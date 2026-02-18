@@ -34,7 +34,7 @@
 				{{ $thumb1x := $img.Fill "300x200 TopLeft webp" }}
 				{{ $thumb2x := $img.Fill "600x400 TopLeft webp" }}
 				<a href="{{ .Params.External }}">
-					<img class="img-thumbnail" src="{{ $thumb2x.Permalink }}" srcset="{{ $thumb1x.Permalink }} 1x, {{ $thumb2x.Permalink }} 2x" alt="Thumbnail for publication" />
+					<img class="img-thumbnail" src="{{ $thumb2x.RelPermalink }}" srcset="{{ $thumb1x.RelPermalink }} 1x, {{ $thumb2x.RelPermalink }} 2x" alt="Thumbnail for publication" />
 				</a>
 			</div>
 			<div class="col-sm-8">
@@ -45,7 +45,7 @@
 			{{ $img := .Resources.GetMatch "thumbnail.png"}}
 			<div class="col-sm-4">
 				<div class="embed-responsive video-border embed-responsive-16by9">
-					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.Permalink }}">
+					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.RelPermalink }}">
 						<source src="{{ .Params.Video }}" type="{{ .Params.VideoType }}">
 						Your browser does not support the video tag.
 					</video>
