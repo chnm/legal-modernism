@@ -19,6 +19,7 @@ Support directories:
 - `db/` — Database migrations, schema, and queries
 - `go/` — Shared Go packages (citations, db, sources)
 - `scripts/` — One-off R and shell scripts for data manipulation
+- `slurm/` — Slurm batch job scripts for running programs on the HPC cluster
 - `test-data/` — Sample data for development and testing
 - `website/` — Hugo static website
 - `notebooks/` — Analytical notebooks (R, Python, Quarto)

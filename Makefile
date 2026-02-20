@@ -33,3 +33,4 @@ clean:
 
 sync-hopper: $(LINUX_TARGETS)
 	rsync --delete --checksum -avz --itemize-changes $(BIN_DIR)/linux-amd64/ hopper:~/legal-modernism/bin/
+	rsync --delete --checksum -avz --itemize-changes slurm/ hopper:~/legal-modernism/jobs/
