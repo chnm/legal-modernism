@@ -6,6 +6,8 @@ on:
     branches:
       - "main"
       - "preview"
+    paths:
+      - "website/**"
 
 jobs:
   build-release:
