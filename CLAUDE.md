@@ -10,7 +10,7 @@ Programs (Go binaries):
 
 - `adj2edge/` — Convert network adjacency list to edge list
 - `cap-import/` — Import data from the Caselaw Access Project
-- `cite-detector/` — Detect citations in legal sources programmatically
+- `cite-detector-moml/` — Detect citations in the *Making of Modern Law* treatises
 - `cite-predictor/` — Augment citation detection using generative AI
 - `cite-linker/` — Link detected citations to a database of caselaw
 
