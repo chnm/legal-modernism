@@ -4,11 +4,13 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"net"
 	"os"
 	"runtime"
 
 	"github.com/lmullen/legal-modernism/go/db"
 	"github.com/shirou/gopsutil/v4/mem"
+	psnet "github.com/shirou/gopsutil/v4/net"
 )
 
 func init() {
@@ -47,6 +49,25 @@ func main() {
 		os.Exit(1)
 	}
 	slog.Info("hostname", "host", host)
+
+	// Report non-loopback IPv4 addresses across all network interfaces
+	ifaces, err := psnet.Interfaces()
+	if err != nil {
+		slog.Error("failed to get network interfaces", "error", err)
+	} else {
+		var addrs []string
+		for _, iface := range ifaces {
+			for _, addr := range iface.Addrs {
+				ip, _, err := net.ParseCIDR(addr.Addr)
+				// Skip parse errors, loopback (127.x.x.x), and IPv6 addresses
+				if err != nil || ip.IsLoopback() || ip.To4() == nil {
+					continue
+				}
+				addrs = append(addrs, addr.Addr)
+			}
+		}
+		slog.Info("IP addresses", "addresses", addrs)
+	}
 
 	// Report CPU cores and GOMAXPROCS
 	slog.Info("available CPUs", "cpu_cores", runtime.NumCPU(), "gomaxprocs", runtime.GOMAXPROCS(0))
