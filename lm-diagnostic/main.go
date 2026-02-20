@@ -2,15 +2,36 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"os"
 	"runtime"
 
 	"github.com/lmullen/legal-modernism/go/db"
+	"github.com/shirou/gopsutil/v4/mem"
 )
 
 func init() {
 	initLogger()
+}
+
+// prettyBytes formats a byte count as a human-readable string using binary prefixes.
+func prettyBytes(b uint64) string {
+	const (
+		GiB = 1 << 30
+		MiB = 1 << 20
+		KiB = 1 << 10
+	)
+	switch {
+	case b >= GiB:
+		return fmt.Sprintf("%.1f GiB", float64(b)/GiB)
+	case b >= MiB:
+		return fmt.Sprintf("%.1f MiB", float64(b)/MiB)
+	case b >= KiB:
+		return fmt.Sprintf("%.1f KiB", float64(b)/KiB)
+	default:
+		return fmt.Sprintf("%d B", b)
+	}
 }
 
 func main() {
@@ -30,13 +51,20 @@ func main() {
 	// Report CPU cores and GOMAXPROCS
 	slog.Info("available CPUs", "cpu_cores", runtime.NumCPU(), "gomaxprocs", runtime.GOMAXPROCS(0))
 
+	vmem, err := mem.VirtualMemory()
+	if err != nil {
+		slog.Error("failed to get memory info", "error", err)
+	} else {
+		slog.Info("system memory", "total", prettyBytes(vmem.Total), "available", prettyBytes(vmem.Available))
+	}
+
 	// Check environment variables
 	_, debugSet := os.LookupEnv("LAW_DEBUG")
 	if _, ok := os.LookupEnv("LAW_DBSTR"); !ok {
 		slog.Error("required environment variable not set", "variable", "LAW_DBSTR")
-		os.Exit(1)
+	} else {
+		slog.Info("environment variables set", "LAW_DBSTR", true, "LAW_DEBUG", debugSet)
 	}
-	slog.Info("environment variables set", "LAW_DBSTR", true, "LAW_DEBUG", debugSet)
 
 	// Test database connectivity
 	pool, err := db.Connect(context.Background())
