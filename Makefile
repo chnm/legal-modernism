@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet
+.PHONY: binaries clean test vet sync-hopper
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -30,3 +30,6 @@ vet:
 
 clean:
 	rm -rf $(BIN_DIR)/*
+
+sync-hopper: $(LINUX_TARGETS)
+	rsync --delete --checksum -avz --itemize-changes $(BIN_DIR)/linux-amd64/ hopper:~/legal-modernism/bin/
