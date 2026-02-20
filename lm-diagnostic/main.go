@@ -44,11 +44,11 @@ func main() {
 	defer cancel()
 	pool, err := db.Connect(ctx)
 	if err != nil {
-		slog.Error("error connecting to database", "error", err)
+		slog.Error("error connecting to database", "database", db.Host(), "error", err)
 		os.Exit(1)
 	}
 	defer pool.Close()
-	slog.Info("successfully connected to database")
+	slog.Info("successfully connected to database", "database", db.Host())
 
 	slog.Debug("diagnostics complete")
 }

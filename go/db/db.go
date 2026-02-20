@@ -34,6 +34,20 @@ func Connect(ctx context.Context) (*pgxpool.Pool, error) {
 	return db, nil
 }
 
+// Host returns the database host from the LAW_DBSTR connection string,
+// or "unknown" if the string is absent or cannot be parsed.
+func Host() string {
+	connstr, err := getConnString()
+	if err != nil {
+		return "unknown"
+	}
+	config, err := pgxpool.ParseConfig(connstr)
+	if err != nil {
+		return "unknown"
+	}
+	return config.ConnConfig.Host
+}
+
 // getConnString returns the DB connection string set as an environment variable
 func getConnString() (string, error) {
 	connstr, exists := os.LookupEnv("LAW_DBSTR")

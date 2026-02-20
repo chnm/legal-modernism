@@ -51,14 +51,15 @@ func main() {
 		}
 	}()
 
-	slog.Info("connecting to database")
+	dbHost := db.Host()
+	slog.Info("connecting to database", "database", dbHost)
 	db, err := db.Connect(ctx)
 	if err != nil {
-		slog.Error("could not connect to database", "error", err)
+		slog.Error("could not connect to database", "database", dbHost, "error", err)
 		os.Exit(1)
 	}
 	defer db.Close()
-	slog.Info("connected to the database")
+	slog.Info("connected to the database", "database", dbHost)
 
 	// Create the repositories
 	sourcesDB := sources.NewPgxStore(db)
