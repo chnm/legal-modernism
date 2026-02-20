@@ -2,7 +2,7 @@
 # Targets: darwin/arm64 (ARM Mac) and linux/amd64 (HPC cluster)
 # Run: make -j binaries
 
-BINARIES = adj2edge cap-import cite-detector lm-diagnostic
+BINARIES = adj2edge cap-import cite-detector-moml lm-diagnostic
 BIN_DIR = bin
 
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))

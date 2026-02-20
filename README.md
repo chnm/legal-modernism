@@ -20,7 +20,7 @@ These programs run the various data creation tasks for the project.
 
 - `adj2edge/`: Convert a network adjacency list to a network edge list.
 - `cap-import`: Import data from the Caselaw Access Project.
-- `cite-detector/`: Detect citations in legal sources programmatically.
+- `cite-detector-moml/`: Detect citations in the *Making of Modern Law* treatises.
 - `cite-predictor/`: Augment citation detection using generative AI.
 - `cite-linker/`: Link detected citations to a database of English and American caselaw.
 
