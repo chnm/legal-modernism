@@ -113,6 +113,7 @@ func main() {
 					page, err := sourcesDB.GetTreatisePage(ctx, id.TreatiseID, id.PageID)
 					if err != nil {
 						slog.Error("could not fetch page from database", "treatise_id", id.TreatiseID, "page_id", id.PageID, "error", err)
+						return
 					}
 					page.CorrectOCR(ocrSubs)
 					for _, detector := range detectors {
