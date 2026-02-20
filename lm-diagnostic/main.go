@@ -5,7 +5,6 @@ import (
 	"log/slog"
 	"os"
 	"runtime"
-	"time"
 
 	"github.com/lmullen/legal-modernism/go/db"
 )
@@ -40,9 +39,7 @@ func main() {
 	slog.Info("environment variables set", "LAW_DBSTR", true, "LAW_DEBUG", debugSet)
 
 	// Test database connectivity
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel()
-	pool, err := db.Connect(ctx)
+	pool, err := db.Connect(context.Background())
 	if err != nil {
 		slog.Error("error connecting to database", "database", db.Host(), "error", err)
 		os.Exit(1)
