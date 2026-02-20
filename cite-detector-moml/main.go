@@ -53,17 +53,17 @@ func main() {
 
 	dbHost := db.Host()
 	slog.Info("connecting to database", "database", dbHost)
-	db, err := db.Connect(ctx)
+	pool, err := db.Connect(ctx)
 	if err != nil {
 		slog.Error("could not connect to database", "database", dbHost, "error", err)
 		os.Exit(1)
 	}
-	defer db.Close()
+	defer pool.Close()
 	slog.Info("connected to the database", "database", dbHost)
 
 	// Create the repositories
-	sourcesDB := sources.NewPgxStore(db)
-	citationsDB := citations.NewDBStore(db)
+	sourcesDB := sources.NewPgxStore(pool)
+	citationsDB := citations.NewDBStore(pool)
 
 	// Create the detectors
 	var detectors []*citations.Detector
