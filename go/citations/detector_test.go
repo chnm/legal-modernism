@@ -57,3 +57,52 @@ func TestDetector_Detect(t *testing.T) {
 		assert.Equal(t, expected[i], citations[i].CleanCite(), fmt.Sprintf("Citation %v", i))
 	}
 }
+
+func TestSingleVolDetector_Detect(t *testing.T) {
+	text := `Lorem ipsum dolor sit amet, consectetur adipiscing elit. The court's ruling in Busb. Eq. Rep. 234 established the principles of equity jurisdiction. Nam vel justo sed felis aliquam malesuada. See also Freem Chy 876, which extended those principles to questions of contract performance. Nulla ut finibus dui. Hob. 423 remains the leading authority on common law pleading. Aliquam purus tellus. Compare with Baldw. 125 for the federal perspective. Ut pharetra augue nulla. The state court first addressed this question in Cheves Eq. 12 before the federal rule was established. Praesent ornare massa quis augue egestas; the same point was reinforced in Busb. Eq. Rep. 234.`
+
+	doc := sources.NewDoc("test-single-vol", text)
+
+	tests := []struct {
+		name         string
+		abbreviation string
+		expected     []string
+	}{
+		{
+			name:         "Busb. Eq. Rep.",
+			abbreviation: `Busb. Eq. Rep.`,
+			expected:     []string{"0 Busb. Eq. Rep. 234", "0 Busb. Eq. Rep. 234"},
+		},
+		{
+			name:         "Freem Chy",
+			abbreviation: `Freem Chy`,
+			expected:     []string{"0 Freem Chy 876"},
+		},
+		{
+			name:         "Hob.",
+			abbreviation: `Hob.`,
+			expected:     []string{"0 Hob. 423"},
+		},
+		{
+			name:         "Baldw.",
+			abbreviation: `Baldw.`,
+			expected:     []string{"0 Baldw. 125"},
+		},
+		{
+			name:         "Cheves Eq.",
+			abbreviation: `Cheves Eq.`,
+			expected:     []string{"0 Cheves Eq. 12"},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			d := NewSingleVolDetector(tt.name, tt.abbreviation)
+			cites := d.Detect(doc)
+			require.Equal(t, len(tt.expected), len(cites))
+			for i, exp := range tt.expected {
+				assert.Equal(t, exp, cites[i].CleanCite(), fmt.Sprintf("Citation %v", i))
+			}
+		})
+	}
+}
