@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:wiki.orc.gmu.edu)"
+      "WebFetch(domain:wiki.orc.gmu.edu)",
+      "Bash(gh issue create:*)"
     ]
   }
 }

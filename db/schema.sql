@@ -1,6 +1,6 @@
 \restrict dbmate
 
--- Dumped from database version 17.7 (Debian 17.7-0+deb13u1)
+-- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
 -- Dumped by pg_dump version 17.7 (Homebrew)
 
 SET statement_timeout = 0;
@@ -710,10 +710,18 @@ CREATE TABLE legalhist.reporters_citation_to_cap (
 
 CREATE VIEW legalhist.reporters_single_volume_abbr AS
  SELECT a.alt_abbr,
+    a.cap_abbr,
     r.reporter_title
    FROM (legalhist.reporters_alt_diffvols_reporters r
      LEFT JOIN legalhist.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
   WHERE (r.single_vol = true);
+
+
+--
+-- Name: VIEW reporters_single_volume_abbr; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON VIEW legalhist.reporters_single_volume_abbr IS 'Abbreviations for single volume reporters';
 
 
 --
@@ -1040,6 +1048,17 @@ CREATE MATERIALIZED VIEW moml_citations.bibliocouple_treatises AS
      LEFT JOIN ut2c cites2 ON ((cites1."case" = cites2."case")))
   WHERE (cites1.bibliographicid <> cites2.bibliographicid)
   GROUP BY cites1.bibliographicid, cites2.bibliographicid
+  WITH NO DATA;
+
+
+--
+-- Name: untitled_materialized_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -
+--
+
+CREATE MATERIALIZED VIEW public.untitled_materialized_view AS
+ SELECT id
+   FROM cap.cases
+  WHERE (decision_year <= 1920)
   WITH NO DATA;
 
 
@@ -1626,6 +1645,13 @@ CREATE INDEX page_bodytype_idx ON moml.page USING btree (type) WHERE ((type)::te
 
 
 --
+-- Name: citations_unlinked_reporter_abbr_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX citations_unlinked_reporter_abbr_idx ON moml_citations.citations_unlinked USING btree (reporter_abbr);
+
+
+--
 -- Name: moml_page_to_cap_case_case_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -1848,4 +1874,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('0015'),
     ('0051'),
     ('20250227185605'),
-    ('20260211115029');
+    ('20260211115029'),
+    ('20260220221029');
