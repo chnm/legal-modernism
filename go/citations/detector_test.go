@@ -57,7 +57,27 @@ func TestDetector_Detect(t *testing.T) {
 }
 
 func TestSingleVolDetector_Detect(t *testing.T) {
-	text := `Lorem ipsum dolor sit amet, consectetur adipiscing elit. The court's ruling in Busb. Eq. Rep. 234 established the principles of equity jurisdiction. Nam vel justo sed felis aliquam malesuada. See also Freem Chy 876, which extended those principles to questions of contract performance. Nulla ut finibus dui. Hob. 423 remains the leading authority on common law pleading. Aliquam purus tellus. Compare with Baldw. 125 for the federal perspective. Ut pharetra augue nulla. The state court first addressed this question in Cheves Eq. 12 before the federal rule was established. Praesent ornare massa quis augue egestas; the same point was reinforced in Busb. Eq. Rep. 234.`
+	text := `
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. The court's ruling in
+	Busb. Eq. Rep. 234 established the principles of equity jurisdiction. Nam vel
+	justo sed felis aliquam malesuada. See also Freem Chy 876, which extended 
+	those principles to questions of performance. Nulla ut finibus dui. Hob. 423 
+	remains the leading authority on common law pleading. Aliquam purus tellus. 
+	Compare with Baldw. 125 for the federal perspective. Ut pharetra augue nulla. 
+	The state court first addressed this question in Cheves Eq. 12 before the 
+	federal rule was established. Praesent ornare massa quis augue egestas; the 
+	same point was reinforced in Busb. Eq. Rep. 234.
+	
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. The court's ruling 
+	in Toth., 234 established the principles of equity jurisdiction. Nam vel justo
+	sed felis aliquam malesuada. See also Tothill, 876, which extended those 
+	principles to questions of contract performance. Nulla ut finibus dui. This 
+	remains the leading authority on common law pleading. Aliquam purus 
+	tellus. Compare with Toth. 125 for the federal perspective (Toth 462). Ut 
+	pharetra augue nulla. The state court first addressed this question in M&M. 12
+	before the federal rule was established (M & M 123). Praesent ornare massa
+	quis augue egestas; the same point was reinforced in M. & M. 234.
+	`
 
 	doc := sources.NewDoc("test-single-vol", text)
 
@@ -90,6 +110,16 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 			name:         "Cheves Eq.",
 			abbreviation: `Cheves Eq.`,
 			expected:     []string{"0 Cheves Eq. 12"},
+		},
+		{
+			name:         "Toth",
+			abbreviation: `Toth`,
+			expected:     []string{"0 Toth 234", "0 Thoth 876", "0 Toth 125", "0 Toth 462"},
+		},
+		{
+			name:         "M & M",
+			abbreviation: `M & M`,
+			expected:     []string{"0 M & M 12", "0 M & M 123", "0 M & M 234"},
 		},
 	}
 
