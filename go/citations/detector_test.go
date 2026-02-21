@@ -49,8 +49,6 @@ func TestDetector_Detect(t *testing.T) {
 	doc := sources.NewDoc("test", text)
 	citations := GenericDetector.Detect(doc)
 
-	fmt.Println(citations)
-
 	require.Equal(t, len(expected), len(citations))
 
 	for i := range expected {
