@@ -114,7 +114,7 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 		{
 			name:         "Toth",
 			abbreviation: `Toth`,
-			expected:     []string{"0 Toth 234", "0 Thoth 876", "0 Toth 125", "0 Toth 462"},
+			expected:     []string{"0 Toth 234", "0 Toth 876", "0 Toth 125", "0 Toth 462"},
 		},
 		{
 			name:         "M & M",

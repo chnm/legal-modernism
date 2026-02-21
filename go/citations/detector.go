@@ -31,11 +31,16 @@ func NewDetector(reporter string, abbreviation string) *Detector {
 // NewSingleVolDetector creates a new citation detector and initializes its
 // regular expression. The detector will not look for a volume number
 func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
+	// Replace spaces in the abbreviation with [\s.]* to match variant forms:
+	// e.g. "M & M" matches "M&M.", "M. & M.", etc.
+	flexAbbr := strings.ReplaceAll(abbreviation, " ", `[\s.]*`)
 	detector := &Detector{
 		Reporter:     reporter,
 		Abbreviation: abbreviation,
 		initial:      nil,
-		regex:        regexp.MustCompile(abbreviation + `\s+\d{1,4}`),
+		// \w* allows alternate long forms (e.g. Tothill matching Toth).
+		// [.,]* allows optional period/comma separators before the page number.
+		regex: regexp.MustCompile(flexAbbr + `\w*[.,]*\s+\d{1,4}`),
 	}
 	return detector
 }
@@ -95,12 +100,21 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		pp := rePage.FindString(m)
 		c.Page, _ = strconv.Atoi(pp)
 
-		// Trim the string down to the reporter abbreviation
-		abbr := m
-		abbr = strings.Replace(abbr, vol, "", 1)
-		abbr = strings.Replace(abbr, pp, "", 1)
-		abbr = strings.TrimSpace(abbr)
-		c.ReporterAbbr = abbr
+		// Determine the reporter abbreviation.
+		if d.initial == nil {
+			// Single-volume detector: use the canonical reporter name directly,
+			// since the raw match may include separator characters (commas,
+			// trailing periods) that are not part of the abbreviation.
+			c.ReporterAbbr = d.Reporter
+		} else {
+			// Standard detector: derive the abbreviation by trimming the volume
+			// and page numbers from the raw match.
+			abbr := m
+			abbr = strings.Replace(abbr, vol, "", 1)
+			abbr = strings.Replace(abbr, pp, "", 1)
+			abbr = strings.TrimSpace(abbr)
+			c.ReporterAbbr = abbr
+		}
 
 		// Save the source
 		c.Source = doc
