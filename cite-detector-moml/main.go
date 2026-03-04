@@ -70,8 +70,8 @@ func main() {
 	var detectors []*citations.Detector
 
 	// Load the general-purpose detector
-	// detectors = append(detectors, citations.GenericDetector)
-	// slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
+	detectors = append(detectors, citations.GenericDetector)
+	slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
 
 	// Create and load the single volume detectors
 	abbreviations, err := citationsDB.GetSingleVolReporters(ctx)
