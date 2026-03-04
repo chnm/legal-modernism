@@ -7,10 +7,10 @@
 #SBATCH --error=/scratch/%u/logs/%j-%x-%N.log   
 #SBATCH --nodes=1  
 #SBATCH --ntasks=1  
-#SBATCH --cpus-per-task=128
-#SBATCH --time=5-00:00:00  
-#SBATCH --mem=512GB  
-#SBATCH --partition bigmem  
+#SBATCH --cpus-per-task=64
+#SBATCH --time=2-00:00:00  
+#SBATCH --mem=128GB  
+#SBATCH --partition normal  
 #SBATCH --mail-user lmullen@gmu.edu  
 #SBATCH --mail-type BEGIN  
 #SBATCH --mail-type END  
