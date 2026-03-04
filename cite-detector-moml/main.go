@@ -68,7 +68,12 @@ func main() {
 
 	// Create the detectors
 	var detectors []*citations.Detector
-	detectors = append(detectors, citations.GenericDetector)
+
+	// Load the general-purpose detector
+	// detectors = append(detectors, citations.GenericDetector)
+	// slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
+
+	// Create and load the single volume detectors
 	abbreviations, err := citationsDB.GetSingleVolReporters(ctx)
 	if err != nil {
 		slog.Error("could not get single volume reporters from database", "error", err)
@@ -78,7 +83,7 @@ func main() {
 		d := citations.NewSingleVolDetector(abbr, abbr)
 		detectors = append(detectors, d)
 	}
-	slog.Info("prepared generic detector and single volume detector", "num_detectors", len(detectors))
+	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
 
 	slog.Info("getting OCR corrections")
 	ocrSubs, err := sourcesDB.GetOCRSubstitutions(ctx)
