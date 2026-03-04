@@ -23,12 +23,14 @@ func main() {
 	slog.Info("starting the citation detector")
 
 	// Create the worker pool
-	cpuMax := runtime.NumCPU()
-	cpu := cpuMax - 2
+	// The bottleneck is the database, so running more jobs than the CPU should
+	// be fine, even preferrable
+	cpuAvail := runtime.NumCPU()
+	cpu := cpuAvail * 2
 	if cpu < 1 {
-		cpu = 1
+		slog.Error("invalid number of CPUs", "available", cpuAvail, "using", cpu)
 	}
-	slog.Info("CPUs", "available", cpuMax, "using", cpu)
+	slog.Info("CPUs", "available", cpuAvail, "using", cpu)
 	wp := workerpool.New(cpu)
 
 	// Create a context and listen for signals to gracefully shutdown the application
