@@ -1,7 +1,7 @@
 \restrict dbmate
 
--- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
--- Dumped by pg_dump version 17.7 (Homebrew)
+-- Dumped from database version 17.7 (Debian 17.7-0+deb13u1)
+-- Dumped by pg_dump version 17.9 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -710,18 +710,10 @@ CREATE TABLE legalhist.reporters_citation_to_cap (
 
 CREATE VIEW legalhist.reporters_single_volume_abbr AS
  SELECT a.alt_abbr,
-    a.cap_abbr,
     r.reporter_title
    FROM (legalhist.reporters_alt_diffvols_reporters r
      LEFT JOIN legalhist.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
   WHERE (r.single_vol = true);
-
-
---
--- Name: VIEW reporters_single_volume_abbr; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON VIEW legalhist.reporters_single_volume_abbr IS 'Abbreviations for single volume reporters';
 
 
 --
@@ -766,7 +758,7 @@ CREATE TABLE moml_citations.citations_unlinked (
     moml_treatise text NOT NULL,
     moml_page text NOT NULL,
     raw text NOT NULL,
-    volume integer NOT NULL,
+    volume integer,
     reporter_abbr text NOT NULL,
     page integer NOT NULL,
     created_at timestamp without time zone NOT NULL
@@ -1052,17 +1044,6 @@ CREATE MATERIALIZED VIEW moml_citations.bibliocouple_treatises AS
 
 
 --
--- Name: untitled_materialized_view; Type: MATERIALIZED VIEW; Schema: public; Owner: -
---
-
-CREATE MATERIALIZED VIEW public.untitled_materialized_view AS
- SELECT id
-   FROM cap.cases
-  WHERE (decision_year <= 1920)
-  WITH NO DATA;
-
-
---
 -- Name: database_size; Type: VIEW; Schema: stats; Owner: -
 --
 
@@ -1305,19 +1286,19 @@ ALTER TABLE ONLY moml.page
 
 
 --
+-- Name: citations_unlinked citations_unlinked_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citations_unlinked
+    ADD CONSTRAINT citations_unlinked_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: citations_unlinked moml_citations_id_key; Type: CONSTRAINT; Schema: moml_citations; Owner: -
 --
 
 ALTER TABLE ONLY moml_citations.citations_unlinked
     ADD CONSTRAINT moml_citations_id_key UNIQUE (id);
-
-
---
--- Name: citations_unlinked moml_citations_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
---
-
-ALTER TABLE ONLY moml_citations.citations_unlinked
-    ADD CONSTRAINT moml_citations_pkey PRIMARY KEY (moml_treatise, moml_page, volume, reporter_abbr, page);
 
 
 --
@@ -1652,6 +1633,13 @@ CREATE INDEX citations_unlinked_reporter_abbr_idx ON moml_citations.citations_un
 
 
 --
+-- Name: citations_unlinked_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked USING btree (moml_treatise, moml_page, COALESCE(volume, '-1'::integer), reporter_abbr, page);
+
+
+--
 -- Name: moml_page_to_cap_case_case_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -1875,4 +1863,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('0051'),
     ('20250227185605'),
     ('20260211115029'),
-    ('20260220221029');
+    ('20260220221029'),
+    ('20260304120000');

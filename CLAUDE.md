@@ -62,6 +62,7 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 - Migration naming: `YYYYMMDDHHMMSS_description.sql`
 - Full schema: `db/schema.sql`
 - Schemas: `cap`, `cap_citations`, `english_reports`, `legalhist`, `moml`, `moml_citations`, `stats`, `sys_admin`, `textbooks`
+- Don't update `db/schema.sql`: this file is auto-generated.
 
 ## Environment variables
 

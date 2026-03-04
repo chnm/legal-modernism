@@ -1,8 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:wiki.orc.gmu.edu)",
-      "Bash(gh issue create:*)"
+      "Bash(find *)",
+      "Bash(gh issue create:*)",
+      "Bash(grep *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Grep",
+      "WebFetch(*)"
     ]
   }
 }
