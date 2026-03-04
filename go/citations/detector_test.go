@@ -89,37 +89,37 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 		{
 			name:         "Busb. Eq. Rep.",
 			abbreviation: `Busb. Eq. Rep.`,
-			expected:     []string{"0 Busb. Eq. Rep. 234", "0 Busb. Eq. Rep. 234"},
+			expected:     []string{"Busb. Eq. Rep. 234", "Busb. Eq. Rep. 234"},
 		},
 		{
 			name:         "Freem Chy",
 			abbreviation: `Freem Chy`,
-			expected:     []string{"0 Freem Chy 876"},
+			expected:     []string{"Freem Chy 876"},
 		},
 		{
 			name:         "Hob.",
 			abbreviation: `Hob.`,
-			expected:     []string{"0 Hob. 423"},
+			expected:     []string{"Hob. 423"},
 		},
 		{
 			name:         "Baldw.",
 			abbreviation: `Baldw.`,
-			expected:     []string{"0 Baldw. 125"},
+			expected:     []string{"Baldw. 125"},
 		},
 		{
 			name:         "Cheves Eq.",
 			abbreviation: `Cheves Eq.`,
-			expected:     []string{"0 Cheves Eq. 12"},
+			expected:     []string{"Cheves Eq. 12"},
 		},
 		{
 			name:         "Toth",
 			abbreviation: `Toth`,
-			expected:     []string{"0 Toth 234", "0 Toth 876", "0 Toth 125", "0 Toth 462"},
+			expected:     []string{"Toth 234", "Toth 876", "Toth 125", "Toth 462"},
 		},
 		{
 			name:         "M & M",
 			abbreviation: `M & M`,
-			expected:     []string{"0 M & M 12", "0 M & M 123", "0 M & M 234"},
+			expected:     []string{"M & M 12", "M & M 123", "M & M 234"},
 		},
 	}
 
@@ -133,4 +133,40 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestCleanCite_NilVolume(t *testing.T) {
+	c := &Citation{
+		ReporterAbbr: "U.S.",
+		Page:         100,
+	}
+	assert.Equal(t, "U.S. 100", c.CleanCite())
+}
+
+func TestCleanCite_NonNilVolume(t *testing.T) {
+	vol := 5
+	c := &Citation{
+		Volume:       &vol,
+		ReporterAbbr: "U.S.",
+		Page:         100,
+	}
+	assert.Equal(t, "5 U.S. 100", c.CleanCite())
+}
+
+func TestDetector_VolumeIsNonNil(t *testing.T) {
+	text := `This has 30 Missis. 673 as a citation.`
+	doc := sources.NewDoc("test", text)
+	cites := GenericDetector.Detect(doc)
+	require.Len(t, cites, 1)
+	require.NotNil(t, cites[0].Volume, "standard detector should produce non-nil Volume")
+	assert.Equal(t, 30, *cites[0].Volume)
+}
+
+func TestSingleVolDetector_VolumeIsNil(t *testing.T) {
+	text := `See Hob. 423 for the ruling.`
+	doc := sources.NewDoc("test", text)
+	d := NewSingleVolDetector("Hob.", "Hob.")
+	cites := d.Detect(doc)
+	require.Len(t, cites, 1)
+	assert.Nil(t, cites[0].Volume, "single-vol detector should produce nil Volume")
 }

@@ -12,7 +12,7 @@ type Citation struct {
 	ID           uuid.UUID
 	Source       sources.Document
 	Raw          string
-	Volume       int
+	Volume       *int
 	ReporterAbbr string
 	Page         int
 }
@@ -23,7 +23,10 @@ func (c Citation) String() string {
 
 // CleanCite returns a clean citation without spaces.
 func (c *Citation) CleanCite() string {
-	return fmt.Sprintf("%v %s %v", c.Volume, c.CleanReporter(), c.Page)
+	if c.Volume == nil {
+		return fmt.Sprintf("%s %v", c.CleanReporter(), c.Page)
+	}
+	return fmt.Sprintf("%v %s %v", *c.Volume, c.CleanReporter(), c.Page)
 }
 
 // CleanReporter returns a normalized string for the reporter abbreviation.
