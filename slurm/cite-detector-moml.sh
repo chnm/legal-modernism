@@ -8,9 +8,9 @@
 #SBATCH --nodes=1  
 #SBATCH --ntasks=1  
 #SBATCH --cpus-per-task=64
-#SBATCH --time=2-00:00:00  
-#SBATCH --mem=128GB  
-#SBATCH --partition normal  
+#SBATCH --time=1-00:00:00  
+#SBATCH --mem=64GB  
+#SBATCH --partition bigmem  
 #SBATCH --mail-user lmullen@gmu.edu  
 #SBATCH --mail-type BEGIN  
 #SBATCH --mail-type END  
