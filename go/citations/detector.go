@@ -94,7 +94,10 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 
 		// Get the volume
 		vol := reVolume.FindString(m)
-		c.Volume, _ = strconv.Atoi(vol)
+		if vol != "" {
+			v, _ := strconv.Atoi(vol)
+			c.Volume = &v
+		}
 
 		// Get the page
 		pp := rePage.FindString(m)
