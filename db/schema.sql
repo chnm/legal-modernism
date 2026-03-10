@@ -280,6 +280,223 @@ $$;
 
 
 --
+-- Name: chnm_revoke_role_from_all(text, boolean); Type: PROCEDURE; Schema: sys_admin; Owner: -
+--
+
+CREATE PROCEDURE sys_admin.chnm_revoke_role_from_all(IN p_role text, IN p_dry_run boolean DEFAULT true)
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    r           RECORD;
+    sql_stmt    TEXT;
+    role_oid    OID;
+    obj_count   INT := 0;
+BEGIN
+
+    -- ── Validate role exists ──────────────────────────────────────────────────
+    SELECT oid INTO role_oid FROM pg_roles WHERE rolname = p_role;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Role "%" does not exist', p_role;
+    END IF;
+
+    RAISE NOTICE '==========================================';
+    IF p_dry_run THEN
+        RAISE NOTICE ' DRY RUN — no changes will be made';
+    ELSE
+        RAISE NOTICE ' LIVE RUN — revoking all grants from: %', p_role;
+    END IF;
+    RAISE NOTICE '==========================================';
+
+
+    -- ── Tables & Views ────────────────────────────────────────────────────────
+    -- information_schema.role_table_grants covers both base tables and views.
+    -- Materialized views are NOT included here (handled separately below).
+    FOR r IN
+        SELECT DISTINCT table_schema, table_name, privilege_type
+        FROM information_schema.role_table_grants
+        WHERE grantee      = p_role
+          AND table_schema NOT IN ('pg_catalog', 'information_schema')
+        ORDER BY table_schema, table_name, privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON TABLE %I.%I FROM %I',
+            r.privilege_type, r.table_schema, r.table_name, p_role
+        );
+        RAISE NOTICE '[table/view] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Materialized Views ────────────────────────────────────────────────────
+    -- pg_matviews + pg_class ACL is the reliable source; information_schema
+    -- does not expose mat view grants.
+    FOR r IN
+        SELECT
+            n.nspname          AS schema,
+            c.relname          AS matview,
+            acl.privilege_type
+        FROM pg_class c
+        JOIN pg_namespace n   ON n.oid = c.relnamespace
+        CROSS JOIN aclexplode(c.relacl) AS acl
+        WHERE c.relkind        = 'm'
+          AND acl.grantee      = role_oid
+          AND n.nspname NOT IN ('pg_catalog', 'information_schema')
+        ORDER BY n.nspname, c.relname, acl.privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON TABLE %I.%I FROM %I',
+            r.privilege_type, r.schema, r.matview, p_role
+        );
+        RAISE NOTICE '[matview] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Sequences ─────────────────────────────────────────────────────────────
+    FOR r IN
+        SELECT DISTINCT object_schema, object_name, privilege_type
+        FROM information_schema.role_usage_grants
+        WHERE grantee       = p_role
+          AND object_type   = 'SEQUENCE'
+          AND object_schema NOT IN ('pg_catalog', 'information_schema')
+        ORDER BY object_schema, object_name, privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON SEQUENCE %I.%I FROM %I',
+            r.privilege_type, r.object_schema, r.object_name, p_role
+        );
+        RAISE NOTICE '[sequence] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Functions & Procedures ────────────────────────────────────────────────
+    -- Join to pg_proc to capture the full argument signature so overloaded
+    -- functions are handled correctly.
+    FOR r IN
+        SELECT DISTINCT
+            g.routine_schema,
+            g.routine_name,
+            g.privilege_type,
+            pg_get_function_identity_arguments(p.oid) AS args
+        FROM information_schema.role_routine_grants g
+        JOIN pg_proc p
+          ON p.proname      = g.routine_name
+         AND p.pronamespace = (
+             SELECT oid FROM pg_namespace WHERE nspname = g.routine_schema
+         )
+        WHERE g.grantee        = p_role
+          AND g.routine_schema NOT IN ('pg_catalog', 'information_schema')
+        ORDER BY g.routine_schema, g.routine_name, g.privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON FUNCTION %I.%I(%s) FROM %I',
+            r.privilege_type,
+            r.routine_schema, r.routine_name, r.args,
+            p_role
+        );
+        RAISE NOTICE '[function] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Schemas ───────────────────────────────────────────────────────────────
+    FOR r IN
+        SELECT nspname, acl.privilege_type
+        FROM pg_namespace
+        CROSS JOIN aclexplode(nspacl) AS acl
+        WHERE acl.grantee = role_oid
+          AND nspname NOT IN ('pg_catalog', 'information_schema', 'pg_toast')
+        ORDER BY nspname, acl.privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON SCHEMA %I FROM %I',
+            r.privilege_type, r.nspname, p_role
+        );
+        RAISE NOTICE '[schema] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Databases ─────────────────────────────────────────────────────────────
+    FOR r IN
+        SELECT datname, acl.privilege_type
+        FROM pg_database
+        CROSS JOIN aclexplode(datacl) AS acl
+        WHERE acl.grantee = role_oid
+        ORDER BY datname, acl.privilege_type
+    LOOP
+        sql_stmt := format(
+            'REVOKE %s ON DATABASE %I FROM %I',
+            r.privilege_type, r.datname, p_role
+        );
+        RAISE NOTICE '[database] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Default Privileges ────────────────────────────────────────────────────
+    -- LEFT JOIN handles database-wide rules (defaclnamespace = 0) which have
+    -- no matching pg_namespace row. Those appear with schema = '(global)'.
+    FOR r IN
+        SELECT
+            COALESCE(n.nspname, '(global)')  AS schema,
+            CASE d.defaclobjtype
+                WHEN 'r' THEN 'TABLES'
+                WHEN 'S' THEN 'SEQUENCES'
+                WHEN 'f' THEN 'FUNCTIONS'
+                WHEN 'T' THEN 'TYPES'
+                WHEN 'n' THEN 'SCHEMAS'
+            END                              AS obj_type,
+            acl.privilege_type,
+            pg_get_userbyid(d.defaclrole)    AS owner,
+            n.nspname                        AS raw_schema   -- NULL = global
+        FROM pg_default_acl d
+        LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace
+        CROSS JOIN aclexplode(d.defaclacl) AS acl
+        WHERE acl.grantee = role_oid
+        ORDER BY schema, obj_type, acl.privilege_type
+    LOOP
+        IF r.raw_schema IS NOT NULL THEN
+            -- Schema-scoped default privilege
+            sql_stmt := format(
+                'ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA %I REVOKE %s ON %s FROM %I',
+                r.owner, r.raw_schema, r.privilege_type, r.obj_type, p_role
+            );
+        ELSE
+            -- Database-wide default privilege (no IN SCHEMA clause)
+            sql_stmt := format(
+                'ALTER DEFAULT PRIVILEGES FOR ROLE %I REVOKE %s ON %s FROM %I',
+                r.owner, r.privilege_type, r.obj_type, p_role
+            );
+        END IF;
+        RAISE NOTICE '[default priv] %', sql_stmt;
+        IF NOT p_dry_run THEN EXECUTE sql_stmt; END IF;
+        obj_count := obj_count + 1;
+    END LOOP;
+
+
+    -- ── Summary ───────────────────────────────────────────────────────────────
+    RAISE NOTICE '==========================================';
+    RAISE NOTICE 'Statements %: %',
+        CASE WHEN p_dry_run THEN 'that would execute' ELSE 'executed' END,
+        obj_count;
+    IF p_dry_run THEN
+        RAISE NOTICE 'Re-run with p_dry_run => FALSE to apply changes.';
+    END IF;
+    RAISE NOTICE '==========================================';
+
+END;
+$$;
+
+
+--
 -- Name: chnm_revoke_role_from_users(text); Type: PROCEDURE; Schema: sys_admin; Owner: -
 --
 
@@ -1049,6 +1266,24 @@ CREATE MATERIALIZED VIEW moml_citations.bibliocouple_treatises AS
 
 CREATE VIEW stats.database_size AS
  SELECT pg_size_pretty(pg_database_size('law'::name)) AS pg_size_pretty;
+
+
+--
+-- Name: table_row_counts; Type: VIEW; Schema: stats; Owner: -
+--
+
+CREATE VIEW stats.table_row_counts AS
+ WITH tbl AS (
+         SELECT tables.table_schema,
+            tables.table_name
+           FROM information_schema.tables
+          WHERE (((tables.table_name)::name !~~ 'pg_%'::text) AND ((tables.table_schema)::name <> ALL (ARRAY['information_schema'::name, 'stats'::name])))
+        )
+ SELECT table_schema,
+    table_name,
+    (((xpath('/row/c/text()'::text, query_to_xml(format('select count(*) as c from %I.%I'::text, table_schema, table_name), false, true, ''::text)))[1])::text)::integer AS row_count
+   FROM tbl
+  ORDER BY table_schema, (((xpath('/row/c/text()'::text, query_to_xml(format('select count(*) as c from %I.%I'::text, table_schema, table_name), false, true, ''::text)))[1])::text)::integer DESC;
 
 
 --
@@ -1864,4 +2099,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20250227185605'),
     ('20260211115029'),
     ('20260220221029'),
-    ('20260304120000');
+    ('20260304120000'),
+    ('20260310120000');
