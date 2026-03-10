@@ -839,46 +839,6 @@ CREATE TABLE legalhist.ocr_corrections (
 
 
 --
--- Name: reporters_alt_diffvols_reporters; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_alt_diffvols_reporters (
-    reporter_title text NOT NULL,
-    level text,
-    jurisdiction text,
-    single_vol boolean NOT NULL,
-    year_start integer,
-    year_end integer
-);
-
-
---
--- Name: TABLE reporters_alt_diffvols_reporters; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON TABLE legalhist.reporters_alt_diffvols_reporters IS 'Alternative reporters to reporters in CAP, where the volume numbers are different from CAP';
-
-
---
--- Name: reporters_alt_diffvols_volumes; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_alt_diffvols_volumes (
-    reporter_title text,
-    vol integer,
-    cap_vol integer,
-    cap_reporter text NOT NULL
-);
-
-
---
--- Name: TABLE reporters_alt_diffvols_volumes; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON TABLE legalhist.reporters_alt_diffvols_volumes IS 'The mapping between volumes from our alternative reporters to the CAP reporter volume numbers';
-
-
---
 -- Name: reporters_citation_to_cap; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -891,6 +851,47 @@ CREATE TABLE legalhist.reporters_citation_to_cap (
     junk boolean NOT NULL,
     cap_different boolean
 );
+
+
+--
+-- Name: reporters_diffvols; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.reporters_diffvols (
+    reporter_title text,
+    vol integer,
+    cap_vol integer,
+    cap_reporter text NOT NULL
+);
+
+
+--
+-- Name: TABLE reporters_diffvols; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON TABLE legalhist.reporters_diffvols IS 'The mapping between volumes from our alternative reporters to the CAP reporter volume numbers';
+
+
+--
+-- Name: reporters_nominate; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.reporters_nominate (
+    reporter_title text NOT NULL,
+    level text,
+    jurisdiction text,
+    single_vol boolean NOT NULL,
+    year_start integer,
+    year_end integer,
+    reporter_standard text
+);
+
+
+--
+-- Name: TABLE reporters_nominate; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON TABLE legalhist.reporters_nominate IS 'Alternative reporters to reporters in CAP, where the volume numbers are different from CAP';
 
 
 --
@@ -1378,7 +1379,7 @@ COMMENT ON TABLE to_delete.reporters_alt_samevols_abbreviations IS 'Alternative 
 CREATE VIEW to_delete.reporters_single_volume_abbr AS
  SELECT a.alt_abbr,
     r.reporter_title
-   FROM (legalhist.reporters_alt_diffvols_reporters r
+   FROM (legalhist.reporters_nominate r
      LEFT JOIN to_delete.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
   WHERE (r.single_vol = true);
 
@@ -1456,10 +1457,10 @@ ALTER TABLE ONLY legalhist.ocr_corrections
 
 
 --
--- Name: reporters_alt_diffvols_reporters reporters_alt_diff_vols_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: reporters_nominate reporters_alt_diff_vols_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
-ALTER TABLE ONLY legalhist.reporters_alt_diffvols_reporters
+ALTER TABLE ONLY legalhist.reporters_nominate
     ADD CONSTRAINT reporters_alt_diff_vols_pkey PRIMARY KEY (reporter_title);
 
 
@@ -1738,21 +1739,21 @@ CREATE INDEX code_reporter_volume_number_idx ON legalhist.code_reporter USING bt
 -- Name: reporters_alt_diff_vols_single_vol_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
-CREATE INDEX reporters_alt_diff_vols_single_vol_idx ON legalhist.reporters_alt_diffvols_reporters USING btree (single_vol);
+CREATE INDEX reporters_alt_diff_vols_single_vol_idx ON legalhist.reporters_nominate USING btree (single_vol);
 
 
 --
 -- Name: reporters_alt_diffvols_volumes_cap_reporter_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
-CREATE INDEX reporters_alt_diffvols_volumes_cap_reporter_idx ON legalhist.reporters_alt_diffvols_volumes USING btree (cap_reporter);
+CREATE INDEX reporters_alt_diffvols_volumes_cap_reporter_idx ON legalhist.reporters_diffvols USING btree (cap_reporter);
 
 
 --
 -- Name: reporters_alt_diffvols_volumes_vol_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
-CREATE INDEX reporters_alt_diffvols_volumes_vol_idx ON legalhist.reporters_alt_diffvols_volumes USING btree (vol);
+CREATE INDEX reporters_alt_diffvols_volumes_vol_idx ON legalhist.reporters_diffvols USING btree (vol);
 
 
 --
@@ -1999,11 +2000,11 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 
 --
--- Name: reporters_alt_diffvols_volumes reporters_alt_diffvols_volumes_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: reporters_diffvols reporters_diffvols_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
-ALTER TABLE ONLY legalhist.reporters_alt_diffvols_volumes
-    ADD CONSTRAINT reporters_alt_diffvols_volumes_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_alt_diffvols_reporters(reporter_title);
+ALTER TABLE ONLY legalhist.reporters_diffvols
+    ADD CONSTRAINT reporters_diffvols_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_nominate(reporter_title) ON UPDATE CASCADE;
 
 
 --
@@ -2079,14 +2080,6 @@ ALTER TABLE ONLY moml.page
 
 
 --
--- Name: reporters_alt_diffvols_abbreviations reporters_alt_diffvols_abbreviations_reporter_title_fkey; Type: FK CONSTRAINT; Schema: to_delete; Owner: -
---
-
-ALTER TABLE ONLY to_delete.reporters_alt_diffvols_abbreviations
-    ADD CONSTRAINT reporters_alt_diffvols_abbreviations_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_alt_diffvols_reporters(reporter_title);
-
-
---
 -- PostgreSQL database dump complete
 --
 
@@ -2108,4 +2101,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260220221029'),
     ('20260304120000'),
     ('20260310120000'),
-    ('20260310190222');
+    ('20260310190222'),
+    ('20260310191741'),
+    ('20260310193513');
