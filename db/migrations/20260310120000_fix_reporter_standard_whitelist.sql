@@ -1,13 +1,17 @@
 -- migrate:up
 -- Fix incorrect reporter_standard values for the English Reports 
 -- See issue #111
-BEGIN;
-
 UPDATE legalhist.reporters_citation_to_cap
 SET
 	reporter_standard = 'E.R.'
 WHERE
 	reporter_standard = 'Eng. Rep.';
+
+UPDATE legalhist.reporters_citation_to_cap
+SET
+	reporter_standard = 'E.R.'
+WHERE
+	reporter_standard = 'E. R.';
 
 UPDATE legalhist.reporters_citation_to_cap
 SET
@@ -118,7 +122,5 @@ SET
 	reporter_standard = 'Barn C'
 WHERE
 	reporter_standard = 'Bar N';
-
-ROLLBACK;
 
 -- migrate:down
