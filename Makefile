@@ -38,20 +38,10 @@ sync-hopper: $(LINUX_TARGETS)
 # Strip pool_max_conns from the connection string since dbmate doesn't support it
 DBMATE_URL := $(shell echo "$(LAW_DBSTR)" | sed 's/[&?]pool_max_conns=[0-9]\{1,3\}//')
 
-define check_dev_env
-	@if [ "$$LAW_DB_ENV" != "DEV" ]; then \
-		printf "LAW_DB_ENV is not set to DEV. Are you sure? [y/N] "; \
-		read ans; \
-		case "$$ans" in [yY]*) ;; *) echo "Aborted."; exit 1 ;; esac; \
-	fi
-endef
-
 db-up:
-	$(check_dev_env)
 	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations up
 
 db-down:
-	$(check_dev_env)
 	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations down
 
 db-status:
