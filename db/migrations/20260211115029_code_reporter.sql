@@ -21,15 +21,15 @@ CREATE TABLE IF NOT EXISTS
     );
 
 ALTER TABLE ONLY legalhist.code_reporter
-ADD CONSTRAINT code_reporter_court_cap_id_fk FOREIGN KEY (court_cap_id) REFERENCES cap.courts (id);
+ADD CONSTRAINT IF NOT EXISTS code_reporter_court_cap_id_fk FOREIGN KEY (court_cap_id) REFERENCES cap.courts (id);
 
-CREATE INDEX "code_reporter_decision_year_idx" ON "legalhist"."code_reporter" ("decision_year");
+CREATE INDEX IF NOT EXISTS "code_reporter_decision_year_idx" ON "legalhist"."code_reporter" ("decision_year");
 
-CREATE INDEX "code_reporter_court_cap_id_idx" ON "legalhist"."code_reporter" ("court_cap_id");
+CREATE INDEX IF NOT EXISTS "code_reporter_court_cap_id_idx" ON "legalhist"."code_reporter" ("court_cap_id");
 
-CREATE INDEX "code_reporter_official_citation_idx" ON "legalhist"."code_reporter" ("official_citation");
+CREATE INDEX IF NOT EXISTS "code_reporter_official_citation_idx" ON "legalhist"."code_reporter" ("official_citation");
 
-CREATE INDEX "code_reporter_volume_number_idx" ON "legalhist"."code_reporter" ("volume_number");
+CREATE INDEX IF NOT EXISTS "code_reporter_volume_number_idx" ON "legalhist"."code_reporter" ("volume_number");
 
 -- migrate:down
 DROP TABLE IF EXISTS legalhist.code_reporter;

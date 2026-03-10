@@ -3,10 +3,10 @@
 -- drop the PK before making volume nullable, then replace it with a unique
 -- index that uses COALESCE to handle NULLs.
 ALTER TABLE moml_citations.citations_unlinked
-DROP CONSTRAINT moml_citations_pkey;
+DROP CONSTRAINT IF EXISTS moml_citations_pkey;
 
 ALTER TABLE moml_citations.citations_unlinked
-ADD PRIMARY KEY (id);
+ADD CONSTRAINT IF NOT EXISTS citations_unlinked_pkey PRIMARY KEY (id);
 
 ALTER TABLE moml_citations.citations_unlinked
 ALTER COLUMN volume
@@ -14,7 +14,7 @@ DROP NOT NULL;
 
 -- Replace the former PK with a unique index. COALESCE maps NULL to -1
 -- (an impossible volume) so the index treats all NULLs as equal for dedup.
-CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked (moml_treatise, moml_page, COALESCE(volume, -1), reporter_abbr, page);
+CREATE UNIQUE INDEX IF NOT EXISTS citations_unlinked_uq ON moml_citations.citations_unlinked (moml_treatise, moml_page, COALESCE(volume, -1), reporter_abbr, page);
 
 -- Convert existing volume=0 rows for single-volume reporters to NULL.
 UPDATE moml_citations.citations_unlinked
@@ -44,7 +44,7 @@ ALTER COLUMN volume
 SET NOT NULL;
 
 ALTER TABLE moml_citations.citations_unlinked
-DROP CONSTRAINT citations_unlinked_pkey;
+DROP CONSTRAINT IF EXISTS citations_unlinked_pkey;
 
 ALTER TABLE moml_citations.citations_unlinked
-ADD CONSTRAINT moml_citations_pkey PRIMARY KEY (moml_treatise, moml_page, volume, reporter_abbr, page);
+ADD CONSTRAINT IF NOT EXISTS moml_citations_pkey PRIMARY KEY (moml_treatise, moml_page, volume, reporter_abbr, page);
