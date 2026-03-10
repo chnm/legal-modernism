@@ -86,6 +86,13 @@ CREATE SCHEMA textbooks;
 
 
 --
+-- Name: to_delete; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA to_delete;
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -832,24 +839,6 @@ CREATE TABLE legalhist.ocr_corrections (
 
 
 --
--- Name: reporters_alt_diffvols_abbreviations; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_alt_diffvols_abbreviations (
-    cap_abbr text,
-    alt_abbr text,
-    reporter_title text
-);
-
-
---
--- Name: TABLE reporters_alt_diffvols_abbreviations; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON TABLE legalhist.reporters_alt_diffvols_abbreviations IS 'The mapping between abbreviations and CAP reporters and our alternative reporters';
-
-
---
 -- Name: reporters_alt_diffvols_reporters; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -890,23 +879,6 @@ COMMENT ON TABLE legalhist.reporters_alt_diffvols_volumes IS 'The mapping betwee
 
 
 --
--- Name: reporters_alt_samevols_abbreviations; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_alt_samevols_abbreviations (
-    cap_abbr text NOT NULL,
-    alt_abbr text NOT NULL
-);
-
-
---
--- Name: TABLE reporters_alt_samevols_abbreviations; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON TABLE legalhist.reporters_alt_samevols_abbreviations IS 'Alternative reporters to reporters in CAP, where the volume numbers are the same as CAP but abbreviations/names are different';
-
-
---
 -- Name: reporters_citation_to_cap; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -919,18 +891,6 @@ CREATE TABLE legalhist.reporters_citation_to_cap (
     junk boolean NOT NULL,
     cap_different boolean
 );
-
-
---
--- Name: reporters_single_volume_abbr; Type: VIEW; Schema: legalhist; Owner: -
---
-
-CREATE VIEW legalhist.reporters_single_volume_abbr AS
- SELECT a.alt_abbr,
-    r.reporter_title
-   FROM (legalhist.reporters_alt_diffvols_reporters r
-     LEFT JOIN legalhist.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
-  WHERE (r.single_vol = true);
 
 
 --
@@ -1377,6 +1337,53 @@ CREATE VIEW textbooks.schools_to_textbooks AS
 
 
 --
+-- Name: reporters_alt_diffvols_abbreviations; Type: TABLE; Schema: to_delete; Owner: -
+--
+
+CREATE TABLE to_delete.reporters_alt_diffvols_abbreviations (
+    cap_abbr text,
+    alt_abbr text,
+    reporter_title text
+);
+
+
+--
+-- Name: TABLE reporters_alt_diffvols_abbreviations; Type: COMMENT; Schema: to_delete; Owner: -
+--
+
+COMMENT ON TABLE to_delete.reporters_alt_diffvols_abbreviations IS 'The mapping between abbreviations and CAP reporters and our alternative reporters';
+
+
+--
+-- Name: reporters_alt_samevols_abbreviations; Type: TABLE; Schema: to_delete; Owner: -
+--
+
+CREATE TABLE to_delete.reporters_alt_samevols_abbreviations (
+    cap_abbr text NOT NULL,
+    alt_abbr text NOT NULL
+);
+
+
+--
+-- Name: TABLE reporters_alt_samevols_abbreviations; Type: COMMENT; Schema: to_delete; Owner: -
+--
+
+COMMENT ON TABLE to_delete.reporters_alt_samevols_abbreviations IS 'Alternative reporters to reporters in CAP, where the volume numbers are the same as CAP but abbreviations/names are different';
+
+
+--
+-- Name: reporters_single_volume_abbr; Type: VIEW; Schema: to_delete; Owner: -
+--
+
+CREATE VIEW to_delete.reporters_single_volume_abbr AS
+ SELECT a.alt_abbr,
+    r.reporter_title
+   FROM (legalhist.reporters_alt_diffvols_reporters r
+     LEFT JOIN to_delete.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
+  WHERE (r.single_vol = true);
+
+
+--
 -- Name: cases cases_pkey; Type: CONSTRAINT; Schema: cap; Owner: -
 --
 
@@ -1446,22 +1453,6 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 ALTER TABLE ONLY legalhist.ocr_corrections
     ADD CONSTRAINT ocr_corrections_unique UNIQUE (mistake, correction);
-
-
---
--- Name: reporters_alt_samevols_abbreviations reporter_alt_abbr_unique; Type: CONSTRAINT; Schema: legalhist; Owner: -
---
-
-ALTER TABLE ONLY legalhist.reporters_alt_samevols_abbreviations
-    ADD CONSTRAINT reporter_alt_abbr_unique UNIQUE (cap_abbr, alt_abbr);
-
-
---
--- Name: reporters_alt_diffvols_abbreviations reporter_alt_diff_vols_abbr_unique; Type: CONSTRAINT; Schema: legalhist; Owner: -
---
-
-ALTER TABLE ONLY legalhist.reporters_alt_diffvols_abbreviations
-    ADD CONSTRAINT reporter_alt_diff_vols_abbr_unique UNIQUE (cap_abbr, alt_abbr);
 
 
 --
@@ -1550,6 +1541,22 @@ ALTER TABLE ONLY moml_citations.page_to_case
 
 ALTER TABLE ONLY sys_admin.migrations_dbmate
     ADD CONSTRAINT migrations_dbmate_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: reporters_alt_samevols_abbreviations reporter_alt_abbr_unique; Type: CONSTRAINT; Schema: to_delete; Owner: -
+--
+
+ALTER TABLE ONLY to_delete.reporters_alt_samevols_abbreviations
+    ADD CONSTRAINT reporter_alt_abbr_unique UNIQUE (cap_abbr, alt_abbr);
+
+
+--
+-- Name: reporters_alt_diffvols_abbreviations reporter_alt_diff_vols_abbr_unique; Type: CONSTRAINT; Schema: to_delete; Owner: -
+--
+
+ALTER TABLE ONLY to_delete.reporters_alt_diffvols_abbreviations
+    ADD CONSTRAINT reporter_alt_diff_vols_abbr_unique UNIQUE (cap_abbr, alt_abbr);
 
 
 --
@@ -1728,45 +1735,10 @@ CREATE INDEX code_reporter_volume_number_idx ON legalhist.code_reporter USING bt
 
 
 --
--- Name: reporter_alt_same_vols_alt_abbr_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporter_alt_same_vols_alt_abbr_idx ON legalhist.reporters_alt_samevols_abbreviations USING btree (alt_abbr);
-
-
---
--- Name: reporter_alt_same_vols_cap_abbr_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporter_alt_same_vols_cap_abbr_idx ON legalhist.reporters_alt_samevols_abbreviations USING btree (cap_abbr);
-
-
---
 -- Name: reporters_alt_diff_vols_single_vol_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
 CREATE INDEX reporters_alt_diff_vols_single_vol_idx ON legalhist.reporters_alt_diffvols_reporters USING btree (single_vol);
-
-
---
--- Name: reporters_alt_diffvols_abbreviations_alt_abbr_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporters_alt_diffvols_abbreviations_alt_abbr_idx ON legalhist.reporters_alt_diffvols_abbreviations USING btree (alt_abbr);
-
-
---
--- Name: reporters_alt_diffvols_abbreviations_cap_abbr_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporters_alt_diffvols_abbreviations_cap_abbr_idx ON legalhist.reporters_alt_diffvols_abbreviations USING btree (cap_abbr);
-
-
---
--- Name: reporters_alt_diffvols_abbreviations_reporter_title_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporters_alt_diffvols_abbreviations_reporter_title_idx ON legalhist.reporters_alt_diffvols_abbreviations USING btree (reporter_title);
 
 
 --
@@ -1896,6 +1868,41 @@ CREATE INDEX moml_page_to_cap_case_moml_treatise_idx ON moml_citations.page_to_c
 
 
 --
+-- Name: reporter_alt_same_vols_alt_abbr_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporter_alt_same_vols_alt_abbr_idx ON to_delete.reporters_alt_samevols_abbreviations USING btree (alt_abbr);
+
+
+--
+-- Name: reporter_alt_same_vols_cap_abbr_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporter_alt_same_vols_cap_abbr_idx ON to_delete.reporters_alt_samevols_abbreviations USING btree (cap_abbr);
+
+
+--
+-- Name: reporters_alt_diffvols_abbreviations_alt_abbr_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporters_alt_diffvols_abbreviations_alt_abbr_idx ON to_delete.reporters_alt_diffvols_abbreviations USING btree (alt_abbr);
+
+
+--
+-- Name: reporters_alt_diffvols_abbreviations_cap_abbr_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporters_alt_diffvols_abbreviations_cap_abbr_idx ON to_delete.reporters_alt_diffvols_abbreviations USING btree (cap_abbr);
+
+
+--
+-- Name: reporters_alt_diffvols_abbreviations_reporter_title_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporters_alt_diffvols_abbreviations_reporter_title_idx ON to_delete.reporters_alt_diffvols_abbreviations USING btree (reporter_title);
+
+
+--
 -- Name: cases cap_cases_court_fk; Type: FK CONSTRAINT; Schema: cap; Owner: -
 --
 
@@ -1992,14 +1999,6 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 
 --
--- Name: reporters_alt_diffvols_abbreviations reporters_alt_diffvols_abbreviations_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
---
-
-ALTER TABLE ONLY legalhist.reporters_alt_diffvols_abbreviations
-    ADD CONSTRAINT reporters_alt_diffvols_abbreviations_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_alt_diffvols_reporters(reporter_title);
-
-
---
 -- Name: reporters_alt_diffvols_volumes reporters_alt_diffvols_volumes_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2080,6 +2079,14 @@ ALTER TABLE ONLY moml.page
 
 
 --
+-- Name: reporters_alt_diffvols_abbreviations reporters_alt_diffvols_abbreviations_reporter_title_fkey; Type: FK CONSTRAINT; Schema: to_delete; Owner: -
+--
+
+ALTER TABLE ONLY to_delete.reporters_alt_diffvols_abbreviations
+    ADD CONSTRAINT reporters_alt_diffvols_abbreviations_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_alt_diffvols_reporters(reporter_title);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2100,4 +2107,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260211115029'),
     ('20260220221029'),
     ('20260304120000'),
-    ('20260310120000');
+    ('20260310120000'),
+    ('20260310190222');
