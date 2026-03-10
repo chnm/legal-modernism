@@ -96,6 +96,19 @@ func (c Case) Save(ctx context.Context, db *pgxpool.Pool) error {
 		return fmt.Errorf("error saving case: %w", err)
 	}
 
+	// Delete existing citations and opinions for this case before inserting,
+	// so that re-imports are idempotent and don't create duplicate rows.
+	_, err = tx.Exec(timeout, `DELETE FROM cap.citations WHERE "case" = $1`, c.ID)
+	if err != nil {
+		tx.Rollback(timeout)
+		return fmt.Errorf("error deleting existing citations: %w", err)
+	}
+	_, err = tx.Exec(timeout, `DELETE FROM cap.opinions WHERE "case" = $1`, c.ID)
+	if err != nil {
+		tx.Rollback(timeout)
+		return fmt.Errorf("error deleting existing opinions: %w", err)
+	}
+
 	for _, cite := range c.Citations {
 		_, err := tx.Exec(timeout, citationQuery, cite.Cite, cite.Type, c.ID)
 		if err != nil {
