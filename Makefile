@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet sync-hopper db-up db-down
+.PHONY: binaries clean test vet sync-hopper db-up db-down db-status
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -53,3 +53,6 @@ db-up:
 db-down:
 	$(check_dev_env)
 	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations down
+
+db-status:
+	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations status
