@@ -24,6 +24,7 @@ func main() {
 	db, err := dbConnect()
 	if err != nil {
 		slog.Error("could not connect to database", "error", err)
+		os.Exit(1)
 	}
 
 	path := os.Args[1]
