@@ -1,8 +1,6 @@
 -- migrate:up
 -- Fix incorrect reporter_standard values for the English Reports 
 -- See issue #111
-SET ROLE = law_admin;
-
 BEGIN;
 
 UPDATE legalhist.reporters_citation_to_cap

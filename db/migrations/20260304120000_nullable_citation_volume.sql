@@ -2,8 +2,6 @@
 -- PostgreSQL does not allow nullable columns in a primary key, so we must
 -- drop the PK before making volume nullable, then replace it with a unique
 -- index that uses COALESCE to handle NULLs.
-SET ROLE = law_admin;
-
 ALTER TABLE moml_citations.citations_unlinked
 DROP CONSTRAINT moml_citations_pkey;
 
@@ -33,8 +31,6 @@ WHERE
 
 -- migrate:down
 -- Restore volume=0 for any NULL volumes.
-SET ROLE = law_admin;
-
 UPDATE moml_citations.citations_unlinked
 SET
   volume = 0
