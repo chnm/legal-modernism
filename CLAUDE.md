@@ -56,12 +56,13 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 
 ## Database
 
-- PostgreSQL, connected via `go/db/db.go` using pgx v4 connection pooling
+- PostgreSQL 17.x, connected via `go/db/db.go` using pgx v4 connection pooling
 - Connection string from `LAW_DBSTR` environment variable
 - Migrations managed by [dbmate](https://github.com/amacneil/dbmate) in `db/migrations/`
 - Migration naming: `YYYYMMDDHHMMSS_description.sql`
 - Full schema: `db/schema.sql`
 - Schemas: `cap`, `cap_citations`, `english_reports`, `legalhist`, `moml`, `moml_citations`, `stats`, `sys_admin`, `textbooks`
+- Migrations should be idempotent: use `IF NOT EXISTS` / `IF EXISTS` guards on `CREATE INDEX`, `CREATE TABLE`, `ADD CONSTRAINT`, `DROP CONSTRAINT`, etc.
 - Don't update `db/schema.sql`: this file is auto-generated.
 
 ## Environment variables
