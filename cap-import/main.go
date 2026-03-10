@@ -55,17 +55,16 @@ func main() {
 			slog.Error("can't unmarshall case JSON", "error", err)
 			os.Exit(1)
 		}
-		// log.Info().Msg(fmt.Sprint(c.ID))
-		if err := scanner.Err(); err != nil {
-			slog.Error("could not scan file", "error", err)
-			os.Exit(1)
-		}
 		err = c.Save(context.Background(), db)
 		if err != nil {
 			slog.Error("could not save case to database", "error", err)
 			os.Exit(1)
 		}
 		casesImported += 1
+	}
+	if err := scanner.Err(); err != nil {
+		slog.Error("could not scan file", "error", err)
+		os.Exit(1)
 	}
 
 	slog.Info("imported cases", "num_cases", casesImported)
