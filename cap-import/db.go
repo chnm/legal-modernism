@@ -63,7 +63,8 @@ func (c Case) Save(ctx context.Context, db *pgxpool.Pool) error {
 
 	citationQuery := `
 	INSERT INTO cap.citations (cite, type, "case")
-	VALUES ($1, $2, $3);
+	VALUES ($1, $2, $3)
+	ON CONFLICT DO NOTHING;
 	`
 
 	opinionQuery := `
