@@ -37,12 +37,13 @@ sync-hopper: $(LINUX_TARGETS)
 
 # Strip pool_max_conns from the connection string since dbmate doesn't support it
 DBMATE_URL := $(shell echo "$(LAW_DBSTR)" | sed 's/[&?]pool_max_conns=[0-9]\{1,3\}//')
+export DBMATE_URL
 
 db-up:
-	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations up
+	dbmate --env DBMATE_URL --migrations-dir db/migrations up
 
 db-down:
-	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations down
+	dbmate --env DBMATE_URL --migrations-dir db/migrations down
 
 db-status:
-	dbmate --url "$(DBMATE_URL)" --migrations-dir db/migrations status
+	dbmate --env DBMATE_URL --migrations-dir db/migrations status

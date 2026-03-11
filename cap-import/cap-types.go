@@ -24,7 +24,7 @@ type Case struct {
 	FrontEndPDFURL   string          `json:"frontend_pdf_url"`
 	Analysis         json.RawMessage `json:"analysis"`
 	LastUpdated      time.Time       `json:"last_updated"`
-	Provenance       json.RawMessage `json:"provenanance"`
+	Provenance       json.RawMessage `json:"provenance"`
 	Casebody         Casebody        `json:"casebody"`
 }
 
