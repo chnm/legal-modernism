@@ -1,7 +1,7 @@
 \restrict dbmate
 
 -- Dumped from database version 17.7 (Debian 17.7-0+deb13u1)
--- Dumped by pg_dump version 17.9 (Homebrew)
+-- Dumped by pg_dump version 18.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1386,6 +1386,14 @@ CREATE VIEW to_delete.reporters_single_volume_abbr AS
 
 
 --
+-- Name: citations cap_citations_unique; Type: CONSTRAINT; Schema: cap; Owner: -
+--
+
+ALTER TABLE ONLY cap.citations
+    ADD CONSTRAINT cap_citations_unique UNIQUE (cite, type, "case");
+
+
+--
 -- Name: cases cases_pkey; Type: CONSTRAINT; Schema: cap; Owner: -
 --
 
@@ -2105,4 +2113,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260310190222'),
     ('20260310191741'),
     ('20260310193513'),
+    ('20260310213126'),
     ('20260311001814');
