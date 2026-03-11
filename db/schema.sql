@@ -861,7 +861,8 @@ CREATE TABLE legalhist.reporters_diffvols (
     reporter_title text,
     vol integer,
     cap_vol integer,
-    cap_reporter text NOT NULL
+    cap_reporter text NOT NULL,
+    reporter_standard text
 );
 
 
@@ -2103,4 +2104,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260310120000'),
     ('20260310190222'),
     ('20260310191741'),
-    ('20260310193513');
+    ('20260310193513'),
+    ('20260311001814');
