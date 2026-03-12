@@ -5,7 +5,7 @@ import "github.com/google/uuid"
 // WhitelistEntry holds the mapping from a found reporter abbreviation to its
 // standardized form and metadata about the reporter type.
 type WhitelistEntry struct {
-	ReporterStandard string
+	ReporterStandard *string
 	ReporterCAP      *string
 	Statute          bool
 	UK               bool

@@ -22,17 +22,16 @@ type LinkerStore interface {
 	// starting after afterID (use uuid.Nil for the first batch).
 	GetUnprocessedCitations(ctx context.Context, afterID uuid.UUID, limit int) ([]UnlinkedCitation, error)
 
-	// LookupCAPCite looks up a normalized citation in cap.citations and returns
-	// the case ID, or nil if not found.
-	LookupCAPCite(ctx context.Context, cite string) (*int64, error)
+	// LoadCAPCitations loads all CAP citations into memory as cite -> case ID.
+	LoadCAPCitations(ctx context.Context) (map[string]int64, error)
 
-	// LookupCodeReporter looks up a citation in legalhist.code_reporter and
-	// returns the row ID, or nil if not found.
-	LookupCodeReporter(ctx context.Context, cite string) (*int64, error)
+	// LoadCodeReporterCitations loads all code reporter citations into memory
+	// as official_citation -> id.
+	LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error)
 
-	// LookupEnglishReports looks up a citation in english_reports.cases and
-	// returns the case ID, or nil if not found.
-	LookupEnglishReports(ctx context.Context, cite string) (*string, error)
+	// LoadEnglishReportsCitations loads all English Reports citations into memory
+	// as cite string -> case ID.
+	LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error)
 
 	// SaveLinkResult saves the outcome of linking a single citation.
 	SaveLinkResult(ctx context.Context, r *LinkResult) error

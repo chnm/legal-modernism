@@ -83,6 +83,30 @@ func main() {
 	}
 	slog.Info("loaded diff-vols mapping", "reporters", len(diffvols))
 
+	slog.Info("loading CAP citations")
+	capCites, err := store.LoadCAPCitations(ctx)
+	if err != nil {
+		slog.Error("could not load CAP citations", "error", err)
+		os.Exit(1)
+	}
+	slog.Info("loaded CAP citations", "entries", len(capCites))
+
+	slog.Info("loading code reporter citations")
+	codeCites, err := store.LoadCodeReporterCitations(ctx)
+	if err != nil {
+		slog.Error("could not load code reporter citations", "error", err)
+		os.Exit(1)
+	}
+	slog.Info("loaded code reporter citations", "entries", len(codeCites))
+
+	slog.Info("loading English Reports citations")
+	erCites, err := store.LoadEnglishReportsCitations(ctx)
+	if err != nil {
+		slog.Error("could not load English Reports citations", "error", err)
+		os.Exit(1)
+	}
+	slog.Info("loaded English Reports citations", "entries", len(erCites))
+
 	// Count unprocessed for progress bar
 	total, err := store.CountUnprocessedCitations(ctx)
 	if err != nil {
@@ -98,7 +122,12 @@ func main() {
 
 	var pb *progressbar.ProgressBar
 	if *showProgress {
-		pb = progressbar.Default(total)
+		pb = progressbar.NewOptions64(total,
+			progressbar.OptionSetWriter(os.Stdout),
+			progressbar.OptionShowCount(),
+			progressbar.OptionShowIts(),
+			progressbar.OptionSetPredictTime(true),
+		)
 	}
 
 	wp := workerpool.New(*workers)
@@ -139,7 +168,7 @@ func main() {
 				default:
 				}
 
-				result := linkCitation(ctx, store, &cite, whitelist, diffvols)
+				result := linkCitation(&cite, whitelist, diffvols, capCites, codeCites, erCites)
 				err := store.SaveLinkResult(ctx, result)
 				if err != nil {
 					slog.Error("could not save link result", "citation_id", cite.ID, "error", err)
@@ -159,12 +188,14 @@ func main() {
 }
 
 // linkCitation processes a single citation through the linking pipeline.
+// All lookups are in-memory map accesses — no database queries.
 func linkCitation(
-	ctx context.Context,
-	store *citations.LinkerDBStore,
 	c *citations.UnlinkedCitation,
 	whitelist map[string]*citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
+	capCites map[string]int64,
+	codeCites map[string]int64,
+	erCites map[string]string,
 ) *citations.LinkResult {
 	result := &citations.LinkResult{CitationID: c.ID}
 
@@ -186,20 +217,27 @@ func linkCitation(
 		return result
 	}
 
+	// If there's no standard reporter, we can't normalize the citation
+	if entry.ReporterStandard == nil {
+		result.Status = citations.StatusSkippedNoMatch
+		result.NormalizedCite = c.ReporterAbbr
+		return result
+	}
+
 	// Step 2: route by UK flag
 	if entry.UK {
-		return linkEnglishReports(ctx, store, c, entry, result)
+		return linkEnglishReports(c, entry, erCites, result)
 	}
-	return linkCAPThenCode(ctx, store, c, entry, diffvols, result)
+	return linkCAPThenCode(c, entry, diffvols, capCites, codeCites, result)
 }
 
-// linkCAPThenCode tries CAP first, then Code Reporter.
+// linkCAPThenCode tries CAP first, then Code Reporter using in-memory maps.
 func linkCAPThenCode(
-	ctx context.Context,
-	store *citations.LinkerDBStore,
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
+	capCites map[string]int64,
+	codeCites map[string]int64,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 
@@ -208,13 +246,9 @@ func linkCAPThenCode(
 	result.NormalizedCite = capCite
 
 	// Try CAP
-	caseID, err := store.LookupCAPCite(ctx, capCite)
-	if err != nil {
-		slog.Error("CAP lookup error", "citation_id", c.ID, "cite", capCite, "error", err)
-	}
-	if caseID != nil {
+	if caseID, ok := capCites[capCite]; ok {
 		result.Status = citations.StatusLinkedCAP
-		result.CAPCaseID = caseID
+		result.CAPCaseID = &caseID
 		return result
 	}
 
@@ -223,13 +257,9 @@ func linkCAPThenCode(
 	if stdCite != capCite {
 		result.NormalizedCite = stdCite
 	}
-	codeID, err := store.LookupCodeReporter(ctx, stdCite)
-	if err != nil {
-		slog.Error("code reporter lookup error", "citation_id", c.ID, "cite", stdCite, "error", err)
-	}
-	if codeID != nil {
+	if codeID, ok := codeCites[stdCite]; ok {
 		result.Status = citations.StatusLinkedCodeReporter
-		result.CodeReporterID = codeID
+		result.CodeReporterID = &codeID
 		result.NormalizedCite = stdCite
 		return result
 	}
@@ -238,24 +268,20 @@ func linkCAPThenCode(
 	return result
 }
 
-// linkEnglishReports tries to link a UK citation to the English Reports.
+// linkEnglishReports tries to link a UK citation to the English Reports
+// using an in-memory map.
 func linkEnglishReports(
-	ctx context.Context,
-	store *citations.LinkerDBStore,
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
+	erCites map[string]string,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 	cite := buildStandardCite(c, entry)
 	result.NormalizedCite = cite
 
-	erID, err := store.LookupEnglishReports(ctx, cite)
-	if err != nil {
-		slog.Error("English Reports lookup error", "citation_id", c.ID, "cite", cite, "error", err)
-	}
-	if erID != nil {
+	if erID, ok := erCites[cite]; ok {
 		result.Status = citations.StatusLinkedEnglishReports
-		result.ERCaseID = erID
+		result.ERCaseID = &erID
 		return result
 	}
 
@@ -266,9 +292,9 @@ func linkEnglishReports(
 // buildStandardCite constructs "{volume} {reporter_standard} {page}".
 func buildStandardCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) string {
 	if c.Volume == nil {
-		return fmt.Sprintf("%s %d", entry.ReporterStandard, c.Page)
+		return fmt.Sprintf("%s %d", *entry.ReporterStandard, c.Page)
 	}
-	return fmt.Sprintf("%d %s %d", *c.Volume, entry.ReporterStandard, c.Page)
+	return fmt.Sprintf("%d %s %d", *c.Volume, *entry.ReporterStandard, c.Page)
 }
 
 // buildCAPCite constructs the citation string appropriate for CAP lookup,
@@ -276,7 +302,7 @@ func buildStandardCite(c *citations.UnlinkedCitation, entry *citations.Whitelist
 func buildCAPCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry, diffvols map[string]map[int]*citations.DiffVolEntry) string {
 	// If this reporter uses different volume numbers in CAP, try the diffvols mapping
 	if entry.CAPDifferent && c.Volume != nil {
-		if vols, ok := diffvols[entry.ReporterStandard]; ok {
+		if vols, ok := diffvols[*entry.ReporterStandard]; ok {
 			if dv, ok := vols[*c.Volume]; ok {
 				return fmt.Sprintf("%d %s %d", dv.CAPVol, dv.CAPReporter, c.Page)
 			}
@@ -284,7 +310,7 @@ func buildCAPCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry
 	}
 
 	// Use reporter_cap if available, otherwise fall back to reporter_standard
-	reporter := entry.ReporterStandard
+	reporter := *entry.ReporterStandard
 	if entry.ReporterCAP != nil {
 		reporter = *entry.ReporterCAP
 	}

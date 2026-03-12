@@ -134,43 +134,81 @@ func (s *LinkerDBStore) GetUnprocessedCitations(ctx context.Context, afterID uui
 	return citations, nil
 }
 
-func (s *LinkerDBStore) LookupCAPCite(ctx context.Context, cite string) (*int64, error) {
-	query := `SELECT "case" FROM cap.citations WHERE cite = $1 LIMIT 1`
-	var caseID int64
-	err := s.DB.QueryRow(ctx, query, cite).Scan(&caseID)
+// LoadCAPCitations loads cap.citations into an in-memory map of cite -> case ID.
+func (s *LinkerDBStore) LoadCAPCitations(ctx context.Context) (map[string]int64, error) {
+	query := `SELECT DISTINCT ON (cite) cite, "case" FROM cap.citations`
+	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
-		if err.Error() == "no rows in result set" {
-			return nil, nil
-		}
-		return nil, fmt.Errorf("looking up CAP cite %q: %w", cite, err)
+		return nil, fmt.Errorf("loading CAP citations: %w", err)
 	}
-	return &caseID, nil
+	defer rows.Close()
+
+	m := make(map[string]int64)
+	for rows.Next() {
+		var cite string
+		var caseID int64
+		if err := rows.Scan(&cite, &caseID); err != nil {
+			return nil, fmt.Errorf("scanning CAP citation: %w", err)
+		}
+		m[cite] = caseID
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating CAP citations: %w", err)
+	}
+	return m, nil
 }
 
-func (s *LinkerDBStore) LookupCodeReporter(ctx context.Context, cite string) (*int64, error) {
-	query := `SELECT id FROM legalhist.code_reporter WHERE official_citation = $1 LIMIT 1`
-	var id int64
-	err := s.DB.QueryRow(ctx, query, cite).Scan(&id)
+// LoadCodeReporterCitations loads code_reporter into an in-memory map of
+// official_citation -> id.
+func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error) {
+	query := `SELECT official_citation, id FROM legalhist.code_reporter`
+	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
-		if err.Error() == "no rows in result set" {
-			return nil, nil
-		}
-		return nil, fmt.Errorf("looking up code reporter cite %q: %w", cite, err)
+		return nil, fmt.Errorf("loading code reporter citations: %w", err)
 	}
-	return &id, nil
+	defer rows.Close()
+
+	m := make(map[string]int64)
+	for rows.Next() {
+		var cite string
+		var id int64
+		if err := rows.Scan(&cite, &id); err != nil {
+			return nil, fmt.Errorf("scanning code reporter citation: %w", err)
+		}
+		m[cite] = id
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating code reporter citations: %w", err)
+	}
+	return m, nil
 }
 
-func (s *LinkerDBStore) LookupEnglishReports(ctx context.Context, cite string) (*string, error) {
-	query := `SELECT id FROM english_reports.cases WHERE er_cite = $1 OR er_parallel_cite = $1 LIMIT 1`
-	var id string
-	err := s.DB.QueryRow(ctx, query, cite).Scan(&id)
+// LoadEnglishReportsCitations loads english_reports.cases into an in-memory map.
+// Both er_cite and er_parallel_cite are mapped to the case ID.
+func (s *LinkerDBStore) LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error) {
+	query := `SELECT id, er_cite, er_parallel_cite FROM english_reports.cases`
+	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
-		if err.Error() == "no rows in result set" {
-			return nil, nil
-		}
-		return nil, fmt.Errorf("looking up English Reports cite %q: %w", cite, err)
+		return nil, fmt.Errorf("loading English Reports citations: %w", err)
 	}
-	return &id, nil
+	defer rows.Close()
+
+	m := make(map[string]string)
+	for rows.Next() {
+		var id, erCite string
+		var erParallel *string
+		if err := rows.Scan(&id, &erCite, &erParallel); err != nil {
+			return nil, fmt.Errorf("scanning English Reports citation: %w", err)
+		}
+		m[erCite] = id
+		if erParallel != nil {
+			m[*erParallel] = id
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating English Reports citations: %w", err)
+	}
+	return m, nil
 }
 
 func (s *LinkerDBStore) SaveLinkResult(ctx context.Context, r *LinkResult) error {
