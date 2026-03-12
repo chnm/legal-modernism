@@ -1173,9 +1173,35 @@ CREATE TABLE moml_citations.citation_links (
     cap_case_id bigint,
     code_reporter_id bigint,
     er_case_id text,
-    normalized_cite text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL
+    cite_cleaned text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    cite_normalized text,
+    cite_linked text
 );
+
+
+--
+-- Name: citation_links_detail; Type: VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE VIEW moml_citations.citation_links_detail AS
+ SELECT cl.citation_id,
+    cl.status,
+    cu.raw AS cite_raw,
+    cl.cite_cleaned AS cite_normalized,
+    COALESCE(cc.name, cr.name, er.er_name) AS case_name,
+    cl.cap_case_id,
+    cl.code_reporter_id,
+    cl.er_case_id,
+    bi.productlink AS moml_url,
+    cu.moml_treatise,
+    cu.moml_page
+   FROM (((((moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+     LEFT JOIN moml.book_info bi ON (((bi.psmid)::text = cu.moml_treatise)))
+     LEFT JOIN cap.cases cc ON ((cc.id = cl.cap_case_id)))
+     LEFT JOIN legalhist.code_reporter cr ON ((cr.id = cl.code_reporter_id)))
+     LEFT JOIN english_reports.cases er ON ((er.id = cl.er_case_id)));
 
 
 --
@@ -2154,4 +2180,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260310213126'),
     ('20260311001814'),
     ('20260312155141'),
-    ('20260312172656');
+    ('20260312172656'),
+    ('20260312181004'),
+    ('20260312215737');

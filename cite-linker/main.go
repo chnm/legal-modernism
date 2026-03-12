@@ -19,11 +19,19 @@ import (
 )
 
 func main() {
-	showProgress := flag.Bool("progress", false, "show a progress bar")
-	skipUnlisted := flag.Bool("skip-unlisted", false, "batch-mark non-whitelisted citations as skipped, then exit")
-	batchSize := flag.Int("batch-size", 5000, "number of citations to fetch per batch")
-	workers := flag.Int("workers", runtime.NumCPU()*2, "number of concurrent workers")
+	var showProgress bool
+	var skipUnlisted bool
+	var batchSize int
+	var workers int
+	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
+	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped, then exit")
+	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 10000)")
+	flag.IntVar(&workers, "workers", runtime.NumCPU()*2, "number of concurrent workers")
 	flag.Parse()
+
+	if batchSize > 10000 {
+		batchSize = 10000
+	}
 
 	slog.Info("starting the citation linker")
 
@@ -55,7 +63,7 @@ func main() {
 	store := citations.NewLinkerDBStore(pool)
 
 	// Handle --skip-unlisted: bulk operation then exit
-	if *skipUnlisted {
+	if skipUnlisted {
 		slog.Info("batch-marking non-whitelisted citations as skipped")
 		affected, err := store.BatchSkipNonWhitelisted(ctx)
 		if err != nil {
@@ -65,6 +73,8 @@ func main() {
 		slog.Info("batch skip complete", "rows_affected", affected)
 		return
 	}
+
+	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
 
 	// Pre-load lookup tables into memory
 	slog.Info("loading reporter whitelist")
@@ -121,7 +131,7 @@ func main() {
 	}
 
 	var pb *progressbar.ProgressBar
-	if *showProgress {
+	if showProgress {
 		pb = progressbar.NewOptions64(total,
 			progressbar.OptionSetWriter(os.Stdout),
 			progressbar.OptionShowCount(),
@@ -130,13 +140,13 @@ func main() {
 		)
 	}
 
-	wp := workerpool.New(*workers)
-	slog.Info("worker pool", "workers", *workers)
+	wp := workerpool.New(workers)
 
-	// Mutex for safe progress bar updates
 	var pbMu sync.Mutex
 
-	// Process in batches using cursor-based pagination
+	// Process in batches using cursor-based pagination.
+	// Fetching is sequential (cursor requires it), but each batch is
+	// handed off to a worker for in-memory linking + batch INSERT.
 	lastID := uuid.Nil
 	for {
 		select {
@@ -147,7 +157,7 @@ func main() {
 		default:
 		}
 
-		batch, err := store.GetUnprocessedCitations(ctx, lastID, *batchSize)
+		batch, err := store.GetUnprocessedCitations(ctx, lastID, batchSize)
 		if err != nil {
 			slog.Error("could not fetch batch", "after_id", lastID, "error", err)
 			break
@@ -159,28 +169,46 @@ func main() {
 		lastID = batch[len(batch)-1].ID
 		slog.Debug("fetched batch", "size", len(batch), "last_id", lastID)
 
-		for _, c := range batch {
-			cite := c // capture for closure
-			wp.Submit(func() {
-				select {
-				case <-ctx.Done():
-					return
-				default:
-				}
+		// Hand the batch to a worker
+		batchCopy := batch
+		wp.Submit(func() {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+			}
 
-				result := linkCitation(&cite, whitelist, diffvols, capCites, codeCites, erCites)
-				err := store.SaveLinkResult(ctx, result)
-				if err != nil {
-					slog.Error("could not save link result", "citation_id", cite.ID, "error", err)
-				}
+			results := make([]*citations.LinkResult, len(batchCopy))
+			var wg sync.WaitGroup
+			for i := range batchCopy {
+				wg.Add(1)
+				go func(idx int) {
+					defer wg.Done()
+					results[idx] = linkCitation(&batchCopy[idx], whitelist, diffvols, capCites, codeCites, erCites)
+				}(i)
+			}
+			wg.Wait()
 
-				if pb != nil {
-					pbMu.Lock()
-					pb.Add(1)
-					pbMu.Unlock()
+			if err := store.SaveLinkResults(ctx, results); err != nil {
+				slog.Error("could not save batch results", "error", err)
+			} else {
+				statusCounts := make(map[string]int)
+				for _, r := range results {
+					statusCounts[r.Status]++
 				}
-			})
-		}
+				attrs := []any{"size", len(results)}
+				for status, count := range statusCounts {
+					attrs = append(attrs, status, count)
+				}
+				slog.Debug("saved batch", attrs...)
+			}
+
+			if pb != nil {
+				pbMu.Lock()
+				pb.Add(len(batchCopy))
+				pbMu.Unlock()
+			}
+		})
 	}
 
 	wp.StopWait()
@@ -203,24 +231,28 @@ func linkCitation(
 	entry, ok := whitelist[c.ReporterAbbr]
 	if !ok {
 		result.Status = citations.StatusSkippedNotWhitelisted
-		result.NormalizedCite = c.ReporterAbbr
+		result.CiteCleaned = c.ReporterAbbr
+		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 	if entry.Statute {
 		result.Status = citations.StatusSkippedStatute
-		result.NormalizedCite = c.ReporterAbbr
+		result.CiteCleaned = c.ReporterAbbr
+		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 	if entry.Junk {
 		result.Status = citations.StatusSkippedJunk
-		result.NormalizedCite = c.ReporterAbbr
+		result.CiteCleaned = c.ReporterAbbr
+		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 
 	// If there's no standard reporter, we can't normalize the citation
 	if entry.ReporterStandard == nil {
 		result.Status = citations.StatusSkippedNoMatch
-		result.NormalizedCite = c.ReporterAbbr
+		result.CiteCleaned = c.ReporterAbbr
+		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 
@@ -241,26 +273,24 @@ func linkCAPThenCode(
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 
-	// Build the CAP cite string
-	capCite := buildCAPCite(c, entry, diffvols)
-	result.NormalizedCite = capCite
+	citeCleaned := buildStandardCite(c, entry)
+	citeNormalized := buildCAPCite(c, entry, diffvols)
+	result.CiteCleaned = citeCleaned
+	result.CiteNormalized = citeNormalized
 
-	// Try CAP
-	if caseID, ok := capCites[capCite]; ok {
+	// Try CAP with the normalized cite
+	if caseID, ok := capCites[citeNormalized]; ok {
 		result.Status = citations.StatusLinkedCAP
 		result.CAPCaseID = &caseID
+		result.CiteLinked = &citeNormalized
 		return result
 	}
 
-	// Try Code Reporter with the standard cite
-	stdCite := buildStandardCite(c, entry)
-	if stdCite != capCite {
-		result.NormalizedCite = stdCite
-	}
-	if codeID, ok := codeCites[stdCite]; ok {
+	// Try Code Reporter with the cleaned cite
+	if codeID, ok := codeCites[citeCleaned]; ok {
 		result.Status = citations.StatusLinkedCodeReporter
 		result.CodeReporterID = &codeID
-		result.NormalizedCite = stdCite
+		result.CiteLinked = &citeCleaned
 		return result
 	}
 
@@ -276,12 +306,14 @@ func linkEnglishReports(
 	erCites map[string]string,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
-	cite := buildStandardCite(c, entry)
-	result.NormalizedCite = cite
+	citeCleaned := buildStandardCite(c, entry)
+	result.CiteCleaned = citeCleaned
+	result.CiteNormalized = citeCleaned
 
-	if erID, ok := erCites[cite]; ok {
+	if erID, ok := erCites[citeCleaned]; ok {
 		result.Status = citations.StatusLinkedEnglishReports
 		result.ERCaseID = &erID
+		result.CiteLinked = &citeCleaned
 		return result
 	}
 

@@ -211,29 +211,47 @@ func (s *LinkerDBStore) LoadEnglishReportsCitations(ctx context.Context) (map[st
 	return m, nil
 }
 
-func (s *LinkerDBStore) SaveLinkResult(ctx context.Context, r *LinkResult) error {
+// SaveLinkResults batch-inserts multiple link results in a single query.
+func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResult) error {
+	if len(results) == 0 {
+		return nil
+	}
+
+	// Build a multi-row INSERT: VALUES ($1,$2,...,$8), ($9,$10,...), ...
 	query := `
 	INSERT INTO moml_citations.citation_links
-		(citation_id, status, cap_case_id, code_reporter_id, er_case_id, normalized_cite)
-	VALUES ($1, $2, $3, $4, $5, $6)
-	ON CONFLICT (citation_id) DO NOTHING
-	`
-	_, err := s.DB.Exec(ctx, query, r.CitationID, r.Status, r.CAPCaseID, r.CodeReporterID, r.ERCaseID, r.NormalizedCite)
+		(citation_id, status, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked)
+	VALUES `
+
+	args := make([]interface{}, 0, len(results)*8)
+	for i, r := range results {
+		if i > 0 {
+			query += ", "
+		}
+		base := i * 8
+		query += fmt.Sprintf("($%d, $%d, $%d, $%d, $%d, $%d, $%d, $%d)",
+			base+1, base+2, base+3, base+4, base+5, base+6, base+7, base+8)
+		args = append(args, r.CitationID, r.Status, r.CAPCaseID, r.CodeReporterID, r.ERCaseID, r.CiteCleaned, r.CiteNormalized, r.CiteLinked)
+	}
+	query += " ON CONFLICT (citation_id) DO NOTHING"
+
+	_, err := s.DB.Exec(ctx, query, args...)
 	if err != nil {
-		return fmt.Errorf("saving link result for %s: %w", r.CitationID, err)
+		return fmt.Errorf("batch saving %d link results: %w", len(results), err)
 	}
 	return nil
 }
 
 func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, error) {
 	query := `
-	INSERT INTO moml_citations.citation_links (citation_id, status, normalized_cite)
+	INSERT INTO moml_citations.citation_links (citation_id, status, cite_cleaned, cite_normalized)
 	SELECT cu.id,
 	       CASE
 	         WHEN wl.statute = true THEN 'skipped_statute'
 	         WHEN wl.junk = true THEN 'skipped_junk'
 	         ELSE 'skipped_not_whitelisted'
 	       END,
+	       cu.reporter_abbr,
 	       cu.reporter_abbr
 	FROM moml_citations.citations_unlinked cu
 	LEFT JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found

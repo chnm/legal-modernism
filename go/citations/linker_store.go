@@ -33,8 +33,8 @@ type LinkerStore interface {
 	// as cite string -> case ID.
 	LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error)
 
-	// SaveLinkResult saves the outcome of linking a single citation.
-	SaveLinkResult(ctx context.Context, r *LinkResult) error
+	// SaveLinkResults batch-inserts multiple link results in a single query.
+	SaveLinkResults(ctx context.Context, results []*LinkResult) error
 
 	// BatchSkipNonWhitelisted marks all non-whitelisted citations as skipped
 	// in a single bulk operation. Returns the number of rows affected.
