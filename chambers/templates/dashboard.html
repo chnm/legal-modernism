@@ -204,7 +204,7 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
             const chart = Plot.plot({
                 width: container.clientWidth,
                 height: 80,
-                x: { label: "Citations", tickFormat: v => fmt(v) },
+                x: { label: "Citations", tickFormat: v => Math.round(v / 1_000_000) + "M" },
                 y: { axis: null },
                 color: { domain: order, range: order.map(s => colorMap.get(s)) },
                 marks: [
