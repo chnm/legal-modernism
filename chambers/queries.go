@@ -205,7 +205,7 @@ func (r *ReporterCite) StatusClass() string {
 	if strings.HasPrefix(s, "linked") {
 		return "status-linked"
 	}
-	if s == "skipped_no_match" {
+	if s == "no_match" {
 		return "status-nomatch"
 	}
 	if s == "skipped_junk" || s == "skipped_statute" {

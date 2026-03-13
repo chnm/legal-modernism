@@ -51,5 +51,5 @@ const (
 	StatusSkippedNotWhitelisted = "skipped_not_whitelisted"
 	StatusSkippedStatute       = "skipped_statute"
 	StatusSkippedJunk          = "skipped_junk"
-	StatusSkippedNoMatch       = "skipped_no_match"
+	StatusNoMatch              = "no_match"
 )

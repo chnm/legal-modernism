@@ -243,7 +243,7 @@ func linkCitation(
 
 	// If there's no standard reporter, we can't normalize the citation
 	if entry.ReporterStandard == nil {
-		result.Status = citations.StatusSkippedNoMatch
+		result.Status = citations.StatusNoMatch
 		return result
 	}
 
@@ -285,7 +285,7 @@ func linkCAPThenCode(
 		return result
 	}
 
-	result.Status = citations.StatusSkippedNoMatch
+	result.Status = citations.StatusNoMatch
 	return result
 }
 
@@ -308,7 +308,7 @@ func linkEnglishReports(
 		return result
 	}
 
-	result.Status = citations.StatusSkippedNoMatch
+	result.Status = citations.StatusNoMatch
 	return result
 }
 
