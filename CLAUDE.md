@@ -12,6 +12,7 @@ Programs (Go binaries):
 - `cap-import/` — Import data from the Caselaw Access Project
 - `cite-detector-moml/` — Detect citations in the *Making of Modern Law* treatises
 - `cite-predictor/` — Augment citation detection using generative AI
+- `chambers/` — Internal web server for inspecting citation data
 - `cite-linker/` — Link detected citations to a database of caselaw
 
 Support directories:
@@ -77,6 +78,19 @@ Hugo static site in `website/`. Uses Bootstrap 5 via CDN, no external Hugo theme
 - `make preview` — Dev server on port 54321
 - `make build` — Production build with minification
 - `make deploy` — Build and rsync to production
+
+## Chambers
+
+Internal web app for browsing and inspecting citation data. Located in `chambers/`.
+
+- Build: `go build ./chambers/`
+- Run: `go run ./chambers/` (default port 4567)
+- Dev with live reload: `air` (configured via `chambers/.air.toml`)
+- Templates and static files are embedded via `//go:embed`
+- Routes registered on `http.NewServeMux()` in `main.go`
+- To add a new page: add query in `queries.go`, create template in `templates/`, add handler and register route in `main.go`, add nav link to `home.html`
+
+**Frontend:** Use the latest version of Bootstrap CSS via CDN (no Bootstrap JavaScript). Use Observable Plot (`@observablehq/plot`) for data visualizations when possible, and D3.js otherwise.
 
 ## CI
 
