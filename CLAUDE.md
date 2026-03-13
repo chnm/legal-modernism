@@ -68,7 +68,13 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 ## Environment variables
 
 - `LAW_DBSTR` — PostgreSQL connection string
+- `LAW_CLAUDE` — Read-only PostgreSQL connection string for Claude
 - `LAW_DEBUG` — Set to `debug` or `true` for debug-level logging
+
+## Claude database access
+
+- **Never use `LAW_DBSTR`.** When connecting to the database, always use the `LAW_CLAUDE` environment variable, which connects with a read-only user.
+- **Read-only access only.** Only run `SELECT` queries. Never run `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `TRUNCATE`, `CREATE`, or any other command that writes to or modifies the database.
 
 ## Website
 
