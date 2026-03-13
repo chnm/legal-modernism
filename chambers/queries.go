@@ -295,23 +295,9 @@ func (d *DashboardData) TotalLinked() int {
 func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, error) {
 	d := &DashboardData{}
 
-	// Use a transaction so SET LOCAL statement_timeout applies to all queries
-	// within it. This overrides any server-level statement_timeout.
-	slog.Debug("beginning transaction for dashboard queries")
-	tx, err := db.Begin(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("beginning transaction for dashboard: %w", err)
-	}
-	defer tx.Rollback(ctx)
-
-	slog.Debug("setting statement_timeout to 120s via SET LOCAL")
-	if _, err := tx.Exec(ctx, `SET LOCAL statement_timeout = '120s'`); err != nil {
-		return nil, fmt.Errorf("setting statement_timeout: %w", err)
-	}
-
 	// Get counts by status from the view
 	slog.Debug("querying citation links status view")
-	rows, err := tx.Query(ctx, `SELECT status, n FROM moml_citations.citation_links_status`)
+	rows, err := db.Query(ctx, `SELECT status, n FROM moml_citations.citation_links_status`)
 	if err != nil {
 		return nil, fmt.Errorf("querying citation links status: %w", err)
 	}
@@ -348,7 +334,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 
 	// Get total raw citations count
 	slog.Debug("counting total raw citations")
-	err = tx.QueryRow(ctx, `SELECT count(*) FROM moml_citations.citations_unlinked`).Scan(&d.TotalRawCites)
+	err = db.QueryRow(ctx, `SELECT count(*) FROM moml_citations.citations_unlinked`).Scan(&d.TotalRawCites)
 	if err != nil {
 		return nil, fmt.Errorf("counting raw citations: %w", err)
 	}

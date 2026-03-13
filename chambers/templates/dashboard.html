@@ -27,7 +27,7 @@
     </div>
 
     <h2 class="h6 text-secondary mb-2">Raw cites detected</h2>
-    <div class="row g-3 mb-3">
+    <div class="row g-3 mb-4">
         <div class="col-md-3">
             <div class="stat-card stat-neutral">
                 <div class="big-number placeholder-number" id="stat-raw">&mdash;</div>
@@ -82,6 +82,34 @@
         </div>
     </div>
 
+    <h2 class="h6 text-secondary mb-2">Linked cites</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-total">&mdash;</div>
+                <div class="big-label">Total linked</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-cap">&mdash;</div>
+                <div class="big-label">Caselaw Access Project</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-er">&mdash;</div>
+                <div class="big-label">English Reports</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-code">&mdash;</div>
+                <div class="big-label">Code Reporter</div>
+            </div>
+        </div>
+    </div>
+
     <details class="mb-3">
         <summary class="small text-secondary">SQL queries</summary>
         <pre class="bg-light p-2 rounded small mt-2"><code>SELECT status, n FROM moml_citations.citation_links_status;
@@ -126,9 +154,9 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
                 return Math.round(n / totalPotential * 100) + "% of potential";
             }
 
-            function setStatWithPct(id, value, pctFn) {
+            function setStatWithPct(id, value, pctFn, fmtFn) {
                 const el = document.getElementById(id);
-                el.textContent = fmtMillions(value);
+                el.textContent = (fmtFn || fmtMillions)(value);
                 el.classList.remove("placeholder-number");
                 const sub = document.createElement("span");
                 sub.style.cssText = "font-size:0.85rem;font-weight:400;color:#6c757d;margin-left:0.4rem;";
@@ -147,6 +175,16 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
             setStatWithPct("stat-linked-pct", totalLinked, pctOfPotential);
             setStatWithPct("stat-nomatch", d.NoMatch, pctOfPotential);
             setStatWithPct("stat-notwl", d.SkippedNotWhiteListed, pctOfPotential);
+
+            // Row 3: linked cites breakdown
+            function pctOfLinked(n) {
+                if (totalLinked === 0) return "0%";
+                return Math.round(n / totalLinked * 100) + "% of linked";
+            }
+            setStat("stat-linked-total", totalLinked);
+            setStatWithPct("stat-linked-cap", d.LinkedCAP, pctOfLinked);
+            setStatWithPct("stat-linked-er", d.LinkedEnglishReports, pctOfLinked);
+            setStatWithPct("stat-linked-code", d.LinkedCodeReporter, pctOfLinked, fmt);
 
             // Build stacked bar chart
             const categories = [
