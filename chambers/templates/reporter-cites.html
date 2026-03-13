@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Reporter}} &mdash; Chambers</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
+        h1 { font-size: 1.2rem; }
+        .back { font-size: 0.85rem; margin-right: 1rem; }
+        a { color: inherit; }
+        .cites { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+        .cite { padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; white-space: nowrap; }
+        .cite a { text-decoration: none; }
+        .cite a:hover { text-decoration: underline; }
+        .status-linked { background: #d4edda; color: #155724; }
+        .status-nomatch { background: #f8d7da; color: #721c24; }
+        .status-skip { background: #cce5ff; color: #004085; }
+        .status-unprocessed { background: #fff3cd; color: #856404; }
+        .legend { margin: 0.5rem 0; font-size: 0.8rem; color: #555; }
+        .legend span { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; margin-right: 0.3rem; }
+        .count { color: #777; font-size: 0.85rem; }
+        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 1rem 0; }
+        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
+        details.query summary { cursor: pointer; color: #777; }
+        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
+    </style>
+</head>
+<body>
+    <a href="/reporters" class="back">&larr; All reporters</a>
+    <h1>{{.Reporter}}</h1>
+
+    <p class="about">
+        This page shows up to 10,000 raw citations from <code>moml_citations.citations_unlinked</code>
+        whose <code>reporter_abbr</code> maps to the standard reporter &ldquo;{{.Reporter}}&rdquo;
+        via the <code>legalhist.reporters_citation_to_cap</code> whitelist. The displayed text is the
+        <code>raw</code> column: the exact citation string as it was detected in the MOML OCR text.
+        Each citation is color-coded by its linking status from <code>moml_citations.citation_links</code>:
+        <span style="color:#155724;font-weight:600">green</span> means the citation was successfully
+        linked to a case (status starts with <code>linked</code>);
+        <span style="color:#721c24;font-weight:600">red</span> means no matching case was found
+        (<code>skipped_no_match</code>);
+        <span style="color:#004085;font-weight:600">blue</span> means the citation was classified as
+        junk or a statute (<code>skipped_junk</code> or <code>skipped_statute</code>);
+        <span style="color:#856404;font-weight:600">yellow</span> means the citation has not yet been
+        processed by the linker. Click any citation to see its full detail page.
+    </p>
+    <details class="query">
+        <summary>Show SQL query</summary>
+        <pre>SELECT cu.id, cu.raw, cl.status
+FROM moml_citations.citations_unlinked cu
+JOIN legalhist.reporters_citation_to_cap wl
+  ON cu.reporter_abbr = wl.reporter_found
+LEFT JOIN moml_citations.citation_links cl
+  ON cl.citation_id = cu.id
+WHERE wl.reporter_standard = '{{.Reporter}}'
+ORDER BY cu.id
+LIMIT 10000</pre>
+    </details>
+
+    <p class="count">Variants: {{range $i, $v := .Variants}}{{if $i}}, {{end}}<code>{{$v}}</code>{{end}}</p>
+    <p class="count">Showing {{len .Cites}} citations</p>
+    <div class="legend">
+        <span class="status-linked">linked</span>
+        <span class="status-nomatch">no match</span>
+        <span class="status-skip">junk/statute</span>
+        <span class="status-unprocessed">unprocessed</span>
+    </div>
+    <div class="cites">
+    {{range .Cites}}
+        <span class="cite {{.StatusClass}}"><a href="/cite?id={{.ID}}">{{.Raw}}</a></span>
+    {{end}}
+    </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation {{.Cite.ID}} &mdash; Chambers</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
+        h1 { font-size: 1.1rem; margin: 0.5rem 0; }
+        h2 { font-size: 0.95rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; margin: 1rem 0 0.3rem; }
+        a { color: #0366d6; }
+        .back { font-size: 0.85rem; }
+        .grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
+        .label { color: #555; white-space: nowrap; }
+        .status { font-weight: 600; }
+        .status-linked { color: #28a745; }
+        .status-skipped { color: #b08800; }
+        pre.ocrtext { background: #f6f6f6; padding: 0.8rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.8rem; max-height: 30rem; overflow-y: auto; border: 1px solid #ddd; margin: 0.3rem 0; }
+        .none { color: #999; font-style: italic; }
+        mark { background: #fff3a8; }
+        .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0.5rem 0; }
+        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
+        details.query summary { cursor: pointer; color: #777; }
+        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
+    </style>
+</head>
+<body>
+    <a href="/cite" class="back">&larr; Citation lookup</a>
+    <h1>{{.Cite.ID}}</h1>
+
+    <p class="about">
+        This page shows a single detected citation and all data associated with it. <strong>Detected</strong>
+        shows the raw string as it was extracted from the MOML page OCR text, along with the parsed
+        volume, reporter abbreviation, and page number. <strong>Linking</strong> shows the result of
+        the citation linking pipeline: the &ldquo;cleaned&rdquo; form normalizes the reporter abbreviation
+        via the whitelist in <code>legalhist.reporters_citation_to_cap</code>; the &ldquo;normalized&rdquo;
+        form applies volume number transformations from <code>legalhist.reporters_diffvols</code>; and
+        the &ldquo;linked&rdquo; form is the final citation string that was matched against the case
+        databases. <strong>Case</strong> shows the matched record from the Caselaw Access Project
+        (<code>cap.cases</code>), Code Reporter (<code>legalhist.code_reporter</code>), or English
+        Reports (<code>english_reports.cases</code>). <strong>MOML Source</strong> shows the treatise
+        metadata and the full OCR text of the page where this citation was found, with the raw citation
+        string highlighted.
+    </p>
+    <details class="query">
+        <summary>Show SQL query</summary>
+        <pre>SELECT
+    cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page,
+    cu.moml_treatise, cu.moml_page,
+    cl.status, cl.cite_cleaned, cl.cite_normalized, cl.cite_linked,
+    cc.name, cc.name_abbreviation, cc.decision_year, cc.volume, cc.frontend_url,
+    cr_rep.full_name, ct.name, j.name,
+    code.name, code.official_citation, code.decision_year,
+    er.er_name, er.er_cite, er.er_year, er.court,
+    bi.bibliographicid, bi.year, bc.displaytitle, bc.author_composed,
+    bi.productlink, mp.sourcepage, po.ocrtext
+FROM moml_citations.citations_unlinked cu
+LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+LEFT JOIN cap.cases cc ON cc.id = cl.cap_case_id
+LEFT JOIN cap.reporters cr_rep ON cr_rep.id = cc.reporter
+LEFT JOIN cap.courts ct ON ct.id = cc.court
+LEFT JOIN cap.jurisdictions j ON j.id = cc.jurisdiction
+LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
+LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
+LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
+LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+LEFT JOIN moml.page mp ON mp.pageid = cu.moml_page
+LEFT JOIN moml.page_ocrtext po ON po.psmid = cu.moml_treatise AND po.pageid = cu.moml_page
+WHERE cu.id = $1
+LIMIT 1</pre>
+    </details>
+
+    <div class="cols">
+    <div>
+    <h2>Detected</h2>
+    <div class="grid">
+        <span class="label">Raw</span><span>{{.Cite.Raw}}</span>
+        <span class="label">Parsed</span><span>{{if .Cite.Volume}}{{deref .Cite.Volume}}{{else}}?{{end}} {{.Cite.ReporterAbbr}} {{.Cite.Page}}</span>
+    </div>
+
+    <h2>Linking</h2>
+    {{if .Cite.Status}}
+    <div class="grid">
+        <span class="label">Status</span><span class="status {{if .Cite.HasLink}}status-linked{{else}}status-skipped{{end}}">{{derefStr .Cite.Status}}</span>
+        <span class="label">Cleaned</span><span>{{ptrOr .Cite.CiteCleaned "&mdash;"}}</span>
+        <span class="label">Normalized</span><span>{{ptrOr .Cite.CiteNormalized "&mdash;"}}</span>
+        <span class="label">Linked</span><span>{{ptrOr .Cite.CiteLinked "&mdash;"}}</span>
+    </div>
+    {{else}}<p class="none">Not yet linked.</p>{{end}}
+    </div>
+
+    <div>
+    <h2>Case</h2>
+    {{if .Cite.IsCAP}}
+    <div class="grid">
+        <span class="label">Source</span><span>CAP</span>
+        <span class="label">Name</span><span>{{ptrOr .Cite.CAPCaseAbbr "&mdash;"}}</span>
+        <span class="label">Full name</span><span>{{ptrOr .Cite.CAPCaseName "&mdash;"}}</span>
+        <span class="label">Year</span><span>{{if .Cite.CAPYear}}{{deref .Cite.CAPYear}}{{else}}&mdash;{{end}}</span>
+        <span class="label">Reporter</span><span>{{ptrOr .Cite.CAPVolume ""}} {{ptrOr .Cite.CAPReporter "&mdash;"}}</span>
+        <span class="label">Court</span><span>{{ptrOr .Cite.CAPCourt "&mdash;"}} ({{ptrOr .Cite.CAPJurisdiction ""}})</span>
+        {{if .Cite.CAPURL}}<span class="label">URL</span><span><a href="{{derefStr .Cite.CAPURL}}" target="_blank">link</a></span>{{end}}
+    </div>
+    {{else if .Cite.IsCodeReporter}}
+    <div class="grid">
+        <span class="label">Source</span><span>Code Reporter</span>
+        <span class="label">Name</span><span>{{ptrOr .Cite.CodeName "&mdash;"}}</span>
+        <span class="label">Citation</span><span>{{ptrOr .Cite.CodeCite "&mdash;"}}</span>
+        <span class="label">Year</span><span>{{if .Cite.CodeYear}}{{deref .Cite.CodeYear}}{{else}}&mdash;{{end}}</span>
+    </div>
+    {{else if .Cite.IsEnglishReports}}
+    <div class="grid">
+        <span class="label">Source</span><span>English Reports</span>
+        <span class="label">Name</span><span>{{ptrOr .Cite.ERName "&mdash;"}}</span>
+        <span class="label">Citation</span><span>{{ptrOr .Cite.ERCite "&mdash;"}}</span>
+        <span class="label">Year</span><span>{{if .Cite.ERYear}}{{deref .Cite.ERYear}}{{else}}&mdash;{{end}}</span>
+        <span class="label">Court</span><span>{{ptrOr .Cite.ERCourt "&mdash;"}}</span>
+    </div>
+    {{else}}<p class="none">No case linked.</p>{{end}}
+    </div>
+    </div>
+
+    <h2>MOML Source</h2>
+    <div class="grid">
+        <span class="label">Title</span><span>{{if .Cite.MomlVolumeURL}}<a href="{{.Cite.MomlVolumeURL}}" target="_blank">{{ptrOr .Cite.BookTitle "&mdash;"}}</a>{{else}}{{ptrOr .Cite.BookTitle "&mdash;"}}{{end}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
+        <span class="label">Author</span><span>{{ptrOr .Cite.Author "&mdash;"}}</span>
+        <span class="label">Printed page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}}</span>
+        <span class="label">Image page</span><span>{{if .Cite.MomlPageURL}}<a href="{{.Cite.MomlPageURL}}" target="_blank">{{.Cite.MomlPage}}</a>{{else}}{{.Cite.MomlPage}}{{end}}</span>
+        <span class="label">Treatise</span><span>{{.Cite.MomlTreatise}}</span>
+    </div>
+
+    {{if .Cite.OCRText}}
+    <pre class="ocrtext">{{highlightRaw (derefStr .Cite.OCRText) .Cite.Raw}}</pre>
+    {{else}}
+    <p class="none">No OCR text available.</p>
+    {{end}}
+</body>
+</html>

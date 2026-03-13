@@ -1,7 +1,7 @@
 \restrict dbmate
 
 -- Dumped from database version 17.7 (Debian 17.7-0+deb13u1)
--- Dumped by pg_dump version 18.2
+-- Dumped by pg_dump version 17.9 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1223,6 +1223,57 @@ CREATE MATERIALIZED VIEW moml_citations.bibliocouple_treatises AS
 
 
 --
+-- Name: citation_links; Type: TABLE; Schema: moml_citations; Owner: -
+--
+
+CREATE TABLE moml_citations.citation_links (
+    citation_id uuid NOT NULL,
+    status text NOT NULL,
+    cap_case_id bigint,
+    code_reporter_id bigint,
+    er_case_id text,
+    cite_cleaned text,
+    cite_normalized text,
+    cite_linked text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+--
+-- Name: citation_links_detail; Type: VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE VIEW moml_citations.citation_links_detail AS
+ SELECT cl.citation_id,
+    cl.status,
+    cu.raw AS cite_raw,
+    cl.cite_cleaned,
+    cl.cite_normalized,
+    cl.cite_linked,
+    COALESCE(cc.name, cr.name, er.er_name) AS case_name,
+    cl.cap_case_id,
+    cl.code_reporter_id,
+    cl.er_case_id
+   FROM ((((moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+     LEFT JOIN cap.cases cc ON ((cc.id = cl.cap_case_id)))
+     LEFT JOIN legalhist.code_reporter cr ON ((cr.id = cl.code_reporter_id)))
+     LEFT JOIN english_reports.cases er ON ((er.id = cl.er_case_id)));
+
+
+--
+-- Name: citation_links_status; Type: VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE VIEW moml_citations.citation_links_status AS
+ SELECT status,
+    count(*) AS n
+   FROM moml_citations.citation_links
+  GROUP BY status
+  ORDER BY (count(*)) DESC;
+
+
+--
 -- Name: database_size; Type: VIEW; Schema: stats; Owner: -
 --
 
@@ -1519,6 +1570,14 @@ ALTER TABLE ONLY moml.page_ocrtext
 
 ALTER TABLE ONLY moml.page
     ADD CONSTRAINT page_pkey PRIMARY KEY (pageid, psmid);
+
+
+--
+-- Name: citation_links citation_links_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citation_links
+    ADD CONSTRAINT citation_links_pkey PRIMARY KEY (citation_id);
 
 
 --
@@ -1857,6 +1916,34 @@ CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked U
 
 
 --
+-- Name: idx_citation_links_cap; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX idx_citation_links_cap ON moml_citations.citation_links USING btree (cap_case_id) WHERE (cap_case_id IS NOT NULL);
+
+
+--
+-- Name: idx_citation_links_code; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX idx_citation_links_code ON moml_citations.citation_links USING btree (code_reporter_id) WHERE (code_reporter_id IS NOT NULL);
+
+
+--
+-- Name: idx_citation_links_er; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX idx_citation_links_er ON moml_citations.citation_links USING btree (er_case_id) WHERE (er_case_id IS NOT NULL);
+
+
+--
+-- Name: idx_citation_links_status; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX idx_citation_links_status ON moml_citations.citation_links USING btree (status);
+
+
+--
 -- Name: moml_page_to_cap_case_case_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2089,6 +2176,38 @@ ALTER TABLE ONLY moml.page
 
 
 --
+-- Name: citation_links citation_links_cap_case_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citation_links
+    ADD CONSTRAINT citation_links_cap_case_id_fkey FOREIGN KEY (cap_case_id) REFERENCES cap.cases(id);
+
+
+--
+-- Name: citation_links citation_links_citation_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citation_links
+    ADD CONSTRAINT citation_links_citation_id_fkey FOREIGN KEY (citation_id) REFERENCES moml_citations.citations_unlinked(id);
+
+
+--
+-- Name: citation_links citation_links_code_reporter_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citation_links
+    ADD CONSTRAINT citation_links_code_reporter_id_fkey FOREIGN KEY (code_reporter_id) REFERENCES legalhist.code_reporter(id);
+
+
+--
+-- Name: citation_links citation_links_er_case_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.citation_links
+    ADD CONSTRAINT citation_links_er_case_id_fkey FOREIGN KEY (er_case_id) REFERENCES english_reports.cases(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -2114,4 +2233,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260310191741'),
     ('20260310193513'),
     ('20260310213126'),
-    ('20260311001814');
+    ('20260311001814'),
+    ('20260312155141'),
+    ('20260312181004');
