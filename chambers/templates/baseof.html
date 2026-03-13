@@ -1,0 +1,25 @@
+{{define "baseof"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{block "title" .}}Chambers{{end}}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
+        a { color: #0366d6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .back { font-size: 0.85rem; }
+        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0.5rem 0; }
+        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
+        details.query summary { cursor: pointer; color: #777; }
+        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
+        {{block "styles" .}}{{end}}
+    </style>
+</head>
+<body>
+    {{block "content" .}}{{end}}
+</body>
+</html>
+{{end}}

@@ -62,6 +62,26 @@ func init() {
 	initLogger()
 }
 
+// parseTemplates parses each page template together with baseof.html so that
+// block overrides work correctly.
+func parseTemplates() map[string]*template.Template {
+	pages := []string{
+		"home.html",
+		"detail.html",
+		"cite-lookup.html",
+		"reporters.html",
+		"reporter-cites.html",
+	}
+	tmpls := make(map[string]*template.Template, len(pages))
+	for _, page := range pages {
+		t := template.Must(
+			template.New("").Funcs(funcMap).ParseFS(templateFS, "templates/baseof.html", "templates/"+page),
+		)
+		tmpls[page] = t
+	}
+	return tmpls
+}
+
 func main() {
 	var port int
 	flag.IntVar(&port, "port", 4567, "port to listen on")
@@ -86,20 +106,20 @@ func main() {
 	defer pool.Close()
 	slog.Info("connected to database", "database", db.Host())
 
-	tmpl := template.Must(template.New("").Funcs(funcMap).ParseFS(templateFS, "templates/*.html"))
+	tmpls := parseTemplates()
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handleHome(w, r, tmpl)
+		handleHome(w, r, tmpls["home.html"])
 	})
 	mux.HandleFunc("/cite", func(w http.ResponseWriter, r *http.Request) {
-		handleCiteLookup(w, r, tmpl)
+		handleCiteLookup(w, r, tmpls["cite-lookup.html"], tmpls["detail.html"])
 	})
 	mux.HandleFunc("/reporters", func(w http.ResponseWriter, r *http.Request) {
-		handleReporters(w, r, tmpl)
+		handleReporters(w, r, tmpls["reporters.html"])
 	})
 	mux.HandleFunc("/reporters/check", func(w http.ResponseWriter, r *http.Request) {
-		handleReporterCites(w, r, tmpl)
+		handleReporterCites(w, r, tmpls["reporter-cites.html"])
 	})
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
@@ -136,17 +156,17 @@ func handleHome(w http.ResponseWriter, r *http.Request, tmpl *template.Template)
 		http.NotFound(w, r)
 		return
 	}
-	if err := tmpl.ExecuteTemplate(w, "home.html", nil); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
 		slog.Error("error rendering home", "error", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 	}
 }
 
-func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+func handleCiteLookup(w http.ResponseWriter, r *http.Request, lookupTmpl, detailTmpl *template.Template) {
 	idStr := r.URL.Query().Get("id")
 	if idStr == "" {
 		data := struct{ Error string }{}
-		if err := tmpl.ExecuteTemplate(w, "cite-lookup.html", data); err != nil {
+		if err := lookupTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 			slog.Error("error rendering cite-lookup", "error", err)
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
 		}
@@ -157,7 +177,7 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		data := struct{ Error string }{Error: fmt.Sprintf("Invalid UUID: %s", idStr)}
-		tmpl.ExecuteTemplate(w, "cite-lookup.html", data)
+		lookupTmpl.ExecuteTemplate(w, "baseof", data)
 		return
 	}
 
@@ -169,7 +189,7 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 		if errors.Is(err, pgx.ErrNoRows) {
 			w.WriteHeader(http.StatusNotFound)
 			data := struct{ Error string }{Error: fmt.Sprintf("Citation not found: %s", id)}
-			tmpl.ExecuteTemplate(w, "cite-lookup.html", data)
+			lookupTmpl.ExecuteTemplate(w, "baseof", data)
 			return
 		}
 		slog.Error("error querying citation", "id", id, "error", err)
@@ -178,7 +198,7 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 	}
 
 	data := struct{ Cite *CitationDetail }{Cite: cite}
-	if err := tmpl.ExecuteTemplate(w, "detail.html", data); err != nil {
+	if err := detailTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering detail", "id", id, "error", err)
 	}
 }
@@ -195,7 +215,7 @@ func handleReporters(w http.ResponseWriter, r *http.Request, tmpl *template.Temp
 	}
 
 	data := struct{ Reporters []ReporterStandard }{Reporters: reporters}
-	if err := tmpl.ExecuteTemplate(w, "reporters.html", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporters", "error", err)
 	}
 }
@@ -229,7 +249,7 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 		Variants []string
 		Cites    []ReporterCite
 	}{Reporter: reporter, Variants: variants, Cites: cites}
-	if err := tmpl.ExecuteTemplate(w, "reporter-cites.html", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
 	}
 }

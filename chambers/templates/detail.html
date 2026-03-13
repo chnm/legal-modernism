@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citation {{.Cite.ID}} &mdash; Chambers</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
+{{define "title"}}Citation {{.Cite.ID}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
         h1 { font-size: 1.1rem; margin: 0.5rem 0; }
         h2 { font-size: 0.95rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; margin: 1rem 0 0.3rem; }
-        a { color: #0366d6; }
-        .back { font-size: 0.85rem; }
         .grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
         .label { color: #555; white-space: nowrap; }
         .status { font-weight: 600; }
@@ -20,13 +12,9 @@
         .none { color: #999; font-style: italic; }
         mark { background: #fff3a8; }
         .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
-        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0.5rem 0; }
-        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
-        details.query summary { cursor: pointer; color: #777; }
-        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
-    </style>
-</head>
-<body>
+{{end}}
+
+{{define "content"}}
     <a href="/cite" class="back">&larr; Citation lookup</a>
     <h1>{{.Cite.ID}}</h1>
 
@@ -136,5 +124,4 @@ LIMIT 1</pre>
     {{else}}
     <p class="none">No OCR text available.</p>
     {{end}}
-</body>
-</html>
+{{end}}

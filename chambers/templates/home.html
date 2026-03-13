@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chambers</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #333; }
+{{define "title"}}Chambers{{end}}
+
+{{define "styles"}}
         h1 { font-size: 1.5rem; }
         .home { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
         .nav ul { list-style: none; padding: 0; }
         .nav li { margin: 0.5rem 0; }
-        a { color: #0366d6; text-decoration: none; }
-        a:hover { text-decoration: underline; }
         .portrait img { max-height: 200px; border-radius: 4px; opacity: 0.8; }
         .portrait blockquote { font-size: 0.8rem; color: #555; font-style: italic; margin: 0.5rem 0 0; max-width: 200px; line-height: 1.3; }
-    </style>
-</head>
-<body>
+{{end}}
+
+{{define "content"}}
     <h1>Chambers</h1>
     <div class="home">
         <div class="nav">
@@ -31,5 +23,4 @@
             <blockquote>&ldquo;All your codes are belong to me.&rdquo; &mdash;David Dudley Field II (1805&ndash;1894)</blockquote>
         </div>
     </div>
-</body>
-</html>
+{{end}}
