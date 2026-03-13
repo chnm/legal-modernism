@@ -46,7 +46,9 @@
     </style>
 </head>
 <body>
-    <div class="container py-3" style="max-width: 800px;">
+    <div class="container-fluid py-3">
+        {{block "nav" .}}{{end}}
+        <div class="mb-3"></div>
         {{block "content" .}}{{end}}
     </div>
 </body>

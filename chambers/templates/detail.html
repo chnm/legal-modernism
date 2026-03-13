@@ -8,6 +8,10 @@
         pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; max-height: 30rem; overflow-y: auto; }
 {{end}}
 
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
 {{define "content"}}
     <a href="/cite" class="small">&larr; Citation lookup</a>
     <h1 class="h5 my-2">{{.Cite.ID}}</h1>

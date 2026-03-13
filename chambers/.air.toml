@@ -19,7 +19,9 @@
   app_port = 4567
   enabled = true
   proxy_port = 4568
+  app_start_timeout = 120000
 
 [screen]
-  clear_on_rebuild = false
-  keep_scroll = true
+  clear_on_rebuild = true
+  keep_scroll = false
+
