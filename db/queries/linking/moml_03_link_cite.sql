@@ -1,1 +1,0 @@
-SELECT *, COALESCE(altvol_cite, cleaner_cite) AS cap_link_cite FROM linking.moml_02_nominate_vols;
