@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation Lookup &mdash; Chambers</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #333; }
+        h1 { font-size: 1.5rem; }
+        .back { font-size: 0.85rem; margin-bottom: 1rem; display: inline-block; }
+        a { color: #0366d6; }
+        form { margin: 1.5rem 0; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        input[type="text"] { width: 24rem; padding: 0.4rem; font-family: monospace; font-size: 0.95rem; }
+        button { padding: 0.4rem 1rem; cursor: pointer; }
+        .error { color: #c00; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back">&larr; Chambers</a>
+    <h1>Citation Lookup</h1>
+    <form action="/cite" method="GET">
+        <label for="id">Citation ID (UUID)</label>
+        <input type="text" id="id" name="id" placeholder="e.g. 3f2504e0-4f89-11d3-9a0c-0305e82c3301" required>
+        <button type="submit">Look up</button>
+    </form>
+    {{if .Error}}
+    <p class="error">{{.Error}}</p>
+    {{end}}
+</body>
+</html>
