@@ -208,7 +208,7 @@ func (r *ReporterCite) StatusClass() string {
 	if strings.HasPrefix(s, "linked") {
 		return "status-linked"
 	}
-	if s == "skipped_no_match" {
+	if s == "no_match" {
 		return "status-nomatch"
 	}
 	if s == "skipped_junk" || s == "skipped_statute" {
@@ -275,6 +275,15 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	return results, rows.Err()
 }
 
+// ReporterStats holds linked and no-match counts for a single reporter_standard.
+type ReporterStats struct {
+	Reporter    string `json:"reporter"`
+	Linked      int    `json:"linked"`
+	NoMatch     int    `json:"noMatch"`
+	Unprocessed int    `json:"unprocessed"`
+	UK          bool   `json:"uk"`
+}
+
 // DashboardData holds aggregated linking status data for the dashboard.
 type DashboardData struct {
 	LinkedCAP             int
@@ -283,8 +292,9 @@ type DashboardData struct {
 	SkippedNotWhiteListed int
 	NoMatch               int
 	SkippedJunk           int
-	SkippedStatute       int
+	SkippedStatute        int
 	TotalRawCites         int
+	Reporters             []ReporterStats `json:"Reporters,omitempty"`
 }
 
 // TotalLinked returns the sum of all linked statuses.
@@ -338,6 +348,41 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 	if err != nil {
 		return nil, fmt.Errorf("counting raw citations: %w", err)
 	}
+	// Get per-reporter linking stats
+	slog.Debug("querying per-reporter linking stats")
+	reporterRows, err := db.Query(ctx, `
+		SELECT
+			wl.reporter_standard,
+			count(*) FILTER (WHERE cl.status LIKE 'linked%') AS linked,
+			count(*) FILTER (WHERE cl.status = 'no_match') AS no_match,
+			count(*) FILTER (WHERE cl.status IS NULL) AS unprocessed,
+			bool_or(wl.uk) AS uk
+		FROM moml_citations.citations_unlinked cu
+		JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
+		LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+		WHERE wl.reporter_standard IS NOT NULL
+		  AND wl.statute = false
+		  AND wl.junk = false
+		GROUP BY wl.reporter_standard
+		ORDER BY count(*) DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("querying reporter stats: %w", err)
+	}
+	defer reporterRows.Close()
+
+	for reporterRows.Next() {
+		var r ReporterStats
+		if err := reporterRows.Scan(&r.Reporter, &r.Linked, &r.NoMatch, &r.Unprocessed, &r.UK); err != nil {
+			return nil, fmt.Errorf("scanning reporter stats: %w", err)
+		}
+		d.Reporters = append(d.Reporters, r)
+	}
+	if err := reporterRows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating reporter stats: %w", err)
+	}
+	slog.Debug("fetched reporter stats", "count", len(d.Reporters))
+
 	slog.Debug("dashboard data complete",
 		"linked_cap", d.LinkedCAP,
 		"linked_english_reports", d.LinkedEnglishReports,
@@ -347,6 +392,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		"skipped_junk", d.SkippedJunk,
 		"skipped_statutes", d.SkippedStatute,
 		"total_raw_cites", d.TotalRawCites,
+		"reporters", len(d.Reporters),
 	)
 
 	return d, nil
