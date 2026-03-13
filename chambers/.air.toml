@@ -1,0 +1,25 @@
+[build]
+  args_bin = []
+  cmd = "go build -o ../tmp/chambers ."
+  delay = 1000
+  entrypoint = ["../tmp/chambers"]
+  exclude_dir = ["assets", "tmp", "vendor", "testdata", "node_modules"]
+  exclude_regex = ["_test.go"]
+  log = "build-errors.log"
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+
+[proxy]
+  app_port = 4567
+  enabled = true
+  proxy_port = 4568
+
+[screen]
+  clear_on_rebuild = false
+  keep_scroll = true

@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet sync-hopper db-up db-down db-status
+.PHONY: binaries clean test vet sync-hopper db-up db-down db-status chambers
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -47,3 +47,6 @@ db-down:
 
 db-status:
 	dbmate --env DBMATE_URL --migrations-dir db/migrations status
+
+chambers:
+	cd ./chambers && go run github.com/air-verse/air
