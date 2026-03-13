@@ -19,11 +19,57 @@
         .none { color: #999; font-style: italic; }
         mark { background: #fff3a8; }
         .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
+        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0.5rem 0; }
+        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
+        details.query summary { cursor: pointer; color: #777; }
+        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
     </style>
 </head>
 <body>
     <a href="/cite" class="back">&larr; Citation lookup</a>
     <h1>{{.Cite.ID}}</h1>
+
+    <p class="about">
+        This page shows a single detected citation and all data associated with it. <strong>Detected</strong>
+        shows the raw string as it was extracted from the MOML page OCR text, along with the parsed
+        volume, reporter abbreviation, and page number. <strong>Linking</strong> shows the result of
+        the citation linking pipeline: the &ldquo;cleaned&rdquo; form normalizes the reporter abbreviation
+        via the whitelist in <code>legalhist.reporters_citation_to_cap</code>; the &ldquo;normalized&rdquo;
+        form applies volume number transformations from <code>legalhist.reporters_diffvols</code>; and
+        the &ldquo;linked&rdquo; form is the final citation string that was matched against the case
+        databases. <strong>Case</strong> shows the matched record from the Caselaw Access Project
+        (<code>cap.cases</code>), Code Reporter (<code>legalhist.code_reporter</code>), or English
+        Reports (<code>english_reports.cases</code>). <strong>MOML Source</strong> shows the treatise
+        metadata and the full OCR text of the page where this citation was found, with the raw citation
+        string highlighted.
+    </p>
+    <details class="query">
+        <summary>Show SQL query</summary>
+        <pre>SELECT
+    cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page,
+    cu.moml_treatise, cu.moml_page,
+    cl.status, cl.cite_cleaned, cl.cite_normalized, cl.cite_linked,
+    cc.name, cc.name_abbreviation, cc.decision_year, cc.volume, cc.frontend_url,
+    cr_rep.full_name, ct.name, j.name,
+    code.name, code.official_citation, code.decision_year,
+    er.er_name, er.er_cite, er.er_year, er.court,
+    bi.bibliographicid, bi.year, bc.displaytitle, bc.author_composed,
+    bi.productlink, mp.sourcepage, po.ocrtext
+FROM moml_citations.citations_unlinked cu
+LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+LEFT JOIN cap.cases cc ON cc.id = cl.cap_case_id
+LEFT JOIN cap.reporters cr_rep ON cr_rep.id = cc.reporter
+LEFT JOIN cap.courts ct ON ct.id = cc.court
+LEFT JOIN cap.jurisdictions j ON j.id = cc.jurisdiction
+LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
+LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
+LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
+LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+LEFT JOIN moml.page mp ON mp.pageid = cu.moml_page
+LEFT JOIN moml.page_ocrtext po ON po.psmid = cu.moml_treatise AND po.pageid = cu.moml_page
+WHERE cu.id = $1
+LIMIT 1</pre>
+    </details>
 
     <div class="cols">
     <div>
@@ -77,9 +123,11 @@
 
     <h2>MOML Source</h2>
     <div class="grid">
-        <span class="label">Title</span><span>{{ptrOr .Cite.BookTitle "&mdash;"}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
+        <span class="label">Title</span><span>{{if .Cite.MomlVolumeURL}}<a href="{{.Cite.MomlVolumeURL}}" target="_blank">{{ptrOr .Cite.BookTitle "&mdash;"}}</a>{{else}}{{ptrOr .Cite.BookTitle "&mdash;"}}{{end}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
         <span class="label">Author</span><span>{{ptrOr .Cite.Author "&mdash;"}}</span>
-        <span class="label">Page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}} <span class="label" style="margin-left:1rem">Treatise</span> {{.Cite.MomlTreatise}} <span class="label" style="margin-left:1rem">Page ID</span> {{.Cite.MomlPage}}</span>
+        <span class="label">Printed page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}}</span>
+        <span class="label">Image page</span><span>{{if .Cite.MomlPageURL}}<a href="{{.Cite.MomlPageURL}}" target="_blank">{{.Cite.MomlPage}}</a>{{else}}{{.Cite.MomlPage}}{{end}}</span>
+        <span class="label">Treatise</span><span>{{.Cite.MomlTreatise}}</span>
     </div>
 
     {{if .Cite.OCRText}}

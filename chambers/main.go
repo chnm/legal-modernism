@@ -64,7 +64,7 @@ func init() {
 
 func main() {
 	var port int
-	flag.IntVar(&port, "port", 8080, "port to listen on")
+	flag.IntVar(&port, "port", 4567, "port to listen on")
 	flag.Parse()
 
 	slog.Info("starting chambers")
@@ -94,6 +94,12 @@ func main() {
 	})
 	mux.HandleFunc("/cite", func(w http.ResponseWriter, r *http.Request) {
 		handleCiteLookup(w, r, tmpl)
+	})
+	mux.HandleFunc("/reporters", func(w http.ResponseWriter, r *http.Request) {
+		handleReporters(w, r, tmpl)
+	})
+	mux.HandleFunc("/reporters/check", func(w http.ResponseWriter, r *http.Request) {
+		handleReporterCites(w, r, tmpl)
 	})
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
@@ -174,5 +180,56 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 	data := struct{ Cite *CitationDetail }{Cite: cite}
 	if err := tmpl.ExecuteTemplate(w, "detail.html", data); err != nil {
 		slog.Error("error rendering detail", "id", id, "error", err)
+	}
+}
+
+func handleReporters(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
+	defer cancel()
+
+	reporters, err := getReporterStandards(ctx, pool)
+	if err != nil {
+		slog.Error("error querying reporters", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	data := struct{ Reporters []ReporterStandard }{Reporters: reporters}
+	if err := tmpl.ExecuteTemplate(w, "reporters.html", data); err != nil {
+		slog.Error("error rendering reporters", "error", err)
+	}
+}
+
+func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	reporter := r.URL.Query().Get("r")
+	if reporter == "" {
+		http.Redirect(w, r, "/reporters", http.StatusFound)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
+	defer cancel()
+
+	variants, err := getReporterVariants(ctx, pool, reporter)
+	if err != nil {
+		slog.Error("error querying variants for reporter", "reporter", reporter, "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	cites, err := getCitesForReporter(ctx, pool, reporter)
+	if err != nil {
+		slog.Error("error querying cites for reporter", "reporter", reporter, "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	data := struct {
+		Reporter string
+		Variants []string
+		Cites    []ReporterCite
+	}{Reporter: reporter, Variants: variants, Cites: cites}
+	if err := tmpl.ExecuteTemplate(w, "reporter-cites.html", data); err != nil {
+		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
 	}
 }
