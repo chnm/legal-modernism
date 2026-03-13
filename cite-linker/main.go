@@ -24,13 +24,13 @@ func main() {
 	var batchSize int
 	var workers int
 	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
-	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped, then exit")
-	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 10000)")
+	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
+	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 8000)")
 	flag.IntVar(&workers, "workers", runtime.NumCPU()*2, "number of concurrent workers")
 	flag.Parse()
 
-	if batchSize > 10000 {
-		batchSize = 10000
+	if batchSize > 8000 {
+		batchSize = 8000
 	}
 
 	slog.Info("starting the citation linker")
@@ -62,7 +62,7 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Handle --skip-unlisted: bulk operation then exit
+	// Handle --skip-unlisted: bulk skip, then continue to linking
 	if skipUnlisted {
 		slog.Info("batch-marking non-whitelisted citations as skipped")
 		affected, err := store.BatchSkipNonWhitelisted(ctx)
@@ -71,7 +71,6 @@ func main() {
 			os.Exit(1)
 		}
 		slog.Info("batch skip complete", "rows_affected", affected)
-		return
 	}
 
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
@@ -231,28 +230,20 @@ func linkCitation(
 	entry, ok := whitelist[c.ReporterAbbr]
 	if !ok {
 		result.Status = citations.StatusSkippedNotWhitelisted
-		result.CiteCleaned = c.ReporterAbbr
-		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 	if entry.Statute {
 		result.Status = citations.StatusSkippedStatute
-		result.CiteCleaned = c.ReporterAbbr
-		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 	if entry.Junk {
 		result.Status = citations.StatusSkippedJunk
-		result.CiteCleaned = c.ReporterAbbr
-		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 
 	// If there's no standard reporter, we can't normalize the citation
 	if entry.ReporterStandard == nil {
 		result.Status = citations.StatusSkippedNoMatch
-		result.CiteCleaned = c.ReporterAbbr
-		result.CiteNormalized = c.ReporterAbbr
 		return result
 	}
 
@@ -275,8 +266,8 @@ func linkCAPThenCode(
 
 	citeCleaned := buildStandardCite(c, entry)
 	citeNormalized := buildCAPCite(c, entry, diffvols)
-	result.CiteCleaned = citeCleaned
-	result.CiteNormalized = citeNormalized
+	result.CiteCleaned = &citeCleaned
+	result.CiteNormalized = &citeNormalized
 
 	// Try CAP with the normalized cite
 	if caseID, ok := capCites[citeNormalized]; ok {
@@ -307,8 +298,8 @@ func linkEnglishReports(
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 	citeCleaned := buildStandardCite(c, entry)
-	result.CiteCleaned = citeCleaned
-	result.CiteNormalized = citeCleaned
+	result.CiteCleaned = &citeCleaned
+	result.CiteNormalized = &citeCleaned
 
 	if erID, ok := erCites[citeCleaned]; ok {
 		result.Status = citations.StatusLinkedEnglishReports

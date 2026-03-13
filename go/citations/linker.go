@@ -38,8 +38,8 @@ type LinkResult struct {
 	CAPCaseID      *int64
 	CodeReporterID *int64
 	ERCaseID       *string
-	CiteCleaned    string  // reporter abbreviation standardized via whitelist
-	CiteNormalized string  // after diffvols transformation (equals CiteCleaned if no transformation)
+	CiteCleaned    *string // reporter abbreviation standardized via whitelist; nil for skipped
+	CiteNormalized *string // after diffvols transformation (equals CiteCleaned if no transformation); nil for skipped
 	CiteLinked     *string // the cite string that matched, nil if no match
 }
 

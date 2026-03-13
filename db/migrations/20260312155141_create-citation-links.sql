@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS moml_citations.citation_links (
     cap_case_id       bigint REFERENCES cap.cases(id),
     code_reporter_id  bigint REFERENCES legalhist.code_reporter(id),
     er_case_id        text REFERENCES english_reports.cases(id),
-    normalized_cite   text,
+    cite_cleaned      text,
+    cite_normalized   text,
+    cite_linked       text,
     created_at        timestamptz NOT NULL DEFAULT now(),
     PRIMARY KEY (citation_id)
 );

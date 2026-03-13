@@ -217,7 +217,6 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 		return nil
 	}
 
-	// Build a multi-row INSERT: VALUES ($1,$2,...,$8), ($9,$10,...), ...
 	query := `
 	INSERT INTO moml_citations.citation_links
 		(citation_id, status, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked)
@@ -244,15 +243,13 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 
 func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, error) {
 	query := `
-	INSERT INTO moml_citations.citation_links (citation_id, status, cite_cleaned, cite_normalized)
+	INSERT INTO moml_citations.citation_links (citation_id, status)
 	SELECT cu.id,
 	       CASE
 	         WHEN wl.statute = true THEN 'skipped_statute'
 	         WHEN wl.junk = true THEN 'skipped_junk'
 	         ELSE 'skipped_not_whitelisted'
-	       END,
-	       cu.reporter_abbr,
-	       cu.reporter_abbr
+	       END
 	FROM moml_citations.citations_unlinked cu
 	LEFT JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
 	WHERE NOT EXISTS (

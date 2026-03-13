@@ -9,7 +9,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=64
 #SBATCH --time=1-00:00:00
-#SBATCH --mem=64GB
+#SBATCH --mem=32GB
 #SBATCH --partition bigmem
 #SBATCH --mail-user lmullen@gmu.edu
 #SBATCH --mail-type BEGIN
@@ -17,4 +17,4 @@
 #SBATCH --mail-type FAIL
 
 ## Run the program
-~/legal-modernism/bin/cite-linker --batch-size=10000 --workers=40
+~/legal-modernism/bin/cite-linker --skip-unlisted --batch-size=8000 --workers=32
