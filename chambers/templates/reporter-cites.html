@@ -1,7 +1,6 @@
 {{define "title"}}{{.Reporter}} &mdash; Chambers{{end}}
 
 {{define "styles"}}
-        h1 { font-size: 1.2rem; }
         .cites { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
         .cite { padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; white-space: nowrap; }
         .cite a { text-decoration: none; color: inherit; }
@@ -10,16 +9,13 @@
         .status-nomatch { background: #f8d7da; color: #721c24; }
         .status-skip { background: #cce5ff; color: #004085; }
         .status-unprocessed { background: #fff3cd; color: #856404; }
-        .legend { margin: 0.5rem 0; font-size: 0.8rem; color: #555; }
-        .legend span { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; margin-right: 0.3rem; }
-        .count { color: #777; font-size: 0.85rem; }
 {{end}}
 
 {{define "content"}}
-    <a href="/reporters" class="back">&larr; All reporters</a>
-    <h1>{{.Reporter}}</h1>
+    <a href="/reporters" class="small">&larr; All reporters</a>
+    <h1 class="h5 mt-2">{{.Reporter}}</h1>
 
-    <p class="about">
+    <p class="small text-secondary">
         This page shows up to 10,000 raw citations from <code>moml_citations.citations_unlinked</code>
         whose <code>reporter_abbr</code> maps to the standard reporter &ldquo;{{.Reporter}}&rdquo;
         via the <code>legalhist.reporters_citation_to_cap</code> whitelist. The displayed text is the
@@ -34,9 +30,9 @@
         <span style="color:#856404;font-weight:600">yellow</span> means the citation has not yet been
         processed by the linker. Click any citation to see its full detail page.
     </p>
-    <details class="query">
-        <summary>Show SQL query</summary>
-        <pre>SELECT cu.id, cu.raw, cl.status
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.id, cu.raw, cl.status
 FROM moml_citations.citations_unlinked cu
 JOIN legalhist.reporters_citation_to_cap wl
   ON cu.reporter_abbr = wl.reporter_found
@@ -44,16 +40,16 @@ LEFT JOIN moml_citations.citation_links cl
   ON cl.citation_id = cu.id
 WHERE wl.reporter_standard = '{{.Reporter}}'
 ORDER BY cu.id
-LIMIT 10000</pre>
+LIMIT 10000</code></pre>
     </details>
 
-    <p class="count">Variants: {{range $i, $v := .Variants}}{{if $i}}, {{end}}<code>{{$v}}</code>{{end}}</p>
-    <p class="count">Showing {{len .Cites}} citations</p>
-    <div class="legend">
-        <span class="status-linked">linked</span>
-        <span class="status-nomatch">no match</span>
-        <span class="status-skip">junk/statute</span>
-        <span class="status-unprocessed">unprocessed</span>
+    <p class="text-secondary small">Variants: {{range $i, $v := .Variants}}{{if $i}}, {{end}}<code>{{$v}}</code>{{end}}</p>
+    <p class="text-secondary small">Showing {{len .Cites}} citations</p>
+    <div class="d-flex gap-2 mb-2 small text-secondary">
+        <span class="status-linked cite">linked</span>
+        <span class="status-nomatch cite">no match</span>
+        <span class="status-skip cite">junk/statute</span>
+        <span class="status-unprocessed cite">unprocessed</span>
     </div>
     <div class="cites">
     {{range .Cites}}
