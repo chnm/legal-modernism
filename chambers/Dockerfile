@@ -8,4 +8,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /chambers ./chambers/
 FROM gcr.io/distroless/static-debian12
 COPY --from=builder /chambers /chambers
 EXPOSE 4567
+
 ENTRYPOINT ["/chambers"]
