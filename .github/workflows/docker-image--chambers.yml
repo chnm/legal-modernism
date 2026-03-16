@@ -1,4 +1,4 @@
-name: Chambers Docker
+name: Build & Publish chambers Docker Image
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository_owner }}/chambers
+          images: ghcr.io/${{ github.repository_owner }}/legal-modernism-chambers
           tags: |
             type=sha,prefix=
             type=raw,value=latest
