@@ -14,7 +14,7 @@ on:
 
 jobs:
 
-  build-and-push:
+  build-and-publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -47,3 +47,11 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    uses: chnm/.github/.github/workflows/docker--deploy.yml@main
+    needs: [build-and-publish]
+    secrets: inherit
+    with:
+      website-devl-fqdn: "chambers.legalmodernism.org"
+      website-prod-fqdn: "chambers.legalmodernism.org"
