@@ -1,0 +1,303 @@
+{{define "title"}}Citation linking progress — Chambers{{end}}
+
+{{define "styles"}}
+        .big-number { font-size: 2rem; font-weight: 600; line-height: 1.2; }
+        .big-label { font-size: 0.85rem; color: #6c757d; }
+        .stat-card { border-left: 4px solid; padding: 0.75rem 1rem; background: #fafafa; border-radius: 4px; }
+        .stat-positive { border-left-color: #198754; }
+        .stat-negative { border-left-color: #dc3545; }
+        .stat-warning { border-left-color: #e87a7a; }
+        .stat-neutral { border-left-color: #6c757d; }
+        #chart-container { min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .loading-text { color: #6c757d; font-size: 0.9rem; }
+        .spinner-border { width: 1.2rem; height: 1.2rem; border-width: 0.15em; }
+        .placeholder-number { color: #ccc; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mb-1">Citation linking progress</h1>
+    <p class="small text-secondary mb-3">Progress of linking detected citations to caselaw databases.</p>
+
+    <div id="chart-container" class="mb-4">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading citation data&hellip;</div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Raw cites detected</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-neutral">
+                <div class="big-number placeholder-number" id="stat-raw">&mdash;</div>
+                <div class="big-label">Total raw cites</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-neutral">
+                <div class="big-number placeholder-number" id="stat-potential-raw">&mdash;</div>
+                <div class="big-label">Potential cites</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-neutral">
+                <div class="big-number placeholder-number" id="stat-junk">&mdash;</div>
+                <div class="big-label">Skipped as junk</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-neutral">
+                <div class="big-number placeholder-number" id="stat-statutes">&mdash;</div>
+                <div class="big-label">Skipped as statutes</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Potential cites linked</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-neutral">
+                <div class="big-number placeholder-number" id="stat-potential">&mdash;</div>
+                <div class="big-label">Total potential cites</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-pct">&mdash;</div>
+                <div class="big-label">Total linked</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-negative">
+                <div class="big-number placeholder-number" id="stat-nomatch">&mdash;</div>
+                <div class="big-label">No match</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-warning">
+                <div class="big-number placeholder-number" id="stat-notwl">&mdash;</div>
+                <div class="big-label">Not whitelisted</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Linked cites</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-total">&mdash;</div>
+                <div class="big-label">Total linked</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-cap">&mdash;</div>
+                <div class="big-label">Caselaw Access Project</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-er">&mdash;</div>
+                <div class="big-label">English Reports</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-code">&mdash;</div>
+                <div class="big-label">Code Reporter</div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Potential cites by reporter</h2>
+    <div id="reporter-chart-container" class="mb-4">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading reporter data&hellip;</div>
+    </div>
+
+    <details class="mb-3">
+        <summary class="small text-secondary">SQL queries</summary>
+        <pre class="bg-light p-2 rounded small mt-2"><code>SELECT status, n FROM moml_citations.citation_links_status;
+SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
+    </details>
+
+    <script type="module">
+        import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
+
+        function fmt(n) {
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + "M";
+            if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
+            return n.toString();
+        }
+
+        function fmtMillions(n) {
+            return (n / 1_000_000).toFixed(1) + "M";
+        }
+
+        function setStat(id, value) {
+            const el = document.getElementById(id);
+            el.textContent = fmtMillions(value);
+            el.classList.remove("placeholder-number");
+        }
+
+        try {
+            const resp = await fetch("/api/linking-dashboard");
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const d = await resp.json();
+
+            const totalLinked = d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter;
+
+            const totalPotential = d.TotalRawCites - d.SkippedJunk - d.SkippedStatute;
+
+            function pctOfRaw(n) {
+                if (d.TotalRawCites === 0) return "0%";
+                return Math.round(n / d.TotalRawCites * 100) + "% of raw";
+            }
+
+            function pctOfPotential(n) {
+                if (totalPotential === 0) return "0%";
+                return Math.round(n / totalPotential * 100) + "% of potential";
+            }
+
+            function setStatWithPct(id, value, pctFn, fmtFn) {
+                const el = document.getElementById(id);
+                el.textContent = (fmtFn || fmtMillions)(value);
+                el.classList.remove("placeholder-number");
+                const sub = document.createElement("span");
+                sub.style.cssText = "font-size:0.85rem;font-weight:400;color:#6c757d;margin-left:0.4rem;";
+                sub.textContent = "(" + pctFn(value) + ")";
+                el.append(sub);
+            }
+
+            // Row 1: raw totals
+            setStat("stat-raw", d.TotalRawCites);
+            setStatWithPct("stat-potential-raw", totalPotential, pctOfRaw);
+            setStatWithPct("stat-junk", d.SkippedJunk, pctOfRaw);
+            setStatWithPct("stat-statutes", d.SkippedStatute, pctOfRaw);
+
+            // Row 2: potential cites breakdown with percentages
+            setStat("stat-potential", totalPotential);
+            setStatWithPct("stat-linked-pct", totalLinked, pctOfPotential);
+            setStatWithPct("stat-nomatch", d.NoMatch, pctOfPotential);
+            setStatWithPct("stat-notwl", d.SkippedNotWhiteListed, pctOfPotential);
+
+            // Row 3: linked cites breakdown
+            function pctOfLinked(n) {
+                if (totalLinked === 0) return "0%";
+                return Math.round(n / totalLinked * 100) + "% of linked";
+            }
+            setStat("stat-linked-total", totalLinked);
+            setStatWithPct("stat-linked-cap", d.LinkedCAP, pctOfLinked);
+            setStatWithPct("stat-linked-er", d.LinkedEnglishReports, pctOfLinked);
+            setStatWithPct("stat-linked-code", d.LinkedCodeReporter, pctOfLinked, fmt);
+
+            // Build stacked bar chart
+            const categories = [
+                { status: "Linked (CAP)", n: d.LinkedCAP, color: "#198754" },
+                { status: "Linked (English Reports)", n: d.LinkedEnglishReports, color: "#0d6efd" },
+                { status: "Linked (Code Reporter)", n: d.LinkedCodeReporter, color: "#0dcaf0" },
+                { status: "Not whitelisted", n: d.SkippedNotWhiteListed, color: "#e87a7a" },
+                { status: "No match", n: d.NoMatch, color: "#dc3545" },
+            ];
+
+            const colorMap = new Map(categories.map(c => [c.status, c.color]));
+            const order = categories.map(c => c.status);
+
+            const container = document.getElementById("chart-container");
+            container.innerHTML = "";
+
+            const chart = Plot.plot({
+                width: container.clientWidth,
+                height: 80,
+                x: { label: "Citations", tickFormat: v => Math.round(v / 1_000_000) + "M" },
+                y: { axis: null },
+                color: { domain: order, range: order.map(s => colorMap.get(s)) },
+                marks: [
+                    Plot.barX(categories, Plot.stackX({
+                        x: "n",
+                        fill: "status",
+                        order: d => order.indexOf(d.status),
+                        title: d => `${d.status}: ${fmt(d.n)}`,
+                    })),
+                    Plot.text(categories.filter(c => c.n > 0), Plot.stackX({
+                        x: "n",
+                        text: d => fmt(d.n),
+                        order: d => order.indexOf(d.status),
+                        fill: "white",
+                        fontSize: 12,
+                        fontWeight: 600,
+                    })),
+                ],
+            });
+
+            // Add a legend below the chart
+            const legend = document.createElement("div");
+            legend.style.cssText = "display:flex;flex-wrap:wrap;gap:1rem;margin-top:0.5rem;font-size:0.8rem;";
+            for (const c of categories) {
+                const item = document.createElement("span");
+                item.innerHTML = `<span style="display:inline-block;width:12px;height:12px;background:${c.color};border-radius:2px;margin-right:4px;vertical-align:middle;"></span>${c.status}`;
+                legend.append(item);
+            }
+
+            container.append(chart);
+            container.append(legend);
+
+            // Reporter bar chart
+            if (d.Reporters && d.Reporters.length > 0) {
+                const reporterData = [];
+                for (const r of d.Reporters) {
+                    const displayName = r.uk ? r.reporter + " (UK)" : r.reporter;
+                    reporterData.push({ reporter: displayName, status: "Linked", n: r.linked });
+                    reporterData.push({ reporter: displayName, status: "No match", n: r.noMatch });
+                    reporterData.push({ reporter: displayName, status: "Unprocessed", n: r.unprocessed });
+                }
+
+                const reporterOrder = d.Reporters.map(r => r.uk ? r.reporter + " (UK)" : r.reporter);
+
+                const reporterContainer = document.getElementById("reporter-chart-container");
+                reporterContainer.innerHTML = "";
+
+                const barHeight = 20;
+                const chartHeight = reporterOrder.length * barHeight + 40;
+
+                const reporterChart = Plot.plot({
+                    width: reporterContainer.clientWidth,
+                    height: chartHeight,
+                    marginLeft: 200,
+                    x: { label: "Citations", tickFormat: v => fmt(v) },
+                    y: { label: null, domain: reporterOrder },
+                    color: {
+                        domain: ["Linked", "No match", "Unprocessed"],
+                        range: ["#198754", "#dc3545", "#adb5bd"],
+                    },
+                    marks: [
+                        Plot.barX(reporterData, Plot.stackX({
+                            x: "n",
+                            y: "reporter",
+                            fill: "status",
+                            order: d => ["Linked", "No match", "Unprocessed"].indexOf(d.status),
+                            title: d => `${d.reporter} — ${d.status}: ${fmt(d.n)}`,
+                        })),
+                    ],
+                });
+
+                reporterContainer.append(reporterChart);
+
+                // Make y-axis reporter labels clickable.
+                const reporterNameSet = new Set(reporterOrder);
+                reporterChart.querySelectorAll("text").forEach(text => {
+                    const name = text.textContent.trim();
+                    if (!reporterNameSet.has(name)) return;
+                    text.style.cursor = "pointer";
+                    text.addEventListener("click", () => {
+                        const rawName = name.replace(/ \(UK\)$/, "");
+                        window.location.href = "/reporters/check?r=" + encodeURIComponent(rawName);
+                    });
+                });
+            }
+        } catch (err) {
+            document.getElementById("chart-container").innerHTML =
+                '<div class="text-danger">Failed to load dashboard data: ' + err.message + '</div>';
+        }
+    </script>
+{{end}}

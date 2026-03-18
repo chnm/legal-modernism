@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check citations via reporter_standard &mdash; Chambers</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
-        h1 { font-size: 1.2rem; }
-        .back { font-size: 0.85rem; }
-        a { color: #0366d6; }
-        .count { color: #777; font-size: 0.85rem; }
-        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 1rem 0; }
-        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
-        details.query summary { cursor: pointer; color: #777; }
-        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
-    </style>
-</head>
-<body>
-    <a href="/" class="back">&larr; Chambers</a>
-    <h1>Check citations via <code>reporter_standard</code></h1>
+{{define "title"}}Check citations via reporter_standard &mdash; Chambers{{end}}
 
-    <p class="about">
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">Check citations via <code>reporter_standard</code></h1>
+
+    <p class="small text-secondary">
         This page lists every distinct <code>reporter_standard</code> value from the
         <code>legalhist.reporters_citation_to_cap</code> whitelist table. This table maps
         the many variant abbreviations found in MOML treatises (the <code>reporter_found</code>
@@ -30,15 +17,14 @@
         raw citations from <code>moml_citations.citations_unlinked</code> whose
         <code>reporter_abbr</code> matches one of the variant abbreviations for that standard reporter.
     </p>
-    <details class="query">
-        <summary>Show SQL query</summary>
-        <pre>SELECT reporter_standard, count(*) AS n
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT reporter_standard, count(*) AS n
 FROM legalhist.reporters_citation_to_cap
 WHERE reporter_standard IS NOT NULL
 GROUP BY reporter_standard
-ORDER BY reporter_standard</pre>
+ORDER BY reporter_standard</code></pre>
     </details>
 
-    <p style="line-height: 2">{{range $i, $r := .Reporters}}{{if $i}} &middot; {{end}}<a href="/reporters/check?r={{$r.Name}}">{{$r.Name}}</a> <span class="count">({{$r.Count}})</span>{{end}}</p>
-</body>
-</html>
+    <p style="line-height: 2">{{range $i, $r := .Reporters}}{{if $i}} &middot; {{end}}<a href="/reporters/check?r={{$r.Name}}">{{$r.Name}}</a> <span class="text-secondary small">({{$r.Count}})</span>{{end}}</p>
+{{end}}

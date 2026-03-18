@@ -1,35 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Citation {{.Cite.ID}} &mdash; Chambers</title>
-    <style>
-        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; color: #333; font-size: 0.9rem; line-height: 1.4; }
-        h1 { font-size: 1.1rem; margin: 0.5rem 0; }
-        h2 { font-size: 0.95rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; margin: 1rem 0 0.3rem; }
-        a { color: #0366d6; }
-        .back { font-size: 0.85rem; }
-        .grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
-        .label { color: #555; white-space: nowrap; }
-        .status { font-weight: 600; }
+{{define "title"}}Citation {{.Cite.ID}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+        .detail-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
+        .detail-grid .label { white-space: nowrap; }
         .status-linked { color: #28a745; }
         .status-skipped { color: #b08800; }
-        pre.ocrtext { background: #f6f6f6; padding: 0.8rem; white-space: pre-wrap; word-wrap: break-word; font-size: 0.8rem; max-height: 30rem; overflow-y: auto; border: 1px solid #ddd; margin: 0.3rem 0; }
-        .none { color: #999; font-style: italic; }
-        mark { background: #fff3a8; }
-        .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; }
-        .about { font-size: 0.85rem; color: #555; line-height: 1.5; margin: 0.5rem 0; }
-        details.query { font-size: 0.8rem; margin: 0.5rem 0; }
-        details.query summary { cursor: pointer; color: #777; }
-        details.query pre { background: #f6f6f6; padding: 0.5rem; border: 1px solid #ddd; overflow-x: auto; margin-top: 0.3rem; }
-    </style>
-</head>
-<body>
-    <a href="/cite" class="back">&larr; Citation lookup</a>
-    <h1>{{.Cite.ID}}</h1>
+        pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; max-height: 30rem; overflow-y: auto; }
+{{end}}
 
-    <p class="about">
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <a href="/cite" class="small">&larr; Citation lookup</a>
+    <h1 class="h5 my-2">{{.Cite.ID}}</h1>
+
+    <p class="small text-secondary">
         This page shows a single detected citation and all data associated with it. <strong>Detected</strong>
         shows the raw string as it was extracted from the MOML page OCR text, along with the parsed
         volume, reporter abbreviation, and page number. <strong>Linking</strong> shows the result of
@@ -43,9 +30,9 @@
         metadata and the full OCR text of the page where this citation was found, with the raw citation
         string highlighted.
     </p>
-    <details class="query">
-        <summary>Show SQL query</summary>
-        <pre>SELECT
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT
     cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page,
     cu.moml_treatise, cu.moml_page,
     cl.status, cl.cite_cleaned, cl.cite_normalized, cl.cite_linked,
@@ -68,72 +55,71 @@ LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
 LEFT JOIN moml.page mp ON mp.pageid = cu.moml_page
 LEFT JOIN moml.page_ocrtext po ON po.psmid = cu.moml_treatise AND po.pageid = cu.moml_page
 WHERE cu.id = $1
-LIMIT 1</pre>
+LIMIT 1</code></pre>
     </details>
 
-    <div class="cols">
-    <div>
-    <h2>Detected</h2>
-    <div class="grid">
-        <span class="label">Raw</span><span>{{.Cite.Raw}}</span>
-        <span class="label">Parsed</span><span>{{if .Cite.Volume}}{{deref .Cite.Volume}}{{else}}?{{end}} {{.Cite.ReporterAbbr}} {{.Cite.Page}}</span>
+    <div class="row">
+    <div class="col-md-6">
+    <h2 class="h6 border-bottom pb-1 mt-3">Detected</h2>
+    <div class="detail-grid">
+        <span class="label text-secondary">Raw</span><span>{{.Cite.Raw}}</span>
+        <span class="label text-secondary">Parsed</span><span>{{if .Cite.Volume}}{{deref .Cite.Volume}}{{else}}?{{end}} {{.Cite.ReporterAbbr}} {{.Cite.Page}}</span>
     </div>
 
-    <h2>Linking</h2>
+    <h2 class="h6 border-bottom pb-1 mt-3">Linking</h2>
     {{if .Cite.Status}}
-    <div class="grid">
-        <span class="label">Status</span><span class="status {{if .Cite.HasLink}}status-linked{{else}}status-skipped{{end}}">{{derefStr .Cite.Status}}</span>
-        <span class="label">Cleaned</span><span>{{ptrOr .Cite.CiteCleaned "&mdash;"}}</span>
-        <span class="label">Normalized</span><span>{{ptrOr .Cite.CiteNormalized "&mdash;"}}</span>
-        <span class="label">Linked</span><span>{{ptrOr .Cite.CiteLinked "&mdash;"}}</span>
+    <div class="detail-grid">
+        <span class="label text-secondary">Status</span><span class="fw-semibold {{if .Cite.HasLink}}status-linked{{else}}status-skipped{{end}}">{{derefStr .Cite.Status}}</span>
+        <span class="label text-secondary">Cleaned</span><span>{{ptrOr .Cite.CiteCleaned "&mdash;"}}</span>
+        <span class="label text-secondary">Normalized</span><span>{{ptrOr .Cite.CiteNormalized "&mdash;"}}</span>
+        <span class="label text-secondary">Linked</span><span>{{ptrOr .Cite.CiteLinked "&mdash;"}}</span>
     </div>
-    {{else}}<p class="none">Not yet linked.</p>{{end}}
+    {{else}}<p class="text-secondary fst-italic">Not yet linked.</p>{{end}}
     </div>
 
-    <div>
-    <h2>Case</h2>
+    <div class="col-md-6">
+    <h2 class="h6 border-bottom pb-1 mt-3">Case</h2>
     {{if .Cite.IsCAP}}
-    <div class="grid">
-        <span class="label">Source</span><span>CAP</span>
-        <span class="label">Name</span><span>{{ptrOr .Cite.CAPCaseAbbr "&mdash;"}}</span>
-        <span class="label">Full name</span><span>{{ptrOr .Cite.CAPCaseName "&mdash;"}}</span>
-        <span class="label">Year</span><span>{{if .Cite.CAPYear}}{{deref .Cite.CAPYear}}{{else}}&mdash;{{end}}</span>
-        <span class="label">Reporter</span><span>{{ptrOr .Cite.CAPVolume ""}} {{ptrOr .Cite.CAPReporter "&mdash;"}}</span>
-        <span class="label">Court</span><span>{{ptrOr .Cite.CAPCourt "&mdash;"}} ({{ptrOr .Cite.CAPJurisdiction ""}})</span>
-        {{if .Cite.CAPURL}}<span class="label">URL</span><span><a href="{{derefStr .Cite.CAPURL}}" target="_blank">link</a></span>{{end}}
+    <div class="detail-grid">
+        <span class="label text-secondary">Source</span><span>CAP</span>
+        <span class="label text-secondary">Name</span><span>{{ptrOr .Cite.CAPCaseAbbr "&mdash;"}}</span>
+        <span class="label text-secondary">Full name</span><span>{{ptrOr .Cite.CAPCaseName "&mdash;"}}</span>
+        <span class="label text-secondary">Year</span><span>{{if .Cite.CAPYear}}{{deref .Cite.CAPYear}}{{else}}&mdash;{{end}}</span>
+        <span class="label text-secondary">Reporter</span><span>{{ptrOr .Cite.CAPVolume ""}} {{ptrOr .Cite.CAPReporter "&mdash;"}}</span>
+        <span class="label text-secondary">Court</span><span>{{ptrOr .Cite.CAPCourt "&mdash;"}} ({{ptrOr .Cite.CAPJurisdiction ""}})</span>
+        {{if .Cite.CAPURL}}<span class="label text-secondary">URL</span><span><a href="{{derefStr .Cite.CAPURL}}" target="_blank">link</a></span>{{end}}
     </div>
     {{else if .Cite.IsCodeReporter}}
-    <div class="grid">
-        <span class="label">Source</span><span>Code Reporter</span>
-        <span class="label">Name</span><span>{{ptrOr .Cite.CodeName "&mdash;"}}</span>
-        <span class="label">Citation</span><span>{{ptrOr .Cite.CodeCite "&mdash;"}}</span>
-        <span class="label">Year</span><span>{{if .Cite.CodeYear}}{{deref .Cite.CodeYear}}{{else}}&mdash;{{end}}</span>
+    <div class="detail-grid">
+        <span class="label text-secondary">Source</span><span>Code Reporter</span>
+        <span class="label text-secondary">Name</span><span>{{ptrOr .Cite.CodeName "&mdash;"}}</span>
+        <span class="label text-secondary">Citation</span><span>{{ptrOr .Cite.CodeCite "&mdash;"}}</span>
+        <span class="label text-secondary">Year</span><span>{{if .Cite.CodeYear}}{{deref .Cite.CodeYear}}{{else}}&mdash;{{end}}</span>
     </div>
     {{else if .Cite.IsEnglishReports}}
-    <div class="grid">
-        <span class="label">Source</span><span>English Reports</span>
-        <span class="label">Name</span><span>{{ptrOr .Cite.ERName "&mdash;"}}</span>
-        <span class="label">Citation</span><span>{{ptrOr .Cite.ERCite "&mdash;"}}</span>
-        <span class="label">Year</span><span>{{if .Cite.ERYear}}{{deref .Cite.ERYear}}{{else}}&mdash;{{end}}</span>
-        <span class="label">Court</span><span>{{ptrOr .Cite.ERCourt "&mdash;"}}</span>
+    <div class="detail-grid">
+        <span class="label text-secondary">Source</span><span>English Reports</span>
+        <span class="label text-secondary">Name</span><span>{{ptrOr .Cite.ERName "&mdash;"}}</span>
+        <span class="label text-secondary">Citation</span><span>{{ptrOr .Cite.ERCite "&mdash;"}}</span>
+        <span class="label text-secondary">Year</span><span>{{if .Cite.ERYear}}{{deref .Cite.ERYear}}{{else}}&mdash;{{end}}</span>
+        <span class="label text-secondary">Court</span><span>{{ptrOr .Cite.ERCourt "&mdash;"}}</span>
     </div>
-    {{else}}<p class="none">No case linked.</p>{{end}}
+    {{else}}<p class="text-secondary fst-italic">No case linked.</p>{{end}}
     </div>
     </div>
 
-    <h2>MOML Source</h2>
-    <div class="grid">
-        <span class="label">Title</span><span>{{if .Cite.MomlVolumeURL}}<a href="{{.Cite.MomlVolumeURL}}" target="_blank">{{ptrOr .Cite.BookTitle "&mdash;"}}</a>{{else}}{{ptrOr .Cite.BookTitle "&mdash;"}}{{end}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
-        <span class="label">Author</span><span>{{ptrOr .Cite.Author "&mdash;"}}</span>
-        <span class="label">Printed page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}}</span>
-        <span class="label">Image page</span><span>{{if .Cite.MomlPageURL}}<a href="{{.Cite.MomlPageURL}}" target="_blank">{{.Cite.MomlPage}}</a>{{else}}{{.Cite.MomlPage}}{{end}}</span>
-        <span class="label">Treatise</span><span>{{.Cite.MomlTreatise}}</span>
+    <h2 class="h6 border-bottom pb-1 mt-3">MOML Source</h2>
+    <div class="detail-grid">
+        <span class="label text-secondary">Title</span><span>{{if .Cite.MomlVolumeURL}}<a href="{{.Cite.MomlVolumeURL}}" target="_blank">{{ptrOr .Cite.BookTitle "&mdash;"}}</a>{{else}}{{ptrOr .Cite.BookTitle "&mdash;"}}{{end}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
+        <span class="label text-secondary">Author</span><span>{{ptrOr .Cite.Author "&mdash;"}}</span>
+        <span class="label text-secondary">Printed page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}}</span>
+        <span class="label text-secondary">Image page</span><span>{{if .Cite.MomlPageURL}}<a href="{{.Cite.MomlPageURL}}" target="_blank">{{.Cite.MomlPage}}</a>{{else}}{{.Cite.MomlPage}}{{end}}</span>
+        <span class="label text-secondary">Treatise</span><span>{{.Cite.MomlTreatise}}</span>
     </div>
 
     {{if .Cite.OCRText}}
-    <pre class="ocrtext">{{highlightRaw (derefStr .Cite.OCRText) .Cite.Raw}}</pre>
+    <pre class="ocrtext bg-light border rounded p-3 mt-2 small">{{highlightRaw (derefStr .Cite.OCRText) .Cite.Raw}}</pre>
     {{else}}
-    <p class="none">No OCR text available.</p>
+    <p class="text-secondary fst-italic">No OCR text available.</p>
     {{end}}
-</body>
-</html>
+{{end}}

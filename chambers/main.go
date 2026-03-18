@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
-	"log/slog"
 	"io/fs"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
@@ -62,6 +63,27 @@ func init() {
 	initLogger()
 }
 
+// parseTemplates parses each page template together with baseof.html so that
+// block overrides work correctly.
+func parseTemplates() map[string]*template.Template {
+	pages := []string{
+		"home.html",
+		"detail.html",
+		"cite-lookup.html",
+		"reporters.html",
+		"reporter-cites.html",
+		"dashboard.html",
+	}
+	tmpls := make(map[string]*template.Template, len(pages))
+	for _, page := range pages {
+		t := template.Must(
+			template.New("").Funcs(funcMap).ParseFS(templateFS, "templates/baseof.html", "templates/"+page),
+		)
+		tmpls[page] = t
+	}
+	return tmpls
+}
+
 func main() {
 	var port int
 	flag.IntVar(&port, "port", 4567, "port to listen on")
@@ -86,21 +108,26 @@ func main() {
 	defer pool.Close()
 	slog.Info("connected to database", "database", db.Host())
 
-	tmpl := template.Must(template.New("").Funcs(funcMap).ParseFS(templateFS, "templates/*.html"))
+	tmpls := parseTemplates()
+	slog.Debug("parsed templates", "count", len(tmpls))
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handleHome(w, r, tmpl)
+		handleHome(w, r, tmpls["home.html"])
 	})
 	mux.HandleFunc("/cite", func(w http.ResponseWriter, r *http.Request) {
-		handleCiteLookup(w, r, tmpl)
+		handleCiteLookup(w, r, tmpls["cite-lookup.html"], tmpls["detail.html"])
 	})
 	mux.HandleFunc("/reporters", func(w http.ResponseWriter, r *http.Request) {
-		handleReporters(w, r, tmpl)
+		handleReporters(w, r, tmpls["reporters.html"])
 	})
 	mux.HandleFunc("/reporters/check", func(w http.ResponseWriter, r *http.Request) {
-		handleReporterCites(w, r, tmpl)
+		handleReporterCites(w, r, tmpls["reporter-cites.html"])
 	})
+	mux.HandleFunc("/linking-dashboard", func(w http.ResponseWriter, r *http.Request) {
+		handleDashboard(w, r, tmpls["dashboard.html"])
+	})
+	mux.HandleFunc("/api/linking-dashboard", handleDashboardAPI)
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 
@@ -132,32 +159,38 @@ func main() {
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "home")
 	if r.URL.Path != "/" {
+		slog.Debug("not found", "path", r.URL.Path)
 		http.NotFound(w, r)
 		return
 	}
-	if err := tmpl.ExecuteTemplate(w, "home.html", nil); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
 		slog.Error("error rendering home", "error", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 	}
 }
 
-func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+func handleCiteLookup(w http.ResponseWriter, r *http.Request, lookupTmpl, detailTmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "cite-lookup")
 	idStr := r.URL.Query().Get("id")
 	if idStr == "" {
+		slog.Debug("rendering cite-lookup form (no id)")
 		data := struct{ Error string }{}
-		if err := tmpl.ExecuteTemplate(w, "cite-lookup.html", data); err != nil {
+		if err := lookupTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 			slog.Error("error rendering cite-lookup", "error", err)
 			http.Error(w, "Internal server error", http.StatusInternalServerError)
 		}
 		return
 	}
 
+	slog.Debug("cite lookup requested", "id", idStr)
 	id, err := uuid.Parse(idStr)
 	if err != nil {
+		slog.Debug("invalid UUID", "id", idStr)
 		w.WriteHeader(http.StatusBadRequest)
 		data := struct{ Error string }{Error: fmt.Sprintf("Invalid UUID: %s", idStr)}
-		tmpl.ExecuteTemplate(w, "cite-lookup.html", data)
+		lookupTmpl.ExecuteTemplate(w, "baseof", data)
 		return
 	}
 
@@ -167,9 +200,10 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 	cite, err := getCitationDetail(ctx, pool, id)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
+			slog.Debug("citation not found", "id", id)
 			w.WriteHeader(http.StatusNotFound)
 			data := struct{ Error string }{Error: fmt.Sprintf("Citation not found: %s", id)}
-			tmpl.ExecuteTemplate(w, "cite-lookup.html", data)
+			lookupTmpl.ExecuteTemplate(w, "baseof", data)
 			return
 		}
 		slog.Error("error querying citation", "id", id, "error", err)
@@ -177,13 +211,15 @@ func handleCiteLookup(w http.ResponseWriter, r *http.Request, tmpl *template.Tem
 		return
 	}
 
+	slog.Debug("rendering citation detail", "id", id, "status", cite.Status)
 	data := struct{ Cite *CitationDetail }{Cite: cite}
-	if err := tmpl.ExecuteTemplate(w, "detail.html", data); err != nil {
+	if err := detailTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering detail", "id", id, "error", err)
 	}
 }
 
 func handleReporters(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "reporters")
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
 	defer cancel()
 
@@ -194,19 +230,54 @@ func handleReporters(w http.ResponseWriter, r *http.Request, tmpl *template.Temp
 		return
 	}
 
+	slog.Debug("rendering reporters page", "count", len(reporters))
 	data := struct{ Reporters []ReporterStandard }{Reporters: reporters}
-	if err := tmpl.ExecuteTemplate(w, "reporters.html", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporters", "error", err)
 	}
 }
 
+func handleDashboard(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "dashboard")
+	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
+		slog.Error("error rendering dashboard", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func handleDashboardAPI(w http.ResponseWriter, r *http.Request) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "dashboard-api")
+	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
+	defer cancel()
+
+	slog.Debug("fetching dashboard data from database")
+	data, err := getDashboardData(ctx, pool)
+	if err != nil {
+		slog.Error("error querying dashboard data", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	slog.Debug("sending dashboard JSON response",
+		"total_raw_cites", data.TotalRawCites,
+		"total_linked", data.TotalLinked(),
+	)
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		slog.Error("error encoding dashboard JSON", "error", err)
+	}
+}
+
 func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "reporter-cites")
 	reporter := r.URL.Query().Get("r")
 	if reporter == "" {
+		slog.Debug("no reporter specified, redirecting to /reporters")
 		http.Redirect(w, r, "/reporters", http.StatusFound)
 		return
 	}
 
+	slog.Debug("looking up reporter cites", "reporter", reporter)
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
 	defer cancel()
 
@@ -224,12 +295,13 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 		return
 	}
 
+	slog.Debug("rendering reporter cites", "reporter", reporter, "variants", len(variants), "cites", len(cites))
 	data := struct {
 		Reporter string
 		Variants []string
 		Cites    []ReporterCite
 	}{Reporter: reporter, Variants: variants, Cites: cites}
-	if err := tmpl.ExecuteTemplate(w, "reporter-cites.html", data); err != nil {
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
 	}
 }

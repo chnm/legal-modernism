@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"strings"
 
 	"github.com/google/uuid"
@@ -165,6 +166,7 @@ type ReporterStandard struct {
 }
 
 func getReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]ReporterStandard, error) {
+	slog.Debug("querying reporter standards")
 	query := `
 	SELECT reporter_standard, count(*) AS n
 	FROM legalhist.reporters_citation_to_cap
@@ -186,6 +188,7 @@ func getReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]ReporterStan
 		}
 		results = append(results, r)
 	}
+	slog.Debug("fetched reporter standards", "count", len(results))
 	return results, rows.Err()
 }
 
@@ -215,6 +218,7 @@ func (r *ReporterCite) StatusClass() string {
 }
 
 func getReporterVariants(ctx context.Context, db *pgxpool.Pool, reporterStandard string) ([]string, error) {
+	slog.Debug("querying reporter variants", "reporter", reporterStandard)
 	query := `
 	SELECT reporter_found
 	FROM legalhist.reporters_citation_to_cap
@@ -235,10 +239,12 @@ func getReporterVariants(ctx context.Context, db *pgxpool.Pool, reporterStandard
 		}
 		results = append(results, v)
 	}
+	slog.Debug("fetched reporter variants", "reporter", reporterStandard, "count", len(results))
 	return results, rows.Err()
 }
 
 func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard string) ([]ReporterCite, error) {
+	slog.Debug("querying cites for reporter", "reporter", reporterStandard)
 	query := `
 	SELECT cu.id, cu.raw, cl.status
 	FROM moml_citations.citations_unlinked cu
@@ -265,10 +271,135 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 		c.Raw = strings.ReplaceAll(c.Raw, "\r", " ")
 		results = append(results, c)
 	}
+	slog.Debug("fetched cites for reporter", "reporter", reporterStandard, "count", len(results))
 	return results, rows.Err()
 }
 
+// ReporterStats holds linked and no-match counts for a single reporter_standard.
+type ReporterStats struct {
+	Reporter    string `json:"reporter"`
+	Linked      int    `json:"linked"`
+	NoMatch     int    `json:"noMatch"`
+	Unprocessed int    `json:"unprocessed"`
+	UK          bool   `json:"uk"`
+}
+
+// DashboardData holds aggregated linking status data for the dashboard.
+type DashboardData struct {
+	LinkedCAP             int
+	LinkedEnglishReports  int
+	LinkedCodeReporter    int
+	SkippedNotWhiteListed int
+	NoMatch               int
+	SkippedJunk           int
+	SkippedStatute        int
+	TotalRawCites         int
+	Reporters             []ReporterStats `json:"Reporters,omitempty"`
+}
+
+// TotalLinked returns the sum of all linked statuses.
+func (d *DashboardData) TotalLinked() int {
+	return d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter
+}
+
+func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, error) {
+	d := &DashboardData{}
+
+	// Get counts by status from the view
+	slog.Debug("querying citation links status view")
+	rows, err := db.Query(ctx, `SELECT status, n FROM moml_citations.citation_links_status`)
+	if err != nil {
+		return nil, fmt.Errorf("querying citation links status: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var status string
+		var n int
+		if err := rows.Scan(&status, &n); err != nil {
+			return nil, fmt.Errorf("scanning citation links status: %w", err)
+		}
+		slog.Debug("citation links status row", "status", status, "n", n)
+		switch status {
+		case "linked_cap":
+			d.LinkedCAP = n
+		case "linked_english_reports":
+			d.LinkedEnglishReports = n
+		case "linked_code_reporter":
+			d.LinkedCodeReporter = n
+		case "skipped_not_whitelisted":
+			d.SkippedNotWhiteListed = n
+		case "no_match":
+			d.NoMatch = n
+		case "skipped_junk":
+			d.SkippedJunk = n
+		case "skipped_statute":
+			d.SkippedStatute = n
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating citation links status: %w", err)
+	}
+	slog.Debug("finished querying citation links status view")
+
+	// Get total raw citations count
+	slog.Debug("counting total raw citations")
+	err = db.QueryRow(ctx, `SELECT count(*) FROM moml_citations.citations_unlinked`).Scan(&d.TotalRawCites)
+	if err != nil {
+		return nil, fmt.Errorf("counting raw citations: %w", err)
+	}
+	// Get per-reporter linking stats
+	slog.Debug("querying per-reporter linking stats")
+	reporterRows, err := db.Query(ctx, `
+		SELECT
+			wl.reporter_standard,
+			count(*) FILTER (WHERE cl.status LIKE 'linked%') AS linked,
+			count(*) FILTER (WHERE cl.status = 'no_match') AS no_match,
+			count(*) FILTER (WHERE cl.status IS NULL) AS unprocessed,
+			bool_or(wl.uk) AS uk
+		FROM moml_citations.citations_unlinked cu
+		JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
+		LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+		WHERE wl.reporter_standard IS NOT NULL
+		  AND wl.statute = false
+		  AND wl.junk = false
+		GROUP BY wl.reporter_standard
+		ORDER BY count(*) DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("querying reporter stats: %w", err)
+	}
+	defer reporterRows.Close()
+
+	for reporterRows.Next() {
+		var r ReporterStats
+		if err := reporterRows.Scan(&r.Reporter, &r.Linked, &r.NoMatch, &r.Unprocessed, &r.UK); err != nil {
+			return nil, fmt.Errorf("scanning reporter stats: %w", err)
+		}
+		d.Reporters = append(d.Reporters, r)
+	}
+	if err := reporterRows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating reporter stats: %w", err)
+	}
+	slog.Debug("fetched reporter stats", "count", len(d.Reporters))
+
+	slog.Debug("dashboard data complete",
+		"linked_cap", d.LinkedCAP,
+		"linked_english_reports", d.LinkedEnglishReports,
+		"linked_code_reporter", d.LinkedCodeReporter,
+		"skipped_not_whitelisted", d.SkippedNotWhiteListed,
+		"no_match", d.NoMatch,
+		"skipped_junk", d.SkippedJunk,
+		"skipped_statutes", d.SkippedStatute,
+		"total_raw_cites", d.TotalRawCites,
+		"reporters", len(d.Reporters),
+	)
+
+	return d, nil
+}
+
 func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*CitationDetail, error) {
+	slog.Debug("querying citation detail", "id", id)
 	var c CitationDetail
 	err := db.QueryRow(ctx, citationDetailQuery, id).Scan(
 		&c.ID,
@@ -308,5 +439,6 @@ func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*Ci
 	if err != nil {
 		return nil, fmt.Errorf("querying citation detail for %s: %w", id, err)
 	}
+	slog.Debug("fetched citation detail", "id", id, "status", c.Status, "reporter_abbr", c.ReporterAbbr)
 	return &c, nil
 }
