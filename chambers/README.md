@@ -10,7 +10,7 @@ go run ./chambers/ --port 8080
 gow run ./chambers/           # auto-restart on file changes
 ```
 
-Requires `LAW_DBSTR` environment variable with a PostgreSQL connection string.
+Requires a database connection configured via `LAW_DBSTR` or the individual `LAW_DB_*` environment variables (see the repository [README](../README.md#configuration)).
 
 ## Architecture
 

@@ -37,7 +37,13 @@ These programs run the various data creation tasks for the project.
 
 ### Configuration
 
-- `LAW_DBSTR`: Most of the programs in this repository expect this environment variable to be set with a PostgreSQL connection string in the form `postgresql://user:password@ipaddress:5432/database?connect_timeout=15&pool_max_conns=8`.
+- `LAW_DBSTR`: Most of the programs in this repository expect a PostgreSQL connection string in the form `postgresql://user:password@host:5432/database?connect_timeout=15&pool_max_conns=8`. If `LAW_DBSTR` is not set, the connection string is assembled from the individual variables below.
+- `LAW_DB_NAME`: Database name (required if `LAW_DBSTR` is not set).
+- `LAW_DB_USER`: Database user (required if `LAW_DBSTR` is not set).
+- `LAW_DB_PASS`: Database password (required if `LAW_DBSTR` is not set).
+- `LAW_DB_HOST`: Database host (required if `LAW_DBSTR` is not set).
+- `LAW_DB_PORT`: Database port (optional, defaults to `5432`).
+- `LAW_DB_PARAMS`: Query parameters appended to the connection string (optional, e.g., `connect_timeout=15&pool_max_conns=8`).
 - `LAW_DEBUG`: An optional environment variable, which can be set to `debug` or `true` to get more verbose logging output.
 
 ## License
