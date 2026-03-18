@@ -244,15 +244,15 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
 
             // Reporter bar chart
             if (d.Reporters && d.Reporters.length > 0) {
-                const ukSet = new Set(d.Reporters.filter(r => r.uk).map(r => r.reporter));
                 const reporterData = [];
                 for (const r of d.Reporters) {
-                    reporterData.push({ reporter: r.reporter, status: "Linked", n: r.linked });
-                    reporterData.push({ reporter: r.reporter, status: "No match", n: r.noMatch });
-                    reporterData.push({ reporter: r.reporter, status: "Unprocessed", n: r.unprocessed });
+                    const displayName = r.uk ? r.reporter + " (UK)" : r.reporter;
+                    reporterData.push({ reporter: displayName, status: "Linked", n: r.linked });
+                    reporterData.push({ reporter: displayName, status: "No match", n: r.noMatch });
+                    reporterData.push({ reporter: displayName, status: "Unprocessed", n: r.unprocessed });
                 }
 
-                const reporterOrder = d.Reporters.map(r => r.reporter);
+                const reporterOrder = d.Reporters.map(r => r.uk ? r.reporter + " (UK)" : r.reporter);
 
                 const reporterContainer = document.getElementById("reporter-chart-container");
                 reporterContainer.innerHTML = "";
@@ -283,17 +283,15 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
 
                 reporterContainer.append(reporterChart);
 
-                // Color y-axis labels by UK/US and make them clickable.
+                // Make y-axis reporter labels clickable.
                 const reporterNameSet = new Set(reporterOrder);
                 reporterChart.querySelectorAll("text").forEach(text => {
                     const name = text.textContent.trim();
                     if (!reporterNameSet.has(name)) return;
-                    const color = ukSet.has(name) ? "#c2185b" : "#1565c0";
-                    text.setAttribute("fill", color);
-                    text.style.fill = color;
                     text.style.cursor = "pointer";
                     text.addEventListener("click", () => {
-                        window.location.href = "/reporters/check?r=" + encodeURIComponent(name);
+                        const rawName = name.replace(/ \(UK\)$/, "");
+                        window.location.href = "/reporters/check?r=" + encodeURIComponent(rawName);
                     });
                 });
             }
