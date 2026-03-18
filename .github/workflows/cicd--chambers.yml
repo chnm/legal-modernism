@@ -3,8 +3,7 @@ name: Build & Publish chambers Docker Image
 on:
   push:
     branches: [
-      "main",
-      "issue156"
+      "main"
     ]
     paths:
       - "chambers/**"
