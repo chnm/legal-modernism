@@ -1,0 +1,47 @@
+{{define "title"}}Whitelist extender &mdash; Chambers{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">Whitelist extender</h1>
+
+    <p class="small text-secondary">
+        Top 100 reporter abbreviations from <code>moml_citations.citations_unlinked</code>
+        that do not appear in the whitelist table
+        (<code>legalhist.reporters_citation_to_cap</code>). The count shows how many
+        citations reference each abbreviation. Adding an abbreviation to the whitelist
+        and reprocessing would allow that many citations to be linked.
+    </p>
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.reporter_abbr, count(*) AS n
+FROM moml_citations.citations_unlinked cu
+LEFT JOIN legalhist.reporters_citation_to_cap wl
+  ON cu.reporter_abbr = wl.reporter_found
+WHERE wl.reporter_found IS NULL
+GROUP BY cu.reporter_abbr
+ORDER BY n DESC
+LIMIT 100</code></pre>
+    </details>
+
+    <table class="table table-sm table-striped small">
+        <thead>
+            <tr>
+                <th class="text-end" style="width: 3em">#</th>
+                <th>Reporter abbreviation</th>
+                <th class="text-end">Citations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range $i, $r := .Reporters}}
+            <tr>
+                <td class="text-end text-secondary">{{$i | add1}}</td>
+                <td><code>{{$r.ReporterAbbr}}</code></td>
+                <td class="text-end">{{$r.Count}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+{{end}}

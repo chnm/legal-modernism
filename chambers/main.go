@@ -51,6 +51,7 @@ var funcMap = template.FuncMap{
 		}
 		return template.HTML(fallback)
 	},
+	"add1": func(i int) int { return i + 1 },
 	"highlightRaw": func(ocrtext, raw string) template.HTML {
 		escaped := template.HTMLEscapeString(ocrtext)
 		rawEscaped := template.HTMLEscapeString(raw)
@@ -73,6 +74,7 @@ func parseTemplates() map[string]*template.Template {
 		"reporters.html",
 		"reporter-cites.html",
 		"dashboard.html",
+		"whitelist-extender.html",
 	}
 	tmpls := make(map[string]*template.Template, len(pages))
 	for _, page := range pages {
@@ -128,6 +130,9 @@ func main() {
 		handleDashboard(w, r, tmpls["dashboard.html"])
 	})
 	mux.HandleFunc("/api/linking-dashboard", handleDashboardAPI)
+	mux.HandleFunc("/whitelist-extender", func(w http.ResponseWriter, r *http.Request) {
+		handleWhitelistExtender(w, r, tmpls["whitelist-extender.html"])
+	})
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 
@@ -303,5 +308,24 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 	}{Reporter: reporter, Variants: variants, Cites: cites}
 	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
+	}
+}
+
+func handleWhitelistExtender(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "whitelist-extender")
+	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
+	defer cancel()
+
+	reporters, err := getUnwhitelistedReporters(ctx, pool)
+	if err != nil {
+		slog.Error("error querying unwhitelisted reporters", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	slog.Debug("rendering whitelist extender page", "count", len(reporters))
+	data := struct{ Reporters []UnwhitelistedReporter }{Reporters: reporters}
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
+		slog.Error("error rendering whitelist extender", "error", err)
 	}
 }

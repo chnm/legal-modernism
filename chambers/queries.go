@@ -275,6 +275,43 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	return results, rows.Err()
 }
 
+// UnwhitelistedReporter is a reporter abbreviation not found in the whitelist,
+// with a count of how many citations reference it.
+type UnwhitelistedReporter struct {
+	ReporterAbbr string
+	Count        int
+}
+
+func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]UnwhitelistedReporter, error) {
+	slog.Debug("querying unwhitelisted reporters")
+	query := `
+	SELECT cu.reporter_abbr, count(*) AS n
+	FROM moml_citations.citations_unlinked cu
+	LEFT JOIN legalhist.reporters_citation_to_cap wl
+	  ON cu.reporter_abbr = wl.reporter_found
+	WHERE wl.reporter_found IS NULL
+	GROUP BY cu.reporter_abbr
+	ORDER BY n DESC
+	LIMIT 100
+	`
+	rows, err := db.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("querying unwhitelisted reporters: %w", err)
+	}
+	defer rows.Close()
+
+	var results []UnwhitelistedReporter
+	for rows.Next() {
+		var r UnwhitelistedReporter
+		if err := rows.Scan(&r.ReporterAbbr, &r.Count); err != nil {
+			return nil, fmt.Errorf("scanning unwhitelisted reporter: %w", err)
+		}
+		results = append(results, r)
+	}
+	slog.Debug("fetched unwhitelisted reporters", "count", len(results))
+	return results, rows.Err()
+}
+
 // ReporterStats holds linked and no-match counts for a single reporter_standard.
 type ReporterStats struct {
 	Reporter    string `json:"reporter"`
