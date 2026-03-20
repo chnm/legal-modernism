@@ -309,7 +309,7 @@ func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]Unwhite
 	WHERE wl.reporter_found IS NULL
 	GROUP BY cu.reporter_abbr
 	ORDER BY n DESC
-	LIMIT 100
+	LIMIT 250
 	`
 	rows, err := db.Query(ctx, query)
 	if err != nil {
