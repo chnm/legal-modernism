@@ -64,6 +64,7 @@ LIMIT 100</code></pre>
                     <th>statute</th>
                     <th>uk</th>
                     <th>junk</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="selections-body"></tbody>
@@ -93,9 +94,9 @@ LIMIT 100</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHK" crossorigin="anonymous"></script>
     <script type="module">
         let reporters = [];
-        let currentIndex = 0;
+        let pendingIndices = []; // queue of reporter indices still to process
         let csvRows = [];
-        let tableRows = [];
+        let tableRows = []; // each entry also has .reporterIndex for undo
         const CSV_HEADER = "reporter_found,reporter_standard,reporter_cap,statute,uk,junk,cap_different";
 
         function escapeCSV(s) {
@@ -111,20 +112,33 @@ LIMIT 100</code></pre>
             return div.innerHTML;
         }
 
-        function addEntry(reporterFound, reporterStandard, reporterCap, statute, uk, junk, capDifferent) {
+        function boolCSV(v) { return v === "true" ? "TRUE" : "FALSE"; }
+
+        function addEntry(reporterIndex, reporterFound, reporterStandard, reporterCap, statute, uk, junk, capDifferent) {
             // CSV row
             const row = [
                 escapeCSV(reporterFound),
                 escapeCSV(reporterStandard),
                 escapeCSV(reporterCap),
-                statute, uk, junk, capDifferent
+                boolCSV(statute), boolCSV(uk), boolCSV(junk), boolCSV(capDifferent)
             ].join(",");
             csvRows.push(row);
 
-            // Table row
-            tableRows.push({ reporterFound, reporterStandard, reporterCap, statute, uk, junk });
+            // Table row with reporter index for undo
+            tableRows.push({ reporterIndex, reporterFound, reporterStandard, reporterCap, statute, uk, junk });
 
             updateDisplay();
+        }
+
+        function undoEntry(tableIndex) {
+            const entry = tableRows[tableIndex];
+            // Remove from both arrays
+            tableRows.splice(tableIndex, 1);
+            csvRows.splice(tableIndex, 1);
+            // Re-queue the reporter at the front so it comes up next
+            pendingIndices.unshift(entry.reporterIndex);
+            updateDisplay();
+            renderNext();
         }
 
         function updateDisplay() {
@@ -137,20 +151,29 @@ LIMIT 100</code></pre>
 
                 // Update visible table
                 let html = "";
-                for (const r of tableRows) {
+                for (let i = 0; i < tableRows.length; i++) {
+                    const r = tableRows[i];
                     html += `<tr>
                         <td><code>${escapeHTML(r.reporterFound)}</code></td>
                         <td>${escapeHTML(r.reporterStandard)}</td>
                         <td>${escapeHTML(r.reporterCap)}</td>
-                        <td>${r.statute === "true" ? "yes" : ""}</td>
-                        <td>${r.uk === "true" ? "yes" : ""}</td>
-                        <td>${r.junk === "true" ? "yes" : ""}</td>
+                        <td>${r.statute === "true" ? "TRUE" : "FALSE"}</td>
+                        <td>${r.uk === "true" ? "TRUE" : "FALSE"}</td>
+                        <td>${r.junk === "true" ? "TRUE" : "FALSE"}</td>
+                        <td><button class="btn btn-sm btn-outline-secondary undo-btn" data-index="${i}" title="Redo this reporter">&#x21A9;</button></td>
                     </tr>`;
                 }
                 tbody.innerHTML = html;
 
+                // Bind undo buttons
+                tbody.querySelectorAll(".undo-btn").forEach(btn => {
+                    btn.addEventListener("click", () => undoEntry(parseInt(btn.dataset.index)));
+                });
+
                 // Update hidden CSV textarea
                 csvOutput.value = CSV_HEADER + "\n" + csvRows.join("\n");
+            } else {
+                area.style.display = "none";
             }
         }
 
@@ -165,16 +188,20 @@ LIMIT 100</code></pre>
             URL.revokeObjectURL(url);
         }
 
-        function renderReporter(index) {
-            const main = document.getElementById("main-area");
-
-            if (index >= reporters.length) {
-                main.innerHTML = '<div class="alert alert-success">All reporters processed.</div>';
+        function renderNext() {
+            if (pendingIndices.length === 0) {
+                document.getElementById("main-area").innerHTML = '<div class="alert alert-success">All reporters processed.</div>';
                 return;
             }
+            renderReporter(pendingIndices[0]);
+        }
 
-            const r = reporters[index];
-            const progress = `${index + 1} of ${reporters.length}`;
+        function renderReporter(reporterIndex) {
+            const main = document.getElementById("main-area");
+
+            const r = reporters[reporterIndex];
+            const done = reporters.length - pendingIndices.length;
+            const progress = `${done + 1} of ${reporters.length}`;
 
             let matchButtons = "";
             if (r.matches && r.matches.length > 0) {
@@ -231,10 +258,10 @@ LIMIT 100</code></pre>
                     if (action === "skip") {
                         // No entry
                     } else if (action === "junk") {
-                        addEntry(r.reporterAbbr, "", "", statute.toString(), uk.toString(), "true", "false");
+                        addEntry(reporterIndex, r.reporterAbbr, "", "", statute.toString(), uk.toString(), "true", "false");
                     }
-                    currentIndex++;
-                    renderReporter(currentIndex);
+                    pendingIndices.shift();
+                    renderNext();
                 });
             });
 
@@ -246,9 +273,9 @@ LIMIT 100</code></pre>
                     const standard = btn.dataset.standard;
                     const cap = btn.dataset.cap || "";
                     const capDiff = btn.dataset.capDifferent === "true";
-                    addEntry(r.reporterAbbr, standard, cap, statute.toString(), uk.toString(), "false", capDiff.toString());
-                    currentIndex++;
-                    renderReporter(currentIndex);
+                    addEntry(reporterIndex, r.reporterAbbr, standard, cap, statute.toString(), uk.toString(), "false", capDiff.toString());
+                    pendingIndices.shift();
+                    renderNext();
                 });
             });
         }
@@ -285,7 +312,8 @@ LIMIT 100</code></pre>
                 html += "</tbody></table>";
                 tableContainer.innerHTML = html;
 
-                renderReporter(0);
+                pendingIndices = reporters.map((_, i) => i);
+                renderNext();
             }
         } catch (err) {
             document.getElementById("main-area").innerHTML =
