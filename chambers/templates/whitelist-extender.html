@@ -1,5 +1,15 @@
 {{define "title"}}Whitelist extender &mdash; Chambers{{end}}
 
+{{define "styles"}}
+        .loading-text { color: #6c757d; font-size: 0.9rem; }
+        .spinner-border { width: 1.2rem; height: 1.2rem; border-width: 0.15em; }
+        .reporter-card { border: 2px solid #6f42c1; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
+        .reporter-abbr { font-size: 1.5rem; font-weight: 600; }
+        .match-btn { margin: 0.2rem; }
+        #csv-output { font-family: monospace; font-size: 0.8rem; width: 100%; min-height: 120px; }
+        .score-badge { font-size: 0.7rem; margin-left: 0.3rem; }
+{{end}}
+
 {{define "nav"}}
     <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
 {{end}}
@@ -8,12 +18,19 @@
     <h1 class="h5 mt-2">Whitelist extender</h1>
 
     <p class="small text-secondary">
-        Top 100 reporter abbreviations from <code>moml_citations.citations_unlinked</code>
-        that do not appear in the whitelist table
-        (<code>legalhist.reporters_citation_to_cap</code>). The count shows how many
-        citations reference each abbreviation. Adding an abbreviation to the whitelist
-        and reprocessing would allow that many citations to be linked.
+        Walk through the top 100 unwhitelisted reporter abbreviations and classify each one.
+        For each abbreviation, choose a matching <code>reporter_standard</code>, or mark it as
+        a statute, junk, or skip it. Selections accumulate as CSV rows for import into
+        <code>legalhist.reporters_citation_to_cap</code>.
     </p>
+
+    <details class="small my-2">
+        <summary class="text-secondary">Show top 100 unwhitelisted reporters</summary>
+        <div id="table-container" class="mt-2">
+            <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading&hellip;</div>
+        </div>
+    </details>
+
     <details class="small my-2">
         <summary class="text-secondary">Show SQL query</summary>
         <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.reporter_abbr, count(*) AS n
@@ -26,22 +43,180 @@ ORDER BY n DESC
 LIMIT 100</code></pre>
     </details>
 
-    <table class="table table-sm table-striped small">
-        <thead>
-            <tr>
-                <th class="text-end" style="width: 3em">#</th>
-                <th>Reporter abbreviation</th>
-                <th class="text-end">Citations</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{range $i, $r := .Reporters}}
-            <tr>
-                <td class="text-end text-secondary">{{$i | add1}}</td>
-                <td><code>{{$r.ReporterAbbr}}</code></td>
-                <td class="text-end">{{$r.Count}}</td>
-            </tr>
-            {{end}}
-        </tbody>
-    </table>
+    <div id="main-area">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading unwhitelisted reporters&hellip;</div>
+    </div>
+
+    <div id="csv-area" class="mt-4" style="display:none;">
+        <h2 class="h6 text-secondary mb-2">CSV output</h2>
+        <textarea id="csv-output" class="form-control" readonly></textarea>
+        <button id="download-csv" class="btn btn-sm btn-outline-secondary mt-2">Download CSV</button>
+    </div>
+
+    <script type="module">
+        let reporters = [];
+        let currentIndex = 0;
+        let csvRows = [];
+        const CSV_HEADER = "reporter_found,reporter_standard,reporter_cap,statute,uk,junk,cap_different";
+
+        function escapeCSV(s) {
+            if (s.includes(",") || s.includes('"') || s.includes("\n")) {
+                return '"' + s.replace(/"/g, '""') + '"';
+            }
+            return s;
+        }
+
+        function addCSVRow(reporterFound, reporterStandard, reporterCap, statute, uk, junk, capDifferent) {
+            const row = [
+                escapeCSV(reporterFound),
+                escapeCSV(reporterStandard),
+                escapeCSV(reporterCap),
+                statute,
+                uk,
+                junk,
+                capDifferent
+            ].join(",");
+            csvRows.push(row);
+            updateCSVDisplay();
+        }
+
+        function updateCSVDisplay() {
+            const area = document.getElementById("csv-area");
+            const output = document.getElementById("csv-output");
+            if (csvRows.length > 0) {
+                area.style.display = "";
+                output.value = CSV_HEADER + "\n" + csvRows.join("\n");
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        function renderReporter(index) {
+            const main = document.getElementById("main-area");
+
+            if (index >= reporters.length) {
+                main.innerHTML = '<div class="alert alert-success">All reporters processed.</div>';
+                return;
+            }
+
+            const r = reporters[index];
+            const progress = `${index + 1} of ${reporters.length}`;
+
+            let matchButtons = "";
+            if (r.matches && r.matches.length > 0) {
+                matchButtons = r.matches.map(m => {
+                    const capInfo = m.reporterCap ? ` → ${m.reporterCap}` : "";
+                    const title = `Score: ${m.score}${capInfo}${m.capDifferent ? " (different vols)" : ""}`;
+                    return `<button class="btn btn-sm btn-outline-primary match-btn" data-standard="${m.standard.replace(/"/g, '&quot;')}" data-cap="${(m.reporterCap || '').replace(/"/g, '&quot;')}" data-cap-different="${m.capDifferent}" title="${title}">${m.standard} <span class="badge bg-secondary score-badge">${m.score}</span></button>`;
+                }).join("");
+            } else {
+                matchButtons = '<span class="text-secondary small">No matches found</span>';
+            }
+
+            main.innerHTML = `
+                <div class="reporter-card">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <span class="reporter-abbr"><code>${r.reporterAbbr}</code></span>
+                            <span class="text-secondary ms-2">${r.count.toLocaleString()} raw citations</span>
+                        </div>
+                        <span class="badge bg-secondary">${progress}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-sm btn-secondary action-btn" data-action="skip">Skip</button>
+                        <button class="btn btn-sm btn-info action-btn" data-action="statute">Statute</button>
+                        <button class="btn btn-sm btn-danger action-btn" data-action="junk">Junk</button>
+                        <div class="form-check form-check-inline ms-3">
+                            <input class="form-check-input" type="checkbox" id="uk-check">
+                            <label class="form-check-label small" for="uk-check">UK</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-1">
+                        <span class="small text-secondary">Potential matches:</span>
+                    </div>
+                    <div id="match-buttons">
+                        ${matchButtons}
+                    </div>
+                </div>
+            `;
+
+            // Bind action buttons
+            main.querySelectorAll(".action-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const action = btn.dataset.action;
+                    const uk = document.getElementById("uk-check").checked;
+                    if (action === "skip") {
+                        // No CSV row
+                    } else if (action === "statute") {
+                        addCSVRow(r.reporterAbbr, "", "", "true", uk.toString(), "false", "false");
+                    } else if (action === "junk") {
+                        addCSVRow(r.reporterAbbr, "", "", "false", uk.toString(), "true", "false");
+                    }
+                    currentIndex++;
+                    renderReporter(currentIndex);
+                });
+            });
+
+            // Bind match buttons
+            main.querySelectorAll(".match-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const uk = document.getElementById("uk-check").checked;
+                    const standard = btn.dataset.standard;
+                    const cap = btn.dataset.cap || "";
+                    const capDiff = btn.dataset.capDifferent === "true";
+                    addCSVRow(r.reporterAbbr, standard, cap, "false", uk.toString(), "false", capDiff.toString());
+                    currentIndex++;
+                    renderReporter(currentIndex);
+                });
+            });
+        }
+
+        // Download CSV
+        document.getElementById("download-csv").addEventListener("click", () => {
+            const content = CSV_HEADER + "\n" + csvRows.join("\n");
+            const blob = new Blob([content], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "whitelist-extender.csv";
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // Load data
+        try {
+            const resp = await fetch("/api/whitelist-extender");
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            reporters = await resp.json();
+
+            // Populate collapsed table
+            const tableContainer = document.getElementById("table-container");
+            if (reporters.length === 0) {
+                tableContainer.innerHTML = '<p class="text-secondary">No unwhitelisted reporters found.</p>';
+                document.getElementById("main-area").innerHTML = '<div class="alert alert-info">No unwhitelisted reporters to process.</div>';
+            } else {
+                let html = `<table class="table table-sm table-striped small">
+                    <thead><tr>
+                        <th class="text-end" style="width:3em">#</th>
+                        <th>Reporter abbreviation</th>
+                        <th class="text-end">Raw citations</th>
+                    </tr></thead><tbody>`;
+                for (let i = 0; i < reporters.length; i++) {
+                    html += `<tr>
+                        <td class="text-end text-secondary">${i + 1}</td>
+                        <td><code>${reporters[i].reporterAbbr}</code></td>
+                        <td class="text-end">${reporters[i].count.toLocaleString()}</td>
+                    </tr>`;
+                }
+                html += "</tbody></table>";
+                tableContainer.innerHTML = html;
+
+                renderReporter(0);
+            }
+        } catch (err) {
+            document.getElementById("main-area").innerHTML =
+                '<div class="text-danger">Failed to load data: ' + err.message + '</div>';
+        }
+    </script>
 {{end}}

@@ -51,7 +51,6 @@ var funcMap = template.FuncMap{
 		}
 		return template.HTML(fallback)
 	},
-	"add1": func(i int) int { return i + 1 },
 	"highlightRaw": func(ocrtext, raw string) template.HTML {
 		escaped := template.HTMLEscapeString(ocrtext)
 		rawEscaped := template.HTMLEscapeString(raw)
@@ -133,6 +132,7 @@ func main() {
 	mux.HandleFunc("/whitelist-extender", func(w http.ResponseWriter, r *http.Request) {
 		handleWhitelistExtender(w, r, tmpls["whitelist-extender.html"])
 	})
+	mux.HandleFunc("/api/whitelist-extender", handleWhitelistExtenderAPI)
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 
@@ -313,6 +313,14 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 
 func handleWhitelistExtender(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
 	slog.Debug("handling request", "path", r.URL.Path, "handler", "whitelist-extender")
+	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
+		slog.Error("error rendering whitelist extender", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func handleWhitelistExtenderAPI(w http.ResponseWriter, r *http.Request) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "whitelist-extender-api")
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
 	defer cancel()
 
@@ -323,9 +331,28 @@ func handleWhitelistExtender(w http.ResponseWriter, r *http.Request, tmpl *templ
 		return
 	}
 
-	slog.Debug("rendering whitelist extender page", "count", len(reporters))
-	data := struct{ Reporters []UnwhitelistedReporter }{Reporters: reporters}
-	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering whitelist extender", "error", err)
+	standards, err := getDistinctReporterStandards(ctx, pool)
+	if err != nil {
+		slog.Error("error querying reporter standards", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	capMap, err := getCapInfoMap(ctx, pool)
+	if err != nil {
+		slog.Error("error querying cap info", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	for i := range reporters {
+		reporters[i].Matches = computeMatches(reporters[i].ReporterAbbr, standards, capMap)
+	}
+
+	slog.Debug("sending whitelist extender JSON response", "count", len(reporters))
+	w.Header().Set("Cache-Control", "public, max-age=3600")
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(reporters); err != nil {
+		slog.Error("error encoding whitelist extender JSON", "error", err)
 	}
 }

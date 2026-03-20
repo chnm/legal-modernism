@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"sort"
 	"strings"
 
+	"github.com/agnivade/levenshtein"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -276,10 +278,25 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 }
 
 // UnwhitelistedReporter is a reporter abbreviation not found in the whitelist,
-// with a count of how many citations reference it.
+// with a count of how many citations reference it and potential matches.
 type UnwhitelistedReporter struct {
-	ReporterAbbr string
-	Count        int
+	ReporterAbbr string              `json:"reporterAbbr"`
+	Count        int                 `json:"count"`
+	Matches      []ReporterMatch     `json:"matches"`
+}
+
+// ReporterMatch is a potential reporter_standard match with its CAP info.
+type ReporterMatch struct {
+	Standard     string `json:"standard"`
+	ReporterCap  string `json:"reporterCap"`
+	CapDifferent bool   `json:"capDifferent"`
+	Score        int    `json:"score"`
+}
+
+// capInfo holds the reporter_cap and cap_different for a reporter_standard.
+type capInfo struct {
+	ReporterCap  string
+	CapDifferent bool
 }
 
 func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]UnwhitelistedReporter, error) {
@@ -310,6 +327,142 @@ func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]Unwhite
 	}
 	slog.Debug("fetched unwhitelisted reporters", "count", len(results))
 	return results, rows.Err()
+}
+
+// getDistinctReporterStandards returns all distinct reporter_standard values.
+func getDistinctReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]string, error) {
+	slog.Debug("querying distinct reporter standards")
+	query := `
+	SELECT DISTINCT reporter_standard
+	FROM legalhist.reporters_citation_to_cap
+	WHERE reporter_standard IS NOT NULL
+	ORDER BY reporter_standard
+	`
+	rows, err := db.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("querying distinct reporter standards: %w", err)
+	}
+	defer rows.Close()
+
+	var results []string
+	for rows.Next() {
+		var s string
+		if err := rows.Scan(&s); err != nil {
+			return nil, fmt.Errorf("scanning reporter standard: %w", err)
+		}
+		results = append(results, s)
+	}
+	slog.Debug("fetched distinct reporter standards", "count", len(results))
+	return results, rows.Err()
+}
+
+// getCapInfoMap returns a map of reporter_standard → capInfo for standards
+// that have a reporter_cap value.
+func getCapInfoMap(ctx context.Context, db *pgxpool.Pool) (map[string]capInfo, error) {
+	slog.Debug("querying cap info map")
+	query := `
+	SELECT DISTINCT ON (reporter_standard) reporter_standard, reporter_cap, COALESCE(cap_different, false)
+	FROM legalhist.reporters_citation_to_cap
+	WHERE reporter_standard IS NOT NULL AND reporter_cap IS NOT NULL AND reporter_cap != ''
+	ORDER BY reporter_standard
+	`
+	rows, err := db.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("querying cap info: %w", err)
+	}
+	defer rows.Close()
+
+	m := make(map[string]capInfo)
+	for rows.Next() {
+		var std, cap string
+		var diff bool
+		if err := rows.Scan(&std, &cap, &diff); err != nil {
+			return nil, fmt.Errorf("scanning cap info: %w", err)
+		}
+		m[std] = capInfo{ReporterCap: cap, CapDifferent: diff}
+	}
+	slog.Debug("fetched cap info map", "count", len(m))
+	return m, rows.Err()
+}
+
+// normalizeReporter strips periods, commas, and extra whitespace, then lowercases.
+func normalizeReporter(s string) string {
+	s = strings.ReplaceAll(s, ".", "")
+	s = strings.ReplaceAll(s, ",", "")
+	s = strings.TrimSpace(s)
+	s = strings.ToLower(s)
+	// Collapse multiple spaces
+	for strings.Contains(s, "  ") {
+		s = strings.ReplaceAll(s, "  ", " ")
+	}
+	return s
+}
+
+// computeMatches finds the best reporter_standard matches for an abbreviation
+// using Levenshtein distance on normalized forms.
+func computeMatches(abbr string, standards []string, capMap map[string]capInfo) []ReporterMatch {
+	normAbbr := normalizeReporter(abbr)
+	if normAbbr == "" {
+		return nil
+	}
+
+	type scored struct {
+		standard string
+		score    int
+	}
+
+	var candidates []scored
+	for _, std := range standards {
+		normStd := normalizeReporter(std)
+		if normStd == "" {
+			continue
+		}
+
+		var score int
+
+		// Exact normalized match
+		if normAbbr == normStd {
+			score = 100
+		} else if strings.HasPrefix(normAbbr, normStd) || strings.HasPrefix(normStd, normAbbr) {
+			// Prefix match
+			score = 90
+		} else {
+			// Levenshtein distance
+			dist := levenshtein.ComputeDistance(normAbbr, normStd)
+			maxLen := max(len(normAbbr), len(normStd))
+			score = int((1.0 - float64(dist)/float64(maxLen)) * 100)
+		}
+
+		if score >= 30 {
+			candidates = append(candidates, scored{standard: std, score: score})
+		}
+	}
+
+	sort.Slice(candidates, func(i, j int) bool {
+		if candidates[i].score != candidates[j].score {
+			return candidates[i].score > candidates[j].score
+		}
+		return candidates[i].standard < candidates[j].standard
+	})
+
+	// Cap at 20 matches
+	if len(candidates) > 20 {
+		candidates = candidates[:20]
+	}
+
+	matches := make([]ReporterMatch, len(candidates))
+	for i, c := range candidates {
+		m := ReporterMatch{
+			Standard: c.standard,
+			Score:    c.score,
+		}
+		if info, ok := capMap[c.standard]; ok {
+			m.ReporterCap = info.ReporterCap
+			m.CapDifferent = info.CapDifferent
+		}
+		matches[i] = m
+	}
+	return matches
 }
 
 // ReporterStats holds linked and no-match counts for a single reporter_standard.
