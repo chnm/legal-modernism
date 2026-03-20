@@ -262,6 +262,7 @@ func handleDashboardAPI(w http.ResponseWriter, r *http.Request) {
 		"total_raw_cites", data.TotalRawCites,
 		"total_linked", data.TotalLinked(),
 	)
+	w.Header().Set("Cache-Control", "max-age=3600")
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		slog.Error("error encoding dashboard JSON", "error", err)
