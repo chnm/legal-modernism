@@ -1,6 +1,6 @@
 \restrict dbmate
 
--- Dumped from database version 17.7 (Debian 17.7-0+deb13u1)
+-- Dumped from database version 17.9 (Debian 17.9-0+deb13u1)
 -- Dumped by pg_dump version 17.9 (Homebrew)
 
 SET statement_timeout = 0;
@@ -839,17 +839,19 @@ CREATE TABLE legalhist.ocr_corrections (
 
 
 --
--- Name: reporters_citation_to_cap; Type: TABLE; Schema: legalhist; Owner: -
+-- Name: reporters; Type: TABLE; Schema: legalhist; Owner: -
 --
 
-CREATE TABLE legalhist.reporters_citation_to_cap (
-    reporter_found text NOT NULL,
-    reporter_standard text,
-    reporter_cap text,
-    statute boolean NOT NULL,
-    uk boolean NOT NULL,
-    junk boolean NOT NULL,
-    cap_different boolean
+CREATE TABLE legalhist.reporters (
+    reporter_standard text NOT NULL,
+    reporter_title text,
+    level text,
+    jurisdiction text,
+    year_start integer,
+    year_end integer,
+    single_vol boolean,
+    type text,
+    reporter_cap text
 );
 
 
@@ -958,21 +960,14 @@ CREATE MATERIALIZED VIEW legalhist.top_reporters AS
 
 
 --
--- Name: top_reporters_not_whitelisted; Type: VIEW; Schema: legalhist; Owner: -
+-- Name: whitelist; Type: TABLE; Schema: legalhist; Owner: -
 --
 
-CREATE VIEW legalhist.top_reporters_not_whitelisted AS
- SELECT tr.reporter_abbr AS reporter_found,
-    wl.reporter_standard,
-    wl.reporter_cap,
-    wl.statute,
-    wl.uk,
-    wl.junk,
-    tr.n
-   FROM (legalhist.top_reporters tr
-     LEFT JOIN legalhist.reporters_citation_to_cap wl ON ((tr.reporter_abbr = wl.reporter_found)))
-  WHERE (wl.reporter_found IS NULL)
-  ORDER BY tr.n DESC;
+CREATE TABLE legalhist.whitelist (
+    reporter_found text NOT NULL,
+    reporter_standard text,
+    junk boolean NOT NULL
+);
 
 
 --
@@ -1525,11 +1520,19 @@ ALTER TABLE ONLY legalhist.reporters_nominate
 
 
 --
--- Name: reporters_citation_to_cap reporters_citation_to_cap_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: whitelist reporters_citation_to_cap_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
-ALTER TABLE ONLY legalhist.reporters_citation_to_cap
+ALTER TABLE ONLY legalhist.whitelist
     ADD CONSTRAINT reporters_citation_to_cap_pkey PRIMARY KEY (reporter_found);
+
+
+--
+-- Name: reporters reporters_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.reporters
+    ADD CONSTRAINT reporters_pkey PRIMARY KEY (reporter_standard);
 
 
 --
@@ -1804,6 +1807,13 @@ CREATE INDEX code_reporter_volume_number_idx ON legalhist.code_reporter USING bt
 
 
 --
+-- Name: idx_reporters_jurisdiction; Type: INDEX; Schema: legalhist; Owner: -
+--
+
+CREATE INDEX idx_reporters_jurisdiction ON legalhist.reporters USING btree (jurisdiction text_pattern_ops);
+
+
+--
 -- Name: reporters_alt_diff_vols_single_vol_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
@@ -1825,17 +1835,10 @@ CREATE INDEX reporters_alt_diffvols_volumes_vol_idx ON legalhist.reporters_diffv
 
 
 --
--- Name: reporters_citation_to_cap_reporter_cap_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporters_citation_to_cap_reporter_cap_idx ON legalhist.reporters_citation_to_cap USING btree (reporter_cap);
-
-
---
 -- Name: reporters_citation_to_cap_reporter_standard_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
-CREATE INDEX reporters_citation_to_cap_reporter_standard_idx ON legalhist.reporters_citation_to_cap USING btree (reporter_standard);
+CREATE INDEX reporters_citation_to_cap_reporter_standard_idx ON legalhist.whitelist USING btree (reporter_standard);
 
 
 --
@@ -2096,6 +2099,14 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 
 --
+-- Name: whitelist fk_whitelist_reporter_standard; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.whitelist
+    ADD CONSTRAINT fk_whitelist_reporter_standard FOREIGN KEY (reporter_standard) REFERENCES legalhist.reporters(reporter_standard);
+
+
+--
 -- Name: reporters_diffvols reporters_diffvols_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2236,4 +2247,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260311001814'),
     ('20260312155141'),
     ('20260312181004'),
-    ('20260313120000');
+    ('20260313120000'),
+    ('20260325003434'),
+    ('20260325004157');
