@@ -1,6 +1,7 @@
 bin/
 scratch/*
 out/*
+!out/legal-abbreviations/
 website/public/*
 tmp/*
 
