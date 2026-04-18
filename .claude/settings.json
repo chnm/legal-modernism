@@ -9,5 +9,12 @@
       "Grep",
       "WebFetch(*)"
     ]
+  },
+  "sandbox": {
+    "network": {
+      "allowedDomains": [
+        "legalabbrevs.cardiff.ac.uk"
+      ]
+    }
   }
 }
