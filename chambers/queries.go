@@ -170,11 +170,11 @@ type ReporterStandard struct {
 func getReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]ReporterStandard, error) {
 	slog.Debug("querying reporter standards")
 	query := `
-	SELECT reporter_standard, count(*) AS n
-	FROM legalhist.reporters_citation_to_cap
-	WHERE reporter_standard IS NOT NULL
-	GROUP BY reporter_standard
-	ORDER BY reporter_standard
+	SELECT r.reporter_standard, count(wl.reporter_found) AS n
+	FROM legalhist.reporters r
+	LEFT JOIN legalhist.whitelist wl ON wl.reporter_standard = r.reporter_standard
+	GROUP BY r.reporter_standard
+	ORDER BY r.reporter_standard
 	`
 	rows, err := db.Query(ctx, query)
 	if err != nil {
@@ -223,7 +223,7 @@ func getReporterVariants(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	slog.Debug("querying reporter variants", "reporter", reporterStandard)
 	query := `
 	SELECT reporter_found
-	FROM legalhist.reporters_citation_to_cap
+	FROM legalhist.whitelist
 	WHERE reporter_standard = $1
 	ORDER BY reporter_found
 	`
@@ -250,7 +250,7 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	query := `
 	SELECT cu.id, cu.raw, cl.status
 	FROM moml_citations.citations_unlinked cu
-	JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
+	JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
 	LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
 	WHERE wl.reporter_standard = $1
 	ORDER BY cu.id
@@ -280,23 +280,16 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 // UnwhitelistedReporter is a reporter abbreviation not found in the whitelist,
 // with a count of how many citations reference it and potential matches.
 type UnwhitelistedReporter struct {
-	ReporterAbbr string              `json:"reporterAbbr"`
-	Count        int                 `json:"count"`
-	Matches      []ReporterMatch     `json:"matches"`
+	ReporterAbbr string          `json:"reporterAbbr"`
+	Count        int             `json:"count"`
+	Matches      []ReporterMatch `json:"matches"`
 }
 
 // ReporterMatch is a potential reporter_standard match with its CAP info.
 type ReporterMatch struct {
-	Standard     string `json:"standard"`
-	ReporterCap  string `json:"reporterCap"`
-	CapDifferent bool   `json:"capDifferent"`
-	Score        int    `json:"score"`
-}
-
-// capInfo holds the reporter_cap and cap_different for a reporter_standard.
-type capInfo struct {
-	ReporterCap  string
-	CapDifferent bool
+	Standard    string `json:"standard"`
+	ReporterCap string `json:"reporterCap"`
+	Score       int    `json:"score"`
 }
 
 func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]UnwhitelistedReporter, error) {
@@ -304,7 +297,7 @@ func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]Unwhite
 	query := `
 	SELECT cu.reporter_abbr, count(*) AS n
 	FROM moml_citations.citations_unlinked cu
-	LEFT JOIN legalhist.reporters_citation_to_cap wl
+	LEFT JOIN legalhist.whitelist wl
 	  ON cu.reporter_abbr = wl.reporter_found
 	WHERE wl.reporter_found IS NULL
 	GROUP BY cu.reporter_abbr
@@ -329,13 +322,13 @@ func getUnwhitelistedReporters(ctx context.Context, db *pgxpool.Pool) ([]Unwhite
 	return results, rows.Err()
 }
 
-// getDistinctReporterStandards returns all distinct reporter_standard values.
+// getDistinctReporterStandards returns the canonical list of reporter_standard
+// values from legalhist.reporters.
 func getDistinctReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]string, error) {
 	slog.Debug("querying distinct reporter standards")
 	query := `
-	SELECT DISTINCT reporter_standard
-	FROM legalhist.reporters_citation_to_cap
-	WHERE reporter_standard IS NOT NULL
+	SELECT reporter_standard
+	FROM legalhist.reporters
 	ORDER BY reporter_standard
 	`
 	rows, err := db.Query(ctx, query)
@@ -356,15 +349,14 @@ func getDistinctReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]stri
 	return results, rows.Err()
 }
 
-// getCapInfoMap returns a map of reporter_standard → capInfo for standards
-// that have a reporter_cap value.
-func getCapInfoMap(ctx context.Context, db *pgxpool.Pool) (map[string]capInfo, error) {
+// getCapInfoMap returns a map of reporter_standard → reporter_cap for standards
+// that have a non-empty reporter_cap value.
+func getCapInfoMap(ctx context.Context, db *pgxpool.Pool) (map[string]string, error) {
 	slog.Debug("querying cap info map")
 	query := `
-	SELECT DISTINCT ON (reporter_standard) reporter_standard, reporter_cap, COALESCE(cap_different, false)
-	FROM legalhist.reporters_citation_to_cap
-	WHERE reporter_standard IS NOT NULL AND reporter_cap IS NOT NULL AND reporter_cap != ''
-	ORDER BY reporter_standard
+	SELECT reporter_standard, reporter_cap
+	FROM legalhist.reporters
+	WHERE reporter_cap IS NOT NULL AND reporter_cap != ''
 	`
 	rows, err := db.Query(ctx, query)
 	if err != nil {
@@ -372,14 +364,13 @@ func getCapInfoMap(ctx context.Context, db *pgxpool.Pool) (map[string]capInfo, e
 	}
 	defer rows.Close()
 
-	m := make(map[string]capInfo)
+	m := make(map[string]string)
 	for rows.Next() {
 		var std, cap string
-		var diff bool
-		if err := rows.Scan(&std, &cap, &diff); err != nil {
+		if err := rows.Scan(&std, &cap); err != nil {
 			return nil, fmt.Errorf("scanning cap info: %w", err)
 		}
-		m[std] = capInfo{ReporterCap: cap, CapDifferent: diff}
+		m[std] = cap
 	}
 	slog.Debug("fetched cap info map", "count", len(m))
 	return m, rows.Err()
@@ -400,7 +391,7 @@ func normalizeReporter(s string) string {
 
 // computeMatches finds the best reporter_standard matches for an abbreviation
 // using Levenshtein distance on normalized forms.
-func computeMatches(abbr string, standards []string, capMap map[string]capInfo) []ReporterMatch {
+func computeMatches(abbr string, standards []string, capMap map[string]string) []ReporterMatch {
 	normAbbr := normalizeReporter(abbr)
 	if normAbbr == "" {
 		return nil
@@ -456,9 +447,8 @@ func computeMatches(abbr string, standards []string, capMap map[string]capInfo) 
 			Standard: c.standard,
 			Score:    c.score,
 		}
-		if info, ok := capMap[c.standard]; ok {
-			m.ReporterCap = info.ReporterCap
-			m.CapDifferent = info.CapDifferent
+		if cap, ok := capMap[c.standard]; ok {
+			m.ReporterCap = cap
 		}
 		matches[i] = m
 	}
@@ -546,12 +536,12 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 			count(*) FILTER (WHERE cl.status LIKE 'linked%') AS linked,
 			count(*) FILTER (WHERE cl.status = 'no_match') AS no_match,
 			count(*) FILTER (WHERE cl.status IS NULL) AS unprocessed,
-			bool_or(wl.uk) AS uk
+			bool_or(r.jurisdiction LIKE 'uk:%') AS uk
 		FROM moml_citations.citations_unlinked cu
-		JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
+		JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
+		JOIN legalhist.reporters r ON r.reporter_standard = wl.reporter_standard
 		LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
 		WHERE wl.reporter_standard IS NOT NULL
-		  AND wl.statute = false
 		  AND wl.junk = false
 		GROUP BY wl.reporter_standard
 		ORDER BY count(*) DESC
