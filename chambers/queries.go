@@ -536,7 +536,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 			count(*) FILTER (WHERE cl.status LIKE 'linked%') AS linked,
 			count(*) FILTER (WHERE cl.status = 'no_match') AS no_match,
 			count(*) FILTER (WHERE cl.status IS NULL) AS unprocessed,
-			bool_or(r.jurisdiction LIKE 'uk:%') AS uk
+			COALESCE(bool_or(r.jurisdiction LIKE 'uk:%'), false) AS uk
 		FROM moml_citations.citations_unlinked cu
 		JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
 		JOIN legalhist.reporters r ON r.reporter_standard = wl.reporter_standard
