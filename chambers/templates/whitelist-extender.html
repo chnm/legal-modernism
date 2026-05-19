@@ -20,9 +20,13 @@
 
     <p class="small text-secondary">
         Walk through the top 250 unwhitelisted reporter abbreviations and classify each one.
-        For each abbreviation, choose a matching <code>reporter_standard</code>, or mark it as
-        a statute, junk, or skip it. Selections accumulate as CSV rows for import into
-        <code>legalhist.reporters_citation_to_cap</code>.
+        For each abbreviation, choose a matching <code>reporter_standard</code>, mark it as
+        junk or a statute, or skip it. Selections produce two CSVs: one for
+        <code>legalhist.whitelist</code> (the variant-to-standard mapping) and one for
+        <code>legalhist.reporters</code> (new reporter rows, populated when you mark an
+        abbreviation as a statute). The <strong>UK</strong> toggle applies only on the Statute
+        path: it seeds the new reporter row's <code>jurisdiction</code> with
+        <code>uk:</code> so you can finish the value before import.
     </p>
 
     <details class="small my-2">
@@ -36,7 +40,7 @@
         <summary class="text-secondary">Show SQL query</summary>
         <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.reporter_abbr, count(*) AS n
 FROM moml_citations.citations_unlinked cu
-LEFT JOIN legalhist.reporters_citation_to_cap wl
+LEFT JOIN legalhist.whitelist wl
   ON cu.reporter_abbr = wl.reporter_found
 WHERE wl.reporter_found IS NULL
 GROUP BY cu.reporter_abbr
@@ -51,18 +55,16 @@ LIMIT 250</code></pre>
     <div id="selections-area" class="mt-4" style="display:none;">
         <h2 class="h6 text-secondary mb-2">
             Selections
-            <button id="download-csv" class="btn btn-sm btn-outline-secondary ms-2">Download CSV</button>
+            <button id="download-whitelist-csv" class="btn btn-sm btn-outline-secondary ms-2">Download whitelist CSV</button>
+            <button id="download-reporters-csv" class="btn btn-sm btn-outline-secondary ms-1">Download reporters CSV</button>
         </h2>
         <table class="table table-sm table-striped small">
             <thead>
                 <tr>
                     <th>reporter_found</th>
                     <th>reporter_standard</th>
-                    <th>reporter_cap</th>
-                    <th>statute</th>
-                    <th>uk</th>
                     <th>junk</th>
-                    <th>cap_different</th>
+                    <th>new reporter row?</th>
                     <th></th>
                 </tr>
             </thead>
@@ -75,9 +77,12 @@ LIMIT 250</code></pre>
     <script type="module">
         let reporters = [];
         let pendingIndices = []; // queue of reporter indices still to process
-        let csvRows = [];
-        let tableRows = []; // each entry also has .reporterIndex for undo
-        const CSV_HEADER = "reporter_found,reporter_standard,reporter_cap,statute,uk,junk,cap_different";
+        // Each entry: { reporterIndex, kind: "match"|"junk"|"statute",
+        //               reporterFound, reporterStandard, junk: bool,
+        //               uk: bool /* statute only */, reporterCap: string /* match only */ }
+        let tableRows = [];
+        const WHITELIST_HEADER = "reporter_found,reporter_standard,junk";
+        const REPORTERS_HEADER = "reporter_standard,reporter_title,level,jurisdiction,year_start,year_end,single_vol,type,reporter_cap";
 
         function escapeCSV(s) {
             if (s.includes(",") || s.includes('"') || s.includes("\n")) {
@@ -92,29 +97,16 @@ LIMIT 250</code></pre>
             return div.innerHTML;
         }
 
-        function boolCSV(v) { return v === "true" ? "TRUE" : "FALSE"; }
+        function boolCSV(b) { return b ? "TRUE" : "FALSE"; }
 
-        function addEntry(reporterIndex, reporterFound, reporterStandard, reporterCap, statute, uk, junk, capDifferent) {
-            // CSV row
-            const row = [
-                escapeCSV(reporterFound),
-                escapeCSV(reporterStandard),
-                escapeCSV(reporterCap),
-                boolCSV(statute), boolCSV(uk), boolCSV(junk), boolCSV(capDifferent)
-            ].join(",");
-            csvRows.push(row);
-
-            // Table row with reporter index for undo
-            tableRows.push({ reporterIndex, reporterFound, reporterStandard, reporterCap, statute, uk, junk, capDifferent });
-
+        function addEntry(entry) {
+            tableRows.push(entry);
             updateDisplay();
         }
 
         function undoEntry(tableIndex) {
             const entry = tableRows[tableIndex];
-            // Remove from both arrays
             tableRows.splice(tableIndex, 1);
-            csvRows.splice(tableIndex, 1);
             // Re-queue the reporter at the front so it comes up next
             pendingIndices.unshift(entry.reporterIndex);
             updateDisplay();
@@ -128,24 +120,20 @@ LIMIT 250</code></pre>
             if (tableRows.length > 0) {
                 area.style.display = "";
 
-                // Update visible table
                 let html = "";
                 for (let i = 0; i < tableRows.length; i++) {
                     const r = tableRows[i];
+                    const newReporter = r.kind === "statute";
                     html += `<tr>
                         <td><code>${escapeHTML(r.reporterFound)}</code></td>
                         <td>${escapeHTML(r.reporterStandard)}</td>
-                        <td>${escapeHTML(r.reporterCap)}</td>
-                        <td>${r.statute === "true" ? "TRUE" : "FALSE"}</td>
-                        <td>${r.uk === "true" ? "TRUE" : "FALSE"}</td>
-                        <td>${r.junk === "true" ? "TRUE" : "FALSE"}</td>
-                        <td>${r.capDifferent === "true" ? "TRUE" : "FALSE"}</td>
+                        <td>${boolCSV(r.junk)}</td>
+                        <td>${newReporter ? "TRUE" : "FALSE"}</td>
                         <td><button class="btn btn-sm btn-outline-secondary undo-btn" data-index="${i}" title="Redo this reporter">&#x21A9;</button></td>
                     </tr>`;
                 }
                 tbody.innerHTML = html;
 
-                // Bind undo buttons
                 tbody.querySelectorAll(".undo-btn").forEach(btn => {
                     btn.addEventListener("click", () => undoEntry(parseInt(btn.dataset.index)));
                 });
@@ -154,13 +142,42 @@ LIMIT 250</code></pre>
             }
         }
 
-        function downloadCSV() {
-            const content = CSV_HEADER + "\n" + csvRows.join("\n");
+        function buildWhitelistCSV() {
+            const lines = [WHITELIST_HEADER];
+            for (const r of tableRows) {
+                lines.push([
+                    escapeCSV(r.reporterFound),
+                    escapeCSV(r.reporterStandard),
+                    boolCSV(r.junk),
+                ].join(","));
+            }
+            return lines.join("\n");
+        }
+
+        function buildReportersCSV() {
+            const lines = [REPORTERS_HEADER];
+            for (const r of tableRows) {
+                if (r.kind !== "statute") continue;
+                // reporter_standard, reporter_title, level, jurisdiction,
+                // year_start, year_end, single_vol, type, reporter_cap
+                lines.push([
+                    escapeCSV(r.reporterStandard),
+                    "", "",
+                    escapeCSV(r.uk ? "uk:" : ""),
+                    "", "", "",
+                    "statute",
+                    "",
+                ].join(","));
+            }
+            return lines.join("\n");
+        }
+
+        function downloadBlob(filename, content) {
             const blob = new Blob([content], { type: "text/csv" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "whitelist-extender.csv";
+            a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -184,8 +201,8 @@ LIMIT 250</code></pre>
             if (r.matches && r.matches.length > 0) {
                 matchButtons = r.matches.map(m => {
                     const capInfo = m.reporterCap ? ` \u2192 ${m.reporterCap}` : "";
-                    const title = `Score: ${m.score}${capInfo}${m.capDifferent ? " (different vols)" : ""}`;
-                    return `<button class="btn btn-sm btn-outline-primary match-btn" data-standard="${escapeHTML(m.standard)}" data-cap="${escapeHTML(m.reporterCap || '')}" data-cap-different="${m.capDifferent}" title="${title}">${escapeHTML(m.standard)} <span class="badge bg-secondary score-badge">${m.score}</span></button>`;
+                    const title = `Score: ${m.score}${capInfo}`;
+                    return `<button class="btn btn-sm btn-outline-primary match-btn" data-standard="${escapeHTML(m.standard)}" data-cap="${escapeHTML(m.reporterCap || '')}" title="${title}">${escapeHTML(m.standard)} <span class="badge bg-secondary score-badge">${m.score}</span></button>`;
                 }).join("");
             } else {
                 matchButtons = '<span class="text-secondary small">No matches found</span>';
@@ -204,17 +221,14 @@ LIMIT 250</code></pre>
                     <div class="mb-3 d-flex align-items-center gap-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="uk-check" style="width:2.5em;height:1.25em;">
-                            <label class="form-check-label" for="uk-check">UK</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="statute-check" style="width:2.5em;height:1.25em;">
-                            <label class="form-check-label" for="statute-check">Statute</label>
+                            <label class="form-check-label" for="uk-check">UK (seeds jurisdiction on Statute)</label>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <button class="btn btn-sm btn-secondary action-btn" data-action="skip">Skip</button>
                         <button class="btn btn-sm btn-danger action-btn" data-action="junk">Junk</button>
+                        <button class="btn btn-sm btn-warning action-btn" data-action="statute">Statute</button>
                     </div>
 
                     <div class="mb-1">
@@ -231,34 +245,61 @@ LIMIT 250</code></pre>
                 btn.addEventListener("click", () => {
                     const action = btn.dataset.action;
                     const uk = document.getElementById("uk-check").checked;
-                    const statute = document.getElementById("statute-check").checked;
                     if (action === "skip") {
                         // No entry
                     } else if (action === "junk") {
-                        addEntry(reporterIndex, r.reporterAbbr, "", "", statute.toString(), uk.toString(), "true", "false");
+                        addEntry({
+                            reporterIndex,
+                            kind: "junk",
+                            reporterFound: r.reporterAbbr,
+                            reporterStandard: "",
+                            junk: true,
+                            uk: false,
+                            reporterCap: "",
+                        });
+                    } else if (action === "statute") {
+                        // Treat the abbreviation itself as the new reporter_standard.
+                        // The user can rename it in the CSV before import.
+                        addEntry({
+                            reporterIndex,
+                            kind: "statute",
+                            reporterFound: r.reporterAbbr,
+                            reporterStandard: r.reporterAbbr,
+                            junk: false,
+                            uk,
+                            reporterCap: "",
+                        });
                     }
                     pendingIndices.shift();
                     renderNext();
                 });
             });
 
-            // Bind match buttons — statute checkbox applies here too
+            // Bind match buttons
             main.querySelectorAll(".match-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
-                    const uk = document.getElementById("uk-check").checked;
-                    const statute = document.getElementById("statute-check").checked;
                     const standard = btn.dataset.standard;
                     const cap = btn.dataset.cap || "";
-                    const capDiff = btn.dataset.capDifferent === "true";
-                    addEntry(reporterIndex, r.reporterAbbr, standard, cap, statute.toString(), uk.toString(), "false", capDiff.toString());
+                    addEntry({
+                        reporterIndex,
+                        kind: "match",
+                        reporterFound: r.reporterAbbr,
+                        reporterStandard: standard,
+                        junk: false,
+                        uk: false,
+                        reporterCap: cap,
+                    });
                     pendingIndices.shift();
                     renderNext();
                 });
             });
         }
 
-        // Download CSV button
-        document.getElementById("download-csv").addEventListener("click", downloadCSV);
+        // Download CSV buttons
+        document.getElementById("download-whitelist-csv").addEventListener("click",
+            () => downloadBlob("whitelist.csv", buildWhitelistCSV()));
+        document.getElementById("download-reporters-csv").addEventListener("click",
+            () => downloadBlob("reporters.csv", buildReportersCSV()));
 
         // Load data
         try {
