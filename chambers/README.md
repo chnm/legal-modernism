@@ -65,7 +65,7 @@ Key joins:
 
 The `moml.page` and `moml.page_ocrtext` joins must include `psmid` (treatise ID) in addition to `pageid`, because `pageid` values (e.g., `06870`) are reused across different treatises.
 
-**`getReporterStandards`** — Distinct `reporter_standard` values with variant counts from the `legalhist.reporters_citation_to_cap` whitelist.
+**`getReporterStandards`** — Reporter standards from `legalhist.reporters` (the canonical reporter list), with variant counts from a `LEFT JOIN` on `legalhist.whitelist`. Reporters with no whitelisted variants appear with count 0.
 
 **`getReporterVariants`** — All `reporter_found` abbreviations for a given `reporter_standard`.
 
