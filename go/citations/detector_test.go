@@ -170,3 +170,89 @@ func TestSingleVolDetector_VolumeIsNil(t *testing.T) {
 	require.Len(t, cites, 1)
 	assert.Nil(t, cites[0].Volume, "single-vol detector should produce nil Volume")
 }
+
+// TestSingleVolDetector_NormalizesReporterAbbr verifies that when the canonical
+// reporter_standard differs from the abbreviation that actually matched in the
+// OCR, the resulting Citation carries the canonical form in ReporterAbbr while
+// Raw preserves the literal OCR'd substring. This is the contract that the
+// detector-creation loop in cite-detector-moml relies on for downstream
+// linking against legalhist.reporters.
+func TestSingleVolDetector_NormalizesReporterAbbr(t *testing.T) {
+	tests := []struct {
+		name         string
+		canonical    string
+		abbreviation string
+		text         string
+		expectedRaw  string
+		expectedPage int
+	}{
+		{
+			name:         "alt missing internal periods",
+			canonical:    "Bail. Eq.",
+			abbreviation: "Bail Eq",
+			text:         "Compare Bail Eq 17 with the earlier ruling.",
+			expectedRaw:  "Bail Eq 17",
+			expectedPage: 17,
+		},
+		{
+			name:         "alt matches canonical exactly",
+			canonical:    "Bail. Eq.",
+			abbreviation: "Bail. Eq.",
+			text:         "See Bail. Eq. 42 for the rule.",
+			expectedRaw:  "Bail. Eq. 42",
+			expectedPage: 42,
+		},
+		{
+			name:         "alt missing trailing period",
+			canonical:    "Baldw.",
+			abbreviation: "Baldw",
+			text:         "The federal view in Baldw 125 was different.",
+			expectedRaw:  "Baldw 125",
+			expectedPage: 125,
+		},
+		{
+			name:         "alt is longer form than canonical",
+			canonical:    "Hob.",
+			abbreviation: "Hobart",
+			text:         "The rule in Hobart 423 was the older precedent.",
+			expectedRaw:  "Hobart 423",
+			expectedPage: 423,
+		},
+		{
+			name:         `alt is much longer form (exercises \w*)`,
+			canonical:    "Toth",
+			abbreviation: "Tothill",
+			text:         "See Tothill 876 for the early statement.",
+			expectedRaw:  "Tothill 876",
+			expectedPage: 876,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			doc := sources.NewDoc("test-normalize", tt.text)
+			d := NewSingleVolDetector(tt.canonical, tt.abbreviation)
+			cites := d.Detect(doc)
+			require.Len(t, cites, 1)
+			assert.Equal(t, tt.canonical, cites[0].ReporterAbbr,
+				"ReporterAbbr should be the canonical form, not the matched alt")
+			assert.Equal(t, tt.expectedRaw, cites[0].Raw,
+				"Raw should preserve the OCR'd alt spelling")
+			assert.Equal(t, tt.expectedPage, cites[0].Page)
+			assert.Nil(t, cites[0].Volume, "single-vol detector should produce nil Volume")
+		})
+	}
+}
+
+// TestSingleVolDetector_RawPreservesOCR is a focused unit test mirroring
+// TestSingleVolDetector_VolumeIsNil: it documents the Raw-preservation
+// invariant in isolation.
+func TestSingleVolDetector_RawPreservesOCR(t *testing.T) {
+	text := `See Bail Eq 42 for the ruling.`
+	doc := sources.NewDoc("test", text)
+	d := NewSingleVolDetector("Bail. Eq.", "Bail Eq")
+	cites := d.Detect(doc)
+	require.Len(t, cites, 1)
+	assert.Equal(t, "Bail. Eq.", cites[0].ReporterAbbr, "ReporterAbbr should be the canonical")
+	assert.Equal(t, "Bail Eq 42", cites[0].Raw, "Raw should preserve the OCR'd alt spelling")
+}
