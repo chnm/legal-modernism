@@ -1,7 +1,7 @@
 \restrict dbmate
 
--- Dumped from database version 17.9 (Debian 17.9-0+deb13u1)
--- Dumped by pg_dump version 17.9 (Homebrew)
+-- Dumped from database version 17.9 (Debian 17.9-1.pgdg13+1)
+-- Dumped by pg_dump version 17.10 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -621,6 +621,26 @@ CREATE TABLE cap.opinions (
 
 
 --
+-- Name: reporter_abbreviations; Type: MATERIALIZED VIEW; Schema: cap; Owner: -
+--
+
+CREATE MATERIALIZED VIEW cap.reporter_abbreviations AS
+ WITH extracted AS (
+         SELECT COALESCE("substring"(citations.cite, '^[0-9]+\s+(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^[0-9]{4}-(.+?)-[0-9]+$'::text)) AS abbreviation
+           FROM cap.citations
+          WHERE (citations.type <> 'parallel'::text)
+        )
+ SELECT abbreviation,
+    count(*) AS n
+   FROM extracted
+  WHERE (abbreviation ~ '^[A-Za-z]'::text)
+  GROUP BY abbreviation
+ HAVING (count(*) > 1)
+  ORDER BY abbreviation
+  WITH NO DATA;
+
+
+--
 -- Name: reporters; Type: TABLE; Schema: cap; Owner: -
 --
 
@@ -852,6 +872,16 @@ CREATE TABLE legalhist.reporters (
     single_vol boolean,
     type text,
     reporter_cap text
+);
+
+
+--
+-- Name: reporters_abbreviations; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.reporters_abbreviations (
+    reporter_standard text NOT NULL,
+    alt_abbr text
 );
 
 
@@ -1702,6 +1732,13 @@ CREATE UNIQUE INDEX cap_volumes_to_jurisdictions_idx ON cap.volumes_to_jurisdict
 
 
 --
+-- Name: reporter_abbreviations_abbreviation_idx; Type: INDEX; Schema: cap; Owner: -
+--
+
+CREATE UNIQUE INDEX reporter_abbreviations_abbreviation_idx ON cap.reporter_abbreviations USING btree (abbreviation);
+
+
+--
 -- Name: reporters_short_name_idx; Type: INDEX; Schema: cap; Owner: -
 --
 
@@ -2107,11 +2144,11 @@ ALTER TABLE ONLY legalhist.whitelist
 
 
 --
--- Name: reporters_diffvols reporters_diffvols_reporter_title_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: reporters_abbreviations reporters_abbreviations_reporter_standard_fk; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
-ALTER TABLE ONLY legalhist.reporters_diffvols
-    ADD CONSTRAINT reporters_diffvols_reporter_title_fkey FOREIGN KEY (reporter_title) REFERENCES legalhist.reporters_nominate(reporter_title) ON UPDATE CASCADE;
+ALTER TABLE ONLY legalhist.reporters_abbreviations
+    ADD CONSTRAINT reporters_abbreviations_reporter_standard_fk FOREIGN KEY (reporter_standard) REFERENCES legalhist.reporters(reporter_standard);
 
 
 --
@@ -2249,4 +2286,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260312181004'),
     ('20260313120000'),
     ('20260325003434'),
-    ('20260325004157');
+    ('20260325004157'),
+    ('20260521114705');
