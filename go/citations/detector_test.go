@@ -226,6 +226,30 @@ func TestSingleVolDetector_NormalizesReporterAbbr(t *testing.T) {
 			expectedRaw:  "Tothill 876",
 			expectedPage: 876,
 		},
+		{
+			name:         "alt with parenthesized jurisdiction (SC)",
+			canonical:    "Bail. Eq.",
+			abbreviation: "Bail Eq (SC)",
+			text:         "See Bail Eq (SC) 42 for the ruling.",
+			expectedRaw:  "Bail Eq (SC) 42",
+			expectedPage: 42,
+		},
+		{
+			name:         "alt with parenthesized jurisdiction (Eng)",
+			canonical:    "Al",
+			abbreviation: "Al (Eng)",
+			text:         "Reference Al (Eng) 17 in the early reports.",
+			expectedRaw:  "Al (Eng) 17",
+			expectedPage: 17,
+		},
+		{
+			name:         "alt with parenthesized jurisdiction (US)",
+			canonical:    "Baldw.",
+			abbreviation: "Baldw (US)",
+			text:         "The federal view in Baldw (US) 125 was different.",
+			expectedRaw:  "Baldw (US) 125",
+			expectedPage: 125,
+		},
 	}
 
 	for _, tt := range tests {
