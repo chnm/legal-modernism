@@ -789,6 +789,48 @@ CREATE TABLE english_reports.cases (
 
 
 --
+-- Name: reporters; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.reporters (
+    reporter_standard text NOT NULL,
+    reporter_title text,
+    level text,
+    jurisdiction text,
+    year_start integer,
+    year_end integer,
+    single_vol boolean,
+    type text,
+    reporter_cap text
+);
+
+
+--
+-- Name: reporters_abbreviations; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.reporters_abbreviations (
+    reporter_standard text NOT NULL,
+    alt_abbr text
+);
+
+
+--
+-- Name: all_abbreviations; Type: VIEW; Schema: legalhist; Owner: -
+--
+
+CREATE VIEW legalhist.all_abbreviations AS
+ SELECT abbreviation
+   FROM ( SELECT DISTINCT reporters.reporter_standard AS abbreviation
+           FROM legalhist.reporters
+        UNION
+         SELECT DISTINCT reporters_abbreviations.alt_abbr AS abbreviation
+           FROM legalhist.reporters_abbreviations
+          WHERE (reporters_abbreviations.alt_abbr IS NOT NULL)) u
+  ORDER BY abbreviation;
+
+
+--
 -- Name: page_ocrtext; Type: TABLE; Schema: moml; Owner: -
 --
 
@@ -855,33 +897,6 @@ ALTER TABLE legalhist.code_reporter ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 CREATE TABLE legalhist.ocr_corrections (
     mistake text,
     correction text
-);
-
-
---
--- Name: reporters; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters (
-    reporter_standard text NOT NULL,
-    reporter_title text,
-    level text,
-    jurisdiction text,
-    year_start integer,
-    year_end integer,
-    single_vol boolean,
-    type text,
-    reporter_cap text
-);
-
-
---
--- Name: reporters_abbreviations; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_abbreviations (
-    reporter_standard text NOT NULL,
-    alt_abbr text
 );
 
 
@@ -2287,4 +2302,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260313120000'),
     ('20260325003434'),
     ('20260325004157'),
-    ('20260521114705');
+    ('20260521114705'),
+    ('20260521131903');
