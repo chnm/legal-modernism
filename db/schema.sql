@@ -811,7 +811,8 @@ CREATE TABLE legalhist.reporters (
 
 CREATE TABLE legalhist.reporters_abbreviations (
     reporter_standard text NOT NULL,
-    alt_abbr text
+    alt_abbr text NOT NULL,
+    CONSTRAINT reporters_abbreviations_distinct_check CHECK ((reporter_standard <> alt_abbr))
 );
 
 
@@ -2303,4 +2304,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260325003434'),
     ('20260325004157'),
     ('20260521114705'),
-    ('20260521131903');
+    ('20260521131903'),
+    ('20260522151323');
