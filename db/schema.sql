@@ -822,13 +822,18 @@ CREATE TABLE legalhist.reporters_abbreviations (
 --
 
 CREATE VIEW legalhist.all_abbreviations AS
- SELECT abbreviation
-   FROM ( SELECT DISTINCT reporters.reporter_standard AS abbreviation
-           FROM legalhist.reporters
+ SELECT abbreviation,
+    jurisdiction,
+    (jurisdiction ~~ 'uk%'::text) AS uk
+   FROM ( SELECT r.reporter_standard AS abbreviation,
+            r.jurisdiction
+           FROM legalhist.reporters r
         UNION
-         SELECT DISTINCT reporters_abbreviations.alt_abbr AS abbreviation
-           FROM legalhist.reporters_abbreviations
-          WHERE (reporters_abbreviations.alt_abbr IS NOT NULL)) u
+         SELECT ra.alt_abbr AS abbreviation,
+            r.jurisdiction
+           FROM (legalhist.reporters_abbreviations ra
+             JOIN legalhist.reporters r ON ((r.reporter_standard = ra.reporter_standard)))
+          WHERE (ra.alt_abbr IS NOT NULL)) u
   ORDER BY abbreviation;
 
 
@@ -2317,4 +2322,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522151323'),
     ('20260522152000'),
     ('20260522170000'),
-    ('20260522170100');
+    ('20260522170100'),
+    ('20260522170200');
