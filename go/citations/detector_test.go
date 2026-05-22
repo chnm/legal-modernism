@@ -280,3 +280,89 @@ func TestSingleVolDetector_RawPreservesOCR(t *testing.T) {
 	assert.Equal(t, "Bail. Eq.", cites[0].ReporterAbbr, "ReporterAbbr should be the canonical")
 	assert.Equal(t, "Bail Eq 42", cites[0].Raw, "Raw should preserve the OCR'd alt spelling")
 }
+
+// TestDetector_SpacingVariants documents the generic detector's behavior on
+// multi-token abbreviations like "Ga. App." where the OCR may drop the
+// whitespace between tokens. The detector matches both spellings but saves
+// ReporterAbbr exactly as it appeared in the text — there is no whitespace
+// normalization at detect time. The whitelist must therefore carry one row
+// per spelling (or normalize whitespace before the whitelist lookup at link
+// time).
+func TestDetector_SpacingVariants(t *testing.T) {
+	tests := []struct {
+		name             string
+		text             string
+		expectedReporter string
+		expectedVolume   int
+		expectedPage     int
+	}{
+		{
+			name:             "canonical spacing",
+			text:             "See 5 Ga. App. 100 for the rule.",
+			expectedReporter: "Ga. App.",
+			expectedVolume:   5,
+			expectedPage:     100,
+		},
+		{
+			name:             "no space between tokens",
+			text:             "See 5 Ga.App. 100 for the rule.",
+			expectedReporter: "Ga.App.",
+			expectedVolume:   5,
+			expectedPage:     100,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			doc := sources.NewDoc("test-spacing", tt.text)
+			cites := GenericDetector.Detect(doc)
+			require.Len(t, cites, 1)
+			assert.Equal(t, tt.expectedReporter, cites[0].ReporterAbbr)
+			require.NotNil(t, cites[0].Volume)
+			assert.Equal(t, tt.expectedVolume, *cites[0].Volume)
+			assert.Equal(t, tt.expectedPage, cites[0].Page)
+		})
+	}
+}
+
+// TestSingleVolDetector_SpacingVariants documents that the single-volume
+// detector matches OCR text that omits the whitespace between abbreviation
+// tokens. NewSingleVolDetector substitutes [\s.]* for every literal space in
+// the abbreviation, so "Ga. App." compiles to `Ga\.[\s.]*App\.` and matches
+// both "Ga. App." and "Ga.App." Saved ReporterAbbr is normalized to the
+// canonical form regardless of which spelling appeared in the OCR.
+func TestSingleVolDetector_SpacingVariants(t *testing.T) {
+	tests := []struct {
+		name         string
+		text         string
+		expectedRaw  string
+		expectedPage int
+	}{
+		{
+			name:         "canonical spacing",
+			text:         "See Ga. App. 42 for the rule.",
+			expectedRaw:  "Ga. App. 42",
+			expectedPage: 42,
+		},
+		{
+			name:         "no space between tokens",
+			text:         "See Ga.App. 42 for the rule.",
+			expectedRaw:  "Ga.App. 42",
+			expectedPage: 42,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			doc := sources.NewDoc("test-spacing-single", tt.text)
+			d := NewSingleVolDetector("Ga. App.", "Ga. App.")
+			cites := d.Detect(doc)
+			require.Len(t, cites, 1)
+			assert.Equal(t, "Ga. App.", cites[0].ReporterAbbr,
+				"ReporterAbbr should be canonical regardless of OCR spacing")
+			assert.Equal(t, tt.expectedRaw, cites[0].Raw,
+				"Raw should preserve the OCR's spacing")
+			assert.Equal(t, tt.expectedPage, cites[0].Page)
+			assert.Nil(t, cites[0].Volume,
+				"single-vol detector should produce nil Volume")
+		})
+	}
+}
