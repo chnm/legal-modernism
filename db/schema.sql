@@ -922,28 +922,6 @@ COMMENT ON TABLE legalhist.reporters_diffvols IS 'The mapping between volumes fr
 
 
 --
--- Name: reporters_nominate; Type: TABLE; Schema: legalhist; Owner: -
---
-
-CREATE TABLE legalhist.reporters_nominate (
-    reporter_title text NOT NULL,
-    level text,
-    jurisdiction text,
-    single_vol boolean NOT NULL,
-    year_start integer,
-    year_end integer,
-    reporter_standard text
-);
-
-
---
--- Name: TABLE reporters_nominate; Type: COMMENT; Schema: legalhist; Owner: -
---
-
-COMMENT ON TABLE legalhist.reporters_nominate IS 'Alternative reporters to reporters in CAP, where the volume numbers are different from CAP';
-
-
---
 -- Name: textbooks_vols; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -1466,13 +1444,35 @@ COMMENT ON TABLE to_delete.reporters_alt_samevols_abbreviations IS 'Alternative 
 
 
 --
+-- Name: reporters_nominate; Type: TABLE; Schema: to_delete; Owner: -
+--
+
+CREATE TABLE to_delete.reporters_nominate (
+    reporter_title text NOT NULL,
+    level text,
+    jurisdiction text,
+    single_vol boolean NOT NULL,
+    year_start integer,
+    year_end integer,
+    reporter_standard text
+);
+
+
+--
+-- Name: TABLE reporters_nominate; Type: COMMENT; Schema: to_delete; Owner: -
+--
+
+COMMENT ON TABLE to_delete.reporters_nominate IS 'Alternative reporters to reporters in CAP, where the volume numbers are different from CAP';
+
+
+--
 -- Name: reporters_single_volume_abbr; Type: VIEW; Schema: to_delete; Owner: -
 --
 
 CREATE VIEW to_delete.reporters_single_volume_abbr AS
  SELECT a.alt_abbr,
     r.reporter_title
-   FROM (legalhist.reporters_nominate r
+   FROM (to_delete.reporters_nominate r
      LEFT JOIN to_delete.reporters_alt_diffvols_abbreviations a ON ((r.reporter_title = a.reporter_title)))
   WHERE (r.single_vol = true);
 
@@ -1555,14 +1555,6 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 ALTER TABLE ONLY legalhist.ocr_corrections
     ADD CONSTRAINT ocr_corrections_unique UNIQUE (mistake, correction);
-
-
---
--- Name: reporters_nominate reporters_alt_diff_vols_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
---
-
-ALTER TABLE ONLY legalhist.reporters_nominate
-    ADD CONSTRAINT reporters_alt_diff_vols_pkey PRIMARY KEY (reporter_title);
 
 
 --
@@ -1675,6 +1667,14 @@ ALTER TABLE ONLY to_delete.reporters_alt_samevols_abbreviations
 
 ALTER TABLE ONLY to_delete.reporters_alt_diffvols_abbreviations
     ADD CONSTRAINT reporter_alt_diff_vols_abbr_unique UNIQUE (cap_abbr, alt_abbr);
+
+
+--
+-- Name: reporters_nominate reporters_alt_diff_vols_pkey; Type: CONSTRAINT; Schema: to_delete; Owner: -
+--
+
+ALTER TABLE ONLY to_delete.reporters_nominate
+    ADD CONSTRAINT reporters_alt_diff_vols_pkey PRIMARY KEY (reporter_title);
 
 
 --
@@ -1867,13 +1867,6 @@ CREATE INDEX idx_reporters_jurisdiction ON legalhist.reporters USING btree (juri
 
 
 --
--- Name: reporters_alt_diff_vols_single_vol_idx; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX reporters_alt_diff_vols_single_vol_idx ON legalhist.reporters_nominate USING btree (single_vol);
-
-
---
 -- Name: reporters_alt_diffvols_volumes_cap_reporter_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
@@ -2032,6 +2025,13 @@ CREATE INDEX reporter_alt_same_vols_alt_abbr_idx ON to_delete.reporters_alt_same
 --
 
 CREATE INDEX reporter_alt_same_vols_cap_abbr_idx ON to_delete.reporters_alt_samevols_abbreviations USING btree (cap_abbr);
+
+
+--
+-- Name: reporters_alt_diff_vols_single_vol_idx; Type: INDEX; Schema: to_delete; Owner: -
+--
+
+CREATE INDEX reporters_alt_diff_vols_single_vol_idx ON to_delete.reporters_nominate USING btree (single_vol);
 
 
 --
@@ -2305,4 +2305,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260325004157'),
     ('20260521114705'),
     ('20260521131903'),
-    ('20260522151323');
+    ('20260522151323'),
+    ('20260522152000');
