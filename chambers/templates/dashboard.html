@@ -46,12 +46,6 @@
                 <div class="big-label">Skipped as junk</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="stat-card stat-neutral">
-                <div class="big-number placeholder-number" id="stat-statutes">&mdash;</div>
-                <div class="big-label">Skipped as statutes</div>
-            </div>
-        </div>
     </div>
 
     <h2 class="h6 text-secondary mb-2">Potential cites linked</h2>
@@ -147,7 +141,7 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
 
             const totalLinked = d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter;
 
-            const totalPotential = d.TotalRawCites - d.SkippedJunk - d.SkippedStatute;
+            const totalPotential = d.TotalRawCites - d.SkippedJunk;
 
             function pctOfRaw(n) {
                 if (d.TotalRawCites === 0) return "0%";
@@ -173,7 +167,6 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
             setStat("stat-raw", d.TotalRawCites);
             setStatWithPct("stat-potential-raw", totalPotential, pctOfRaw);
             setStatWithPct("stat-junk", d.SkippedJunk, pctOfRaw);
-            setStatWithPct("stat-statutes", d.SkippedStatute, pctOfRaw);
 
             // Row 2: potential cites breakdown with percentages
             setStat("stat-potential", totalPotential);
