@@ -626,9 +626,10 @@ CREATE TABLE cap.opinions (
 
 CREATE MATERIALIZED VIEW cap.reporter_abbreviations AS
  WITH extracted AS (
-         SELECT COALESCE("substring"(citations.cite, '^[0-9]+\s+(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^[0-9]{4}-(.+?)-[0-9]+$'::text)) AS abbreviation
-           FROM cap.citations
-          WHERE (citations.type <> 'parallel'::text)
+         SELECT COALESCE("substring"(c.cite, '^[0-9]+\s+(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(c.cite, '^(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(c.cite, '^[0-9]{4}-(.+?)-[0-9]+$'::text)) AS abbreviation
+           FROM (cap.citations c
+             JOIN cap.cases cs ON ((cs.id = c."case")))
+          WHERE ((c.cite !~~ '%;%'::text) AND (cs.decision_year <= 1925))
         )
  SELECT abbreviation,
     count(*) AS n
@@ -821,14 +822,47 @@ CREATE TABLE legalhist.reporters_abbreviations (
 --
 
 CREATE VIEW legalhist.all_abbreviations AS
- SELECT abbreviation
-   FROM ( SELECT DISTINCT reporters.reporter_standard AS abbreviation
-           FROM legalhist.reporters
+ SELECT abbreviation,
+    jurisdiction,
+    (jurisdiction ~~ 'uk%'::text) AS uk
+   FROM ( SELECT r.reporter_standard AS abbreviation,
+            r.jurisdiction
+           FROM legalhist.reporters r
         UNION
-         SELECT DISTINCT reporters_abbreviations.alt_abbr AS abbreviation
-           FROM legalhist.reporters_abbreviations
-          WHERE (reporters_abbreviations.alt_abbr IS NOT NULL)) u
+         SELECT ra.alt_abbr AS abbreviation,
+            r.jurisdiction
+           FROM (legalhist.reporters_abbreviations ra
+             JOIN legalhist.reporters r ON ((r.reporter_standard = ra.reporter_standard)))
+          WHERE (ra.alt_abbr IS NOT NULL)) u
   ORDER BY abbreviation;
+
+
+--
+-- Name: abbrs_cap_not_in_legalhist; Type: VIEW; Schema: legalhist; Owner: -
+--
+
+CREATE VIEW legalhist.abbrs_cap_not_in_legalhist AS
+ SELECT abbreviation,
+    n
+   FROM cap.reporter_abbreviations
+  WHERE (NOT (abbreviation IN ( SELECT all_abbreviations.abbreviation
+           FROM legalhist.all_abbreviations
+          WHERE (NOT all_abbreviations.uk))))
+  ORDER BY abbreviation;
+
+
+--
+-- Name: abbrs_legalhist_not_in_cap; Type: VIEW; Schema: legalhist; Owner: -
+--
+
+CREATE VIEW legalhist.abbrs_legalhist_not_in_cap AS
+ SELECT all_abbreviations.abbreviation
+   FROM legalhist.all_abbreviations
+  WHERE (NOT all_abbreviations.uk)
+EXCEPT
+ SELECT reporter_abbreviations.abbreviation
+   FROM cap.reporter_abbreviations
+  ORDER BY 1;
 
 
 --
@@ -2315,4 +2349,7 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260521131903'),
     ('20260522151323'),
     ('20260522152000'),
-    ('20260522170000');
+    ('20260522170000'),
+    ('20260522170100'),
+    ('20260522170200'),
+    ('20260522170300');
