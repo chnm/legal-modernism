@@ -910,7 +910,7 @@ CREATE TABLE legalhist.reporters_diffvols (
     vol integer,
     cap_vol integer,
     cap_reporter text NOT NULL,
-    reporter_standard text
+    reporter_standard text NOT NULL
 );
 
 
@@ -2152,6 +2152,14 @@ ALTER TABLE ONLY legalhist.code_reporter
 
 
 --
+-- Name: reporters_diffvols fk_reporters_diffvols_reporter_standard; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.reporters_diffvols
+    ADD CONSTRAINT fk_reporters_diffvols_reporter_standard FOREIGN KEY (reporter_standard) REFERENCES legalhist.reporters(reporter_standard);
+
+
+--
 -- Name: whitelist fk_whitelist_reporter_standard; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2306,4 +2314,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260521114705'),
     ('20260521131903'),
     ('20260522151323'),
-    ('20260522152000');
+    ('20260522152000'),
+    ('20260522170000');
