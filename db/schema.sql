@@ -626,9 +626,10 @@ CREATE TABLE cap.opinions (
 
 CREATE MATERIALIZED VIEW cap.reporter_abbreviations AS
  WITH extracted AS (
-         SELECT COALESCE("substring"(citations.cite, '^[0-9]+\s+(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(citations.cite, '^[0-9]{4}-(.+?)-[0-9]+$'::text)) AS abbreviation
-           FROM cap.citations
-          WHERE (citations.type <> 'parallel'::text)
+         SELECT COALESCE("substring"(c.cite, '^[0-9]+\s+(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(c.cite, '^(.+?)\s+[0-9]+[A-Za-z-]*$'::text), "substring"(c.cite, '^[0-9]{4}-(.+?)-[0-9]+$'::text)) AS abbreviation
+           FROM (cap.citations c
+             JOIN cap.cases cs ON ((cs.id = c."case")))
+          WHERE ((c.cite !~~ '%;%'::text) AND (cs.decision_year <= 1925))
         )
  SELECT abbreviation,
     count(*) AS n
@@ -2315,4 +2316,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260521131903'),
     ('20260522151323'),
     ('20260522152000'),
-    ('20260522170000');
+    ('20260522170000'),
+    ('20260522170100');
