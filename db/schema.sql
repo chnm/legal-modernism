@@ -838,6 +838,34 @@ CREATE VIEW legalhist.all_abbreviations AS
 
 
 --
+-- Name: abbrs_cap_not_in_legalhist; Type: VIEW; Schema: legalhist; Owner: -
+--
+
+CREATE VIEW legalhist.abbrs_cap_not_in_legalhist AS
+ SELECT abbreviation,
+    n
+   FROM cap.reporter_abbreviations
+  WHERE (NOT (abbreviation IN ( SELECT all_abbreviations.abbreviation
+           FROM legalhist.all_abbreviations
+          WHERE (NOT all_abbreviations.uk))))
+  ORDER BY abbreviation;
+
+
+--
+-- Name: abbrs_legalhist_not_in_cap; Type: VIEW; Schema: legalhist; Owner: -
+--
+
+CREATE VIEW legalhist.abbrs_legalhist_not_in_cap AS
+ SELECT all_abbreviations.abbreviation
+   FROM legalhist.all_abbreviations
+  WHERE (NOT all_abbreviations.uk)
+EXCEPT
+ SELECT reporter_abbreviations.abbreviation
+   FROM cap.reporter_abbreviations
+  ORDER BY 1;
+
+
+--
 -- Name: page_ocrtext; Type: TABLE; Schema: moml; Owner: -
 --
 
@@ -2323,4 +2351,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522152000'),
     ('20260522170000'),
     ('20260522170100'),
-    ('20260522170200');
+    ('20260522170200'),
+    ('20260522170300');
