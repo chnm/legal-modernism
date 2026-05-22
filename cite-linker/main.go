@@ -232,10 +232,6 @@ func linkCitation(
 		result.Status = citations.StatusSkippedNotWhitelisted
 		return result
 	}
-	if entry.Statute {
-		result.Status = citations.StatusSkippedStatute
-		return result
-	}
 	if entry.Junk {
 		result.Status = citations.StatusSkippedJunk
 		return result

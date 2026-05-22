@@ -7,7 +7,6 @@ import "github.com/google/uuid"
 type WhitelistEntry struct {
 	ReporterStandard *string
 	ReporterCAP      *string
-	Statute          bool
 	UK               bool
 	Junk             bool
 	CAPDifferent     bool
@@ -45,11 +44,10 @@ type LinkResult struct {
 
 // Status constants for link results.
 const (
-	StatusLinkedCAP            = "linked_cap"
-	StatusLinkedCodeReporter   = "linked_code_reporter"
-	StatusLinkedEnglishReports = "linked_english_reports"
+	StatusLinkedCAP             = "linked_cap"
+	StatusLinkedCodeReporter    = "linked_code_reporter"
+	StatusLinkedEnglishReports  = "linked_english_reports"
 	StatusSkippedNotWhitelisted = "skipped_not_whitelisted"
-	StatusSkippedStatute       = "skipped_statute"
-	StatusSkippedJunk          = "skipped_junk"
-	StatusNoMatch              = "no_match"
+	StatusSkippedJunk           = "skipped_junk"
+	StatusNoMatch               = "no_match"
 )

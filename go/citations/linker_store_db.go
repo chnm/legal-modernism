@@ -20,8 +20,18 @@ func NewLinkerDBStore(db *pgxpool.Pool) *LinkerDBStore {
 
 func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*WhitelistEntry, error) {
 	query := `
-	SELECT reporter_found, reporter_standard, reporter_cap, statute, uk, junk, cap_different
-	FROM legalhist.reporters_citation_to_cap
+	SELECT
+		w.reporter_found,
+		w.reporter_standard,
+		r.reporter_cap,
+		w.junk,
+		COALESCE(r.jurisdiction LIKE 'uk%', false) AS uk,
+		EXISTS (
+			SELECT 1 FROM legalhist.reporters_diffvols d
+			WHERE d.reporter_standard = w.reporter_standard
+		) AS cap_different
+	FROM legalhist.whitelist w
+	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
@@ -33,13 +43,9 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	for rows.Next() {
 		var found string
 		var e WhitelistEntry
-		var capDiff *bool
-		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Statute, &e.UK, &e.Junk, &capDiff)
+		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
-		}
-		if capDiff != nil {
-			e.CAPDifferent = *capDiff
 		}
 		whitelist[found] = &e
 	}
@@ -246,16 +252,15 @@ func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, err
 	INSERT INTO moml_citations.citation_links (citation_id, status)
 	SELECT cu.id,
 	       CASE
-	         WHEN wl.statute = true THEN 'skipped_statute'
 	         WHEN wl.junk = true THEN 'skipped_junk'
 	         ELSE 'skipped_not_whitelisted'
 	       END
 	FROM moml_citations.citations_unlinked cu
-	LEFT JOIN legalhist.reporters_citation_to_cap wl ON cu.reporter_abbr = wl.reporter_found
+	LEFT JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
 	WHERE NOT EXISTS (
 		SELECT 1 FROM moml_citations.citation_links cl WHERE cl.citation_id = cu.id
 	)
-	AND (wl.reporter_found IS NULL OR wl.statute = true OR wl.junk = true)
+	AND (wl.reporter_found IS NULL OR wl.junk = true)
 	ON CONFLICT (citation_id) DO NOTHING
 	`
 	tag, err := s.DB.Exec(ctx, query)
