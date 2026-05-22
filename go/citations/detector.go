@@ -31,9 +31,12 @@ func NewDetector(reporter string, abbreviation string) *Detector {
 // NewSingleVolDetector creates a new citation detector and initializes its
 // regular expression. The detector will not look for a volume number
 func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
-	// Replace spaces in the abbreviation with [\s.]* to match variant forms:
+	// Escape regex metacharacters first so abbreviations containing parens,
+	// periods, etc. (e.g. "Bail Eq (SC)") match literally rather than being
+	// interpreted as capture groups or wildcards. Then replace literal spaces
+	// (which QuoteMeta leaves alone) with [\s.]* to match variant forms:
 	// e.g. "M & M" matches "M&M.", "M. & M.", etc.
-	flexAbbr := strings.ReplaceAll(abbreviation, " ", `[\s.]*`)
+	flexAbbr := strings.ReplaceAll(regexp.QuoteMeta(abbreviation), " ", `[\s.]*`)
 	detector := &Detector{
 		Reporter:     reporter,
 		Abbreviation: abbreviation,

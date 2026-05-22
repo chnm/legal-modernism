@@ -73,14 +73,17 @@ func main() {
 	detectors = append(detectors, citations.GenericDetector)
 	slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
 
-	// Create and load the single volume detectors
-	abbreviations, err := citationsDB.GetSingleVolReporters(ctx)
+	// Create and load the single volume detectors. Each row is a
+	// (reporter_standard, abbreviation) pair, so the saved reporter_abbr
+	// gets normalized to the canonical reporter_standard regardless of
+	// which spelling appeared in the OCR.
+	singleVolReporters, err := citationsDB.GetSingleVolReporterAbbrs(ctx)
 	if err != nil {
 		slog.Error("could not get single volume reporters from database", "error", err)
 		os.Exit(1)
 	}
-	for _, abbr := range abbreviations {
-		d := citations.NewSingleVolDetector(abbr, abbr)
+	for _, sv := range singleVolReporters {
+		d := citations.NewSingleVolDetector(sv.Standard, sv.Abbr)
 		detectors = append(detectors, d)
 	}
 	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))

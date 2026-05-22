@@ -32,11 +32,26 @@ func (r *DBStore) SaveCitation(ctx context.Context, c *Citation) error {
 	return err
 }
 
-// GetSingleVolReporters gets the abbreviations for all the single volume
-// reporters in the database.
-func (r *DBStore) GetSingleVolReporters(ctx context.Context) ([]string, error) {
-	query := `SELECT alt_abbr FROM legalhist.reporters_single_volume_abbr;`
-	var abbreviations []string
+// GetSingleVolReporterAbbrs returns one row per (reporter_standard, abbreviation)
+// pair for every single-volume reporter, covering both the canonical
+// reporter_standard form and every alt_abbr in legalhist.reporters_abbreviations.
+// Pairing each abbreviation with its canonical reporter_standard lets the
+// detector normalize the saved reporter_abbr to the canonical form regardless
+// of which spelling appeared in the OCR.
+func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolReporter, error) {
+	query := `
+	SELECT r.reporter_standard, r.reporter_standard AS abbr
+	  FROM legalhist.reporters r
+	 WHERE r.single_vol = true
+	UNION
+	SELECT r.reporter_standard, ra.alt_abbr
+	  FROM legalhist.reporters r
+	  JOIN legalhist.reporters_abbreviations ra
+	    ON ra.reporter_standard = r.reporter_standard
+	 WHERE r.single_vol = true
+	   AND ra.alt_abbr IS NOT NULL;
+	`
+	var reporters []SingleVolReporter
 
 	rows, err := r.DB.Query(ctx, query)
 	if err != nil {
@@ -44,14 +59,13 @@ func (r *DBStore) GetSingleVolReporters(ctx context.Context) ([]string, error) {
 	}
 	defer rows.Close()
 
-	var abbr string
 	for rows.Next() {
-		err = rows.Scan(&abbr)
-		if err != nil {
+		var sv SingleVolReporter
+		if err := rows.Scan(&sv.Standard, &sv.Abbr); err != nil {
 			return nil, err
 		}
-		abbreviations = append(abbreviations, abbr)
+		reporters = append(reporters, sv)
 	}
 
-	return abbreviations, nil
+	return reporters, nil
 }
