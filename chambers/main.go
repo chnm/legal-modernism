@@ -252,7 +252,7 @@ func handleDashboard(w http.ResponseWriter, r *http.Request, tmpl *template.Temp
 
 func handleDashboardAPI(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("handling request", "path", r.URL.Path, "handler", "dashboard-api")
-	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Minute)
 	defer cancel()
 
 	slog.Debug("fetching dashboard data from database")
