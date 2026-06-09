@@ -491,22 +491,27 @@ func (d *DashboardData) TotalLinked() int {
 func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, error) {
 	d := &DashboardData{}
 
-	// Get counts by status from the view
-	slog.Debug("querying citation links status view")
-	rows, err := db.Query(ctx, `SELECT status, n FROM moml_citations.citation_links_status`)
+	// Get summary metrics (total raw cites and per-status counts) from the
+	// precomputed materialized view. The view is refreshed by the cite-linker;
+	// reading it here is a small indexed scan instead of aggregating the ~62M-row
+	// citations_unlinked and citation_links tables on every request.
+	slog.Debug("querying linking dashboard summary view")
+	rows, err := db.Query(ctx, `SELECT metric, n FROM moml_citations.linking_dashboard_summary`)
 	if err != nil {
-		return nil, fmt.Errorf("querying citation links status: %w", err)
+		return nil, fmt.Errorf("querying dashboard summary: %w", err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		var status string
+		var metric string
 		var n int
-		if err := rows.Scan(&status, &n); err != nil {
-			return nil, fmt.Errorf("scanning citation links status: %w", err)
+		if err := rows.Scan(&metric, &n); err != nil {
+			return nil, fmt.Errorf("scanning dashboard summary: %w", err)
 		}
-		slog.Debug("citation links status row", "status", status, "n", n)
-		switch status {
+		slog.Debug("dashboard summary row", "metric", metric, "n", n)
+		switch metric {
+		case "total_raw_cites":
+			d.TotalRawCites = n
 		case "linked_cap":
 			d.LinkedCAP = n
 		case "linked_english_reports":
@@ -522,33 +527,17 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		}
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("iterating citation links status: %w", err)
+		return nil, fmt.Errorf("iterating dashboard summary: %w", err)
 	}
-	slog.Debug("finished querying citation links status view")
+	slog.Debug("finished querying linking dashboard summary view")
 
-	// Get total raw citations count
-	slog.Debug("counting total raw citations")
-	err = db.QueryRow(ctx, `SELECT count(*) FROM moml_citations.citations_unlinked`).Scan(&d.TotalRawCites)
-	if err != nil {
-		return nil, fmt.Errorf("counting raw citations: %w", err)
-	}
-	// Get per-reporter linking stats
+	// Get per-reporter linking stats from the precomputed materialized view,
+	// ordered by total citations descending (linked + no_match + unprocessed).
 	slog.Debug("querying per-reporter linking stats")
 	reporterRows, err := db.Query(ctx, `
-		SELECT
-			wl.reporter_standard,
-			count(*) FILTER (WHERE cl.status LIKE 'linked%') AS linked,
-			count(*) FILTER (WHERE cl.status = 'no_match') AS no_match,
-			count(*) FILTER (WHERE cl.status IS NULL) AS unprocessed,
-			COALESCE(bool_or(r.jurisdiction LIKE 'uk:%'), false) AS uk
-		FROM moml_citations.citations_unlinked cu
-		JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
-		JOIN legalhist.reporters r ON r.reporter_standard = wl.reporter_standard
-		LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
-		WHERE wl.reporter_standard IS NOT NULL
-		  AND wl.junk = false
-		GROUP BY wl.reporter_standard
-		ORDER BY count(*) DESC
+		SELECT reporter_standard, linked, no_match, unprocessed, uk
+		FROM moml_citations.linking_dashboard_reporters
+		ORDER BY linked + no_match + unprocessed DESC
 	`)
 	if err != nil {
 		return nil, fmt.Errorf("querying reporter stats: %w", err)
