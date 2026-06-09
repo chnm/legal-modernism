@@ -40,8 +40,9 @@ type LinkerStore interface {
 	// in a single bulk operation. Returns the number of rows affected.
 	BatchSkipNonWhitelisted(ctx context.Context) (int64, error)
 
-	// RefreshUnmatchedView refreshes the moml_citations.citations_unmatched_top
-	// materialized view so its ranked list of citations still to be linked
-	// reflects the current state of citation_links.
-	RefreshUnmatchedView(ctx context.Context) error
+	// RefreshDashboardViews refreshes the materialized views that back the
+	// chambers dashboard (citations_unmatched_top, linking_dashboard_reporters,
+	// linking_dashboard_summary) so their precomputed aggregates reflect the
+	// current state of citation_links.
+	RefreshDashboardViews(ctx context.Context) error
 }
