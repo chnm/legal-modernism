@@ -28,8 +28,10 @@ WITH NO DATA;
 
 -- Unique index on the grouping key. Each (volume, reporter_standard, page) is
 -- unique by construction (it is the GROUP BY key). NULLS NOT DISTINCT treats
--- the NULL volume of single-volume reporters as a single value. This unique
--- index is required for REFRESH MATERIALIZED VIEW CONCURRENTLY.
+-- the NULL volume of single-volume reporters as a single value. The cite-linker
+-- refreshes this view with a plain (non-concurrent) REFRESH, so this index is
+-- not required for that; it documents the grouping invariant and keeps the
+-- option of a manual REFRESH MATERIALIZED VIEW CONCURRENTLY open.
 CREATE UNIQUE INDEX IF NOT EXISTS citations_unmatched_top_uq
   ON moml_citations.citations_unmatched_top (volume, reporter_standard, page) NULLS NOT DISTINCT;
 
@@ -37,11 +39,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS citations_unmatched_top_uq
 CREATE INDEX IF NOT EXISTS citations_unmatched_top_n_idx
   ON moml_citations.citations_unmatched_top (n DESC);
 
--- After this migration, populate the view once with a plain (non-concurrent)
--- refresh, since CONCURRENTLY cannot run against a never-populated view:
+-- After this migration the view is empty. The cite-linker refreshes it at the
+-- start and end of each run, so it will be populated the next time cite-linker
+-- runs. To populate it manually in the meantime:
 --   REFRESH MATERIALIZED VIEW moml_citations.citations_unmatched_top;
--- Subsequent refreshes (e.g. after a linking batch) can be non-blocking:
---   REFRESH MATERIALIZED VIEW CONCURRENTLY moml_citations.citations_unmatched_top;
 
 -- migrate:down
 DROP MATERIALIZED VIEW IF EXISTS moml_citations.citations_unmatched_top;

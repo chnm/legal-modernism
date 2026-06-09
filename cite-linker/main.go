@@ -62,6 +62,16 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
+	// Refresh the unmatched-citations view up front so it reflects the state
+	// of the data before this run begins. A failed refresh should not block
+	// linking, so log and continue.
+	slog.Info("refreshing citations_unmatched_top materialized view")
+	if err := store.RefreshUnmatchedView(ctx); err != nil {
+		slog.Warn("could not refresh citations_unmatched_top view", "error", err)
+	} else {
+		slog.Info("refreshed citations_unmatched_top materialized view")
+	}
+
 	// Handle --skip-unlisted: bulk skip, then continue to linking
 	if skipUnlisted {
 		slog.Info("batch-marking non-whitelisted citations as skipped")
@@ -212,6 +222,15 @@ func main() {
 
 	wp.StopWait()
 	slog.Info("done linking citations")
+
+	// Refresh the unmatched-citations view again so it reflects the links
+	// produced by this run. Log and continue on failure.
+	slog.Info("refreshing citations_unmatched_top materialized view")
+	if err := store.RefreshUnmatchedView(ctx); err != nil {
+		slog.Warn("could not refresh citations_unmatched_top view", "error", err)
+	} else {
+		slog.Info("refreshed citations_unmatched_top materialized view")
+	}
 }
 
 // linkCitation processes a single citation through the linking pipeline.

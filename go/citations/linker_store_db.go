@@ -269,3 +269,18 @@ func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, err
 	}
 	return tag.RowsAffected(), nil
 }
+
+// RefreshUnmatchedView refreshes the moml_citations.citations_unmatched_top
+// materialized view. The refresh is blocking: the call does not return until
+// the view has been rebuilt, so the linker does no further work until it is
+// done. This is a plain (non-concurrent) refresh, which takes an exclusive
+// lock that blocks readers while it runs. That is acceptable here because the
+// view is not read during a linker run, and a plain refresh is faster than a
+// CONCURRENTLY refresh.
+func (s *LinkerDBStore) RefreshUnmatchedView(ctx context.Context) error {
+	const view = "moml_citations.citations_unmatched_top"
+	if _, err := s.DB.Exec(ctx, "REFRESH MATERIALIZED VIEW "+view); err != nil {
+		return fmt.Errorf("refreshing %s: %w", view, err)
+	}
+	return nil
+}

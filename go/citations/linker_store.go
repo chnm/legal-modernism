@@ -39,4 +39,9 @@ type LinkerStore interface {
 	// BatchSkipNonWhitelisted marks all non-whitelisted citations as skipped
 	// in a single bulk operation. Returns the number of rows affected.
 	BatchSkipNonWhitelisted(ctx context.Context) (int64, error)
+
+	// RefreshUnmatchedView refreshes the moml_citations.citations_unmatched_top
+	// materialized view so its ranked list of citations still to be linked
+	// reflects the current state of citation_links.
+	RefreshUnmatchedView(ctx context.Context) error
 }
