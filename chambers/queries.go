@@ -4,7 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"net/url"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/agnivade/levenshtein"
@@ -30,13 +32,13 @@ type CitationDetail struct {
 	CiteLinked     *string
 
 	// CAP case info
-	CAPCaseName   *string
-	CAPCaseAbbr   *string
-	CAPYear       *int
-	CAPVolume     *string
-	CAPURL        *string
-	CAPReporter   *string
-	CAPCourt      *string
+	CAPCaseName     *string
+	CAPCaseAbbr     *string
+	CAPYear         *int
+	CAPVolume       *string
+	CAPURL          *string
+	CAPReporter     *string
+	CAPCourt        *string
 	CAPJurisdiction *string
 
 	// Code reporter case info
@@ -201,12 +203,12 @@ type ReporterCite struct {
 	Status *string
 }
 
-// StatusClass returns a CSS class based on the linking status.
-func (r *ReporterCite) StatusClass() string {
-	if r.Status == nil {
+// statusClass maps a linking status to a CSS class.
+func statusClass(status *string) string {
+	if status == nil {
 		return "status-unprocessed"
 	}
-	s := *r.Status
+	s := *status
 	if strings.HasPrefix(s, "linked") {
 		return "status-linked"
 	}
@@ -217,6 +219,11 @@ func (r *ReporterCite) StatusClass() string {
 		return "status-skip"
 	}
 	return "status-unprocessed"
+}
+
+// StatusClass returns a CSS class based on the linking status.
+func (r *ReporterCite) StatusClass() string {
+	return statusClass(r.Status)
 }
 
 func getReporterVariants(ctx context.Context, db *pgxpool.Pool, reporterStandard string) ([]string, error) {
@@ -572,6 +579,190 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 	)
 
 	return d, nil
+}
+
+// UnmatchedCitation is one aggregated row from
+// moml_citations.citations_unmatched_top: a distinct (volume, reporter_standard,
+// page) citation that still needs to be linked, with the count n of raw
+// citations it aggregates.
+type UnmatchedCitation struct {
+	Volume           *int
+	ReporterStandard *string
+	Page             int
+	N                int
+}
+
+// VolumeDisplay returns the volume for display, or an em dash for single-volume
+// reporters (NULL volume).
+func (u *UnmatchedCitation) VolumeDisplay() string {
+	if u.Volume == nil {
+		return "—"
+	}
+	return strconv.Itoa(*u.Volume)
+}
+
+// ReporterDisplay returns the standard reporter, or a placeholder when it is
+// NULL (a non-junk whitelist entry with no standard assigned).
+func (u *UnmatchedCitation) ReporterDisplay() string {
+	if u.ReporterStandard == nil {
+		return "(no standard)"
+	}
+	return *u.ReporterStandard
+}
+
+// Cite renders the aggregated citation as it would appear, e.g. "4 Wil. 877".
+func (u *UnmatchedCitation) Cite() string {
+	if u.Volume == nil {
+		return fmt.Sprintf("%s %d", u.ReporterDisplay(), u.Page)
+	}
+	return fmt.Sprintf("%d %s %d", *u.Volume, u.ReporterDisplay(), u.Page)
+}
+
+// DetailURL builds the URL to the reverse-aggregation page for this citation.
+// Volume and reporter are omitted when NULL so the handler treats them as NULL.
+func (u *UnmatchedCitation) DetailURL() string {
+	v := url.Values{}
+	v.Set("page", strconv.Itoa(u.Page))
+	if u.Volume != nil {
+		v.Set("volume", strconv.Itoa(*u.Volume))
+	}
+	if u.ReporterStandard != nil {
+		v.Set("reporter", *u.ReporterStandard)
+	}
+	return "/unmatched/cites?" + v.Encode()
+}
+
+// unmatchedFilters maps a filter key to its SQL predicate on the view. Values
+// are fixed literals (never user input) so they are safe to interpolate.
+var unmatchedFilters = map[string]string{
+	"multi":  "volume IS NOT NULL",
+	"single": "volume IS NULL",
+	"all":    "true",
+}
+
+// NormalizeUnmatchedFilter returns filter if it is a known key, else "multi".
+func NormalizeUnmatchedFilter(filter string) string {
+	if _, ok := unmatchedFilters[filter]; ok {
+		return filter
+	}
+	return "multi"
+}
+
+func getTopUnmatched(ctx context.Context, db *pgxpool.Pool, filter string) ([]UnmatchedCitation, error) {
+	pred := unmatchedFilters[NormalizeUnmatchedFilter(filter)]
+	slog.Debug("querying top unmatched citations", "filter", filter)
+	query := `
+	SELECT volume, reporter_standard, page, n
+	FROM moml_citations.citations_unmatched_top
+	WHERE ` + pred + `
+	ORDER BY n DESC, reporter_standard, volume, page
+	LIMIT 1000
+	`
+	rows, err := db.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("querying top unmatched citations: %w", err)
+	}
+	defer rows.Close()
+
+	var results []UnmatchedCitation
+	for rows.Next() {
+		var u UnmatchedCitation
+		if err := rows.Scan(&u.Volume, &u.ReporterStandard, &u.Page, &u.N); err != nil {
+			return nil, fmt.Errorf("scanning unmatched citation: %w", err)
+		}
+		results = append(results, u)
+	}
+	slog.Debug("fetched top unmatched citations", "filter", filter, "count", len(results))
+	return results, rows.Err()
+}
+
+// UnmatchedSummary holds aggregate counts over the unmatched-citations view.
+type UnmatchedSummary struct {
+	Groups int   // number of grouped (distinct) citations
+	Cites  int64 // total raw unmatched citations across those groups (sum of n)
+}
+
+func getUnmatchedSummary(ctx context.Context, db *pgxpool.Pool, filter string) (UnmatchedSummary, error) {
+	pred := unmatchedFilters[NormalizeUnmatchedFilter(filter)]
+	slog.Debug("querying unmatched summary", "filter", filter)
+	var s UnmatchedSummary
+	err := db.QueryRow(ctx, `
+		SELECT count(*), COALESCE(sum(n), 0)
+		FROM moml_citations.citations_unmatched_top
+		WHERE `+pred).Scan(&s.Groups, &s.Cites)
+	if err != nil {
+		return s, fmt.Errorf("querying unmatched summary: %w", err)
+	}
+	slog.Debug("fetched unmatched summary", "filter", filter, "groups", s.Groups, "cites", s.Cites)
+	return s, nil
+}
+
+// UnmatchedCite is a single raw citation occurrence on the reverse-aggregation
+// page, with the MOML treatise and page where it was found.
+type UnmatchedCite struct {
+	ID       uuid.UUID
+	Raw      string
+	Status   *string
+	Treatise string // MOML treatise short (display) title
+	Page     string // printed source page, or the MOML page id as a fallback
+}
+
+// StatusClass returns a CSS class based on the linking status.
+func (c *UnmatchedCite) StatusClass() string {
+	return statusClass(c.Status)
+}
+
+// unmatchedCitesLimit caps how many raw citations the reverse-aggregation page
+// renders, matching the reporter-cites page. Groups larger than this are
+// truncated for display; the true total is reported separately.
+const unmatchedCitesLimit = 10000
+
+// getUnmatchedCites reverses the aggregation: it returns the raw, still-to-be-
+// linked citations that the view aggregated under (volume, reporter_standard,
+// page), capped at unmatchedCitesLimit, plus the true total (the view's n).
+// Each occurrence carries the MOML treatise title and page where it was found,
+// since the raw string is often identical across many treatises. volume and
+// reporter may be nil to match NULL values. The unmatched predicate matches
+// the view, so total equals the row's n.
+func getUnmatchedCites(ctx context.Context, db *pgxpool.Pool, volume *int, reporter *string, page int) ([]UnmatchedCite, int, error) {
+	slog.Debug("querying cites for unmatched citation", "page", page)
+	query := `
+	SELECT cu.id, cu.raw, cl.status,
+	       COALESCE(bc.displaytitle, '') AS treatise,
+	       COALESCE(NULLIF(mp.sourcepage, ''), cu.moml_page) AS found_page,
+	       count(*) OVER() AS total
+	FROM moml_citations.citations_unlinked cu
+	JOIN legalhist.whitelist wl
+	  ON cu.reporter_abbr = wl.reporter_found AND wl.junk = false
+	LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+	LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+	LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
+	WHERE wl.reporter_standard IS NOT DISTINCT FROM $1::text
+	  AND cu.volume IS NOT DISTINCT FROM $2::int
+	  AND cu.page = $3
+	  AND (cl.citation_id IS NULL OR cl.status = 'no_match')
+	ORDER BY bc.displaytitle NULLS LAST, mp.sourcepage, cu.id
+	LIMIT $4
+	`
+	rows, err := db.Query(ctx, query, reporter, volume, page, unmatchedCitesLimit)
+	if err != nil {
+		return nil, 0, fmt.Errorf("querying cites for unmatched citation: %w", err)
+	}
+	defer rows.Close()
+
+	var results []UnmatchedCite
+	var total int
+	for rows.Next() {
+		var c UnmatchedCite
+		if err := rows.Scan(&c.ID, &c.Raw, &c.Status, &c.Treatise, &c.Page, &total); err != nil {
+			return nil, 0, fmt.Errorf("scanning unmatched cite: %w", err)
+		}
+		c.Raw = strings.ReplaceAll(c.Raw, "\n", " ")
+		c.Raw = strings.ReplaceAll(c.Raw, "\r", " ")
+		results = append(results, c)
+	}
+	slog.Debug("fetched cites for unmatched citation", "page", page, "shown", len(results), "total", total)
+	return results, total, rows.Err()
 }
 
 func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*CitationDetail, error) {

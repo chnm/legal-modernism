@@ -1,0 +1,69 @@
+{{define "title"}}Top unmatched citations &mdash; Chambers{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">Top unmatched citations</h1>
+
+    <p class="small text-secondary">
+        This page lists the most frequent citations still to be linked, drawn from the
+        <code>moml_citations.citations_unmatched_top</code> materialized view. Each row is a distinct
+        citation &mdash; a <code>(volume, reporter_standard, page)</code> combination &mdash; and
+        <code>n</code> is the number of raw, detected citations that aggregate to it. A citation
+        counts as &ldquo;unmatched&rdquo; when it has no row in <code>citation_links</code> or its
+        link attempt resulted in <code>no_match</code>. The list is capped at the top 1,000 by
+        <code>n</code> for the selected filter. Click a citation to see all the raw citations that
+        aggregate to it.
+    </p>
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT volume, reporter_standard, page, n
+FROM moml_citations.citations_unmatched_top
+WHERE {{if eq .Filter "multi"}}volume IS NOT NULL{{else if eq .Filter "single"}}volume IS NULL{{else}}true{{end}}
+ORDER BY n DESC, reporter_standard, volume, page
+LIMIT 1000</code></pre>
+    </details>
+
+    <div class="btn-group btn-group-sm my-2" role="group" aria-label="Volume filter">
+        <a href="/unmatched?filter=multi" class="btn {{if eq .Filter "multi"}}btn-primary{{else}}btn-outline-secondary{{end}}">Multi-volume reporters</a>
+        <a href="/unmatched?filter=single" class="btn {{if eq .Filter "single"}}btn-primary{{else}}btn-outline-secondary{{end}}">Single-volume reporters</a>
+        <a href="/unmatched?filter=all" class="btn {{if eq .Filter "all"}}btn-primary{{else}}btn-outline-secondary{{end}}">All</a>
+    </div>
+
+    <p class="small text-secondary mb-2">
+        {{if eq .Filter "multi"}}Showing citations with a volume number (multi-volume reporters).
+        {{else if eq .Filter "single"}}Showing citations with no volume number (single-volume reporters).
+        {{else}}Showing all citations.{{end}}
+        This filter matches <strong>{{.Summary.Groups}}</strong> grouped citations
+        ({{.Summary.Cites}} raw unmatched citations); displaying the top <strong>{{.Shown}}</strong>.
+        Across the whole view there are <strong>{{.Total.Groups}}</strong> grouped citations
+        ({{.Total.Cites}} raw unmatched citations).
+    </p>
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Citation</th>
+                <th>Volume</th>
+                <th>Reporter</th>
+                <th class="text-end">Page</th>
+                <th class="text-end">Count (n)</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Cites}}
+            <tr>
+                <td><a href="{{.DetailURL}}" class="font-monospace">{{.Cite}}</a></td>
+                <td>{{.VolumeDisplay}}</td>
+                <td>{{.ReporterDisplay}}</td>
+                <td class="text-end">{{.Page}}</td>
+                <td class="text-end">{{.N}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="5" class="text-secondary">No unmatched citations for this filter.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+{{end}}
