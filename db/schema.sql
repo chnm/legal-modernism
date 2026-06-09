@@ -1327,6 +1327,25 @@ CREATE VIEW moml_citations.citation_links_status AS
 
 
 --
+-- Name: citations_unmatched_top; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.citations_unmatched_top AS
+ SELECT cu.volume,
+    w.reporter_standard,
+    cu.page,
+    count(*) AS n
+   FROM ((moml_citations.citations_unlinked cu
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+     JOIN legalhist.whitelist w ON (((w.reporter_found = cu.reporter_abbr) AND (w.junk = false))))
+  WHERE ((cl.citation_id IS NULL) OR (cl.status = 'no_match'::text))
+  GROUP BY cu.volume, w.reporter_standard, cu.page
+ HAVING (count(*) >= 5)
+  ORDER BY (count(*)) DESC
+  WITH NO DATA;
+
+
+--
 -- Name: database_size; Type: VIEW; Schema: stats; Owner: -
 --
 
@@ -1999,6 +2018,20 @@ CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked U
 
 
 --
+-- Name: citations_unmatched_top_n_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX citations_unmatched_top_n_idx ON moml_citations.citations_unmatched_top USING btree (n DESC);
+
+
+--
+-- Name: citations_unmatched_top_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX citations_unmatched_top_uq ON moml_citations.citations_unmatched_top USING btree (volume, reporter_standard, page) NULLS NOT DISTINCT;
+
+
+--
 -- Name: idx_citation_links_cap; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2352,4 +2385,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522170000'),
     ('20260522170100'),
     ('20260522170200'),
-    ('20260522170300');
+    ('20260522170300'),
+    ('20260609115030');
