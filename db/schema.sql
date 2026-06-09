@@ -1346,6 +1346,41 @@ CREATE MATERIALIZED VIEW moml_citations.citations_unmatched_top AS
 
 
 --
+-- Name: linking_dashboard_reporters; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.linking_dashboard_reporters AS
+ SELECT wl.reporter_standard,
+    count(*) FILTER (WHERE (cl.status ~~ 'linked%'::text)) AS linked,
+    count(*) FILTER (WHERE (cl.status = 'no_match'::text)) AS no_match,
+    count(*) FILTER (WHERE (cl.status IS NULL)) AS unprocessed,
+    COALESCE(bool_or((r.jurisdiction ~~ 'uk:%'::text)), false) AS uk
+   FROM (((moml_citations.citations_unlinked cu
+     JOIN legalhist.whitelist wl ON ((cu.reporter_abbr = wl.reporter_found)))
+     JOIN legalhist.reporters r ON ((r.reporter_standard = wl.reporter_standard)))
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+  WHERE ((wl.reporter_standard IS NOT NULL) AND (wl.junk = false))
+  GROUP BY wl.reporter_standard
+  WITH NO DATA;
+
+
+--
+-- Name: linking_dashboard_summary; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.linking_dashboard_summary AS
+ SELECT 'total_raw_cites'::text AS metric,
+    count(*) AS n
+   FROM moml_citations.citations_unlinked
+UNION ALL
+ SELECT citation_links.status AS metric,
+    count(*) AS n
+   FROM moml_citations.citation_links
+  GROUP BY citation_links.status
+  WITH NO DATA;
+
+
+--
 -- Name: database_size; Type: VIEW; Schema: stats; Owner: -
 --
 
@@ -2060,6 +2095,20 @@ CREATE INDEX idx_citation_links_status ON moml_citations.citation_links USING bt
 
 
 --
+-- Name: linking_dashboard_reporters_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX linking_dashboard_reporters_uq ON moml_citations.linking_dashboard_reporters USING btree (reporter_standard);
+
+
+--
+-- Name: linking_dashboard_summary_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX linking_dashboard_summary_uq ON moml_citations.linking_dashboard_summary USING btree (metric);
+
+
+--
 -- Name: moml_page_to_cap_case_case_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2386,4 +2435,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522170100'),
     ('20260522170200'),
     ('20260522170300'),
-    ('20260609115030');
+    ('20260609115030'),
+    ('20260609133000');

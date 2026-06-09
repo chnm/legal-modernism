@@ -62,14 +62,14 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Refresh the unmatched-citations view up front so it reflects the state
-	// of the data before this run begins. A failed refresh should not block
-	// linking, so log and continue.
-	slog.Info("refreshing citations_unmatched_top materialized view")
-	if err := store.RefreshUnmatchedView(ctx); err != nil {
-		slog.Warn("could not refresh citations_unmatched_top view", "error", err)
+	// Refresh the dashboard materialized views up front so they reflect the
+	// state of the data before this run begins. A failed refresh should not
+	// block linking, so log and continue.
+	slog.Info("refreshing dashboard materialized views")
+	if err := store.RefreshDashboardViews(ctx); err != nil {
+		slog.Warn("could not refresh dashboard materialized views", "error", err)
 	} else {
-		slog.Info("refreshed citations_unmatched_top materialized view")
+		slog.Info("refreshed dashboard materialized views")
 	}
 
 	// Handle --skip-unlisted: bulk skip, then continue to linking
@@ -223,13 +223,13 @@ func main() {
 	wp.StopWait()
 	slog.Info("done linking citations")
 
-	// Refresh the unmatched-citations view again so it reflects the links
+	// Refresh the dashboard materialized views again so they reflect the links
 	// produced by this run. Log and continue on failure.
-	slog.Info("refreshing citations_unmatched_top materialized view")
-	if err := store.RefreshUnmatchedView(ctx); err != nil {
-		slog.Warn("could not refresh citations_unmatched_top view", "error", err)
+	slog.Info("refreshing dashboard materialized views")
+	if err := store.RefreshDashboardViews(ctx); err != nil {
+		slog.Warn("could not refresh dashboard materialized views", "error", err)
 	} else {
-		slog.Info("refreshed citations_unmatched_top materialized view")
+		slog.Info("refreshed dashboard materialized views")
 	}
 }
 

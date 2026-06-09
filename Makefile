@@ -48,5 +48,8 @@ db-down:
 db-status:
 	dbmate --env DBMATE_URL --migrations-dir db/migrations status
 
+db-schema:
+	dbmate --env DBMATE_URL dump
+
 chambers:
 	cd ./chambers && go run github.com/air-verse/air
