@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -72,6 +73,8 @@ func parseTemplates() map[string]*template.Template {
 		"cite-lookup.html",
 		"reporters.html",
 		"reporter-cites.html",
+		"unmatched.html",
+		"unmatched-cites.html",
 		"dashboard.html",
 		"whitelist-extender.html",
 	}
@@ -124,6 +127,12 @@ func main() {
 	})
 	mux.HandleFunc("/reporters/check", func(w http.ResponseWriter, r *http.Request) {
 		handleReporterCites(w, r, tmpls["reporter-cites.html"])
+	})
+	mux.HandleFunc("/unmatched", func(w http.ResponseWriter, r *http.Request) {
+		handleUnmatched(w, r, tmpls["unmatched.html"])
+	})
+	mux.HandleFunc("/unmatched/cites", func(w http.ResponseWriter, r *http.Request) {
+		handleUnmatchedCites(w, r, tmpls["unmatched-cites.html"])
 	})
 	mux.HandleFunc("/linking-dashboard", func(w http.ResponseWriter, r *http.Request) {
 		handleDashboard(w, r, tmpls["dashboard.html"])
@@ -309,6 +318,101 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 	}{Reporter: reporter, Variants: variants, Cites: cites}
 	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
+	}
+}
+
+func handleUnmatched(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "unmatched")
+	filter := NormalizeUnmatchedFilter(r.URL.Query().Get("filter"))
+
+	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
+	defer cancel()
+
+	cites, err := getTopUnmatched(ctx, pool, filter)
+	if err != nil {
+		slog.Error("error querying top unmatched citations", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	summary, err := getUnmatchedSummary(ctx, pool, filter)
+	if err != nil {
+		slog.Error("error querying unmatched summary", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	total, err := getUnmatchedSummary(ctx, pool, "all")
+	if err != nil {
+		slog.Error("error querying overall unmatched summary", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	slog.Debug("rendering unmatched page", "filter", filter, "shown", len(cites))
+	data := struct {
+		Filter  string
+		Cites   []UnmatchedCitation
+		Summary UnmatchedSummary
+		Total   UnmatchedSummary
+		Shown   int
+	}{Filter: filter, Cites: cites, Summary: summary, Total: total, Shown: len(cites)}
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
+		slog.Error("error rendering unmatched", "error", err)
+	}
+}
+
+func handleUnmatchedCites(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "unmatched-cites")
+	q := r.URL.Query()
+
+	pageStr := q.Get("page")
+	if pageStr == "" {
+		slog.Debug("no page specified, redirecting to /unmatched")
+		http.Redirect(w, r, "/unmatched", http.StatusFound)
+		return
+	}
+	page, err := strconv.Atoi(pageStr)
+	if err != nil {
+		slog.Debug("invalid page", "page", pageStr)
+		http.Error(w, fmt.Sprintf("Invalid page: %s", pageStr), http.StatusBadRequest)
+		return
+	}
+
+	// volume and reporter are omitted from the URL when NULL; treat absence
+	// (and an unparseable/empty value) as NULL.
+	var volume *int
+	if q.Has("volume") {
+		if v, err := strconv.Atoi(q.Get("volume")); err == nil {
+			volume = &v
+		}
+	}
+	var reporter *string
+	if s := q.Get("reporter"); s != "" {
+		reporter = &s
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
+	defer cancel()
+
+	cites, total, err := getUnmatchedCites(ctx, pool, volume, reporter, page)
+	if err != nil {
+		slog.Error("error querying unmatched cites", "page", page, "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	agg := &UnmatchedCitation{Volume: volume, ReporterStandard: reporter, Page: page, N: total}
+	slog.Debug("rendering unmatched cites", "cite", agg.Cite(), "shown", len(cites), "total", total)
+	data := struct {
+		Agg       *UnmatchedCitation
+		Cites     []UnmatchedCite
+		Shown     int
+		Total     int
+		Truncated bool
+	}{Agg: agg, Cites: cites, Shown: len(cites), Total: total, Truncated: total > len(cites)}
+	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
+		slog.Error("error rendering unmatched cites", "error", err)
 	}
 }
 

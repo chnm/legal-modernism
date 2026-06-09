@@ -1,0 +1,78 @@
+{{define "title"}}{{.Agg.Cite}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+        .cites { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+        .cite { width: 16rem; box-sizing: border-box; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+        .cite a { text-decoration: none; color: inherit; display: block; }
+        .cite a:hover .raw { text-decoration: underline; }
+        .cite .raw { font-weight: 600; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cite .src { display: block; font-size: 0.72rem; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .status-linked { background: #d4edda; color: #155724; }
+        .status-nomatch { background: #f8d7da; color: #721c24; }
+        .status-skip { background: #cce5ff; color: #004085; }
+        .status-unprocessed { background: #fff3cd; color: #856404; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <a href="/unmatched" class="small">&larr; All unmatched citations</a>
+    <h1 class="h5 mt-2 font-monospace">{{.Agg.Cite}}</h1>
+
+    <p class="small text-secondary">
+        This page reverses the aggregation from <code>moml_citations.citations_unmatched_top</code>:
+        it shows every raw, still-to-be-linked citation that aggregates to
+        <strong>{{.Agg.Cite}}</strong> &mdash; that is, citations whose <code>reporter_abbr</code>
+        maps (via the non-junk <code>legalhist.whitelist</code>) to
+        {{if .Agg.ReporterStandard}}reporter standard &ldquo;{{.Agg.ReporterDisplay}}&rdquo;{{else}}no standard reporter{{end}},
+        with {{if .Agg.Volume}}volume {{.Agg.VolumeDisplay}}{{else}}no volume{{end}} and page {{.Agg.Page}}.
+        Only unmatched citations are shown (no row in <code>citation_links</code>, or
+        <code>no_match</code>), so the count below equals the view&rsquo;s <code>n</code>. Each button
+        shows the <code>raw</code> column &mdash; the exact string detected in the MOML OCR &mdash;
+        along with the MOML treatise title and the page where it was found, since the raw string is
+        often identical across many treatises. Click any citation to open its detail page, keyed by
+        citation UUID.
+    </p>
+    <details class="small my-2">
+        <summary class="text-secondary">Show SQL query</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.id, cu.raw, cl.status,
+       bc.displaytitle AS treatise,
+       COALESCE(NULLIF(mp.sourcepage, ''), cu.moml_page) AS found_page
+FROM moml_citations.citations_unlinked cu
+JOIN legalhist.whitelist wl
+  ON cu.reporter_abbr = wl.reporter_found AND wl.junk = false
+LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
+LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
+WHERE wl.reporter_standard IS NOT DISTINCT FROM {{if .Agg.ReporterStandard}}'{{.Agg.ReporterDisplay}}'{{else}}NULL{{end}}
+  AND cu.volume IS NOT DISTINCT FROM {{if .Agg.Volume}}{{.Agg.VolumeDisplay}}{{else}}NULL{{end}}
+  AND cu.page = {{.Agg.Page}}
+  AND (cl.citation_id IS NULL OR cl.status = 'no_match')
+ORDER BY bc.displaytitle NULLS LAST, mp.sourcepage, cu.id
+LIMIT 10000</code></pre>
+    </details>
+
+    <p class="text-secondary small mb-2">
+        <strong>{{.Total}}</strong> raw unmatched citations aggregate to <code>{{.Agg.Cite}}</code>
+        (the view&rsquo;s <code>n</code> = {{.Agg.N}}).
+        {{if .Truncated}}<span class="text-danger">Showing the first {{.Shown}}; the list is capped at 10,000.</span>{{end}}
+    </p>
+    <div class="d-flex gap-2 mb-2 small text-secondary">
+        <span class="status-nomatch cite">no match</span>
+        <span class="status-unprocessed cite">unprocessed</span>
+    </div>
+    <div class="cites">
+    {{range .Cites}}
+        <span class="cite {{.StatusClass}}">
+            <a href="/cite?id={{.ID}}" title="{{.Treatise}} (p. {{.Page}})">
+                <span class="raw">{{.Raw}}</span>
+                <span class="src">{{if .Treatise}}{{.Treatise}}{{else}}(unknown treatise){{end}} &middot; p. {{.Page}}</span>
+            </a>
+        </span>
+    {{else}}
+        <span class="text-secondary small">No citations found.</span>
+    {{end}}
+    </div>
+{{end}}
