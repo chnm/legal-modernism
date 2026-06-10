@@ -226,9 +226,11 @@ func extractClusterCAPPairs(path string, showProgress bool) ([]clusterCAPPair, e
 	for {
 		line, rerr := reader.ReadString('\n')
 		if len(line) > 0 {
-			// A record begins only on a line starting with a digit; check that
-			// cheaply before running the anchored timestamp regex.
-			if line[0] >= '0' && line[0] <= '9' {
+			// A record begins on a line whose first column is the id: either a
+			// bare digit or a quoted id ("123",...). Check that cheaply before
+			// running the anchored timestamp regex; continuation lines from
+			// embedded newlines start with field text and are skipped here.
+			if c := line[0]; c == '"' || (c >= '0' && c <= '9') {
 				if m := reClusterRecordStart.FindStringSubmatch(line); m != nil {
 					emit() // close out the previous record
 					if id, perr := strconv.ParseInt(m[1], 10, 64); perr == nil {
