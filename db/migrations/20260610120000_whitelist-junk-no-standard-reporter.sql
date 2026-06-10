@@ -1,4 +1,6 @@
 -- migrate:up
+SET ROLE = law_admin;
+
 ALTER TABLE legalhist.whitelist
     ADD CONSTRAINT chk_whitelist_junk_no_standard
     CHECK (NOT (junk AND reporter_standard IS NOT NULL));
