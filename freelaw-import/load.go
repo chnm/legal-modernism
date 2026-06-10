@@ -185,13 +185,24 @@ func loadClusters(ctx context.Context, pool *pgxpool.Pool, path string, showProg
 	}
 
 	// ext: every cluster with a Harvard filepath, with the CAP id parsed from
-	// the path (strip ".json", take the last "."-delimited token).
+	// the path (strip ".json", take the last "."-delimited token). The id is
+	// parsed only when the stripped path ends in a numeric token; otherwise it
+	// is NULL. A non-numeric trailing token would otherwise abort the whole load
+	// on the ::bigint cast, and ~3% of real paths have such tokens (prose that
+	// landed in this column in the source export).
 	const extCTE = `
-	WITH ext AS (
+	WITH stripped AS (
 		SELECT id::bigint AS cluster_id,
-			split_part(regexp_replace(filepath_json_harvard, '\.json$', ''), '.', -1)::bigint AS cap_id
+			regexp_replace(filepath_json_harvard, '\.json$', '') AS path
 		FROM staging_clusters
 		WHERE filepath_json_harvard <> ''
+	),
+	ext AS (
+		SELECT cluster_id,
+			CASE WHEN path ~ '\.[0-9]+$'
+				THEN split_part(path, '.', -1)::bigint
+			END AS cap_id
+		FROM stripped
 	)`
 
 	insertSQL := extCTE + `
