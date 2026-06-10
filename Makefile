@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet sync-hopper db-up db-down db-status chambers
+.PHONY: binaries clean test vet sync-hopper db-up db-down db-status db-schema db-refresh chambers
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -50,6 +50,11 @@ db-status:
 
 db-schema:
 	dbmate --env DBMATE_URL dump
+
+# Refresh all materialized views, in dependency order and in parallel within
+# each level. Uses LAW_DBSTR directly (needs write access).
+db-refresh:
+	./db/refresh-matviews.sh
 
 chambers:
 	cd ./chambers && go run github.com/air-verse/air
