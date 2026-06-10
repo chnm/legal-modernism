@@ -113,7 +113,7 @@ LIMIT 1</code></pre>
         <span class="label text-secondary">Title</span><span>{{if .Cite.MomlVolumeURL}}<a href="{{.Cite.MomlVolumeURL}}" target="_blank">{{ptrOr .Cite.BookTitle "&mdash;"}}</a>{{else}}{{ptrOr .Cite.BookTitle "&mdash;"}}{{end}}{{if .Cite.PubYear}} ({{deref .Cite.PubYear}}){{end}}</span>
         <span class="label text-secondary">Author</span><span>{{ptrOr .Cite.Author "&mdash;"}}</span>
         <span class="label text-secondary">Printed page</span><span>{{ptrOr .Cite.SourcePage "&mdash;"}}</span>
-        <span class="label text-secondary">Image page</span><span>{{if .Cite.MomlPageURL}}<a href="{{.Cite.MomlPageURL}}" target="_blank">{{.Cite.MomlPage}}</a>{{else}}{{.Cite.MomlPage}}{{end}}</span>
+        <span class="label text-secondary">Image page</span><span>{{.Cite.MomlPage}}{{if .Cite.MomlPageURL}} (<a href="{{.Cite.MomlPageURL}}" target="_blank">GMU</a>, <a href="{{.Cite.MomlPageURLColumbia}}" target="_blank">Columbia</a>){{end}}</span>
         <span class="label text-secondary">Treatise</span><span>{{.Cite.MomlTreatise}}</span>
     </div>
 
