@@ -66,6 +66,13 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 - Migrations should be idempotent: use `IF NOT EXISTS` / `IF EXISTS` guards on `CREATE INDEX`, `CREATE TABLE`, `ADD CONSTRAINT`, `DROP CONSTRAINT`, etc.
 - Don't update `db/schema.sql`: this file is auto-generated.
 
+### Writing a migration
+
+1. Create `db/migrations/YYYYMMDDHHMMSS_description.sql` with `-- migrate:up` / `-- migrate:down` sections; the `down` must fully reverse the `up`. Start the `migrate:up` with `SET ROLE = law_admin;`, as the existing migrations do.
+2. Before adding a constraint, verify existing rows won't violate it (query with the read-only `LAW_CLAUDE` connection); a constraint that current data violates fails to apply.
+3. Apply with `make db-up`, then regenerate the schema with `make db-schema`. Both need write access via `LAW_DBSTR`, so Claude cannot run them — ask the user to.
+4. Commit **both** the migration file and the regenerated `db/schema.sql`. "Don't update `db/schema.sql`" means don't hand-edit it, not don't commit it.
+
 ## Environment variables
 
 - `LAW_DBSTR` — PostgreSQL connection string
