@@ -4,8 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"html/template"
 	"log/slog"
 	"net/url"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -319,14 +321,38 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 // Treatise page: the citations detected on one page
 // ---------------------------------------------------------------------------
 
-// TreatisePageView is one treatise page with the citations detected on it.
+// TreatisePageView is one treatise page with its OCR text and the citations
+// detected on it.
 type TreatisePageView struct {
 	PSMID      string
 	PageID     string
 	BiblioID   *string
 	Title      *string
 	SourcePage string
+	OCRText    string
 	Citations  []PageCitation
+}
+
+// HighlightedOCR returns the page's OCR text with each detected citation's raw
+// span wrapped in <mark>, HTML-escaped. Longer raw strings are marked first so a
+// full citation is highlighted before any partial sub-citation it contains.
+func (v *TreatisePageView) HighlightedOCR() template.HTML {
+	text := template.HTMLEscapeString(v.OCRText)
+	seen := make(map[string]bool, len(v.Citations))
+	raws := make([]string, 0, len(v.Citations))
+	for i := range v.Citations {
+		raw := v.Citations[i].orig
+		if raw != "" && !seen[raw] {
+			seen[raw] = true
+			raws = append(raws, raw)
+		}
+	}
+	sort.SliceStable(raws, func(i, j int) bool { return len(raws[i]) > len(raws[j]) })
+	for _, raw := range raws {
+		esc := template.HTMLEscapeString(raw)
+		text = strings.ReplaceAll(text, esc, "<mark>"+esc+"</mark>")
+	}
+	return template.HTML(text)
 }
 
 // TreatiseURL links back to the parent work, when known.
@@ -357,6 +383,9 @@ type PageCitation struct {
 	Source   *string // "cap" | "er" | "code" when linked
 	CaseID   *string
 	CaseName *string
+
+	orig string // raw before newline cleanup, for locating it in the OCR text
+	pos  int    // byte offset of orig in the OCR text, for page-order sorting
 }
 
 // StatusClass reuses the shared linked/not-linked colour classes.
@@ -406,7 +435,16 @@ func getTreatisePage(ctx context.Context, db *pgxpool.Pool, psmid, pageid string
 		view.SourcePage = *sourcePage
 	}
 
-	// Citations on the page.
+	// OCR text for the page, loaded with the page so the text and citations can
+	// be shown side by side.
+	ocr, err := getPageOCRText(ctx, db, psmid, pageid)
+	if err != nil {
+		return nil, err
+	}
+	view.OCRText = ocr
+
+	// Citations on the page, fetched in detection order (created_at) as a stable
+	// base ordering before sorting by position in the page text below.
 	rows, err := db.Query(ctx, `
 		SELECT cu.id, cu.raw, cl.status,
 		       CASE WHEN cl.cap_case_id IS NOT NULL THEN 'cap'
@@ -420,7 +458,7 @@ func getTreatisePage(ctx context.Context, db *pgxpool.Pool, psmid, pageid string
 		LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
 		LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
 		WHERE cu.moml_treatise = $1 AND cu.moml_page = $2
-		ORDER BY cl.status LIKE 'linked_%' DESC, cu.raw
+		ORDER BY cu.created_at, cu.id
 	`, psmid, pageid)
 	if err != nil {
 		return nil, fmt.Errorf("querying page citations: %w", err)
@@ -431,17 +469,36 @@ func getTreatisePage(ctx context.Context, db *pgxpool.Pool, psmid, pageid string
 		if err := rows.Scan(&c.ID, &c.Raw, &c.Status, &c.Source, &c.CaseID, &c.CaseName); err != nil {
 			return nil, fmt.Errorf("scanning page citation: %w", err)
 		}
+		c.orig = c.Raw
 		c.Raw = cleanRaw(c.Raw)
 		view.Citations = append(view.Citations, c)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterating page citations: %w", err)
 	}
-	if len(view.Citations) == 0 && view.Title == nil {
+	view.orderCitationsByPosition()
+	if len(view.Citations) == 0 && view.Title == nil && view.OCRText == "" {
 		return nil, nil
 	}
 	slog.Debug("fetched treatise page", "psmid", psmid, "pageid", pageid, "citations", len(view.Citations))
 	return view, nil
+}
+
+// orderCitationsByPosition sorts the page's citations by where their raw text
+// appears in the OCR text, approximating reading order on the page. Citations
+// whose raw text is not found verbatim (OCR drift) keep their detection-order
+// position after the located ones.
+func (v *TreatisePageView) orderCitationsByPosition() {
+	for i := range v.Citations {
+		p := strings.Index(v.OCRText, v.Citations[i].orig)
+		if p < 0 {
+			p = len(v.OCRText) + i // not found: keep detection order, after located cites
+		}
+		v.Citations[i].pos = p
+	}
+	sort.SliceStable(v.Citations, func(i, j int) bool {
+		return v.Citations[i].pos < v.Citations[j].pos
+	})
 }
 
 // getPageOCRText returns the OCR text for one treatise page, loaded on demand by

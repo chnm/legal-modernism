@@ -1,16 +1,16 @@
 {{define "title"}}Page {{.Page.SourcePage}} &mdash; Chambers{{end}}
 
 {{define "styles"}}
-    .cites { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
-    .cite { width: 18rem; box-sizing: border-box; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid transparent; }
-    .cite .raw { font-weight: 600; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cites { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+    .cite { box-sizing: border-box; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid transparent; }
+    .cite .raw { font-weight: 600; font-family: monospace; }
     .cite .meta { display: block; font-size: 0.72rem; }
     .cite a { text-decoration: none; }
     .cite-linked { background: #d4edda; border-color: #b6dcc0; }
     .cite-linked .raw a { color: #155724; }
     .cite-unlinked { background: #f8d7da; border-color: #eeb9be; }
     .cite-unlinked .raw a { color: #721c24; }
-    pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; max-height: 32rem; overflow-y: auto; }
+    pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; position: sticky; top: 1rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
 {{end}}
 
 {{define "nav"}}
@@ -26,62 +26,37 @@
         <code>{{.Page.PSMID}}</code> / <code>{{.Page.PageID}}</code> &middot;
         {{len .Page.Citations}} citation(s) detected, {{.Page.LinkedCount}} linked.
         <span style="color:#28a745;">Green</span> = linked to a case,
-        <span style="color:#dc3545;">red</span> = not yet linked.
+        <span style="color:#dc3545;">red</span> = not yet linked. Citations are ordered as they
+        appear on the page.
     </p>
 
-    <button id="load-ocr" class="btn btn-sm btn-accent"
-            data-psmid="{{.Page.PSMID}}" data-pageid="{{.Page.PageID}}">Load OCR text</button>
-    <pre id="ocr-text" class="ocrtext bg-light border rounded p-3 mt-2 small d-none"></pre>
-
-    <div class="cites">
-    {{range .Page.Citations}}
-        <span class="cite {{if .IsLinked}}cite-linked{{else}}cite-unlinked{{end}}">
-            <span class="raw"><a href="{{.CiteURL}}" title="Inspect detection &amp; linking">{{.Raw}}</a></span>
-            <span class="meta">
-                {{if .IsLinked}}
-                    {{if .CaseURL}}<a href="{{.CaseURL}}">{{ptrOr .CaseName "linked case"}}</a>{{else}}{{ptrOr .CaseName "linked case"}}{{end}}
-                {{else}}
-                    <span class="text-secondary">{{ptrOr .Status "unlinked"}}</span>
-                {{end}}
-            </span>
-        </span>
-    {{else}}
-        <span class="text-secondary small">No citations detected on this page.</span>
-    {{end}}
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h2 class="h6 border-bottom pb-1">Page text</h2>
+            {{if .Page.OCRText}}
+                <pre class="ocrtext bg-light border rounded p-3 small">{{.Page.HighlightedOCR}}</pre>
+            {{else}}
+                <p class="text-secondary fst-italic small">No OCR text available for this page.</p>
+            {{end}}
+        </div>
+        <div class="col-md-6">
+            <h2 class="h6 border-bottom pb-1">Citations <span class="text-secondary fw-normal">({{len .Page.Citations}})</span></h2>
+            <div class="cites">
+            {{range .Page.Citations}}
+                <span class="cite {{if .IsLinked}}cite-linked{{else}}cite-unlinked{{end}}">
+                    <span class="raw"><a href="{{.CiteURL}}" title="Inspect detection &amp; linking">{{.Raw}}</a></span>
+                    <span class="meta">
+                        {{if .IsLinked}}
+                            {{if .CaseURL}}<a href="{{.CaseURL}}">{{ptrOr .CaseName "linked case"}}</a>{{else}}{{ptrOr .CaseName "linked case"}}{{end}}
+                        {{else}}
+                            <span class="text-secondary">{{ptrOr .Status "unlinked"}}</span>
+                        {{end}}
+                    </span>
+                </span>
+            {{else}}
+                <span class="text-secondary small">No citations detected on this page.</span>
+            {{end}}
+            </div>
+        </div>
     </div>
-
-    <script>
-    const rawCites = [{{range .Page.Citations}}{{.Raw}},{{end}}];
-    function escapeHTML(s) {
-        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-    function highlight(text) {
-        let html = escapeHTML(text);
-        for (const raw of rawCites) {
-            if (!raw) continue;
-            const esc = escapeHTML(raw).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            try { html = html.replace(new RegExp(esc, 'g'), m => '<mark>' + m + '</mark>'); } catch (e) {}
-        }
-        return html;
-    }
-    document.getElementById('load-ocr').addEventListener('click', async function () {
-        const btn = this;
-        const pre = document.getElementById('ocr-text');
-        btn.disabled = true;
-        btn.textContent = 'Loading…';
-        try {
-            const res = await fetch('/api/page-text?psmid=' + encodeURIComponent(btn.dataset.psmid) +
-                '&pageid=' + encodeURIComponent(btn.dataset.pageid));
-            const data = await res.json();
-            pre.innerHTML = data.text ? highlight(data.text) : '<span class="text-secondary">(no OCR text for this page)</span>';
-            pre.classList.remove('d-none');
-            btn.classList.add('d-none');
-        } catch (e) {
-            pre.textContent = 'Error loading OCR text.';
-            pre.classList.remove('d-none');
-            btn.disabled = false;
-            btn.textContent = 'Load OCR text';
-        }
-    });
-    </script>
 {{end}}
