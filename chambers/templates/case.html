@@ -25,23 +25,29 @@
     </div>
 
     <p class="small text-secondary">
-        Cited on <strong>{{.Case.PageCount}}</strong> treatise page(s){{if .Truncated}} (showing the first {{.Case.PageCount}}){{end}}.
-        Click a page to see all of its citations.
+        Cited on <strong>{{.Case.PageCount}}</strong> treatise page(s) across
+        <strong>{{.Case.TreatiseCount}}</strong> treatise(s){{if .Truncated}} (showing the first {{.Case.PageCount}}){{end}}.
+        Each row is one treatise; click a page to see all of its citations. A
+        <span class="text-secondary">(n)</span> after a page is how many times the case is cited there.
     </p>
 
     <table class="table table-sm table-hover align-middle">
         <thead>
-            <tr><th>Treatise</th><th>Page</th><th class="text-end">Times cited here</th></tr>
+            <tr><th>Treatise</th><th>Pages</th></tr>
         </thead>
         <tbody>
-        {{range .Case.Pages}}
+        {{range .Case.Treatises}}
             <tr>
-                <td>{{if .TreatiseURL}}<a href="{{.TreatiseURL}}">{{ptrOr .Treatise "(untitled)"}}</a>{{else}}{{ptrOr .Treatise "(untitled)"}}{{end}}</td>
-                <td><a href="{{.PageURL}}">p. {{.SourcePage}}</a></td>
-                <td class="num text-secondary">{{.Cites}}</td>
+                <td>
+                    {{if .TreatiseURL}}<a href="{{.TreatiseURL}}">{{ptrOr .Treatise "(untitled)"}}</a>{{else}}{{ptrOr .Treatise "(untitled)"}}{{end}}
+                    <span class="text-secondary small">&middot; {{.PageCount}} page{{if ne .PageCount 1}}s{{end}}</span>
+                </td>
+                <td>
+                    {{range $i, $p := .Pages}}{{if $i}}, {{end}}<a href="{{$p.URL}}" class="text-nowrap">p.&nbsp;{{$p.SourcePage}}</a>{{if gt $p.Cites 1}}<span class="text-secondary small">&nbsp;({{$p.Cites}})</span>{{end}}{{end}}
+                </td>
             </tr>
         {{else}}
-            <tr><td colspan="3" class="text-secondary">No citing pages found.</td></tr>
+            <tr><td colspan="2" class="text-secondary">No citing pages found.</td></tr>
         {{end}}
         </tbody>
     </table>

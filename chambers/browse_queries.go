@@ -646,17 +646,19 @@ func getTopCases(ctx context.Context, db *pgxpool.Pool, limit, offset int) ([]Ca
 // Cases: case detail (the treatise pages that cite a case)
 // ---------------------------------------------------------------------------
 
-// CaseDetail is one case with the treatise pages that cite it.
+// CaseDetail is one case with the treatises that cite it, each carrying its own
+// citing pages.
 type CaseDetail struct {
-	Source    string
-	CaseID    string
-	Name      *string
-	Year      *int
-	Court     *string
-	Citation  *string
-	URL       *string // external link, when available
-	PageCount int
-	Pages     []CitingPage
+	Source        string
+	CaseID        string
+	Name          *string
+	Year          *int
+	Court         *string
+	Citation      *string
+	URL           *string // external link, when available
+	PageCount     int     // total distinct citing pages across all treatises
+	TreatiseCount int
+	Treatises     []CitingTreatise
 }
 
 // SourceLabel returns the short human label for the case's source.
@@ -670,30 +672,41 @@ func (c *CaseDetail) SourceLabel() string {
 // SourceBadgeClass returns the badge colour class for the case's source.
 func (c *CaseDetail) SourceBadgeClass() string { return sourceBadgeClass(c.Source) }
 
-// CitingPage is one treatise page that cites a case.
-type CitingPage struct {
+// CitingTreatise is one treatise (work) that cites a case, with all of its
+// citing pages grouped onto a single row.
+type CitingTreatise struct {
+	BiblioID *string
+	Treatise *string
+	Pages    []CitingPageRef
+
+	total int // total citations of the case in this treatise, for ordering
+}
+
+// TreatiseURL links to the parent work, when known.
+func (t *CitingTreatise) TreatiseURL() string {
+	if t.BiblioID == nil {
+		return ""
+	}
+	return "/treatise?id=" + url.QueryEscape(*t.BiblioID)
+}
+
+// PageCount is the number of distinct citing pages in this treatise.
+func (t *CitingTreatise) PageCount() int { return len(t.Pages) }
+
+// CitingPageRef is one citing page within a treatise.
+type CitingPageRef struct {
 	PSMID      string
 	PageID     string
-	BiblioID   *string
-	Treatise   *string
 	SourcePage string
 	Cites      int
 }
 
-// PageURL links to the treatise page's citation detail.
-func (p *CitingPage) PageURL() string {
+// URL links to the treatise page's citation detail.
+func (p *CitingPageRef) URL() string {
 	v := url.Values{}
 	v.Set("psmid", p.PSMID)
 	v.Set("pageid", p.PageID)
 	return "/treatise/page?" + v.Encode()
-}
-
-// TreatiseURL links to the parent work, when known.
-func (p *CitingPage) TreatiseURL() string {
-	if p.BiblioID == nil {
-		return ""
-	}
-	return "/treatise?id=" + url.QueryEscape(*p.BiblioID)
 }
 
 // caseLinkColumns maps a case source to the citation_links column holding its id.
@@ -735,7 +748,9 @@ func getCaseDetail(ctx context.Context, db *pgxpool.Pool, source, id string) (*C
 	col := caseLinkColumns[source]
 	status := caseLinkStatuses[source]
 	// The id is a bigint for cap/code and text for er; bind it as text and cast
-	// the column to text so one query serves all three sources safely.
+	// the column to text so one query serves all three sources safely. Rows come
+	// ordered so each treatise's (and volume's) pages are contiguous and in page
+	// order; they are grouped into one row per treatise below.
 	query := `
 	SELECT cu.moml_treatise, cu.moml_page,
 	       bi.bibliographicid,
@@ -749,7 +764,7 @@ func getCaseDetail(ctx context.Context, db *pgxpool.Pool, source, id string) (*C
 	LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 	WHERE cl.status = '` + status + `' AND cl.` + col + `::text = $1
 	GROUP BY cu.moml_treatise, cu.moml_page, bi.bibliographicid, bc.displaytitle, sourcepage
-	ORDER BY cites DESC, bc.displaytitle NULLS LAST, cu.moml_page
+	ORDER BY COALESCE(bi.bibliographicid, cu.moml_treatise), cu.moml_treatise, cu.moml_page
 	LIMIT $2
 	`
 	rows, err := db.Query(ctx, query, id, caseDetailCitingLimit)
@@ -757,18 +772,40 @@ func getCaseDetail(ctx context.Context, db *pgxpool.Pool, source, id string) (*C
 		return nil, fmt.Errorf("querying citing pages: %w", err)
 	}
 	defer rows.Close()
+	index := make(map[string]int) // group key -> position in d.Treatises
+	pageRows := 0
 	for rows.Next() {
-		var p CitingPage
-		if err := rows.Scan(&p.PSMID, &p.PageID, &p.BiblioID, &p.Treatise, &p.SourcePage, &p.Cites); err != nil {
+		var psmid, pageid, sourcepage string
+		var biblioID, treatise *string
+		var cites int
+		if err := rows.Scan(&psmid, &pageid, &biblioID, &treatise, &sourcepage, &cites); err != nil {
 			return nil, fmt.Errorf("scanning citing page: %w", err)
 		}
-		d.Pages = append(d.Pages, p)
+		pageRows++
+		// Group by work (bibliographicid) so a multi-volume treatise is one row;
+		// fall back to the volume id when the work is unknown.
+		key := psmid
+		if biblioID != nil {
+			key = "b:" + *biblioID
+		}
+		pos, ok := index[key]
+		if !ok {
+			d.Treatises = append(d.Treatises, CitingTreatise{BiblioID: biblioID, Treatise: treatise})
+			pos = len(d.Treatises) - 1
+			index[key] = pos
+		}
+		t := &d.Treatises[pos]
+		t.Pages = append(t.Pages, CitingPageRef{PSMID: psmid, PageID: pageid, SourcePage: sourcepage, Cites: cites})
+		t.total += cites
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterating citing pages: %w", err)
 	}
-	d.PageCount = len(d.Pages)
-	slog.Debug("fetched case detail", "source", source, "id", id, "pages", d.PageCount)
+	// Most-citing treatise first; pages within each stay in page order.
+	sort.SliceStable(d.Treatises, func(i, j int) bool { return d.Treatises[i].total > d.Treatises[j].total })
+	d.PageCount = pageRows
+	d.TreatiseCount = len(d.Treatises)
+	slog.Debug("fetched case detail", "source", source, "id", id, "pages", d.PageCount, "treatises", d.TreatiseCount)
 	return d, nil
 }
 
