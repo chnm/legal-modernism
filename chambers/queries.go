@@ -104,9 +104,10 @@ func (c *CitationDetail) MomlVolumeURL() string {
 }
 
 // MomlVolumeURLColumbia returns a Gale MOML URL for the volume as a whole,
-// routed through Columbia University's EZproxy.
+// scoped to Columbia University via the Gale institutional u= parameter
+// (u=columbiau), the same way MomlVolumeURL scopes to GMU with u=viva_gmu.
 func (c *CitationDetail) MomlVolumeURLColumbia() string {
-	return c.momlVolumeURL("https://go-gale-com.ezproxy.cul.columbia.edu", "")
+	return c.momlVolumeURL("https://link.gale.com", "u=columbiau&")
 }
 
 // momlPageURL appends the page (pg) parameter to a Gale MOML volume URL.
