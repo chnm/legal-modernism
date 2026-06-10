@@ -183,6 +183,23 @@ func (p *TreatisePageRow) URL() string {
 	return "/treatise/page?" + v.Encode()
 }
 
+// LinkedPct is the share of the page's citations that are linked, as a rounded
+// percentage. LinkedPct + NotLinkedPct == 100 whenever the page has citations.
+func (p *TreatisePageRow) LinkedPct() int {
+	if p.Cites == 0 {
+		return 0
+	}
+	return (p.Linked*100 + p.Cites/2) / p.Cites
+}
+
+// NotLinkedPct is the share of the page's citations that are not linked.
+func (p *TreatisePageRow) NotLinkedPct() int {
+	if p.Cites == 0 {
+		return 0
+	}
+	return 100 - p.LinkedPct()
+}
+
 // getTreatiseDetail returns one work's volumes and citation-bearing pages. It
 // runs three small queries (volumes, subjects, pages) keyed off the work's
 // bibliographicid; the page query uses the citations_unlinked index on

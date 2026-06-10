@@ -39,8 +39,8 @@
                 <tr>
                     <td><a href="{{.URL}}">p. {{.SourcePage}}</a></td>
                     <td class="num">{{.Cites}}</td>
-                    <td class="num linked">{{.Linked}}</td>
-                    <td class="num unlinked">{{.NotLinked}}</td>
+                    <td class="num linked">{{.Linked}}{{if .Cites}} <span class="small text-secondary">({{.LinkedPct}}%)</span>{{end}}</td>
+                    <td class="num unlinked">{{.NotLinked}}{{if .Cites}} <span class="small text-secondary">({{.NotLinkedPct}}%)</span>{{end}}</td>
                 </tr>
             {{end}}
             </tbody>
