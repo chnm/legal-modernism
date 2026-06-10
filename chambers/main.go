@@ -58,6 +58,16 @@ var funcMap = template.FuncMap{
 		highlighted := strings.ReplaceAll(escaped, rawEscaped, "<mark>"+rawEscaped+"</mark>")
 		return template.HTML(highlighted)
 	},
+	// Small integer helpers for computing list rank numbers in templates.
+	"add": func(nums ...int) int {
+		sum := 0
+		for _, n := range nums {
+			sum += n
+		}
+		return sum
+	},
+	"sub": func(a, b int) int { return a - b },
+	"mul": func(a, b int) int { return a * b },
 }
 
 func init() {
@@ -77,6 +87,13 @@ func parseTemplates() map[string]*template.Template {
 		"unmatched-cites.html",
 		"dashboard.html",
 		"whitelist-extender.html",
+		"treatises.html",
+		"treatise.html",
+		"treatise-page.html",
+		"cases.html",
+		"case.html",
+		"normalized.html",
+		"normalized-cite.html",
 	}
 	tmpls := make(map[string]*template.Template, len(pages))
 	for _, page := range pages {
@@ -142,6 +159,28 @@ func main() {
 		handleWhitelistExtender(w, r, tmpls["whitelist-extender.html"])
 	})
 	mux.HandleFunc("/api/whitelist-extender", handleWhitelistExtenderAPI)
+	mux.HandleFunc("/treatises", func(w http.ResponseWriter, r *http.Request) {
+		handleTreatises(w, r, tmpls["treatises.html"])
+	})
+	mux.HandleFunc("/treatise", func(w http.ResponseWriter, r *http.Request) {
+		handleTreatise(w, r, tmpls["treatise.html"])
+	})
+	mux.HandleFunc("/treatise/page", func(w http.ResponseWriter, r *http.Request) {
+		handleTreatisePage(w, r, tmpls["treatise-page.html"])
+	})
+	mux.HandleFunc("/api/page-text", handlePageText)
+	mux.HandleFunc("/cases", func(w http.ResponseWriter, r *http.Request) {
+		handleCases(w, r, tmpls["cases.html"])
+	})
+	mux.HandleFunc("/case", func(w http.ResponseWriter, r *http.Request) {
+		handleCase(w, r, tmpls["case.html"])
+	})
+	mux.HandleFunc("/normalized", func(w http.ResponseWriter, r *http.Request) {
+		handleNormalized(w, r, tmpls["normalized.html"])
+	})
+	mux.HandleFunc("/normalized/cite", func(w http.ResponseWriter, r *http.Request) {
+		handleNormalizedCite(w, r, tmpls["normalized-cite.html"])
+	})
 	staticSub, _ := fs.Sub(staticFS, "static")
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
 
