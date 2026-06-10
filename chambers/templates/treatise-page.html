@@ -16,7 +16,11 @@
 {{end}}
 
 {{define "nav"}}
-    {{if .Page.TreatiseURL}}<a href="{{.Page.TreatiseURL}}" class="small text-decoration-none">&larr; Back to treatise</a>{{else}}<a href="/treatises" class="small text-decoration-none">&larr; All treatises</a>{{end}}
+    <a href="/" class="small text-decoration-none">&larr; Chambers</a>
+    <span class="text-secondary small mx-1">&middot;</span>
+    <a href="/treatises" class="small text-decoration-none">All treatises</a>
+    {{if .Page.TreatiseURL}}<span class="text-secondary small mx-1">&middot;</span>
+    <a href="{{.Page.TreatiseURL}}" class="small text-decoration-none">Back to treatise</a>{{end}}
 {{end}}
 
 {{define "content"}}
