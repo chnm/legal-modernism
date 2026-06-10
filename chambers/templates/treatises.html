@@ -4,6 +4,7 @@
     td.num { text-align: right; font-variant-numeric: tabular-nums; }
     .linked { color: #28a745; }
     .unlinked { color: #dc3545; }
+    .title-col { width: 22rem; max-width: 22rem; word-break: break-word; }
 {{end}}
 
 {{define "nav"}}
@@ -39,7 +40,7 @@
     <table class="table table-sm table-hover align-middle">
         <thead>
             <tr>
-                <th>Treatise</th>
+                <th class="title-col">Treatise</th>
                 <th>Author</th>
                 <th class="text-end">Year</th>
                 <th class="text-end">Vols</th>
@@ -51,7 +52,7 @@
         <tbody>
         {{range .Items}}
             <tr>
-                <td><a href="{{.DetailURL}}">{{.Title}}</a></td>
+                <td class="title-col"><a href="{{.DetailURL}}">{{.Title}}</a></td>
                 <td class="small text-secondary">{{ptrOr .Author "&mdash;"}}</td>
                 <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
                 <td class="num">{{.Vols}}</td>
