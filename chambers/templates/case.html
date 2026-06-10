@@ -3,6 +3,9 @@
 {{define "styles"}}
     td.num { text-align: right; font-variant-numeric: tabular-nums; }
     .detail-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
+    .badge.src-cap { background-color: #6f42c1; }
+    .badge.src-er { background-color: #0d9488; }
+    .badge.src-code { background-color: #c2410c; }
 {{end}}
 
 {{define "nav"}}
@@ -14,7 +17,7 @@
 {{define "content"}}
     <h1 class="h5 mt-2">{{if .Case.Name}}{{.Case.Name | derefStr}}{{else}}(unknown case){{end}}</h1>
     <div class="detail-grid small mb-2">
-        <span class="text-secondary">Source</span><span><span class="badge bg-secondary">{{.Case.SourceLabel}}</span></span>
+        <span class="text-secondary">Source</span><span><span class="badge {{.Case.SourceBadgeClass}}">{{.Case.SourceLabel}}</span></span>
         {{if .Case.Citation}}<span class="text-secondary">Citation</span><span>{{.Case.Citation | derefStr}}</span>{{end}}
         {{if .Case.Year}}<span class="text-secondary">Year</span><span>{{deref .Case.Year}}</span>{{end}}
         {{if .Case.Court}}<span class="text-secondary">Court</span><span>{{.Case.Court | derefStr}}</span>{{end}}

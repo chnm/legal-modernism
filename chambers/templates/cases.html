@@ -2,6 +2,9 @@
 
 {{define "styles"}}
     td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .badge.src-cap { background-color: #6f42c1; }
+    .badge.src-er { background-color: #0d9488; }
+    .badge.src-code { background-color: #c2410c; }
 {{end}}
 
 {{define "nav"}}
@@ -13,9 +16,9 @@
     <p class="small text-secondary mb-3">
         Cases ranked by the number of distinct treatise pages that cite them (a case cited
         several times on one page counts once). Includes all linked sources: the Caselaw
-        Access Project (<span class="badge bg-secondary">CAP</span>), English Reports
-        (<span class="badge bg-secondary">Eng.&nbsp;Rep.</span>), and code reporters
-        (<span class="badge bg-secondary">Code&nbsp;rep.</span>). From
+        Access Project (<span class="badge src-cap">CAP</span>), English Reports
+        (<span class="badge src-er">Eng.&nbsp;Rep.</span>), and code reporters
+        (<span class="badge src-code">Code&nbsp;rep.</span>). From
         <code>moml_citations.case_citation_counts</code>.
     </p>
 
@@ -38,7 +41,7 @@
             <tr>
                 <td class="num text-secondary small">{{add $start $i 1}}</td>
                 <td><a href="{{$c.DetailURL}}">{{ptrOr $c.Name "(unknown case)"}}</a></td>
-                <td><span class="badge bg-secondary">{{$c.SourceLabel}}</span></td>
+                <td><span class="badge {{$c.SourceBadgeClass}}">{{$c.SourceLabel}}</span></td>
                 <td class="num">{{if $c.Year}}{{deref $c.Year}}{{else}}&mdash;{{end}}</td>
                 <td class="small text-secondary">{{ptrOr $c.Court "&mdash;"}}</td>
                 <td class="num">{{$c.PageCount}}</td>

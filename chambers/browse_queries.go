@@ -553,6 +553,22 @@ var caseSourceLabels = map[string]string{
 	"code": "Code rep.",
 }
 
+// caseSourceBadges maps a case source to its badge colour class (defined in the
+// cases/case templates), so each source reads as a distinct colour.
+var caseSourceBadges = map[string]string{
+	"cap":  "src-cap",
+	"er":   "src-er",
+	"code": "src-code",
+}
+
+// sourceBadgeClass returns the badge colour class for a case source.
+func sourceBadgeClass(source string) string {
+	if c, ok := caseSourceBadges[source]; ok {
+		return c
+	}
+	return "bg-secondary"
+}
+
 // CaseListItem is one cited case on the /cases ranking.
 type CaseListItem struct {
 	Source    string
@@ -572,6 +588,9 @@ func (c *CaseListItem) SourceLabel() string {
 	}
 	return c.Source
 }
+
+// SourceBadgeClass returns the badge colour class for the case's source.
+func (c *CaseListItem) SourceBadgeClass() string { return sourceBadgeClass(c.Source) }
 
 // DetailURL links to the case detail page.
 func (c *CaseListItem) DetailURL() string {
@@ -647,6 +666,9 @@ func (c *CaseDetail) SourceLabel() string {
 	}
 	return c.Source
 }
+
+// SourceBadgeClass returns the badge colour class for the case's source.
+func (c *CaseDetail) SourceBadgeClass() string { return sourceBadgeClass(c.Source) }
 
 // CitingPage is one treatise page that cites a case.
 type CitingPage struct {
