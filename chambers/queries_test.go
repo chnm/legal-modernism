@@ -19,14 +19,14 @@ func TestMomlPageURLs(t *testing.T) {
 			productLink: strptr(productLink),
 			momlPage:    "06870",
 			gmu:         "https://link.gale.com/apps/doc/F0103227568/MOML?u=viva_gmu&sid=dhxml&pg=687",
-			columbia:    "https://go-gale-com.ezproxy.cul.columbia.edu/apps/doc/F0103227568/MOML?sid=dhxml&pg=687",
+			columbia:    "https://link.gale.com/apps/doc/F0103227568/MOML?u=columbiau&sid=dhxml&pg=687",
 		},
 		{
 			name:        "no page",
 			productLink: strptr(productLink),
 			momlPage:    "",
 			gmu:         "https://link.gale.com/apps/doc/F0103227568/MOML?u=viva_gmu&sid=dhxml",
-			columbia:    "https://go-gale-com.ezproxy.cul.columbia.edu/apps/doc/F0103227568/MOML?sid=dhxml",
+			columbia:    "https://link.gale.com/apps/doc/F0103227568/MOML?u=columbiau&sid=dhxml",
 		},
 		{
 			name:        "nil product link",

@@ -76,7 +76,7 @@ The `moml.page` and `moml.page_ocrtext` joins must include `psmid` (treatise ID)
 - `HasLink()` — true if status is any `linked_*` value
 - `IsCAP()` / `IsCodeReporter()` / `IsEnglishReports()` — which case source was matched
 - `MomlVolumeURL()` — Gale MOML URL for the volume routed through GMU's library proxy (transforms the stored `productlink` from old `link.galegroup.com` domain to `link.gale.com`, adds `u=viva_gmu`)
-- `MomlVolumeURLColumbia()` — Same volume URL routed through Columbia University's EZproxy (`go-gale-com.ezproxy.cul.columbia.edu`, no `u=` param)
+- `MomlVolumeURLColumbia()` — Same volume URL scoped to Columbia via the Gale institutional param `u=columbiau` (otherwise identical to the GMU link)
 - `MomlPageURL()` / `MomlPageURLColumbia()` — Same as the GMU/Columbia volume URLs but append `&pg=N` where N is derived from `pageid` by stripping the trailing `0` and leading `0`s (e.g., `06870` becomes `687`)
 
 ### ReporterCite.StatusClass
