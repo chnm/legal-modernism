@@ -1024,7 +1024,9 @@ CREATE MATERIALIZED VIEW legalhist.top_reporters AS
 CREATE TABLE legalhist.whitelist (
     reporter_found text NOT NULL,
     reporter_standard text,
-    junk boolean NOT NULL
+    junk boolean NOT NULL,
+    CONSTRAINT chk_whitelist_junk_no_standard CHECK ((NOT (junk AND (reporter_standard IS NOT NULL)))),
+    CONSTRAINT chk_whitelist_nonjunk_has_standard CHECK ((junk OR (reporter_standard IS NOT NULL)))
 );
 
 
@@ -2436,4 +2438,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522170200'),
     ('20260522170300'),
     ('20260609115030'),
-    ('20260609133000');
+    ('20260609133000'),
+    ('20260610120000');
