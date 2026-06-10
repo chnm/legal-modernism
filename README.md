@@ -23,6 +23,7 @@ These programs run the various data creation tasks for the project.
 - `cite-detector-moml/`: Detect citations in the *Making of Modern Law* treatises.
 - `cite-predictor/`: Augment citation detection using generative AI.
 - `cite-linker/`: Link detected citations to a database of English and American caselaw.
+- `freelaw-import/`: Import CourtListener (Free Law Project) parallel-citation and cluster-to-CAP crosswalks.
 - `lm-diagnostic/`: Run various diagnostic checks on the high-performance cluster.
 - `chambers/`: An internal-only web app for understanding our data
 
