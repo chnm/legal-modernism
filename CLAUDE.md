@@ -105,6 +105,17 @@ Internal web app for browsing and inspecting citation data. Located in `chambers
 
 **Frontend:** Use the latest version of Bootstrap CSS via CDN (no Bootstrap JavaScript). Use Observable Plot (`@observablehq/plot`) for data visualizations when possible, and D3.js otherwise.
 
+## GitHub
+
+Use the `gh` CLI for GitHub operations — creating pull requests, viewing issues, checking CI status, and commenting. It is authenticated via the `GH_TOKEN` environment variable.
+
+- Open a PR: `gh pr create --base main --head <branch> --title "..." --body "..."`
+- Reference the issue a PR closes in the commit or PR body with `Closes #<n>` so it auto-closes on merge.
+- View an issue: `gh issue view <n>`
+- Check CI on a PR: `gh pr checks <n>`
+
+Do not hand-build GitHub API calls with `curl`; prefer `gh`.
+
 ## CI
 
 GitHub Actions (`.github/workflows/go.yml`) runs on push/PR to main:
