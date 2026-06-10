@@ -6,6 +6,7 @@
     .badge.src-cap { background-color: #6f42c1; }
     .badge.src-er { background-color: #0d9488; }
     .badge.src-code { background-color: #c2410c; }
+    .title-col { width: 18rem; max-width: 18rem; word-break: break-word; }
 {{end}}
 
 {{define "nav"}}
@@ -33,12 +34,12 @@
 
     <table class="table table-sm table-hover align-middle">
         <thead>
-            <tr><th>Treatise</th><th>Pages</th></tr>
+            <tr><th class="title-col">Treatise</th><th>Pages</th></tr>
         </thead>
         <tbody>
         {{range .Case.Treatises}}
             <tr>
-                <td>
+                <td class="title-col">
                     {{if .TreatiseURL}}<a href="{{.TreatiseURL}}">{{ptrOr .Treatise "(untitled)"}}</a>{{else}}{{ptrOr .Treatise "(untitled)"}}{{end}}
                     <span class="text-secondary small">&middot; {{.PageCount}} page{{if ne .PageCount 1}}s{{end}}</span>
                 </td>
