@@ -88,13 +88,7 @@ func (c *CitationDetail) IsEnglishReports() bool {
 // parameter. host and userParam select which institution's proxy the link
 // routes through.
 func (c *CitationDetail) momlVolumeURL(host, userParam string) string {
-	if c.ProductLink == nil {
-		return ""
-	}
-	url := *c.ProductLink
-	url = strings.Replace(url, "http://link.galegroup.com", host, 1)
-	url = strings.Replace(url, "?sid=dhxml", "?"+userParam+"sid=dhxml", 1)
-	return url
+	return momlVolumeLink(c.ProductLink, host, userParam)
 }
 
 // MomlVolumeURL returns a Gale MOML URL for the volume as a whole, routed
@@ -114,18 +108,7 @@ func (c *CitationDetail) MomlVolumeURLColumbia() string {
 // The pg parameter uses MomlPage (pageid), with the trailing 0 stripped
 // and leading 0s removed. E.g., pageid "06870" becomes pg=687.
 func (c *CitationDetail) momlPageURL(base string) string {
-	if base == "" {
-		return ""
-	}
-	if c.MomlPage != "" {
-		pg := c.MomlPage
-		pg = strings.TrimRight(pg, "0")
-		pg = strings.TrimLeft(pg, "0")
-		if pg != "" {
-			base += "&pg=" + pg
-		}
-	}
-	return base
+	return momlPageLink(base, c.MomlPage)
 }
 
 // MomlPageURL constructs a Gale MOML URL linking to the specific page, routed

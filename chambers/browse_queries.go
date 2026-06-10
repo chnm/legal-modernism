@@ -32,6 +32,36 @@ func isLinked(status *string) bool {
 	return status != nil && strings.HasPrefix(*status, "linked_")
 }
 
+// momlVolumeLink rewrites a stored Gale productlink to the given host and
+// inserts the institutional user param (e.g. "u=viva_gmu&"), yielding a MOML
+// volume URL routed through that institution's proxy. Returns "" when there is
+// no productlink.
+func momlVolumeLink(productLink *string, host, userParam string) string {
+	if productLink == nil {
+		return ""
+	}
+	u := *productLink
+	u = strings.Replace(u, "http://link.galegroup.com", host, 1)
+	u = strings.Replace(u, "?sid=dhxml", "?"+userParam+"sid=dhxml", 1)
+	return u
+}
+
+// momlPageLink appends the page (pg) parameter to a Gale MOML volume URL. The pg
+// value is the pageid with its trailing and leading zeros stripped (e.g.
+// "06870" -> 687). Returns "" when base is empty.
+func momlPageLink(base, pageID string) string {
+	if base == "" {
+		return ""
+	}
+	if pageID != "" {
+		pg := strings.TrimLeft(strings.TrimRight(pageID, "0"), "0")
+		if pg != "" {
+			base += "&pg=" + pg
+		}
+	}
+	return base
+}
+
 // chipClass maps a link status to the colour class for a citation chip:
 // linked (green), no_match (red), skipped_junk (gray — OCR noise, not a real
 // citation), and everything else not attempted (amber — reporter not
@@ -344,13 +374,24 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 // TreatisePageView is one treatise page with its OCR text and the citations
 // detected on it.
 type TreatisePageView struct {
-	PSMID      string
-	PageID     string
-	BiblioID   *string
-	Title      *string
-	SourcePage string
-	OCRText    string
-	Citations  []PageCitation
+	PSMID       string
+	PageID      string
+	BiblioID    *string
+	Title       *string
+	SourcePage  string
+	ProductLink *string
+	OCRText     string
+	Citations   []PageCitation
+}
+
+// MomlPageURLGMU links to this page on Gale MOML through GMU's library proxy.
+func (v *TreatisePageView) MomlPageURLGMU() string {
+	return momlPageLink(momlVolumeLink(v.ProductLink, "https://link.gale.com", "u=viva_gmu&"), v.PageID)
+}
+
+// MomlPageURLColumbia links to this page on Gale MOML through Columbia's proxy.
+func (v *TreatisePageView) MomlPageURLColumbia() string {
+	return momlPageLink(momlVolumeLink(v.ProductLink, "https://link.gale.com", "u=columbiau&"), v.PageID)
 }
 
 // HighlightedOCR returns the page's OCR text with each detected citation's raw
@@ -437,23 +478,25 @@ func getTreatisePage(ctx context.Context, db *pgxpool.Pool, psmid, pageid string
 	slog.Debug("querying treatise page", "psmid", psmid, "pageid", pageid)
 	view := &TreatisePageView{PSMID: psmid, PageID: pageid, SourcePage: pageid}
 
-	// Header: treatise title, bibliographicid, source page number.
+	// Header: treatise title, bibliographicid, productlink, source page number.
 	var title *string
 	var biblioID *string
+	var productLink *string
 	var sourcePage *string
 	err := db.QueryRow(ctx, `
-		SELECT bc.displaytitle, bi.bibliographicid,
+		SELECT bc.displaytitle, bi.bibliographicid, bi.productlink,
 		       (SELECT NULLIF(mp.sourcepage, '') FROM moml.page mp
 		         WHERE mp.psmid = $1 AND mp.pageid = $2)
 		FROM moml.book_info bi
 		LEFT JOIN moml.book_citation bc ON bc.psmid = bi.psmid
 		WHERE bi.psmid = $1
-	`, psmid, pageid).Scan(&title, &biblioID, &sourcePage)
+	`, psmid, pageid).Scan(&title, &biblioID, &productLink, &sourcePage)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return nil, fmt.Errorf("querying page header: %w", err)
 	}
 	view.Title = title
 	view.BiblioID = biblioID
+	view.ProductLink = productLink
 	if sourcePage != nil && *sourcePage != "" {
 		view.SourcePage = *sourcePage
 	}

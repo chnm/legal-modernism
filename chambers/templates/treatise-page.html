@@ -39,6 +39,13 @@
         <span class="legend-dot cite-skip"></span> reporter not whitelisted &nbsp;
         <span class="legend-dot cite-junk"></span> junk (not a real citation)
     </p>
+    {{if or .Page.MomlPageURLGMU .Page.MomlPageURLColumbia}}
+    <p class="small mb-2">
+        View this page on Gale MOML:
+        {{if .Page.MomlPageURLGMU}}<a href="{{.Page.MomlPageURLGMU}}" target="_blank" rel="noopener">GMU</a>{{end}}
+        {{if .Page.MomlPageURLColumbia}}&middot; <a href="{{.Page.MomlPageURLColumbia}}" target="_blank" rel="noopener">Columbia</a>{{end}}
+    </p>
+    {{end}}
 
     <div class="row g-4">
         <div class="col-md-6">
