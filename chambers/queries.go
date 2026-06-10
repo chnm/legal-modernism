@@ -82,22 +82,37 @@ func (c *CitationDetail) IsEnglishReports() bool {
 	return c.Status != nil && *c.Status == "linked_english_reports"
 }
 
-// MomlVolumeURL returns a Gale MOML URL for the volume as a whole.
-func (c *CitationDetail) MomlVolumeURL() string {
+// momlVolumeURL builds a Gale MOML volume URL from the stored productlink,
+// rewriting the legacy link.galegroup.com host to the given host and inserting
+// the optional Gale user query fragment (e.g. "u=viva_gmu&") before the sid
+// parameter. host and userParam select which institution's proxy the link
+// routes through.
+func (c *CitationDetail) momlVolumeURL(host, userParam string) string {
 	if c.ProductLink == nil {
 		return ""
 	}
 	url := *c.ProductLink
-	url = strings.Replace(url, "http://link.galegroup.com", "https://link.gale.com", 1)
-	url = strings.Replace(url, "?sid=dhxml", "?u=viva_gmu&sid=dhxml", 1)
+	url = strings.Replace(url, "http://link.galegroup.com", host, 1)
+	url = strings.Replace(url, "?sid=dhxml", "?"+userParam+"sid=dhxml", 1)
 	return url
 }
 
-// MomlPageURL constructs a Gale MOML URL linking to the specific page.
+// MomlVolumeURL returns a Gale MOML URL for the volume as a whole, routed
+// through GMU's library proxy.
+func (c *CitationDetail) MomlVolumeURL() string {
+	return c.momlVolumeURL("https://link.gale.com", "u=viva_gmu&")
+}
+
+// MomlVolumeURLColumbia returns a Gale MOML URL for the volume as a whole,
+// routed through Columbia University's EZproxy.
+func (c *CitationDetail) MomlVolumeURLColumbia() string {
+	return c.momlVolumeURL("https://go-gale-com.ezproxy.cul.columbia.edu", "")
+}
+
+// momlPageURL appends the page (pg) parameter to a Gale MOML volume URL.
 // The pg parameter uses MomlPage (pageid), with the trailing 0 stripped
 // and leading 0s removed. E.g., pageid "06870" becomes pg=687.
-func (c *CitationDetail) MomlPageURL() string {
-	base := c.MomlVolumeURL()
+func (c *CitationDetail) momlPageURL(base string) string {
 	if base == "" {
 		return ""
 	}
@@ -110,6 +125,18 @@ func (c *CitationDetail) MomlPageURL() string {
 		}
 	}
 	return base
+}
+
+// MomlPageURL constructs a Gale MOML URL linking to the specific page, routed
+// through GMU's library proxy.
+func (c *CitationDetail) MomlPageURL() string {
+	return c.momlPageURL(c.MomlVolumeURL())
+}
+
+// MomlPageURLColumbia constructs a Gale MOML URL linking to the specific page,
+// routed through Columbia University's EZproxy.
+func (c *CitationDetail) MomlPageURLColumbia() string {
+	return c.momlPageURL(c.MomlVolumeURLColumbia())
 }
 
 const citationDetailQuery = `
