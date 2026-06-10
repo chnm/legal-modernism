@@ -37,6 +37,13 @@ CREATE SCHEMA english_reports;
 
 
 --
+-- Name: freelaw; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA freelaw;
+
+
+--
 -- Name: legalhist; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -786,6 +793,34 @@ CREATE TABLE english_reports.cases (
     er_url text,
     court text,
     word_count integer
+);
+
+
+--
+-- Name: citations; Type: TABLE; Schema: freelaw; Owner: -
+--
+
+CREATE TABLE freelaw.citations (
+    id bigint NOT NULL,
+    volume text NOT NULL,
+    reporter text NOT NULL,
+    page text NOT NULL,
+    cite text GENERATED ALWAYS AS (((((volume || ' '::text) || reporter) || ' '::text) || page)) STORED,
+    type text NOT NULL,
+    cluster_id bigint NOT NULL,
+    date_created timestamp with time zone,
+    date_modified timestamp with time zone,
+    CONSTRAINT chk_freelaw_citations_type CHECK ((type = ANY (ARRAY['federal'::text, 'state'::text, 'state_regional'::text, 'specialty'::text, 'scotus_early'::text, 'lexis'::text, 'west'::text, 'neutral'::text, 'journal'::text])))
+);
+
+
+--
+-- Name: clusters_to_cap; Type: TABLE; Schema: freelaw; Owner: -
+--
+
+CREATE TABLE freelaw.clusters_to_cap (
+    cluster_id bigint NOT NULL,
+    cap_case_id bigint
 );
 
 
@@ -1632,6 +1667,22 @@ ALTER TABLE ONLY english_reports.cases
 
 
 --
+-- Name: citations citations_pkey; Type: CONSTRAINT; Schema: freelaw; Owner: -
+--
+
+ALTER TABLE ONLY freelaw.citations
+    ADD CONSTRAINT citations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: clusters_to_cap clusters_to_cap_pkey; Type: CONSTRAINT; Schema: freelaw; Owner: -
+--
+
+ALTER TABLE ONLY freelaw.clusters_to_cap
+    ADD CONSTRAINT clusters_to_cap_pkey PRIMARY KEY (cluster_id);
+
+
+--
 -- Name: code_reporter code_reporter_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -1919,6 +1970,27 @@ CREATE INDEX er_cases_er_parallel_cite_idx ON english_reports.cases USING btree 
 --
 
 CREATE INDEX er_cases_er_year_idx ON english_reports.cases USING btree (er_year);
+
+
+--
+-- Name: idx_freelaw_citations_cite; Type: INDEX; Schema: freelaw; Owner: -
+--
+
+CREATE INDEX idx_freelaw_citations_cite ON freelaw.citations USING btree (cite);
+
+
+--
+-- Name: idx_freelaw_citations_cluster_id; Type: INDEX; Schema: freelaw; Owner: -
+--
+
+CREATE INDEX idx_freelaw_citations_cluster_id ON freelaw.citations USING btree (cluster_id);
+
+
+--
+-- Name: idx_freelaw_clusters_to_cap_cap_case_id; Type: INDEX; Schema: freelaw; Owner: -
+--
+
+CREATE INDEX idx_freelaw_clusters_to_cap_cap_case_id ON freelaw.clusters_to_cap USING btree (cap_case_id) WHERE (cap_case_id IS NOT NULL);
 
 
 --
@@ -2262,6 +2334,14 @@ ALTER TABLE ONLY cap_citations.pagerank
 
 
 --
+-- Name: clusters_to_cap clusters_to_cap_cap_case_id_fkey; Type: FK CONSTRAINT; Schema: freelaw; Owner: -
+--
+
+ALTER TABLE ONLY freelaw.clusters_to_cap
+    ADD CONSTRAINT clusters_to_cap_cap_case_id_fkey FOREIGN KEY (cap_case_id) REFERENCES cap.cases(id);
+
+
+--
 -- Name: code_reporter code_reporter_court_cap_id_fk; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2439,4 +2519,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260522170300'),
     ('20260609115030'),
     ('20260609133000'),
-    ('20260610120000');
+    ('20260610120000'),
+    ('20260610130000');
