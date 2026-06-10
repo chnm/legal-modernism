@@ -1330,6 +1330,40 @@ CREATE TABLE moml_citations.citation_links (
 
 
 --
+-- Name: case_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.case_citation_counts AS
+ SELECT 'cap'::text AS source,
+    (cl.cap_case_id)::text AS case_id,
+    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
+    count(*) AS cite_count
+   FROM (moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+  WHERE (cl.status = 'linked_cap'::text)
+  GROUP BY cl.cap_case_id
+UNION ALL
+ SELECT 'er'::text AS source,
+    cl.er_case_id AS case_id,
+    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
+    count(*) AS cite_count
+   FROM (moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+  WHERE (cl.status = 'linked_english_reports'::text)
+  GROUP BY cl.er_case_id
+UNION ALL
+ SELECT 'code'::text AS source,
+    (cl.code_reporter_id)::text AS case_id,
+    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
+    count(*) AS cite_count
+   FROM (moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+  WHERE (cl.status = 'linked_code_reporter'::text)
+  GROUP BY cl.code_reporter_id
+  WITH NO DATA;
+
+
+--
 -- Name: citation_links_detail; Type: VIEW; Schema: moml_citations; Owner: -
 --
 
@@ -1414,6 +1448,37 @@ UNION ALL
     count(*) AS n
    FROM moml_citations.citation_links
   GROUP BY citation_links.status
+  WITH NO DATA;
+
+
+--
+-- Name: normalized_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.normalized_citation_counts AS
+ SELECT cl.cite_normalized,
+    count(*) AS cite_count,
+    count(*) FILTER (WHERE (cl.status ~~ 'linked_%'::text)) AS linked_count,
+    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count
+   FROM (moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+  WHERE (cl.cite_normalized IS NOT NULL)
+  GROUP BY cl.cite_normalized
+  WITH NO DATA;
+
+
+--
+-- Name: treatise_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.treatise_citation_counts AS
+ SELECT cu.moml_treatise,
+    count(*) AS n,
+    count(*) FILTER (WHERE (cl.status ~~ 'linked_%'::text)) AS linked,
+    count(*) FILTER (WHERE ((cl.status IS NULL) OR (cl.status !~~ 'linked_%'::text))) AS not_linked
+   FROM (moml_citations.citations_unlinked cu
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+  GROUP BY cu.moml_treatise
   WITH NO DATA;
 
 
@@ -2113,6 +2178,27 @@ CREATE INDEX page_bodytype_idx ON moml.page USING btree (type) WHERE ((type)::te
 
 
 --
+-- Name: case_citation_counts_page_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_citation_counts_page_count_idx ON moml_citations.case_citation_counts USING btree (page_count DESC);
+
+
+--
+-- Name: case_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX case_citation_counts_uq ON moml_citations.case_citation_counts USING btree (source, case_id);
+
+
+--
+-- Name: citation_links_cite_normalized_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX citation_links_cite_normalized_idx ON moml_citations.citation_links USING btree (cite_normalized);
+
+
+--
 -- Name: citations_unlinked_reporter_abbr_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2201,6 +2287,34 @@ CREATE INDEX moml_page_to_cap_case_moml_page_idx ON moml_citations.page_to_case 
 --
 
 CREATE INDEX moml_page_to_cap_case_moml_treatise_idx ON moml_citations.page_to_case USING btree (moml_treatise);
+
+
+--
+-- Name: normalized_citation_counts_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX normalized_citation_counts_count_idx ON moml_citations.normalized_citation_counts USING btree (cite_count DESC);
+
+
+--
+-- Name: normalized_citation_counts_prefix_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX normalized_citation_counts_prefix_idx ON moml_citations.normalized_citation_counts USING btree (cite_normalized text_pattern_ops);
+
+
+--
+-- Name: normalized_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX normalized_citation_counts_uq ON moml_citations.normalized_citation_counts USING btree (cite_normalized);
+
+
+--
+-- Name: treatise_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX treatise_citation_counts_uq ON moml_citations.treatise_citation_counts USING btree (moml_treatise);
 
 
 --
@@ -2520,4 +2634,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260609115030'),
     ('20260609133000'),
     ('20260610120000'),
-    ('20260610130000');
+    ('20260610130000'),
+    ('20260610140000');

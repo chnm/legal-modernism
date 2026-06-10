@@ -31,7 +31,7 @@
     </form>
 
     <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Sort">
-        <a href="/treatises?sort=cites{{if .Q}}&q={{.Q | urlquery}}{{end}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most cited</a>
+        <a href="/treatises?sort=cites{{if .Q}}&q={{.Q | urlquery}}{{end}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most citations</a>
         <a href="/treatises?sort=year{{if .Q}}&q={{.Q | urlquery}}{{end}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Earliest</a>
         <a href="/treatises?sort=title{{if .Q}}&q={{.Q | urlquery}}{{end}}" class="btn {{if eq .Sort "title"}}btn-primary{{else}}btn-outline-secondary{{end}}">Title</a>
     </div>
@@ -56,8 +56,8 @@
                 <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
                 <td class="num">{{.Vols}}</td>
                 <td class="num">{{.N}}</td>
-                <td class="num linked">{{.Linked}}</td>
-                <td class="num unlinked">{{.NotLinked}}</td>
+                <td class="num linked">{{.Linked}}{{if .N}} <span class="small text-secondary">({{.LinkedPct}}%)</span>{{end}}</td>
+                <td class="num unlinked">{{.NotLinked}}{{if .N}} <span class="small text-secondary">({{.NotLinkedPct}}%)</span>{{end}}</td>
             </tr>
         {{else}}
             <tr><td colspan="7" class="text-secondary">No treatises found. (If all counts are zero, the

@@ -52,6 +52,24 @@ func (t *TreatiseListItem) DetailURL() string {
 	return "/treatise?id=" + url.QueryEscape(t.BiblioID)
 }
 
+// LinkedPct is the share of the work's citations that are linked, as a rounded
+// percentage (0 when the work has no citations). Every citation is either
+// linked or not, so LinkedPct + NotLinkedPct == 100 whenever N > 0.
+func (t *TreatiseListItem) LinkedPct() int {
+	if t.N == 0 {
+		return 0
+	}
+	return (t.Linked*100 + t.N/2) / t.N
+}
+
+// NotLinkedPct is the share of the work's citations that are not linked.
+func (t *TreatiseListItem) NotLinkedPct() int {
+	if t.N == 0 {
+		return 0
+	}
+	return 100 - t.LinkedPct()
+}
+
 // treatiseSorts maps a sort key to its ORDER BY expression. Values are fixed
 // literals (never user input) so they are safe to interpolate.
 var treatiseSorts = map[string]string{
