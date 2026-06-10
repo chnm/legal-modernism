@@ -1,0 +1,65 @@
+{{define "title"}}Normalized citations &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">Normalized citations</h1>
+    <p class="small text-secondary mb-2">
+        Citations grouped by their normalized form (e.g. <code>2 Haw. 63</code>), ranked by how
+        often they occur. <strong>Linked</strong> counts how many occurrences resolved to a case;
+        <strong>Pages</strong> is the number of distinct treatise pages the citation appears on.
+        Click a citation to see those pages. From
+        <code>moml_citations.normalized_citation_counts</code>.
+    </p>
+
+    <form method="get" class="row g-2 align-items-center mb-3">
+        <div class="col-auto">
+            <input type="search" name="q" value="{{.Q}}" class="form-control form-control-sm"
+                   placeholder="Starts with&hellip; (e.g. 2 Haw.)" style="min-width: 18rem;">
+        </div>
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Search</button></div>
+        {{if .Q}}<div class="col-auto"><a href="/normalized" class="small">clear</a></div>{{end}}
+    </form>
+
+    <table class="table table-sm table-hover align-middle" style="max-width: 48rem;">
+        <thead>
+            <tr>
+                <th>Normalized citation</th>
+                <th class="text-end">Occurrences</th>
+                <th class="text-end">Linked</th>
+                <th class="text-end">Pages</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Items}}
+            <tr>
+                <td><a href="{{.DetailURL}}" class="font-monospace">{{.Cite}}</a></td>
+                <td class="num">{{.CiteCount}}</td>
+                <td class="num text-secondary">{{.LinkedCount}}</td>
+                <td class="num text-secondary">{{.PageCount}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="4" class="text-secondary">No normalized citations. (If empty, the
+                <code>normalized_citation_counts</code> view may need a <code>make db-refresh</code>.)</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{template "pagination" .Nav}}
+{{end}}
+
+{{define "pagination"}}
+    {{if or .HasPrev .HasNext}}
+    <nav class="my-3">
+        {{if .HasPrev}}<a href="{{.PrevURL}}" class="btn btn-sm btn-outline-secondary">&larr; Prev</a>{{end}}
+        <span class="small text-secondary mx-2">Page {{.Page}}</span>
+        {{if .HasNext}}<a href="{{.NextURL}}" class="btn btn-sm btn-outline-secondary">Next &rarr;</a>{{end}}
+    </nav>
+    {{end}}
+{{end}}

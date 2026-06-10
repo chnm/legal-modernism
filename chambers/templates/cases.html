@@ -1,0 +1,69 @@
+{{define "title"}}Most-cited cases &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .badge.src-cap { background-color: #6f42c1; }
+    .badge.src-er { background-color: #0d9488; }
+    .badge.src-code { background-color: #c2410c; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">Most-cited cases</h1>
+    <p class="small text-secondary mb-3">
+        Cases ranked by the number of distinct treatise pages that cite them (a case cited
+        several times on one page counts once). Includes all linked sources: the Caselaw
+        Access Project (<span class="badge src-cap">CAP</span>), English Reports
+        (<span class="badge src-er">Eng.&nbsp;Rep.</span>), and code reporters
+        (<span class="badge src-code">Code&nbsp;rep.</span>). From
+        <code>moml_citations.case_citation_counts</code>.
+    </p>
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Case</th>
+                <th>Source</th>
+                <th class="text-end">Year</th>
+                <th>Court</th>
+                <th class="text-end">Treatise pages</th>
+                <th class="text-end">Citations</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {{$start := mul (sub .Nav.Page 1) 100}}
+        {{range $i, $c := .Items}}
+            <tr>
+                <td class="num text-secondary small">{{add $start $i 1}}</td>
+                <td><a href="{{$c.DetailURL}}">{{ptrOr $c.Name "(unknown case)"}}</a></td>
+                <td><span class="badge {{$c.SourceBadgeClass}}">{{$c.SourceLabel}}</span></td>
+                <td class="num">{{if $c.Year}}{{deref $c.Year}}{{else}}&mdash;{{end}}</td>
+                <td class="small text-secondary">{{ptrOr $c.Court "&mdash;"}}</td>
+                <td class="num">{{$c.PageCount}}</td>
+                <td class="num text-secondary">{{$c.CiteCount}}</td>
+                <td>{{if $c.URL}}<a href="{{$c.URL | derefStr}}" target="_blank" rel="noopener" class="small">source &nearr;</a>{{end}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="8" class="text-secondary">No cases. (If empty, the
+                <code>case_citation_counts</code> view may need a <code>make db-refresh</code>.)</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{template "pagination" .Nav}}
+{{end}}
+
+{{define "pagination"}}
+    {{if or .HasPrev .HasNext}}
+    <nav class="my-3">
+        {{if .HasPrev}}<a href="{{.PrevURL}}" class="btn btn-sm btn-outline-secondary">&larr; Prev</a>{{end}}
+        <span class="small text-secondary mx-2">Page {{.Page}}</span>
+        {{if .HasNext}}<a href="{{.NextURL}}" class="btn btn-sm btn-outline-secondary">Next &rarr;</a>{{end}}
+    </nav>
+    {{end}}
+{{end}}

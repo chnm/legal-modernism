@@ -1,0 +1,55 @@
+{{define "title"}}{{if .Case.Name}}{{.Case.Name | derefStr}}{{else}}Case{{end}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .detail-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.1rem 0.8rem; margin: 0.2rem 0; }
+    .badge.src-cap { background-color: #6f42c1; }
+    .badge.src-er { background-color: #0d9488; }
+    .badge.src-code { background-color: #c2410c; }
+    .title-col { width: 18rem; max-width: 18rem; word-break: break-word; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Chambers</a>
+    <span class="text-secondary small mx-1">&middot;</span>
+    <a href="/cases" class="small text-decoration-none">All cases</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">{{if .Case.Name}}{{.Case.Name | derefStr}}{{else}}(unknown case){{end}}</h1>
+    <div class="detail-grid small mb-2">
+        <span class="text-secondary">Source</span><span><span class="badge {{.Case.SourceBadgeClass}}">{{.Case.SourceLabel}}</span></span>
+        {{if .Case.Citation}}<span class="text-secondary">Citation</span><span>{{.Case.Citation | derefStr}}</span>{{end}}
+        {{if .Case.Year}}<span class="text-secondary">Year</span><span>{{deref .Case.Year}}</span>{{end}}
+        {{if .Case.Court}}<span class="text-secondary">Court</span><span>{{.Case.Court | derefStr}}</span>{{end}}
+        {{if .Case.URL}}<span class="text-secondary">Link</span><span><a href="{{.Case.URL | derefStr}}" target="_blank" rel="noopener">view source &nearr;</a></span>{{end}}
+    </div>
+
+    <p class="small text-secondary">
+        Cited on <strong>{{.Case.PageCount}}</strong> treatise page(s) across
+        <strong>{{.Case.TreatiseCount}}</strong> treatise(s){{if .Truncated}} (showing the first {{.Case.PageCount}}){{end}}.
+        Each row is one treatise; click a page to see all of its citations. A
+        <span class="text-secondary">(n)</span> after a page is how many times the case is cited there.
+    </p>
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr><th class="title-col">Treatise</th><th>Pages</th></tr>
+        </thead>
+        <tbody>
+        {{range .Case.Treatises}}
+            <tr>
+                <td class="title-col">
+                    {{if .TreatiseURL}}<a href="{{.TreatiseURL}}">{{ptrOr .Treatise "(untitled)"}}</a>{{else}}{{ptrOr .Treatise "(untitled)"}}{{end}}
+                    <span class="text-secondary small">&middot; {{.PageCount}} page{{if ne .PageCount 1}}s{{end}}</span>
+                </td>
+                <td>
+                    {{range $i, $p := .Pages}}{{if $i}}, {{end}}<a href="{{$p.URL}}" class="text-nowrap">p.&nbsp;{{$p.SourcePage}}</a>{{if gt $p.Cites 1}}<span class="text-secondary small">&nbsp;({{$p.Cites}})</span>{{end}}{{end}}
+                </td>
+            </tr>
+        {{else}}
+            <tr><td colspan="2" class="text-secondary">No citing pages found.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+{{end}}

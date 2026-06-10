@@ -1,0 +1,79 @@
+{{define "title"}}Page {{.Page.SourcePage}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    .cites { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem; }
+    .cite { box-sizing: border-box; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid transparent; }
+    .cite .raw { font-weight: 600; font-family: monospace; }
+    .cite .meta { display: block; font-size: 0.72rem; }
+    .cite a { text-decoration: none; }
+    .cite .raw a { color: #212529; }
+    .cite-linked { background: #d4edda; border-color: #b6dcc0; }
+    .cite-nomatch { background: #f8d7da; border-color: #eeb9be; }
+    .cite-junk { background: #e2e3e5; border-color: #cdd0d3; }
+    .cite-skip { background: #fff3cd; border-color: #ffe69c; }
+    .legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; border: 1px solid rgba(0,0,0,.15); vertical-align: -1px; }
+    pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; position: sticky; top: 1rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Chambers</a>
+    <span class="text-secondary small mx-1">&middot;</span>
+    <a href="/treatises" class="small text-decoration-none">All treatises</a>
+    {{if .Page.TreatiseURL}}<span class="text-secondary small mx-1">&middot;</span>
+    <a href="{{.Page.TreatiseURL}}" class="small text-decoration-none">Back to treatise</a>{{end}}
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">
+        {{if .Page.Title}}{{.Page.Title | derefStr}}{{else}}Treatise page{{end}}
+        <span class="text-secondary fw-normal">&middot; p. {{.Page.SourcePage}}</span>
+    </h1>
+    <p class="small text-secondary mb-2">
+        <code>{{.Page.PSMID}}</code> / <code>{{.Page.PageID}}</code> &middot;
+        {{len .Page.Citations}} citation(s) detected, {{.Page.LinkedCount}} linked.
+        Ordered as they appear on the page.
+    </p>
+    <p class="small mb-2">
+        <span class="legend-dot cite-linked"></span> linked &nbsp;
+        <span class="legend-dot cite-nomatch"></span> no match &nbsp;
+        <span class="legend-dot cite-skip"></span> reporter not whitelisted &nbsp;
+        <span class="legend-dot cite-junk"></span> junk (not a real citation)
+    </p>
+    {{if or .Page.MomlPageURLGMU .Page.MomlPageURLColumbia}}
+    <p class="small mb-2">
+        View this page on Gale MOML:
+        {{if .Page.MomlPageURLGMU}}<a href="{{.Page.MomlPageURLGMU}}" target="_blank" rel="noopener">GMU</a>{{end}}
+        {{if .Page.MomlPageURLColumbia}}&middot; <a href="{{.Page.MomlPageURLColumbia}}" target="_blank" rel="noopener">Columbia</a>{{end}}
+    </p>
+    {{end}}
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <h2 class="h6 border-bottom pb-1">Page text</h2>
+            {{if .Page.OCRText}}
+                <pre class="ocrtext bg-light border rounded p-3 small">{{.Page.HighlightedOCR}}</pre>
+            {{else}}
+                <p class="text-secondary fst-italic small">No OCR text available for this page.</p>
+            {{end}}
+        </div>
+        <div class="col-md-6">
+            <h2 class="h6 border-bottom pb-1">Citations <span class="text-secondary fw-normal">({{len .Page.Citations}})</span></h2>
+            <div class="cites">
+            {{range .Page.Citations}}
+                <span class="cite {{.ChipClass}}">
+                    <span class="raw"><a href="{{.CiteURL}}" title="Inspect detection &amp; linking">{{.Raw}}</a></span>
+                    <span class="meta">
+                        {{if .IsLinked}}
+                            {{if .CaseURL}}<a href="{{.CaseURL}}">{{ptrOr .CaseName "linked case"}}</a>{{else}}{{ptrOr .CaseName "linked case"}}{{end}}
+                        {{else}}
+                            <span class="text-secondary">{{ptrOr .Status "unlinked"}}</span>
+                        {{end}}
+                    </span>
+                </span>
+            {{else}}
+                <span class="text-secondary small">No citations detected on this page.</span>
+            {{end}}
+            </div>
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,49 @@
+{{define "title"}}{{.Cite}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    .cites { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .cite { width: 19rem; box-sizing: border-box; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid transparent; }
+    .cite .raw { font-weight: 600; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cite .meta { display: block; font-size: 0.72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cite a { text-decoration: none; }
+    .cite .raw a { color: #212529; }
+    .cite-linked { background: #d4edda; border-color: #b6dcc0; }
+    .cite-nomatch { background: #f8d7da; border-color: #eeb9be; }
+    .cite-junk { background: #e2e3e5; border-color: #cdd0d3; }
+    .cite-skip { background: #fff3cd; border-color: #ffe69c; }
+    .legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; border: 1px solid rgba(0,0,0,.15); vertical-align: -1px; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Chambers</a>
+    <span class="text-secondary small mx-1">&middot;</span>
+    <a href="/normalized" class="small text-decoration-none">All normalized citations</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2 font-monospace">{{.Cite}}</h1>
+    <p class="small text-secondary mb-2">
+        {{.Total}} occurrence(s) across treatise pages{{if .Truncated}}; showing the first {{.Shown}}{{end}}.
+        The raw text links to the full detection/linking detail; the page link opens the treatise page.
+    </p>
+    <p class="small mb-2">
+        <span class="legend-dot cite-linked"></span> linked &nbsp;
+        <span class="legend-dot cite-nomatch"></span> no match &nbsp;
+        <span class="legend-dot cite-skip"></span> reporter not whitelisted &nbsp;
+        <span class="legend-dot cite-junk"></span> junk (not a real citation)
+    </p>
+
+    <div class="cites">
+    {{range .Cites}}
+        <span class="cite {{.ChipClass}}">
+            <span class="raw"><a href="{{.CiteURL}}" title="Inspect detection &amp; linking">{{.Raw}}</a></span>
+            <span class="meta">
+                {{if .TreatiseURL}}<a href="{{.TreatiseURL}}">{{ptrOr .Treatise "(untitled)"}}</a>{{else}}{{ptrOr .Treatise "(untitled)"}}{{end}}
+                &middot; <a href="{{.PageURL}}">p. {{.SourcePage}}</a>
+            </span>
+        </span>
+    {{else}}
+        <span class="text-secondary small">No occurrences found.</span>
+    {{end}}
+    </div>
+{{end}}

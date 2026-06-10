@@ -1,0 +1,54 @@
+{{define "title"}}{{if .T.Title}}{{.T.Title}}{{else}}Treatise{{end}} &mdash; Chambers{{end}}
+
+{{define "styles"}}
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .linked { color: #28a745; }
+    .unlinked { color: #dc3545; }
+    .pages-table td, .pages-table th { padding-top: 0.15rem; padding-bottom: 0.15rem; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Chambers</a>
+    <span class="text-secondary small mx-1">&middot;</span>
+    <a href="/treatises" class="small text-decoration-none">All treatises</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">{{if .T.Title}}{{.T.Title}}{{else}}(untitled treatise){{end}}</h1>
+    <div class="detail-grid small mb-2" style="display:grid; grid-template-columns:auto 1fr; gap:0.1rem 0.8rem;">
+        {{if .T.Author}}<span class="text-secondary">Author</span><span>{{.T.Author | derefStr}}</span>{{end}}
+        {{if .T.Year}}<span class="text-secondary">Year</span><span>{{deref .T.Year}}</span>{{end}}
+        <span class="text-secondary">Volumes</span><span>{{.T.Vols}}</span>
+        <span class="text-secondary">Bibliographic ID</span><span><code>{{.T.BiblioID}}</code></span>
+        {{if .T.Subjects}}<span class="text-secondary">Subjects</span><span>{{range .T.Subjects}}<span class="badge bg-secondary me-1">{{.}}</span>{{end}}</span>{{end}}
+    </div>
+    <p class="small text-secondary">
+        Pages on which citations were detected. <span class="linked">Green</span> = linked,
+        <span class="unlinked">red</span> = not yet linked. Click a page to see its citations.
+    </p>
+
+    {{range .T.Volumes}}
+        {{if $.T.MultiVolume}}
+            <h2 class="h6 border-bottom pb-1 mt-3">Volume {{if .VolumeLabel}}{{.VolumeLabel}}{{else}}&mdash;{{end}} <span class="text-secondary small fw-normal"><code>{{.PSMID}}</code></span></h2>
+        {{end}}
+        {{if .Pages}}
+        <table class="table table-sm table-hover align-middle pages-table" style="max-width: 40rem;">
+            <thead>
+                <tr><th>Page</th><th class="text-end">Citations</th><th class="text-end">Linked</th><th class="text-end">Unlinked</th></tr>
+            </thead>
+            <tbody>
+            {{range .Pages}}
+                <tr>
+                    <td><a href="{{.URL}}">p. {{.SourcePage}}</a></td>
+                    <td class="num">{{.Cites}}</td>
+                    <td class="num linked">{{.Linked}}{{if .Cites}} <span class="small text-secondary">({{.LinkedPct}}%)</span>{{end}}</td>
+                    <td class="num unlinked">{{.NotLinked}}{{if .Cites}} <span class="small text-secondary">({{.NotLinkedPct}}%)</span>{{end}}</td>
+                </tr>
+            {{end}}
+            </tbody>
+        </table>
+        {{else}}
+            <p class="small text-secondary fst-italic">No citations detected in this volume.</p>
+        {{end}}
+    {{end}}
+{{end}}
