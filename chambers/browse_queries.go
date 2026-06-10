@@ -32,6 +32,26 @@ func isLinked(status *string) bool {
 	return status != nil && strings.HasPrefix(*status, "linked_")
 }
 
+// chipClass maps a link status to the colour class for a citation chip:
+// linked (green), no_match (red), skipped_junk (gray — OCR noise, not a real
+// citation), and everything else not attempted (amber — reporter not
+// whitelisted, or unprocessed).
+func chipClass(status *string) string {
+	if status == nil {
+		return "cite-skip"
+	}
+	switch s := *status; {
+	case strings.HasPrefix(s, "linked_"):
+		return "cite-linked"
+	case s == "no_match":
+		return "cite-nomatch"
+	case s == "skipped_junk":
+		return "cite-junk"
+	default:
+		return "cite-skip"
+	}
+}
+
 // ---------------------------------------------------------------------------
 // Treatises: browse list
 // ---------------------------------------------------------------------------
@@ -390,6 +410,9 @@ type PageCitation struct {
 
 // StatusClass reuses the shared linked/not-linked colour classes.
 func (c *PageCitation) StatusClass() string { return statusClass(c.Status) }
+
+// ChipClass returns the status-aware colour class for the citation chip.
+func (c *PageCitation) ChipClass() string { return chipClass(c.Status) }
 
 // IsLinked reports whether the citation resolved to a case.
 func (c *PageCitation) IsLinked() bool { return isLinked(c.Status) }
@@ -829,6 +852,9 @@ type NormalizedCite struct {
 
 // StatusClass reuses the shared linked/not-linked colour classes.
 func (c *NormalizedCite) StatusClass() string { return statusClass(c.Status) }
+
+// ChipClass returns the status-aware colour class for the citation chip.
+func (c *NormalizedCite) ChipClass() string { return chipClass(c.Status) }
 
 // IsLinked reports whether the instance resolved to a case.
 func (c *NormalizedCite) IsLinked() bool { return isLinked(c.Status) }

@@ -6,10 +6,12 @@
     .cite .raw { font-weight: 600; font-family: monospace; }
     .cite .meta { display: block; font-size: 0.72rem; }
     .cite a { text-decoration: none; }
+    .cite .raw a { color: #212529; }
     .cite-linked { background: #d4edda; border-color: #b6dcc0; }
-    .cite-linked .raw a { color: #155724; }
-    .cite-unlinked { background: #f8d7da; border-color: #eeb9be; }
-    .cite-unlinked .raw a { color: #721c24; }
+    .cite-nomatch { background: #f8d7da; border-color: #eeb9be; }
+    .cite-junk { background: #e2e3e5; border-color: #cdd0d3; }
+    .cite-skip { background: #fff3cd; border-color: #ffe69c; }
+    .legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; border: 1px solid rgba(0,0,0,.15); vertical-align: -1px; }
     pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; position: sticky; top: 1rem; max-height: calc(100vh - 3rem); overflow-y: auto; }
 {{end}}
 
@@ -25,9 +27,13 @@
     <p class="small text-secondary mb-2">
         <code>{{.Page.PSMID}}</code> / <code>{{.Page.PageID}}</code> &middot;
         {{len .Page.Citations}} citation(s) detected, {{.Page.LinkedCount}} linked.
-        <span style="color:#28a745;">Green</span> = linked to a case,
-        <span style="color:#dc3545;">red</span> = not yet linked. Citations are ordered as they
-        appear on the page.
+        Ordered as they appear on the page.
+    </p>
+    <p class="small mb-2">
+        <span class="legend-dot cite-linked"></span> linked &nbsp;
+        <span class="legend-dot cite-nomatch"></span> no match &nbsp;
+        <span class="legend-dot cite-skip"></span> reporter not whitelisted &nbsp;
+        <span class="legend-dot cite-junk"></span> junk (not a real citation)
     </p>
 
     <div class="row g-4">
@@ -43,7 +49,7 @@
             <h2 class="h6 border-bottom pb-1">Citations <span class="text-secondary fw-normal">({{len .Page.Citations}})</span></h2>
             <div class="cites">
             {{range .Page.Citations}}
-                <span class="cite {{if .IsLinked}}cite-linked{{else}}cite-unlinked{{end}}">
+                <span class="cite {{.ChipClass}}">
                     <span class="raw"><a href="{{.CiteURL}}" title="Inspect detection &amp; linking">{{.Raw}}</a></span>
                     <span class="meta">
                         {{if .IsLinked}}
