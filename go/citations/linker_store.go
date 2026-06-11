@@ -50,10 +50,4 @@ type LinkerStore interface {
 	// BatchSkipNonWhitelisted marks all non-whitelisted citations as skipped
 	// in a single bulk operation. Returns the number of rows affected.
 	BatchSkipNonWhitelisted(ctx context.Context) (int64, error)
-
-	// RefreshDashboardViews refreshes the materialized views that back the
-	// chambers dashboard (citations_unmatched_top, linking_dashboard_reporters,
-	// linking_dashboard_summary) so their precomputed aggregates reflect the
-	// current state of citation_links.
-	RefreshDashboardViews(ctx context.Context) error
 }

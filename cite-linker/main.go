@@ -66,8 +66,8 @@ func main() {
 
 	// Handle --reset: delete unresolved links (no_match, skipped_not_whitelisted)
 	// so they are re-processed by this run. Linked rows and skipped_junk rows are
-	// preserved. Done before everything else so the dashboard refresh and linking
-	// below see the post-reset state.
+	// preserved. Done before everything else so the linking below sees the
+	// post-reset state.
 	if reset {
 		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted)")
 		deleted, err := store.ResetUnlinked(ctx)
@@ -76,16 +76,6 @@ func main() {
 			os.Exit(1)
 		}
 		slog.Info("reset complete", "deleted", deleted)
-	}
-
-	// Refresh the dashboard materialized views up front so they reflect the
-	// state of the data before this run begins. A failed refresh should not
-	// block linking, so log and continue.
-	slog.Info("refreshing dashboard materialized views")
-	if err := store.RefreshDashboardViews(ctx); err != nil {
-		slog.Warn("could not refresh dashboard materialized views", "error", err)
-	} else {
-		slog.Info("refreshed dashboard materialized views")
 	}
 
 	// Handle --skip-unlisted: bulk skip, then continue to linking
@@ -250,14 +240,8 @@ func main() {
 	wp.StopWait()
 	slog.Info("done linking citations")
 
-	// Refresh the dashboard materialized views again so they reflect the links
-	// produced by this run. Log and continue on failure.
-	slog.Info("refreshing dashboard materialized views")
-	if err := store.RefreshDashboardViews(ctx); err != nil {
-		slog.Warn("could not refresh dashboard materialized views", "error", err)
-	} else {
-		slog.Info("refreshed dashboard materialized views")
-	}
+	// The chambers dashboard materialized views are refreshed separately after a
+	// run (make db-refresh / db/refresh-matviews.sh), not by the linker.
 }
 
 // linkCitation processes a single citation through the linking pipeline.

@@ -314,29 +314,3 @@ func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
 	}
 	return tag.RowsAffected(), nil
 }
-
-// dashboardViews are the materialized views that precompute aggregates read by
-// the chambers linking dashboard and unmatched-citations pages. They are
-// refreshed together by RefreshDashboardViews.
-var dashboardViews = []string{
-	"moml_citations.citations_unmatched_top",
-	"moml_citations.linking_dashboard_reporters",
-	"moml_citations.linking_dashboard_summary",
-}
-
-// RefreshDashboardViews refreshes the materialized views that back the chambers
-// dashboard so their precomputed aggregates reflect the current state of
-// citation_links. Each refresh is blocking: the call does not return until the
-// views have been rebuilt, so the linker does no further work until it is done.
-// These are plain (non-concurrent) refreshes, which take an exclusive lock that
-// blocks readers while they run. That is acceptable here because the views are
-// not read during a linker run, and a plain refresh is faster than a
-// CONCURRENTLY refresh.
-func (s *LinkerDBStore) RefreshDashboardViews(ctx context.Context) error {
-	for _, view := range dashboardViews {
-		if _, err := s.DB.Exec(ctx, "REFRESH MATERIALIZED VIEW "+view); err != nil {
-			return fmt.Errorf("refreshing %s: %w", view, err)
-		}
-	}
-	return nil
-}
