@@ -42,10 +42,18 @@ Write code in Go unless instructed otherwise.
 
 Follow idiomatic Go patterns. Specific conventions used in this project:
 
-**Logging:** Use the `slog` package for structured logging. Output JSON to stderr. Control log level with the `LAW_DEBUG` environment variable. Domain objects should provide a `LogID()` method returning `[]any` key-value pairs for consistent structured log context. Example:
+**Logging:** Use the `slog` package for structured logging. Output JSON to stderr. Control log level with the `LAW_DEBUG` environment variable. Domain objects should provide a `LogID()` method returning `[]any` key-value pairs for consistent structured log context.
+
+Log levels:
+
+- **DEBUG** — intermittent, per-iteration progress (e.g. per-batch counts inside a loop). Gated behind `LAW_DEBUG` so a normal run isn't noisy.
+- **INFO** — phase starts and final results (e.g. `deleted X rows`, `loaded N entries`, `done linking citations`). For a long operation, log the outcome once when it finishes — not per chunk.
+- **WARN** — recoverable problems that don't stop the run.
+- **ERROR** — failures, typically right before exiting.
 
 ```go
-slog.Info("processed batch", batch.LogID()...)
+slog.Debug("saved batch", batch.LogID()...)        // per-iteration progress → DEBUG
+slog.Info("reset complete", "deleted", n)          // final result → INFO
 slog.Error("batch failed", batch.LogID("error", err)...)
 ```
 
