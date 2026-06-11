@@ -22,9 +22,9 @@
 # ~/legal-modernism/bin/cite-linker --skip-unlisted --batch-size=8000 --workers=32
 
 # One-time reset run (FreeLaw rollout / after whitelist corrections): comment out
-# the line above and use the line below instead. --reset deletes unresolved links
-# (no_match, skipped_not_whitelisted) so they are re-linked against the FreeLaw
-# crosswalk; linked_* and skipped_junk rows are kept. Re-comment it afterward —
-# leaving --reset in would wipe and re-do those rows on every subsequent run. If
-# the job is interrupted, resume WITHOUT --reset.
+# the line above and use the line below instead. --reset deletes every non-linked
+# row (no_match, skipped_not_whitelisted, skipped_junk) so they are re-linked
+# against the FreeLaw crosswalk; only linked_* rows are kept. Re-comment it
+# afterward — leaving --reset in would wipe and re-do those rows on every
+# subsequent run. If the job is interrupted, resume WITHOUT --reset.
 ~/legal-modernism/bin/cite-linker --reset --skip-unlisted --batch-size=8000 --workers=32

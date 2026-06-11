@@ -26,7 +26,7 @@ func main() {
 	var workers int
 	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
 	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
-	flag.BoolVar(&reset, "reset", false, "before linking, delete unresolved links (status no_match and skipped_not_whitelisted) so they are re-processed; linked_* and skipped_junk rows are kept")
+	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 8000)")
 	flag.IntVar(&workers, "workers", runtime.NumCPU()*2, "number of concurrent workers")
 	flag.Parse()
@@ -64,12 +64,12 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Handle --reset: delete unresolved links (no_match, skipped_not_whitelisted)
-	// so they are re-processed by this run. Linked rows and skipped_junk rows are
-	// preserved. Done before everything else so the linking below sees the
-	// post-reset state.
+	// Handle --reset: delete every non-linked row (no_match,
+	// skipped_not_whitelisted, skipped_junk) so they are re-processed by this run.
+	// Only linked_* rows are preserved. Done before everything else so the linking
+	// below sees the post-reset state.
 	if reset {
-		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted)")
+		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
 		deleted, err := store.ResetUnlinked(ctx)
 		if err != nil {
 			slog.Error("reset failed", "deleted", deleted, "error", err)
