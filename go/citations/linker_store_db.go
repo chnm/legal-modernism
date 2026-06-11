@@ -3,6 +3,7 @@ package citations
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -164,6 +165,34 @@ func (s *LinkerDBStore) LoadCAPCitations(ctx context.Context) (map[string]int64,
 	return m, nil
 }
 
+// LoadFreelawCites loads the FreeLaw parallel-citation crosswalk into an
+// in-memory map of cite -> cap_case_id. The matview is keyed on the same
+// "{volume} {reporter} {page}" cite string the linker builds, so the linker can
+// probe it exactly like the cap.citations map. The matview already enforces one
+// cap_case_id per cite, so no DISTINCT is needed here.
+func (s *LinkerDBStore) LoadFreelawCites(ctx context.Context) (map[string]int64, error) {
+	query := `SELECT cite, cap_case_id FROM freelaw.cite_to_cap`
+	rows, err := s.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading FreeLaw cites: %w", err)
+	}
+	defer rows.Close()
+
+	m := make(map[string]int64)
+	for rows.Next() {
+		var cite string
+		var caseID int64
+		if err := rows.Scan(&cite, &caseID); err != nil {
+			return nil, fmt.Errorf("scanning FreeLaw cite: %w", err)
+		}
+		m[cite] = caseID
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating FreeLaw cites: %w", err)
+	}
+	return m, nil
+}
+
 // LoadCodeReporterCitations loads code_reporter into an in-memory map of
 // official_citation -> id.
 func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error) {
@@ -268,6 +297,49 @@ func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, err
 		return 0, fmt.Errorf("batch skipping non-whitelisted citations: %w", err)
 	}
 	return tag.RowsAffected(), nil
+}
+
+// resetDeleteBatch is the number of rows ResetUnlinked deletes per statement.
+// Deleting in chunks keeps each transaction's WAL bounded and lets the run be
+// interrupted between chunks rather than rolling back one giant (~35M-row)
+// delete.
+const resetDeleteBatch = 50000
+
+// ResetUnlinked deletes citation_links rows that were not resolved to a case
+// (status no_match or skipped_not_whitelisted) so the linker re-processes them on
+// the next run. Every linked_* row and every skipped_junk row is left untouched.
+// The delete runs in batches of resetDeleteBatch rows; it returns the total
+// number of rows deleted. A cancelled context stops the loop and returns the
+// rows deleted so far along with the context error.
+func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
+	query := `
+	DELETE FROM moml_citations.citation_links
+	WHERE citation_id IN (
+		SELECT citation_id FROM moml_citations.citation_links
+		WHERE status IN ($1, $2)
+		LIMIT $3
+	)
+	`
+	var total int64
+	for {
+		select {
+		case <-ctx.Done():
+			return total, ctx.Err()
+		default:
+		}
+
+		tag, err := s.DB.Exec(ctx, query, StatusNoMatch, StatusSkippedNotWhitelisted, resetDeleteBatch)
+		if err != nil {
+			return total, fmt.Errorf("resetting unlinked citations after %d rows: %w", total, err)
+		}
+		n := tag.RowsAffected()
+		if n == 0 {
+			break
+		}
+		total += n
+		slog.Info("reset progress", "deleted", total)
+	}
+	return total, nil
 }
 
 // dashboardViews are the materialized views that precompute aggregates read by

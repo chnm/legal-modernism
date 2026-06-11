@@ -25,6 +25,11 @@ type LinkerStore interface {
 	// LoadCAPCitations loads all CAP citations into memory as cite -> case ID.
 	LoadCAPCitations(ctx context.Context) (map[string]int64, error)
 
+	// LoadFreelawCites loads the FreeLaw parallel-citation crosswalk
+	// (freelaw.cite_to_cap) into memory as cite -> cap_case_id. The linker uses
+	// it as a fallback after the exact cap.citations lookup misses.
+	LoadFreelawCites(ctx context.Context) (map[string]int64, error)
+
 	// LoadCodeReporterCitations loads all code reporter citations into memory
 	// as official_citation -> id.
 	LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error)
@@ -35,6 +40,12 @@ type LinkerStore interface {
 
 	// SaveLinkResults batch-inserts multiple link results in a single query.
 	SaveLinkResults(ctx context.Context, results []*LinkResult) error
+
+	// ResetUnlinked deletes citation_links rows that were not resolved to a case
+	// (status no_match and skipped_not_whitelisted) so the linker re-processes
+	// them, while preserving every linked_* row and skipped_junk row. Returns the
+	// number of rows deleted.
+	ResetUnlinked(ctx context.Context) (int64, error)
 
 	// BatchSkipNonWhitelisted marks all non-whitelisted citations as skipped
 	// in a single bulk operation. Returns the number of rows affected.
