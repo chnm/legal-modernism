@@ -234,8 +234,9 @@ func main() {
 
 	slog.Info("done linking citations", "processed", processed.Load())
 
-	// The chambers dashboard materialized views are refreshed separately after a
-	// run (make db-refresh / db/refresh-matviews.sh), not by the linker.
+	// Post-run database maintenance (vacuum/analyze the churned tables and
+	// refresh the chambers dashboard materialized views) is run separately
+	// (make db-maintenance / db/maintenance.sh), not by the linker.
 }
 
 // linkCitation processes a single citation through the linking pipeline.

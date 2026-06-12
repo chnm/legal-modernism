@@ -6,7 +6,7 @@ SET ROLE = law_admin;
 -- moml_citations.citations_unlinked and moml_citations.citation_links tables;
 -- aggregating them on every request takes 90+ seconds. These materialized
 -- views move that work off the request path. They are built WITH NO DATA and
--- refreshed manually with `make db-refresh` (db/refresh-matviews.sh discovers
+-- refreshed manually with `make db-maintenance` (db/maintenance.sh discovers
 -- every materialized view automatically, so no script edit is needed). See the
 -- note before migrate:down for manual REFRESH commands.
 
