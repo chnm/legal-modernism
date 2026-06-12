@@ -2,8 +2,6 @@ package citations
 
 import (
 	"context"
-
-	"github.com/google/uuid"
 )
 
 // LinkerStore is an interface for the data operations needed by the cite-linker.
@@ -15,12 +13,12 @@ type LinkerStore interface {
 	// The outer key is reporter_standard, inner key is original volume number.
 	GetDiffVols(ctx context.Context) (map[string]map[int]*DiffVolEntry, error)
 
-	// CountUnprocessedCitations returns the number of citations not yet in citation_links.
-	CountUnprocessedCitations(ctx context.Context) (int64, error)
-
-	// GetUnprocessedCitations fetches a batch of citations not yet linked,
-	// starting after afterID (use uuid.Nil for the first batch).
-	GetUnprocessedCitations(ctx context.Context, afterID uuid.UUID, limit int) ([]UnlinkedCitation, error)
+	// StreamUnprocessedCitations runs a single anti-join over the whole
+	// citations_unlinked table and delivers every citation not yet in
+	// citation_links to fn in batches of at most batchSize. The full set is read
+	// in one streaming pass, so callers must apply their own backpressure inside
+	// fn (e.g. a bounded channel) to avoid buffering the entire table in memory.
+	StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error
 
 	// LoadCAPCitations loads all CAP citations into memory as cite -> case ID.
 	LoadCAPCitations(ctx context.Context) (map[string]int64, error)

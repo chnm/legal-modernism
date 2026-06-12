@@ -2,16 +2,16 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
 	"os/signal"
-	"runtime"
 	"sync"
+	"sync/atomic"
 	"syscall"
 
-	"github.com/gammazero/workerpool"
-	"github.com/google/uuid"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	"github.com/schollz/progressbar/v3"
@@ -27,12 +27,15 @@ func main() {
 	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
 	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
-	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 8000)")
-	flag.IntVar(&workers, "workers", runtime.NumCPU()*2, "number of concurrent workers")
+	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
+	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
 	flag.Parse()
 
-	if batchSize > 8000 {
-		batchSize = 8000
+	if batchSize < 1 {
+		batchSize = 1
+	}
+	if workers < 1 {
+		workers = 1
 	}
 
 	slog.Info("starting the citation linker")
@@ -54,7 +57,13 @@ func main() {
 	}()
 
 	slog.Info("connecting to database", "database", db.Host())
-	pool, err := db.Connect(ctx)
+	// Size the pool to the insert workers plus one dedicated connection for the
+	// long-lived streaming read, with a small margin. Without this the default
+	// pool could starve either the reader or the workers and serialize inserts.
+	maxConns := int32(workers + 2)
+	pool, err := db.ConnectPool(ctx, func(c *pgxpool.Config) {
+		c.MaxConns = maxConns
+	})
 	if err != nil {
 		slog.Error("could not connect to database", "database", db.Host(), "error", err)
 		os.Exit(1)
@@ -143,102 +152,87 @@ func main() {
 	}
 	slog.Info("loaded English Reports citations", "entries", len(erCites))
 
-	// Count unprocessed for progress bar
-	total, err := store.CountUnprocessedCitations(ctx)
-	if err != nil {
-		slog.Error("could not count unprocessed citations", "error", err)
-		os.Exit(1)
-	}
-	slog.Info("unprocessed citations", "count", total)
-
-	if total == 0 {
-		slog.Info("no unprocessed citations, nothing to do")
-		return
-	}
-
 	var pb *progressbar.ProgressBar
 	if showProgress {
-		pb = progressbar.NewOptions64(total,
+		// The unprocessed total is not pre-counted (an exact count is itself a
+		// full anti-join), so the bar runs in count/rate mode without an ETA.
+		pb = progressbar.NewOptions64(-1,
 			progressbar.OptionSetWriter(os.Stdout),
 			progressbar.OptionShowCount(),
 			progressbar.OptionShowIts(),
-			progressbar.OptionSetPredictTime(true),
 		)
 	}
 
-	wp := workerpool.New(workers)
-
+	// Bounded pipeline. A single streaming reader (this goroutine, inside
+	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
+	// workers through a bounded channel. The channel capacity bounds how many
+	// batches are in flight, so the reader blocks — applying backpressure —
+	// when the workers fall behind, instead of buffering the whole 62M-row
+	// table in memory.
+	batchCh := make(chan []citations.UnlinkedCitation, workers)
+	var wg sync.WaitGroup
 	var pbMu sync.Mutex
+	var processed atomic.Int64
 
-	// Process in batches using cursor-based pagination.
-	// Fetching is sequential (cursor requires it), but each batch is
-	// handed off to a worker for in-memory linking + batch INSERT.
-	lastID := uuid.Nil
-	for {
-		select {
-		case <-ctx.Done():
-			slog.Info("context cancelled, stopping")
-			wp.StopWait()
-			return
-		default:
-		}
+	for i := 0; i < workers; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for batch := range batchCh {
+				select {
+				case <-ctx.Done():
+					continue // drain the channel without doing work
+				default:
+				}
 
-		batch, err := store.GetUnprocessedCitations(ctx, lastID, batchSize)
-		if err != nil {
-			slog.Error("could not fetch batch", "after_id", lastID, "error", err)
-			break
-		}
-		if len(batch) == 0 {
-			break
-		}
-
-		lastID = batch[len(batch)-1].ID
-		slog.Debug("fetched batch", "size", len(batch), "last_id", lastID)
-
-		// Hand the batch to a worker
-		batchCopy := batch
-		wp.Submit(func() {
-			select {
-			case <-ctx.Done():
-				return
-			default:
-			}
-
-			results := make([]*citations.LinkResult, len(batchCopy))
-			var wg sync.WaitGroup
-			for i := range batchCopy {
-				wg.Add(1)
-				go func(idx int) {
-					defer wg.Done()
-					results[idx] = linkCitation(&batchCopy[idx], whitelist, diffvols, capCites, freelawCites, codeCites, erCites)
-				}(i)
-			}
-			wg.Wait()
-
-			if err := store.SaveLinkResults(ctx, results); err != nil {
-				slog.Error("could not save batch results", "error", err)
-			} else {
+				results := make([]*citations.LinkResult, len(batch))
 				statusCounts := make(map[string]int)
-				for _, r := range results {
+				for j := range batch {
+					r := linkCitation(&batch[j], whitelist, diffvols, capCites, freelawCites, codeCites, erCites)
+					results[j] = r
 					statusCounts[r.Status]++
 				}
+
+				if err := store.SaveLinkResults(ctx, results); err != nil {
+					slog.Error("could not save batch results", "error", err)
+					continue
+				}
+
+				processed.Add(int64(len(batch)))
 				attrs := []any{"size", len(results)}
 				for status, count := range statusCounts {
 					attrs = append(attrs, status, count)
 				}
 				slog.Debug("saved batch", attrs...)
-			}
 
-			if pb != nil {
-				pbMu.Lock()
-				pb.Add(len(batchCopy))
-				pbMu.Unlock()
+				if pb != nil {
+					pbMu.Lock()
+					pb.Add(len(batch))
+					pbMu.Unlock()
+				}
 			}
-		})
+		}()
 	}
 
-	wp.StopWait()
-	slog.Info("done linking citations")
+	// Stream the whole unprocessed set in one pass, pushing batches into the
+	// bounded channel. The send blocks when the channel is full (backpressure).
+	streamErr := store.StreamUnprocessedCitations(ctx, batchSize, func(batch []citations.UnlinkedCitation) error {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case batchCh <- batch:
+			return nil
+		}
+	})
+	close(batchCh)
+	wg.Wait()
+
+	if streamErr != nil && !errors.Is(streamErr, context.Canceled) {
+		slog.Error("streaming unprocessed citations failed", "processed", processed.Load(), "error", streamErr)
+		os.Exit(1)
+	}
+
+	slog.Info("done linking citations", "processed", processed.Load())
 
 	// The chambers dashboard materialized views are refreshed separately after a
 	// run (make db-refresh / db/refresh-matviews.sh), not by the linker.

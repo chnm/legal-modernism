@@ -16,6 +16,15 @@ import (
 // Connect returns a pool of connections to the database, which is concurrency
 // safe. Uses the pgx interface.
 func Connect(ctx context.Context) (*pgxpool.Pool, error) {
+	return ConnectPool(ctx, nil)
+}
+
+// ConnectPool is like Connect but lets the caller tune the pool configuration
+// (for example, MaxConns) before the pool is opened. The configure callback,
+// if non-nil, is invoked with the parsed *pgxpool.Config. It is used by
+// high-concurrency batch jobs (e.g. cite-linker) that need to size the pool to
+// the number of worker connections plus a dedicated streaming-read connection.
+func ConnectPool(ctx context.Context, configure func(*pgxpool.Config)) (*pgxpool.Pool, error) {
 	timeout, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
 
@@ -24,7 +33,15 @@ func Connect(ctx context.Context) (*pgxpool.Pool, error) {
 		return nil, err
 	}
 
-	db, err := pgxpool.Connect(timeout, connstr)
+	config, err := pgxpool.ParseConfig(connstr)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing database config: %w", err)
+	}
+	if configure != nil {
+		configure(config)
+	}
+
+	db, err := pgxpool.ConnectConfig(timeout, config)
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to database: %w", err)
 	}
