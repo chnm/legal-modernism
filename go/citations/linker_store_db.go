@@ -164,6 +164,34 @@ func (s *LinkerDBStore) LoadCAPCitations(ctx context.Context) (map[string]int64,
 	return m, nil
 }
 
+// LoadFreelawCites loads the FreeLaw parallel-citation crosswalk into an
+// in-memory map of cite -> cap_case_id. The matview is keyed on the same
+// "{volume} {reporter} {page}" cite string the linker builds, so the linker can
+// probe it exactly like the cap.citations map. The matview already enforces one
+// cap_case_id per cite, so no DISTINCT is needed here.
+func (s *LinkerDBStore) LoadFreelawCites(ctx context.Context) (map[string]int64, error) {
+	query := `SELECT cite, cap_case_id FROM freelaw.cite_to_cap`
+	rows, err := s.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading FreeLaw cites: %w", err)
+	}
+	defer rows.Close()
+
+	m := make(map[string]int64)
+	for rows.Next() {
+		var cite string
+		var caseID int64
+		if err := rows.Scan(&cite, &caseID); err != nil {
+			return nil, fmt.Errorf("scanning FreeLaw cite: %w", err)
+		}
+		m[cite] = caseID
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating FreeLaw cites: %w", err)
+	}
+	return m, nil
+}
+
 // LoadCodeReporterCitations loads code_reporter into an in-memory map of
 // official_citation -> id.
 func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error) {
@@ -270,28 +298,21 @@ func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, err
 	return tag.RowsAffected(), nil
 }
 
-// dashboardViews are the materialized views that precompute aggregates read by
-// the chambers linking dashboard and unmatched-citations pages. They are
-// refreshed together by RefreshDashboardViews.
-var dashboardViews = []string{
-	"moml_citations.citations_unmatched_top",
-	"moml_citations.linking_dashboard_reporters",
-	"moml_citations.linking_dashboard_summary",
-}
-
-// RefreshDashboardViews refreshes the materialized views that back the chambers
-// dashboard so their precomputed aggregates reflect the current state of
-// citation_links. Each refresh is blocking: the call does not return until the
-// views have been rebuilt, so the linker does no further work until it is done.
-// These are plain (non-concurrent) refreshes, which take an exclusive lock that
-// blocks readers while they run. That is acceptable here because the views are
-// not read during a linker run, and a plain refresh is faster than a
-// CONCURRENTLY refresh.
-func (s *LinkerDBStore) RefreshDashboardViews(ctx context.Context) error {
-	for _, view := range dashboardViews {
-		if _, err := s.DB.Exec(ctx, "REFRESH MATERIALIZED VIEW "+view); err != nil {
-			return fmt.Errorf("refreshing %s: %w", view, err)
-		}
+// ResetUnlinked deletes every citation_links row that was not resolved to a case
+// (status no_match, skipped_not_whitelisted, or skipped_junk) so the linker
+// re-processes them on the next run; only linked_* rows are preserved. Deleting
+// both skip statuses lets a re-run with --skip-unlisted re-derive them from the
+// current whitelist, so a reporter later corrected from junk to legit is no
+// longer stuck as skipped_junk. The delete runs as a single statement — one
+// all-or-nothing transaction — and returns the number of rows deleted.
+func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
+	query := `
+	DELETE FROM moml_citations.citation_links
+	WHERE status IN ($1, $2, $3)
+	`
+	tag, err := s.DB.Exec(ctx, query, StatusNoMatch, StatusSkippedNotWhitelisted, StatusSkippedJunk)
+	if err != nil {
+		return 0, fmt.Errorf("resetting unlinked citations: %w", err)
 	}
-	return nil
+	return tag.RowsAffected(), nil
 }

@@ -21,10 +21,12 @@ import (
 func main() {
 	var showProgress bool
 	var skipUnlisted bool
+	var reset bool
 	var batchSize int
 	var workers int
 	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
 	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
+	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations to fetch per batch (max 8000)")
 	flag.IntVar(&workers, "workers", runtime.NumCPU()*2, "number of concurrent workers")
 	flag.Parse()
@@ -62,14 +64,18 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Refresh the dashboard materialized views up front so they reflect the
-	// state of the data before this run begins. A failed refresh should not
-	// block linking, so log and continue.
-	slog.Info("refreshing dashboard materialized views")
-	if err := store.RefreshDashboardViews(ctx); err != nil {
-		slog.Warn("could not refresh dashboard materialized views", "error", err)
-	} else {
-		slog.Info("refreshed dashboard materialized views")
+	// Handle --reset: delete every non-linked row (no_match,
+	// skipped_not_whitelisted, skipped_junk) so they are re-processed by this run.
+	// Only linked_* rows are preserved. Done before everything else so the linking
+	// below sees the post-reset state.
+	if reset {
+		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
+		deleted, err := store.ResetUnlinked(ctx)
+		if err != nil {
+			slog.Error("reset failed", "deleted", deleted, "error", err)
+			os.Exit(1)
+		}
+		slog.Info("reset complete", "deleted", deleted)
 	}
 
 	// Handle --skip-unlisted: bulk skip, then continue to linking
@@ -109,6 +115,17 @@ func main() {
 		os.Exit(1)
 	}
 	slog.Info("loaded CAP citations", "entries", len(capCites))
+
+	slog.Info("loading FreeLaw cite crosswalk")
+	freelawCites, err := store.LoadFreelawCites(ctx)
+	if err != nil {
+		slog.Error("could not load FreeLaw cite crosswalk", "error", err)
+		os.Exit(1)
+	}
+	if len(freelawCites) == 0 {
+		slog.Warn("FreeLaw cite crosswalk is empty; the FreeLaw fallback will do nothing — refresh the freelaw.cite_to_cap materialized view")
+	}
+	slog.Info("loaded FreeLaw cite crosswalk", "entries", len(freelawCites))
 
 	slog.Info("loading code reporter citations")
 	codeCites, err := store.LoadCodeReporterCitations(ctx)
@@ -193,7 +210,7 @@ func main() {
 				wg.Add(1)
 				go func(idx int) {
 					defer wg.Done()
-					results[idx] = linkCitation(&batchCopy[idx], whitelist, diffvols, capCites, codeCites, erCites)
+					results[idx] = linkCitation(&batchCopy[idx], whitelist, diffvols, capCites, freelawCites, codeCites, erCites)
 				}(i)
 			}
 			wg.Wait()
@@ -223,14 +240,8 @@ func main() {
 	wp.StopWait()
 	slog.Info("done linking citations")
 
-	// Refresh the dashboard materialized views again so they reflect the links
-	// produced by this run. Log and continue on failure.
-	slog.Info("refreshing dashboard materialized views")
-	if err := store.RefreshDashboardViews(ctx); err != nil {
-		slog.Warn("could not refresh dashboard materialized views", "error", err)
-	} else {
-		slog.Info("refreshed dashboard materialized views")
-	}
+	// The chambers dashboard materialized views are refreshed separately after a
+	// run (make db-refresh / db/refresh-matviews.sh), not by the linker.
 }
 
 // linkCitation processes a single citation through the linking pipeline.
@@ -240,6 +251,7 @@ func linkCitation(
 	whitelist map[string]*citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
 	capCites map[string]int64,
+	freelawCites map[string]int64,
 	codeCites map[string]int64,
 	erCites map[string]string,
 ) *citations.LinkResult {
@@ -266,15 +278,18 @@ func linkCitation(
 	if entry.UK {
 		return linkEnglishReports(c, entry, erCites, result)
 	}
-	return linkCAPThenCode(c, entry, diffvols, capCites, codeCites, result)
+	return linkCAPThenCode(c, entry, diffvols, capCites, freelawCites, codeCites, result)
 }
 
-// linkCAPThenCode tries CAP first, then Code Reporter using in-memory maps.
+// linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
+// (which also resolves to a CAP case), then the Code Reporter, all using
+// in-memory maps.
 func linkCAPThenCode(
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
 	capCites map[string]int64,
+	freelawCites map[string]int64,
 	codeCites map[string]int64,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
@@ -286,6 +301,16 @@ func linkCAPThenCode(
 
 	// Try CAP with the normalized cite
 	if caseID, ok := capCites[citeNormalized]; ok {
+		result.Status = citations.StatusLinkedCAP
+		result.CAPCaseID = &caseID
+		result.CiteLinked = &citeNormalized
+		return result
+	}
+
+	// Fall back to the FreeLaw crosswalk: if any parallel form of this decision
+	// is in our CAP data, this reaches the CAP case from the form we detected.
+	// The result is still a CAP link (status linked_cap).
+	if caseID, ok := freelawCites[citeNormalized]; ok {
 		result.Status = citations.StatusLinkedCAP
 		result.CAPCaseID = &caseID
 		result.CiteLinked = &citeNormalized
