@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
 #
-# Refresh every materialized view in the database.
+# Run post-linker database maintenance: vacuum/analyze the heavily-churned
+# tables, then refresh every materialized view.
 #
-# The set of materialized views and their dependencies are discovered at
+# Table maintenance runs first. The cite-linker churns the moml_citations
+# tables hard — a --reset run deletes and re-inserts tens of millions of rows in
+# moml_citations.citation_links — which leaves dead tuples, a stale visibility
+# map (forcing needless heap fetches during index-only scans), and outdated
+# planner statistics. VACUUM (ANALYZE) recovers the space, sets the visibility
+# map, and refreshes statistics. Doing it before the refresh also gives the
+# matview refreshes below fresh statistics to plan against. Add further
+# maintenance statements to MAINTENANCE_SQL as needed.
+#
+# The set of materialized views and their dependencies are then discovered at
 # runtime from the system catalogs, so this script never needs editing when a
 # view is added, removed, or renamed. Views are grouped into dependency levels:
 # a view is only refreshed once the materialized views it reads from have been
@@ -13,12 +23,12 @@
 # pgx-only pool_max_conns parameter is stripped because psql does not
 # understand it, matching how the Makefile feeds the string to dbmate.
 #
-# REFRESH MATERIALIZED VIEW takes an ACCESS EXCLUSIVE lock on each view, so
-# readers are blocked for the duration of that view's refresh. This is intended
-# as a maintenance task rather than something to run under live load.
+# Both VACUUM and REFRESH MATERIALIZED VIEW take heavy locks (REFRESH takes an
+# ACCESS EXCLUSIVE lock on each view, blocking readers for its duration). This
+# is intended as a maintenance task rather than something to run under live load.
 #
 # Usage:
-#   db/refresh-matviews.sh [connection-string]
+#   db/maintenance.sh [connection-string]
 
 set -euo pipefail
 
@@ -31,6 +41,27 @@ fi
 CONN="$(printf '%s' "$CONN" | sed 's/[&?]pool_max_conns=[0-9]\{1,3\}//')"
 
 PSQL=(psql "$CONN" -X -v ON_ERROR_STOP=1)
+
+# Table maintenance statements, run sequentially before the matview refresh.
+# VACUUM cannot run inside a transaction block, so each is sent on its own
+# connection (psql autocommits a bare -c statement).
+MAINTENANCE_SQL=(
+  "VACUUM (ANALYZE) moml_citations.citation_links;"
+  "VACUUM (ANALYZE) moml_citations.citations_unlinked;"
+)
+
+echo "Running ${#MAINTENANCE_SQL[@]} table maintenance statement(s)."
+for stmt in "${MAINTENANCE_SQL[@]}"; do
+  echo "[maintenance] $stmt"
+  maint_start=$(date +%s)
+  if "${PSQL[@]}" -q -c "$stmt"; then
+    printf '  done   %-52s %ss\n' "$stmt" "$(($(date +%s) - maint_start))"
+  else
+    echo "  FAILED $stmt" >&2
+    exit 1
+  fi
+done
+echo
 
 # Discover materialized views and the dependency level of each. Level 0 views
 # depend on no other materialized view; a view at level N depends on at least
