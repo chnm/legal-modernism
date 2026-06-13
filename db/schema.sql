@@ -825,6 +825,43 @@ CREATE TABLE freelaw.clusters_to_cap (
 
 
 --
+-- Name: cite_to_cap; Type: MATERIALIZED VIEW; Schema: freelaw; Owner: -
+--
+
+CREATE MATERIALIZED VIEW freelaw.cite_to_cap AS
+ WITH relevant AS (
+         SELECT citations.cite,
+            citations.cluster_id
+           FROM freelaw.citations
+          WHERE (citations.type <> ALL (ARRAY['lexis'::text, 'west'::text, 'journal'::text]))
+        ), cluster_cap AS (
+         SELECT clusters_to_cap.cluster_id,
+            clusters_to_cap.cap_case_id
+           FROM freelaw.clusters_to_cap
+          WHERE (clusters_to_cap.cap_case_id IS NOT NULL)
+        UNION
+         SELECT r.cluster_id,
+            capc."case" AS cap_case_id
+           FROM (relevant r
+             JOIN cap.citations capc ON ((capc.cite = r.cite)))
+          WHERE (NOT (EXISTS ( SELECT 1
+                   FROM freelaw.clusters_to_cap a
+                  WHERE ((a.cluster_id = r.cluster_id) AND (a.cap_case_id IS NOT NULL)))))
+        ), cite_caps AS (
+         SELECT r.cite,
+            cc.cap_case_id
+           FROM (relevant r
+             JOIN cluster_cap cc ON ((cc.cluster_id = r.cluster_id)))
+        )
+ SELECT cite,
+    min(cap_case_id) AS cap_case_id
+   FROM cite_caps
+  GROUP BY cite
+ HAVING (count(DISTINCT cap_case_id) = 1)
+  WITH NO DATA;
+
+
+--
 -- Name: reporters; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -2038,6 +2075,13 @@ CREATE INDEX er_cases_er_year_idx ON english_reports.cases USING btree (er_year)
 
 
 --
+-- Name: freelaw_cite_to_cap_uq; Type: INDEX; Schema: freelaw; Owner: -
+--
+
+CREATE UNIQUE INDEX freelaw_cite_to_cap_uq ON freelaw.cite_to_cap USING btree (cite);
+
+
+--
 -- Name: idx_freelaw_citations_cite; Type: INDEX; Schema: freelaw; Owner: -
 --
 
@@ -2635,4 +2679,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260609133000'),
     ('20260610120000'),
     ('20260610130000'),
-    ('20260610140000');
+    ('20260610140000'),
+    ('20260611182350'),
+    ('20260612205502');
