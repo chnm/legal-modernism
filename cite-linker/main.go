@@ -136,6 +136,14 @@ func main() {
 	}
 	slog.Info("loaded FreeLaw cite crosswalk", "entries", len(freelawCites))
 
+	slog.Info("loading reporter alternate abbreviations")
+	altAbbrs, err := store.LoadReporterAltAbbrs(ctx)
+	if err != nil {
+		slog.Error("could not load reporter alternate abbreviations", "error", err)
+		os.Exit(1)
+	}
+	slog.Info("loaded reporter alternate abbreviations", "reporters", len(altAbbrs))
+
 	slog.Info("loading code reporter citations")
 	codeCites, err := store.LoadCodeReporterCitations(ctx)
 	if err != nil {
@@ -188,7 +196,7 @@ func main() {
 				results := make([]*citations.LinkResult, len(batch))
 				statusCounts := make(map[string]int)
 				for j := range batch {
-					r := linkCitation(&batch[j], whitelist, diffvols, capCites, freelawCites, codeCites, erCites)
+					r := linkCitation(&batch[j], whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites)
 					results[j] = r
 					statusCounts[r.Status]++
 				}
@@ -247,6 +255,7 @@ func linkCitation(
 	diffvols map[string]map[int]*citations.DiffVolEntry,
 	capCites map[string]int64,
 	freelawCites map[string]int64,
+	altAbbrs map[string][]string,
 	codeCites map[string]int64,
 	erCites map[string]string,
 ) *citations.LinkResult {
@@ -273,18 +282,19 @@ func linkCitation(
 	if entry.UK {
 		return linkEnglishReports(c, entry, erCites, result)
 	}
-	return linkCAPThenCode(c, entry, diffvols, capCites, freelawCites, codeCites, result)
+	return linkCAPThenCode(c, entry, diffvols, capCites, freelawCites, altAbbrs, codeCites, result)
 }
 
 // linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
-// (which also resolves to a CAP case), then the Code Reporter, all using
-// in-memory maps.
+// (which also resolves to a CAP case), then the FreeLaw crosswalk again under
+// alternate reporter spellings, then the Code Reporter, all using in-memory maps.
 func linkCAPThenCode(
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
 	capCites map[string]int64,
 	freelawCites map[string]int64,
+	altAbbrs map[string][]string,
 	codeCites map[string]int64,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
@@ -310,6 +320,27 @@ func linkCAPThenCode(
 		result.CAPCaseID = &caseID
 		result.CiteLinked = &citeNormalized
 		return result
+	}
+
+	// Fall back to alternate reporter spellings: the same decision may be in the
+	// FreeLaw crosswalk under a CourtListener spelling that differs from our
+	// reporter_standard/reporter_cap. Probe each known alternate spelling for this
+	// reporter (keyed by the canonical reporter_standard, like diffvols). The
+	// first hit links to the CAP case (status linked_cap). Volume-nil is handled
+	// the same way as buildStandardCite/buildCAPCite.
+	for _, alt := range altAbbrs[*entry.ReporterStandard] {
+		var altCite string
+		if c.Volume == nil {
+			altCite = fmt.Sprintf("%s %d", alt, c.Page)
+		} else {
+			altCite = fmt.Sprintf("%d %s %d", *c.Volume, alt, c.Page)
+		}
+		if caseID, ok := freelawCites[altCite]; ok {
+			result.Status = citations.StatusLinkedCAP
+			result.CAPCaseID = &caseID
+			result.CiteLinked = &altCite
+			return result
+		}
 	}
 
 	// Try Code Reporter with the cleaned cite

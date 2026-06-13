@@ -222,3 +222,42 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 	require.NoError(t, s.DB.QueryRow(ctx, `SELECT count(*) FROM moml_citations.citation_links`).Scan(&n))
 	assert.Equal(t, 5, n)
 }
+
+func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// Build the minimal legalhist slice the loader touches, mirroring the
+	// production shape (FK to reporters + the distinct CHECK). Kept inside this
+	// test rather than in newTestStore so the unrelated stream/save tests don't
+	// depend on a legalhist schema.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS legalhist CASCADE`,
+		`CREATE SCHEMA legalhist`,
+		`CREATE TABLE legalhist.reporters (reporter_standard text PRIMARY KEY)`,
+		`CREATE TABLE legalhist.reporters_abbreviations (
+			reporter_standard text NOT NULL REFERENCES legalhist.reporters(reporter_standard),
+			alt_abbr text NOT NULL,
+			CONSTRAINT reporters_abbreviations_distinct_check CHECK (reporter_standard <> alt_abbr)
+		)`,
+		`INSERT INTO legalhist.reporters (reporter_standard) VALUES ('Serg. & Rawl.'), ('U.S.'), ('Mass.')`,
+		`INSERT INTO legalhist.reporters_abbreviations (reporter_standard, alt_abbr) VALUES
+			('Serg. & Rawl.', 'Serg. & Rawle'),
+			('U.S.', 'US'),
+			('U.S.', 'U. S.')`,
+		// 'Mass.' deliberately has no alt rows: it must be absent from the map.
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.LoadReporterAltAbbrs(ctx)
+	require.NoError(t, err)
+
+	assert.ElementsMatch(t, []string{"US", "U. S."}, got["U.S."])
+	assert.Equal(t, []string{"Serg. & Rawle"}, got["Serg. & Rawl."])
+	_, hasMass := got["Mass."]
+	assert.False(t, hasMass, "a reporter with no alt rows should be absent from the map")
+	assert.Len(t, got, 2)
+}

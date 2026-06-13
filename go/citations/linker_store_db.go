@@ -198,6 +198,37 @@ func (s *LinkerDBStore) LoadFreelawCites(ctx context.Context) (map[string]int64,
 	return m, nil
 }
 
+// LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into an in-memory
+// map of reporter_standard -> []alt_abbr. The linker probes the FreeLaw
+// crosswalk with each alternate spelling (keyed by the canonical
+// reporter_standard, like the diffvols mapping) after the standard/reporter_cap
+// forms miss.
+func (s *LinkerDBStore) LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error) {
+	query := `
+	SELECT reporter_standard, alt_abbr
+	FROM legalhist.reporters_abbreviations
+	WHERE alt_abbr IS NOT NULL
+	`
+	rows, err := s.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading reporter alt abbreviations: %w", err)
+	}
+	defer rows.Close()
+
+	m := make(map[string][]string)
+	for rows.Next() {
+		var std, alt string
+		if err := rows.Scan(&std, &alt); err != nil {
+			return nil, fmt.Errorf("scanning reporter alt abbreviation: %w", err)
+		}
+		m[std] = append(m[std], alt)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating reporter alt abbreviations: %w", err)
+	}
+	return m, nil
+}
+
 // LoadCodeReporterCitations loads code_reporter into an in-memory map of
 // official_citation -> id.
 func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error) {
