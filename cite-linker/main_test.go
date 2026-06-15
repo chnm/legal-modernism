@@ -21,6 +21,7 @@ func TestLinkCitation(t *testing.T) {
 		whitelist    map[string]*citations.WhitelistEntry
 		capCites     map[string]int64
 		freelawCites map[string]int64
+		altAbbrs     map[string][]string
 		codeCites    map[string]int64
 		erCites      map[string]string
 		wantStatus   string
@@ -81,6 +82,83 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("1 Q.B. 20"),
 		},
 		{
+			name:         "alt_abbr FreeLaw hit recovers a no_match",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{"5 US 10": 333}, // CourtListener spelling, no periods
+			altAbbrs:     map[string][]string{"U.S.": {"US"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(333)),
+			wantLinked:   ptr("5 US 10"),
+		},
+		{
+			name:         "direct CAP hit wins over alt_abbr",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{"5 U.S. 10": 111},
+			freelawCites: map[string]int64{"5 US 10": 333},
+			altAbbrs:     map[string][]string{"U.S.": {"US"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(111)),
+			wantLinked:   ptr("5 U.S. 10"),
+		},
+		{
+			name:         "direct FreeLaw-normalized hit wins over alt_abbr",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{"5 U.S. 10": 222, "5 US 10": 333},
+			altAbbrs:     map[string][]string{"U.S.": {"US"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(222)),
+			wantLinked:   ptr("5 U.S. 10"),
+		},
+		{
+			name:         "alt_abbr miss falls through to code reporter",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
+			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{},
+			altAbbrs:     map[string][]string{"Stat.": {"Statx"}}, // present but never matches FreeLaw
+			codeCites:    map[string]int64{"2 Stat. 30": 999},
+			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantCodeID:   ptr(int64(999)),
+			wantLinked:   ptr("2 Stat. 30"),
+		},
+		{
+			name:         "multiple alt_abbrs, later entry matches",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{"5 US 10": 333},
+			altAbbrs:     map[string][]string{"U.S.": {"USA", "US"}}, // first misses, second hits
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(333)),
+			wantLinked:   ptr("5 US 10"),
+		},
+		{
+			name:         "nil-volume alt_abbr hit",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Stat.", Page: 30},
+			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{"Stat 30": 444},
+			altAbbrs:     map[string][]string{"Stat.": {"Stat"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(444)),
+			wantLinked:   ptr("Stat 30"),
+		},
+		{
+			name:         "alt_abbr path is not consulted for UK reporters",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
+			whitelist:    map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			freelawCites: map[string]int64{"1 QB 20": 222}, // would match if alt path ran
+			altAbbrs:     map[string][]string{"Q.B.": {"QB"}},
+			erCites:      map[string]string{}, // no English Reports match
+			wantStatus:   citations.StatusNoMatch,
+			wantLinked:   nil,
+		},
+		{
 			name:       "not whitelisted is skipped",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "Bogus", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{},
@@ -104,7 +182,7 @@ func TestLinkCitation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := linkCitation(&tt.cite, tt.whitelist, diffvols, tt.capCites, tt.freelawCites, tt.codeCites, tt.erCites)
+			got := linkCitation(&tt.cite, tt.whitelist, diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites)
 
 			assert.Equal(t, tt.wantStatus, got.Status)
 			assert.Equal(t, tt.cite.ID, got.CitationID)

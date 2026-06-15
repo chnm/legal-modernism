@@ -28,6 +28,13 @@ type LinkerStore interface {
 	// it as a fallback after the exact cap.citations lookup misses.
 	LoadFreelawCites(ctx context.Context) (map[string]int64, error)
 
+	// LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into memory as
+	// reporter_standard -> list of alternate abbreviations. The linker probes the
+	// FreeLaw crosswalk with each alternate spelling after the canonical
+	// reporter_standard / reporter_cap forms miss, recovering matches where our
+	// reporter string and CourtListener's disagree.
+	LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error)
+
 	// LoadCodeReporterCitations loads all code reporter citations into memory
 	// as official_citation -> id.
 	LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error)
