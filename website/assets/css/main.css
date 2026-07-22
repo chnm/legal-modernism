@@ -1,8 +1,22 @@
 :root {
   --lm-purple: rgba(186, 2, 232, 1);
   --lm-purple-muted: rgba(186, 2, 232, 0.3);
+  --lm-purple-dark: rgb(122, 1, 160);
   --bs-body-font-family: "IBM Plex Sans", sans-serif;
   --bs-link-color: var(--lm-purple);
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1050;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  color: var(--lm-purple-dark);
+  border: 2px solid var(--lm-purple);
+  border-radius: 0.25rem;
+  text-decoration: none;
 }
 
 h1.site-title {
@@ -44,7 +58,7 @@ a:visited {
 
 a:hover,
 a:active {
-  color: var(--lm-purple-muted);
+  color: var(--lm-purple-dark);
 }
 
 .page-container {
@@ -91,7 +105,22 @@ footer {
   border-top: 1px solid var(--lm-purple-muted);
 }
 
+.footer-logos,
+.footer-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footer-text {
+  align-items: flex-end;
+  text-align: right;
+}
+
 img.logo {
+  max-height: 40px;
+  width: auto;
   max-width: 100%;
 }
 
