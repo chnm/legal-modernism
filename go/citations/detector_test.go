@@ -112,14 +112,22 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 			expected:     []string{"Cheves Eq. 12"},
 		},
 		{
+			// "Tothill, 876" is deliberately absent: without stemming, the
+			// "Toth" detector no longer swallows longer words. "Tothill" is
+			// matched by its own detector instead.
 			name:         "Toth",
 			abbreviation: `Toth`,
-			expected:     []string{"Toth 234", "Toth 876", "Toth 125", "Toth 462"},
+			expected:     []string{"Toth. 234", "Toth. 125", "Toth 462"},
+		},
+		{
+			name:         "Tothill",
+			abbreviation: `Tothill`,
+			expected:     []string{"Tothill 876"},
 		},
 		{
 			name:         "M & M",
 			abbreviation: `M & M`,
-			expected:     []string{"M & M 12", "M & M 123", "M & M 234"},
+			expected:     []string{"M&M. 12", "M & M 123", "M. & M. 234"},
 		},
 	}
 
@@ -171,82 +179,101 @@ func TestSingleVolDetector_VolumeIsNil(t *testing.T) {
 	assert.Nil(t, cites[0].Volume, "single-vol detector should produce nil Volume")
 }
 
-// TestSingleVolDetector_NormalizesReporterAbbr verifies that when the canonical
-// reporter_standard differs from the abbreviation that actually matched in the
-// OCR, the resulting Citation carries the canonical form in ReporterAbbr while
-// Raw preserves the literal OCR'd substring. This is the contract that the
-// detector-creation loop in cite-detector-moml relies on for downstream
-// linking against legalhist.reporters.
-func TestSingleVolDetector_NormalizesReporterAbbr(t *testing.T) {
+// TestSingleVolDetector_RecordsDetectedAbbr verifies that the Citation records
+// the abbreviation that actually matched in the OCR, not the reporter the
+// detector was built from. cite-linker normalizes that detected form through
+// legalhist.whitelist, exactly as it does for the generic detector. Recording
+// the reporter instead would assert that every match belongs to this single
+// volume, which is how "Alienation, 118" came to be linked to Aleyn's King's
+// Bench.
+func TestSingleVolDetector_RecordsDetectedAbbr(t *testing.T) {
 	tests := []struct {
 		name         string
-		canonical    string
+		reporter     string
 		abbreviation string
 		text         string
+		expectedAbbr string
 		expectedRaw  string
 		expectedPage int
 	}{
 		{
 			name:         "alt missing internal periods",
-			canonical:    "Bail. Eq.",
+			reporter:     "Bail. Eq.",
 			abbreviation: "Bail Eq",
 			text:         "Compare Bail Eq 17 with the earlier ruling.",
+			expectedAbbr: "Bail Eq",
 			expectedRaw:  "Bail Eq 17",
 			expectedPage: 17,
 		},
 		{
-			name:         "alt matches canonical exactly",
-			canonical:    "Bail. Eq.",
+			name:         "alt matches reporter exactly",
+			reporter:     "Bail. Eq.",
 			abbreviation: "Bail. Eq.",
 			text:         "See Bail. Eq. 42 for the rule.",
+			expectedAbbr: "Bail. Eq.",
 			expectedRaw:  "Bail. Eq. 42",
 			expectedPage: 42,
 		},
 		{
 			name:         "alt missing trailing period",
-			canonical:    "Baldw.",
+			reporter:     "Baldw.",
 			abbreviation: "Baldw",
 			text:         "The federal view in Baldw 125 was different.",
+			expectedAbbr: "Baldw",
 			expectedRaw:  "Baldw 125",
 			expectedPage: 125,
 		},
 		{
-			name:         "alt is longer form than canonical",
-			canonical:    "Hob.",
+			name:         "trailing comma is a separator, not part of the abbr",
+			reporter:     "Baldw.",
+			abbreviation: "Baldw",
+			text:         "The federal view in Baldw, 125 was different.",
+			expectedAbbr: "Baldw",
+			expectedRaw:  "Baldw, 125",
+			expectedPage: 125,
+		},
+		{
+			name:         "alt is longer form than reporter",
+			reporter:     "Hob.",
 			abbreviation: "Hobart",
 			text:         "The rule in Hobart 423 was the older precedent.",
+			expectedAbbr: "Hobart",
 			expectedRaw:  "Hobart 423",
 			expectedPage: 423,
 		},
 		{
-			name:         `alt is much longer form (exercises \w*)`,
-			canonical:    "Toth",
+			name:         "alt is much longer form than reporter",
+			reporter:     "Toth",
 			abbreviation: "Tothill",
 			text:         "See Tothill 876 for the early statement.",
+			expectedAbbr: "Tothill",
 			expectedRaw:  "Tothill 876",
 			expectedPage: 876,
 		},
 		{
 			name:         "alt with parenthesized jurisdiction (SC)",
-			canonical:    "Bail. Eq.",
+			reporter:     "Bail. Eq.",
 			abbreviation: "Bail Eq (SC)",
 			text:         "See Bail Eq (SC) 42 for the ruling.",
+			expectedAbbr: "Bail Eq (SC)",
 			expectedRaw:  "Bail Eq (SC) 42",
 			expectedPage: 42,
 		},
 		{
 			name:         "alt with parenthesized jurisdiction (Eng)",
-			canonical:    "Al",
+			reporter:     "Al",
 			abbreviation: "Al (Eng)",
 			text:         "Reference Al (Eng) 17 in the early reports.",
+			expectedAbbr: "Al (Eng)",
 			expectedRaw:  "Al (Eng) 17",
 			expectedPage: 17,
 		},
 		{
 			name:         "alt with parenthesized jurisdiction (US)",
-			canonical:    "Baldw.",
+			reporter:     "Baldw.",
 			abbreviation: "Baldw (US)",
 			text:         "The federal view in Baldw (US) 125 was different.",
+			expectedAbbr: "Baldw (US)",
 			expectedRaw:  "Baldw (US) 125",
 			expectedPage: 125,
 		},
@@ -254,12 +281,12 @@ func TestSingleVolDetector_NormalizesReporterAbbr(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			doc := sources.NewDoc("test-normalize", tt.text)
-			d := NewSingleVolDetector(tt.canonical, tt.abbreviation)
+			doc := sources.NewDoc("test-detected-abbr", tt.text)
+			d := NewSingleVolDetector(tt.reporter, tt.abbreviation)
 			cites := d.Detect(doc)
 			require.Len(t, cites, 1)
-			assert.Equal(t, tt.canonical, cites[0].ReporterAbbr,
-				"ReporterAbbr should be the canonical form, not the matched alt")
+			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr,
+				"ReporterAbbr should be the spelling that matched, not the reporter")
 			assert.Equal(t, tt.expectedRaw, cites[0].Raw,
 				"Raw should preserve the OCR'd alt spelling")
 			assert.Equal(t, tt.expectedPage, cites[0].Page)
@@ -277,8 +304,65 @@ func TestSingleVolDetector_RawPreservesOCR(t *testing.T) {
 	d := NewSingleVolDetector("Bail. Eq.", "Bail Eq")
 	cites := d.Detect(doc)
 	require.Len(t, cites, 1)
-	assert.Equal(t, "Bail. Eq.", cites[0].ReporterAbbr, "ReporterAbbr should be the canonical")
+	assert.Equal(t, "Bail Eq", cites[0].ReporterAbbr, "ReporterAbbr should be the detected spelling")
 	assert.Equal(t, "Bail Eq 42", cites[0].Raw, "Raw should preserve the OCR'd alt spelling")
+}
+
+// TestSingleVolDetector_NoStemming verifies that a single-volume abbreviation
+// does not match longer words that merely begin with it. This is the fix for
+// issue #218: the abbreviation "Al" was matching "Alienation", "Alimony" and
+// "Ala.", and every one of those was then recorded as a citation to Aleyn's
+// King's Bench. A genuine long form such as "Tothill" is picked up by its own
+// detector, registered in legalhist.reporters_abbreviations.
+func TestSingleVolDetector_NoStemming(t *testing.T) {
+	notMatched := []string{
+		"the law of Alienation, 118 is settled",
+		"see Ala., 672 for the rule",
+		"compare Allen, 2 with the later cases",
+		"questions of Alimony 122 aside",
+		"discussed in Alexander, 3 at length",
+	}
+	d := NewSingleVolDetector("Al", "Al")
+	for _, text := range notMatched {
+		t.Run(text, func(t *testing.T) {
+			doc := sources.NewDoc("test-no-stem", text)
+			assert.Empty(t, d.Detect(doc),
+				"abbreviation should not match a longer word beginning with it")
+		})
+	}
+
+	matched := []struct {
+		text         string
+		expectedAbbr string
+	}{
+		{"see Al. 17 for the rule", "Al."},
+		{"see Al 17 for the rule", "Al"},
+		{"see Al, 17 for the rule", "Al"},
+	}
+	for _, tt := range matched {
+		t.Run(tt.text, func(t *testing.T) {
+			doc := sources.NewDoc("test-no-stem", tt.text)
+			cites := d.Detect(doc)
+			require.Len(t, cites, 1)
+			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr)
+			assert.Equal(t, 17, cites[0].Page)
+		})
+	}
+}
+
+// TestSingleVolDetector_WordBoundary verifies that an abbreviation does not
+// match in the middle of a word, which is what the leading \b in the regex
+// guards against.
+func TestSingleVolDetector_WordBoundary(t *testing.T) {
+	d := NewSingleVolDetector("Bur.", "Bur")
+
+	doc := sources.NewDoc("test-boundary", "the estate of McBur 12 was disputed")
+	assert.Empty(t, d.Detect(doc), "abbreviation should not match mid-word")
+
+	doc = sources.NewDoc("test-boundary", "the estate in Bur. 12 was disputed")
+	cites := d.Detect(doc)
+	require.Len(t, cites, 1)
+	assert.Equal(t, "Bur.", cites[0].ReporterAbbr)
 }
 
 // TestDetector_SpacingVariants documents the generic detector's behavior on
@@ -328,24 +412,28 @@ func TestDetector_SpacingVariants(t *testing.T) {
 // detector matches OCR text that omits the whitespace between abbreviation
 // tokens. NewSingleVolDetector substitutes [\s.]* for every literal space in
 // the abbreviation, so "Ga. App." compiles to `Ga\.[\s.]*App\.` and matches
-// both "Ga. App." and "Ga.App." Saved ReporterAbbr is normalized to the
-// canonical form regardless of which spelling appeared in the OCR.
+// both "Ga. App." and "Ga.App." As with the generic detector, ReporterAbbr is
+// saved exactly as it appeared, so the whitelist must carry one row per
+// spelling. See TestDetector_SpacingVariants for the same contract.
 func TestSingleVolDetector_SpacingVariants(t *testing.T) {
 	tests := []struct {
 		name         string
 		text         string
+		expectedAbbr string
 		expectedRaw  string
 		expectedPage int
 	}{
 		{
 			name:         "canonical spacing",
 			text:         "See Ga. App. 42 for the rule.",
+			expectedAbbr: "Ga. App.",
 			expectedRaw:  "Ga. App. 42",
 			expectedPage: 42,
 		},
 		{
 			name:         "no space between tokens",
 			text:         "See Ga.App. 42 for the rule.",
+			expectedAbbr: "Ga.App.",
 			expectedRaw:  "Ga.App. 42",
 			expectedPage: 42,
 		},
@@ -356,8 +444,8 @@ func TestSingleVolDetector_SpacingVariants(t *testing.T) {
 			d := NewSingleVolDetector("Ga. App.", "Ga. App.")
 			cites := d.Detect(doc)
 			require.Len(t, cites, 1)
-			assert.Equal(t, "Ga. App.", cites[0].ReporterAbbr,
-				"ReporterAbbr should be canonical regardless of OCR spacing")
+			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr,
+				"ReporterAbbr should preserve the OCR's spacing")
 			assert.Equal(t, tt.expectedRaw, cites[0].Raw,
 				"Raw should preserve the OCR's spacing")
 			assert.Equal(t, tt.expectedPage, cites[0].Page)

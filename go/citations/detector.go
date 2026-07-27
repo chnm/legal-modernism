@@ -41,9 +41,13 @@ func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
 		Reporter:     reporter,
 		Abbreviation: abbreviation,
 		initial:      nil,
-		// \w* allows alternate long forms (e.g. Tothill matching Toth).
+		// \b keeps the abbreviation from matching mid-word: without it "Bur"
+		// matches inside "McBur". The abbreviation must also be followed
+		// directly by the page number, so long forms such as "Tothill" only
+		// match if they are registered as abbreviations in their own right --
+		// stemming here made "Al" swallow "Alienation" and "Ala.".
 		// [.,]* allows optional period/comma separators before the page number.
-		regex: regexp.MustCompile(flexAbbr + `\w*[.,]*\s+\d{1,4}`),
+		regex: regexp.MustCompile(`\b` + flexAbbr + `[.,]*\s+\d{1,4}`),
 	}
 	return detector
 }
@@ -106,21 +110,22 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		pp := rePage.FindString(m)
 		c.Page, _ = strconv.Atoi(pp)
 
-		// Determine the reporter abbreviation.
-		if d.initial == nil {
-			// Single-volume detector: use the canonical reporter name directly,
-			// since the raw match may include separator characters (commas,
-			// trailing periods) that are not part of the abbreviation.
-			c.ReporterAbbr = d.Reporter
-		} else {
-			// Standard detector: derive the abbreviation by trimming the volume
-			// and page numbers from the raw match.
-			abbr := m
-			abbr = strings.Replace(abbr, vol, "", 1)
-			abbr = strings.Replace(abbr, pp, "", 1)
-			abbr = strings.TrimSpace(abbr)
-			c.ReporterAbbr = abbr
-		}
+		// Derive the abbreviation as it actually appeared in the text by
+		// trimming the volume and page numbers off the match. Both reVolume and
+		// rePage are anchored, so trimming the prefix and suffix leaves any
+		// digits inside the abbreviation itself alone. A trailing comma is a
+		// separator admitted by the single-volume regex rather than part of the
+		// abbreviation, so drop it; trailing periods are kept because they are
+		// usually part of the abbreviation ("Ala.", "Hob.").
+		//
+		// Recording what was detected rather than the reporter the detector was
+		// built from is what lets the whitelist normalize single-volume
+		// citations at link time, the same way it does for every other citation.
+		abbr := m
+		abbr = strings.TrimPrefix(abbr, vol)
+		abbr = strings.TrimSuffix(abbr, pp)
+		abbr = strings.TrimRight(strings.TrimSpace(abbr), " ,")
+		c.ReporterAbbr = abbr
 
 		// Save the source
 		c.Source = doc
