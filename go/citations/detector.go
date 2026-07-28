@@ -42,12 +42,14 @@ func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
 		Abbreviation: abbreviation,
 		initial:      nil,
 		// \b keeps the abbreviation from matching mid-word: without it "Bur"
-		// matches inside "McBur". The abbreviation must also be followed
-		// directly by the page number, so long forms such as "Tothill" only
-		// match if they are registered as abbreviations in their own right --
-		// stemming here made "Al" swallow "Alienation" and "Ala.".
+		// matches inside "McBur".
+		// \w* allows alternate long forms (e.g. Tothill matching Toth). It
+		// deliberately over-captures -- "Al" also matches "Alienation" and
+		// "Ala." -- because the abbreviation recorded below is the word that
+		// actually matched, which the whitelist then routes to the right
+		// reporter or rejects outright.
 		// [.,]* allows optional period/comma separators before the page number.
-		regex: regexp.MustCompile(`\b` + flexAbbr + `[.,]*\s+\d{1,4}`),
+		regex: regexp.MustCompile(`\b` + flexAbbr + `\w*[.,]*\s+\d{1,4}`),
 	}
 	return detector
 }

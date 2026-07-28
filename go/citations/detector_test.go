@@ -112,12 +112,12 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 			expected:     []string{"Cheves Eq. 12"},
 		},
 		{
-			// "Tothill, 876" is deliberately absent: without stemming, the
-			// "Toth" detector no longer swallows longer words. "Tothill" is
-			// matched by its own detector instead.
+			// \w* lets the "Toth" abbreviation reach the longer form
+			// "Tothill", which is recorded as "Tothill" rather than "Toth" so
+			// that the whitelist decides where it belongs.
 			name:         "Toth",
 			abbreviation: `Toth`,
-			expected:     []string{"Toth. 234", "Toth. 125", "Toth 462"},
+			expected:     []string{"Toth. 234", "Tothill 876", "Toth. 125", "Toth 462"},
 		},
 		{
 			name:         "Tothill",
@@ -308,44 +308,45 @@ func TestSingleVolDetector_RawPreservesOCR(t *testing.T) {
 	assert.Equal(t, "Bail Eq 42", cites[0].Raw, "Raw should preserve the OCR'd alt spelling")
 }
 
-// TestSingleVolDetector_NoStemming verifies that a single-volume abbreviation
-// does not match longer words that merely begin with it. This is the fix for
-// issue #218: the abbreviation "Al" was matching "Alienation", "Alimony" and
-// "Ala.", and every one of those was then recorded as a citation to Aleyn's
-// King's Bench. A genuine long form such as "Tothill" is picked up by its own
-// detector, registered in legalhist.reporters_abbreviations.
-func TestSingleVolDetector_NoStemming(t *testing.T) {
-	notMatched := []string{
-		"the law of Alienation, 118 is settled",
-		"see Ala., 672 for the rule",
-		"compare Allen, 2 with the later cases",
-		"questions of Alimony 122 aside",
-		"discussed in Alexander, 3 at length",
-	}
-	d := NewSingleVolDetector("Al", "Al")
-	for _, text := range notMatched {
-		t.Run(text, func(t *testing.T) {
-			doc := sources.NewDoc("test-no-stem", text)
-			assert.Empty(t, d.Detect(doc),
-				"abbreviation should not match a longer word beginning with it")
-		})
-	}
-
-	matched := []struct {
+// TestSingleVolDetector_StemRecordsMatchedWord pins down what the \w* stem
+// costs and why that is now tolerable. The stem makes the abbreviation "Al"
+// reach any word beginning with it, so Aleyn's King's Bench detector fires on
+// "Alienation", "Alimony" and "Ala." alike. Under the old behavior every one of
+// those was recorded as a citation to Aleyn and linked on the page number
+// alone, which issue #218 identifies as the largest source of false positives
+// in the data.
+//
+// Recording the word that actually matched moves the decision to the
+// whitelist: "Ala." routes to the Alabama reporter, "Alienation" and "Alimony"
+// are not whitelisted and are skipped. The over-capture becomes a volume
+// problem rather than an accuracy problem.
+func TestSingleVolDetector_StemRecordsMatchedWord(t *testing.T) {
+	tests := []struct {
 		text         string
 		expectedAbbr string
+		expectedPage int
 	}{
-		{"see Al. 17 for the rule", "Al."},
-		{"see Al 17 for the rule", "Al"},
-		{"see Al, 17 for the rule", "Al"},
+		// Stemmed matches: recorded as the longer word, not as "Al".
+		{"the law of Alienation, 118 is settled", "Alienation", 118},
+		{"see Ala., 672 for the rule", "Ala.", 672},
+		{"compare Allen, 2 with the later cases", "Allen", 2},
+		{"questions of Alimony 122 aside", "Alimony", 122},
+		{"discussed in Alexander, 3 at length", "Alexander", 3},
+		// Exact matches still record the abbreviation itself.
+		{"see Al. 17 for the rule", "Al.", 17},
+		{"see Al 17 for the rule", "Al", 17},
+		{"see Al, 17 for the rule", "Al", 17},
 	}
-	for _, tt := range matched {
+
+	d := NewSingleVolDetector("Al", "Al")
+	for _, tt := range tests {
 		t.Run(tt.text, func(t *testing.T) {
-			doc := sources.NewDoc("test-no-stem", tt.text)
+			doc := sources.NewDoc("test-stem", tt.text)
 			cites := d.Detect(doc)
 			require.Len(t, cites, 1)
-			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr)
-			assert.Equal(t, 17, cites[0].Page)
+			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr,
+				"ReporterAbbr should be the word that matched, not the reporter")
+			assert.Equal(t, tt.expectedPage, cites[0].Page)
 		})
 	}
 }
