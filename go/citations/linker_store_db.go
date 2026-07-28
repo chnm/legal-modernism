@@ -331,35 +331,12 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 	return nil
 }
 
-func (s *LinkerDBStore) BatchSkipNonWhitelisted(ctx context.Context) (int64, error) {
-	query := `
-	INSERT INTO moml_citations.citation_links (citation_id, status)
-	SELECT cu.id,
-	       CASE
-	         WHEN wl.junk = true THEN 'skipped_junk'
-	         ELSE 'skipped_not_whitelisted'
-	       END
-	FROM moml_citations.citations_unlinked cu
-	LEFT JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
-	WHERE NOT EXISTS (
-		SELECT 1 FROM moml_citations.citation_links cl WHERE cl.citation_id = cu.id
-	)
-	AND (wl.reporter_found IS NULL OR wl.junk = true)
-	ON CONFLICT (citation_id) DO NOTHING
-	`
-	tag, err := s.DB.Exec(ctx, query)
-	if err != nil {
-		return 0, fmt.Errorf("batch skipping non-whitelisted citations: %w", err)
-	}
-	return tag.RowsAffected(), nil
-}
-
 // ResetUnlinked deletes every citation_links row that was not resolved to a case
 // (status no_match, skipped_not_whitelisted, or skipped_junk) so the linker
 // re-processes them on the next run; only linked_* rows are preserved. Deleting
-// both skip statuses lets a re-run with --skip-unlisted re-derive them from the
-// current whitelist, so a reporter later corrected from junk to legit is no
-// longer stuck as skipped_junk. The delete runs as a single statement — one
+// both skip statuses lets a re-run re-derive them from the current whitelist, so
+// a reporter later corrected from junk to legit is no longer stuck as
+// skipped_junk. The delete runs as a single statement — one
 // all-or-nothing transaction — and returns the number of rows deleted.
 func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
 	query := `

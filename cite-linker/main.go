@@ -10,6 +10,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"syscall"
+	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
@@ -18,14 +19,17 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
+// progressInterval is how often the linking loop logs a progress heartbeat. A
+// full run processes ~62M citations over several hours, so this is frequent
+// enough to extrapolate a finish time without making the log noisy.
+const progressInterval = 5 * time.Minute
+
 func main() {
 	var showProgress bool
-	var skipUnlisted bool
 	var reset bool
 	var batchSize int
 	var workers int
 	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
-	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
@@ -85,17 +89,6 @@ func main() {
 			os.Exit(1)
 		}
 		slog.Info("reset complete", "deleted", deleted)
-	}
-
-	// Handle --skip-unlisted: bulk skip, then continue to linking
-	if skipUnlisted {
-		slog.Info("batch-marking non-whitelisted citations as skipped")
-		affected, err := store.BatchSkipNonWhitelisted(ctx)
-		if err != nil {
-			slog.Error("batch skip failed", "error", err)
-			os.Exit(1)
-		}
-		slog.Info("batch skip complete", "rows_affected", affected)
 	}
 
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
@@ -182,6 +175,33 @@ func main() {
 	var pbMu sync.Mutex
 	var processed atomic.Int64
 
+	// Heartbeat. A full run takes hours and results are only logged per batch at
+	// DEBUG, so without this the job is silent from here until it finishes and an
+	// operator can't tell a stalled run from a slow one. Time-based, not
+	// per-batch, so a normal run stays quiet.
+	started := time.Now()
+	heartbeatDone := make(chan struct{})
+	var heartbeatWG sync.WaitGroup
+	heartbeatWG.Add(1)
+	go func() {
+		defer heartbeatWG.Done()
+		ticker := time.NewTicker(progressInterval)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-heartbeatDone:
+				return
+			case <-ticker.C:
+				n := processed.Load()
+				elapsed := time.Since(started)
+				slog.Info("linking progress",
+					"processed", n,
+					"elapsed", elapsed.Round(time.Second).String(),
+					"rows_per_sec", int64(float64(n)/elapsed.Seconds()))
+			}
+		}
+	}()
+
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
 		go func() {
@@ -234,6 +254,8 @@ func main() {
 	})
 	close(batchCh)
 	wg.Wait()
+	close(heartbeatDone)
+	heartbeatWG.Wait()
 
 	if streamErr != nil && !errors.Is(streamErr, context.Canceled) {
 		slog.Error("streaming unprocessed citations failed", "processed", processed.Load(), "error", streamErr)

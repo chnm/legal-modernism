@@ -8,7 +8,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=24
-#SBATCH --time=02:00:00
+#SBATCH --time=06:00:00
 #SBATCH --mem=12GB
 #SBATCH --partition=normal
 #SBATCH --mail-user lmullen@gmu.edu
@@ -18,13 +18,16 @@
 
 ## Run the program
 
-# Routine run: link any not-yet-processed citations.
-# ~/legal-modernism/bin/cite-linker --skip-unlisted --batch-size=8000 --workers=32
+# Routine run: link any not-yet-processed citations. Safe to resubmit — results
+# are committed per batch (8,000 rows), so a job that hits the wall time can just
+# be resubmitted and it picks up exactly where it left off. Check `squeue` first;
+# two concurrent linkers are correct but double the read work.
+~/legal-modernism/bin/cite-linker --batch-size=8000 --workers=32
 
-# One-time reset run (FreeLaw rollout / after whitelist corrections): comment out
-# the line above and use the line below instead. --reset deletes every non-linked
-# row (no_match, skipped_not_whitelisted, skipped_junk) so they are re-linked
-# against the FreeLaw crosswalk; only linked_* rows are kept. Re-comment it
-# afterward — leaving --reset in would wipe and re-do those rows on every
-# subsequent run. If the job is interrupted, resume WITHOUT --reset.
-~/legal-modernism/bin/cite-linker --reset --skip-unlisted --batch-size=8000 --workers=32
+# One-time reset run (after whitelist corrections or a new linking tier): comment
+# out the line above and use the line below instead. --reset deletes every
+# non-linked row (no_match, skipped_not_whitelisted, skipped_junk) so they are
+# re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
+# --reset live would wipe and re-do those rows on every subsequent run, including
+# on a resubmit after a timeout, throwing away all partial progress.
+# ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32
