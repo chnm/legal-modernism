@@ -304,51 +304,59 @@ func linkCAPThenCode(
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeNormalized
 
-	// Try CAP with the normalized cite
-	if caseID, ok := capCites[citeNormalized]; ok {
-		result.Status = citations.StatusLinkedCAP
-		result.CAPCaseID = &caseID
-		result.CiteLinked = &citeNormalized
-		return result
-	}
+	// Run the whole cascade for the form we detected before trying the volume
+	// variant, so an existing link can never be rewired: the variant only ever
+	// turns a no_match into a link.
+	for _, f := range volumeForms(c, entry) {
+		cleaned := buildStandardCite(f, entry)
+		normalized := buildCAPCite(f, entry, diffvols)
 
-	// Fall back to the FreeLaw crosswalk: if any parallel form of this decision
-	// is in our CAP data, this reaches the CAP case from the form we detected.
-	// The result is still a CAP link (status linked_cap).
-	if caseID, ok := freelawCites[citeNormalized]; ok {
-		result.Status = citations.StatusLinkedCAP
-		result.CAPCaseID = &caseID
-		result.CiteLinked = &citeNormalized
-		return result
-	}
-
-	// Fall back to alternate reporter spellings: the same decision may be in the
-	// FreeLaw crosswalk under a CourtListener spelling that differs from our
-	// reporter_standard/reporter_cap. Probe each known alternate spelling for this
-	// reporter (keyed by the canonical reporter_standard, like diffvols). The
-	// first hit links to the CAP case (status linked_cap). Volume-nil is handled
-	// the same way as buildStandardCite/buildCAPCite.
-	for _, alt := range altAbbrs[*entry.ReporterStandard] {
-		var altCite string
-		if c.Volume == nil {
-			altCite = fmt.Sprintf("%s %d", alt, c.Page)
-		} else {
-			altCite = fmt.Sprintf("%d %s %d", *c.Volume, alt, c.Page)
-		}
-		if caseID, ok := freelawCites[altCite]; ok {
+		// Try CAP with the normalized cite
+		if caseID, ok := capCites[normalized]; ok {
 			result.Status = citations.StatusLinkedCAP
 			result.CAPCaseID = &caseID
-			result.CiteLinked = &altCite
+			result.CiteLinked = &normalized
 			return result
 		}
-	}
 
-	// Try Code Reporter with the cleaned cite
-	if codeID, ok := codeCites[citeCleaned]; ok {
-		result.Status = citations.StatusLinkedCodeReporter
-		result.CodeReporterID = &codeID
-		result.CiteLinked = &citeCleaned
-		return result
+		// Fall back to the FreeLaw crosswalk: if any parallel form of this decision
+		// is in our CAP data, this reaches the CAP case from the form we detected.
+		// The result is still a CAP link (status linked_cap).
+		if caseID, ok := freelawCites[normalized]; ok {
+			result.Status = citations.StatusLinkedCAP
+			result.CAPCaseID = &caseID
+			result.CiteLinked = &normalized
+			return result
+		}
+
+		// Fall back to alternate reporter spellings: the same decision may be in the
+		// FreeLaw crosswalk under a CourtListener spelling that differs from our
+		// reporter_standard/reporter_cap. Probe each known alternate spelling for this
+		// reporter (keyed by the canonical reporter_standard, like diffvols). The
+		// first hit links to the CAP case (status linked_cap). Volume-nil is handled
+		// the same way as buildStandardCite/buildCAPCite.
+		for _, alt := range altAbbrs[*entry.ReporterStandard] {
+			var altCite string
+			if f.Volume == nil {
+				altCite = fmt.Sprintf("%s %d", alt, f.Page)
+			} else {
+				altCite = fmt.Sprintf("%d %s %d", *f.Volume, alt, f.Page)
+			}
+			if caseID, ok := freelawCites[altCite]; ok {
+				result.Status = citations.StatusLinkedCAP
+				result.CAPCaseID = &caseID
+				result.CiteLinked = &altCite
+				return result
+			}
+		}
+
+		// Try Code Reporter with the cleaned cite
+		if codeID, ok := codeCites[cleaned]; ok {
+			result.Status = citations.StatusLinkedCodeReporter
+			result.CodeReporterID = &codeID
+			result.CiteLinked = &cleaned
+			return result
+		}
 	}
 
 	result.Status = citations.StatusNoMatch
@@ -367,15 +375,52 @@ func linkEnglishReports(
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeCleaned
 
-	if erID, ok := erCites[citeCleaned]; ok {
-		result.Status = citations.StatusLinkedEnglishReports
-		result.ERCaseID = &erID
-		result.CiteLinked = &citeCleaned
-		return result
+	// The English Reports are inconsistent about the redundant volume on
+	// single-volume nominate reporters: most are stored bare ("Cro Eliz 1") but
+	// some carry it ("1 Vern 1"), so try both forms.
+	for _, f := range volumeForms(c, entry) {
+		cite := buildStandardCite(f, entry)
+		if erID, ok := erCites[cite]; ok {
+			result.Status = citations.StatusLinkedEnglishReports
+			result.ERCaseID = &erID
+			result.CiteLinked = &cite
+			return result
+		}
 	}
 
 	result.Status = citations.StatusNoMatch
 	return result
+}
+
+// volumeForms returns the citation forms to probe, most-faithful first. For a
+// single-volume reporter "Toth 123" and "1 Toth 123" are the same citation --
+// such reports were often cited with a redundant volume 1 even though there is
+// only one volume to cite -- so both are tried. Everything else yields just the
+// citation as detected.
+//
+// The variant is a copy of the citation with the volume flipped rather than a
+// rewritten string, so buildStandardCite and buildCAPCite handle it with their
+// existing reporter_cap and diffvols logic. That also reaches diffvols entries
+// for volume 1, which buildCAPCite skips when the volume is nil.
+func volumeForms(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) []*citations.UnlinkedCitation {
+	forms := []*citations.UnlinkedCitation{c}
+	if !entry.SingleVol {
+		return forms
+	}
+
+	variant := *c
+	switch {
+	case c.Volume == nil:
+		one := 1
+		variant.Volume = &one
+	case *c.Volume == 1:
+		variant.Volume = nil
+	default:
+		// Volume 2 or higher is a real volume number, not a redundant 1, so
+		// there is nothing equivalent to try.
+		return forms
+	}
+	return append(forms, &variant)
 }
 
 // buildStandardCite constructs "{volume} {reporter_standard} {page}".
