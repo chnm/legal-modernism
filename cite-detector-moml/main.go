@@ -74,9 +74,11 @@ func main() {
 	slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
 
 	// Create and load the single volume detectors. Each row is a
-	// (reporter_standard, abbreviation) pair, so the saved reporter_abbr
-	// gets normalized to the canonical reporter_standard regardless of
-	// which spelling appeared in the OCR.
+	// (reporter_standard, abbreviation) pair. The saved reporter_abbr is the
+	// spelling that actually appeared in the OCR, not the reporter_standard the
+	// detector was built from; cite-linker normalizes it through
+	// legalhist.whitelist, so a spelling that belongs to a different reporter is
+	// linked to that reporter instead of to this single volume.
 	singleVolReporters, err := citationsDB.GetSingleVolReporterAbbrs(ctx)
 	if err != nil {
 		slog.Error("could not get single volume reporters from database", "error", err)

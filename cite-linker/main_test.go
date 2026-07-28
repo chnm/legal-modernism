@@ -14,6 +14,8 @@ func TestLinkCitation(t *testing.T) {
 	usStd := "U.S."
 	qbStd := "Q.B."
 	statStd := "Stat."
+	alaStd := "Ala."
+	aleynStd := "Al"
 
 	tests := []struct {
 		name         string
@@ -147,6 +149,40 @@ func TestLinkCitation(t *testing.T) {
 			wantStatus:   citations.StatusLinkedCAP,
 			wantCAPID:    ptr(int64(444)),
 			wantLinked:   ptr("Stat 30"),
+		},
+		{
+			// Regression test for #218/#226. The single-volume detector for
+			// Aleyn's King's Bench ("Al") also fires on "Ala." in OCR'd text.
+			// Now that the detector records the spelling it actually found, the
+			// whitelist routes the citation to the Alabama reporter. Previously
+			// ReporterAbbr arrived as "Al", so the linker built candidate cites
+			// against Aleyn's single volume instead.
+			name: "detected spelling routes to its own reporter",
+			cite: citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(12), ReporterAbbr: "Ala.", Page: 672},
+			whitelist: map[string]*citations.WhitelistEntry{
+				"Ala.": {ReporterStandard: &alaStd},
+				"Al":   {ReporterStandard: &aleynStd, UK: true},
+			},
+			capCites:   map[string]int64{"12 Ala. 672": 555},
+			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
+			wantStatus: citations.StatusLinkedCAP,
+			wantCAPID:  ptr(int64(555)),
+			wantLinked: ptr("12 Ala. 672"),
+		},
+		{
+			// The same routing, but with nothing to link to. The English
+			// Reports entry keyed on "Al 672" is exactly the false positive
+			// this issue removes: it is reachable only if the citation claims
+			// to be a citation to Aleyn.
+			name: "detected spelling is not attributed to the detecting single volume",
+			cite: citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Ala.", Page: 672},
+			whitelist: map[string]*citations.WhitelistEntry{
+				"Ala.": {ReporterStandard: &alaStd},
+				"Al":   {ReporterStandard: &aleynStd, UK: true},
+			},
+			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
+			wantStatus: citations.StatusNoMatch,
+			wantLinked: nil,
 		},
 		{
 			name:         "alt_abbr path is not consulted for UK reporters",
