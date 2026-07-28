@@ -1,5 +1,5 @@
 title: "Legal Modernism"
-languageCode: "en-us"
+locale: "en-us"
 baseURL: "https://legalmodernism.org"
 
 params:
