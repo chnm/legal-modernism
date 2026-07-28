@@ -52,5 +52,6 @@ jobs:
     needs: [build-and-publish]
     secrets: inherit
     with:
+      runner_labels: '["self-hosted","IncusOS"]'
       website-devl-fqdn: "chambers.legalmodernism.org"
       website-prod-fqdn: "chambers.legalmodernism.org"
