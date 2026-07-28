@@ -69,9 +69,12 @@ func main() {
 	// Create the detectors
 	var detectors []*citations.Detector
 
-	// Load the general-purpose detector
-	detectors = append(detectors, citations.GenericDetector)
-	slog.Info("prepared general-purpose detector", "num_detectors", len(detectors))
+	// Load the general-purpose detectors. The second finds citations whose
+	// abbreviation the OCR corrupted by reading a letter as a digit ("F1ed."
+	// for "Fed."), which the first cannot match at all. It scans separately so
+	// that it can only add citations, never displace one.
+	detectors = append(detectors, citations.GenericDetector, citations.GenericOCRDigitDetector)
+	slog.Info("prepared general-purpose detectors", "num_detectors", len(detectors))
 
 	// Create and load the single volume detectors. Each row is a
 	// (reporter_standard, abbreviation) pair. The saved reporter_abbr is the
