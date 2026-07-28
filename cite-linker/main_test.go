@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func ptr[T any](v T) *T { return &v }
@@ -14,6 +15,9 @@ func TestLinkCitation(t *testing.T) {
 	usStd := "U.S."
 	qbStd := "Q.B."
 	statStd := "Stat."
+	tothStd := "Toth"
+	croStd := "Cro Eliz"
+	vernStd := "Vern"
 	alaStd := "Ala."
 	aleynStd := "Al"
 
@@ -195,6 +199,95 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   nil,
 		},
 		{
+			// A single-volume reporter is the same citation with or without a
+			// leading volume 1. CAP normalizes everything to a volume, so a
+			// volume-less detection needs the variant to reach it.
+			name:       "single-volume nil volume links under an explicit volume 1",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"1 Toth 123": 777},
+			wantStatus: citations.StatusLinkedCAP,
+			wantCAPID:  ptr(int64(777)),
+			wantLinked: ptr("1 Toth 123"),
+		},
+		{
+			// The other direction: the English Reports store most nominate
+			// reporters bare, so a citation written "1 Cro Eliz 5" has to drop
+			// the redundant volume to match.
+			name:       "single-volume explicit volume 1 links under the bare form",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Cro Eliz", Page: 5},
+			whitelist:  map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
+			erCites:    map[string]string{"Cro Eliz 5": "er-cro-5"},
+			wantStatus: citations.StatusLinkedEnglishReports,
+			wantERID:   ptr("er-cro-5"),
+			wantLinked: ptr("Cro Eliz 5"),
+		},
+		{
+			// ...but some English Reports rows do carry the redundant volume
+			// ("1 Vern 1"), which is why the variant is needed in both
+			// directions rather than just one.
+			name:       "single-volume nil volume links to an English Reports cite stored with the redundant 1",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Vern", Page: 12},
+			whitelist:  map[string]*citations.WhitelistEntry{"Vern": {ReporterStandard: &vernStd, UK: true, SingleVol: true}},
+			erCites:    map[string]string{"1 Vern 12": "er-vern-12"},
+			wantStatus: citations.StatusLinkedEnglishReports,
+			wantERID:   ptr("er-vern-12"),
+			wantLinked: ptr("1 Vern 12"),
+		},
+		{
+			// The alt-spelling probe has to use the variant's volume, not the
+			// detected one, or it builds the wrong string.
+			name:         "alt spelling is probed under the variant volume too",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:    map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			freelawCites: map[string]int64{"1 Tothill 123": 555},
+			altAbbrs:     map[string][]string{"Toth": {"Tothill"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(555)),
+			wantLinked:   ptr("1 Tothill 123"),
+		},
+		{
+			// The detected form is exhausted across every source before the
+			// variant is tried, so a link that exists today can never be
+			// rewired to a different source.
+			name:       "detected form wins over the volume variant",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"1 Toth 123": 888},
+			codeCites:  map[string]int64{"Toth 123": 999},
+			wantStatus: citations.StatusLinkedCodeReporter,
+			wantCodeID: ptr(int64(999)),
+			wantLinked: ptr("Toth 123"),
+		},
+		{
+			// Volume 2 is a real volume, not a redundant 1, so there is nothing
+			// equivalent to try even on a single-volume reporter.
+			name:       "single-volume reporter with volume 2 has no variant",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"Toth 123": 777, "1 Toth 123": 888},
+			wantStatus: citations.StatusNoMatch,
+			wantLinked: nil,
+		},
+		{
+			// For a multi-volume reporter "1 U.S. 10" is a real volume 1 and
+			// means something different from "U.S. 10".
+			name:       "multi-volume reporter does not gain a volume 1",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"1 U.S. 10": 111},
+			wantStatus: citations.StatusNoMatch,
+			wantLinked: nil,
+		},
+		{
+			name:       "multi-volume reporter does not drop its volume 1",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"U.S. 10": 111},
+			wantStatus: citations.StatusNoMatch,
+			wantLinked: nil,
+		},
+		{
 			name:       "not whitelisted is skipped",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "Bogus", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{},
@@ -255,5 +348,69 @@ func TestLinkCitation(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestVolumeForms(t *testing.T) {
+	std := "Toth"
+	single := &citations.WhitelistEntry{ReporterStandard: &std, SingleVol: true}
+	multi := &citations.WhitelistEntry{ReporterStandard: &std}
+
+	tests := []struct {
+		name    string
+		volume  *int
+		entry   *citations.WhitelistEntry
+		wantLen int
+		wantVar *int // volume of the variant, when there is one
+	}{
+		{"single-vol nil volume gains a 1", nil, single, 2, ptr(1)},
+		{"single-vol volume 1 loses it", ptr(1), single, 2, nil},
+		{"single-vol volume 2 has no variant", ptr(2), single, 1, nil},
+		{"multi-vol nil volume has no variant", nil, multi, 1, nil},
+		{"multi-vol volume 1 has no variant", ptr(1), multi, 1, nil},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &citations.UnlinkedCitation{ID: uuid.New(), Volume: tt.volume, ReporterAbbr: "Toth", Page: 123}
+			forms := volumeForms(c, tt.entry)
+
+			require.Len(t, forms, tt.wantLen)
+			assert.Same(t, c, forms[0], "the detected citation must be probed first")
+
+			if tt.wantLen == 1 {
+				return
+			}
+			if tt.wantVar == nil {
+				assert.Nil(t, forms[1].Volume)
+			} else if assert.NotNil(t, forms[1].Volume) {
+				assert.Equal(t, *tt.wantVar, *forms[1].Volume)
+			}
+			// The variant is a copy: the original must not be mutated.
+			assert.Equal(t, tt.volume, c.Volume)
+		})
+	}
+}
+
+// TestVolumeVariantRecordsDetectedForm checks that when the variant is what
+// matched, cite_linked reports the string that actually hit while cite_cleaned
+// and cite_normalized still describe the citation as it was detected.
+func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
+	std := "Toth"
+	c := &citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123}
+	whitelist := map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &std, SingleVol: true}}
+
+	got := linkCitation(c, whitelist, map[string]map[int]*citations.DiffVolEntry{},
+		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil)
+
+	assert.Equal(t, citations.StatusLinkedCAP, got.Status)
+	if assert.NotNil(t, got.CiteLinked) {
+		assert.Equal(t, "1 Toth 123", *got.CiteLinked, "cite_linked is the form that matched")
+	}
+	if assert.NotNil(t, got.CiteCleaned) {
+		assert.Equal(t, "Toth 123", *got.CiteCleaned, "cite_cleaned stays the detected form")
+	}
+	if assert.NotNil(t, got.CiteNormalized) {
+		assert.Equal(t, "Toth 123", *got.CiteNormalized, "cite_normalized stays the detected form")
 	}
 }

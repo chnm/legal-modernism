@@ -10,6 +10,11 @@ type WhitelistEntry struct {
 	UK               bool
 	Junk             bool
 	CAPDifferent     bool
+	// SingleVol reports whether the reporter has only one volume, in which case
+	// a citation to it means the same thing with or without a leading volume 1.
+	// legalhist.reporters.single_vol is nullable, and an unclassified reporter
+	// is loaded as false so the volume variant stays off it.
+	SingleVol bool
 }
 
 // DiffVolEntry maps an original volume number to the corresponding CAP volume
