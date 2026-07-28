@@ -17,6 +17,7 @@ jobs:
       container-registry: "ghcr.io"
       container-image-name: "legalmodernism-website"
       hugo-context-root: "website"
+      hugo-content-path: "/srv"
       hugo-devl-url: "https://legalmodernism.org"
       hugo-prod-url: "https://legalmodernism.org"
 
