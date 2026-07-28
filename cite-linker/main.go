@@ -15,13 +15,12 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
-	"github.com/schollz/progressbar/v3"
 	flag "github.com/spf13/pflag"
 )
 
-// progressInterval is how often the linking loop logs a progress heartbeat. A
-// full run processes ~62M citations over several hours, so this is frequent
-// enough to extrapolate a finish time without making the log noisy.
+// progressInterval is how often --progress logs a heartbeat. A full run
+// processes ~62M citations over several hours, so this is frequent enough to
+// extrapolate a finish time without making the log noisy.
 const progressInterval = 5 * time.Minute
 
 func main() {
@@ -29,7 +28,7 @@ func main() {
 	var reset bool
 	var batchSize int
 	var workers int
-	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
+	flag.BoolVar(&showProgress, "progress", false, "log a progress heartbeat (count, elapsed, rows/sec) every 5 minutes")
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
@@ -153,17 +152,6 @@ func main() {
 	}
 	slog.Info("loaded English Reports citations", "entries", len(erCites))
 
-	var pb *progressbar.ProgressBar
-	if showProgress {
-		// The unprocessed total is not pre-counted (an exact count is itself a
-		// full anti-join), so the bar runs in count/rate mode without an ETA.
-		pb = progressbar.NewOptions64(-1,
-			progressbar.OptionSetWriter(os.Stdout),
-			progressbar.OptionShowCount(),
-			progressbar.OptionShowIts(),
-		)
-	}
-
 	// Bounded pipeline. A single streaming reader (this goroutine, inside
 	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
 	// workers through a bounded channel. The channel capacity bounds how many
@@ -172,35 +160,18 @@ func main() {
 	// table in memory.
 	batchCh := make(chan []citations.UnlinkedCitation, workers)
 	var wg sync.WaitGroup
-	var pbMu sync.Mutex
 	var processed atomic.Int64
 
-	// Heartbeat. A full run takes hours and results are only logged per batch at
-	// DEBUG, so without this the job is silent from here until it finishes and an
-	// operator can't tell a stalled run from a slow one. Time-based, not
-	// per-batch, so a normal run stays quiet.
-	started := time.Now()
-	heartbeatDone := make(chan struct{})
-	var heartbeatWG sync.WaitGroup
-	heartbeatWG.Add(1)
-	go func() {
-		defer heartbeatWG.Done()
-		ticker := time.NewTicker(progressInterval)
-		defer ticker.Stop()
-		for {
-			select {
-			case <-heartbeatDone:
-				return
-			case <-ticker.C:
-				n := processed.Load()
-				elapsed := time.Since(started)
+	stopHeartbeat := func() {}
+	if showProgress {
+		stopHeartbeat = startProgressHeartbeat(progressInterval, &processed,
+			func(n int64, elapsed time.Duration) {
 				slog.Info("linking progress",
 					"processed", n,
 					"elapsed", elapsed.Round(time.Second).String(),
 					"rows_per_sec", int64(float64(n)/elapsed.Seconds()))
-			}
-		}
-	}()
+			})
+	}
 
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
@@ -232,12 +203,6 @@ func main() {
 					attrs = append(attrs, status, count)
 				}
 				slog.Debug("saved batch", attrs...)
-
-				if pb != nil {
-					pbMu.Lock()
-					pb.Add(len(batch))
-					pbMu.Unlock()
-				}
 			}
 		}()
 	}
@@ -254,8 +219,7 @@ func main() {
 	})
 	close(batchCh)
 	wg.Wait()
-	close(heartbeatDone)
-	heartbeatWG.Wait()
+	stopHeartbeat()
 
 	if streamErr != nil && !errors.Is(streamErr, context.Canceled) {
 		slog.Error("streaming unprocessed citations failed", "processed", processed.Load(), "error", streamErr)
@@ -267,6 +231,38 @@ func main() {
 	// Post-run database maintenance (vacuum/analyze the churned tables and
 	// refresh the chambers dashboard materialized views) is run separately
 	// (make db-maintenance / db/maintenance.sh), not by the linker.
+}
+
+// startProgressHeartbeat calls report every interval with the current count and
+// the time elapsed since the heartbeat started, until the returned stop function
+// is called. This is what --progress does: a full run takes hours and per-batch
+// results are only logged at DEBUG, so otherwise the job is silent from the
+// start of linking until it finishes and an operator can't tell a stalled run
+// from a slow one. Reporting on a timer rather than per batch keeps the output
+// readable in a Slurm log. stop blocks until the heartbeat goroutine has exited,
+// so no report can be emitted after it returns.
+func startProgressHeartbeat(interval time.Duration, processed *atomic.Int64, report func(n int64, elapsed time.Duration)) (stop func()) {
+	started := time.Now()
+	done := make(chan struct{})
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		ticker := time.NewTicker(interval)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-done:
+				return
+			case <-ticker.C:
+				report(processed.Load(), time.Since(started))
+			}
+		}
+	}()
+	return func() {
+		close(done)
+		wg.Wait()
+	}
 }
 
 // linkCitation processes a single citation through the linking pipeline.
