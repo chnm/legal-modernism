@@ -127,12 +127,7 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		abbr = strings.TrimPrefix(abbr, vol)
 		abbr = strings.TrimSuffix(abbr, pp)
 		abbr = strings.TrimRight(strings.TrimSpace(abbr), " ,")
-		// A digit surrounded by letters is an OCR misreading of a letter, not a
-		// spelling the whitelist should have to carry a row for, so drop it.
-		// This is the same kind of repair as legalhist.ocr_corrections, which
-		// can only fix spellings someone has enumerated by hand. Raw keeps the
-		// uncorrected form.
-		c.ReporterAbbr = stripInteriorDigits(abbr)
+		c.ReporterAbbr = abbr
 
 		// Save the source
 		c.Source = doc
@@ -140,22 +135,6 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		citations = append(citations, c)
 	}
 	return citations
-}
-
-// stripInteriorDigits removes every digit that has a letter on both sides,
-// which is how the OCR renders a misread letter inside an abbreviation
-// ("F1ed." for "Fed."). It repeats until the string stops changing because
-// reInteriorDigit consumes the flanking letters, so a single pass would miss
-// the second corruption in a run like "M1a2ss." Each pass shortens the string,
-// so the loop terminates.
-func stripInteriorDigits(s string) string {
-	for {
-		stripped := reInteriorDigit.ReplaceAllString(s, "$1$2")
-		if stripped == s {
-			return s
-		}
-		s = stripped
-	}
 }
 
 // Given a string s, start at i and get a substring of length l, but don't

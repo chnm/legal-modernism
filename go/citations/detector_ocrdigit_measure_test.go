@@ -25,16 +25,18 @@ import (
 // actually land in the table. Counting raw matches instead roughly doubles
 // every number, since Detect's 25-character windows overlap.
 //
-// Skipped unless LAW_CLAUDE points at the read-only database, so CI is a no-op:
+// Skipped unless LAW_MEASURE is set, so neither CI nor a normal `go test ./...`
+// pays for it. Reads the database through LAW_CLAUDE:
 //
-//	go test ./go/citations/ -run OCRDigitYield -v -timeout 30m
+//	LAW_MEASURE=1 go test ./go/citations/ -run OCRDigitYield -v -timeout 30m
 //
 // LAW_SAMPLE_PCT sets the TABLESAMPLE percentage (default 0.25, ~26k pages).
 func TestOCRDigitYield(t *testing.T) {
-	dsn := os.Getenv("LAW_CLAUDE")
-	if dsn == "" {
-		t.Skip("LAW_CLAUDE not set; skipping measurement harness")
+	if os.Getenv("LAW_MEASURE") == "" {
+		t.Skip("LAW_MEASURE not set; skipping measurement harness")
 	}
+	dsn := os.Getenv("LAW_CLAUDE")
+	require.NotEmpty(t, dsn, "LAW_MEASURE is set but LAW_CLAUDE is not")
 	pct := 0.25
 	if v := os.Getenv("LAW_SAMPLE_PCT"); v != "" {
 		parsed, err := strconv.ParseFloat(v, 64)

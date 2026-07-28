@@ -41,5 +41,10 @@ var GenericDetector = NewDetector("Generic", abbrChar+`{3,16}`+edition)
 // Running it separately makes the yield purely additive: the two detectors scan
 // independently and SaveCitation's ON CONFLICT DO NOTHING collapses any citation
 // they both produce.
+//
+// As everywhere else, the ReporterAbbr saved is the spelling that actually
+// appeared in the OCR -- "F1ed.", not "Fed." -- and legalhist.whitelist decides
+// what it means. These citations therefore link only once the whitelist carries
+// their spellings; TestOCRDigitWhitelistSuggestions compiles the candidates.
 var GenericOCRDigitDetector = NewDetector("Generic OCR digit",
 	abbrUnit+`{0,15}`+abbrOCRDigit+abbrUnit+`{0,15}`+edition)
