@@ -1427,11 +1427,16 @@ CREATE VIEW moml_citations.citation_links_detail AS
 --
 
 CREATE VIEW moml_citations.citation_links_status AS
- SELECT status,
+ SELECT citation_links.status,
     count(*) AS n
    FROM moml_citations.citation_links
-  GROUP BY status
-  ORDER BY (count(*)) DESC;
+  GROUP BY citation_links.status
+UNION ALL
+ SELECT 'unprocessed'::text AS status,
+    (( SELECT count(*) AS count
+           FROM moml_citations.citations_unlinked) - ( SELECT count(*) AS count
+           FROM moml_citations.citation_links)) AS n
+  ORDER BY 2 DESC;
 
 
 --
@@ -2682,4 +2687,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260610140000'),
     ('20260611182350'),
     ('20260612205502'),
-    ('20260727212625');
+    ('20260727212625'),
+    ('20260728174121');

@@ -51,8 +51,4 @@ type LinkerStore interface {
 	// linker re-processes them, preserving only linked_* rows. Returns the number
 	// of rows deleted.
 	ResetUnlinked(ctx context.Context) (int64, error)
-
-	// BatchSkipNonWhitelisted marks all non-whitelisted citations as skipped
-	// in a single bulk operation. Returns the number of rows affected.
-	BatchSkipNonWhitelisted(ctx context.Context) (int64, error)
 }

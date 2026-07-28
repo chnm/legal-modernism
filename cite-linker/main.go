@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -10,22 +9,53 @@ import (
 	"sync"
 	"sync/atomic"
 	"syscall"
+	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
-	"github.com/schollz/progressbar/v3"
 	flag "github.com/spf13/pflag"
 )
 
+// progressInterval is how often --progress logs a heartbeat. A full run
+// processes ~62M citations over several hours, so this is frequent enough to
+// extrapolate a finish time without making the log noisy.
+const progressInterval = 5 * time.Minute
+
+// signalExitBase is added to the signal number to form the exit status of a run
+// stopped by a shutdown signal, following the shell convention: 130 for SIGINT,
+// 143 for SIGTERM. An interrupted run must be distinguishable from both a
+// completed one (0) and a genuine failure (1), because it committed real work
+// and should simply be resubmitted.
+const signalExitBase = 128
+
+// stopSignal holds the number of the shutdown signal that cancelled the run, or
+// 0 if none was received. A signal cancels the context, which then surfaces as
+// an error from whichever database call was in flight; consulting this instead
+// of inspecting that error is what lets an interrupt be reported as an
+// interrupt rather than as a failure.
+var stopSignal atomic.Int64
+
+// exitStartupError ends a run that failed before linking began. A shutdown
+// signal during startup cancels the in-flight query, so without the stopSignal
+// check a routine Ctrl-C during the minutes-long lookup-table load would exit 1
+// and log an ERROR, indistinguishable from a real failure.
+func exitStartupError(msg string, err error, attrs ...any) {
+	if sig := stopSignal.Load(); sig != 0 {
+		slog.Warn("interrupted during startup; no citations were linked",
+			append([]any{"step", msg, "signal", syscall.Signal(sig).String()}, attrs...)...)
+		os.Exit(signalExitBase + int(sig))
+	}
+	slog.Error(msg, append([]any{"error", err}, attrs...)...)
+	os.Exit(1)
+}
+
 func main() {
 	var showProgress bool
-	var skipUnlisted bool
 	var reset bool
 	var batchSize int
 	var workers int
-	flag.BoolVar(&showProgress, "progress", false, "show a progress bar")
-	flag.BoolVar(&skipUnlisted, "skip-unlisted", false, "batch-mark non-whitelisted citations as skipped before linking")
+	flag.BoolVar(&showProgress, "progress", false, "log a progress heartbeat (count, elapsed, rows/sec) every 5 minutes")
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
@@ -49,8 +79,11 @@ func main() {
 	}()
 	go func() {
 		select {
-		case <-quit:
-			slog.Info("quitting because shutdown signal received")
+		case s := <-quit:
+			if sig, ok := s.(syscall.Signal); ok {
+				stopSignal.Store(int64(sig))
+			}
+			slog.Info("quitting because shutdown signal received", "signal", s.String())
 			cancel()
 		case <-ctx.Done():
 		}
@@ -65,8 +98,7 @@ func main() {
 		c.MaxConns = maxConns
 	})
 	if err != nil {
-		slog.Error("could not connect to database", "database", db.Host(), "error", err)
-		os.Exit(1)
+		exitStartupError("could not connect to database", err, "database", db.Host())
 	}
 	defer pool.Close()
 	slog.Info("connected to the database", "database", db.Host())
@@ -81,21 +113,9 @@ func main() {
 		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
 		deleted, err := store.ResetUnlinked(ctx)
 		if err != nil {
-			slog.Error("reset failed", "deleted", deleted, "error", err)
-			os.Exit(1)
+			exitStartupError("reset failed", err, "deleted", deleted)
 		}
 		slog.Info("reset complete", "deleted", deleted)
-	}
-
-	// Handle --skip-unlisted: bulk skip, then continue to linking
-	if skipUnlisted {
-		slog.Info("batch-marking non-whitelisted citations as skipped")
-		affected, err := store.BatchSkipNonWhitelisted(ctx)
-		if err != nil {
-			slog.Error("batch skip failed", "error", err)
-			os.Exit(1)
-		}
-		slog.Info("batch skip complete", "rows_affected", affected)
 	}
 
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
@@ -104,32 +124,28 @@ func main() {
 	slog.Info("loading reporter whitelist")
 	whitelist, err := store.GetReporterWhitelist(ctx)
 	if err != nil {
-		slog.Error("could not load reporter whitelist", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load reporter whitelist", err)
 	}
 	slog.Info("loaded reporter whitelist", "entries", len(whitelist))
 
 	slog.Info("loading diff-vols mapping")
 	diffvols, err := store.GetDiffVols(ctx)
 	if err != nil {
-		slog.Error("could not load diff-vols mapping", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load diff-vols mapping", err)
 	}
 	slog.Info("loaded diff-vols mapping", "reporters", len(diffvols))
 
 	slog.Info("loading CAP citations")
 	capCites, err := store.LoadCAPCitations(ctx)
 	if err != nil {
-		slog.Error("could not load CAP citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load CAP citations", err)
 	}
 	slog.Info("loaded CAP citations", "entries", len(capCites))
 
 	slog.Info("loading FreeLaw cite crosswalk")
 	freelawCites, err := store.LoadFreelawCites(ctx)
 	if err != nil {
-		slog.Error("could not load FreeLaw cite crosswalk", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load FreeLaw cite crosswalk", err)
 	}
 	if len(freelawCites) == 0 {
 		slog.Warn("FreeLaw cite crosswalk is empty; the FreeLaw fallback will do nothing — refresh the freelaw.cite_to_cap materialized view")
@@ -139,37 +155,23 @@ func main() {
 	slog.Info("loading reporter alternate abbreviations")
 	altAbbrs, err := store.LoadReporterAltAbbrs(ctx)
 	if err != nil {
-		slog.Error("could not load reporter alternate abbreviations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load reporter alternate abbreviations", err)
 	}
 	slog.Info("loaded reporter alternate abbreviations", "reporters", len(altAbbrs))
 
 	slog.Info("loading code reporter citations")
 	codeCites, err := store.LoadCodeReporterCitations(ctx)
 	if err != nil {
-		slog.Error("could not load code reporter citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load code reporter citations", err)
 	}
 	slog.Info("loaded code reporter citations", "entries", len(codeCites))
 
 	slog.Info("loading English Reports citations")
 	erCites, err := store.LoadEnglishReportsCitations(ctx)
 	if err != nil {
-		slog.Error("could not load English Reports citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load English Reports citations", err)
 	}
 	slog.Info("loaded English Reports citations", "entries", len(erCites))
-
-	var pb *progressbar.ProgressBar
-	if showProgress {
-		// The unprocessed total is not pre-counted (an exact count is itself a
-		// full anti-join), so the bar runs in count/rate mode without an ETA.
-		pb = progressbar.NewOptions64(-1,
-			progressbar.OptionSetWriter(os.Stdout),
-			progressbar.OptionShowCount(),
-			progressbar.OptionShowIts(),
-		)
-	}
 
 	// Bounded pipeline. A single streaming reader (this goroutine, inside
 	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
@@ -179,8 +181,18 @@ func main() {
 	// table in memory.
 	batchCh := make(chan []citations.UnlinkedCitation, workers)
 	var wg sync.WaitGroup
-	var pbMu sync.Mutex
 	var processed atomic.Int64
+
+	stopHeartbeat := func() {}
+	if showProgress {
+		stopHeartbeat = startProgressHeartbeat(progressInterval, &processed,
+			func(n int64, elapsed time.Duration) {
+				slog.Info("linking progress",
+					"processed", n,
+					"elapsed", elapsed.Round(time.Second).String(),
+					"rows_per_sec", int64(float64(n)/elapsed.Seconds()))
+			})
+	}
 
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
@@ -202,6 +214,13 @@ func main() {
 				}
 
 				if err := store.SaveLinkResults(ctx, results); err != nil {
+					if ctx.Err() != nil {
+						// Shutting down. The insert was cancelled in flight, so
+						// this batch is simply not committed and will be picked
+						// up by the next run — not a failure worth an ERROR.
+						slog.Warn("batch not saved because of shutdown", "size", len(results))
+						continue
+					}
 					slog.Error("could not save batch results", "error", err)
 					continue
 				}
@@ -212,12 +231,6 @@ func main() {
 					attrs = append(attrs, status, count)
 				}
 				slog.Debug("saved batch", attrs...)
-
-				if pb != nil {
-					pbMu.Lock()
-					pb.Add(len(batch))
-					pbMu.Unlock()
-				}
 			}
 		}()
 	}
@@ -234,8 +247,23 @@ func main() {
 	})
 	close(batchCh)
 	wg.Wait()
+	stopHeartbeat()
 
-	if streamErr != nil && !errors.Is(streamErr, context.Canceled) {
+	// A shutdown signal cancels ctx, which surfaces as an error from whichever
+	// query was in flight, so this must be checked before streamErr: the run was
+	// interrupted, not broken. The count is a lower bound — a batch whose insert
+	// committed on the server but whose response was never read (because the
+	// context was cancelled first) is reported as unsaved and not counted. That
+	// only ever undercounts, and re-processing is idempotent thanks to
+	// ON CONFLICT (citation_id) DO NOTHING.
+	if sig := stopSignal.Load(); sig != 0 {
+		slog.Warn("interrupted before finishing; committed work is saved, resubmit to resume",
+			"processed_at_least", processed.Load(),
+			"signal", syscall.Signal(sig).String())
+		os.Exit(signalExitBase + int(sig))
+	}
+
+	if streamErr != nil {
 		slog.Error("streaming unprocessed citations failed", "processed", processed.Load(), "error", streamErr)
 		os.Exit(1)
 	}
@@ -245,6 +273,38 @@ func main() {
 	// Post-run database maintenance (vacuum/analyze the churned tables and
 	// refresh the chambers dashboard materialized views) is run separately
 	// (make db-maintenance / db/maintenance.sh), not by the linker.
+}
+
+// startProgressHeartbeat calls report every interval with the current count and
+// the time elapsed since the heartbeat started, until the returned stop function
+// is called. This is what --progress does: a full run takes hours and per-batch
+// results are only logged at DEBUG, so otherwise the job is silent from the
+// start of linking until it finishes and an operator can't tell a stalled run
+// from a slow one. Reporting on a timer rather than per batch keeps the output
+// readable in a Slurm log. stop blocks until the heartbeat goroutine has exited,
+// so no report can be emitted after it returns.
+func startProgressHeartbeat(interval time.Duration, processed *atomic.Int64, report func(n int64, elapsed time.Duration)) (stop func()) {
+	started := time.Now()
+	done := make(chan struct{})
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		ticker := time.NewTicker(interval)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-done:
+				return
+			case <-ticker.C:
+				report(processed.Load(), time.Since(started))
+			}
+		}
+	}()
+	return func() {
+		close(done)
+		wg.Wait()
+	}
 }
 
 // linkCitation processes a single citation through the linking pipeline.

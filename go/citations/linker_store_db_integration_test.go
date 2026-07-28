@@ -2,7 +2,9 @@ package citations
 
 import (
 	"context"
+	"errors"
 	"os"
+	"slices"
 	"testing"
 
 	"github.com/google/uuid"
@@ -117,6 +119,63 @@ func TestStreamUnprocessedCitationsIntegration(t *testing.T) {
 
 	// Batching: 7 rows at batch size 3 => batches of 3, 3, 1.
 	assert.Equal(t, []int{3, 3, 1}, batchSizes)
+}
+
+// errStopStream aborts a stream from inside the callback, standing in for a
+// killed job.
+var errStopStream = errors.New("stop stream")
+
+// TestStreamUnprocessedCitationsResumesIntegration covers the property the
+// linker depends on for resumability: because results are committed per batch,
+// a run killed partway through (a Slurm wall-time timeout) can simply be
+// resubmitted, and the anti-join delivers only the citations that were never
+// saved. This is what replaced the old batch-skip pre-pass, whose single giant
+// transaction committed nothing when killed.
+func TestStreamUnprocessedCitationsResumesIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	all := make([]uuid.UUID, 10)
+	for i := range all {
+		all[i] = uuid.New()
+		v := i
+		seedUnlinked(t, s, all[i], &v)
+	}
+
+	// First run: stream, but only save the first batch before "dying".
+	var saved []uuid.UUID
+	err := s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+		results := make([]*LinkResult, len(batch))
+		for i := range batch {
+			results[i] = &LinkResult{CitationID: batch[i].ID, Status: StatusSkippedNotWhitelisted}
+			saved = append(saved, batch[i].ID)
+		}
+		if err := s.SaveLinkResults(ctx, results); err != nil {
+			return err
+		}
+		return errStopStream // simulate the job being killed after one batch
+	})
+	require.ErrorIs(t, err, errStopStream)
+	require.Len(t, saved, 4, "expected exactly one batch of 4 to be committed")
+
+	// Second run: the resubmitted job sees only the 6 that were never saved.
+	var got []uuid.UUID
+	err = s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+		for _, c := range batch {
+			got = append(got, c.ID)
+		}
+		return nil
+	})
+	require.NoError(t, err)
+
+	want := make([]uuid.UUID, 0, 6)
+	for _, id := range all {
+		if !slices.Contains(saved, id) {
+			want = append(want, id)
+		}
+	}
+	assert.Len(t, got, 6)
+	assert.ElementsMatch(t, want, got, "resumed run must skip already-saved citations")
 }
 
 func TestSaveLinkResultsIntegration(t *testing.T) {
