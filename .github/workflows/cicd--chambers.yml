@@ -1,6 +1,7 @@
 name: Build & Publish chambers Docker Image
 
 on:
+  workflow_dispatch:
   push:
     branches: [
       "main"
