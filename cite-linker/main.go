@@ -6,15 +6,23 @@ import (
 	"log/slog"
 	"os"
 	"os/signal"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"syscall"
+	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	flag "github.com/spf13/pflag"
 )
+
+// progressInterval is how often the linking loop logs a progress heartbeat. A
+// frozen count across consecutive lines is the signal that the run is blocked;
+// one minute is frequent enough to notice that within a Slurm job without
+// making the log unreadable.
+const progressInterval = 1 * time.Minute
 
 // signalExitBase is added to the signal number to form the exit status of a run
 // stopped by a shutdown signal, following the shell convention: 130 for SIGINT,
@@ -48,9 +56,11 @@ func main() {
 	var reset bool
 	var batchSize int
 	var workers int
+	var lockTimeout time.Duration
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
+	flag.DurationVar(&lockTimeout, "lock-timeout", time.Minute, "give up on a statement that waits this long for a database lock, instead of blocking forever behind an uncommitted transaction; 0 disables")
 	flag.Parse()
 
 	if batchSize < 1 {
@@ -88,6 +98,15 @@ func main() {
 	maxConns := int32(workers + 2)
 	pool, err := db.ConnectPool(ctx, func(c *pgxpool.Config) {
 		c.MaxConns = maxConns
+		// Without lock_timeout a batch that collides with an uncommitted
+		// transaction — a psql or GUI session left mid-transaction on
+		// citation_links — waits forever, and every worker piles up behind it
+		// until the whole run is wedged with no error to show for it. Setting it
+		// as a connection runtime parameter covers every statement on every
+		// pooled connection, including the streaming read.
+		if lockTimeout > 0 {
+			c.ConnConfig.RuntimeParams["lock_timeout"] = strconv.FormatInt(lockTimeout.Milliseconds(), 10)
+		}
 	})
 	if err != nil {
 		exitStartupError("could not connect to database", err, "database", db.Host())
@@ -174,11 +193,23 @@ func main() {
 	batchCh := make(chan []citations.UnlinkedCitation, workers)
 	var wg sync.WaitGroup
 	var processed atomic.Int64
+	var failedBatches atomic.Int64
+	var failedRows atomic.Int64
 
 	// Mark the transition out of the loading phase. Without this the log goes
 	// quiet after the last lookup table is loaded, so there is no way to tell
 	// that linking has actually begun.
-	slog.Info("starting to link citations", "workers", workers, "batch_size", batchSize)
+	slog.Info("starting to link citations",
+		"workers", workers, "batch_size", batchSize,
+		"lock_timeout", lockTimeout.String(), "progress_every", progressInterval.String())
+
+	stopHeartbeat := startProgressHeartbeat(progressInterval, &processed,
+		func(n int64, elapsed time.Duration) {
+			slog.Info("linking progress",
+				"processed", n,
+				"elapsed", elapsed.Round(time.Second).String(),
+				"rows_per_sec", int64(float64(n)/elapsed.Seconds()))
+		})
 
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
@@ -207,7 +238,9 @@ func main() {
 						slog.Warn("batch not saved because of shutdown", "size", len(results))
 						continue
 					}
-					slog.Error("could not save batch results", "error", err)
+					failedBatches.Add(1)
+					failedRows.Add(int64(len(results)))
+					slog.Error("could not save batch results", "size", len(results), "error", err)
 					continue
 				}
 
@@ -233,6 +266,7 @@ func main() {
 	})
 	close(batchCh)
 	wg.Wait()
+	stopHeartbeat()
 
 	// A shutdown signal cancels ctx, which surfaces as an error from whichever
 	// query was in flight, so this must be checked before streamErr: the run was
@@ -253,11 +287,53 @@ func main() {
 		os.Exit(1)
 	}
 
+	// A batch that could not be saved is left unprocessed rather than lost, but
+	// the run must not report success: with --lock-timeout set, a blocking
+	// transaction now turns an indefinite hang into dropped batches, and
+	// swallowing that would trade a visible stall for a silent partial run.
+	if n := failedBatches.Load(); n > 0 {
+		slog.Error("finished with unsaved batches; re-run to pick them up",
+			"processed", processed.Load(),
+			"failed_batches", n,
+			"failed_rows", failedRows.Load())
+		os.Exit(1)
+	}
+
 	slog.Info("done linking citations", "processed", processed.Load())
 
 	// Post-run database maintenance (vacuum/analyze the churned tables and
 	// refresh the chambers dashboard materialized views) is run separately
 	// (make db-maintenance / db/maintenance.sh), not by the linker.
+}
+
+// startProgressHeartbeat calls report every interval with the current count and
+// the time elapsed since the heartbeat started, until the returned stop function
+// is called. Reporting on a timer rather than per batch keeps the output
+// readable in a Slurm log, and a count that does not move between consecutive
+// reports is what makes a blocked run visible. stop blocks until the heartbeat
+// goroutine has exited, so no report can be emitted after it returns.
+func startProgressHeartbeat(interval time.Duration, processed *atomic.Int64, report func(n int64, elapsed time.Duration)) (stop func()) {
+	started := time.Now()
+	done := make(chan struct{})
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		ticker := time.NewTicker(interval)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-done:
+				return
+			case <-ticker.C:
+				report(processed.Load(), time.Since(started))
+			}
+		}
+	}()
+	return func() {
+		close(done)
+		wg.Wait()
+	}
 }
 
 // linkCitation processes a single citation through the linking pipeline.

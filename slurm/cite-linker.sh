@@ -21,8 +21,11 @@
 # Routine run: link any not-yet-processed citations. Safe to resubmit — results
 # are committed per batch (8,000 rows), so a job that hits the wall time can just
 # be resubmitted and it picks up exactly where it left off. Check `squeue` first;
-# two concurrent linkers are correct but double the read work.
-~/legal-modernism/bin/cite-linker --batch-size=8000 --workers=32
+# two concurrent linkers are correct but double the read work. --lock-timeout
+# stops the run wedging behind an uncommitted transaction on citation_links (a
+# psql or GUI session left mid-transaction); it exits non-zero naming the
+# dropped batches instead of hanging until the wall time runs out.
+~/legal-modernism/bin/cite-linker --batch-size=8000 --workers=32 --lock-timeout=1m
 
 # One-time reset run (after whitelist corrections or a new linking tier): comment
 # out the line above and use the line below instead. --reset deletes every
@@ -30,4 +33,4 @@
 # re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
 # on a resubmit after a timeout, throwing away all partial progress.
-# ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32
+# ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32 --lock-timeout=1m
