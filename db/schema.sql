@@ -1,6 +1,6 @@
 \restrict dbmate
 
--- Dumped from database version 17.9 (Debian 17.9-1.pgdg13+1)
+-- Dumped from database version 17.10 (Debian 17.10-0+deb13u1)
 -- Dumped by pg_dump version 17.10 (Homebrew)
 
 SET statement_timeout = 0;
@@ -2681,4 +2681,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260610130000'),
     ('20260610140000'),
     ('20260611182350'),
-    ('20260612205502');
+    ('20260612205502'),
+    ('20260727212625');
