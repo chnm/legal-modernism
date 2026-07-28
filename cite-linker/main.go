@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -22,6 +21,34 @@ import (
 // processes ~62M citations over several hours, so this is frequent enough to
 // extrapolate a finish time without making the log noisy.
 const progressInterval = 5 * time.Minute
+
+// signalExitBase is added to the signal number to form the exit status of a run
+// stopped by a shutdown signal, following the shell convention: 130 for SIGINT,
+// 143 for SIGTERM. An interrupted run must be distinguishable from both a
+// completed one (0) and a genuine failure (1), because it committed real work
+// and should simply be resubmitted.
+const signalExitBase = 128
+
+// stopSignal holds the number of the shutdown signal that cancelled the run, or
+// 0 if none was received. A signal cancels the context, which then surfaces as
+// an error from whichever database call was in flight; consulting this instead
+// of inspecting that error is what lets an interrupt be reported as an
+// interrupt rather than as a failure.
+var stopSignal atomic.Int64
+
+// exitStartupError ends a run that failed before linking began. A shutdown
+// signal during startup cancels the in-flight query, so without the stopSignal
+// check a routine Ctrl-C during the minutes-long lookup-table load would exit 1
+// and log an ERROR, indistinguishable from a real failure.
+func exitStartupError(msg string, err error, attrs ...any) {
+	if sig := stopSignal.Load(); sig != 0 {
+		slog.Warn("interrupted during startup; no citations were linked",
+			append([]any{"step", msg, "signal", syscall.Signal(sig).String()}, attrs...)...)
+		os.Exit(signalExitBase + int(sig))
+	}
+	slog.Error(msg, append([]any{"error", err}, attrs...)...)
+	os.Exit(1)
+}
 
 func main() {
 	var showProgress bool
@@ -52,8 +79,11 @@ func main() {
 	}()
 	go func() {
 		select {
-		case <-quit:
-			slog.Info("quitting because shutdown signal received")
+		case s := <-quit:
+			if sig, ok := s.(syscall.Signal); ok {
+				stopSignal.Store(int64(sig))
+			}
+			slog.Info("quitting because shutdown signal received", "signal", s.String())
 			cancel()
 		case <-ctx.Done():
 		}
@@ -68,8 +98,7 @@ func main() {
 		c.MaxConns = maxConns
 	})
 	if err != nil {
-		slog.Error("could not connect to database", "database", db.Host(), "error", err)
-		os.Exit(1)
+		exitStartupError("could not connect to database", err, "database", db.Host())
 	}
 	defer pool.Close()
 	slog.Info("connected to the database", "database", db.Host())
@@ -84,8 +113,7 @@ func main() {
 		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
 		deleted, err := store.ResetUnlinked(ctx)
 		if err != nil {
-			slog.Error("reset failed", "deleted", deleted, "error", err)
-			os.Exit(1)
+			exitStartupError("reset failed", err, "deleted", deleted)
 		}
 		slog.Info("reset complete", "deleted", deleted)
 	}
@@ -96,32 +124,28 @@ func main() {
 	slog.Info("loading reporter whitelist")
 	whitelist, err := store.GetReporterWhitelist(ctx)
 	if err != nil {
-		slog.Error("could not load reporter whitelist", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load reporter whitelist", err)
 	}
 	slog.Info("loaded reporter whitelist", "entries", len(whitelist))
 
 	slog.Info("loading diff-vols mapping")
 	diffvols, err := store.GetDiffVols(ctx)
 	if err != nil {
-		slog.Error("could not load diff-vols mapping", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load diff-vols mapping", err)
 	}
 	slog.Info("loaded diff-vols mapping", "reporters", len(diffvols))
 
 	slog.Info("loading CAP citations")
 	capCites, err := store.LoadCAPCitations(ctx)
 	if err != nil {
-		slog.Error("could not load CAP citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load CAP citations", err)
 	}
 	slog.Info("loaded CAP citations", "entries", len(capCites))
 
 	slog.Info("loading FreeLaw cite crosswalk")
 	freelawCites, err := store.LoadFreelawCites(ctx)
 	if err != nil {
-		slog.Error("could not load FreeLaw cite crosswalk", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load FreeLaw cite crosswalk", err)
 	}
 	if len(freelawCites) == 0 {
 		slog.Warn("FreeLaw cite crosswalk is empty; the FreeLaw fallback will do nothing — refresh the freelaw.cite_to_cap materialized view")
@@ -131,24 +155,21 @@ func main() {
 	slog.Info("loading reporter alternate abbreviations")
 	altAbbrs, err := store.LoadReporterAltAbbrs(ctx)
 	if err != nil {
-		slog.Error("could not load reporter alternate abbreviations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load reporter alternate abbreviations", err)
 	}
 	slog.Info("loaded reporter alternate abbreviations", "reporters", len(altAbbrs))
 
 	slog.Info("loading code reporter citations")
 	codeCites, err := store.LoadCodeReporterCitations(ctx)
 	if err != nil {
-		slog.Error("could not load code reporter citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load code reporter citations", err)
 	}
 	slog.Info("loaded code reporter citations", "entries", len(codeCites))
 
 	slog.Info("loading English Reports citations")
 	erCites, err := store.LoadEnglishReportsCitations(ctx)
 	if err != nil {
-		slog.Error("could not load English Reports citations", "error", err)
-		os.Exit(1)
+		exitStartupError("could not load English Reports citations", err)
 	}
 	slog.Info("loaded English Reports citations", "entries", len(erCites))
 
@@ -193,6 +214,13 @@ func main() {
 				}
 
 				if err := store.SaveLinkResults(ctx, results); err != nil {
+					if ctx.Err() != nil {
+						// Shutting down. The insert was cancelled in flight, so
+						// this batch is simply not committed and will be picked
+						// up by the next run — not a failure worth an ERROR.
+						slog.Warn("batch not saved because of shutdown", "size", len(results))
+						continue
+					}
 					slog.Error("could not save batch results", "error", err)
 					continue
 				}
@@ -221,7 +249,21 @@ func main() {
 	wg.Wait()
 	stopHeartbeat()
 
-	if streamErr != nil && !errors.Is(streamErr, context.Canceled) {
+	// A shutdown signal cancels ctx, which surfaces as an error from whichever
+	// query was in flight, so this must be checked before streamErr: the run was
+	// interrupted, not broken. The count is a lower bound — a batch whose insert
+	// committed on the server but whose response was never read (because the
+	// context was cancelled first) is reported as unsaved and not counted. That
+	// only ever undercounts, and re-processing is idempotent thanks to
+	// ON CONFLICT (citation_id) DO NOTHING.
+	if sig := stopSignal.Load(); sig != 0 {
+		slog.Warn("interrupted before finishing; committed work is saved, resubmit to resume",
+			"processed_at_least", processed.Load(),
+			"signal", syscall.Signal(sig).String())
+		os.Exit(signalExitBase + int(sig))
+	}
+
+	if streamErr != nil {
 		slog.Error("streaming unprocessed citations failed", "processed", processed.Load(), "error", streamErr)
 		os.Exit(1)
 	}
