@@ -9,18 +9,12 @@ import (
 	"sync"
 	"sync/atomic"
 	"syscall"
-	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	flag "github.com/spf13/pflag"
 )
-
-// progressInterval is how often --progress logs a heartbeat. A full run
-// processes ~62M citations over several hours, so this is frequent enough to
-// extrapolate a finish time without making the log noisy.
-const progressInterval = 5 * time.Minute
 
 // signalExitBase is added to the signal number to form the exit status of a run
 // stopped by a shutdown signal, following the shell convention: 130 for SIGINT,
@@ -51,11 +45,9 @@ func exitStartupError(msg string, err error, attrs ...any) {
 }
 
 func main() {
-	var showProgress bool
 	var reset bool
 	var batchSize int
 	var workers int
-	flag.BoolVar(&showProgress, "progress", false, "log a progress heartbeat (count, elapsed, rows/sec) every 5 minutes")
 	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
@@ -183,25 +175,10 @@ func main() {
 	var wg sync.WaitGroup
 	var processed atomic.Int64
 
-	stopHeartbeat := func() {}
-	if showProgress {
-		stopHeartbeat = startProgressHeartbeat(progressInterval, &processed,
-			func(n int64, elapsed time.Duration) {
-				slog.Info("linking progress",
-					"processed", n,
-					"elapsed", elapsed.Round(time.Second).String(),
-					"rows_per_sec", int64(float64(n)/elapsed.Seconds()))
-			})
-	}
-
 	// Mark the transition out of the loading phase. Without this the log goes
-	// quiet after the last lookup table is loaded and stays quiet until the first
-	// heartbeat, so there is no way to tell that linking has actually begun.
-	startAttrs := []any{"workers", workers, "batch_size", batchSize}
-	if showProgress {
-		startAttrs = append(startAttrs, "progress_every", progressInterval.String())
-	}
-	slog.Info("starting to link citations", startAttrs...)
+	// quiet after the last lookup table is loaded, so there is no way to tell
+	// that linking has actually begun.
+	slog.Info("starting to link citations", "workers", workers, "batch_size", batchSize)
 
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
@@ -256,7 +233,6 @@ func main() {
 	})
 	close(batchCh)
 	wg.Wait()
-	stopHeartbeat()
 
 	// A shutdown signal cancels ctx, which surfaces as an error from whichever
 	// query was in flight, so this must be checked before streamErr: the run was
@@ -282,38 +258,6 @@ func main() {
 	// Post-run database maintenance (vacuum/analyze the churned tables and
 	// refresh the chambers dashboard materialized views) is run separately
 	// (make db-maintenance / db/maintenance.sh), not by the linker.
-}
-
-// startProgressHeartbeat calls report every interval with the current count and
-// the time elapsed since the heartbeat started, until the returned stop function
-// is called. This is what --progress does: a full run takes hours and per-batch
-// results are only logged at DEBUG, so otherwise the job is silent from the
-// start of linking until it finishes and an operator can't tell a stalled run
-// from a slow one. Reporting on a timer rather than per batch keeps the output
-// readable in a Slurm log. stop blocks until the heartbeat goroutine has exited,
-// so no report can be emitted after it returns.
-func startProgressHeartbeat(interval time.Duration, processed *atomic.Int64, report func(n int64, elapsed time.Duration)) (stop func()) {
-	started := time.Now()
-	done := make(chan struct{})
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		ticker := time.NewTicker(interval)
-		defer ticker.Stop()
-		for {
-			select {
-			case <-done:
-				return
-			case <-ticker.C:
-				report(processed.Load(), time.Since(started))
-			}
-		}
-	}()
-	return func() {
-		close(done)
-		wg.Wait()
-	}
 }
 
 // linkCitation processes a single citation through the linking pipeline.
