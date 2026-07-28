@@ -194,6 +194,15 @@ func main() {
 			})
 	}
 
+	// Mark the transition out of the loading phase. Without this the log goes
+	// quiet after the last lookup table is loaded and stays quiet until the first
+	// heartbeat, so there is no way to tell that linking has actually begun.
+	startAttrs := []any{"workers", workers, "batch_size", batchSize}
+	if showProgress {
+		startAttrs = append(startAttrs, "progress_every", progressInterval.String())
+	}
+	slog.Info("starting to link citations", startAttrs...)
+
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
 		go func() {
