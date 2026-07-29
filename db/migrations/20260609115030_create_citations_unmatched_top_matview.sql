@@ -7,7 +7,7 @@ SET ROLE = law_admin;
 -- abbreviations are joined to the whitelist (excluding junk) to get the
 -- standard reporter, then grouped by volume, standard reporter, and page so
 -- each distinct normalized citation is counted once. Built WITH NO DATA; run
--- REFRESH MATERIALIZED VIEW to populate (see note in migrate:down).
+-- REFRESH MATERIALIZED VIEW to populate (see note before migrate:down).
 CREATE MATERIALIZED VIEW IF NOT EXISTS moml_citations.citations_unmatched_top AS
 SELECT
   cu.volume,
@@ -28,10 +28,10 @@ WITH NO DATA;
 
 -- Unique index on the grouping key. Each (volume, reporter_standard, page) is
 -- unique by construction (it is the GROUP BY key). NULLS NOT DISTINCT treats
--- the NULL volume of single-volume reporters as a single value. The cite-linker
--- refreshes this view with a plain (non-concurrent) REFRESH, so this index is
--- not required for that; it documents the grouping invariant and keeps the
--- option of a manual REFRESH MATERIALIZED VIEW CONCURRENTLY open.
+-- the NULL volume of single-volume reporters as a single value.
+-- db/maintenance.sh refreshes this view with a plain (non-concurrent) REFRESH,
+-- so this index is not required for that; it documents the grouping invariant
+-- and keeps the option of a manual REFRESH MATERIALIZED VIEW CONCURRENTLY open.
 CREATE UNIQUE INDEX IF NOT EXISTS citations_unmatched_top_uq
   ON moml_citations.citations_unmatched_top (volume, reporter_standard, page) NULLS NOT DISTINCT;
 
@@ -39,9 +39,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS citations_unmatched_top_uq
 CREATE INDEX IF NOT EXISTS citations_unmatched_top_n_idx
   ON moml_citations.citations_unmatched_top (n DESC);
 
--- After this migration the view is empty. The cite-linker refreshes it at the
--- start and end of each run, so it will be populated the next time cite-linker
--- runs. To populate it manually in the meantime:
+-- After this migration the view is empty. The cite-linker does not refresh it;
+-- run `make db-maintenance` (db/maintenance.sh) after a linker run, or populate
+-- it manually:
 --   REFRESH MATERIALIZED VIEW moml_citations.citations_unmatched_top;
 
 -- migrate:down

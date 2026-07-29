@@ -314,9 +314,95 @@ func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
 	got, err := s.LoadReporterAltAbbrs(ctx)
 	require.NoError(t, err)
 
-	assert.ElementsMatch(t, []string{"US", "U. S."}, got["U.S."])
+	// Exact order, not ElementsMatch: the loader's ORDER BY … COLLATE "C" makes
+	// the probe order deterministic, byte-ordered ("U. S." before "US").
+	assert.Equal(t, []string{"U. S.", "US"}, got["U.S."])
 	assert.Equal(t, []string{"Serg. & Rawle"}, got["Serg. & Rawl."])
 	_, hasMass := got["Mass."]
 	assert.False(t, hasMass, "a reporter with no alt rows should be absent from the map")
 	assert.Len(t, got, 2)
+}
+
+func TestLoadCAPCitationsIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// Minimal cap slice: just the citations table the loader reads.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS cap CASCADE`,
+		`CREATE SCHEMA cap`,
+		`CREATE TABLE cap.citations (cite text NOT NULL, type text NOT NULL, "case" bigint NOT NULL)`,
+		`INSERT INTO cap.citations (cite, type, "case") VALUES
+			('5 U.S. 10', 'official', 111),
+			('108 S. Ct. 185', 'official', 222),
+			('108 S. Ct. 185', 'official', 333),
+			('2 Mass. 4', 'official', 444),
+			('2 Mass. 4', 'parallel', 444)`,
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.LoadCAPCitations(ctx)
+	require.NoError(t, err)
+
+	// An unambiguous cite is kept; a cite belonging to two cases is dropped; a
+	// cite appearing twice for the SAME case is one distinct case, so it stays.
+	assert.Equal(t, map[string]int64{
+		"5 U.S. 10": 111,
+		"2 Mass. 4": 444,
+	}, got)
+}
+
+func TestLoadCodeReporterCitationsIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// Minimal code_reporter slice: only the columns the loader reads.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS legalhist CASCADE`,
+		`CREATE SCHEMA legalhist`,
+		`CREATE TABLE legalhist.code_reporter (
+			id bigint PRIMARY KEY,
+			official_citation text NOT NULL,
+			parallel_citation text
+		)`,
+		`INSERT INTO legalhist.code_reporter (id, official_citation, parallel_citation) VALUES
+			(1, '1 Code Rep. 5', NULL),
+			(2, '1 Code Rep. 59', NULL),
+			(3, '1 Code Rep. 59', NULL),
+			(4, '2 Code Rep. 153', '4 Sandf. 21; 6 N.Y. Super. Ct. 21'),
+			(5, '3 Code Rep. 67', '1 Code Rep. 91 (1848)'),
+			(6, '3 Code Rep. 103', '21 F. Cas 863; Cox, Manual Trade-Mark Cas. 51'),
+			(7, '2 Code Rep. 7', '1 Code Rep. 5'),
+			(8, '3 Code Rep. 39', '3 Code Rep. 39')`,
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.LoadCodeReporterCitations(ctx)
+	require.NoError(t, err)
+
+	assert.Equal(t, map[string]int64{
+		// Officials shared by two rows (ids 2 and 3) are dropped; '1 Code Rep. 5'
+		// is dropped because id 7's parallel collides with id 1's official.
+		"2 Code Rep. 153": 4,
+		"3 Code Rep. 67":  5,
+		"3 Code Rep. 103": 6,
+		"2 Code Rep. 7":   7,
+		// A parallel equal to its own official is one distinct id: kept once.
+		"3 Code Rep. 39": 8,
+		// "; "-separated parallels split into individual keys.
+		"4 Sandf. 21":          4,
+		"6 N.Y. Super. Ct. 21": 4,
+		// A trailing parenthetical year is stripped.
+		"1 Code Rep. 91": 5,
+		// Comma-joined segments are NOT split (reporter names contain commas);
+		// they stay as literal keys no probe string will match.
+		"21 F. Cas 863":                  6,
+		"Cox, Manual Trade-Mark Cas. 51": 6,
+	}, got)
 }

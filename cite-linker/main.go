@@ -361,11 +361,10 @@ func linkCitation(
 		return result
 	}
 
-	// If there's no standard reporter, we can't normalize the citation
-	if entry.ReporterStandard == nil {
-		result.Status = citations.StatusNoMatch
-		return result
-	}
+	// Past this point entry.ReporterStandard is never nil: non-junk whitelist
+	// rows always have a standard reporter, enforced by the
+	// chk_whitelist_nonjunk_has_standard constraint. A violation panics at the
+	// derefs below rather than silently producing no_match.
 
 	// Step 2: route by UK flag
 	if entry.UK {
@@ -375,8 +374,13 @@ func linkCitation(
 }
 
 // linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
-// (which also resolves to a CAP case), then the FreeLaw crosswalk again under
-// alternate reporter spellings, then the Code Reporter, all using in-memory maps.
+// (which also resolves to a CAP case), then both again under alternate reporter
+// spellings, then the Code Reporter (standard form, then alternates), all using
+// in-memory maps. The alternate spellings probe per map, not per alt: CAP is
+// exhausted across every alternate before FreeLaw is consulted, because the
+// source ranking is meaningful (CAP's own citation index over the FreeLaw
+// cluster crosswalk, matching the direct-probe order) while the position of an
+// alt in its list is not.
 func linkCAPThenCode(
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
@@ -418,33 +422,44 @@ func linkCAPThenCode(
 			return result
 		}
 
-		// Fall back to alternate reporter spellings: the same decision may be in the
-		// FreeLaw crosswalk under a CourtListener spelling that differs from our
-		// reporter_standard/reporter_cap. Probe each known alternate spelling for this
-		// reporter (keyed by the canonical reporter_standard, like diffvols). The
-		// first hit links to the CAP case (status linked_cap). Volume-nil is handled
-		// the same way as buildStandardCite/buildCAPCite.
-		for _, alt := range altAbbrs[*entry.ReporterStandard] {
-			var altCite string
-			if f.Volume == nil {
-				altCite = fmt.Sprintf("%s %d", alt, f.Page)
-			} else {
-				altCite = fmt.Sprintf("%d %s %d", *f.Volume, alt, f.Page)
-			}
-			if caseID, ok := freelawCites[altCite]; ok {
+		// Fall back to alternate reporter spellings: the same decision may be in
+		// CAP or the FreeLaw crosswalk under a spelling that differs from our
+		// reporter_standard/reporter_cap. Probe each known alternate spelling for
+		// this reporter (keyed by the canonical reporter_standard, like diffvols)
+		// against CAP first, then all of them against FreeLaw. A hit links to the
+		// CAP case (status linked_cap).
+		altCites := buildAltCites(f, altAbbrs[*entry.ReporterStandard])
+		for i := range altCites {
+			if caseID, ok := capCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCAP
 				result.CAPCaseID = &caseID
-				result.CiteLinked = &altCite
+				result.CiteLinked = &altCites[i]
+				return result
+			}
+		}
+		for i := range altCites {
+			if caseID, ok := freelawCites[altCites[i]]; ok {
+				result.Status = citations.StatusLinkedCAP
+				result.CAPCaseID = &caseID
+				result.CiteLinked = &altCites[i]
 				return result
 			}
 		}
 
-		// Try Code Reporter with the cleaned cite
+		// Try Code Reporter with the cleaned cite, then the alternate spellings
 		if codeID, ok := codeCites[cleaned]; ok {
 			result.Status = citations.StatusLinkedCodeReporter
 			result.CodeReporterID = &codeID
 			result.CiteLinked = &cleaned
 			return result
+		}
+		for i := range altCites {
+			if codeID, ok := codeCites[altCites[i]]; ok {
+				result.Status = citations.StatusLinkedCodeReporter
+				result.CodeReporterID = &codeID
+				result.CiteLinked = &altCites[i]
+				return result
+			}
 		}
 	}
 
@@ -510,6 +525,26 @@ func volumeForms(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry)
 		return forms
 	}
 	return append(forms, &variant)
+}
+
+// buildAltCites constructs the alternate-spelling cite strings for a citation
+// form, one per alternate abbreviation, in order; nil when there are none.
+// Volume-nil is handled the same way as buildStandardCite. The alternates
+// deliberately bypass buildCAPCite's reporter_cap/diffvols handling: they are
+// the other source's own spellings, so remapping their volumes would be wrong.
+func buildAltCites(c *citations.UnlinkedCitation, alts []string) []string {
+	if len(alts) == 0 {
+		return nil
+	}
+	altCites := make([]string, len(alts))
+	for i, alt := range alts {
+		if c.Volume == nil {
+			altCites[i] = fmt.Sprintf("%s %d", alt, c.Page)
+		} else {
+			altCites[i] = fmt.Sprintf("%d %s %d", *c.Volume, alt, c.Page)
+		}
+	}
+	return altCites
 }
 
 // buildStandardCite constructs "{volume} {reporter_standard} {page}".

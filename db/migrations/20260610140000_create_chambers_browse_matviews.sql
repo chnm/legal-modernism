@@ -116,7 +116,7 @@ CREATE INDEX IF NOT EXISTS citation_links_cite_normalized_idx
 
 -- After this migration the three views are empty. Populate them (and refresh the
 -- existing dashboard views) with:
---   make db-refresh
+--   make db-maintenance
 -- or individually:
 --   REFRESH MATERIALIZED VIEW moml_citations.treatise_citation_counts;
 --   REFRESH MATERIALIZED VIEW moml_citations.case_citation_counts;

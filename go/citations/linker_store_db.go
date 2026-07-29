@@ -148,8 +148,19 @@ func (s *LinkerDBStore) StreamUnprocessedCitations(ctx context.Context, batchSiz
 }
 
 // LoadCAPCitations loads cap.citations into an in-memory map of cite -> case ID.
+// A cite is included only if it resolves unambiguously to a single case, the
+// same policy freelaw.cite_to_cap enforces with its HAVING clause: ~10% of
+// distinct cite strings belong to more than one case (memorandum/table pages
+// listing several decisions), and linking those to an arbitrary case would
+// inject systematic errors, so they are dropped. min("case") is a formality —
+// the HAVING guarantees a single distinct value.
 func (s *LinkerDBStore) LoadCAPCitations(ctx context.Context) (map[string]int64, error) {
-	query := `SELECT DISTINCT ON (cite) cite, "case" FROM cap.citations`
+	query := `
+	SELECT cite, min("case") AS case_id
+	FROM cap.citations
+	GROUP BY cite
+	HAVING count(DISTINCT "case") = 1
+	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
 		return nil, fmt.Errorf("loading CAP citations: %w", err)
@@ -200,15 +211,18 @@ func (s *LinkerDBStore) LoadFreelawCites(ctx context.Context) (map[string]int64,
 }
 
 // LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into an in-memory
-// map of reporter_standard -> []alt_abbr. The linker probes the FreeLaw
-// crosswalk with each alternate spelling (keyed by the canonical
+// map of reporter_standard -> []alt_abbr. The linker probes the CAP, FreeLaw,
+// and code-reporter maps with each alternate spelling (keyed by the canonical
 // reporter_standard, like the diffvols mapping) after the standard/reporter_cap
-// forms miss.
+// forms miss. The ORDER BY makes the probe order — and therefore which alt wins
+// when more than one would hit — deterministic across runs; COLLATE "C" keeps
+// that order byte-identical across environments regardless of locale.
 func (s *LinkerDBStore) LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error) {
 	query := `
 	SELECT reporter_standard, alt_abbr
 	FROM legalhist.reporters_abbreviations
 	WHERE alt_abbr IS NOT NULL
+	ORDER BY reporter_standard COLLATE "C", alt_abbr COLLATE "C"
 	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
@@ -231,9 +245,31 @@ func (s *LinkerDBStore) LoadReporterAltAbbrs(ctx context.Context) (map[string][]
 }
 
 // LoadCodeReporterCitations loads code_reporter into an in-memory map of
-// official_citation -> id.
+// citation -> id, keyed by both official_citation and the individual
+// parallel_citation entries. parallel_citation is a "; "-separated list
+// ("4 Sandf. 21; 6 N.Y. Super. Ct. 21"), so it is split on semicolons, with a
+// trailing parenthetical year ("1 Code Rep. 91 (1848)") stripped. Commas are
+// NOT split on: reporter names legitimately contain them ("Cox, Manual
+// Trade-Mark Cas. 51"), so the few comma-joined pairs inside one segment stay
+// as harmless keys no probe string will ever match. As with the CAP map, a
+// citation is included only if it resolves unambiguously to a single row —
+// several Code Reports pages carry many short decisions, so the same cite can
+// belong to more than one id.
 func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error) {
-	query := `SELECT official_citation, id FROM legalhist.code_reporter`
+	query := `
+	SELECT cite, min(id) AS id
+	FROM (
+		SELECT official_citation AS cite, id FROM legalhist.code_reporter
+		UNION ALL
+		SELECT regexp_replace(trim(seg), '\s*\(\d{4}\)$', ''), id
+		FROM legalhist.code_reporter,
+		     unnest(string_to_array(parallel_citation, ';')) AS seg
+		WHERE parallel_citation IS NOT NULL
+	) t
+	WHERE cite <> ''
+	GROUP BY cite
+	HAVING count(DISTINCT id) = 1
+	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
 		return nil, fmt.Errorf("loading code reporter citations: %w", err)

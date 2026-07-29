@@ -158,6 +158,93 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("Stat 30"),
 		},
 		{
+			name:         "alt_abbr CAP hit recovers a no_match",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{"5 US 10": 333}, // CAP holds the no-period spelling
+			freelawCites: map[string]int64{},
+			altAbbrs:     map[string][]string{"U.S.": {"US"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(333)),
+			wantLinked:   ptr("5 US 10"),
+		},
+		{
+			// The alternates probe per map, not per alt: CAP is exhausted across
+			// every alternate before FreeLaw is consulted, so a later alt's CAP
+			// hit beats an earlier alt's FreeLaw hit.
+			name:         "alt CAP hit wins over an earlier-alt FreeLaw hit",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{"5 U. S. 10": 333}, // second alt
+			freelawCites: map[string]int64{"5 US 10": 444},    // first alt
+			altAbbrs:     map[string][]string{"U.S.": {"US", "U. S."}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(333)),
+			wantLinked:   ptr("5 U. S. 10"),
+		},
+		{
+			// The alt probes sit after both direct probes: a normalized-form
+			// FreeLaw hit still beats any alternate-spelling CAP hit.
+			name:         "direct FreeLaw-normalized hit wins over alt CAP",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{"5 US 10": 333},
+			freelawCites: map[string]int64{"5 U.S. 10": 222},
+			altAbbrs:     map[string][]string{"U.S.": {"US"}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantCAPID:    ptr(int64(222)),
+			wantLinked:   ptr("5 U.S. 10"),
+		},
+		{
+			name:         "alt_abbr code-reporter hit recovers a no_match",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
+			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{},
+			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
+			codeCites:    map[string]int64{"2 Statx 30": 999},
+			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantCodeID:   ptr(int64(999)),
+			wantLinked:   ptr("2 Statx 30"),
+		},
+		{
+			name:         "official code cite wins over alt code cite",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
+			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			capCites:     map[string]int64{},
+			freelawCites: map[string]int64{},
+			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
+			codeCites:    map[string]int64{"2 Stat. 30": 111, "2 Statx 30": 222},
+			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantCodeID:   ptr(int64(111)),
+			wantLinked:   ptr("2 Stat. 30"),
+		},
+		{
+			// The new code-reporter alt probe runs inside the volumeForms loop:
+			// the detected form is exhausted across every source, alternates
+			// included, before the volume variant is tried.
+			name:       "alt code hit on the detected form wins over CAP hit on the variant",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"1 Toth 123": 777}, // variant form only
+			altAbbrs:   map[string][]string{"Toth": {"Tothill"}},
+			codeCites:  map[string]int64{"Tothill 123": 999}, // detected form, alt spelling
+			wantStatus: citations.StatusLinkedCodeReporter,
+			wantCodeID: ptr(int64(999)),
+			wantLinked: ptr("Tothill 123"),
+		},
+		{
+			name:       "nil-volume alt code hit",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Stat.", Page: 30},
+			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			capCites:   map[string]int64{},
+			altAbbrs:   map[string][]string{"Stat.": {"Stat"}},
+			codeCites:  map[string]int64{"Stat 30": 555},
+			wantStatus: citations.StatusLinkedCodeReporter,
+			wantCodeID: ptr(int64(555)),
+			wantLinked: ptr("Stat 30"),
+		},
+		{
 			// Regression test for #218/#226. The single-volume detector for
 			// Aleyn's King's Bench ("Al") also fires on "Ala." in OCR'd text.
 			// Now that the detector records the spelling it actually found, the
@@ -301,12 +388,6 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {Junk: true}},
 			wantStatus: citations.StatusSkippedJunk,
-		},
-		{
-			name:       "whitelisted but no standard reporter is no_match",
-			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
-			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: nil}},
-			wantStatus: citations.StatusNoMatch,
 		},
 	}
 
