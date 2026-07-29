@@ -1299,57 +1299,6 @@ CREATE VIEW moml.us_treatises AS
 
 
 --
--- Name: page_to_case; Type: TABLE; Schema: moml_citations; Owner: -
---
-
-CREATE TABLE moml_citations.page_to_case (
-    id uuid NOT NULL,
-    moml_treatise text,
-    moml_page text,
-    cite_in_moml text,
-    cap_link_cite text,
-    "case" bigint
-);
-
-
---
--- Name: volume_to_case; Type: VIEW; Schema: moml_citations; Owner: -
---
-
-CREATE VIEW moml_citations.volume_to_case AS
- SELECT moml_treatise,
-    "case",
-    count(*) AS n
-   FROM moml_citations.page_to_case
-  GROUP BY moml_treatise, "case";
-
-
---
--- Name: bibliocouple_treatises; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
---
-
-CREATE MATERIALIZED VIEW moml_citations.bibliocouple_treatises AS
- WITH ut2c AS (
-         SELECT DISTINCT t2c.bibliographicid,
-            t2c."case"
-           FROM ( SELECT t.bibliographicid,
-                    c.moml_treatise AS psmid,
-                    c."case"
-                   FROM ((moml_citations.volume_to_case c
-                     LEFT JOIN moml.book_info bi ON ((c.moml_treatise = (bi.psmid)::text)))
-                     LEFT JOIN moml.us_treatises t ON (((bi.bibliographicid)::text = t.bibliographicid)))) t2c
-        )
- SELECT cites1.bibliographicid AS t1,
-    cites2.bibliographicid AS t2,
-    count(*) AS n
-   FROM (ut2c cites1
-     LEFT JOIN ut2c cites2 ON ((cites1."case" = cites2."case")))
-  WHERE (cites1.bibliographicid <> cites2.bibliographicid)
-  GROUP BY cites1.bibliographicid, cites2.bibliographicid
-  WITH NO DATA;
-
-
---
 -- Name: citation_links; Type: TABLE; Schema: moml_citations; Owner: -
 --
 
@@ -1573,55 +1522,6 @@ CREATE VIEW stats.table_sizes AS
 CREATE TABLE sys_admin.migrations_dbmate (
     version character varying(128) NOT NULL
 );
-
-
---
--- Name: schools_to_cases; Type: MATERIALIZED VIEW; Schema: textbooks; Owner: -
---
-
-CREATE MATERIALIZED VIEW textbooks.schools_to_cases AS
- SELECT s2w2v.school,
-    s2w2v.school_state,
-    s2w2v.region,
-    s2w2v.course,
-    s2w2v.topic,
-    s2w2v.subtopic,
-    s2w2v.year_begin,
-    s2w2v.year_end,
-    s2w2v.workid,
-    s2w2v.work_title,
-    s2w2v.moml_webid,
-    m6.moml_treatise,
-    m6."case",
-    c.name_abbreviation,
-    c.decision_year,
-    j.name_long AS jurisdiction_name
-   FROM (((( SELECT tw.workid,
-            tw.work_title,
-            tw.moml_webid,
-            tv.bibliographicid,
-            tv.psmid,
-            tv.webid,
-            tv.school,
-            tv.title,
-            tv.edition,
-            tv.topic,
-            tv.year_begin,
-            tv.year_end,
-            tv.course,
-            tv.subtopic,
-            tv.school_state,
-            tv.region,
-            tv.class_year
-           FROM (( SELECT textbooks_works.workid,
-                    textbooks_works.work_title,
-                    unnest(textbooks_works.moml_webids) AS moml_webid
-                   FROM legalhist.textbooks_works) tw
-             LEFT JOIN legalhist.textbooks_vols tv ON ((tw.moml_webid = tv.webid)))) s2w2v
-     LEFT JOIN moml_citations.volume_to_case m6 ON ((s2w2v.psmid = m6.moml_treatise)))
-     LEFT JOIN cap.cases c ON ((m6."case" = c.id)))
-     LEFT JOIN cap.jurisdictions j ON ((c.jurisdiction = j.id)))
-  WITH NO DATA;
 
 
 --
@@ -1883,14 +1783,6 @@ ALTER TABLE ONLY moml_citations.citations_unlinked
 
 ALTER TABLE ONLY moml_citations.citations_unlinked
     ADD CONSTRAINT moml_citations_id_key UNIQUE (id);
-
-
---
--- Name: page_to_case moml_page_to_cap_case_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
---
-
-ALTER TABLE ONLY moml_citations.page_to_case
-    ADD CONSTRAINT moml_page_to_cap_case_pkey PRIMARY KEY (id);
 
 
 --
@@ -2318,27 +2210,6 @@ CREATE UNIQUE INDEX linking_dashboard_summary_uq ON moml_citations.linking_dashb
 
 
 --
--- Name: moml_page_to_cap_case_case_idx; Type: INDEX; Schema: moml_citations; Owner: -
---
-
-CREATE INDEX moml_page_to_cap_case_case_idx ON moml_citations.page_to_case USING btree ("case");
-
-
---
--- Name: moml_page_to_cap_case_moml_page_idx; Type: INDEX; Schema: moml_citations; Owner: -
---
-
-CREATE INDEX moml_page_to_cap_case_moml_page_idx ON moml_citations.page_to_case USING btree (moml_page);
-
-
---
--- Name: moml_page_to_cap_case_moml_treatise_idx; Type: INDEX; Schema: moml_citations; Owner: -
---
-
-CREATE INDEX moml_page_to_cap_case_moml_treatise_idx ON moml_citations.page_to_case USING btree (moml_treatise);
-
-
---
 -- Name: normalized_citation_counts_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2689,4 +2560,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260612205502'),
     ('20260727212625'),
     ('20260728162040'),
-    ('20260728174121');
+    ('20260728174121'),
+    ('20260729133619');
