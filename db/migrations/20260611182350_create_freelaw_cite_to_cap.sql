@@ -28,8 +28,8 @@ SET ROLE = law_admin;
 --
 -- This is a SOURCE crosswalk: it depends on the freelaw and cap data, not on
 -- linker output, so it is NOT refreshed by the cite-linker on each run. Build it
--- WITH NO DATA and populate it with `make db-refresh` (which auto-discovers every
--- materialized view) or:
+-- WITH NO DATA and populate it with `make db-maintenance` (which auto-discovers
+-- every materialized view) or:
 --   REFRESH MATERIALIZED VIEW freelaw.cite_to_cap;
 -- The build runs two large joins and takes several minutes.
 CREATE MATERIALIZED VIEW IF NOT EXISTS freelaw.cite_to_cap AS

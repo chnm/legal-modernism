@@ -5,10 +5,11 @@ SET ROLE = law_admin;
 -- (/linking-dashboard). The dashboard previously aggregated the ~62M-row
 -- moml_citations.citations_unlinked and ~61M-row moml_citations.citation_links
 -- tables on every page load, which took over a minute and timed out in the
--- browser. These materialized views move that work off the request path; the
--- cite-linker refreshes them at the start and end of each run, alongside
--- moml_citations.citations_unmatched_top. Both are built WITH NO DATA; run
--- REFRESH MATERIALIZED VIEW to populate (see note before migrate:down).
+-- browser. These materialized views move that work off the request path;
+-- `make db-maintenance` (db/maintenance.sh) refreshes them after a linker run,
+-- alongside moml_citations.citations_unmatched_top. Both are built WITH NO
+-- DATA; run REFRESH MATERIALIZED VIEW to populate (see note before
+-- migrate:down).
 
 -- Per-reporter linking breakdown. For each whitelisted (non-junk) standard
 -- reporter, counts how many of its raw citations are linked, ended in
@@ -55,9 +56,9 @@ WITH NO DATA;
 CREATE UNIQUE INDEX IF NOT EXISTS linking_dashboard_summary_uq
   ON moml_citations.linking_dashboard_summary (metric);
 
--- After this migration both views are empty. The cite-linker refreshes them at
--- the start and end of each run, so they will be populated the next time
--- cite-linker runs. To populate them manually in the meantime:
+-- After this migration both views are empty. The cite-linker does not refresh
+-- them; run `make db-maintenance` (db/maintenance.sh) after a linker run, or
+-- populate them manually:
 --   REFRESH MATERIALIZED VIEW moml_citations.linking_dashboard_reporters;
 --   REFRESH MATERIALIZED VIEW moml_citations.linking_dashboard_summary;
 
