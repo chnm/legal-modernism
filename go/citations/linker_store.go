@@ -20,7 +20,10 @@ type LinkerStore interface {
 	// fn (e.g. a bounded channel) to avoid buffering the entire table in memory.
 	StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error
 
-	// LoadCAPCitations loads all CAP citations into memory as cite -> case ID.
+	// LoadCAPCitations loads CAP citations into memory as cite -> case ID.
+	// Cites that belong to more than one case are dropped, mirroring
+	// freelaw.cite_to_cap, so an ambiguous cite is a miss rather than a link
+	// to an arbitrary case.
 	LoadCAPCitations(ctx context.Context) (map[string]int64, error)
 
 	// LoadFreelawCites loads the FreeLaw parallel-citation crosswalk
@@ -29,14 +32,17 @@ type LinkerStore interface {
 	LoadFreelawCites(ctx context.Context) (map[string]int64, error)
 
 	// LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into memory as
-	// reporter_standard -> list of alternate abbreviations. The linker probes the
-	// FreeLaw crosswalk with each alternate spelling after the canonical
-	// reporter_standard / reporter_cap forms miss, recovering matches where our
-	// reporter string and CourtListener's disagree.
+	// reporter_standard -> list of alternate abbreviations, in a deterministic
+	// order. The linker probes the CAP, FreeLaw, and code-reporter maps with each
+	// alternate spelling after the canonical reporter_standard / reporter_cap
+	// forms miss, recovering matches where our reporter string and the other
+	// source's disagree.
 	LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error)
 
-	// LoadCodeReporterCitations loads all code reporter citations into memory
-	// as official_citation -> id.
+	// LoadCodeReporterCitations loads code reporter citations into memory as
+	// cite -> id, keyed by both the official citation and the individual
+	// parallel citations. Cites that belong to more than one row are dropped,
+	// as in LoadCAPCitations.
 	LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error)
 
 	// LoadEnglishReportsCitations loads all English Reports citations into memory
