@@ -8,6 +8,8 @@ params:
 
 markup:
   goldmark:
+    extensions:
+      linkify: false
     renderer:
       unsafe: true
 

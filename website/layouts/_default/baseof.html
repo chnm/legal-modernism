@@ -37,6 +37,8 @@
 
 <body>
 
+	<a class="visually-hidden-focusable skip-link" href="#main-content">Skip to main content</a>
+
 	<div class="container page-container">
 
 		<header>
@@ -47,13 +49,13 @@
 				<p>
 					<a href="https://kellenfunk.org" class="author">Kellen Funk</a>, Columbia Law School &lt;<a
 						href="mailto:krf2138@columbia.edu">krf2138@columbia.edu</a>&gt;
-					<a href="https://orcid.org/0000-0002-4165-9202"><img alt="ORCID logo"
+					<a href="https://orcid.org/0000-0002-4165-9202"><img alt="Kellen Funk's ORCID profile"
 							src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
 				</p>
 				<p>
 					<a href="https://lincolnmullen.com" class="author">Lincoln Mullen</a>, Roy Rosenzweig Center for History and
 					New Media &lt;<a href="mailto:lincoln@lincolnmullen.com">lincoln@lincolnmullen.com</a>&gt;
-					<a href="https://orcid.org/0000-0001-5103-6917"><img alt="ORCID logo"
+					<a href="https://orcid.org/0000-0001-5103-6917"><img alt="Lincoln Mullen's ORCID profile"
 							src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
 				</p>
 
@@ -61,7 +63,7 @@
 			{{ end }}
 		</header>
 
-		<main>
+		<main id="main-content" tabindex="-1">
 			{{ block "main" . }}
 			{{ if .Page.Title }}
 			<h2>{{ .Page.Title }}</h2>
@@ -73,21 +75,31 @@
 		<footer>
 			{{ block "footer" . }}
 			<div class="row">
-				<div class="col-sm-6 col-md-3 mb-4">
-					<a href="https://rrchnm.org/">
-						<img class="logo" src="/img/rrchnm-logo.png" alt="RRCHNM logo" />
-					</a>
+				<div class="col-auto mb-4">
+					<div class="footer-logos">
+						<a href="https://rrchnm.org/">
+							<img class="logo" src="/img/rrchnm-logo.png" alt="Roy Rosenzweig Center for History and New Media logo" />
+						</a>
+						<a href="https://www.law.columbia.edu">
+							<img class="logo" src="/img/cls-logo.png" alt="Columbia Law School logo" />
+						</a>
+						<a href="https://www.gmu.edu">
+							<img class="logo" src="/img/gmu-logo.png" alt="George Mason University logo" />
+						</a>
+					</div>
 				</div>
-				<div class="col-sm-6 col-md-3 mb-4">
-					<a href="https://www.law.columbia.edu">
-						<img class="logo" src="/img/cls-logo.png" alt="Columbia Law School logo" />
-					</a>
-				</div>
-				<div class="col-sm-12 col-md-6 mb-4">
-					The <span class="semibold">Legal Modernism</span> project is a collaboration between the <a
-						href="https://rrchnm.org/">Roy Rosenzweig
-						Center
-						for History and New Media</a> and <a href="https://www.law.columbia.edu">Columbia Law School</a>.
+				<div class="col mb-4">
+					<div class="footer-text">
+						<div>
+							The <span class="semibold">Legal Modernism</span> project is a collaboration between the <a
+								href="https://rrchnm.org/">Roy Rosenzweig
+								Center
+								for History and New Media</a> and <a href="https://www.law.columbia.edu">Columbia Law School</a>.
+						</div>
+						<div>
+							<a href="https://rrchnm.org/accessibility/">Accessibility Statement.</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			{{ end }}

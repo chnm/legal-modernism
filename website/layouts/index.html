@@ -33,8 +33,9 @@
 				{{ $img := .Resources.GetMatch "thumbnail.png"}}
 				{{ $thumb1x := $img.Fill "300x200 TopLeft webp" }}
 				{{ $thumb2x := $img.Fill "600x400 TopLeft webp" }}
+				{{ $alt := .Params.Alt | default (printf "Thumbnail for %s" .Title) }}
 				<a href="{{ .Params.External }}">
-					<img class="img-thumbnail" src="{{ $thumb2x.RelPermalink }}" srcset="{{ $thumb1x.RelPermalink }} 1x, {{ $thumb2x.RelPermalink }} 2x" alt="Thumbnail for publication" />
+					<img class="img-thumbnail" src="{{ $thumb2x.RelPermalink }}" srcset="{{ $thumb1x.RelPermalink }} 1x, {{ $thumb2x.RelPermalink }} 2x" alt="{{ $alt }}" />
 				</a>
 			</div>
 			<div class="col-sm-8">
@@ -43,9 +44,10 @@
 			{{ end}}
 			{{ if .Params.Video }}
 			{{ $img := .Resources.GetMatch "thumbnail.png"}}
+			{{ $alt := .Params.Alt | default (printf "Video preview for %s" .Title) }}
 			<div class="col-sm-4">
 				<div class="embed-responsive video-border embed-responsive-16by9">
-					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.RelPermalink }}">
+					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.RelPermalink }}" aria-label="{{ $alt }}">
 						<source src="{{ .Params.Video }}" type="{{ .Params.VideoType }}">
 						Your browser does not support the video tag.
 					</video>
@@ -62,20 +64,20 @@
 	</div>
 </section>
 
-<section id=" code">
-	<h3>Source code and datasets</h3>
+<section id="code">
+	<h2>Source code and datasets</h2>
 	<p>
 		We are commited to publishing our source code and any datasets that we generate as open access, open source
 		resources.
 	</p>
 
 	<p>
-		<i class="icon bi-github"></i> The source code for our ongoing work is published in a <a href="https://github.com/lmullen/legal-modernism">GitHub
+		<i class="icon bi-github" aria-hidden="true"></i> The source code for our ongoing work is published in a <a href="https://github.com/lmullen/legal-modernism">GitHub
 			repository.</a>
 	</p>
 
 	<p>
-		<i class="icon bi-file-earmark-bar-graph"></i> Our article on &ldquo;The Spine of American Law&rdquo;
+		<i class="icon bi-file-earmark-bar-graph" aria-hidden="true"></i> Our article on &ldquo;The Spine of American Law&rdquo;
 		featured a
 		research compendium with the datasets that supported the article. The <a href="https://academic.oup.com/ahr/article/123/1/132/4840258#supplementary-data">entire compendium</a> can
 		be
@@ -83,18 +85,18 @@
 	</p>
 
 	<p id="field-code-clusters">
-		<i class="icon bi-file-earmark-bar-graph"></i> That article featured clusters of sections from the state
+		<i class="icon bi-file-earmark-bar-graph" aria-hidden="true"></i> That article featured clusters of sections from the state
 		codes of
 		civil procedure derived from Field Code. We believe those clusters would be useful to researchers seeking to
 		understand the development of procedural law. Those <a href="/datasets/spine-of-american-law-clusters-of-sections.zip">procedure code clusters</a> can be
-		downloaded from this website. They have been assigned the following DOI: <a href="https://doi.org/10.31835/legalmodernism.field-code-clusters">https://doi.org/10.31835/legalmodernism.field-code-clusters</a>.
+		downloaded from this website. They have been assigned the following DOI: <a href="https://doi.org/10.31835/legalmodernism.field-code-clusters" aria-label="DOI for the procedure code clusters dataset">https://doi.org/10.31835/legalmodernism.field-code-clusters</a>.
 	</p>
 
 </section>
 
 <section id="news">
-	<h3>Project news</h3>
-	<p><i class="icon bi-rss-fill"></i>
+	<h2>Project news</h2>
+	<p><i class="icon bi-rss-fill" aria-hidden="true"></i>
 		<a href="/news/index.xml">Subscribe to our feed</a> for updates on our research.
 	</p>
 	<ul>
@@ -106,7 +108,7 @@
 </section>
 
 <section id="contributors">
-	<h3>Contributors</h3>
+	<h2>Contributors</h2>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md">
@@ -125,13 +127,13 @@
 </section>
 
 <section id="citation">
-	<h3>Suggested citation</h3>
+	<h2>Suggested citation</h2>
 	<p>
 		If you would like to cite this project, we recommend the following citatation.
 	</p>
 	<blockquote class="suggested-citation">
 		Kellen Funk and Lincoln Mullen, <em>Legal Modernism</em>, Roy Rosenzweig Center for History and New Media
-		(2022&ndash;): <a href="https://doi.org/10.31835/legalmodernism">https://doi.org/10.31835/legalmodernism</a>.
+		(2022&ndash;): <a href="https://doi.org/10.31835/legalmodernism" aria-label="DOI for the Legal Modernism project">https://doi.org/10.31835/legalmodernism</a>.
 	</blockquote>
 </section>
 
