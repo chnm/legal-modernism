@@ -1311,7 +1311,9 @@ CREATE TABLE moml_citations.citation_links (
     cite_cleaned text,
     cite_normalized text,
     cite_linked text,
-    created_at timestamp with time zone DEFAULT now() NOT NULL
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    match_tier text,
+    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'code_alt_spelling'::text, 'er_direct'::text, 'er_page_interior'::text]))))
 );
 
 
@@ -1440,6 +1442,37 @@ UNION ALL
    FROM moml_citations.citation_links
   GROUP BY citation_links.status
   WITH NO DATA;
+
+
+--
+-- Name: linking_dashboard_tiers; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.linking_dashboard_tiers AS
+ SELECT wl.reporter_standard,
+    cl.status,
+    cl.match_tier,
+    count(*) AS n
+   FROM ((moml_citations.citations_unlinked cu
+     JOIN legalhist.whitelist wl ON ((cu.reporter_abbr = wl.reporter_found)))
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+  WHERE ((wl.reporter_standard IS NOT NULL) AND (wl.junk = false))
+  GROUP BY wl.reporter_standard, cl.status, cl.match_tier
+  WITH NO DATA;
+
+
+--
+-- Name: linking_tier_summary; Type: VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE VIEW moml_citations.linking_tier_summary AS
+ SELECT COALESCE(status, 'unprocessed'::text) AS status,
+    match_tier,
+    sum(n) AS n,
+    round(((100.0 * sum(n)) / sum(sum(n)) OVER (PARTITION BY linking_dashboard_tiers.status)), 2) AS pct_of_status
+   FROM moml_citations.linking_dashboard_tiers
+  GROUP BY status, match_tier
+  ORDER BY (sum(n)) DESC;
 
 
 --
@@ -2210,6 +2243,13 @@ CREATE UNIQUE INDEX linking_dashboard_summary_uq ON moml_citations.linking_dashb
 
 
 --
+-- Name: linking_dashboard_tiers_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX linking_dashboard_tiers_uq ON moml_citations.linking_dashboard_tiers USING btree (reporter_standard, status, match_tier) NULLS NOT DISTINCT;
+
+
+--
 -- Name: normalized_citation_counts_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -2561,4 +2601,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260727212625'),
     ('20260728162040'),
     ('20260728174121'),
-    ('20260729133619');
+    ('20260729133619'),
+    ('20260729191037'),
+    ('20260729212710');
