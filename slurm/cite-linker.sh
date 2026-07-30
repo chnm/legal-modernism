@@ -17,9 +17,9 @@
 #SBATCH --error=/scratch/%u/logs/%j-%x-%N.log
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=32
 #SBATCH --time=01:00:00
-#SBATCH --mem=6GB
+#SBATCH --mem=12GB
 #SBATCH --partition=normal
 #SBATCH --mail-user lmullen@gmu.edu
 #SBATCH --mail-type BEGIN
@@ -43,11 +43,6 @@
 # re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
 # on a resubmit after a timeout, throwing away all partial progress.
-#
-# Submit this path with a longer wall time than the directive above:
-#
-#     sbatch --time=06:00:00 slurm/cite-linker.sh
-#
 # It re-processes tens of millions of rows through the per-citation path rather
 # than the handful a routine run sees, and it is the one case where a timeout is
 # expensive: because --reset starts by deleting, a resubmit restarts from scratch
