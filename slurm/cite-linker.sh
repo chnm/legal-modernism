@@ -2,15 +2,15 @@
 
 # Run the citation linker to link detected citations to cases
 
-# Resources are sized for the routine run below, from job 9215377: 8m12s wall,
-# 7m37s of CPU time (0.93 cores average), 2.6GB peak RAM. The work waits on the
-# database, not on cores, and --workers is a count of DB connections rather than
-# threads, so 4 cores still carries 32 concurrent queries. Memory is bounded and
-# nearly independent of how many citations are pending: the lookup tables are the
-# bulk of it, and the streaming reader keeps only --workers batches in flight.
-# A routine run that does hit the wall time is safe to resubmit, so the time
-# limit is a short-queue optimization, not a cliff. Raise --mem if the CAP or
-# FreeLaw tables grow enough to push peak RAM past ~4GB.
+# Resources are informed by job 9215377: 8m12s wall, 7m37s of CPU time (0.93
+# cores average), 2.6GB peak RAM. Cores are held at 32 to match --workers=32 and
+# memory at 12GB, both above what that run needed: the linker waits on the
+# database rather than on cores, but peak RAM tracks the pre-loaded lookup
+# tables, which grow with CAP and FreeLaw, so one incremental run's 2.6GB is a
+# floor rather than a ceiling. Memory does not scale with how many citations are
+# pending — the streaming reader keeps only --workers batches in flight. The wall
+# time is sized for the routine run below, where hitting it is safe to resubmit,
+# so the limit is a short-queue optimization rather than a cliff.
 
 #SBATCH --job-name=cite-linker
 #SBATCH --output=/scratch/%u/logs/%j-%x-%N.out
@@ -43,9 +43,8 @@
 # re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
 # on a resubmit after a timeout, throwing away all partial progress.
-# It re-processes tens of millions of rows through the per-citation path rather
-# than the handful a routine run sees, and it is the one case where a timeout is
-# expensive: because --reset starts by deleting, a resubmit restarts from scratch
-# instead of resuming. Cores and memory need no override — neither scales with the
-# row count.
+# The reset run re-processes tens of millions of rows through the per-citation
+# path rather than the handful a routine run sees, and it is the one case where a
+# timeout is expensive: because --reset starts by deleting, a resubmit restarts
+# from scratch instead of resuming rather than picking up where it left off.
 # ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32 --lock-timeout=1m
