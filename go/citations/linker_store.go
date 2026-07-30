@@ -49,6 +49,19 @@ type LinkerStore interface {
 	// as cite string -> case ID.
 	LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error)
 
+	// LoadCAPCaseSpans loads every CAP first-page cite together with the page
+	// length of the case it names, for the page-range index that resolves pin
+	// cites. Unlike LoadCAPCitations this keeps ambiguous cites: two cases sharing
+	// a first page is exactly what the index has to detect in order to refuse the
+	// match, so dropping them here would turn a knowable ambiguity into a silent
+	// wrong answer.
+	LoadCAPCaseSpans(ctx context.Context) ([]CaseSpan[int64], error)
+
+	// LoadERCaseSpans loads every English Reports first-page cite — both er_cite
+	// and er_parallel_cite — for the same purpose. Length is always 0: the table
+	// records no page range, so spans there can only be bounded by the next cite.
+	LoadERCaseSpans(ctx context.Context) ([]CaseSpan[string], error)
+
 	// SaveLinkResults batch-inserts multiple link results in a single query.
 	SaveLinkResults(ctx context.Context, results []*LinkResult) error
 
