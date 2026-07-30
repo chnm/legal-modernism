@@ -39,6 +39,7 @@ type UnlinkedCitation struct {
 type LinkResult struct {
 	CitationID     uuid.UUID
 	Status         string
+	MatchTier      string // how far the cascade got, see the Tier constants; "" (SQL NULL) for skipped
 	CAPCaseID      *int64
 	CodeReporterID *int64
 	ERCaseID       *string
@@ -55,4 +56,41 @@ const (
 	StatusSkippedNotWhitelisted = "skipped_not_whitelisted"
 	StatusSkippedJunk           = "skipped_junk"
 	StatusNoMatch               = "no_match"
+)
+
+// Tier constants for LinkResult.MatchTier: how far the linking cascade got with
+// a citation. Status says whether a citation linked; the tier says why it did
+// not, or which probe succeeded when it did. Without it the 20M no_match rows
+// are undifferentiated and the reason has to be re-derived by query.
+//
+// The failure tiers carry a route prefix (us_/uk_) rather than a target prefix
+// because a failure exhausts the whole cascade: a US no_match missed CAP and the
+// FreeLaw crosswalk and the code reporter, so naming any one target would be a
+// half-truth. They report the closest approach across every target probed,
+// ordered reporter_absent (nothing to match against) through page_absent (right
+// reporter, right volume, wrong page — the pin-cite pool). The success tiers name
+// the target that produced the link, since exactly one did.
+//
+// The values are constrained in SQL by chk_citation_links_match_tier; adding one
+// here needs a migration to widen that constraint.
+const (
+	// no_match, US route (CAP -> FreeLaw -> alternate spellings -> code reporter).
+	TierUSReporterAbsent  = "us_reporter_absent"  // no probed reporter spelling appears in any US source
+	TierUSDiffVolsMissing = "us_diffvols_missing" // reporter renumbers in CAP, but no reporters_diffvols row covers this volume
+	TierUSVolumeAbsent    = "us_volume_absent"    // reporter present, this volume never appears
+	TierUSPageAbsent      = "us_page_absent"      // reporter and volume present, page is not a first-page cite
+
+	// no_match, UK route (English Reports).
+	TierUKReporterAbsent = "uk_reporter_absent"
+	TierUKVolumeAbsent   = "uk_volume_absent"
+	TierUKPageAbsent     = "uk_page_absent"
+
+	// linked_*: which probe produced the link.
+	TierCAPDirect             = "cap_direct"               // cap.citations, under the normalized cite
+	TierCAPFreelaw            = "cap_freelaw"              // freelaw.cite_to_cap, under the normalized cite
+	TierCAPAltSpelling        = "cap_alt_spelling"         // cap.citations, under a reporters_abbreviations alternate
+	TierCAPFreelawAltSpelling = "cap_freelaw_alt_spelling" // freelaw.cite_to_cap, under an alternate
+	TierCodeDirect            = "code_direct"              // legalhist.code_reporter, under the cleaned cite
+	TierCodeAltSpelling       = "code_alt_spelling"        // legalhist.code_reporter, under an alternate
+	TierERDirect              = "er_direct"                // english_reports.cases
 )
