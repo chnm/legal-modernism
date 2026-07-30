@@ -2,7 +2,9 @@ package citations
 
 import (
 	"fmt"
+	"strings"
 	"testing"
+	"unicode"
 
 	"github.com/lmullen/legal-modernism/go/sources"
 	"github.com/stretchr/testify/assert"
@@ -452,6 +454,65 @@ func TestSingleVolDetector_SpacingVariants(t *testing.T) {
 			assert.Equal(t, tt.expectedPage, cites[0].Page)
 			assert.Nil(t, cites[0].Volume,
 				"single-vol detector should produce nil Volume")
+		})
+	}
+}
+
+// TestDetector_NoLetterAbbrs pins the detections that issue #254 junks in the
+// whitelist. abbrChar admits whitespace and punctuation without requiring a
+// letter, so two numbers separated by nothing but leader dots, spaces, commas,
+// or parentheses look exactly like a citation: a table-of-contents row
+// ("Of contracts . . . 12 . . . 456") or a column of page numbers ("5   88")
+// yields a citation whose ReporterAbbr contains no letter at all. No reporter is
+// spelled that way, so every such detection is noise, which is why the rule
+// "contains no letter implies junk" is safe to apply wholesale.
+//
+// The test exists so the junk whitelist rows cannot silently become dead weight:
+// if abbrChar is ever tightened to require a letter, these detections stop
+// happening and this test fails, which is the signal to drop those rows.
+func TestDetector_NoLetterAbbrs(t *testing.T) {
+	tests := []struct {
+		name         string
+		text         string
+		expectedAbbr string
+	}{
+		{
+			name:         "leader dots in a table of contents",
+			text:         "Of the nature of contracts . . . 12 . . . 456\n",
+			expectedAbbr: ". . .",
+		},
+		{
+			name:         "unspaced leader dots in an index",
+			text:         "Index entry 7 ......... 231\n",
+			expectedAbbr: ".........",
+		},
+		{
+			name:         "a column of numbers separated only by whitespace",
+			text:         "Table row 5     88\n",
+			expectedAbbr: "",
+		},
+		{
+			name:         "stray commas and periods",
+			text:         "Another 9 , . , 44\n",
+			expectedAbbr: ", .",
+		},
+		{
+			name:         "empty parentheses",
+			text:         "Paren 4 ( ) 22\n",
+			expectedAbbr: "( )",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			doc := sources.NewDoc("test-no-letter", tt.text)
+			var got []string
+			for _, c := range GenericDetector.Detect(doc) {
+				if !strings.ContainsFunc(c.ReporterAbbr, unicode.IsLetter) {
+					got = append(got, c.ReporterAbbr)
+				}
+			}
+			require.Len(t, got, 1, "expected exactly one letterless detection")
+			assert.Equal(t, tt.expectedAbbr, got[0])
 		})
 	}
 }
