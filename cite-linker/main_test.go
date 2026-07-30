@@ -28,12 +28,14 @@ func TestLinkCitation(t *testing.T) {
 		name         string
 		cite         citations.UnlinkedCitation
 		whitelist    map[string]*citations.WhitelistEntry
+		diffvols     map[string]map[int]*citations.DiffVolEntry
 		capCites     map[string]int64
 		freelawCites map[string]int64
 		altAbbrs     map[string][]string
 		codeCites    map[string]int64
 		erCites      map[string]string
 		wantStatus   string
+		wantTier     string
 		wantCAPID    *int64
 		wantCodeID   *int64
 		wantERID     *string
@@ -46,6 +48,7 @@ func TestLinkCitation(t *testing.T) {
 			capCites:     map[string]int64{"5 U.S. 10": 111},
 			freelawCites: map[string]int64{"5 U.S. 10": 222},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPDirect,
 			wantCAPID:    ptr(int64(111)),
 			wantLinked:   ptr("5 U.S. 10"),
 		},
@@ -56,6 +59,7 @@ func TestLinkCitation(t *testing.T) {
 			capCites:     map[string]int64{},
 			freelawCites: map[string]int64{"5 U.S. 10": 222},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelaw,
 			wantCAPID:    ptr(int64(222)),
 			wantLinked:   ptr("5 U.S. 10"),
 		},
@@ -67,6 +71,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{},
 			codeCites:    map[string]int64{"2 Stat. 30": 999},
 			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantTier:     citations.TierCodeDirect,
 			wantCodeID:   ptr(int64(999)),
 			wantLinked:   ptr("2 Stat. 30"),
 		},
@@ -78,6 +83,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{},
 			codeCites:    map[string]int64{},
 			wantStatus:   citations.StatusNoMatch,
+			wantTier:     citations.TierUSReporterAbsent,
 			wantLinked:   nil,
 		},
 		{
@@ -87,6 +93,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"1 Q.B. 20": 222},
 			erCites:      map[string]string{"1 Q.B. 20": "er-1"},
 			wantStatus:   citations.StatusLinkedEnglishReports,
+			wantTier:     citations.TierERDirect,
 			wantERID:     ptr("er-1"),
 			wantLinked:   ptr("1 Q.B. 20"),
 		},
@@ -98,6 +105,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 US 10": 333}, // CourtListener spelling, no periods
 			altAbbrs:     map[string][]string{"U.S.": {"US"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelawAltSpelling,
 			wantCAPID:    ptr(int64(333)),
 			wantLinked:   ptr("5 US 10"),
 		},
@@ -109,6 +117,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 US 10": 333},
 			altAbbrs:     map[string][]string{"U.S.": {"US"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPDirect,
 			wantCAPID:    ptr(int64(111)),
 			wantLinked:   ptr("5 U.S. 10"),
 		},
@@ -120,6 +129,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 U.S. 10": 222, "5 US 10": 333},
 			altAbbrs:     map[string][]string{"U.S.": {"US"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelaw,
 			wantCAPID:    ptr(int64(222)),
 			wantLinked:   ptr("5 U.S. 10"),
 		},
@@ -132,6 +142,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:     map[string][]string{"Stat.": {"Statx"}}, // present but never matches FreeLaw
 			codeCites:    map[string]int64{"2 Stat. 30": 999},
 			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantTier:     citations.TierCodeDirect,
 			wantCodeID:   ptr(int64(999)),
 			wantLinked:   ptr("2 Stat. 30"),
 		},
@@ -143,6 +154,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 US 10": 333},
 			altAbbrs:     map[string][]string{"U.S.": {"USA", "US"}}, // first misses, second hits
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelawAltSpelling,
 			wantCAPID:    ptr(int64(333)),
 			wantLinked:   ptr("5 US 10"),
 		},
@@ -154,6 +166,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"Stat 30": 444},
 			altAbbrs:     map[string][]string{"Stat.": {"Stat"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelawAltSpelling,
 			wantCAPID:    ptr(int64(444)),
 			wantLinked:   ptr("Stat 30"),
 		},
@@ -165,6 +178,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{},
 			altAbbrs:     map[string][]string{"U.S.": {"US"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPAltSpelling,
 			wantCAPID:    ptr(int64(333)),
 			wantLinked:   ptr("5 US 10"),
 		},
@@ -179,6 +193,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 US 10": 444},    // first alt
 			altAbbrs:     map[string][]string{"U.S.": {"US", "U. S."}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPAltSpelling,
 			wantCAPID:    ptr(int64(333)),
 			wantLinked:   ptr("5 U. S. 10"),
 		},
@@ -192,6 +207,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"5 U.S. 10": 222},
 			altAbbrs:     map[string][]string{"U.S.": {"US"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelaw,
 			wantCAPID:    ptr(int64(222)),
 			wantLinked:   ptr("5 U.S. 10"),
 		},
@@ -204,6 +220,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
 			codeCites:    map[string]int64{"2 Statx 30": 999},
 			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantTier:     citations.TierCodeAltSpelling,
 			wantCodeID:   ptr(int64(999)),
 			wantLinked:   ptr("2 Statx 30"),
 		},
@@ -216,6 +233,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
 			codeCites:    map[string]int64{"2 Stat. 30": 111, "2 Statx 30": 222},
 			wantStatus:   citations.StatusLinkedCodeReporter,
+			wantTier:     citations.TierCodeDirect,
 			wantCodeID:   ptr(int64(111)),
 			wantLinked:   ptr("2 Stat. 30"),
 		},
@@ -230,6 +248,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:   map[string][]string{"Toth": {"Tothill"}},
 			codeCites:  map[string]int64{"Tothill 123": 999}, // detected form, alt spelling
 			wantStatus: citations.StatusLinkedCodeReporter,
+			wantTier:   citations.TierCodeAltSpelling,
 			wantCodeID: ptr(int64(999)),
 			wantLinked: ptr("Tothill 123"),
 		},
@@ -241,6 +260,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:   map[string][]string{"Stat.": {"Stat"}},
 			codeCites:  map[string]int64{"Stat 30": 555},
 			wantStatus: citations.StatusLinkedCodeReporter,
+			wantTier:   citations.TierCodeAltSpelling,
 			wantCodeID: ptr(int64(555)),
 			wantLinked: ptr("Stat 30"),
 		},
@@ -260,6 +280,7 @@ func TestLinkCitation(t *testing.T) {
 			capCites:   map[string]int64{"12 Ala. 672": 555},
 			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
 			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(555)),
 			wantLinked: ptr("12 Ala. 672"),
 		},
@@ -276,6 +297,7 @@ func TestLinkCitation(t *testing.T) {
 			},
 			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
 			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
 			wantLinked: nil,
 		},
 		{
@@ -286,6 +308,7 @@ func TestLinkCitation(t *testing.T) {
 			altAbbrs:     map[string][]string{"Q.B.": {"QB"}},
 			erCites:      map[string]string{}, // no English Reports match
 			wantStatus:   citations.StatusNoMatch,
+			wantTier:     citations.TierUKReporterAbsent,
 			wantLinked:   nil,
 		},
 		{
@@ -297,6 +320,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
 			capCites:   map[string]int64{"1 Toth 123": 777},
 			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(777)),
 			wantLinked: ptr("1 Toth 123"),
 		},
@@ -309,6 +333,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
 			erCites:    map[string]string{"Cro Eliz 5": "er-cro-5"},
 			wantStatus: citations.StatusLinkedEnglishReports,
+			wantTier:   citations.TierERDirect,
 			wantERID:   ptr("er-cro-5"),
 			wantLinked: ptr("Cro Eliz 5"),
 		},
@@ -321,6 +346,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Vern": {ReporterStandard: &vernStd, UK: true, SingleVol: true}},
 			erCites:    map[string]string{"1 Vern 12": "er-vern-12"},
 			wantStatus: citations.StatusLinkedEnglishReports,
+			wantTier:   citations.TierERDirect,
 			wantERID:   ptr("er-vern-12"),
 			wantLinked: ptr("1 Vern 12"),
 		},
@@ -333,6 +359,7 @@ func TestLinkCitation(t *testing.T) {
 			freelawCites: map[string]int64{"1 Tothill 123": 555},
 			altAbbrs:     map[string][]string{"Toth": {"Tothill"}},
 			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelawAltSpelling,
 			wantCAPID:    ptr(int64(555)),
 			wantLinked:   ptr("1 Tothill 123"),
 		},
@@ -346,6 +373,7 @@ func TestLinkCitation(t *testing.T) {
 			capCites:   map[string]int64{"1 Toth 123": 888},
 			codeCites:  map[string]int64{"Toth 123": 999},
 			wantStatus: citations.StatusLinkedCodeReporter,
+			wantTier:   citations.TierCodeDirect,
 			wantCodeID: ptr(int64(999)),
 			wantLinked: ptr("Toth 123"),
 		},
@@ -357,6 +385,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
 			capCites:   map[string]int64{"Toth 123": 777, "1 Toth 123": 888},
 			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSVolumeAbsent,
 			wantLinked: nil,
 		},
 		{
@@ -367,6 +396,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"1 U.S. 10": 111},
 			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSVolumeAbsent,
 			wantLinked: nil,
 		},
 		{
@@ -375,6 +405,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"U.S. 10": 111},
 			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSVolumeAbsent,
 			wantLinked: nil,
 		},
 		{
@@ -389,15 +420,55 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {Junk: true}},
 			wantStatus: citations.StatusSkippedJunk,
 		},
+		{
+			// The volume is in CAP and only the page missed, which is the
+			// pin-cite pool #242 is about — the tier is what makes it countable
+			// without a per-reporter query.
+			name:       "reporter and volume present, page missed, is us_page_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 11": 111}, // same volume, different page
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSPageAbsent,
+		},
+		{
+			// A reporter that renumbers in CAP with no diffvols row for the cited
+			// volume: every probe was built on an untranslated volume number, so
+			// this outranks the volume and page tiers even though the probed
+			// volume happens to exist in CAP.
+			name:       "unmapped diffvols volume is us_diffvols_missing",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(7), ReporterAbbr: "Stat.", Page: 30},
+			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd, CAPDifferent: true}},
+			diffvols:   map[string]map[int]*citations.DiffVolEntry{"Stat.": {2: {CAPVol: 81, CAPReporter: "Stat."}}},
+			capCites:   map[string]int64{"7 Stat. 31": 111},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSDiffVolsMissing,
+		},
+		{
+			name:       "UK reporter at another volume is uk_volume_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			erCites:    map[string]string{"9 Q.B. 20": "er-9"},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKVolumeAbsent,
+		},
+		{
+			name:       "UK volume present, page missed, is uk_page_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			erCites:    map[string]string{"1 Q.B. 21": "er-1"},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKPageAbsent,
+		},
 	}
-
-	diffvols := map[string]map[int]*citations.DiffVolEntry{}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := linkCitation(&tt.cite, tt.whitelist, diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites)
+			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites)
+			got := linkCitation(&tt.cite, tables)
 
 			assert.Equal(t, tt.wantStatus, got.Status)
+			assert.Equal(t, tt.wantTier, got.MatchTier)
 			assert.Equal(t, tt.cite.ID, got.CitationID)
 
 			if tt.wantCAPID == nil {
@@ -484,8 +555,9 @@ func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
 	c := &citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123}
 	whitelist := map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &std, SingleVol: true}}
 
-	got := linkCitation(c, whitelist, map[string]map[int]*citations.DiffVolEntry{},
+	tables := newLinkTables(whitelist, map[string]map[int]*citations.DiffVolEntry{},
 		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil)
+	got := linkCitation(c, tables)
 
 	assert.Equal(t, citations.StatusLinkedCAP, got.Status)
 	if assert.NotNil(t, got.CiteLinked) {

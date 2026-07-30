@@ -184,6 +184,14 @@ func main() {
 	}
 	slog.Info("loaded English Reports citations", "entries", len(erCites))
 
+	// Assemble the lookup tables, which also walks every loaded cite string once
+	// to build the reporter/volume indexes a no_match is attributed with.
+	slog.Info("indexing cite strings by reporter and volume")
+	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites)
+	slog.Info("indexed cite strings",
+		"us_reporters", len(tables.us.reporters), "us_volumes", len(tables.us.volumes),
+		"uk_reporters", len(tables.uk.reporters), "uk_volumes", len(tables.uk.volumes))
+
 	// Bounded pipeline. A single streaming reader (this goroutine, inside
 	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
 	// workers through a bounded channel. The channel capacity bounds how many
@@ -225,7 +233,7 @@ func main() {
 				results := make([]*citations.LinkResult, len(batch))
 				statusCounts := make(map[string]int)
 				for j := range batch {
-					r := linkCitation(&batch[j], whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites)
+					r := linkCitation(&batch[j], tables)
 					results[j] = r
 					statusCounts[r.Status]++
 				}
@@ -336,10 +344,27 @@ func startProgressHeartbeat(interval time.Duration, processed *atomic.Int64, rep
 	}
 }
 
-// linkCitation processes a single citation through the linking pipeline.
-// All lookups are in-memory map accesses — no database queries.
-func linkCitation(
-	c *citations.UnlinkedCitation,
+// linkTables holds every in-memory lookup table the cascade reads, together with
+// the derived indexes that let a failure report which tier it reached. It is
+// built once at startup and never written to afterwards, which is what makes it
+// safe to share across the insert workers.
+type linkTables struct {
+	whitelist    map[string]*citations.WhitelistEntry
+	diffvols     map[string]map[int]*citations.DiffVolEntry
+	capCites     map[string]int64
+	freelawCites map[string]int64
+	altAbbrs     map[string][]string
+	codeCites    map[string]int64
+	erCites      map[string]string
+
+	// us indexes the three maps the US cascade probes as a unit; uk indexes the
+	// English Reports. Building them walks every cite string once, which is why
+	// it happens here rather than per citation.
+	us *citeIndex
+	uk *citeIndex
+}
+
+func newLinkTables(
 	whitelist map[string]*citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,
 	capCites map[string]int64,
@@ -347,11 +372,28 @@ func linkCitation(
 	altAbbrs map[string][]string,
 	codeCites map[string]int64,
 	erCites map[string]string,
-) *citations.LinkResult {
+) *linkTables {
+	return &linkTables{
+		whitelist:    whitelist,
+		diffvols:     diffvols,
+		capCites:     capCites,
+		freelawCites: freelawCites,
+		altAbbrs:     altAbbrs,
+		codeCites:    codeCites,
+		erCites:      erCites,
+		us:           newCiteIndex(capCites, freelawCites, codeCites),
+		uk:           newCiteIndex(erCites),
+	}
+}
+
+// linkCitation processes a single citation through the linking pipeline.
+// All lookups are in-memory map accesses — no database queries.
+func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkResult {
 	result := &citations.LinkResult{CitationID: c.ID}
 
-	// Step 1: whitelist check
-	entry, ok := whitelist[c.ReporterAbbr]
+	// Step 1: whitelist check. Neither skip records a tier: the status is already
+	// the whole explanation, and there was no cascade to reach a tier in.
+	entry, ok := t.whitelist[c.ReporterAbbr]
 	if !ok {
 		result.Status = citations.StatusSkippedNotWhitelisted
 		return result
@@ -368,9 +410,9 @@ func linkCitation(
 
 	// Step 2: route by UK flag
 	if entry.UK {
-		return linkEnglishReports(c, entry, erCites, result)
+		return linkEnglishReports(c, entry, t, result)
 	}
-	return linkCAPThenCode(c, entry, diffvols, capCites, freelawCites, altAbbrs, codeCites, result)
+	return linkCAPThenCode(c, entry, t, result)
 }
 
 // linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
@@ -384,29 +426,34 @@ func linkCitation(
 func linkCAPThenCode(
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
-	diffvols map[string]map[int]*citations.DiffVolEntry,
-	capCites map[string]int64,
-	freelawCites map[string]int64,
-	altAbbrs map[string][]string,
-	codeCites map[string]int64,
+	t *linkTables,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 
 	citeCleaned := buildStandardCite(c, entry)
-	citeNormalized := buildCAPCite(c, entry, diffvols)
+	citeNormalized := buildCAPCite(c, entry, t.diffvols)
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeNormalized
+
+	// Every cite string probed below, in order, so a no_match can be attributed to
+	// the tier the cascade actually reached rather than to a second, drifting
+	// reimplementation of which forms get tried. The capacity covers the common
+	// case (one volume form, cleaned plus normalized, a couple of alternates)
+	// without reallocating.
+	probes := make([]string, 0, 8)
 
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
 	// turns a no_match into a link.
 	for _, f := range volumeForms(c, entry) {
 		cleaned := buildStandardCite(f, entry)
-		normalized := buildCAPCite(f, entry, diffvols)
+		normalized := buildCAPCite(f, entry, t.diffvols)
+		probes = append(probes, normalized, cleaned)
 
 		// Try CAP with the normalized cite
-		if caseID, ok := capCites[normalized]; ok {
+		if caseID, ok := t.capCites[normalized]; ok {
 			result.Status = citations.StatusLinkedCAP
+			result.MatchTier = citations.TierCAPDirect
 			result.CAPCaseID = &caseID
 			result.CiteLinked = &normalized
 			return result
@@ -414,9 +461,11 @@ func linkCAPThenCode(
 
 		// Fall back to the FreeLaw crosswalk: if any parallel form of this decision
 		// is in our CAP data, this reaches the CAP case from the form we detected.
-		// The result is still a CAP link (status linked_cap).
-		if caseID, ok := freelawCites[normalized]; ok {
+		// The result is still a CAP link (status linked_cap), distinguished from a
+		// direct hit only by the tier.
+		if caseID, ok := t.freelawCites[normalized]; ok {
 			result.Status = citations.StatusLinkedCAP
+			result.MatchTier = citations.TierCAPFreelaw
 			result.CAPCaseID = &caseID
 			result.CiteLinked = &normalized
 			return result
@@ -428,18 +477,21 @@ func linkCAPThenCode(
 		// this reporter (keyed by the canonical reporter_standard, like diffvols)
 		// against CAP first, then all of them against FreeLaw. A hit links to the
 		// CAP case (status linked_cap).
-		altCites := buildAltCites(f, altAbbrs[*entry.ReporterStandard])
+		altCites := buildAltCites(f, t.altAbbrs[*entry.ReporterStandard])
+		probes = append(probes, altCites...)
 		for i := range altCites {
-			if caseID, ok := capCites[altCites[i]]; ok {
+			if caseID, ok := t.capCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCAP
+				result.MatchTier = citations.TierCAPAltSpelling
 				result.CAPCaseID = &caseID
 				result.CiteLinked = &altCites[i]
 				return result
 			}
 		}
 		for i := range altCites {
-			if caseID, ok := freelawCites[altCites[i]]; ok {
+			if caseID, ok := t.freelawCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCAP
+				result.MatchTier = citations.TierCAPFreelawAltSpelling
 				result.CAPCaseID = &caseID
 				result.CiteLinked = &altCites[i]
 				return result
@@ -447,15 +499,17 @@ func linkCAPThenCode(
 		}
 
 		// Try Code Reporter with the cleaned cite, then the alternate spellings
-		if codeID, ok := codeCites[cleaned]; ok {
+		if codeID, ok := t.codeCites[cleaned]; ok {
 			result.Status = citations.StatusLinkedCodeReporter
+			result.MatchTier = citations.TierCodeDirect
 			result.CodeReporterID = &codeID
 			result.CiteLinked = &cleaned
 			return result
 		}
 		for i := range altCites {
-			if codeID, ok := codeCites[altCites[i]]; ok {
+			if codeID, ok := t.codeCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCodeReporter
+				result.MatchTier = citations.TierCodeAltSpelling
 				result.CodeReporterID = &codeID
 				result.CiteLinked = &altCites[i]
 				return result
@@ -464,7 +518,22 @@ func linkCAPThenCode(
 	}
 
 	result.Status = citations.StatusNoMatch
+	result.MatchTier = usTier(probes, t.us, diffvolsMissing(c, entry, t.diffvols))
 	return result
+}
+
+// diffvolsMissing reports whether this citation's reporter renumbers its volumes
+// in CAP but no legalhist.reporters_diffvols row covers the cited volume — the
+// case where buildCAPCite has to fall back to the untranslated volume number, so
+// every probe built from it is a guess. A volume-less citation is not counted:
+// there is no volume to translate, and buildCAPCite does not consult diffvols for
+// one either.
+func diffvolsMissing(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry, diffvols map[string]map[int]*citations.DiffVolEntry) bool {
+	if !entry.CAPDifferent || c.Volume == nil {
+		return false
+	}
+	_, ok := diffvols[*entry.ReporterStandard][*c.Volume]
+	return !ok
 }
 
 // linkEnglishReports tries to link a UK citation to the English Reports
@@ -472,20 +541,24 @@ func linkCAPThenCode(
 func linkEnglishReports(
 	c *citations.UnlinkedCitation,
 	entry *citations.WhitelistEntry,
-	erCites map[string]string,
+	t *linkTables,
 	result *citations.LinkResult,
 ) *citations.LinkResult {
 	citeCleaned := buildStandardCite(c, entry)
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeCleaned
 
+	probes := make([]string, 0, 2)
+
 	// The English Reports are inconsistent about the redundant volume on
 	// single-volume nominate reporters: most are stored bare ("Cro Eliz 1") but
 	// some carry it ("1 Vern 1"), so try both forms.
 	for _, f := range volumeForms(c, entry) {
 		cite := buildStandardCite(f, entry)
-		if erID, ok := erCites[cite]; ok {
+		probes = append(probes, cite)
+		if erID, ok := t.erCites[cite]; ok {
 			result.Status = citations.StatusLinkedEnglishReports
+			result.MatchTier = citations.TierERDirect
 			result.ERCaseID = &erID
 			result.CiteLinked = &cite
 			return result
@@ -493,6 +566,7 @@ func linkEnglishReports(
 	}
 
 	result.Status = citations.StatusNoMatch
+	result.MatchTier = ukTier(probes, t.uk)
 	return result
 }
 

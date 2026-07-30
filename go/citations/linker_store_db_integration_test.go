@@ -50,6 +50,7 @@ func newTestStore(t *testing.T) *LinkerDBStore {
 		`CREATE TABLE moml_citations.citation_links (
 			citation_id uuid PRIMARY KEY,
 			status text NOT NULL,
+			match_tier text,
 			cap_case_id bigint,
 			code_reporter_id bigint,
 			er_case_id text,
@@ -197,18 +198,19 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 
 	results := []*LinkResult{
 		// A CAP link: cap_case_id set, the rest of the case IDs nil.
-		{CitationID: idCAP, Status: StatusLinkedCAP, CAPCaseID: &capID,
+		{CitationID: idCAP, Status: StatusLinkedCAP, MatchTier: TierCAPDirect, CAPCaseID: &capID,
 			CiteCleaned: &cleaned, CiteNormalized: &normalized, CiteLinked: &linked},
 		// A code-reporter link.
-		{CitationID: idCode, Status: StatusLinkedCodeReporter, CodeReporterID: &codeID,
+		{CitationID: idCode, Status: StatusLinkedCodeReporter, MatchTier: TierCodeDirect, CodeReporterID: &codeID,
 			CiteCleaned: &cleaned, CiteNormalized: &normalized, CiteLinked: &linked},
 		// An English Reports link (text id).
-		{CitationID: idER, Status: StatusLinkedEnglishReports, ERCaseID: &erID,
+		{CitationID: idER, Status: StatusLinkedEnglishReports, MatchTier: TierERDirect, ERCaseID: &erID,
 			CiteCleaned: &cleaned, CiteNormalized: &normalized, CiteLinked: &linked},
-		// no_match: cite_cleaned/normalized set, everything else nil.
-		{CitationID: idNoMatch, Status: StatusNoMatch,
+		// no_match: cite_cleaned/normalized and the tier set, everything else nil.
+		{CitationID: idNoMatch, Status: StatusNoMatch, MatchTier: TierUSPageAbsent,
 			CiteCleaned: &cleaned, CiteNormalized: &normalized},
-		// skipped: all nullable columns nil. Exercises NULL encoding in every array.
+		// skipped: all nullable columns nil, including an empty MatchTier that has
+		// to arrive as SQL NULL. Exercises NULL encoding in every array.
 		{CitationID: idSkipped, Status: StatusSkippedNotWhitelisted},
 	}
 
@@ -217,21 +219,24 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 	// Read each row back and verify the values (and the NULLs) round-tripped.
 	type row struct {
 		status                          string
+		tier                            *string
 		capCaseID, codeReporterID       *int64
 		erCaseID, cleaned, norm, linked *string
 	}
 	read := func(id uuid.UUID) row {
 		var r row
 		err := s.DB.QueryRow(ctx,
-			`SELECT status, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked
+			`SELECT status, match_tier, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked
 			 FROM moml_citations.citation_links WHERE citation_id = $1`, id).
-			Scan(&r.status, &r.capCaseID, &r.codeReporterID, &r.erCaseID, &r.cleaned, &r.norm, &r.linked)
+			Scan(&r.status, &r.tier, &r.capCaseID, &r.codeReporterID, &r.erCaseID, &r.cleaned, &r.norm, &r.linked)
 		require.NoError(t, err)
 		return r
 	}
 
 	cap := read(idCAP)
 	assert.Equal(t, StatusLinkedCAP, cap.status)
+	require.NotNil(t, cap.tier)
+	assert.Equal(t, TierCAPDirect, *cap.tier)
 	require.NotNil(t, cap.capCaseID)
 	assert.Equal(t, capID, *cap.capCaseID)
 	assert.Nil(t, cap.codeReporterID)
@@ -241,18 +246,24 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 
 	code := read(idCode)
 	assert.Equal(t, StatusLinkedCodeReporter, code.status)
+	require.NotNil(t, code.tier)
+	assert.Equal(t, TierCodeDirect, *code.tier)
 	require.NotNil(t, code.codeReporterID)
 	assert.Equal(t, codeID, *code.codeReporterID)
 	assert.Nil(t, code.capCaseID)
 
 	er := read(idER)
 	assert.Equal(t, StatusLinkedEnglishReports, er.status)
+	require.NotNil(t, er.tier)
+	assert.Equal(t, TierERDirect, *er.tier)
 	require.NotNil(t, er.erCaseID)
 	assert.Equal(t, erID, *er.erCaseID)
 	assert.Nil(t, er.capCaseID)
 
 	nm := read(idNoMatch)
 	assert.Equal(t, StatusNoMatch, nm.status)
+	require.NotNil(t, nm.tier)
+	assert.Equal(t, TierUSPageAbsent, *nm.tier)
 	assert.Nil(t, nm.capCaseID)
 	require.NotNil(t, nm.cleaned)
 	assert.Equal(t, cleaned, *nm.cleaned)
@@ -260,6 +271,7 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 
 	sk := read(idSkipped)
 	assert.Equal(t, StatusSkippedNotWhitelisted, sk.status)
+	assert.Nil(t, sk.tier, "an empty MatchTier must be stored as NULL, not as an empty string")
 	assert.Nil(t, sk.capCaseID)
 	assert.Nil(t, sk.codeReporterID)
 	assert.Nil(t, sk.erCaseID)
