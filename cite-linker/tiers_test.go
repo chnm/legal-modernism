@@ -13,18 +13,19 @@ func TestSplitCite(t *testing.T) {
 		cite         string
 		wantVol      string
 		wantReporter string
+		wantPage     int
 		wantOK       bool
 	}{
-		{"volume, reporter, page", "17 Mass. 210", "17", "Mass.", true},
-		{"multi-word reporter", "1 Ves Sen 1", "1", "Ves Sen", true},
-		{"no volume", "Cro Eliz 1", "", "Cro Eliz", true},
-		{"no volume, single-word reporter", "Stat 30", "", "Stat", true},
-		{"multi-digit volume and page", "123 U.S. 4567", "123", "U.S.", true},
+		{"volume, reporter, page", "17 Mass. 210", "17", "Mass.", 210, true},
+		{"multi-word reporter", "1 Ves Sen 1", "1", "Ves Sen", 1, true},
+		{"no volume", "Cro Eliz 1", "", "Cro Eliz", 1, true},
+		{"no volume, single-word reporter", "Stat 30", "", "Stat", 30, true},
+		{"multi-digit volume and page", "123 U.S. 4567", "123", "U.S.", 4567, true},
 		{
 			// A reporter whose own name starts with something numeric-looking
 			// must not have it read as a volume.
 			name: "leading token that is not all digits is part of the reporter",
-			cite: "2d Cir. 5", wantVol: "", wantReporter: "2d Cir.", wantOK: true,
+			cite: "2d Cir. 5", wantVol: "", wantReporter: "2d Cir.", wantPage: 5, wantOK: true,
 		},
 		{
 			// The code-reporter map holds keys like this on purpose; they must not
@@ -32,22 +33,29 @@ func TestSplitCite(t *testing.T) {
 			name: "no page is not a cite",
 			cite: "Cox, Manual Trade-Mark Cas.", wantOK: false,
 		},
-		{"empty string", "", "", "", false},
-		{"page only", "210", "", "", false},
-		{"leading space", " 210", "", "", false},
-		{"trailing space", "17 Mass. ", "", "", false},
-		{"non-numeric page", "17 Mass. cciii", "", "", false},
+		{
+			// allDigits accepts it, but it overflows an int, so Atoi has to be what
+			// decides. A wrapped page would silently land in the wrong span.
+			name: "page too large for an int is not a cite",
+			cite: "1 Mass. 99999999999999999999", wantOK: false,
+		},
+		{"empty string", "", "", "", 0, false},
+		{"page only", "210", "", "", 0, false},
+		{"leading space", " 210", "", "", 0, false},
+		{"trailing space", "17 Mass. ", "", "", 0, false},
+		{"non-numeric page", "17 Mass. cciii", "", "", 0, false},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			vol, reporter, ok := splitCite(tt.cite)
+			vol, reporter, page, ok := splitCite(tt.cite)
 			assert.Equal(t, tt.wantOK, ok)
 			if !tt.wantOK {
 				return
 			}
 			assert.Equal(t, tt.wantVol, vol, "volume")
 			assert.Equal(t, tt.wantReporter, reporter, "reporter")
+			assert.Equal(t, tt.wantPage, page, "page")
 		})
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/lmullen/legal-modernism/go/citations"
@@ -32,7 +33,7 @@ func newCiteIndex[V any](maps ...map[string]V) *citeIndex {
 	}
 	for _, m := range maps {
 		for cite := range m {
-			vol, reporter, ok := splitCite(cite)
+			vol, reporter, _, ok := splitCite(cite)
 			if !ok {
 				continue
 			}
@@ -48,7 +49,7 @@ func newCiteIndex[V any](maps ...map[string]V) *citeIndex {
 // string the index cannot parse is ignored rather than counted as a miss.
 func (ix *citeIndex) reached(probes []string) (reporter, volume bool) {
 	for _, p := range probes {
-		vol, rep, ok := splitCite(p)
+		vol, rep, _, ok := splitCite(p)
 		if !ok {
 			continue
 		}
@@ -72,25 +73,31 @@ func volumeKey(vol, reporter string) string {
 }
 
 // splitCite splits a cite string of the form "{volume} {reporter} {page}" into
-// its volume and reporter parts, discarding the page; vol is empty for the
-// volume-less form "{reporter} {page}" that single-volume reporters use. ok is
-// false when the string is not a cite at all, which is not hypothetical: the
-// code-reporter map deliberately holds keys like "Cox, Manual Trade-Mark Cas."
-// that no probe will ever match.
+// its volume, reporter, and page; vol is empty for the volume-less form
+// "{reporter} {page}" that single-volume reporters use. ok is false when the
+// string is not a cite at all, which is not hypothetical: the code-reporter map
+// deliberately holds keys like "Cox, Manual Trade-Mark Cas." that no probe will
+// ever match.
 //
-// Volume and page stay strings because they are only ever compared with other
-// cite strings built the same way; parsing them to int would add failure modes
-// for no gain.
-func splitCite(cite string) (vol, reporter string, ok bool) {
+// The volume stays a string because it is only ever compared with other cite
+// strings built the same way, and parsing it to int would add failure modes for
+// no gain. The page is parsed, because the range index orders and compares pages
+// numerically. A page that does not fit an int yields ok false rather than a
+// wrapped value.
+func splitCite(cite string) (vol, reporter string, page int, ok bool) {
 	sp := strings.LastIndexByte(cite, ' ')
 	if sp <= 0 || !allDigits(cite[sp+1:]) {
-		return "", "", false // no page, so not a cite
+		return "", "", 0, false // no page, so not a cite
+	}
+	page, err := strconv.Atoi(cite[sp+1:])
+	if err != nil {
+		return "", "", 0, false
 	}
 	head := cite[:sp]
 	if v := strings.IndexByte(head, ' '); v > 0 && allDigits(head[:v]) {
-		return head[:v], head[v+1:], true
+		return head[:v], head[v+1:], page, true
 	}
-	return "", head, true
+	return "", head, page, true
 }
 
 // allDigits reports whether s is a non-empty run of ASCII digits.
