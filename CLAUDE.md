@@ -124,6 +124,24 @@ Use the `gh` CLI for GitHub operations — creating pull requests, viewing issue
 
 Do not hand-build GitHub API calls with `curl`; prefer `gh`.
 
+### Attribution
+
+Work that Claude does should be attributed to Claude, not to the repository owner.
+
+- **Commits:** pass `--author="Claude <noreply@anthropic.com>"` to `git commit`. The
+  committer stays whoever `git config user.email` names, so GitHub shows the commit as
+  "Claude authored and lmullen committed". Do **not** change `user.name` or `user.email`
+  in git config to accomplish this — that would relabel hand-written commits too.
+- **Trailer:** keep the usual `Co-Authored-By: Claude ... <noreply@anthropic.com>` trailer
+  at the end of the commit message.
+- **Comments, PR bodies, and issue text:** `gh` posts under the authenticated human account
+  and there is no way to change that, so open any body Claude writes with an attribution
+  line, followed by a blank line:
+
+      _Written by Claude Code._
+
+  Text that Claude drafts for a human to post themselves does not need the line.
+
 ## CI
 
 GitHub Actions (`.github/workflows/go.yml`) runs on push/PR to main:
