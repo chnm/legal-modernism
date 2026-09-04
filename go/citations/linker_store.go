@@ -46,8 +46,11 @@ type LinkerStore interface {
 	LoadCodeReporterCitations(ctx context.Context) (map[string]int64, error)
 
 	// LoadEnglishReportsCitations loads all English Reports citations into memory
-	// as cite string -> case ID.
-	LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error)
+	// as cite string -> ERCase, keyed by both the E.R. reprint cite and the
+	// nominate parallel cite. Unlike LoadCAPCitations, a cite belonging to more
+	// than one case is kept as a key and marked ambiguous rather than dropped, so
+	// the linker can distinguish a cite it cannot resolve from one it never saw.
+	LoadEnglishReportsCitations(ctx context.Context) (map[string]ERCase, error)
 
 	// SaveLinkResults batch-inserts multiple link results in a single query.
 	SaveLinkResults(ctx context.Context, results []*LinkResult) error
