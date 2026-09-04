@@ -48,3 +48,20 @@
 # timeout is expensive: because --reset starts by deleting, a resubmit restarts
 # from scratch instead of resuming rather than picking up where it left off.
 # ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32 --lock-timeout=1m
+
+# Full rebuild (discarding every existing link, e.g. after linking code was run
+# against production from an unmerged branch): TRUNCATE the table from psql
+# first, then use the routine invocation above unchanged.
+#
+#   psql "$LAW_DBSTR" -c 'TRUNCATE moml_citations.citation_links;'
+#
+# Deliberately not --reset. --reset preserves linked_* rows, so it cannot clear
+# them, and because it deletes at startup a job that hits the wall time restarts
+# from scratch. Truncating separately and running without --reset leaves the
+# anti-join in StreamUnprocessedCitations to resume from wherever the last job
+# stopped, so a timeout costs a resubmit rather than the whole run. Nothing has a
+# foreign key onto citation_links, so the truncate needs no cascade.
+#
+# Raise --time well above the 1 hour below before submitting: this processes all
+# ~62.5M citations through the per-citation path rather than the handful a
+# routine run sees. Restore it afterward.

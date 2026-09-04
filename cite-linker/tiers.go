@@ -127,13 +127,23 @@ func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
 
 // ukTier reports which tier an English Reports cascade that failed to link
 // reached. There is no diffvols equivalent on this route.
-func ukTier(probes []string, ix *citeIndex) string {
+//
+// ambiguous reports that some probe matched a cite string several cases share.
+// It outranks page_absent because it says strictly more: the cite was found, and
+// only the choice among the cases sharing it was impossible. It cannot in
+// practice conflict with the reporter and volume tiers — the flag is only set by
+// a probe that matched a key exactly, and every such key is in the index — but
+// the ladder is written in full so it stays correct if the index is ever built
+// from something other than the map the cascade probes.
+func ukTier(probes []string, ix *citeIndex, ambiguous bool) string {
 	reporter, volume := ix.reached(probes)
 	switch {
 	case !reporter:
 		return citations.TierUKReporterAbsent
 	case !volume:
 		return citations.TierUKVolumeAbsent
+	case ambiguous:
+		return citations.TierUKPageAmbiguous
 	default:
 		return citations.TierUKPageAbsent
 	}

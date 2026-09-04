@@ -291,27 +291,53 @@ func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[stri
 	return m, nil
 }
 
-// LoadEnglishReportsCitations loads english_reports.cases into an in-memory map.
-// Both er_cite and er_parallel_cite are mapped to the case ID.
-func (s *LinkerDBStore) LoadEnglishReportsCitations(ctx context.Context) (map[string]string, error) {
-	query := `SELECT id, er_cite, er_parallel_cite FROM english_reports.cases`
+// LoadEnglishReportsCitations loads english_reports.cases into an in-memory map
+// keyed by both er_cite (the E.R. reprint cite, "84 E.R. 256") and
+// er_parallel_cite (the nominate cite, "2 Keb 408"). The two keyspaces are
+// disjoint — no string appears in both — so one map serves them without
+// collision, and treatises overwhelmingly cite the nominate form.
+//
+// There is deliberately no HAVING clause here, which is where this diverges from
+// LoadCAPCitations and LoadCodeReporterCitations: a cite belonging to more than
+// one case is kept as a key and marked ambiguous instead of being dropped. The
+// linking policy is the same — such a cite links to nothing, because assigning
+// one of the cases arbitrarily is the bug in #256 — but keeping the key lets the
+// cascade report uk_page_ambiguous rather than the much vaguer uk_page_absent,
+// and keeps the volume in the tier index, where dropping it would understate how
+// far a failed citation actually got.
+//
+// min(id) is a formality on the unambiguous branch: cases = 1 guarantees there
+// is only one value to take.
+func (s *LinkerDBStore) LoadEnglishReportsCitations(ctx context.Context) (map[string]ERCase, error) {
+	query := `
+	SELECT cite, min(id) AS id, count(DISTINCT id) AS cases
+	FROM (
+		SELECT er_cite AS cite, id FROM english_reports.cases
+		UNION ALL
+		SELECT er_parallel_cite, id FROM english_reports.cases
+		WHERE er_parallel_cite IS NOT NULL
+	) t
+	WHERE cite <> ''
+	GROUP BY cite
+	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {
 		return nil, fmt.Errorf("loading English Reports citations: %w", err)
 	}
 	defer rows.Close()
 
-	m := make(map[string]string)
+	m := make(map[string]ERCase)
 	for rows.Next() {
-		var id, erCite string
-		var erParallel *string
-		if err := rows.Scan(&id, &erCite, &erParallel); err != nil {
+		var cite, id string
+		var cases int
+		if err := rows.Scan(&cite, &id, &cases); err != nil {
 			return nil, fmt.Errorf("scanning English Reports citation: %w", err)
 		}
-		m[erCite] = id
-		if erParallel != nil {
-			m[*erParallel] = id
+		if cases > 1 {
+			m[cite] = ERCase{Ambiguous: true, Cases: cases}
+			continue
 		}
+		m[cite] = ERCase{ID: id, Cases: 1}
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterating English Reports citations: %w", err)

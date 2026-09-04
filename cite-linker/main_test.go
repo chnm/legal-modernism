@@ -23,6 +23,7 @@ func TestLinkCitation(t *testing.T) {
 	vernStd := "Vern"
 	alaStd := "Ala."
 	aleynStd := "Al"
+	kebStd := "Keb"
 
 	tests := []struct {
 		name         string
@@ -33,7 +34,7 @@ func TestLinkCitation(t *testing.T) {
 		freelawCites map[string]int64
 		altAbbrs     map[string][]string
 		codeCites    map[string]int64
-		erCites      map[string]string
+		erCites      map[string]citations.ERCase
 		wantStatus   string
 		wantTier     string
 		wantCAPID    *int64
@@ -91,7 +92,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
 			whitelist:    map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
 			freelawCites: map[string]int64{"1 Q.B. 20": 222},
-			erCites:      map[string]string{"1 Q.B. 20": "er-1"},
+			erCites:      map[string]citations.ERCase{"1 Q.B. 20": {ID: "er-1", Cases: 1}},
 			wantStatus:   citations.StatusLinkedEnglishReports,
 			wantTier:     citations.TierERDirect,
 			wantERID:     ptr("er-1"),
@@ -278,7 +279,7 @@ func TestLinkCitation(t *testing.T) {
 				"Al":   {ReporterStandard: &aleynStd, UK: true},
 			},
 			capCites:   map[string]int64{"12 Ala. 672": 555},
-			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
+			erCites:    map[string]citations.ERCase{"Al 672": {ID: "aleyn-false-positive", Cases: 1}},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(555)),
@@ -295,7 +296,7 @@ func TestLinkCitation(t *testing.T) {
 				"Ala.": {ReporterStandard: &alaStd},
 				"Al":   {ReporterStandard: &aleynStd, UK: true},
 			},
-			erCites:    map[string]string{"Al 672": "aleyn-false-positive"},
+			erCites:    map[string]citations.ERCase{"Al 672": {ID: "aleyn-false-positive", Cases: 1}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSReporterAbsent,
 			wantLinked: nil,
@@ -306,7 +307,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:    map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
 			freelawCites: map[string]int64{"1 QB 20": 222}, // would match if alt path ran
 			altAbbrs:     map[string][]string{"Q.B.": {"QB"}},
-			erCites:      map[string]string{}, // no English Reports match
+			erCites:      map[string]citations.ERCase{}, // no English Reports match
 			wantStatus:   citations.StatusNoMatch,
 			wantTier:     citations.TierUKReporterAbsent,
 			wantLinked:   nil,
@@ -331,7 +332,7 @@ func TestLinkCitation(t *testing.T) {
 			name:       "single-volume explicit volume 1 links under the bare form",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Cro Eliz", Page: 5},
 			whitelist:  map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
-			erCites:    map[string]string{"Cro Eliz 5": "er-cro-5"},
+			erCites:    map[string]citations.ERCase{"Cro Eliz 5": {ID: "er-cro-5", Cases: 1}},
 			wantStatus: citations.StatusLinkedEnglishReports,
 			wantTier:   citations.TierERDirect,
 			wantERID:   ptr("er-cro-5"),
@@ -344,11 +345,71 @@ func TestLinkCitation(t *testing.T) {
 			name:       "single-volume nil volume links to an English Reports cite stored with the redundant 1",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Vern", Page: 12},
 			whitelist:  map[string]*citations.WhitelistEntry{"Vern": {ReporterStandard: &vernStd, UK: true, SingleVol: true}},
-			erCites:    map[string]string{"1 Vern 12": "er-vern-12"},
+			erCites:    map[string]citations.ERCase{"1 Vern 12": {ID: "er-vern-12", Cases: 1}},
 			wantStatus: citations.StatusLinkedEnglishReports,
 			wantTier:   citations.TierERDirect,
 			wantERID:   ptr("er-vern-12"),
 			wantLinked: ptr("1 Vern 12"),
+		},
+		{
+			// #256: several short decisions routinely share one nominate-reporter
+			// page, and the map used to resolve such a cite to whichever row the
+			// table scan returned last. 818,290 of 5,330,468 ER links sat on such
+			// a cite, at an expected precision of 44.3%.
+			name:       "ambiguous English Reports cite does not link",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Keb", Page: 408},
+			whitelist:  map[string]*citations.WhitelistEntry{"Keb": {ReporterStandard: &kebStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"2 Keb 408": {Ambiguous: true, Cases: 3}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKPageAmbiguous,
+			// wantERID and wantLinked stay nil: an ambiguous entry carries no ID,
+			// and writing its zero value would fail citation_links_er_case_id_fkey
+			// on the whole batch.
+		},
+		{
+			// The tier has to distinguish a page the corpus holds but cannot
+			// resolve from one it has never seen. Both are no_match; only the
+			// first is a candidate for disambiguation work.
+			name:       "unambiguous cite in the same volume is still page_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Keb", Page: 999},
+			whitelist:  map[string]*citations.WhitelistEntry{"Keb": {ReporterStandard: &kebStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"2 Keb 408": {Ambiguous: true, Cases: 3}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKPageAbsent,
+		},
+		{
+			// The ambiguity must not short-circuit the volume-form loop: one form
+			// colliding is not evidence against the other form linking cleanly.
+			name:      "one volume form ambiguous, the other links",
+			cite:      citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Cro Eliz", Page: 5},
+			whitelist: map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
+			erCites: map[string]citations.ERCase{
+				"Cro Eliz 5":   {Ambiguous: true, Cases: 2},
+				"1 Cro Eliz 5": {ID: "er-cro-5", Cases: 1},
+			},
+			wantStatus: citations.StatusLinkedEnglishReports,
+			wantTier:   citations.TierERDirect,
+			wantERID:   ptr("er-cro-5"),
+			wantLinked: ptr("1 Cro Eliz 5"),
+		},
+		{
+			// ...and when the other form is merely absent, the ambiguity is still
+			// the most informative thing known about the failure.
+			name:       "one volume form ambiguous, the other absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Cro Eliz", Page: 5},
+			whitelist:  map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
+			erCites:    map[string]citations.ERCase{"Cro Eliz 5": {Ambiguous: true, Cases: 2}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKPageAmbiguous,
+		},
+		{
+			// Ambiguity never promotes a citation past a tier it did not reach.
+			name:       "ambiguous cite in an unknown volume is volume_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(7), ReporterAbbr: "Keb", Page: 408},
+			whitelist:  map[string]*citations.WhitelistEntry{"Keb": {ReporterStandard: &kebStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"2 Keb 408": {Ambiguous: true, Cases: 3}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKVolumeAbsent,
 		},
 		{
 			// The alt-spelling probe has to use the variant's volume, not the
@@ -448,7 +509,7 @@ func TestLinkCitation(t *testing.T) {
 			name:       "UK reporter at another volume is uk_volume_absent",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
 			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
-			erCites:    map[string]string{"9 Q.B. 20": "er-9"},
+			erCites:    map[string]citations.ERCase{"9 Q.B. 20": {ID: "er-9", Cases: 1}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKVolumeAbsent,
 		},
@@ -456,7 +517,7 @@ func TestLinkCitation(t *testing.T) {
 			name:       "UK volume present, page missed, is uk_page_absent",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
 			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
-			erCites:    map[string]string{"1 Q.B. 21": "er-1"},
+			erCites:    map[string]citations.ERCase{"1 Q.B. 21": {ID: "er-1", Cases: 1}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKPageAbsent,
 		},
