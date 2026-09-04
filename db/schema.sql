@@ -1,7 +1,7 @@
 \restrict dbmate
 
 -- Dumped from database version 17.10 (Debian 17.10-0+deb13u1)
--- Dumped by pg_dump version 17.10 (Homebrew)
+-- Dumped by pg_dump version 17.11 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1313,7 +1313,7 @@ CREATE TABLE moml_citations.citation_links (
     cite_linked text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     match_tier text,
-    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'code_alt_spelling'::text, 'er_direct'::text, 'er_page_interior'::text]))))
+    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'code_alt_spelling'::text, 'er_direct'::text, 'er_page_interior'::text]))))
 );
 
 
@@ -2603,4 +2603,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260728174121'),
     ('20260729133619'),
     ('20260729191037'),
-    ('20260729212710');
+    ('20260729212710'),
+    ('20260904202221');
