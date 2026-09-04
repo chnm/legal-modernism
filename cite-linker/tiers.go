@@ -106,11 +106,33 @@ func allDigits(s string) bool {
 	return true
 }
 
+// carriesVolume reports whether any of the probes named a volume at all. When
+// none did, the citation was detected without one and the cascade never had a
+// volume to look up, which is a different failure from a volume no source holds
+// (issue #261). A probe string that cannot be parsed is ignored, as in reached.
+//
+// This is read off the probes rather than off the citation so that the
+// single-volume variant counts: volumeForms adds "1 Toth 123" beside a
+// volume-less "Toth 123", and for such a reporter the bare form is a real cite,
+// so its failures are volume_absent or page_absent, never volume_missing.
+func carriesVolume(probes []string) bool {
+	for _, p := range probes {
+		if vol, _, ok := splitCite(p); ok && vol != "" {
+			return true
+		}
+	}
+	return false
+}
+
 // usTier reports which tier a US cascade that failed to link reached, given
 // every cite string it probed. diffvolsMissing takes precedence over the volume
 // and page tiers: when a reporter renumbers in CAP and no reporters_diffvols row
 // covers the cited volume, every probe was built on a volume number we know to be
 // untranslated, so how far those probes got says nothing about the citation.
+//
+// A miss at the volume step is volume_missing when no probe carried a volume
+// and volume_absent otherwise. The reporter must be known first: a volume-less
+// citation to a reporter no source holds is still reporter_absent.
 func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
 	reporter, volume := ix.reached(probes)
 	switch {
@@ -118,6 +140,8 @@ func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
 		return citations.TierUSReporterAbsent
 	case diffvolsMissing:
 		return citations.TierUSDiffVolsMissing
+	case !volume && !carriesVolume(probes):
+		return citations.TierUSVolumeMissing
 	case !volume:
 		return citations.TierUSVolumeAbsent
 	default:
@@ -140,6 +164,8 @@ func ukTier(probes []string, ix *citeIndex, ambiguous bool) string {
 	switch {
 	case !reporter:
 		return citations.TierUKReporterAbsent
+	case !volume && !carriesVolume(probes):
+		return citations.TierUKVolumeMissing
 	case !volume:
 		return citations.TierUKVolumeAbsent
 	case ambiguous:

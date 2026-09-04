@@ -451,14 +451,34 @@ func TestLinkCitation(t *testing.T) {
 		},
 		{
 			// For a multi-volume reporter "1 U.S. 10" is a real volume 1 and
-			// means something different from "U.S. 10".
+			// means something different from "U.S. 10". The tier says the
+			// citation carried no volume, not that CAP lacks one (#261).
 			name:       "multi-volume reporter does not gain a volume 1",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"1 U.S. 10": 111},
 			wantStatus: citations.StatusNoMatch,
-			wantTier:   citations.TierUSVolumeAbsent,
+			wantTier:   citations.TierUSVolumeMissing,
 			wantLinked: nil,
+		},
+		{
+			// The single-volume variant supplies a volume, so a miss on both
+			// forms is a genuine volume_absent even though the citation was
+			// detected without one.
+			name:       "volume-less single-volume citation missing under both forms is volume_absent",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"2 Toth 123": 777},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSVolumeAbsent,
+		},
+		{
+			name:       "volume-less UK citation to a multi-volume reporter is uk_volume_missing",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Q.B.", Page: 20},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"9 Q.B. 20": {ID: "er-9", Cases: 1}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKVolumeMissing,
 		},
 		{
 			name:       "multi-volume reporter does not drop its volume 1",
