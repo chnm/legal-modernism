@@ -49,15 +49,28 @@ func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
 		// actually matched, which the whitelist then routes to the right
 		// reporter or rejects outright.
 		// [.,]* allows optional period/comma separators before the page number.
+		//
+		// Nothing here looks at what precedes the abbreviation, so on its own
+		// this detector also matches the tail of a multi-volume citation:
+		// "Cal. 185" inside "123 Cal. 185", or "Raym. 45" inside "5 Ld. Raym.
+		// 45". RE2 has no lookbehind to rule that out, and a leading optional
+		// volume would not see the longer-abbreviation case. RemoveShadows
+		// drops those matches afterwards by comparing spans across detectors
+		// (issue #267).
 		regex: regexp.MustCompile(`\b` + flexAbbr + `\w*[.,]*\s+\d{1,4}`),
 	}
 	return detector
 }
 
-// Detect finds all the examples matching the reporter's abbreviation.
+// Detect finds all the examples matching the reporter's abbreviation. Each
+// citation records where in the text it was found (Start, End), which is what
+// lets RemoveShadows compare the output of several detectors on one page.
 func (d *Detector) Detect(doc sources.Document) []*Citation {
-	// Hold the matches that we have detected that we have detected.
-	var matches []string
+	text := doc.Text()
+
+	// Hold the spans of the matches that we have detected, as [start, end)
+	// byte offsets into text.
+	var matches [][]int
 
 	// Some kinds of detectors need to be able to find overlapping strings. If so
 	// We need to use a different strategy.
@@ -65,26 +78,29 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		// If the initial detector is present, then we need to find the start of potential
 		// matches, get a substring, check if there is a match, and if so, add it to
 		// the list of matches.
-		starts := d.initial.FindAllStringIndex(doc.Text(), -1)
+		starts := d.initial.FindAllStringIndex(text, -1)
 
 		for _, start := range starts {
 			i := start[0]
-			substr := getSubstr(doc.Text(), i, 25)
-			m := d.regex.FindString(substr) // Only look for one match
-			if m != "" {
-				// If we have a match, append it to the slice
-				matches = append(matches, m)
+			substr := getSubstr(text, i, 25)
+			loc := d.regex.FindStringIndex(substr) // Only look for one match
+			if loc != nil {
+				// The location is relative to the window, so shift it back
+				// into the coordinates of the whole text.
+				matches = append(matches, []int{i + loc[0], i + loc[1]})
 			}
 		}
 	} else {
 		// If there is not an initial detector, then just use FindAll
-		matches = d.regex.FindAllString(doc.Text(), -1)
+		matches = d.regex.FindAllStringIndex(text, -1)
 
 	}
 
 	// Now turn the matches into citations
 	var citations []*Citation
-	for _, m := range matches {
+	for _, span := range matches {
+		m := text[span[0]:span[1]]
+
 		// Filter out the citations which are in these formats
 		// 	6 Ex parte Wray, 30
 		// 	5 Rex v. Osborn, 7
@@ -95,8 +111,10 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 
 		c := &Citation{}
 		c.ID = uuid.New()
-		// Get the raw string
+		// Get the raw string and where it was found
 		c.Raw = m
+		c.Start = span[0]
+		c.End = span[1]
 
 		// Normalize all whitespace down to a single space
 		m = reSpace.ReplaceAllString(m, " ")
