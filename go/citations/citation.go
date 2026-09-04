@@ -15,6 +15,14 @@ type Citation struct {
 	Volume       *int
 	ReporterAbbr string
 	Page         int
+
+	// Start and End are the byte offsets of Raw in Source.Text(), so that
+	// Source.Text()[Start:End] == Raw. They are not persisted: SaveCitation
+	// does not read them. They exist so that detections from different
+	// detectors can be compared by position, which is how RemoveShadows tells
+	// that "Cal. 185" was found inside "123 Cal. 185".
+	Start int
+	End   int
 }
 
 func (c Citation) String() string {

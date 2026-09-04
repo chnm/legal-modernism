@@ -82,6 +82,11 @@ func main() {
 	// detector was built from; cite-linker normalizes it through
 	// legalhist.whitelist, so a spelling that belongs to a different reporter is
 	// linked to that reporter instead of to this single volume.
+	//
+	// These detectors do not check what precedes the abbreviation, so they also
+	// match inside longer citations ("Cal. 185" in "123 Cal. 185"). Those
+	// shadows are dropped per page below, once every detector has run, by
+	// citations.RemoveShadows.
 	singleVolReporters, err := citationsDB.GetSingleVolReporterAbbrs(ctx)
 	if err != nil {
 		slog.Error("could not get single volume reporters from database", "error", err)
@@ -131,13 +136,22 @@ func main() {
 						return
 					}
 					page.CorrectOCR(ocrSubs)
+
+					// Run every detector over the page before saving anything,
+					// so that a single-volume match found inside a longer
+					// citation can be recognized as a shadow of it and dropped.
+					var found []*citations.Citation
 					for _, detector := range detectors {
-						citations := detector.Detect(page)
-						for _, cite := range citations {
-							err = citationsDB.SaveCitation(ctx, cite)
-							if err != nil {
-								slog.Error("could not save citation", "citation", cite, "error", err)
-							}
+						found = append(found, detector.Detect(page)...)
+					}
+					kept := citations.RemoveShadows(found)
+					if len(kept) < len(found) {
+						slog.Debug("dropped shadow citations", "treatise_id", id.TreatiseID, "page_id", id.PageID, "dropped", len(found)-len(kept))
+					}
+					for _, cite := range kept {
+						err = citationsDB.SaveCitation(ctx, cite)
+						if err != nil {
+							slog.Error("could not save citation", "citation", cite, "error", err)
 						}
 					}
 				}

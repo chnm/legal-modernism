@@ -99,7 +99,7 @@ func TestCiteIndexSkipsUnparsableKeys(t *testing.T) {
 }
 
 func TestUSTier(t *testing.T) {
-	ix := newCiteIndex(map[string]int64{"17 Mass. 210": 1})
+	ix := newCiteIndex(map[string]int64{"17 Mass. 210": 1, "Cro Eliz 1": 2})
 
 	tests := []struct {
 		name            string
@@ -110,6 +110,33 @@ func TestUSTier(t *testing.T) {
 		{"unknown reporter", []string{"1 Nonesuch 5"}, false, citations.TierUSReporterAbsent},
 		{"unknown volume", []string{"22 Mass. 5"}, false, citations.TierUSVolumeAbsent},
 		{"known volume, unknown page", []string{"17 Mass. 5"}, false, citations.TierUSPageAbsent},
+		{
+			// #261: the citation carried no volume, so the cascade never had
+			// one to look up. That is not evidence about coverage.
+			name:   "no probe carries a volume",
+			probes: []string{"Mass. 5"},
+			want:   citations.TierUSVolumeMissing,
+		},
+		{
+			// ...but the reporter has to be known first.
+			name:   "a volume-less citation to an unknown reporter is reporter_absent",
+			probes: []string{"Nonesuch 5"},
+			want:   citations.TierUSReporterAbsent,
+		},
+		{
+			// A single-volume reporter's variant supplies a volume, so a miss
+			// on both forms is a real volume_absent, not volume_missing.
+			name:   "the volume-1 variant counts as carrying a volume",
+			probes: []string{"Mass. 5", "1 Mass. 5"},
+			want:   citations.TierUSVolumeAbsent,
+		},
+		{
+			// A bare form the index holds is a real volume bucket, so the
+			// cascade got past the volume step.
+			name:   "a bare form the index holds reaches page_absent",
+			probes: []string{"Cro Eliz 9"},
+			want:   citations.TierUSPageAbsent,
+		},
 		{
 			// The diffvols gap outranks both the volume and page tiers: the probes
 			// were built on a volume number we know to be untranslated, so how
@@ -143,6 +170,13 @@ func TestUKTier(t *testing.T) {
 	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, false),
 		"Vesey Junior volumes cited as Vesey Senior are a volume-range miss")
 	assert.Equal(t, citations.TierUKPageAbsent, ukTier([]string{"1 Ves Sen 100"}, ix, false))
+
+	// #261: a citation detected without a volume never had one to look up.
+	assert.Equal(t, citations.TierUKVolumeMissing, ukTier([]string{"Ves Sen 100"}, ix, false))
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"Nonesuch 5"}, ix, false),
+		"the reporter must be known before the volume step is judged")
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"Ves Sen 100", "4 Ves Sen 100"}, ix, false),
+		"the single-volume variant carries a volume, so the miss is volume_absent")
 
 	// #256: a cite the corpus holds but cannot resolve is a different failure
 	// from a page it has never seen, and outranks it.

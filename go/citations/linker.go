@@ -86,8 +86,11 @@ const (
 // FreeLaw crosswalk and the code reporter, so naming any one target would be a
 // half-truth. They report the closest approach across every target probed,
 // ordered reporter_absent (nothing to match against) through page_absent (right
-// reporter, right volume, wrong page — the pin-cite pool). The success tiers name
-// the target that produced the link, since exactly one did.
+// reporter, right volume, wrong page — the pin-cite pool). volume_missing sits
+// beside volume_absent rather than below it: both mean the volume step failed,
+// but for a different reason — the citation carried no volume for the probes to
+// look up, so nothing is known about coverage (issue #261). The success tiers
+// name the target that produced the link, since exactly one did.
 //
 // The values are constrained in SQL by chk_citation_links_match_tier; adding one
 // here needs a migration to widen that constraint.
@@ -96,11 +99,13 @@ const (
 	TierUSReporterAbsent  = "us_reporter_absent"  // no probed reporter spelling appears in any US source
 	TierUSDiffVolsMissing = "us_diffvols_missing" // reporter renumbers in CAP, but no reporters_diffvols row covers this volume
 	TierUSVolumeAbsent    = "us_volume_absent"    // reporter present, this volume never appears
+	TierUSVolumeMissing   = "us_volume_missing"   // reporter present, but the citation carries no volume to look up
 	TierUSPageAbsent      = "us_page_absent"      // reporter and volume present, page is not a first-page cite
 
 	// no_match, UK route (English Reports).
 	TierUKReporterAbsent = "uk_reporter_absent"
 	TierUKVolumeAbsent   = "uk_volume_absent"
+	TierUKVolumeMissing  = "uk_volume_missing"
 	TierUKPageAbsent     = "uk_page_absent"
 	// TierUKPageAmbiguous: the cite string is in the English Reports, but more
 	// than one case shares it, so there is nothing to link to. Already permitted
