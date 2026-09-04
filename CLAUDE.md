@@ -124,6 +124,8 @@ Use the `gh` CLI for GitHub operations — creating pull requests, viewing issue
 
 Do not hand-build GitHub API calls with `curl`; prefer `gh`.
 
+The project status board is https://github.com/orgs/chnm/projects/21/views/1.
+
 ## CI
 
 GitHub Actions (`.github/workflows/go.yml`) runs on push/PR to main:
