@@ -42,11 +42,9 @@
 # non-linked row (no_match, skipped_not_whitelisted, skipped_junk) so they are
 # re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
-# on a resubmit after a timeout, throwing away all partial progress.
-# The reset run re-processes tens of millions of rows through the per-citation
-# path rather than the handful a routine run sees, and it is the one case where a
-# timeout is expensive: because --reset starts by deleting, a resubmit restarts
-# from scratch instead of resuming rather than picking up where it left off.
+# on a resubmit after a timeout, throwing away all partial progress. Because
+# --reset starts by deleting, a resubmit restarts from scratch rather than
+# picking up where it left off.
 # ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32 --lock-timeout=1m
 
 # Full rebuild (discarding every existing link, e.g. after linking code was run
@@ -62,6 +60,11 @@
 # stopped, so a timeout costs a resubmit rather than the whole run. Nothing has a
 # foreign key onto citation_links, so the truncate needs no cascade.
 #
-# Raise --time well above the 1 hour below before submitting: this processes all
-# ~62.5M citations through the per-citation path rather than the handful a
-# routine run sees. Restore it afterward.
+# Sizing: a full rebuild of all ~62.2M citations on 2026-09-04 fit comfortably in
+# the 1 hour wall time above — 8m21s wall, of which 32s was loading the lookup
+# tables and 7m49s was linking at a steady 105–140K rows/sec (roughly 1 core and
+# 2.6GB RSS, the same profile as a routine run). An earlier attempt the same day
+# (job 9552356) crawled at ~8,000 rows/min and hit the wall time without
+# finishing; the cause was never identified. If a rebuild is running far below
+# ~100K rows/sec in the "linking progress" log lines, cancel and resubmit rather
+# than raising --time.
