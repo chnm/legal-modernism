@@ -418,3 +418,55 @@ func TestLoadCodeReporterCitationsIntegration(t *testing.T) {
 		"Cox, Manual Trade-Mark Cas. 51": 6,
 	}, got)
 }
+
+func TestLoadEnglishReportsCitationsIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// Minimal english_reports slice: only the columns the loader reads.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS english_reports CASCADE`,
+		`CREATE SCHEMA english_reports`,
+		`CREATE TABLE english_reports.cases (
+			id text PRIMARY KEY,
+			er_cite text NOT NULL,
+			er_parallel_cite text
+		)`,
+		`INSERT INTO english_reports.cases (id, er_cite, er_parallel_cite) VALUES
+			('c1', '24 E.R. 1053', '3 P Wms 258'),
+			('c2', '84 E.R. 256', '2 Keb 408'),
+			('c3', '84 E.R. 256', '2 Keb 409'),
+			('c4', '57 E.R. 1001', '3 Sim 273'),
+			('c5', '57 E.R. 1002', '3 Sim 273'),
+			('c6', '57 E.R. 1003', '3 Sim 273'),
+			('c7', '99 E.R. 944', NULL)`,
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.LoadEnglishReportsCitations(ctx)
+	require.NoError(t, err)
+
+	// Ambiguous cites are KEPT and flagged rather than dropped, which is where
+	// this diverges from LoadCAPCitations: the linker needs the key present to
+	// report uk_page_ambiguous instead of uk_page_absent (#256).
+	assert.Equal(t, map[string]ERCase{
+		// Unambiguous under both the reprint cite and the nominate cite.
+		"24 E.R. 1053": {ID: "c1", Cases: 1},
+		"3 P Wms 258":  {ID: "c1", Cases: 1},
+		// One reprint page carrying two decisions: no case, flagged.
+		"84 E.R. 256": {Ambiguous: true, Cases: 2},
+		// ...whose nominate cites are themselves distinct and still resolve.
+		"2 Keb 408": {ID: "c2", Cases: 1},
+		"2 Keb 409": {ID: "c3", Cases: 1},
+		// A nominate cite shared by three cases, each with its own reprint page.
+		"3 Sim 273":    {Ambiguous: true, Cases: 3},
+		"57 E.R. 1001": {ID: "c4", Cases: 1},
+		"57 E.R. 1002": {ID: "c5", Cases: 1},
+		"57 E.R. 1003": {ID: "c6", Cases: 1},
+		// A NULL parallel cite contributes only its reprint cite.
+		"99 E.R. 944": {ID: "c7", Cases: 1},
+	}, got)
+}

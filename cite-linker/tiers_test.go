@@ -134,12 +134,37 @@ func TestUSTier(t *testing.T) {
 }
 
 func TestUKTier(t *testing.T) {
-	ix := newCiteIndex(map[string]string{"1 Ves Sen 1": "er-1"})
+	ix := newCiteIndex(map[string]citations.ERCase{
+		"1 Ves Sen 1": {ID: "er-1", Cases: 1},
+		"1 Ves Sen 4": {Ambiguous: true, Cases: 3},
+	})
 
-	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix))
-	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix),
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, false))
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, false),
 		"Vesey Junior volumes cited as Vesey Senior are a volume-range miss")
-	assert.Equal(t, citations.TierUKPageAbsent, ukTier([]string{"1 Ves Sen 100"}, ix))
+	assert.Equal(t, citations.TierUKPageAbsent, ukTier([]string{"1 Ves Sen 100"}, ix, false))
+
+	// #256: a cite the corpus holds but cannot resolve is a different failure
+	// from a page it has never seen, and outranks it.
+	assert.Equal(t, citations.TierUKPageAmbiguous, ukTier([]string{"1 Ves Sen 4"}, ix, true))
+
+	// ...but only once the reporter and the volume are actually known. An
+	// ambiguous flag must never promote a citation past a tier it did not reach.
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, true))
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, true))
+}
+
+// TestCiteIndexKeepsAmbiguousKeys guards the property that makes
+// uk_page_ambiguous reachable at all: LoadEnglishReportsCitations keeps
+// ambiguous cites in the map, so the index still learns their reporter and
+// volume. Dropping them, as the CAP loader does, would report a citation that
+// reached a real volume as uk_volume_absent.
+func TestCiteIndexKeepsAmbiguousKeys(t *testing.T) {
+	ix := newCiteIndex(map[string]citations.ERCase{"3 Keb 408": {Ambiguous: true, Cases: 2}})
+
+	reporter, volume := ix.reached([]string{"3 Keb 999"})
+	assert.True(t, reporter, "an ambiguous cite still proves the reporter exists")
+	assert.True(t, volume, "an ambiguous cite still proves the volume exists")
 }
 
 // TestDiffvolsMissing covers the three ways the diffvols check can decline to

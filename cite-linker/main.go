@@ -182,7 +182,18 @@ func main() {
 	if err != nil {
 		exitStartupError("could not load English Reports citations", err)
 	}
-	slog.Info("loaded English Reports citations", "entries", len(erCites))
+	erUnambiguous := 0
+	for _, er := range erCites {
+		if !er.Ambiguous {
+			erUnambiguous++
+		}
+	}
+	// The ambiguous count is the one number that shows #256's policy took effect,
+	// so it is logged once at startup rather than left to be re-derived by query.
+	slog.Info("loaded English Reports citations",
+		"entries", len(erCites),
+		"unambiguous", erUnambiguous,
+		"ambiguous", len(erCites)-erUnambiguous)
 
 	// Assemble the lookup tables, which also walks every loaded cite string once
 	// to build the reporter/volume indexes a no_match is attributed with.
@@ -355,7 +366,7 @@ type linkTables struct {
 	freelawCites map[string]int64
 	altAbbrs     map[string][]string
 	codeCites    map[string]int64
-	erCites      map[string]string
+	erCites      map[string]citations.ERCase
 
 	// us indexes the three maps the US cascade probes as a unit; uk indexes the
 	// English Reports. Building them walks every cite string once, which is why
@@ -371,7 +382,7 @@ func newLinkTables(
 	freelawCites map[string]int64,
 	altAbbrs map[string][]string,
 	codeCites map[string]int64,
-	erCites map[string]string,
+	erCites map[string]citations.ERCase,
 ) *linkTables {
 	return &linkTables{
 		whitelist:    whitelist,
@@ -550,23 +561,36 @@ func linkEnglishReports(
 
 	probes := make([]string, 0, 2)
 
+	// Set when a probe matches a cite string that several English Reports cases
+	// share. Recorded rather than returned on, because it is not a reason to stop
+	// probing: on a single-volume reporter one volume form can collide while the
+	// other resolves cleanly, and a real link is better evidence than a refusal.
+	// Only after every form has missed does it decide the tier.
+	ambiguous := false
+
 	// The English Reports are inconsistent about the redundant volume on
 	// single-volume nominate reporters: most are stored bare ("Cro Eliz 1") but
 	// some carry it ("1 Vern 1"), so try both forms.
 	for _, f := range volumeForms(c, entry) {
 		cite := buildStandardCite(f, entry)
 		probes = append(probes, cite)
-		if erID, ok := t.erCites[cite]; ok {
-			result.Status = citations.StatusLinkedEnglishReports
-			result.MatchTier = citations.TierERDirect
-			result.ERCaseID = &erID
-			result.CiteLinked = &cite
-			return result
+		er, ok := t.erCites[cite]
+		if !ok {
+			continue
 		}
+		if er.Ambiguous {
+			ambiguous = true
+			continue
+		}
+		result.Status = citations.StatusLinkedEnglishReports
+		result.MatchTier = citations.TierERDirect
+		result.ERCaseID = &er.ID
+		result.CiteLinked = &cite
+		return result
 	}
 
 	result.Status = citations.StatusNoMatch
-	result.MatchTier = ukTier(probes, t.uk)
+	result.MatchTier = ukTier(probes, t.uk, ambiguous)
 	return result
 }
 

@@ -24,6 +24,24 @@ type DiffVolEntry struct {
 	CAPReporter string
 }
 
+// ERCase is what one English Reports cite string resolves to. A cite that
+// several cases share resolves to no case at all: nominate-reporter pages often
+// carry many short decisions, so 40,677 of the 185,538 distinct cite strings
+// (21.9%) belong to more than one case, and resolving those to an arbitrary one
+// was issue #256.
+//
+// Ambiguous cites stay in the map rather than being dropped, which is the one
+// way this differs from the policy LoadCAPCitations enforces with its HAVING
+// clause. A cite the corpus knows but cannot resolve and a cite it has never
+// seen are different failures, and the linker reports them as different tiers
+// (uk_page_ambiguous against uk_page_absent), so the key has to survive the load
+// for the distinction to be available at link time.
+type ERCase struct {
+	ID        string // the case; empty when Ambiguous
+	Ambiguous bool   // the cite string belongs to more than one case
+	Cases     int    // how many cases share the cite string; 1 when unambiguous
+}
+
 // UnlinkedCitation is a raw citation fetched from the database for linking.
 type UnlinkedCitation struct {
 	ID           uuid.UUID
@@ -84,6 +102,11 @@ const (
 	TierUKReporterAbsent = "uk_reporter_absent"
 	TierUKVolumeAbsent   = "uk_volume_absent"
 	TierUKPageAbsent     = "uk_page_absent"
+	// TierUKPageAmbiguous: the cite string is in the English Reports, but more
+	// than one case shares it, so there is nothing to link to. Already permitted
+	// by chk_citation_links_match_tier, forward-declared there for #243, so #256
+	// needed no migration to start emitting it.
+	TierUKPageAmbiguous = "uk_page_ambiguous"
 
 	// linked_*: which probe produced the link.
 	TierCAPDirect             = "cap_direct"               // cap.citations, under the normalized cite

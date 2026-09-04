@@ -2,13 +2,23 @@
 
 # Run the citation linker to link detected citations to cases
 
+# Resources are informed by job 9215377: 8m12s wall, 7m37s of CPU time (0.93
+# cores average), 2.6GB peak RAM. Cores are held at 32 to match --workers=32 and
+# memory at 12GB, both above what that run needed: the linker waits on the
+# database rather than on cores, but peak RAM tracks the pre-loaded lookup
+# tables, which grow with CAP and FreeLaw, so one incremental run's 2.6GB is a
+# floor rather than a ceiling. Memory does not scale with how many citations are
+# pending — the streaming reader keeps only --workers batches in flight. The wall
+# time is sized for the routine run below, where hitting it is safe to resubmit,
+# so the limit is a short-queue optimization rather than a cliff.
+
 #SBATCH --job-name=cite-linker
 #SBATCH --output=/scratch/%u/logs/%j-%x-%N.out
 #SBATCH --error=/scratch/%u/logs/%j-%x-%N.log
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=24
-#SBATCH --time=06:00:00
+#SBATCH --cpus-per-task=32
+#SBATCH --time=01:00:00
 #SBATCH --mem=12GB
 #SBATCH --partition=normal
 #SBATCH --mail-user lmullen@gmu.edu
@@ -33,4 +43,25 @@
 # re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
 # on a resubmit after a timeout, throwing away all partial progress.
+# The reset run re-processes tens of millions of rows through the per-citation
+# path rather than the handful a routine run sees, and it is the one case where a
+# timeout is expensive: because --reset starts by deleting, a resubmit restarts
+# from scratch instead of resuming rather than picking up where it left off.
 # ~/legal-modernism/bin/cite-linker --reset --batch-size=8000 --workers=32 --lock-timeout=1m
+
+# Full rebuild (discarding every existing link, e.g. after linking code was run
+# against production from an unmerged branch): TRUNCATE the table from psql
+# first, then use the routine invocation above unchanged.
+#
+#   psql "$LAW_DBSTR" -c 'TRUNCATE moml_citations.citation_links;'
+#
+# Deliberately not --reset. --reset preserves linked_* rows, so it cannot clear
+# them, and because it deletes at startup a job that hits the wall time restarts
+# from scratch. Truncating separately and running without --reset leaves the
+# anti-join in StreamUnprocessedCitations to resume from wherever the last job
+# stopped, so a timeout costs a resubmit rather than the whole run. Nothing has a
+# foreign key onto citation_links, so the truncate needs no cascade.
+#
+# Raise --time well above the 1 hour below before submitting: this processes all
+# ~62.5M citations through the per-citation path rather than the handful a
+# routine run sees. Restore it afterward.
