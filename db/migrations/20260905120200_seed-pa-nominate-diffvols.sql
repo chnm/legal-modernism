@@ -11,6 +11,13 @@ SET ROLE = law_admin;
 -- rows and Casey 6,469, cited at volumes 1-12 in both cases, and CAP holds
 -- 2,741 distinct first-page cites in Pa. volumes 13-36.
 --
+-- Outerbridge (Pa. 97-107) is the third case, found while reviewing the
+-- OCR-variant candidates for #247: the spelling "Out." is not whitelisted at
+-- all, and the harness proposed it as Ontario. Its 1,075 rows are cited at
+-- volumes 1-9, spread evenly, which is Outerbridge's run, not Ontario's. It
+-- needs a reporter row and a whitelist row before its diffvols rows can be
+-- reached, so all three are seeded here; the down removes them in reverse.
+--
 -- Jones (Pa. 11-12) and Wright (Pa. 37-50) are not seeded: the whitelist
 -- routes "Jones" to Jones' North Carolina Law Reports and "Wright" to
 -- Wright's Ohio Reports, so their Pennsylvania volumes need a routing decision
@@ -21,6 +28,16 @@ SET ROLE = law_admin;
 -- then tiered us_diffvols_missing rather than guessed at. The table has no
 -- unique constraint, so each row is inserted only when its
 -- (reporter_standard, vol) pair is absent.
+
+INSERT INTO legalhist.reporters
+    (reporter_standard, reporter_title, level, jurisdiction, year_start, year_end, single_vol, type)
+SELECT 'Out.', 'Outerbridge''s Pennsylvania State Reports', 'state', 'us:pa', 1881, 1885, false, 'nominate'
+WHERE NOT EXISTS (SELECT 1 FROM legalhist.reporters r WHERE r.reporter_standard = 'Out.');
+
+INSERT INTO legalhist.whitelist (reporter_found, reporter_standard, junk)
+VALUES ('Out.', 'Out.', false),        -- 1,075 rows
+       ('Outerbridge', 'Out.', false)  -- 51 rows
+ON CONFLICT (reporter_found) DO NOTHING;
 
 INSERT INTO legalhist.reporters_diffvols (reporter_title, vol, cap_vol, cap_reporter, reporter_standard)
 SELECT v.reporter_title, v.vol, v.cap_vol, 'Pa.', v.reporter_standard
@@ -48,7 +65,18 @@ FROM (VALUES
     ('Casey''s Pennsylvania Reports', 9, 33, 'Casey'),
     ('Casey''s Pennsylvania Reports', 10, 34, 'Casey'),
     ('Casey''s Pennsylvania Reports', 11, 35, 'Casey'),
-    ('Casey''s Pennsylvania Reports', 12, 36, 'Casey')
+    ('Casey''s Pennsylvania Reports', 12, 36, 'Casey'),
+    ('Outerbridge''s Pennsylvania State Reports', 1, 97, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 2, 98, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 3, 99, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 4, 100, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 5, 101, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 6, 102, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 7, 103, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 8, 104, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 9, 105, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 10, 106, 'Out.'),
+    ('Outerbridge''s Pennsylvania State Reports', 11, 107, 'Out.')
 ) AS v(reporter_title, vol, cap_vol, reporter_standard)
 WHERE EXISTS (
     SELECT 1 FROM legalhist.reporters r WHERE r.reporter_standard = v.reporter_standard
@@ -61,7 +89,8 @@ AND NOT EXISTS (
 -- migrate:down
 SET ROLE = law_admin;
 
--- Remove exactly the 24 rows seeded above.
+-- Remove exactly the 35 rows seeded above, then the Outerbridge whitelist and
+-- reporter rows (in that order, for the foreign keys).
 DELETE FROM legalhist.reporters_diffvols
  WHERE cap_reporter = 'Pa.'
    AND (reporter_standard, vol) IN (
@@ -88,5 +117,19 @@ DELETE FROM legalhist.reporters_diffvols
     ('Casey', 9),
     ('Casey', 10),
     ('Casey', 11),
-    ('Casey', 12)
+    ('Casey', 12),
+    ('Out.', 1),
+    ('Out.', 2),
+    ('Out.', 3),
+    ('Out.', 4),
+    ('Out.', 5),
+    ('Out.', 6),
+    ('Out.', 7),
+    ('Out.', 8),
+    ('Out.', 9),
+    ('Out.', 10),
+    ('Out.', 11)
    );
+
+DELETE FROM legalhist.whitelist WHERE reporter_found IN ('Out.', 'Outerbridge') AND reporter_standard = 'Out.';
+DELETE FROM legalhist.reporters WHERE reporter_standard = 'Out.' AND type = 'nominate';
