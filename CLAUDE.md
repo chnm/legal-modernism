@@ -81,6 +81,15 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 3. Apply with `make db-up`, then regenerate the schema with `make db-schema`. Both need write access via `LAW_DBSTR`, so Claude cannot run them — ask the user to.
 4. Commit **both** the migration file and the regenerated `db/schema.sql`. "Don't update `db/schema.sql`" means don't hand-edit it, not don't commit it.
 
+## Pipeline run order
+
+After a change to the detector, the whitelist, or the reporter tables:
+
+1. `make db-up`, then `make db-schema` and commit `db/schema.sql`.
+2. If the detector or its inputs (`legalhist.reporters.single_vol`, `reporters_abbreviations`) changed: `TRUNCATE moml_citations.citations_unlinked CASCADE` (this also empties `citation_links`), then run `cite-detector-moml` (`slurm/cite-detector-moml.sh`, about a day on the cluster).
+3. Run `cite-linker` (`slurm/cite-linker.sh`): a plain run after a re-detection, or `--reset` after whitelist-only changes so the non-linked rows are re-derived.
+4. `make db-maintenance` to vacuum the churned tables and refresh every materialized view, which the chambers dashboard reads.
+
 ## Environment variables
 
 - `LAW_DBSTR` — PostgreSQL connection string
