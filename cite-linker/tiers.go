@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/lmullen/legal-modernism/go/citations"
@@ -32,7 +33,7 @@ func newCiteIndex[V any](maps ...map[string]V) *citeIndex {
 	}
 	for _, m := range maps {
 		for cite := range m {
-			vol, reporter, ok := splitCite(cite)
+			vol, reporter, _, ok := splitCite(cite)
 			if !ok {
 				continue
 			}
@@ -48,7 +49,7 @@ func newCiteIndex[V any](maps ...map[string]V) *citeIndex {
 // string the index cannot parse is ignored rather than counted as a miss.
 func (ix *citeIndex) reached(probes []string) (reporter, volume bool) {
 	for _, p := range probes {
-		vol, rep, ok := splitCite(p)
+		vol, rep, _, ok := splitCite(p)
 		if !ok {
 			continue
 		}
@@ -72,25 +73,31 @@ func volumeKey(vol, reporter string) string {
 }
 
 // splitCite splits a cite string of the form "{volume} {reporter} {page}" into
-// its volume and reporter parts, discarding the page; vol is empty for the
-// volume-less form "{reporter} {page}" that single-volume reporters use. ok is
-// false when the string is not a cite at all, which is not hypothetical: the
-// code-reporter map deliberately holds keys like "Cox, Manual Trade-Mark Cas."
-// that no probe will ever match.
+// its volume, reporter, and page; vol is empty for the volume-less form
+// "{reporter} {page}" that single-volume reporters use. ok is false when the
+// string is not a cite at all, which is not hypothetical: the code-reporter map
+// deliberately holds keys like "Cox, Manual Trade-Mark Cas." that no probe will
+// ever match.
 //
-// Volume and page stay strings because they are only ever compared with other
-// cite strings built the same way; parsing them to int would add failure modes
-// for no gain.
-func splitCite(cite string) (vol, reporter string, ok bool) {
+// The volume stays a string because it is only ever compared with other cite
+// strings built the same way, and parsing it to int would add failure modes for
+// no gain. The page is parsed, because the range index orders and compares pages
+// numerically. A page that does not fit an int yields ok false rather than a
+// wrapped value.
+func splitCite(cite string) (vol, reporter string, page int, ok bool) {
 	sp := strings.LastIndexByte(cite, ' ')
 	if sp <= 0 || !allDigits(cite[sp+1:]) {
-		return "", "", false // no page, so not a cite
+		return "", "", 0, false // no page, so not a cite
+	}
+	page, err := strconv.Atoi(cite[sp+1:])
+	if err != nil {
+		return "", "", 0, false
 	}
 	head := cite[:sp]
 	if v := strings.IndexByte(head, ' '); v > 0 && allDigits(head[:v]) {
-		return head[:v], head[v+1:], true
+		return head[:v], head[v+1:], page, true
 	}
-	return "", head, true
+	return "", head, page, true
 }
 
 // allDigits reports whether s is a non-empty run of ASCII digits.
@@ -117,7 +124,7 @@ func allDigits(s string) bool {
 // so its failures are volume_absent or page_absent, never volume_missing.
 func carriesVolume(probes []string) bool {
 	for _, p := range probes {
-		if vol, _, ok := splitCite(p); ok && vol != "" {
+		if vol, _, _, ok := splitCite(p); ok && vol != "" {
 			return true
 		}
 	}
@@ -133,8 +140,14 @@ func carriesVolume(probes []string) bool {
 // A miss at the volume step is volume_missing when no probe carried a volume
 // and volume_absent otherwise. The reporter must be known first: a volume-less
 // citation to a reporter no source holds is still reporter_absent.
-func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
+//
+// span is what page-range matching concluded after every exact probe missed
+// (issue #242). It refines the page step rather than replacing the ladder, so
+// that every tier decision stays here instead of being scattered through the
+// cascade as early returns.
+func usTier(probes []string, ix *citeIndex, diffvolsMissing bool, span rangeOutcome) string {
 	reporter, volume := ix.reached(probes)
+	reporter, volume = spanReached(reporter, volume, span)
 	switch {
 	case !reporter:
 		return citations.TierUSReporterAbsent
@@ -144,6 +157,10 @@ func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
 		return citations.TierUSVolumeMissing
 	case !volume:
 		return citations.TierUSVolumeAbsent
+	case span == rangeAmbiguous:
+		return citations.TierUSPageAmbiguous
+	case span == rangeGap:
+		return citations.TierUSPageGap
 	default:
 		return citations.TierUSPageAbsent
 	}
@@ -159,8 +176,13 @@ func usTier(probes []string, ix *citeIndex, diffvolsMissing bool) string {
 // a probe that matched a key exactly, and every such key is in the index — but
 // the ladder is written in full so it stays correct if the index is ever built
 // from something other than the map the cascade probes.
-func ukTier(probes []string, ix *citeIndex, ambiguous bool) string {
+//
+// span is the page-range outcome, as in usTier. An exact ambiguity outranks a
+// range gap: a cite string the corpus actually holds says more about the citation
+// than a page falling in a hole under some other volume form of it.
+func ukTier(probes []string, ix *citeIndex, ambiguous bool, span rangeOutcome) string {
 	reporter, volume := ix.reached(probes)
+	reporter, volume = spanReached(reporter, volume, span)
 	switch {
 	case !reporter:
 		return citations.TierUKReporterAbsent
@@ -168,9 +190,35 @@ func ukTier(probes []string, ix *citeIndex, ambiguous bool) string {
 		return citations.TierUKVolumeMissing
 	case !volume:
 		return citations.TierUKVolumeAbsent
-	case ambiguous:
+	case ambiguous || span == rangeAmbiguous:
 		return citations.TierUKPageAmbiguous
+	case span == rangeGap:
+		return citations.TierUKPageGap
 	default:
 		return citations.TierUKPageAbsent
 	}
+}
+
+// spanReached folds a page-range outcome into what the cite index found. Any
+// outcome but rangeMiss is itself proof that the reporter and the volume were
+// reached: the span index is keyed on reporter and volume, so nothing short of a
+// matching key can produce one.
+//
+// The two can legitimately disagree, which is why this is needed at all. They are
+// built from different loads: citeIndex from the maps the exact cascade probes,
+// where LoadCAPCitations drops every cite belonging to more than one case, and
+// the span index from cap.citations directly, where those cites are deliberately
+// kept. A volume whose cites are all ambiguous is therefore absent from the first
+// and present in the second, and reporting it as volume_absent would be false.
+// (Measured on the live data this is 52 of 51,480 reporter-volume keys, so it
+// changes almost nothing in aggregate — but "almost nothing" is not a reason to
+// record a tier that is wrong.)
+//
+// The UK route's ambiguous flag needs no equivalent, because it is set by a hit
+// in the very map citeIndex is built from: if it is set, the index already agrees.
+func spanReached(reporter, volume bool, span rangeOutcome) (bool, bool) {
+	if span == rangeMiss {
+		return reporter, volume
+	}
+	return true, true
 }
