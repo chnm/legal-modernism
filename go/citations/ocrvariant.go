@@ -1,9 +1,41 @@
 package citations
 
 import (
+	"regexp"
 	"sort"
 	"strings"
 )
+
+// reInteriorDigit matches a digit with a letter on either side. In this corpus
+// that is always an OCR misreading of a letter rather than a real part of an
+// abbreviation: "Fed." scanned as "F1ed.", "Mass." as "Ma5ss.". The digits that
+// legitimately appear in a reporter abbreviation are series designators
+// ("Wn. (2d)", "A.S.R.3d") and edition numbers ("Leach, 4th ed."), where the
+// digit follows a space or a period rather than a letter, so this leaves them
+// alone. No row in legalhist.reporters, legalhist.reporters_abbreviations, or
+// legalhist.whitelist matches it.
+//
+// This lives with the suggestion generator, not in the detector. The detector
+// records the spelling that appeared in the OCR and lets legalhist.whitelist
+// decide what it means; stripping the digit there would move a reading of the
+// text into the detector, where it does not belong. Here the stripped form is
+// only used to propose which reporter a corrupted spelling belongs to, for a
+// human to approve.
+var reInteriorDigit = regexp.MustCompile(`(\p{L})\d(\p{L})`)
+
+// stripInteriorDigits removes every digit that has a letter on both sides. It
+// repeats until the string stops changing because reInteriorDigit consumes the
+// flanking letters, so a single pass would miss the second corruption in a run
+// like "M1a2ss." Each pass shortens the string, so the loop terminates.
+func stripInteriorDigits(s string) string {
+	for {
+		stripped := reInteriorDigit.ReplaceAllString(s, "$1$2")
+		if stripped == s {
+			return s
+		}
+		s = stripped
+	}
+}
 
 // ocrConfusions are the substitutions the OCR makes inside a reporter
 // abbreviation, each as the pair (what the OCR wrote, what the text said). The
@@ -11,8 +43,11 @@ import (
 // non-whitelisted tail ("Vill." for "Will.", "Fcd." for "Fed.", "Cornst." for
 // "Comst."), plus the digit-for-letter readings that stripInteriorDigits cannot
 // repair because the digit replaced a letter rather than being inserted
-// ("I1l." for "Ill."). Both directions of each confusion are listed because the
-// OCR is not consistent about which way it errs.
+// ("I1l." for "Ill."). Both directions of each letter confusion are listed
+// because the OCR is not consistent about which way it errs; the digit
+// confusions run one way only, digit to letter, since a reading that puts a
+// digit into a spelling is a further corruption, not a correction (the first
+// run proposed "Hlare" -> "H1are", a spelling the digit migration whitelisted).
 //
 // This is a candidate generator, not a normalizer: every string it produces is
 // looked up as an exact spelling in legalhist.whitelist, and a reading that is
@@ -25,15 +60,24 @@ var ocrConfusions = [][2]string{
 	{"c", "e"}, {"e", "c"},
 	{"t", "l"}, {"l", "t"},
 	{"f", "s"}, {"s", "f"},
-	{"1", "l"}, {"l", "1"}, {"1", "I"}, {"I", "1"}, {"I", "l"}, {"l", "I"},
-	{"0", "O"}, {"O", "0"},
-	{"5", "S"}, {"S", "5"},
-	{"8", "B"}, {"B", "8"},
+	{"I", "l"}, {"l", "I"},
 	{"u", "n"}, {"n", "u"},
 	{"ii", "n"}, {"n", "ii"},
 	{"cl", "d"}, {"d", "cl"},
 	{"vv", "w"}, {"w", "vv"},
 	{"C", "G"}, {"G", "C"},
+}
+
+// ocrDigitSubstitutions are the digits the OCR writes for a letter of the same
+// shape. They are a rule of their own because a digit inside a reporter
+// abbreviation is always an OCR error, so reading it as its look-alike letter
+// is much stronger evidence than a letter-for-letter confusion, whose result
+// is as plausible a word as its input.
+var ocrDigitSubstitutions = [][2]string{
+	{"1", "l"}, {"1", "I"},
+	{"0", "O"},
+	{"5", "S"},
+	{"8", "B"},
 }
 
 // Rules name how a corrected spelling was derived from the one the OCR wrote.
@@ -45,6 +89,7 @@ var ocrConfusions = [][2]string{
 // check; a reading found only this way is reported for review, never seeded.
 const (
 	RuleDigit       = "digit"        // stripInteriorDigits: a letter-flanked digit removed
+	RuleDigitSub    = "digit_sub"    // one ocrDigitSubstitutions reading at one site
 	RuleConfusion   = "confusion"    // one ocrConfusions substitution at one site
 	RuleDigitLetter = "digit_letter" // a letter-flanked digit read as some letter
 )
@@ -61,9 +106,18 @@ type Reading struct {
 // from s, applied at a single site, without s itself and without duplicates,
 // in a deterministic order.
 func confusionVariants(s string) []string {
+	return substitutions(s, ocrConfusions)
+}
+
+// digitSubVariants is confusionVariants for the digit-for-letter readings.
+func digitSubVariants(s string) []string {
+	return substitutions(s, ocrDigitSubstitutions)
+}
+
+func substitutions(s string, table [][2]string) []string {
 	seen := map[string]bool{s: true}
 	var out []string
-	for _, c := range ocrConfusions {
+	for _, c := range table {
 		from, to := c[0], c[1]
 		for i := 0; i+len(from) <= len(s); i++ {
 			if !strings.HasPrefix(s[i:], from) {
@@ -81,9 +135,9 @@ func confusionVariants(s string) []string {
 }
 
 // readings returns the corrected spellings proposed for a scanned one, in
-// order of rule specificity: the digit strip, then the confusion table, then a
-// letter-flanked digit read as each letter. A spelling several rules reach is
-// reported once, under the first.
+// order of rule specificity: the digit strip, the digit-for-letter readings,
+// the confusion table, then a letter-flanked digit read as each letter. A
+// spelling several rules reach is reported once, under the first.
 func readings(found string) []Reading {
 	seen := map[string]bool{found: true}
 	var out []Reading
@@ -94,6 +148,9 @@ func readings(found string) []Reading {
 		}
 	}
 	add(stripInteriorDigits(found), RuleDigit)
+	for _, v := range digitSubVariants(found) {
+		add(v, RuleDigitSub)
+	}
 	for _, v := range confusionVariants(found) {
 		add(v, RuleConfusion)
 	}

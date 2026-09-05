@@ -32,7 +32,8 @@ import (
 // pays for it. Reads the database through LAW_CLAUDE; the two aggregate
 // queries scan the whole table and take a few minutes each:
 //
-//	LAW_MEASURE=1 LAW_MIN_COUNT=20 LAW_SUGGEST_OUT=db/whitelist-candidates-ocr-variants.tsv \
+//	LAW_MEASURE=1 LAW_MIN_COUNT=20 LAW_UNRESOLVED_MIN=100 \
+//	  LAW_SUGGEST_OUT=db/whitelist-candidates-ocr-variants.tsv \
 //	  go test ./go/citations/ -run OCRVariantWhitelistSuggestions -v -timeout 2h
 func TestOCRVariantWhitelistSuggestions(t *testing.T) {
 	if os.Getenv("LAW_MEASURE") == "" {
@@ -51,6 +52,15 @@ func TestOCRVariantWhitelistSuggestions(t *testing.T) {
 		parsed, err := strconv.ParseFloat(v, 64)
 		require.NoError(t, err)
 		threshold = parsed
+	}
+	// The unresolved tail is tens of thousands of spellings, most of them the
+	// bare surnames the single-volume detectors' word stem produces, so the
+	// review file lists only the ones frequent enough to be worth a look.
+	unresolvedMin := 100
+	if v := os.Getenv("LAW_UNRESOLVED_MIN"); v != "" {
+		parsed, err := strconv.Atoi(v)
+		require.NoError(t, err)
+		unresolvedMin = parsed
 	}
 
 	ctx := context.Background()
@@ -217,9 +227,20 @@ func TestOCRVariantWhitelistSuggestions(t *testing.T) {
 	for _, v := range byKind[KindToJunk] {
 		fmt.Fprintf(&b, "#TOJUNK\t%d\t%q\t%q\t%q\n", v.count, v.found, v.Candidates[0].Corrected, v.example)
 	}
-	fmt.Fprintf(&b, "\n# UNRESOLVED: no reading is a whitelisted spelling.\n")
+	var omitted, omittedRows int
+	for _, v := range byKind[KindUnresolved] {
+		if v.count < unresolvedMin {
+			omitted++
+			omittedRows += v.count
+		}
+	}
+	fmt.Fprintf(&b, "\n# UNRESOLVED: no reading is a whitelisted spelling. Only spellings with at least %d rows are\n", unresolvedMin)
+	fmt.Fprintf(&b, "# listed; %d spellings (%d rows) below that are omitted.\n", omitted, omittedRows)
 	fmt.Fprintf(&b, "#UNRESOLVED\tcount\treporter_found\texample\n")
 	for _, v := range byKind[KindUnresolved] {
+		if v.count < unresolvedMin {
+			continue
+		}
 		fmt.Fprintf(&b, "#UNRESOLVED\t%d\t%q\t%q\n", v.count, v.found, v.example)
 	}
 	require.NoError(t, os.WriteFile(out, []byte(b.String()), 0o644))

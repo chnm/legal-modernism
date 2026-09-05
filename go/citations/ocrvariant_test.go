@@ -18,7 +18,8 @@ func TestConfusionVariants(t *testing.T) {
 		{"V for W", "Vill.", []string{"Will."}, nil, true},
 		{"c for e", "Fcd.", []string{"Fed."}, nil, true},
 		{"rn for m", "Cornst.", []string{"Comst."}, nil, true},
-		{"digit for letter", "I1l.", []string{"Ill.", "Il1."}, nil, true},
+		{"digits are not letter confusions", "I1l.", []string{"I1t.", "l1l."}, []string{"Ill.", "IIl.", "Il1.", "I11."}, true},
+		{"a letter never becomes a digit", "Hlare", nil, []string{"H1are"}, true},
 		{"two sites are separate variants", "Vv.", []string{"Wv.", "Vw."}, []string{"Ww."}, true},
 		{"multi-character confusion", "vv.", []string{"w."}, nil, true},
 		{"no confusable characters", "Mass.", nil, []string{"Mass."}, true},
@@ -47,10 +48,13 @@ func TestReadingsRuleOrder(t *testing.T) {
 	got := readings("M1o.")
 	require.NotEmpty(t, got)
 	assert.Equal(t, Reading{Corrected: "Mo.", Rule: RuleDigit}, got[0])
-	// "1" -> "l" and "1" -> "I" are confusion readings of the same spelling,
-	// and keep that rule even though the digit-as-letter pass reaches them too.
-	assert.Contains(t, got, Reading{Corrected: "Mlo.", Rule: RuleConfusion})
-	assert.Contains(t, got, Reading{Corrected: "MIo.", Rule: RuleConfusion})
+	// "1" -> "l" and "1" -> "I" are digit-for-letter readings of the same
+	// spelling, and keep that rule even though the digit-as-letter pass
+	// reaches them too.
+	assert.Contains(t, got, Reading{Corrected: "Mlo.", Rule: RuleDigitSub})
+	assert.Contains(t, got, Reading{Corrected: "MIo.", Rule: RuleDigitSub})
+	assert.Contains(t, readings("I1l."), Reading{Corrected: "Ill.", Rule: RuleDigitSub})
+	assert.Contains(t, readings("I1l."), Reading{Corrected: "IIl.", Rule: RuleDigitSub})
 	// Any other letter in the digit's place is a review-only reading.
 	assert.Contains(t, got, Reading{Corrected: "Moo.", Rule: RuleDigitLetter})
 	assert.NotContains(t, got, Reading{Corrected: "Moo.", Rule: RuleConfusion})
@@ -85,7 +89,7 @@ func TestResolve(t *testing.T) {
 		// pass, and Mod. is 71% as frequent as Md.
 		{"competing reporter above 10% is ambiguous", "M1d.", KindAmbiguous, "", "", false},
 		{"confusion reading", "Vill.", KindProposed, "Will.", RuleConfusion, false},
-		{"canonical spelling beats the variant of the same reporter", "I1l.", KindProposed, "Ill.", RuleConfusion, true},
+		{"canonical spelling beats the variant of the same reporter", "I1l.", KindProposed, "Ill.", RuleDigitSub, true},
 		{"junk only", "Fcb.", KindToJunk, "", "", false},
 		{"reporter beats junk", "Fcd.", KindProposed, "Fed.", RuleConfusion, true},
 		{"nothing known", "Xyzzy.", KindUnresolved, "", "", false},

@@ -15,6 +15,15 @@ inserts the proposals surviving two filters, the ones PR #241 applied by hand:
      reading a digit as an arbitrary letter (rule digit_letter) are review
      material, not evidence, and are dropped here too.
 
+  3. long enough for a letter confusion -- a digit inside an abbreviation is
+     always an OCR error, so the digit rules stand on their own, but a
+     letter-for-letter reading of a short abbreviation is as plausible a word
+     as its input: the first run proposed "Out." as Ontario when it is
+     Outerbridge's Pennsylvania Reports, and "Gal." as California when it is
+     as likely Gallison. A confusion reading is seeded only when its corrected
+     spelling has at least MIN_CONFUSION_LETTERS letters; shorter ones are
+     listed in the header for review.
+
 Usage: build-whitelist-migration.py CANDIDATES.tsv OUT.sql [DESCRIPTION]
 
 DESCRIPTION is a short phrase for the header, e.g. the harness's source line.
@@ -27,7 +36,16 @@ from collections import OrderedDict
 
 CANDIDATES, OUT = sys.argv[1], sys.argv[2]
 DESCRIPTION = sys.argv[3] if len(sys.argv) > 3 else ""
-SEEDABLE_RULES = {"digit", "confusion"}
+SEEDABLE_RULES = {"digit", "digit_sub", "confusion"}
+MIN_CONFUSION_LETTERS = 5
+
+
+def letters(s):
+    return sum(1 for ch in s if ch.isalpha())
+
+
+def long_enough(r):
+    return r["rule"] != "confusion" or letters(r["corrected"]) >= MIN_CONFUSION_LETTERS
 
 rows, ambiguous, tojunk, unresolved = [], 0, 0, 0
 source = ""
@@ -56,9 +74,12 @@ with open(CANDIDATES, encoding="utf-8") as fh:
         })
 
 canonical = [r for r in rows if r["conf"] == "canonical"]
-keep = [r for r in canonical if r["rule"] in SEEDABLE_RULES]
+seedable_rule = [r for r in canonical if r["rule"] in SEEDABLE_RULES]
+keep = [r for r in seedable_rule if long_enough(r)]
+short = [r for r in seedable_rule if not long_enough(r)]
+short.sort(key=lambda r: (-r["count"], r["found"]))
 dropped_variant = len(rows) - len(canonical)
-dropped_digit_letter = len(canonical) - len(keep)
+dropped_digit_letter = len(canonical) - len(seedable_rule)
 
 keep.sort(key=lambda r: (-r["count"], r["found"]))
 seen = OrderedDict()
@@ -115,6 +136,16 @@ w("--      section and none is seeded. A reading reached only by taking a digit"
 w("--      for an arbitrary letter (rule digit_letter) is the check's evidence,")
 w("--      not a proposal: %d canonical proposals of that kind were dropped." % dropped_digit_letter)
 w("--")
+w("--   3. Long enough. A letter-for-letter reading is seeded only when the")
+w("--      corrected spelling has at least %d letters, because on a shorter" % MIN_CONFUSION_LETTERS)
+w("--      abbreviation the reading is as plausible a word as the scanned one")
+w("--      (\"Out.\" is Outerbridge, not Ontario; \"Gal.\" is as likely Gallison as")
+w("--      California). Digit readings are exempt: a digit inside an abbreviation")
+w("--      is always an OCR error. %d canonical proposals were set aside for" % len(short))
+w("--      review this way, %s rows in all:" % format(sum(r["count"] for r in short), ","))
+for r in short:
+    w("--        %-14s -> %-14s %-12s %6d rows" % ('"%s"' % r["found"], r["standard"], "(" + r["corrected"] + ")", r["count"]))
+w("--")
 w("-- %d rows remain, by rule:" % len(keep))
 for rule in sorted(by_rule):
     w("--   %-10s %5d spellings %10s rows" % (rule, by_rule[rule][0], format(by_rule[rule][1], ",")))
@@ -145,5 +176,6 @@ with open(OUT, "w", encoding="utf-8") as fh:
 print("proposals in file:        %d" % len(rows))
 print("canonical:                %d" % len(canonical))
 print("dropped as digit_letter:  %d" % dropped_digit_letter)
+print("set aside as short:       %d spellings, %d rows" % (len(short), sum(r["count"] for r in short)))
 print("ambiguous (in file):      %d" % ambiguous)
 print("SEEDED:                   %d spellings, %d rows" % (len(keep), sum(r["count"] for r in keep)))
