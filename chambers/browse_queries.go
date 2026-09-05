@@ -63,9 +63,9 @@ func momlPageLink(base, pageID string) string {
 }
 
 // chipClass maps a link status to the colour class for a citation chip:
-// linked (green), no_match (red), skipped_junk (gray — OCR noise, not a real
-// citation), and everything else not attempted (amber — reporter not
-// whitelisted, or unprocessed).
+// linked (green), no_match (red), skipped_junk and skipped_statute (gray — OCR
+// noise or a regnal-year statute, neither a case citation), and everything else
+// not attempted (amber — reporter not whitelisted, or unprocessed).
 func chipClass(status *string) string {
 	if status == nil {
 		return "cite-skip"
@@ -75,7 +75,7 @@ func chipClass(status *string) string {
 		return "cite-linked"
 	case s == "no_match":
 		return "cite-nomatch"
-	case s == "skipped_junk":
+	case s == "skipped_junk", s == "skipped_statute":
 		return "cite-junk"
 	default:
 		return "cite-skip"

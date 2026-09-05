@@ -502,6 +502,23 @@ func TestLinkCitation(t *testing.T) {
 			wantStatus: citations.StatusSkippedJunk,
 		},
 		{
+			// "13 Eliz. c. 5" detects as volume 13, "Eliz. c.", page 5. The
+			// whitelist routes the spelling to a type = 'statute' reporter row,
+			// and the linker skips it without probing or recording a tier.
+			name:       "statute reporter is skipped",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(13), ReporterAbbr: "Eliz. c.", Page: 5},
+			whitelist:  map[string]*citations.WhitelistEntry{"Eliz. c.": {ReporterStandard: ptr("Stat. Eliz."), Statute: true}},
+			wantStatus: citations.StatusSkippedStatute,
+		},
+		{
+			// The statute rows carry a UK jurisdiction, which must not send the
+			// citation down the English Reports route to a uk_* no_match.
+			name:       "statute flag wins over UK routing",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(3), ReporterAbbr: "Will.", Page: 4},
+			whitelist:  map[string]*citations.WhitelistEntry{"Will.": {ReporterStandard: ptr("Stat. Will."), UK: true, Statute: true}},
+			wantStatus: citations.StatusSkippedStatute,
+		},
+		{
 			// The volume is in CAP and only the page missed, which is the
 			// pin-cite pool #242 is about — the tier is what makes it countable
 			// without a per-reporter query.

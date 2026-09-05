@@ -15,6 +15,11 @@ type WhitelistEntry struct {
 	// legalhist.reporters.single_vol is nullable, and an unclassified reporter
 	// is loaded as false so the volume variant stays off it.
 	SingleVol bool
+	// Statute reports that the reporter row is type = 'statute': the spelling is
+	// a regnal-year statute citation ("3 & 4 Will. 4, c. 74" read as volume 3,
+	// reporter "Will.", page 4), which names no case in any source. The linker
+	// skips it rather than probing (issue #246).
+	Statute bool
 }
 
 // DiffVolEntry maps an original volume number to the corresponding CAP volume
@@ -73,8 +78,21 @@ const (
 	StatusLinkedEnglishReports  = "linked_english_reports"
 	StatusSkippedNotWhitelisted = "skipped_not_whitelisted"
 	StatusSkippedJunk           = "skipped_junk"
+	StatusSkippedStatute        = "skipped_statute"
 	StatusNoMatch               = "no_match"
 )
+
+// UnresolvedStatuses are the statuses that did not resolve a citation to a
+// case, i.e. everything but linked_*. ResetUnlinked deletes exactly these so a
+// rerun re-derives them from the current whitelist; a status listed here and
+// nowhere else would silently survive --reset, which
+// TestUnresolvedStatusesCoverEverySkip guards against.
+var UnresolvedStatuses = []string{
+	StatusNoMatch,
+	StatusSkippedNotWhitelisted,
+	StatusSkippedJunk,
+	StatusSkippedStatute,
+}
 
 // Tier constants for LinkResult.MatchTier: how far the linking cascade got with
 // a citation. Status says whether a citation linked; the tier says why it did

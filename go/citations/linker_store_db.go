@@ -3,6 +3,7 @@ package citations
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -29,7 +30,8 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 			SELECT 1 FROM legalhist.reporters_diffvols d
 			WHERE d.reporter_standard = w.reporter_standard
 		) AS cap_different,
-		COALESCE(r.single_vol, false) AS single_vol
+		COALESCE(r.single_vol, false) AS single_vol,
+		COALESCE(r.type = 'statute', false) AS statute
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	`
@@ -43,7 +45,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	for rows.Next() {
 		var found string
 		var e WhitelistEntry
-		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol)
+		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}
@@ -402,18 +404,25 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 }
 
 // ResetUnlinked deletes every citation_links row that was not resolved to a case
-// (status no_match, skipped_not_whitelisted, or skipped_junk) so the linker
-// re-processes them on the next run; only linked_* rows are preserved. Deleting
-// both skip statuses lets a re-run re-derive them from the current whitelist, so
-// a reporter later corrected from junk to legit is no longer stuck as
-// skipped_junk. The delete runs as a single statement — one
-// all-or-nothing transaction — and returns the number of rows deleted.
+// (every status in UnresolvedStatuses: no_match, skipped_not_whitelisted,
+// skipped_junk, skipped_statute) so the linker re-processes them on the next
+// run; only linked_* rows are preserved. Deleting the skip statuses too lets a
+// re-run re-derive them from the current whitelist, so a reporter later
+// corrected from junk to legit is no longer stuck as skipped_junk. The delete
+// runs as a single statement — one all-or-nothing transaction — and returns the
+// number of rows deleted.
 func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
-	query := `
+	placeholders := make([]string, len(UnresolvedStatuses))
+	args := make([]any, len(UnresolvedStatuses))
+	for i, status := range UnresolvedStatuses {
+		placeholders[i] = fmt.Sprintf("$%d", i+1)
+		args[i] = status
+	}
+	query := fmt.Sprintf(`
 	DELETE FROM moml_citations.citation_links
-	WHERE status IN ($1, $2, $3)
-	`
-	tag, err := s.DB.Exec(ctx, query, StatusNoMatch, StatusSkippedNotWhitelisted, StatusSkippedJunk)
+	WHERE status IN (%s)
+	`, strings.Join(placeholders, ", "))
+	tag, err := s.DB.Exec(ctx, query, args...)
 	if err != nil {
 		return 0, fmt.Errorf("resetting unlinked citations: %w", err)
 	}

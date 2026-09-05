@@ -39,8 +39,8 @@
 
 # One-time reset run (after whitelist corrections or a new linking tier): comment
 # out the line above and use the line below instead. --reset deletes every
-# non-linked row (no_match, skipped_not_whitelisted, skipped_junk) so they are
-# re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
+# non-linked row (no_match, skipped_not_whitelisted, skipped_junk,
+# skipped_statute) so they are re-linked; only linked_* rows are kept. Re-comment it afterward — leaving
 # --reset live would wipe and re-do those rows on every subsequent run, including
 # on a resubmit after a timeout, throwing away all partial progress. Because
 # --reset starts by deleting, a resubmit restarts from scratch rather than

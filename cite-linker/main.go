@@ -57,7 +57,7 @@ func main() {
 	var batchSize int
 	var workers int
 	var lockTimeout time.Duration
-	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
+	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk, skipped_statute) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
 	flag.DurationVar(&lockTimeout, "lock-timeout", time.Minute, "give up on a statement that waits this long for a database lock, instead of blocking forever behind an uncommitted transaction; 0 disables")
@@ -117,11 +117,11 @@ func main() {
 	store := citations.NewLinkerDBStore(pool)
 
 	// Handle --reset: delete every non-linked row (no_match,
-	// skipped_not_whitelisted, skipped_junk) so they are re-processed by this run.
-	// Only linked_* rows are preserved. Done before everything else so the linking
-	// below sees the post-reset state.
+	// skipped_not_whitelisted, skipped_junk, skipped_statute) so they are
+	// re-processed by this run. Only linked_* rows are preserved. Done before
+	// everything else so the linking below sees the post-reset state.
 	if reset {
-		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
+		slog.Info("resetting unresolved citation links", "statuses", citations.UnresolvedStatuses)
 		deleted, err := store.ResetUnlinked(ctx)
 		if err != nil {
 			exitStartupError("reset failed", err, "deleted", deleted)
@@ -402,8 +402,8 @@ func newLinkTables(
 func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkResult {
 	result := &citations.LinkResult{CitationID: c.ID}
 
-	// Step 1: whitelist check. Neither skip records a tier: the status is already
-	// the whole explanation, and there was no cascade to reach a tier in.
+	// Step 1: whitelist check. None of the skips records a tier: the status is
+	// already the whole explanation, and there was no cascade to reach a tier in.
 	entry, ok := t.whitelist[c.ReporterAbbr]
 	if !ok {
 		result.Status = citations.StatusSkippedNotWhitelisted
@@ -411,6 +411,14 @@ func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkR
 	}
 	if entry.Junk {
 		result.Status = citations.StatusSkippedJunk
+		return result
+	}
+	// A regnal-year statute ("13 Eliz. c. 5") is a real citation but not to a
+	// case, so no source could hold it; skipping it here keeps it out of
+	// no_match, where it would read as a coverage gap (issue #246). Checked
+	// before routing because the statute rows carry a jurisdiction too.
+	if entry.Statute {
+		result.Status = citations.StatusSkippedStatute
 		return result
 	}
 

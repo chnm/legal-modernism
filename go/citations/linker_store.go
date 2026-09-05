@@ -56,8 +56,9 @@ type LinkerStore interface {
 	SaveLinkResults(ctx context.Context, results []*LinkResult) error
 
 	// ResetUnlinked deletes every citation_links row that was not resolved to a
-	// case (status no_match, skipped_not_whitelisted, or skipped_junk) so the
-	// linker re-processes them, preserving only linked_* rows. Returns the number
-	// of rows deleted.
+	// case (every status in UnresolvedStatuses: no_match,
+	// skipped_not_whitelisted, skipped_junk, skipped_statute) so the linker
+	// re-processes them, preserving only linked_* rows. Returns the number of
+	// rows deleted.
 	ResetUnlinked(ctx context.Context) (int64, error)
 }
