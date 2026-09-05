@@ -1,0 +1,289 @@
+# Whitelisted spellings of single-volume reporters that no single-volume detector finds bare (issue #275, item 2).
+# Produced by db/queries/single-vol-uncovered-spellings.sql against the live database, 2026-09-05, after the
+# single_vol flag corrections of 2026-09-04. Counts are moml_citations.citations_unlinked rows in that spelling.
+# action: add_alt_abbr = seed as reporters_abbreviations.alt_abbr (20260905120300_seed-single-vol-uncovered-alt-abbrs.sql);
+#         fix_whitelist = the whitelist routes the spelling to the wrong reporter (target in the target column, or junk;
+#                         seeded by 20260905120300 or 20260905120500 where the note says so);
+#         statute = rerouted to a statute row by 20260905120000_seed-statute-reporters.sql; leave = no change proposed.
+#
+# reporter_standard	reporter_found	volumed_rows	bare_rows	action	target	note
+Car & M	C. & M.	8622	0	add_alt_abbr	Car & M	
+Choyce Cases	Ch. Cas.	5075	0	fix_whitelist	Chan Cas	Cases in Chancery (cited at volumes 1-3), not Choyce Cases; seeded in the routing block
+Vern	Vcrn.	4933	0	add_alt_abbr	Vern	
+Taylor	Term	4763	0	fix_whitelist	junk	the word Term from Taylor's North Carolina Term Reports; seeded in the routing block
+Ves Sen Supp	B. Sup.	3145	0	add_alt_abbr	Ves Sen Supp	
+Brooke	B. N. C.	2923	0	fix_whitelist	Bing NC	Bingham's New Cases (cited at volumes 1-8), not Brooke's New Cases; seeded in the routing block
+Comst.	Corn.	2531	0	add_alt_abbr	Comst.	
+West	West. Rep.	2402	0	fix_whitelist	West. Rep.	the Western Reporter (1885-1888), not West's House of Lords; reporter row and reroute seeded in 20260905120500
+Jenk	Cent. Rep.	2213	0	fix_whitelist	Cent. Rep.	the Central Reporter (1885-1888), not Jenkins; reporter row and reroute seeded in 20260905120500
+Dears & B	D. & B.	2044	0	add_alt_abbr	Dears & B	
+T Jones	Jon.	1754	6448	fix_whitelist		ambiguous among the Jones reporters; 6,448 bare rows already exist from another detector's stem
+S. & S.	S. & St.	1720	0	add_alt_abbr	S. & S.	
+Sess Cas	Sc. Sess. Cas.	1431	0	fix_whitelist		Scottish Session Cases, not the King's Bench Sess Cas
+Vern	Vern. R.	1363	0	add_alt_abbr	Vern	
+Dan	I).	1330	0	fix_whitelist	junk	OCR fragment of D.; seeded in the routing block
+Comst.	Comst.)	1306	0	leave		OCR parenthesis; the volumed form already links via the whitelist
+Colles	Coil.	965	0	add_alt_abbr	Colles	
+Jenk	Cent.	965	0	fix_whitelist	Cent. Rep.	as Cent. Rep.; seeded in 20260905120500
+Wil.	WILL.	955	0	statute	Stat. Will.	
+Martin	Martin, R.	857	0	add_alt_abbr	Martin	
+Hopk. Ch.	Hopk.	647	0	add_alt_abbr	Hopk. Ch.	
+Dears	Dears. C. C.	538	0	add_alt_abbr	Dears	
+Comst.	Comst. R.	524	0	add_alt_abbr	Comst.	
+Le & Ca	L. & C.	522	0	add_alt_abbr	Le & Ca	
+M & M	Mood. & M.	498	0	add_alt_abbr	M & M	
+Comst.	Comst. (N. Y.)	462	0	add_alt_abbr	Comst.	
+El Bl & El	E. B. & E.	427	0	add_alt_abbr	El Bl & El	
+Russ & Ry	R. & R.	417	0	add_alt_abbr	Russ & Ry	
+Wil.	Wnll.	414	0	statute	Stat. Will.	
+Win.	WVm.	399	0	add_alt_abbr	Win.	
+Hoff. Ch.	Hoff. Ch. Pr.	366	0	add_alt_abbr	Hoff. Ch.	
+Wil.	WVill.	356	0	statute	Stat. Will.	
+Car & M	C. & Mar.	247	0	add_alt_abbr	Car & M	
+Hopk. Ch.	Hopkins	222	0	leave		bare surname; a detector for it would stem into every longer word
+Wil.	Vill.	219	0	statute	Stat. Will.	
+Wil.	will.	216	0	statute	Stat. Will.	
+Jac & W	Jac. and W.	200	0	add_alt_abbr	Jac & W	
+Wil.	W ill.	198	0	statute	Stat. Will.	
+Johns	Johns. Ch	175	0	add_alt_abbr	Johns	
+Car & M	Carr. & M.	153	0	add_alt_abbr	Car & M	
+Barn KB	Barn. K. B.	148	0	add_alt_abbr	Barn KB	
+Peck	Pec.	144	0	add_alt_abbr	Peck	
+Busb.	Bus.	137	0	add_alt_abbr	Busb.	
+Martin	Martin R.	130	0	add_alt_abbr	Martin	
+Jac & W	Jacob & Walker	115	0	add_alt_abbr	Jac & W	
+M & M	Moody & Malkin	108	0	add_alt_abbr	M & M	
+Ry & Mood	Ryan & Moody	108	0	add_alt_abbr	Ry & Mood	
+Hoff. Ch.	Hoff. Ch. R.	106	0	add_alt_abbr	Hoff. Ch.	
+Peck	Peek.	102	0	add_alt_abbr	Peck	
+Car & M	C. & Marsh.	77	0	add_alt_abbr	Car & M	
+Bell	Bell C. C.	71	0	add_alt_abbr	Bell	
+Edw	Edw. Adm.	69	0	add_alt_abbr	Edw	
+Russ & Ry	Russ. & R.	69	0	add_alt_abbr	Russ & Ry	
+Hoff. Ch.	Hoff. Pr.	52	0	add_alt_abbr	Hoff. Ch.	
+Speers Eq.	Speer Eq.	47	0	add_alt_abbr	Speers Eq.	
+Choyce Cases	Ch. Cas. Ch.	40	0	fix_whitelist	Chan Cas	as Ch. Cas.; seeded in the routing block
+Le & Ca	L. & C. C. C.	39	0	add_alt_abbr	Le & Ca	
+Hoff. Ch.	Hoff. C. R.	36	0	add_alt_abbr	Hoff. Ch.	
+Turn & R	Turn. and R.	36	0	add_alt_abbr	Turn & R	
+Hopk. Ch.	Hopk. Ch. R.	35	0	add_alt_abbr	Hopk. Ch.	
+Hoff. Ch.	Hoff. Ch. Rep.	34	0	add_alt_abbr	Hoff. Ch.	
+Hoff. Ch.	Hoff. Ch. Prac.	23	0	add_alt_abbr	Hoff. Ch.	
+Hopk. Ch.	Hopk. Ch. Rep.	23	0	add_alt_abbr	Hopk. Ch.	
+Saxton	Saxt. Ch.	21	0	add_alt_abbr	Saxton	
+Tay.	Tayl. Rep.	18	0	leave		
+El Bl & El	El. B. & El.	16	0	leave		
+Chev. Eq.	Cheves Eq.	13	0	leave		
+Dears	Dears. C.C.	13	0	leave		
+Cr & Ph	Cr. and Ph.	12	0	leave		
+Lush	Lush. Adm.	11	0	leave		
+Fost	Fost. Crown Law	10	0	leave		
+Le & Ca	Leigh & Cave	10	0	leave		
+M'Cle & Yo	McCl. & Y.	10	0	leave		
+Dea & Sw	Deane & S.	8	0	leave		
+Hopk. Ch.	Hopkins R.	8	0	leave		
+M'Cle & Yo	McCle. & Yo.	8	0	leave		
+Fost	Fost. Cr. Law	7	0	leave		
+Hopk. Ch.	Hopkins Ch.	7	0	leave		
+Turn & R	Turner & Russell	7	0	leave		
+Cro Eliz	Croke Eliz.	6	0	leave		
+Ry & Mood	Ry. and Mood.	6	0	leave		
+Barn KB	Barn. K.B.	5	0	leave		
+Bur.	B1ur.	5	0	leave		
+Coxe	Coxe Rep.	5	0	leave		
+Dears & B	Dears. & B. C.C.	5	0	leave		
+Dea & Sw	Deane Ecc. Rep.	5	0	leave		
+Ben & D	Benl. & Dal.	4	0	leave		
+Charlton	Charlt.	4	864	leave		already an alt_abbr of Charlton Rep.; the whitelist routes it to Charlton; reconcile under #272
+Le & Ca	Leigh & C. C. C.	4	0	leave		
+Russ & Ry	Rus. & Ry.	4	0	leave		
+Swab	Swab. Adm.	4	0	leave		
+Cas T Talbot	Cas. t. Talbot	3	0	leave		
+Cr & Ph	Craig & Phillips	3	0	leave		
+Dea & Sw	Deane & Swabey	3	0	leave		
+Jac & W	Jacob and Walker	3	0	leave		
+Win.	W1in.	3	0	leave		
+Bell	Bell Cr. Cas.	2	0	leave		
+Cas T H	Cas. t. Hard.	2	0	leave		
+CP Coop	C.P. Coop.	2	0	leave		
+CP Coop	C.P. Cooper	2	0	leave		
+Gilb Rep	Gilb. R.	2	0	leave		
+Macl & R	Macl. and R.	2	0	leave		
+Martin	M3artin	2	0	leave		
+Br & Lush	Brown. & Lush.	1	0	leave		
+Busb.	Bus. R.	1	0	leave		
+Coxe	Coxe, Rep.	1	0	leave		
+Cro Jac	Croke Jac.	1	0	leave		
+Dears & B	Dearsley & Bell	1	0	leave		
+Dea & Sw	Deane Ecc.	1	0	leave		
+Fin H	Rep. T. Finch	1	0	leave		
+Gilb Cas	Gilb. K. B.	1	0	leave		
+Gow	Gow N. P.	1	0	leave		
+Holt KB	Holt K. B.	1	0	leave		
+Moo KB	Moo. K. B.	1	0	leave		
+Russ & Ry	R. & Ry. C. C.	1	0	leave		
+Swab	Sw. Adm.	1	0	leave		
+T Jones	Jones, T.	1	0	leave		
+T Raym	Raymond, T.	1	0	leave		
+T Raym	Raym. T.	1	0	leave		
+Vern	Ve2rn	1	0	leave		
+Ves Sen Supp	Ves. Sr. Sup.	1	0	leave		
+Wil.	Wi1l.	1	0	leave		
+Wil.	Wi2l.	1	0	leave		
+Win.	W0in.	1	0	leave		
+Bail. Eq.	Bail. Eq. (So. Car.)	0	0	leave		
+Bail. Eq.	Bailey Eq. (So. Car.)	0	0	leave		
+Bail. Eq.	Bailey (So. Car.) Eq.	0	0	leave		
+Barn C	Barnardiston Ch.	0	0	leave		
+Barn KB	Barnard,	0	0	leave		
+Barn KB	Barnardiston K. B.	0	0	leave		
+Barn KB	Barnardiston K.B.	0	0	leave		
+Bell	Bell Cr. Ca.	0	0	leave		
+Ben & D	Benloe & Dalison	0	0	leave		
+Benl	Benl. K. B.	0	0	leave		
+Benl	Benl. K.B.	0	0	leave		
+Bridg J	Bridgman J.	0	0	leave		
+Bridg J	J. Bridg.	0	0	leave		
+Bridg O	Bridgman O.	0	0	leave		
+Bridg O	O. Bridg.	0	0	leave		
+Bur.	Burnett's R.	0	0	leave		
+Bur.	Burnett's Rep.	0	0	leave		
+Burrell	Burr. Adm.	0	0	leave		
+Busb.	Busbee's Rep.	0	0	leave		
+Busb.	Busb. Rep.	0	0	leave		
+Busb.	Bus, Rep,	0	0	leave		
+Busb.	Bus. Rep.	0	0	leave		
+Busb. Eq.	Busbee's Eq.	0	0	leave		
+Busb. Eq.	Busb. Eq. Rep.	0	0	leave		
+Busb. Eq.	Bus. Eq.	0	0	leave		
+Busb. Eq.	Bus. Eq. R.	0	0	leave		
+Busb. Eq.	Bus. Eq. Rep.	0	0	leave		
+Cam. & Nor.	Cameron and Norwood	0	0	leave		
+Cam. & Nor.	Cameron and Norwood's Rep.	0	0	leave		
+Cam. & Nor.	Cameron and Norw. Rep.	0	0	leave		
+Cam. & Nor.	Cameron & Norwood	0	0	leave		
+Cam. & Nor.	Cameron & Norwood, reporters	0	0	leave		
+Cam. & Nor.	Cameron & Norwood's R.	0	0	leave		
+Car & M	Carrington & Marshman	0	0	leave		
+Cas T H	Cas. t. H.	0	0	leave		
+Cas T Talbot	Cases T. Talbot	0	0	leave		
+Charlton	Charlton Rep.	0	10	leave		
+Charlton	Charlton’s Rep.	0	0	leave		
+Choyce Cases	Choyce Cas. Ch.	0	0	leave		
+Choyce Cases	Choyce Ch. Cas.	0	0	leave		
+Comst.	Comst.),	0	0	leave		
+Comst.	Comst. R.,	0	0	leave		
+Coop T Br	Coop. t. Br.	0	0	leave		
+Coop T Br	Coop. temp. Brougham	0	0	leave		
+Coxe	Coxe's Rep.	0	0	leave		
+Coxe	Coxe's Repo.	0	0	leave		
+Coxe	Cox's Reports	0	0	leave		
+CP Coop	Coop. Pr. Ca.	0	0	leave		
+Cro Eliz	Croke Elizabeth	0	0	leave		
+Cr & Ph	Craig and Phillips	0	0	leave		
+Dan	D.,	0	0	leave		
+Dav	Davis (Ireland)	0	0	leave		
+Dav	Davis (Irish)	0	0	leave		
+Dears	Dearsy C. C.	0	0	leave		
+Dears	Dearsy C.C.	0	0	leave		
+Dears & B	Dears. & B. C. C.	0	0	leave		
+Dears & B	Dears. & B. Cr. Cas.	0	0	leave		
+Dea & Sw	Deane & S. Ecc.	0	0	leave		
+Donn Eq	Donnelly Eq.	0	0	leave		
+Dowl & Ry NP	Dowl. & Ryl. N.P.	0	0	leave		
+Dowl & Ry NP	Dowl. & Ry. N.P.	0	0	leave		
+Dud.	Dudley's Law	0	0	leave		
+Dud.	Dudley's Rep.	0	0	leave		
+Dud. Eq.	Dudley, Ch. R.	0	0	leave		
+Dud. Eq.	Dudley's Eq. Rep.	0	0	leave		
+Dud. Eq.	Dudley's Equity	0	0	leave		
+Edw	Edw. P.C.	0	0	leave		
+Edw	Edw. PC	0	0	leave		
+Edw	Edw. Pr. Cas.	0	0	leave		
+Fin H	Rep. Temp. Finch	0	0	leave		
+Fort	Fortes. Rep.	0	0	leave		
+Gilb Cas	Gilb. K.B.	0	0	leave		
+Gilb Cas	Gilb. KB	0	0	leave		
+Gow	Gow NP	0	0	leave		
+Hoff. Ch.	Hoff. Chan. Prac.	0	0	leave		
+Hoff. Ch.	Hoff. Chan. R.	0	0	leave		
+Hoff. Ch.	Hoff. Ch. Practice	0	0	leave		
+Hoff. Ch.	Hoff. Chy. Pr	0	0	leave		
+Hoff. Ch.	Hoff. Chy. Pract.	0	0	leave		
+Hoff. Ch.	Hoff. Chy. R.	0	0	leave		
+Hoff. Ch.	Hoffman's Ch. Pr	0	0	leave		
+Hoff. Ch.	Hoffman's Ch. R.	0	0	leave		
+Holt KB	Holt K.B.	0	0	leave		
+Hopk. Ch.	Hopkins,	0	0	leave		
+Hopk. Ch.	Hopkins' Ch.	0	0	leave		
+Hopk. Ch.	Hopkins’ Ch. R.	0	0	leave		
+Hopk. Ch.	Hopkins' R.	0	0	leave		
+Hopk. Ch.	Hopkin's Rep.	0	0	leave		
+Le & Ca	L. & C.C.C.	0	0	leave		
+Macl & R	Maclean & Robinson	0	0	leave		
+March NR	March N. C.	0	0	leave		
+March NR	March New Cas.	0	0	leave		
+March NR	March N. R.	0	0	leave		
+March NR	March N.R.	0	0	leave		
+M'Cle & Yo	M'Cleland & Younge	0	0	leave		
+M'Cle & Yo	M'Cl. & Y.	0	0	leave		
+Moo KB	Moo K.B.	0	0	leave		
+Moo KB	Moo. K.B.	0	0	leave		
+Moo KB	Moore K.B. Cas.	0	0	leave		
+Park	Park. Exch.	0	0	leave		
+Peake	Peake's	0	0	leave		
+Peake	Peake's Cas.	0	0	leave		
+Peake Add Cas	Peake N.P. Add. Cas.	0	0	leave		
+Peck	Peck.),	0	0	leave		
+Phil.	Phil. Law	0	0	leave		
+Phil.	Phillips'	0	0	leave		
+Phil. Eq.	Phillips' Equity	0	0	leave		
+Prec Ch	Precedents Ch.	0	0	leave		
+Ridg T H	Ridgeway tem. Hardwicke	0	0	leave		
+Ridg T H	Ridg. t. H.	0	0	leave		
+Russ & Ry	R. & Ry. C.C.	0	0	leave		
+Saxton	Sax. Ch. Rep.	0	0	leave		
+Saxton	Saxton's Ch.	0	0	leave		
+Saxton	Saxton's Ch. Rep.	0	0	leave		
+Saxton	Saxton's C. R.	0	0	leave		
+Saxton	Saxton's R.	0	0	leave		
+Saxton	Saxton's Rep.	0	0	leave		
+Sel Cas T King	Ca. t. King	0	0	leave		
+Sel Cas T King	Sel. Cas. tem. King	0	0	leave		
+Sel Cas T King	Sel. Cas. t. King	0	0	leave		
+Sel Cas T King	Sel. Cas. T. King Ch.	0	0	leave		
+Smith	N.H. (Smith)	0	0	leave		
+Sp PC	Spinks P. C.	0	0	leave		
+Sp PC	Sp. P. C.	0	0	leave		
+Sp PC	Sp. P.C.	0	0	leave		
+Sp PC	Sp. Pr. Cas.	0	0	leave		
+Tapp. Rep.	Tappan’s Ohio Rep.,	0	0	leave		
+Tay.	Taylor's Rep.	0	0	leave		
+T Jones	T. Jones' Rep.	0	0	leave		
+T Raym	Raym., T.	0	0	leave		
+Tuck. & Cl.	D.C. (Tuck & Cl.)	0	0	leave		
+Tuck. Surr.	Tucker’s R.	0	0	leave		
+Tuck. Surr.	Tucker’s Surr. R.	0	0	leave		
+Tuck. Surr.	Tucker's Surr. Rep.	0	0	leave		
+Turn & R	Turner and Russell	0	0	leave		
+Ves Sen Supp	Ves. Sr. Supp.	0	0	leave		
+Walk. Ch.	Walker Ch. R.	0	0	leave		
+Walk. Ch.	Walker, C. R.	0	0	leave		
+Walk. Ch.	Walker’s Ch.	0	0	leave		
+Walk. Ch.	Walkers Ch.	0	0	leave		
+Walk. Ch.	Walker’s Chan.	0	0	leave		
+Walk. Ch.	Walker’s Ch R.	0	0	leave		
+Walk. Ch.	Walker’s Ch. R.	0	0	leave		
+Walk. Ch.	Walker’s Ch. Rep.	0	0	leave		
+Walk. Ch.	Walker’s (Mich.), Ch. R.	0	0	leave		
+West T Hard	West t. Hard.	0	0	leave		
+West T Hard	West t. Hardwicke	0	0	leave		
+White & W.	White,	0	0	leave		
+Wilm	Wilm. Judg.	0	0	leave		
+Wilm	Wilm. Op.	0	0	leave		
+Wils Ex	Wilson Ex.	0	0	leave		
+Win.	Winston's Rep.	0	0	leave		
+Win.	Winst. Rep.	0	0	leave		
+Win. Eq.	Winst Eq.	0	0	leave		
+Win. Eq.	Winst., Eq.	0	0	leave		
+Win. Eq.	Winst. Eq. (Hinsdale's Ed.)	0	0	leave		

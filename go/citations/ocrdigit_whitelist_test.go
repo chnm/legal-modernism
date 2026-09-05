@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -15,37 +14,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
-
-// reInteriorDigit matches a digit with a letter on either side. In this corpus
-// that is always an OCR misreading of a letter rather than a real part of an
-// abbreviation: "Fed." scanned as "F1ed.", "Mass." as "Ma5ss.". The digits that
-// legitimately appear in a reporter abbreviation are series designators
-// ("Wn. (2d)", "A.S.R.3d") and edition numbers ("Leach, 4th ed."), where the
-// digit follows a space or a period rather than a letter, so this leaves them
-// alone. No row in legalhist.reporters, legalhist.reporters_abbreviations, or
-// legalhist.whitelist matches it.
-//
-// This lives with the suggestion generator, not in the detector. The detector
-// records the spelling that appeared in the OCR and lets legalhist.whitelist
-// decide what it means; stripping the digit there would move a reading of the
-// text into the detector, where it does not belong. Here the stripped form is
-// only used to propose which reporter a corrupted spelling belongs to, for a
-// human to approve.
-var reInteriorDigit = regexp.MustCompile(`(\p{L})\d(\p{L})`)
-
-// stripInteriorDigits removes every digit that has a letter on both sides. It
-// repeats until the string stops changing because reInteriorDigit consumes the
-// flanking letters, so a single pass would miss the second corruption in a run
-// like "M1a2ss." Each pass shortens the string, so the loop terminates.
-func stripInteriorDigits(s string) string {
-	for {
-		stripped := reInteriorDigit.ReplaceAllString(s, "$1$2")
-		if stripped == s {
-			return s
-		}
-		s = stripped
-	}
-}
 
 func TestStripInteriorDigits(t *testing.T) {
 	tests := []struct {

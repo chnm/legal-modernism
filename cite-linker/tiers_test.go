@@ -13,18 +13,19 @@ func TestSplitCite(t *testing.T) {
 		cite         string
 		wantVol      string
 		wantReporter string
+		wantPage     int
 		wantOK       bool
 	}{
-		{"volume, reporter, page", "17 Mass. 210", "17", "Mass.", true},
-		{"multi-word reporter", "1 Ves Sen 1", "1", "Ves Sen", true},
-		{"no volume", "Cro Eliz 1", "", "Cro Eliz", true},
-		{"no volume, single-word reporter", "Stat 30", "", "Stat", true},
-		{"multi-digit volume and page", "123 U.S. 4567", "123", "U.S.", true},
+		{"volume, reporter, page", "17 Mass. 210", "17", "Mass.", 210, true},
+		{"multi-word reporter", "1 Ves Sen 1", "1", "Ves Sen", 1, true},
+		{"no volume", "Cro Eliz 1", "", "Cro Eliz", 1, true},
+		{"no volume, single-word reporter", "Stat 30", "", "Stat", 30, true},
+		{"multi-digit volume and page", "123 U.S. 4567", "123", "U.S.", 4567, true},
 		{
 			// A reporter whose own name starts with something numeric-looking
 			// must not have it read as a volume.
 			name: "leading token that is not all digits is part of the reporter",
-			cite: "2d Cir. 5", wantVol: "", wantReporter: "2d Cir.", wantOK: true,
+			cite: "2d Cir. 5", wantVol: "", wantReporter: "2d Cir.", wantPage: 5, wantOK: true,
 		},
 		{
 			// The code-reporter map holds keys like this on purpose; they must not
@@ -32,22 +33,29 @@ func TestSplitCite(t *testing.T) {
 			name: "no page is not a cite",
 			cite: "Cox, Manual Trade-Mark Cas.", wantOK: false,
 		},
-		{"empty string", "", "", "", false},
-		{"page only", "210", "", "", false},
-		{"leading space", " 210", "", "", false},
-		{"trailing space", "17 Mass. ", "", "", false},
-		{"non-numeric page", "17 Mass. cciii", "", "", false},
+		{
+			// allDigits accepts it, but it overflows an int, so Atoi has to be what
+			// decides. A wrapped page would silently land in the wrong span.
+			name: "page too large for an int is not a cite",
+			cite: "1 Mass. 99999999999999999999", wantOK: false,
+		},
+		{"empty string", "", "", "", 0, false},
+		{"page only", "210", "", "", 0, false},
+		{"leading space", " 210", "", "", 0, false},
+		{"trailing space", "17 Mass. ", "", "", 0, false},
+		{"non-numeric page", "17 Mass. cciii", "", "", 0, false},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			vol, reporter, ok := splitCite(tt.cite)
+			vol, reporter, page, ok := splitCite(tt.cite)
 			assert.Equal(t, tt.wantOK, ok)
 			if !tt.wantOK {
 				return
 			}
 			assert.Equal(t, tt.wantVol, vol, "volume")
 			assert.Equal(t, tt.wantReporter, reporter, "reporter")
+			assert.Equal(t, tt.wantPage, page, "page")
 		})
 	}
 }
@@ -105,11 +113,12 @@ func TestUSTier(t *testing.T) {
 		name            string
 		probes          []string
 		diffvolsMissing bool
+		span            rangeOutcome
 		want            string
 	}{
-		{"unknown reporter", []string{"1 Nonesuch 5"}, false, citations.TierUSReporterAbsent},
-		{"unknown volume", []string{"22 Mass. 5"}, false, citations.TierUSVolumeAbsent},
-		{"known volume, unknown page", []string{"17 Mass. 5"}, false, citations.TierUSPageAbsent},
+		{"unknown reporter", []string{"1 Nonesuch 5"}, false, rangeMiss, citations.TierUSReporterAbsent},
+		{"unknown volume", []string{"22 Mass. 5"}, false, rangeMiss, citations.TierUSVolumeAbsent},
+		{"known volume, unknown page", []string{"17 Mass. 5"}, false, rangeMiss, citations.TierUSPageAbsent},
 		{
 			// #261: the citation carried no volume, so the cascade never had
 			// one to look up. That is not evidence about coverage.
@@ -151,11 +160,44 @@ func TestUSTier(t *testing.T) {
 			probes: []string{"1 Nonesuch 5"}, diffvolsMissing: true,
 			want: citations.TierUSReporterAbsent,
 		},
+		{
+			// #242: page-range matching found the page inside a case span that
+			// two cases begin on, which says strictly more than page_absent.
+			name:   "an ambiguous span refines the page tier",
+			probes: []string{"17 Mass. 5"}, span: rangeAmbiguous,
+			want: citations.TierUSPageAmbiguous,
+		},
+		{
+			// #242: the page is past the end of the case before it, in a hole in
+			// CAP's coverage rather than inside a case — the #99 pool.
+			name:   "a gap span refines the page tier",
+			probes: []string{"17 Mass. 5"}, span: rangeGap,
+			want: citations.TierUSPageGap,
+		},
+		{
+			// A span outcome is itself proof the reporter and volume were
+			// reached, since the span index is keyed on both. The two indexes
+			// are built from different loads and can disagree — a volume whose
+			// CAP cites are all ambiguous is dropped from the exact maps but
+			// kept in the span index — and where they do, the one that actually
+			// found the volume is the one to believe.
+			name:   "a span outcome proves the reporter and volume were reached",
+			probes: []string{"1 Nonesuch 5"}, span: rangeGap,
+			want: citations.TierUSPageGap,
+		},
+		{
+			// ...but the diffvols gap still outranks it. In the cascade that
+			// combination cannot arise, because range matching is skipped
+			// outright when diffvols is missing; the ladder says so anyway.
+			name:   "the diffvols gap outranks a span outcome",
+			probes: []string{"17 Mass. 5"}, diffvolsMissing: true, span: rangeGap,
+			want: citations.TierUSDiffVolsMissing,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, usTier(tt.probes, ix, tt.diffvolsMissing))
+			assert.Equal(t, tt.want, usTier(tt.probes, ix, tt.diffvolsMissing, tt.span))
 		})
 	}
 }
@@ -166,26 +208,37 @@ func TestUKTier(t *testing.T) {
 		"1 Ves Sen 4": {Ambiguous: true, Cases: 3},
 	})
 
-	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, false))
-	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, false),
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, false, rangeMiss))
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, false, rangeMiss),
 		"Vesey Junior volumes cited as Vesey Senior are a volume-range miss")
-	assert.Equal(t, citations.TierUKPageAbsent, ukTier([]string{"1 Ves Sen 100"}, ix, false))
+	assert.Equal(t, citations.TierUKPageAbsent, ukTier([]string{"1 Ves Sen 100"}, ix, false, rangeMiss))
 
 	// #261: a citation detected without a volume never had one to look up.
-	assert.Equal(t, citations.TierUKVolumeMissing, ukTier([]string{"Ves Sen 100"}, ix, false))
-	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"Nonesuch 5"}, ix, false),
+	assert.Equal(t, citations.TierUKVolumeMissing, ukTier([]string{"Ves Sen 100"}, ix, false, rangeMiss))
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"Nonesuch 5"}, ix, false, rangeMiss),
 		"the reporter must be known before the volume step is judged")
-	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"Ves Sen 100", "4 Ves Sen 100"}, ix, false),
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"Ves Sen 100", "4 Ves Sen 100"}, ix, false, rangeMiss),
 		"the single-volume variant carries a volume, so the miss is volume_absent")
 
 	// #256: a cite the corpus holds but cannot resolve is a different failure
 	// from a page it has never seen, and outranks it.
-	assert.Equal(t, citations.TierUKPageAmbiguous, ukTier([]string{"1 Ves Sen 4"}, ix, true))
+	assert.Equal(t, citations.TierUKPageAmbiguous, ukTier([]string{"1 Ves Sen 4"}, ix, true, rangeMiss))
 
 	// ...but only once the reporter and the volume are actually known. An
 	// ambiguous flag must never promote a citation past a tier it did not reach.
-	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, true))
-	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, true))
+	assert.Equal(t, citations.TierUKReporterAbsent, ukTier([]string{"1 Nonesuch 5"}, ix, true, rangeMiss))
+	assert.Equal(t, citations.TierUKVolumeAbsent, ukTier([]string{"4 Ves Sen 100"}, ix, true, rangeMiss))
+
+	// #243: the page-range outcomes refine the page step the same way, and are
+	// held to the same rule about not promoting past the volume step.
+	assert.Equal(t, citations.TierUKPageAmbiguous, ukTier([]string{"1 Ves Sen 100"}, ix, false, rangeAmbiguous))
+	assert.Equal(t, citations.TierUKPageGap, ukTier([]string{"1 Ves Sen 100"}, ix, false, rangeGap))
+	assert.Equal(t, citations.TierUKPageGap, ukTier([]string{"4 Ves Sen 100"}, ix, false, rangeGap),
+		"a span outcome proves the volume was reached even where the cite index missed it")
+
+	// An exact cite the corpus holds outranks a gap reached under some other
+	// volume form: a known cite string says more than a page inside a hole.
+	assert.Equal(t, citations.TierUKPageAmbiguous, ukTier([]string{"1 Ves Sen 4"}, ix, true, rangeGap))
 }
 
 // TestCiteIndexKeepsAmbiguousKeys guards the property that makes

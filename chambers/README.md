@@ -84,7 +84,7 @@ The `moml.page` and `moml.page_ocrtext` joins must include `psmid` (treatise ID)
 Maps linking status to CSS classes for color-coded display:
 - `status-linked` (green) — status starts with `linked`
 - `status-nomatch` (red) — `no_match`
-- `status-skip` (blue) — `skipped_junk`
+- `status-skip` (blue) — `skipped_junk` or `skipped_statute`
 - `status-unprocessed` (yellow) — nil status or unknown
 
 ## Adding a new page

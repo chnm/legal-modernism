@@ -57,7 +57,7 @@ func main() {
 	var batchSize int
 	var workers int
 	var lockTimeout time.Duration
-	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk) so they are re-processed; only linked_* rows are kept")
+	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk, skipped_statute) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
 	flag.DurationVar(&lockTimeout, "lock-timeout", time.Minute, "give up on a statement that waits this long for a database lock, instead of blocking forever behind an uncommitted transaction; 0 disables")
@@ -117,11 +117,11 @@ func main() {
 	store := citations.NewLinkerDBStore(pool)
 
 	// Handle --reset: delete every non-linked row (no_match,
-	// skipped_not_whitelisted, skipped_junk) so they are re-processed by this run.
-	// Only linked_* rows are preserved. Done before everything else so the linking
-	// below sees the post-reset state.
+	// skipped_not_whitelisted, skipped_junk, skipped_statute) so they are
+	// re-processed by this run. Only linked_* rows are preserved. Done before
+	// everything else so the linking below sees the post-reset state.
 	if reset {
-		slog.Info("resetting unresolved citation links (no_match, skipped_not_whitelisted, skipped_junk)")
+		slog.Info("resetting unresolved citation links", "statuses", citations.UnresolvedStatuses)
 		deleted, err := store.ResetUnlinked(ctx)
 		if err != nil {
 			exitStartupError("reset failed", err, "deleted", deleted)
@@ -195,13 +195,48 @@ func main() {
 		"unambiguous", erUnambiguous,
 		"ambiguous", len(erCites)-erUnambiguous)
 
+	slog.Info("loading CAP case page spans")
+	capSpans, err := store.LoadCAPCaseSpans(ctx)
+	if err != nil {
+		exitStartupError("could not load CAP case page spans", err)
+	}
+	slog.Info("loaded CAP case page spans", "entries", len(capSpans))
+
+	slog.Info("loading English Reports case page spans")
+	erSpans, err := store.LoadERCaseSpans(ctx)
+	if err != nil {
+		exitStartupError("could not load English Reports case page spans", err)
+	}
+	slog.Info("loaded English Reports case page spans", "entries", len(erSpans))
+
 	// Assemble the lookup tables, which also walks every loaded cite string once
-	// to build the reporter/volume indexes a no_match is attributed with.
+	// to build the reporter/volume indexes a no_match is attributed with, and the
+	// page-range indexes that resolve pin cites.
 	slog.Info("indexing cite strings by reporter and volume")
-	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites)
+	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites, capSpans, erSpans)
 	slog.Info("indexed cite strings",
 		"us_reporters", len(tables.us.reporters), "us_volumes", len(tables.us.volumes),
 		"uk_reporters", len(tables.uk.reporters), "uk_volumes", len(tables.uk.volumes))
+
+	// The span arrays are large and fully consumed by the indexes; drop the
+	// references so the 7M-element CAP slice can be collected before linking
+	// starts rather than sitting alongside the maps for the whole run.
+	capSpans, erSpans = nil, nil
+
+	capVols, capSpanCount := tables.capRanges.size()
+	erVols, erSpanCount := tables.erRanges.size()
+	slog.Info("indexed case page spans",
+		"cap_volumes", capVols, "cap_spans", capSpanCount,
+		"er_volumes", erVols, "er_spans", erSpanCount)
+
+	// A malformed span index mislinks silently and at scale, so verify the
+	// invariant that has to hold by construction before any citation is linked.
+	if err := tables.capRanges.checkSelfConsistency(); err != nil {
+		exitStartupError("page span index is inconsistent", err, "index", "cap")
+	}
+	if err := tables.erRanges.checkSelfConsistency(); err != nil {
+		exitStartupError("page span index is inconsistent", err, "index", "er")
+	}
 
 	// Bounded pipeline. A single streaming reader (this goroutine, inside
 	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
@@ -373,6 +408,12 @@ type linkTables struct {
 	// it happens here rather than per citation.
 	us *citeIndex
 	uk *citeIndex
+
+	// capRanges and erRanges resolve pin cites — citations to an interior page of
+	// a case — after the exact cascade has missed. Either may be nil, in which
+	// case range matching is simply skipped.
+	capRanges *rangeIndex[int64]
+	erRanges  *rangeIndex[string]
 }
 
 func newLinkTables(
@@ -383,6 +424,8 @@ func newLinkTables(
 	altAbbrs map[string][]string,
 	codeCites map[string]int64,
 	erCites map[string]citations.ERCase,
+	capSpans []citations.CaseSpan[int64],
+	erSpans []citations.CaseSpan[string],
 ) *linkTables {
 	return &linkTables{
 		whitelist:    whitelist,
@@ -394,6 +437,8 @@ func newLinkTables(
 		erCites:      erCites,
 		us:           newCiteIndex(capCites, freelawCites, codeCites),
 		uk:           newCiteIndex(erCites),
+		capRanges:    newRangeIndex(capSpans),
+		erRanges:     newRangeIndex(erSpans),
 	}
 }
 
@@ -402,8 +447,8 @@ func newLinkTables(
 func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkResult {
 	result := &citations.LinkResult{CitationID: c.ID}
 
-	// Step 1: whitelist check. Neither skip records a tier: the status is already
-	// the whole explanation, and there was no cascade to reach a tier in.
+	// Step 1: whitelist check. None of the skips records a tier: the status is
+	// already the whole explanation, and there was no cascade to reach a tier in.
 	entry, ok := t.whitelist[c.ReporterAbbr]
 	if !ok {
 		result.Status = citations.StatusSkippedNotWhitelisted
@@ -411,6 +456,14 @@ func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkR
 	}
 	if entry.Junk {
 		result.Status = citations.StatusSkippedJunk
+		return result
+	}
+	// A regnal-year statute ("13 Eliz. c. 5") is a real citation but not to a
+	// case, so no source could hold it; skipping it here keeps it out of
+	// no_match, where it would read as a coverage gap (issue #246). Checked
+	// before routing because the statute rows carry a jurisdiction too.
+	if entry.Statute {
+		result.Status = citations.StatusSkippedStatute
 		return result
 	}
 
@@ -528,8 +581,39 @@ func linkCAPThenCode(
 		}
 	}
 
+	// Every exact form missed. Before giving up, try page-range matching: the
+	// citation may be a pin cite to an interior page of a case, which no
+	// first-page cite string can ever equal. This runs last so it can only turn a
+	// no_match into a link, never rewire one the exact cascade already made.
+	//
+	// Skipped when diffvols is missing, for the same reason usTier reports that
+	// tier ahead of the volume and page ones: the reporter renumbers in CAP and no
+	// reporters_diffvols row covers this volume, so every probe carries a volume
+	// number known to be untranslated. An exact miss on such a probe is harmless,
+	// but a range hit is not — the wrong volume of the right reporter is densely
+	// populated, so containment would confidently return a case from it. Measured
+	// over the current no_match pool this suppresses 45,077 otherwise-plausible
+	// links that would all have been fabricated.
+	missingDiffvols := diffvolsMissing(c, entry, t.diffvols)
+	span := rangeMiss
+	if t.capRanges != nil && !missingDiffvols {
+		caseID, outcome := t.capRanges.probe(probes)
+		if outcome == rangeHit {
+			result.Status = citations.StatusLinkedCAP
+			result.MatchTier = citations.TierCAPPageInterior
+			result.CAPCaseID = &caseID
+			// No cite string matched, so there is nothing to record as the cite
+			// that linked; CiteLinked stays nil and the tier is what identifies
+			// how this row was made.
+			return result
+		}
+		// A refusal is not a link but is still a finding, so it is carried to
+		// usTier to sharpen the page step rather than dropped.
+		span = outcome
+	}
+
 	result.Status = citations.StatusNoMatch
-	result.MatchTier = usTier(probes, t.us, diffvolsMissing(c, entry, t.diffvols))
+	result.MatchTier = usTier(probes, t.us, missingDiffvols, span)
 	return result
 }
 
@@ -589,8 +673,23 @@ func linkEnglishReports(
 		return result
 	}
 
+	// As on the US route, fall back to page-range matching for pin cites. The
+	// English Reports record no page ranges of their own, so spans here are
+	// bounded only by the next cite and maxSpanPages.
+	span := rangeMiss
+	if t.erRanges != nil {
+		erID, outcome := t.erRanges.probe(probes)
+		if outcome == rangeHit {
+			result.Status = citations.StatusLinkedEnglishReports
+			result.MatchTier = citations.TierERPageInterior
+			result.ERCaseID = &erID
+			return result
+		}
+		span = outcome
+	}
+
 	result.Status = citations.StatusNoMatch
-	result.MatchTier = ukTier(probes, t.uk, ambiguous)
+	result.MatchTier = ukTier(probes, t.uk, ambiguous, span)
 	return result
 }
 

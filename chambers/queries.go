@@ -226,7 +226,7 @@ func statusClass(status *string) string {
 	if s == "no_match" {
 		return "status-nomatch"
 	}
-	if s == "skipped_junk" {
+	if s == "skipped_junk" || s == "skipped_statute" {
 		return "status-skip"
 	}
 	return "status-unprocessed"
@@ -490,6 +490,7 @@ type DashboardData struct {
 	SkippedNotWhiteListed int
 	NoMatch               int
 	SkippedJunk           int
+	SkippedStatute        int
 	TotalRawCites         int
 	Reporters             []ReporterStats `json:"Reporters,omitempty"`
 }
@@ -535,6 +536,8 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 			d.NoMatch = n
 		case "skipped_junk":
 			d.SkippedJunk = n
+		case "skipped_statute":
+			d.SkippedStatute = n
 		}
 	}
 	if err := rows.Err(); err != nil {
@@ -574,6 +577,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		"skipped_not_whitelisted", d.SkippedNotWhiteListed,
 		"no_match", d.NoMatch,
 		"skipped_junk", d.SkippedJunk,
+		"skipped_statute", d.SkippedStatute,
 		"total_raw_cites", d.TotalRawCites,
 		"reporters", len(d.Reporters),
 	)

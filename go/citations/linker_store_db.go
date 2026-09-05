@@ -3,6 +3,7 @@ package citations
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -29,7 +30,8 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 			SELECT 1 FROM legalhist.reporters_diffvols d
 			WHERE d.reporter_standard = w.reporter_standard
 		) AS cap_different,
-		COALESCE(r.single_vol, false) AS single_vol
+		COALESCE(r.single_vol, false) AS single_vol,
+		COALESCE(r.type = 'statute', false) AS statute
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	`
@@ -43,7 +45,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	for rows.Next() {
 		var found string
 		var e WhitelistEntry
-		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol)
+		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}
@@ -345,6 +347,96 @@ func (s *LinkerDBStore) LoadEnglishReportsCitations(ctx context.Context) (map[st
 	return m, nil
 }
 
+// LoadCAPCaseSpans loads the first-page cites that the page-range index is built
+// from, with each case's own page count.
+//
+// Only official and nominative cites are loaded. vendor and split cites are
+// excluded because they are not "{volume} {reporter} {page}" at all — a vendor
+// cite like "1996 WL 12345" parses as page 12345 and would wreck the volume it
+// landed in. parallel cites are excluded on measurement rather than principle:
+// they are safe (a reporter-volume key only ever receives pages in that
+// reporter's own pagination) but add 1.28M cite strings for +1.5% of hits.
+//
+// Ambiguous cites are deliberately kept, unlike LoadCAPCitations; see the
+// interface comment.
+func (s *LinkerDBStore) LoadCAPCaseSpans(ctx context.Context) ([]CaseSpan[int64], error) {
+	// The cite is parsed in Go rather than with regexp_match here: doing it
+	// server-side over all 6.9M rows costs about nine minutes, against seconds for
+	// the plain join.
+	query := `
+	SELECT c.cite, c."case", k.first_page, k.last_page
+	FROM cap.citations c
+	JOIN cap.cases k ON k.id = c."case"
+	WHERE c.type IN ('official', 'nominative')
+	`
+	rows, err := s.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading CAP case spans: %w", err)
+	}
+	defer rows.Close()
+
+	spans := make([]CaseSpan[int64], 0, 7_000_000)
+	for rows.Next() {
+		var cite string
+		var caseID int64
+		var firstPage, lastPage *int
+		if err := rows.Scan(&cite, &caseID, &firstPage, &lastPage); err != nil {
+			return nil, fmt.Errorf("scanning CAP case span: %w", err)
+		}
+		spans = append(spans, CaseSpan[int64]{
+			Cite:   cite,
+			ID:     caseID,
+			Length: pageLength(firstPage, lastPage),
+		})
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating CAP case spans: %w", err)
+	}
+	return spans, nil
+}
+
+// pageLength converts a first/last page pair into the number of pages the case
+// occupies, or 0 when either is NULL or the pair is inverted (167 rows in CAP
+// have last_page < first_page). The +1 matters: CAP's ranges share their boundary
+// page with the next case 72.8% of the time, so last-first+1 overshoots by one
+// there and is exact under the other convention — taking the minimum with the
+// distance to the next cite clamps it correctly either way.
+func pageLength(firstPage, lastPage *int) int {
+	if firstPage == nil || lastPage == nil || *lastPage < *firstPage {
+		return 0
+	}
+	return *lastPage - *firstPage + 1
+}
+
+// LoadERCaseSpans loads the English Reports first-page cites, under both the E.R.
+// keying and the nominate parallel keying. Each reporter-volume key receives only
+// pages in its own pagination, so the two systems never mix.
+func (s *LinkerDBStore) LoadERCaseSpans(ctx context.Context) ([]CaseSpan[string], error) {
+	query := `SELECT id, er_cite, er_parallel_cite FROM english_reports.cases`
+	rows, err := s.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading English Reports case spans: %w", err)
+	}
+	defer rows.Close()
+
+	spans := make([]CaseSpan[string], 0, 250_000)
+	for rows.Next() {
+		var id, erCite string
+		var erParallel *string
+		if err := rows.Scan(&id, &erCite, &erParallel); err != nil {
+			return nil, fmt.Errorf("scanning English Reports case span: %w", err)
+		}
+		spans = append(spans, CaseSpan[string]{Cite: erCite, ID: id})
+		if erParallel != nil {
+			spans = append(spans, CaseSpan[string]{Cite: *erParallel, ID: id})
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating English Reports case spans: %w", err)
+	}
+	return spans, nil
+}
+
 // SaveLinkResults batch-inserts multiple link results in a single statement.
 //
 // Rather than build a VALUES list with up to batchSize*9 placeholders (which
@@ -402,18 +494,25 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 }
 
 // ResetUnlinked deletes every citation_links row that was not resolved to a case
-// (status no_match, skipped_not_whitelisted, or skipped_junk) so the linker
-// re-processes them on the next run; only linked_* rows are preserved. Deleting
-// both skip statuses lets a re-run re-derive them from the current whitelist, so
-// a reporter later corrected from junk to legit is no longer stuck as
-// skipped_junk. The delete runs as a single statement — one
-// all-or-nothing transaction — and returns the number of rows deleted.
+// (every status in UnresolvedStatuses: no_match, skipped_not_whitelisted,
+// skipped_junk, skipped_statute) so the linker re-processes them on the next
+// run; only linked_* rows are preserved. Deleting the skip statuses too lets a
+// re-run re-derive them from the current whitelist, so a reporter later
+// corrected from junk to legit is no longer stuck as skipped_junk. The delete
+// runs as a single statement — one all-or-nothing transaction — and returns the
+// number of rows deleted.
 func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
-	query := `
+	placeholders := make([]string, len(UnresolvedStatuses))
+	args := make([]any, len(UnresolvedStatuses))
+	for i, status := range UnresolvedStatuses {
+		placeholders[i] = fmt.Sprintf("$%d", i+1)
+		args[i] = status
+	}
+	query := fmt.Sprintf(`
 	DELETE FROM moml_citations.citation_links
-	WHERE status IN ($1, $2, $3)
-	`
-	tag, err := s.DB.Exec(ctx, query, StatusNoMatch, StatusSkippedNotWhitelisted, StatusSkippedJunk)
+	WHERE status IN (%s)
+	`, strings.Join(placeholders, ", "))
+	tag, err := s.DB.Exec(ctx, query, args...)
 	if err != nil {
 		return 0, fmt.Errorf("resetting unlinked citations: %w", err)
 	}

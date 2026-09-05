@@ -20,7 +20,7 @@ import (
 // reads every Tier* constant straight out of the source (no hand-maintained list
 // to drift) and requires each one to appear in some migration.
 func TestMatchTierConstantsAreAllowedBySQL(t *testing.T) {
-	tiers := tierConstants(t)
+	tiers := stringConstants(t, "Tier")
 	require.NotEmpty(t, tiers, "found no Tier* constants; has the naming changed?")
 
 	migrations, err := filepath.Glob(filepath.Join("..", "..", "db", "migrations", "*.sql"))
@@ -43,9 +43,9 @@ func TestMatchTierConstantsAreAllowedBySQL(t *testing.T) {
 	}
 }
 
-// tierConstants returns every Tier*-named string constant declared in this
-// package, keyed by constant name.
-func tierConstants(t *testing.T) map[string]string {
+// stringConstants returns every string constant declared in this package whose
+// name starts with prefix ("Tier", "Status"), keyed by constant name.
+func stringConstants(t *testing.T, prefix string) map[string]string {
 	t.Helper()
 
 	pkgs, err := parser.ParseDir(token.NewFileSet(), ".", nil, 0)
@@ -65,7 +65,7 @@ func tierConstants(t *testing.T) map[string]string {
 						continue
 					}
 					for i, ident := range vs.Names {
-						if !strings.HasPrefix(ident.Name, "Tier") || i >= len(vs.Values) {
+						if !strings.HasPrefix(ident.Name, prefix) || i >= len(vs.Values) {
 							continue
 						}
 						lit, ok := vs.Values[i].(*ast.BasicLit)
