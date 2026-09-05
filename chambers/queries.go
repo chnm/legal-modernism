@@ -209,9 +209,19 @@ func getReporterStandards(ctx context.Context, db *pgxpool.Pool) ([]ReporterStan
 
 // ReporterCite is a raw citation with its linking status, for the reporter check page.
 type ReporterCite struct {
-	ID     uuid.UUID
-	Raw    string
-	Status *string
+	ID        uuid.UUID
+	Raw       string
+	Status    *string
+	MatchTier *string
+}
+
+// TierLabel returns the match tier for display, or an em dash for the statuses
+// that never reach a probe and so carry no tier.
+func (r *ReporterCite) TierLabel() string {
+	if r.MatchTier == nil {
+		return "\u2014"
+	}
+	return *r.MatchTier
 }
 
 // statusClass maps a linking status to a CSS class.
@@ -263,18 +273,23 @@ func getReporterVariants(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	return results, rows.Err()
 }
 
-func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard string) ([]ReporterCite, error) {
-	slog.Debug("querying cites for reporter", "reporter", reporterStandard)
+// getCitesForReporter returns up to 10,000 raw citations mapped to a reporter
+// standard. An empty tier means every citation; naming one narrows the page to
+// the citations whose linking ended in that tier, which is how a failure mode
+// like an open-tail volume is inspected rather than merely counted (issue #268).
+func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard, tier string) ([]ReporterCite, error) {
+	slog.Debug("querying cites for reporter", "reporter", reporterStandard, "tier", tier)
 	query := `
-	SELECT cu.id, cu.raw, cl.status
+	SELECT cu.id, cu.raw, cl.status, cl.match_tier
 	FROM moml_citations.citations_unlinked cu
 	JOIN legalhist.whitelist wl ON cu.reporter_abbr = wl.reporter_found
 	LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
 	WHERE wl.reporter_standard = $1
+	  AND ($2 = '' OR cl.match_tier = $2)
 	ORDER BY cu.id
 	LIMIT 10000
 	`
-	rows, err := db.Query(ctx, query, reporterStandard)
+	rows, err := db.Query(ctx, query, reporterStandard, tier)
 	if err != nil {
 		return nil, fmt.Errorf("querying cites for reporter %q: %w", reporterStandard, err)
 	}
@@ -283,7 +298,7 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 	var results []ReporterCite
 	for rows.Next() {
 		var c ReporterCite
-		if err := rows.Scan(&c.ID, &c.Raw, &c.Status); err != nil {
+		if err := rows.Scan(&c.ID, &c.Raw, &c.Status, &c.MatchTier); err != nil {
 			return nil, fmt.Errorf("scanning cite for reporter: %w", err)
 		}
 		// Strip newlines from raw cite
@@ -291,7 +306,44 @@ func getCitesForReporter(ctx context.Context, db *pgxpool.Pool, reporterStandard
 		c.Raw = strings.ReplaceAll(c.Raw, "\r", " ")
 		results = append(results, c)
 	}
-	slog.Debug("fetched cites for reporter", "reporter", reporterStandard, "count", len(results))
+	slog.Debug("fetched cites for reporter", "reporter", reporterStandard, "tier", tier, "count", len(results))
+	return results, rows.Err()
+}
+
+// ReporterTierCount is one status and match_tier pair for a single reporter,
+// read from the materialized view so the count covers the reporter's whole pool
+// rather than only the citations this page can display.
+type ReporterTierCount struct {
+	Status string
+	Tier   string
+	N      int
+}
+
+// getReporterTierCounts returns a reporter's citations grouped by status and
+// match tier, heaviest first.
+func getReporterTierCounts(ctx context.Context, db *pgxpool.Pool, reporterStandard string) ([]ReporterTierCount, error) {
+	slog.Debug("querying tier counts for reporter", "reporter", reporterStandard)
+	query := `
+	SELECT COALESCE(status, 'unprocessed'), COALESCE(match_tier, ''), n
+	FROM moml_citations.linking_dashboard_tiers
+	WHERE reporter_standard = $1
+	ORDER BY n DESC
+	`
+	rows, err := db.Query(ctx, query, reporterStandard)
+	if err != nil {
+		return nil, fmt.Errorf("querying tier counts for reporter %q: %w", reporterStandard, err)
+	}
+	defer rows.Close()
+
+	var results []ReporterTierCount
+	for rows.Next() {
+		var t ReporterTierCount
+		if err := rows.Scan(&t.Status, &t.Tier, &t.N); err != nil {
+			return nil, fmt.Errorf("scanning tier count: %w", err)
+		}
+		results = append(results, t)
+	}
+	slog.Debug("fetched tier counts for reporter", "reporter", reporterStandard, "count", len(results))
 	return results, rows.Err()
 }
 
@@ -492,12 +544,41 @@ type DashboardData struct {
 	SkippedJunk           int
 	SkippedStatute        int
 	TotalRawCites         int
-	Reporters             []ReporterStats `json:"Reporters,omitempty"`
+	Reporters             []ReporterStats    `json:"Reporters,omitempty"`
+	Tiers                 []TierStat         `json:"Tiers,omitempty"`
+	ReporterTiers         []ReporterTierStat `json:"ReporterTiers,omitempty"`
 }
 
 // TotalLinked returns the sum of all linked statuses.
 func (d *DashboardData) TotalLinked() int {
 	return d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter
+}
+
+// loadReporterStats fills in d.Reporters from the per-reporter materialized
+// view, ordered by total citations descending (linked + no_match + unprocessed).
+func loadReporterStats(ctx context.Context, db *pgxpool.Pool, d *DashboardData) error {
+	rows, err := db.Query(ctx, `
+		SELECT reporter_standard, linked, no_match, unprocessed, uk
+		FROM moml_citations.linking_dashboard_reporters
+		ORDER BY linked + no_match + unprocessed DESC
+	`)
+	if err != nil {
+		return fmt.Errorf("querying reporter stats: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var r ReporterStats
+		if err := rows.Scan(&r.Reporter, &r.Linked, &r.NoMatch, &r.Unprocessed, &r.UK); err != nil {
+			return fmt.Errorf("scanning reporter stats: %w", err)
+		}
+		d.Reporters = append(d.Reporters, r)
+	}
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("iterating reporter stats: %w", err)
+	}
+	slog.Debug("fetched reporter stats", "count", len(d.Reporters))
+	return nil
 }
 
 func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, error) {
@@ -545,30 +626,20 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 	}
 	slog.Debug("finished querying linking dashboard summary view")
 
-	// Get per-reporter linking stats from the precomputed materialized view,
-	// ordered by total citations descending (linked + no_match + unprocessed).
-	slog.Debug("querying per-reporter linking stats")
-	reporterRows, err := db.Query(ctx, `
-		SELECT reporter_standard, linked, no_match, unprocessed, uk
-		FROM moml_citations.linking_dashboard_reporters
-		ORDER BY linked + no_match + unprocessed DESC
-	`)
-	if err != nil {
-		return nil, fmt.Errorf("querying reporter stats: %w", err)
+	// The three sections below each read their own materialized view, and a
+	// failure in any of them is not fatal. A view that a migration has just
+	// recreated stays unpopulated until the next make db-maintenance and errors
+	// when queried; the summary above is the substance of the page, so a section
+	// that cannot be read degrades to empty rather than taking the page down.
+	if err := loadReporterStats(ctx, db, d); err != nil {
+		slog.Warn("reporter stats unavailable, rendering dashboard without them", "error", err)
 	}
-	defer reporterRows.Close()
-
-	for reporterRows.Next() {
-		var r ReporterStats
-		if err := reporterRows.Scan(&r.Reporter, &r.Linked, &r.NoMatch, &r.Unprocessed, &r.UK); err != nil {
-			return nil, fmt.Errorf("scanning reporter stats: %w", err)
-		}
-		d.Reporters = append(d.Reporters, r)
+	if d.Tiers, err = getTierSummary(ctx, db); err != nil {
+		slog.Warn("tier summary unavailable, rendering dashboard without it", "error", err)
 	}
-	if err := reporterRows.Err(); err != nil {
-		return nil, fmt.Errorf("iterating reporter stats: %w", err)
+	if d.ReporterTiers, err = getReporterTiers(ctx, db); err != nil {
+		slog.Warn("reporter tiers unavailable, rendering dashboard without them", "error", err)
 	}
-	slog.Debug("fetched reporter stats", "count", len(d.Reporters))
 
 	slog.Debug("dashboard data complete",
 		"linked_cap", d.LinkedCAP,
@@ -580,9 +651,112 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		"skipped_statute", d.SkippedStatute,
 		"total_raw_cites", d.TotalRawCites,
 		"reporters", len(d.Reporters),
+		"tiers", len(d.Tiers),
+		"reporter_tiers", len(d.ReporterTiers),
 	)
 
 	return d, nil
+}
+
+// TierStat is one row of moml_citations.linking_tier_summary: a linking status
+// paired with the match_tier that says how far the linker got, its count, and
+// its share of that status. Tier is empty for the statuses that never reach a
+// probe and so carry no tier.
+type TierStat struct {
+	Status      string  `json:"status"`
+	Tier        string  `json:"tier"`
+	N           int     `json:"n"`
+	PctOfStatus float64 `json:"pctOfStatus"`
+}
+
+// getTierSummary reads the corpus-wide status × match_tier breakdown. The view
+// aggregates moml_citations.linking_dashboard_tiers, which joins the whitelist,
+// so it covers exactly the citations the linker probes — linked, no_match,
+// skipped_statute, and unprocessed — and omits skipped_junk and
+// skipped_not_whitelisted, which are turned away before any target is consulted.
+func getTierSummary(ctx context.Context, db *pgxpool.Pool) ([]TierStat, error) {
+	slog.Debug("querying linking tier summary view")
+	rows, err := db.Query(ctx, `
+		SELECT status, match_tier, n, pct_of_status
+		FROM moml_citations.linking_tier_summary
+		ORDER BY n DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("querying tier summary: %w", err)
+	}
+	defer rows.Close()
+
+	var results []TierStat
+	for rows.Next() {
+		var t TierStat
+		var tier *string
+		if err := rows.Scan(&t.Status, &tier, &t.N, &t.PctOfStatus); err != nil {
+			return nil, fmt.Errorf("scanning tier summary: %w", err)
+		}
+		if tier != nil {
+			t.Tier = *tier
+		}
+		results = append(results, t)
+	}
+	slog.Debug("fetched tier summary", "count", len(results))
+	return results, rows.Err()
+}
+
+// ReporterTierStat holds one reporter_standard's no_match citations broken down
+// by the tier that says where the match failed. Tiers is keyed by match_tier.
+type ReporterTierStat struct {
+	Reporter string         `json:"reporter"`
+	NoMatch  int            `json:"noMatch"`
+	Tiers    map[string]int `json:"tiers"`
+}
+
+// getReporterTiers reads the failure tiers of every reporter's no_match pool and
+// pivots them into one row per reporter, so the page can compare the shape of a
+// reporter's failures — mostly volume_absent, mostly page_absent — rather than
+// only their total.
+func getReporterTiers(ctx context.Context, db *pgxpool.Pool) ([]ReporterTierStat, error) {
+	slog.Debug("querying per-reporter failure tiers")
+	rows, err := db.Query(ctx, `
+		SELECT reporter_standard, match_tier, n
+		FROM moml_citations.linking_dashboard_tiers
+		WHERE status = 'no_match' AND match_tier IS NOT NULL
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("querying reporter tiers: %w", err)
+	}
+	defer rows.Close()
+
+	byReporter := make(map[string]*ReporterTierStat)
+	for rows.Next() {
+		var reporter, tier string
+		var n int
+		if err := rows.Scan(&reporter, &tier, &n); err != nil {
+			return nil, fmt.Errorf("scanning reporter tier: %w", err)
+		}
+		r, ok := byReporter[reporter]
+		if !ok {
+			r = &ReporterTierStat{Reporter: reporter, Tiers: make(map[string]int)}
+			byReporter[reporter] = r
+		}
+		r.Tiers[tier] += n
+		r.NoMatch += n
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating reporter tiers: %w", err)
+	}
+
+	results := make([]ReporterTierStat, 0, len(byReporter))
+	for _, r := range byReporter {
+		results = append(results, *r)
+	}
+	sort.Slice(results, func(i, j int) bool {
+		if results[i].NoMatch != results[j].NoMatch {
+			return results[i].NoMatch > results[j].NoMatch
+		}
+		return results[i].Reporter < results[j].Reporter
+	})
+	slog.Debug("fetched reporter tiers", "count", len(results))
+	return results, nil
 }
 
 // UnmatchedCitation is one aggregated row from

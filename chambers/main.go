@@ -331,7 +331,9 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 		return
 	}
 
-	slog.Debug("looking up reporter cites", "reporter", reporter)
+	tier := r.URL.Query().Get("tier")
+
+	slog.Debug("looking up reporter cites", "reporter", reporter, "tier", tier)
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
 	defer cancel()
 
@@ -342,19 +344,30 @@ func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.
 		return
 	}
 
-	cites, err := getCitesForReporter(ctx, pool, reporter)
+	tiers, err := getReporterTierCounts(ctx, pool, reporter)
+	if err != nil {
+		// The tier counts come from a materialized view that a migration can
+		// leave unpopulated until the next make db-maintenance. Losing the
+		// filter bar is better than losing the citations it filters.
+		slog.Warn("tier counts unavailable for reporter", "reporter", reporter, "error", err)
+	}
+
+	cites, err := getCitesForReporter(ctx, pool, reporter, tier)
 	if err != nil {
 		slog.Error("error querying cites for reporter", "reporter", reporter, "error", err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 
-	slog.Debug("rendering reporter cites", "reporter", reporter, "variants", len(variants), "cites", len(cites))
+	slog.Debug("rendering reporter cites", "reporter", reporter, "tier", tier,
+		"variants", len(variants), "tiers", len(tiers), "cites", len(cites))
 	data := struct {
 		Reporter string
+		Tier     string
 		Variants []string
+		Tiers    []ReporterTierCount
 		Cites    []ReporterCite
-	}{Reporter: reporter, Variants: variants, Cites: cites}
+	}{Reporter: reporter, Tier: tier, Variants: variants, Tiers: tiers, Cites: cites}
 	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
 		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
 	}
