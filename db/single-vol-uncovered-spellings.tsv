@@ -2,7 +2,8 @@
 # Produced by db/queries/single-vol-uncovered-spellings.sql against the live database, 2026-09-05, after the
 # single_vol flag corrections of 2026-09-04. Counts are moml_citations.citations_unlinked rows in that spelling.
 # action: add_alt_abbr = seed as reporters_abbreviations.alt_abbr (20260905120300_seed-single-vol-uncovered-alt-abbrs.sql);
-#         fix_whitelist = the whitelist routes the spelling to the wrong reporter (target in the target column, or junk);
+#         fix_whitelist = the whitelist routes the spelling to the wrong reporter (target in the target column, or junk;
+#                         seeded by 20260905120300 or 20260905120500 where the note says so);
 #         statute = rerouted to a statute row by 20260905120000_seed-statute-reporters.sql; leave = no change proposed.
 #
 # reporter_standard	reporter_found	volumed_rows	bare_rows	action	target	note
@@ -13,8 +14,8 @@ Taylor	Term	4763	0	fix_whitelist	junk	the word Term from Taylor's North Carolina
 Ves Sen Supp	B. Sup.	3145	0	add_alt_abbr	Ves Sen Supp	
 Brooke	B. N. C.	2923	0	fix_whitelist	Bing NC	Bingham's New Cases (cited at volumes 1-8), not Brooke's New Cases; seeded in the routing block
 Comst.	Corn.	2531	0	add_alt_abbr	Comst.	
-West	West. Rep.	2402	0	fix_whitelist		the Western Reporter (1885-1888), not West's House of Lords; no legalhist.reporters row yet
-Jenk	Cent. Rep.	2213	0	fix_whitelist		the Central Reporter (1885-1888), not Jenkins; no legalhist.reporters row yet, a coverage gap
+West	West. Rep.	2402	0	fix_whitelist	West. Rep.	the Western Reporter (1885-1888), not West's House of Lords; reporter row and reroute seeded in 20260905120500
+Jenk	Cent. Rep.	2213	0	fix_whitelist	Cent. Rep.	the Central Reporter (1885-1888), not Jenkins; reporter row and reroute seeded in 20260905120500
 Dears & B	D. & B.	2044	0	add_alt_abbr	Dears & B	
 T Jones	Jon.	1754	6448	fix_whitelist		ambiguous among the Jones reporters; 6,448 bare rows already exist from another detector's stem
 S. & S.	S. & St.	1720	0	add_alt_abbr	S. & S.	
@@ -23,7 +24,7 @@ Vern	Vern. R.	1363	0	add_alt_abbr	Vern
 Dan	I).	1330	0	fix_whitelist	junk	OCR fragment of D.; seeded in the routing block
 Comst.	Comst.)	1306	0	leave		OCR parenthesis; the volumed form already links via the whitelist
 Colles	Coil.	965	0	add_alt_abbr	Colles	
-Jenk	Cent.	965	0	fix_whitelist		as Cent. Rep.
+Jenk	Cent.	965	0	fix_whitelist	Cent. Rep.	as Cent. Rep.; seeded in 20260905120500
 Wil.	WILL.	955	0	statute	Stat. Will.	
 Martin	Martin, R.	857	0	add_alt_abbr	Martin	
 Hopk. Ch.	Hopk.	647	0	add_alt_abbr	Hopk. Ch.	
