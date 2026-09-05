@@ -12,6 +12,15 @@
         .loading-text { color: #6c757d; font-size: 0.9rem; }
         .spinner-border { width: 1.2rem; height: 1.2rem; border-width: 0.15em; }
         .placeholder-number { color: #ccc; }
+        .tier-table { font-size: 0.85rem; }
+        .tier-table th { font-weight: 600; }
+        .tier-table td.num, .tier-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .tier-table tr.status-row td { background: #f1f3f5; font-weight: 600; }
+        .tier-table code { font-size: 0.85rem; }
+        .tier-gloss { color: #6c757d; }
+        .tier-scroll { overflow-x: auto; }
+        .tier-scroll th.rot { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 600; font-size: 0.75rem; }
+        .reporter-link { cursor: pointer; text-decoration: none; }
 {{end}}
 
 {{define "nav"}}
@@ -115,10 +124,49 @@
         <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading reporter data&hellip;</div>
     </div>
 
+    <h2 class="h6 text-secondary mb-2">Match tiers</h2>
+    <p class="small text-secondary mb-2">
+        The tier records how far the linker got: which probe produced a link, or which
+        step of the cascade ran out of things to match against. Percentages are of the
+        status, not of the corpus. Citations turned away before any probe
+        (<code>skipped_junk</code>, <code>skipped_not_whitelisted</code>) carry no tier
+        and are not counted here.
+    </p>
+    <div id="tier-container" class="mb-4">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading tier data&hellip;</div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Failure tiers by reporter</h2>
+    <p class="small text-secondary mb-2">
+        Where each reporter's <code>no_match</code> citations gave out. A reporter whose
+        failures pile up in one tier has a single fixable cause; one spread across tiers
+        does not. Cells show the share of that reporter's <code>no_match</code> pool;
+        hover for the count. Click a reporter to see its raw citations.
+    </p>
+    <div id="reporter-tier-container" class="mb-4">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading reporter tier data&hellip;</div>
+    </div>
+
     <details class="mb-3">
         <summary class="small text-secondary">SQL queries</summary>
-        <pre class="bg-light p-2 rounded small mt-2"><code>SELECT status, n FROM moml_citations.citation_links_status;
-SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
+        <pre class="bg-light p-2 rounded small mt-2"><code>SELECT metric, n FROM moml_citations.linking_dashboard_summary;
+
+SELECT reporter_standard, linked, no_match, unprocessed, uk
+FROM moml_citations.linking_dashboard_reporters
+ORDER BY linked + no_match + unprocessed DESC;
+
+SELECT status, match_tier, n, pct_of_status
+FROM moml_citations.linking_tier_summary
+ORDER BY n DESC;
+
+SELECT reporter_standard, match_tier, n
+FROM moml_citations.linking_dashboard_tiers
+WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
+        <p class="small text-secondary mt-2 mb-0">
+            All four read materialized views, refreshed by <code>make db-maintenance</code>.
+            Every figure on this page is as of that last refresh, not as of the last
+            linker run.
+        </p>
     </details>
 
     <script type="module">
@@ -132,6 +180,12 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
 
         function fmtMillions(n) {
             return (n / 1_000_000).toFixed(1) + "M";
+        }
+
+        function escapeHTML(s) {
+            const div = document.createElement("div");
+            div.textContent = s;
+            return div.innerHTML;
         }
 
         function setStat(id, value) {
@@ -192,6 +246,171 @@ SELECT count(*) FROM moml_citations.citations_unlinked;</code></pre>
             setStatWithPct("stat-linked-cap", d.LinkedCAP, pctOfLinked);
             setStatWithPct("stat-linked-er", d.LinkedEnglishReports, pctOfLinked);
             setStatWithPct("stat-linked-code", d.LinkedCodeReporter, pctOfLinked, fmt);
+
+            // Match tier tables. The gloss covers the whole tier vocabulary in
+            // go/citations/linker.go, not only the tiers a given run produced, so a
+            // tier that appears for the first time still arrives with a label.
+            const TIER_GLOSS = {
+                us_reporter_absent: "no probed spelling of the reporter appears in any US source",
+                us_diffvols_missing: "the reporter renumbers in CAP, but no diffvols row covers this volume",
+                us_volume_absent: "reporter present, this volume never appears",
+                us_volume_missing: "reporter present, but the citation carries no volume to look up",
+                us_page_absent: "reporter and volume present, no case begins on or spans this page",
+                us_page_ambiguous: "the page falls in a span, but several cases begin on that span's first page",
+                us_page_gap: "the page falls past the end of the preceding case, in a hole in CAP's coverage",
+                uk_reporter_absent: "the reporter does not appear in the English Reports index",
+                uk_volume_absent: "reporter present, this volume never appears",
+                uk_volume_missing: "reporter present, but the citation carries no volume to look up",
+                uk_page_absent: "reporter and volume present, no case begins on or spans this page",
+                uk_page_ambiguous: "the cite, or the span covering it, belongs to more than one case",
+                uk_page_gap: "the page falls past the end of the preceding case, in a hole in the corpus",
+                cap_direct: "matched a first-page cite in cap.citations",
+                cap_freelaw: "matched through the FreeLaw crosswalk",
+                cap_alt_spelling: "matched cap.citations under an alternate spelling",
+                cap_freelaw_alt_spelling: "matched the FreeLaw crosswalk under an alternate spelling",
+                cap_page_interior: "matched inside a case's page range — a pin cite",
+                code_direct: "matched a code reporter entry",
+                code_alt_spelling: "matched a code reporter entry under an alternate spelling",
+                er_direct: "matched an English Reports case",
+                er_page_interior: "matched inside an English Reports case's page range — a pin cite",
+            };
+
+            const STATUS_ORDER = [
+                "linked_cap", "linked_english_reports", "linked_code_reporter",
+                "no_match", "skipped_statute", "unprocessed",
+            ];
+
+            function statusRank(s) {
+                const i = STATUS_ORDER.indexOf(s);
+                return i === -1 ? STATUS_ORDER.length : i;
+            }
+
+            function renderTierTable(tiers) {
+                const container = document.getElementById("tier-container");
+                if (!tiers || tiers.length === 0) {
+                    container.innerHTML = '<div class="text-secondary small">No tier data available. ' +
+                        'Run <code>make db-maintenance</code> to refresh the materialized views.</div>';
+                    return;
+                }
+
+                const sorted = tiers.slice().sort((a, b) => {
+                    const r = statusRank(a.status) - statusRank(b.status);
+                    return r !== 0 ? r : b.n - a.n;
+                });
+
+                const table = document.createElement("table");
+                table.className = "table table-sm tier-table align-middle";
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>What it means</th>
+                            <th class="num">Citations</th>
+                            <th class="num">% of status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+                const tbody = table.querySelector("tbody");
+
+                let currentStatus = null;
+                for (const t of sorted) {
+                    if (t.status !== currentStatus) {
+                        currentStatus = t.status;
+                        const total = sorted
+                            .filter(x => x.status === currentStatus)
+                            .reduce((sum, x) => sum + x.n, 0);
+                        const head = document.createElement("tr");
+                        head.className = "status-row";
+                        head.innerHTML =
+                            `<td colspan="2"><code>${escapeHTML(t.status)}</code></td>` +
+                            `<td class="num">${total.toLocaleString()}</td><td></td>`;
+                        tbody.append(head);
+                    }
+                    const tr = document.createElement("tr");
+                    const tier = t.tier || "";
+                    const gloss = tier ? (TIER_GLOSS[tier] || "") : "no tier: the citation was never probed";
+                    tr.innerHTML =
+                        `<td>${tier ? `<code>${escapeHTML(tier)}</code>` : '<span class="text-secondary">&mdash;</span>'}</td>` +
+                        `<td class="tier-gloss">${escapeHTML(gloss)}</td>` +
+                        `<td class="num">${t.n.toLocaleString()}</td>` +
+                        `<td class="num">${t.pctOfStatus.toFixed(2)}%</td>`;
+                    tbody.append(tr);
+                }
+
+                container.innerHTML = "";
+                container.append(table);
+            }
+
+            const REPORTER_TIER_LIMIT = 40;
+
+            function renderReporterTierTable(reporterTiers) {
+                const container = document.getElementById("reporter-tier-container");
+                if (!reporterTiers || reporterTiers.length === 0) {
+                    container.innerHTML = '<div class="text-secondary small">No reporter tier data available. ' +
+                        'Run <code>make db-maintenance</code> to refresh the materialized views.</div>';
+                    return;
+                }
+
+                const shown = reporterTiers.slice(0, REPORTER_TIER_LIMIT);
+
+                // Columns are the tiers that actually occur among the shown
+                // reporters, heaviest first, so the table is only as wide as the data.
+                const columnTotals = new Map();
+                for (const r of shown) {
+                    for (const [tier, n] of Object.entries(r.tiers)) {
+                        columnTotals.set(tier, (columnTotals.get(tier) || 0) + n);
+                    }
+                }
+                const columns = [...columnTotals.keys()].sort((a, b) => columnTotals.get(b) - columnTotals.get(a));
+
+                const table = document.createElement("table");
+                table.className = "table table-sm table-bordered tier-table align-middle mb-1";
+                const head = columns.map(c =>
+                    `<th class="num" title="${escapeHTML(TIER_GLOSS[c] || c)}"><code>${escapeHTML(c)}</code></th>`).join("");
+                table.innerHTML = `
+                    <thead>
+                        <tr><th>Reporter</th><th class="num">No match</th>${head}</tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+                const tbody = table.querySelector("tbody");
+
+                for (const r of shown) {
+                    const cells = columns.map(c => {
+                        const n = r.tiers[c] || 0;
+                        if (n === 0) return '<td class="num text-secondary">&middot;</td>';
+                        const pct = n / r.noMatch * 100;
+                        // Shade by share so a reporter's dominant failure reads at a glance.
+                        const alpha = (0.08 + 0.55 * (pct / 100)).toFixed(3);
+                        return `<td class="num" style="background:rgba(220,53,69,${alpha})" ` +
+                            `title="${n.toLocaleString()} citations">${Math.round(pct)}%</td>`;
+                    }).join("");
+                    const tr = document.createElement("tr");
+                    tr.innerHTML =
+                        `<td><a class="reporter-link" href="/reporters/check?r=${encodeURIComponent(r.reporter)}">` +
+                        `${escapeHTML(r.reporter)}</a></td>` +
+                        `<td class="num">${r.noMatch.toLocaleString()}</td>${cells}`;
+                    tbody.append(tr);
+                }
+
+                const wrap = document.createElement("div");
+                wrap.className = "tier-scroll";
+                wrap.append(table);
+
+                container.innerHTML = "";
+                container.append(wrap);
+                if (reporterTiers.length > shown.length) {
+                    const note = document.createElement("div");
+                    note.className = "small text-secondary";
+                    note.textContent =
+                        `Showing the ${shown.length} reporters with the largest no_match pools, of ${reporterTiers.length}.`;
+                    container.append(note);
+                }
+            }
+
+            renderTierTable(d.Tiers);
+            renderReporterTierTable(d.ReporterTiers);
 
             // Build stacked bar chart
             const categories = [

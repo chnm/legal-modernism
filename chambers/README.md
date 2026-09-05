@@ -33,7 +33,7 @@ Single-binary Go web server using `net/http` (no external router), `html/templat
 | `GET /cite` | `handleCiteLookup` | `cite-lookup.html` | UUID input form |
 | `GET /cite?id={uuid}` | `handleCiteLookup` | `detail.html` | Full citation detail page |
 | `GET /reporters` | `handleReporters` | `reporters.html` | List all standard reporters |
-| `GET /reporters/check?r={name}` | `handleReporterCites` | `reporter-cites.html` | Color-coded citations for a reporter |
+| `GET /reporters/check?r={name}[&tier={tier}]` | `handleReporterCites` | `reporter-cites.html` | Color-coded citations for a reporter, optionally narrowed to one match tier |
 | `GET /static/...` | `http.FileServer` | — | Embedded static files (portrait image) |
 
 ### Templates and static files
@@ -69,7 +69,15 @@ The `moml.page` and `moml.page_ocrtext` joins must include `psmid` (treatise ID)
 
 **`getReporterVariants`** — All `reporter_found` abbreviations for a given `reporter_standard`.
 
-**`getCitesForReporter`** — Up to 10,000 raw citations whose `reporter_abbr` maps to a given `reporter_standard` via the whitelist, with linking status. Ordered by `cu.id` to get a mix of variants (not alphabetical, which would cluster one variant before the LIMIT).
+**`getCitesForReporter`** — Up to 10,000 raw citations whose `reporter_abbr` maps to a given `reporter_standard` via the whitelist, with linking status and match tier. Ordered by `cu.id` to get a mix of variants (not alphabetical, which would cluster one variant before the LIMIT). An optional tier argument narrows the result to the citations whose linking ended in that tier, so a failure mode can be read rather than only counted.
+
+**`getReporterTierCounts`** — One reporter's citations grouped by status and match tier, read from `moml_citations.linking_dashboard_tiers`. Drives the tier filter bar on the reporter page; because it comes from the matview rather than the query above, its counts cover the reporter's whole pool and can exceed the 10,000 citations the page displays.
+
+**`getDashboardData`** — Everything `/linking-dashboard` shows, assembled from four materialized views. `linking_dashboard_summary` gives the corpus totals per status and is required; the other three are read through `loadReporterStats`, `getTierSummary`, and `getReporterTiers` and are optional — a failure in any of them logs a warning and leaves that section empty rather than failing the request, because a view a migration has just recreated stays unpopulated until the next `make db-maintenance` and errors when queried.
+
+**`getTierSummary`** — The corpus-wide `status` × `match_tier` breakdown from the `linking_tier_summary` view, with each tier's share of its status. The view aggregates `linking_dashboard_tiers`, which joins the whitelist, so it covers exactly the citations the linker probes — `linked_*`, `no_match`, `skipped_statute`, and unprocessed — and omits `skipped_junk` and `skipped_not_whitelisted`, which are turned away before any target is consulted.
+
+**`getReporterTiers`** — Every reporter's `no_match` pool broken down by failure tier, pivoted in Go into one row per reporter so the dashboard can show the shape of a reporter's failures rather than only their total.
 
 ### CitationDetail methods
 
@@ -86,6 +94,8 @@ Maps linking status to CSS classes for color-coded display:
 - `status-nomatch` (red) — `no_match`
 - `status-skip` (blue) — `skipped_junk` or `skipped_statute`
 - `status-unprocessed` (yellow) — nil status or unknown
+
+`ReporterCite.TierLabel` returns the citation's `match_tier` for the chip's tooltip, or an em dash for the statuses that never reach a probe and so carry no tier.
 
 ## Adding a new page
 

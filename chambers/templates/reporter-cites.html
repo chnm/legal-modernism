@@ -9,6 +9,13 @@
         .status-nomatch { background: #f8d7da; color: #721c24; }
         .status-skip { background: #cce5ff; color: #004085; }
         .status-unprocessed { background: #fff3cd; color: #856404; }
+        .tier-filter { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.75rem; }
+        .tier-filter a { font-size: 0.78rem; padding: 0.15rem 0.45rem; border-radius: 3px; text-decoration: none;
+                         border: 1px solid #dee2e6; color: #495057; background: #fff; white-space: nowrap; }
+        .tier-filter a:hover { background: #f1f3f5; }
+        .tier-filter a.active { background: #495057; border-color: #495057; color: #fff; }
+        .tier-filter .count { color: #adb5bd; margin-left: 0.25rem; }
+        .tier-filter a.active .count { color: #ced4da; }
 {{end}}
 
 {{define "nav"}}
@@ -35,20 +42,46 @@
         processed by the linker. Click any citation to see its full detail page.
     </p>
     <details class="small my-2">
-        <summary class="text-secondary">Show SQL query</summary>
-        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.id, cu.raw, cl.status
+        <summary class="text-secondary">Show SQL queries</summary>
+        <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT cu.id, cu.raw, cl.status, cl.match_tier
 FROM moml_citations.citations_unlinked cu
 JOIN legalhist.whitelist wl
   ON cu.reporter_abbr = wl.reporter_found
 LEFT JOIN moml_citations.citation_links cl
   ON cl.citation_id = cu.id
 WHERE wl.reporter_standard = '{{.Reporter}}'
+  AND ('{{.Tier}}' = '' OR cl.match_tier = '{{.Tier}}')
 ORDER BY cu.id
-LIMIT 10000</code></pre>
+LIMIT 10000;
+
+SELECT COALESCE(status, 'unprocessed'), COALESCE(match_tier, ''), n
+FROM moml_citations.linking_dashboard_tiers
+WHERE reporter_standard = '{{.Reporter}}'
+ORDER BY n DESC;</code></pre>
     </details>
 
     <p class="text-secondary small">Variants: {{range $i, $v := .Variants}}{{if $i}}, {{end}}<code>{{$v}}</code>{{end}}</p>
-    <p class="text-secondary small">Showing {{len .Cites}} citations</p>
+
+    {{if .Tiers}}
+    <p class="small text-secondary mb-1">
+        Filter by match tier &mdash; how far the linker got with each citation. Counts are
+        for the reporter's whole pool, from <code>moml_citations.linking_dashboard_tiers</code>,
+        so they can exceed the 10,000 citations shown below.
+    </p>
+    <div class="tier-filter">
+        <a href="/reporters/check?r={{.Reporter}}"{{if not .Tier}} class="active"{{end}}>All</a>
+        {{range .Tiers}}
+            {{if .Tier}}
+        <a href="/reporters/check?r={{$.Reporter}}&amp;tier={{.Tier}}"{{if eq $.Tier .Tier}} class="active"{{end}}
+           title="{{.Status}}"><code>{{.Tier}}</code><span class="count">{{.N}}</span></a>
+            {{end}}
+        {{end}}
+    </div>
+    {{end}}
+
+    <p class="text-secondary small">
+        Showing {{len .Cites}} citations{{if .Tier}} in tier <code>{{.Tier}}</code>{{end}}
+    </p>
     <div class="d-flex gap-2 mb-2 small text-secondary">
         <span class="status-linked cite">linked</span>
         <span class="status-nomatch cite">no match</span>
@@ -57,7 +90,7 @@ LIMIT 10000</code></pre>
     </div>
     <div class="cites">
     {{range .Cites}}
-        <span class="cite {{.StatusClass}}"><a href="/cite?id={{.ID}}">{{.Raw}}</a></span>
+        <span class="cite {{.StatusClass}}" title="{{.TierLabel}}"><a href="/cite?id={{.ID}}">{{.Raw}}</a></span>
     {{end}}
     </div>
 {{end}}
