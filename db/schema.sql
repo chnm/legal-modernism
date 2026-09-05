@@ -1423,7 +1423,7 @@ CREATE MATERIALIZED VIEW moml_citations.linking_dashboard_reporters AS
      JOIN legalhist.whitelist wl ON ((cu.reporter_abbr = wl.reporter_found)))
      JOIN legalhist.reporters r ON ((r.reporter_standard = wl.reporter_standard)))
      LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
-  WHERE ((wl.reporter_standard IS NOT NULL) AND (wl.junk = false))
+  WHERE ((wl.reporter_standard IS NOT NULL) AND (wl.junk = false) AND (COALESCE(r.type, ''::text) <> 'statute'::text))
   GROUP BY wl.reporter_standard
   WITH NO DATA;
 
@@ -2604,4 +2604,11 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260729133619'),
     ('20260729191037'),
     ('20260729212710'),
-    ('20260904202221');
+    ('20260904202221'),
+    ('20260905120000'),
+    ('20260905120100'),
+    ('20260905120200'),
+    ('20260905120300'),
+    ('20260905120400'),
+    ('20260905120500'),
+    ('20260905120600');
