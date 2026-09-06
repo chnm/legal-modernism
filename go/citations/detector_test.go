@@ -114,12 +114,12 @@ func TestSingleVolDetector_Detect(t *testing.T) {
 			expected:     []string{"Cheves Eq. 12"},
 		},
 		{
-			// \w* lets the "Toth" abbreviation reach the longer form
-			// "Tothill", which is recorded as "Tothill" rather than "Toth" so
-			// that the whitelist decides where it belongs.
+			// "Toth" is four characters, below stemMinAbbrLen, so it does not
+			// reach the longer form "Tothill" -- the registered "Tothill"
+			// abbreviation below does that instead (issue #283).
 			name:         "Toth",
 			abbreviation: `Toth`,
-			expected:     []string{"Toth. 234", "Tothill 876", "Toth. 125", "Toth 462"},
+			expected:     []string{"Toth. 234", "Toth. 125", "Toth 462"},
 		},
 		{
 			name:         "Tothill",
@@ -389,25 +389,26 @@ func TestSingleVolDetector_RawPreservesOCR(t *testing.T) {
 // whitelist: "Ala." routes to the Alabama reporter, "Alienation" and "Alimony"
 // are not whitelisted and are skipped. The over-capture becomes a volume
 // problem rather than an accuracy problem.
+// TestSingleVolDetector_StemRecordsMatchedWord checks that an abbreviation long
+// enough to carry the stem still reaches the longer form of its own word, and
+// records the word that matched rather than the reporter the detector was built
+// from. "Baldw" is five characters, so it keeps the stem and reaches "Baldwin".
 func TestSingleVolDetector_StemRecordsMatchedWord(t *testing.T) {
 	tests := []struct {
 		text         string
 		expectedAbbr string
 		expectedPage int
 	}{
-		// Stemmed matches: recorded as the longer word, not as "Al".
-		{"the law of Alienation, 118 is settled", "Alienation", 118},
-		{"see Ala., 672 for the rule", "Ala.", 672},
-		{"compare Allen, 2 with the later cases", "Allen", 2},
-		{"questions of Alimony 122 aside", "Alimony", 122},
-		{"discussed in Alexander, 3 at length", "Alexander", 3},
+		// Stemmed matches: recorded as the longer word, not as "Baldw".
+		{"the federal view in Baldwin, 125 was different", "Baldwin", 125},
+		{"reported at Baldwins 7 in the older printing", "Baldwins", 7},
 		// Exact matches still record the abbreviation itself.
-		{"see Al. 17 for the rule", "Al.", 17},
-		{"see Al 17 for the rule", "Al", 17},
-		{"see Al, 17 for the rule", "Al", 17},
+		{"see Baldw. 125 for the rule", "Baldw.", 125},
+		{"see Baldw 125 for the rule", "Baldw", 125},
+		{"see Baldw, 125 for the rule", "Baldw", 125},
 	}
 
-	d := NewSingleVolDetector("Al", "Al")
+	d := NewSingleVolDetector("Baldw.", "Baldw")
 	for _, tt := range tests {
 		t.Run(tt.text, func(t *testing.T) {
 			doc := sources.NewDoc("test-stem", tt.text)
@@ -416,6 +417,72 @@ func TestSingleVolDetector_StemRecordsMatchedWord(t *testing.T) {
 			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr,
 				"ReporterAbbr should be the word that matched, not the reporter")
 			assert.Equal(t, tt.expectedPage, cites[0].Page)
+		})
+	}
+}
+
+// TestSingleVolDetector_ShortAbbrDoesNotStem covers issue #283. A short
+// abbreviation is a prefix of far too many ordinary words to carry the stem
+// safely: "Al" reached "Alienation", "Ala.", "Allen" and "Alexander", which is
+// most of the surname tail in skipped_not_whitelisted. Measured over the corpus
+// the stem produced 1,466,414 rows no alternate list knows and 130 links, and
+// both of those links came from three-character abbreviations, so nothing that
+// links is lost here.
+func TestSingleVolDetector_ShortAbbrDoesNotStem(t *testing.T) {
+	d := NewSingleVolDetector("Al", "Al")
+
+	for _, text := range []string{
+		"the law of Alienation, 118 is settled",
+		"see Ala., 672 for the rule",
+		"compare Allen, 2 with the later cases",
+		"questions of Alimony 122 aside",
+		"discussed in Alexander, 3 at length",
+	} {
+		t.Run(text, func(t *testing.T) {
+			assert.Empty(t, d.Detect(sources.NewDoc("test-short-stem", text)),
+				"a short abbreviation must not absorb the rest of a word")
+		})
+	}
+
+	// The gate removes the stem, not the abbreviation: the exact forms, with
+	// their optional trailing period or comma separator, still match.
+	exact := []struct {
+		text         string
+		expectedAbbr string
+	}{
+		{"see Al. 17 for the rule", "Al."},
+		{"see Al 17 for the rule", "Al"},
+		{"see Al, 17 for the rule", "Al"},
+	}
+	for _, tt := range exact {
+		t.Run(tt.text, func(t *testing.T) {
+			cites := d.Detect(sources.NewDoc("test-short-stem", tt.text))
+			require.Len(t, cites, 1)
+			assert.Equal(t, tt.expectedAbbr, cites[0].ReporterAbbr)
+			assert.Equal(t, 17, cites[0].Page)
+		})
+	}
+}
+
+// TestAbbrCoreLen pins down the length the stem gate is applied to: whitespace
+// and periods do not count, because flexAbbr makes them optional anyway.
+func TestAbbrCoreLen(t *testing.T) {
+	tests := []struct {
+		abbr string
+		want int
+	}{
+		{"Al", 2},
+		{"Bur.", 3},
+		{"Toth", 4},
+		{"Baldw", 5},
+		{"Ch. Cas.", 5},
+		{"M & M", 3},
+		{"Busb. Eq. Rep.", 9},
+		{"Bail Eq (SC)", 10},
+	}
+	for _, tt := range tests {
+		t.Run(tt.abbr, func(t *testing.T) {
+			assert.Equal(t, tt.want, abbrCoreLen(tt.abbr))
 		})
 	}
 }
@@ -537,49 +604,66 @@ func TestSingleVolDetector_SpacingVariants(t *testing.T) {
 // The test exists so the junk whitelist rows cannot silently become dead weight:
 // if abbrChar is ever tightened to require a letter, these detections stop
 // happening and this test fails, which is the signal to drop those rows.
+// TestDetector_NoLetterAbbrs covers issue #283. abbrChar admits whitespace,
+// periods, commas, ampersands and parentheses and requires no letter, so the
+// pattern matches the leader dots between two numbers in a table of contents.
+// Those used to be saved with the leader as the reporter -- 1,135,636 rows,
+// every one of them skipped_junk at link time -- and are now rejected. Until
+// this change the same rows were dealt with downstream, by migration
+// 20260729191037 junking 5,856 letterless spellings in legalhist.whitelist.
 func TestDetector_NoLetterAbbrs(t *testing.T) {
 	tests := []struct {
-		name         string
-		text         string
-		expectedAbbr string
+		name string
+		text string
+		// wasRecordedAs is the abbreviation this text used to be saved under,
+		// kept to document what each fixture exercises.
+		wasRecordedAs string
 	}{
 		{
-			name:         "leader dots in a table of contents",
-			text:         "Of the nature of contracts . . . 12 . . . 456\n",
-			expectedAbbr: ". . .",
+			name:          "leader dots in a table of contents",
+			text:          "Of the nature of contracts . . . 12 . . . 456\n",
+			wasRecordedAs: ". . .",
 		},
 		{
-			name:         "unspaced leader dots in an index",
-			text:         "Index entry 7 ......... 231\n",
-			expectedAbbr: ".........",
+			name:          "unspaced leader dots in an index",
+			text:          "Index entry 7 ......... 231\n",
+			wasRecordedAs: ".........",
 		},
 		{
-			name:         "a column of numbers separated only by whitespace",
-			text:         "Table row 5     88\n",
-			expectedAbbr: "",
+			name:          "a column of numbers separated only by whitespace",
+			text:          "Table row 5     88\n",
+			wasRecordedAs: "",
 		},
 		{
-			name:         "stray commas and periods",
-			text:         "Another 9 , . , 44\n",
-			expectedAbbr: ", .",
+			name:          "stray commas and periods",
+			text:          "Another 9 , . , 44\n",
+			wasRecordedAs: ", .",
 		},
 		{
-			name:         "empty parentheses",
-			text:         "Paren 4 ( ) 22\n",
-			expectedAbbr: "( )",
+			name:          "empty parentheses",
+			text:          "Paren 4 ( ) 22\n",
+			wasRecordedAs: "( )",
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			doc := sources.NewDoc("test-no-letter", tt.text)
-			var got []string
 			for _, c := range GenericDetector.Detect(doc) {
-				if !strings.ContainsFunc(c.ReporterAbbr, unicode.IsLetter) {
-					got = append(got, c.ReporterAbbr)
-				}
+				assert.True(t, strings.ContainsFunc(c.ReporterAbbr, unicode.IsLetter),
+					"detected %q under the letterless abbreviation %q", c.Raw, c.ReporterAbbr)
 			}
-			require.Len(t, got, 1, "expected exactly one letterless detection")
-			assert.Equal(t, tt.expectedAbbr, got[0])
 		})
 	}
+}
+
+// TestDetector_NoLetterAbbrsKeepsRealCitations checks that the letterless guard
+// rejects only the leader, not a real citation sharing the line with one.
+func TestDetector_NoLetterAbbrsKeepsRealCitations(t *testing.T) {
+	doc := sources.NewDoc("test-no-letter-mixed",
+		"Of the nature of contracts . . . 12 . . . 456, and see 43 Md. 295 as well.\n")
+	var got []string
+	for _, c := range GenericDetector.Detect(doc) {
+		got = append(got, c.CleanCite())
+	}
+	assert.Equal(t, []string{"43 Md. 295"}, got)
 }

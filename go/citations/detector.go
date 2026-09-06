@@ -4,6 +4,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/google/uuid"
 	"github.com/lmullen/legal-modernism/go/sources"
@@ -36,6 +37,37 @@ func NewDetector(reporter string, abbreviation string) *Detector {
 	return detector
 }
 
+// stemMinAbbrLen is the shortest abbreviation, counted without its whitespace
+// and periods, that may carry the \w* stem. The stem lets an abbreviation reach
+// a longer form of the same word, but a short abbreviation is a prefix of far
+// too many ordinary words to do that safely: "Jac" reaches "Jackson", "Al"
+// reaches "Ala." and "Alexander", "Coop" reaches "Cooper".
+//
+// Measured over the corpus, the stem produced 1,466,414 rows whose spelling no
+// alternate list knows and exactly 130 links, and both of those links came from
+// three-character abbreviations. Requiring five characters drops 1,312,136 of
+// those rows (89%) and costs the same 130 links as removing the stem outright,
+// while leaving the long abbreviations it was written for untouched. The long
+// forms of short abbreviations are reached instead by registering them in
+// legalhist.reporters_abbreviations, which is what
+// db/queries/single-vol-uncovered-spellings.sql finds (issue #283).
+const stemMinAbbrLen = 5
+
+// abbrCoreLen counts the characters of an abbreviation that are neither
+// whitespace nor a period, so that "Ch. Cas." and "ChCas" are the same length.
+// Those are exactly the characters flexAbbr makes optional, so they say nothing
+// about how distinctive the abbreviation is.
+func abbrCoreLen(abbreviation string) int {
+	n := 0
+	for _, r := range abbreviation {
+		if r == '.' || unicode.IsSpace(r) {
+			continue
+		}
+		n++
+	}
+	return n
+}
+
 // NewSingleVolDetector creates a new citation detector and initializes its
 // regular expression. The detector will not look for a volume number
 func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
@@ -45,17 +77,24 @@ func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
 	// (which QuoteMeta leaves alone) with [\s.]* to match variant forms:
 	// e.g. "M & M" matches "M&M.", "M. & M.", etc.
 	flexAbbr := strings.ReplaceAll(regexp.QuoteMeta(abbreviation), " ", `[\s.]*`)
+	// The stem is applied only to abbreviations long enough to carry it; see
+	// stemMinAbbrLen.
+	stem := `\w*`
+	if abbrCoreLen(abbreviation) < stemMinAbbrLen {
+		stem = ``
+	}
 	detector := &Detector{
 		Reporter:     reporter,
 		Abbreviation: abbreviation,
 		initial:      nil,
 		// \b keeps the abbreviation from matching mid-word: without it "Bur"
 		// matches inside "McBur".
-		// \w* allows alternate long forms (e.g. Tothill matching Toth). It
-		// deliberately over-captures -- "Al" also matches "Alienation" and
-		// "Ala." -- because the abbreviation recorded below is the word that
-		// actually matched, which the whitelist then routes to the right
-		// reporter or rejects outright.
+		// The stem allows alternate long forms (e.g. Tothill matching Toth),
+		// recording the word that actually matched so the whitelist routes it
+		// to the right reporter or rejects it outright. It over-captures by
+		// design, which is why it is carried only by abbreviations of
+		// stemMinAbbrLen characters or more; on a short one it reaches far more
+		// ordinary words than reporters.
 		// [.,]* allows optional period/comma separators before the page number.
 		//
 		// Nothing here looks at what precedes the abbreviation, so on its own
@@ -65,7 +104,7 @@ func NewSingleVolDetector(reporter string, abbreviation string) *Detector {
 		// volume would not see the longer-abbreviation case. RemoveShadows
 		// drops those matches afterwards by comparing spans across detectors
 		// (issue #267).
-		regex: regexp.MustCompile(`\b` + flexAbbr + `\w*[.,]*\s+\d{1,4}`),
+		regex: regexp.MustCompile(`\b` + flexAbbr + stem + `[.,]*\s+\d{1,4}`),
 	}
 	return detector
 }
@@ -123,7 +162,14 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 	// Now turn the matches into citations
 	var citations []*Citation
 	for _, span := range matches {
-		m := text[span[0]:span[1]]
+		raw := text[span[0]:span[1]]
+
+		// Normalize all whitespace down to a single space. This happens before
+		// anything is decided about the match, because the OCR text separates
+		// lines with "\n\t\t\t" and every test below assumes a single space:
+		// filtering on the unnormalized string let 271,407 case names split
+		// across a line break through (issue #283).
+		m := reSpace.ReplaceAllString(raw, " ")
 
 		// Filter out the citations which are in these formats
 		// 	6 Ex parte Wray, 30
@@ -135,13 +181,11 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 
 		c := &Citation{}
 		c.ID = uuid.New()
-		// Get the raw string and where it was found
-		c.Raw = m
+		// Get the raw string and where it was found. Raw is the text as it was
+		// scanned, not the normalized form the rest of this loop works on.
+		c.Raw = raw
 		c.Start = span[0]
 		c.End = span[1]
-
-		// Normalize all whitespace down to a single space
-		m = reSpace.ReplaceAllString(m, " ")
 
 		// Get the volume
 		vol := reVolume.FindString(m)
@@ -169,6 +213,15 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		abbr = strings.TrimPrefix(abbr, vol)
 		abbr = strings.TrimSuffix(abbr, pp)
 		abbr = strings.TrimRight(strings.TrimSpace(abbr), " ,")
+
+		// An abbreviation with no letter in it is not a reporter. abbrChar
+		// admits whitespace, periods, commas, ampersands and parentheses, so
+		// GenericDetector otherwise matches the leader dots between two numbers
+		// in a table of contents and records the leader as the reporter: 1.1M
+		// such rows, every one of them junk at link time (issue #283).
+		if !reHasLetter.MatchString(abbr) {
+			continue
+		}
 		c.ReporterAbbr = abbr
 
 		// Save the source

@@ -97,10 +97,12 @@ func TestRemoveShadows(t *testing.T) {
 			// Two detectors whose abbreviations are prefixes of one another
 			// match the same span. That is the same citation twice, not a
 			// shadow; the unique index on citations_unlinked collapses it.
+			// Both abbreviations have to reach stemMinAbbrLen for the shorter
+			// one to stem this far -- "Toth" no longer reaches "Tothill".
 			name:      "equal spans from two detectors are both kept",
-			text:      "See Tothill 876 for the early statement.",
-			detectors: []*Detector{NewSingleVolDetector("Toth", "Toth"), NewSingleVolDetector("Tothill", "Tothill")},
-			want:      []string{"Tothill 876", "Tothill 876"},
+			text:      "The federal view in Baldwin 125 was different.",
+			detectors: []*Detector{NewSingleVolDetector("Baldw.", "Baldw"), NewSingleVolDetector("Baldw.", "Baldwin")},
+			want:      []string{"Baldwin 125", "Baldwin 125"},
 		},
 		{
 			name:      "no citations",
