@@ -544,9 +544,14 @@ type DashboardData struct {
 	SkippedJunk           int
 	SkippedStatute        int
 	TotalRawCites         int
-	Reporters             []ReporterStats    `json:"Reporters,omitempty"`
-	Tiers                 []TierStat         `json:"Tiers,omitempty"`
-	ReporterTiers         []ReporterTierStat `json:"ReporterTiers,omitempty"`
+	// Unprocessed is the citations detected but not yet linked. It is normally
+	// zero; anything else means the linker has not finished, and every
+	// percentage on the dashboard is being computed over a partial run
+	// (issue #296).
+	Unprocessed   int
+	Reporters     []ReporterStats    `json:"Reporters,omitempty"`
+	Tiers         []TierStat         `json:"Tiers,omitempty"`
+	ReporterTiers []ReporterTierStat `json:"ReporterTiers,omitempty"`
 }
 
 // TotalLinked returns the sum of all linked statuses.
@@ -584,8 +589,9 @@ func loadReporterStats(ctx context.Context, db *pgxpool.Pool, d *DashboardData) 
 func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, error) {
 	d := &DashboardData{}
 
-	// Get summary metrics (total raw cites and per-status counts) from the
-	// precomputed materialized view. The view is refreshed by the cite-linker;
+	// Get summary metrics (total raw cites, per-status counts, and how many
+	// citations are not yet linked at all) from the precomputed materialized
+	// view. The view is refreshed by db/maintenance.sh, not by the linker;
 	// reading it here is a small indexed scan instead of aggregating the ~62M-row
 	// citations_unlinked and citation_links tables on every request.
 	slog.Debug("querying linking dashboard summary view")
@@ -619,6 +625,8 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 			d.SkippedJunk = n
 		case "skipped_statute":
 			d.SkippedStatute = n
+		case "unprocessed":
+			d.Unprocessed = n
 		}
 	}
 	if err := rows.Err(); err != nil {
@@ -650,6 +658,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		"skipped_junk", d.SkippedJunk,
 		"skipped_statute", d.SkippedStatute,
 		"total_raw_cites", d.TotalRawCites,
+		"unprocessed", d.Unprocessed,
 		"reporters", len(d.Reporters),
 		"tiers", len(d.Tiers),
 		"reporter_tiers", len(d.ReporterTiers),

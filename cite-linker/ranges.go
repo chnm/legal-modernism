@@ -100,6 +100,14 @@ func newRangeIndex[ID comparable](spans []citations.CaseSpan[ID]) *rangeIndex[ID
 			}
 			cur := list[i]
 			cur.shared = j > i
+			// A shared span stands for every case beginning on that page, so its
+			// length is the longest of theirs: any of them could be the one that
+			// runs furthest, and now that lookup tests the bound before shared,
+			// too short a bound would report a page inside one of those cases as
+			// a gap. A single unknown length (0) makes the group's length
+			// unknown rather than the maximum of the rest, so boundFor falls
+			// back to the distance to the next case.
+			cur.bound = groupLength(list[i : j+1])
 			cur.bound = boundFor(cur.bound, nextPage(list, j+1), cur.page)
 			out = append(out, cur)
 			i = j + 1
@@ -107,6 +115,22 @@ func newRangeIndex[ID comparable](spans []citations.CaseSpan[ID]) *rangeIndex[ID
 		byVolume[key] = out
 	}
 	return &rangeIndex[ID]{volumes: byVolume}
+}
+
+// groupLength is the recorded length of a run of cases that begin on the same
+// page: the longest of them, or 0 if any one of them has no recorded length,
+// since an unknown length among them makes the group's own extent unknown.
+func groupLength[ID comparable](group []span[ID]) int {
+	longest := 0
+	for _, s := range group {
+		if s.bound == 0 {
+			return 0
+		}
+		if s.bound > longest {
+			longest = s.bound
+		}
+	}
+	return longest
 }
 
 // nextPage returns the first page of the span at i, or 0 if i is past the end —
@@ -169,11 +193,18 @@ func (ix *rangeIndex[ID]) lookup(vol, reporter string, page int) (ID, rangeOutco
 		// nothing and let the reporter/volume tiers describe the miss.
 		return zero, rangeMiss
 	}
-	if s.shared {
-		return zero, rangeAmbiguous
-	}
+	// The bound is tested before shared. A page past the end of the last case
+	// that could cover it is in a hole in the corpus whether or not several
+	// cases began together back at the span's first page, and testing shared
+	// first reported every such page as an ambiguity. The two mean different
+	// things: an ambiguity is a page inside a case we cannot name, a gap is a
+	// page inside no case at all, and us_page_gap is the pool #249's
+	// OCR-correction work draws from (issue #290).
 	if page >= s.page+s.bound {
 		return zero, rangeGap
+	}
+	if s.shared {
+		return zero, rangeAmbiguous
 	}
 	return s.id, rangeHit
 }

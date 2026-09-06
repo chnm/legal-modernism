@@ -281,3 +281,65 @@ func TestRangeIndexEmpty(t *testing.T) {
 	assert.Zero(t, volumes)
 	assert.Zero(t, spans)
 }
+
+// TestRangeIndexSharedSpanReportsGapPastItsBound covers issue #290. lookup used
+// to test shared before the bound, so every page after a shared start page came
+// back ambiguous however far past the end of those cases it lay. The two say
+// different things: an ambiguity is a page inside a case we cannot name, a gap
+// is a page inside no case at all, and us_page_gap is the pool #249's
+// OCR-correction work draws from.
+func TestRangeIndexSharedSpanReportsGapPastItsBound(t *testing.T) {
+	ix := newRangeIndex([]citations.CaseSpan[int64]{
+		{Cite: "1 Test 10", ID: 101, Length: 5},
+		{Cite: "1 Test 10", ID: 102, Length: 8}, // two decisions begin on page 10
+		{Cite: "1 Test 40", ID: 400, Length: 5},
+	})
+
+	// Inside the longest of the two cases: unresolvable, but really inside one.
+	for _, page := range []int{11, 17} {
+		_, outcome := ix.lookup("1", "Test", page)
+		assert.Equal(t, rangeAmbiguous, outcome, "page %d is inside a case", page)
+	}
+
+	// Past the end of both, before the next case begins: a hole.
+	for _, page := range []int{18, 25, 39} {
+		_, outcome := ix.lookup("1", "Test", page)
+		assert.Equal(t, rangeGap, outcome, "page %d is past both cases", page)
+	}
+}
+
+// TestRangeIndexSharedSpanTakesLongestLength checks the other half of the same
+// change: a shared span stands for every case that begins on its page, so its
+// bound is the longest of theirs. Taking the first case's length instead would
+// report the interior pages of the longer case as a gap.
+func TestRangeIndexSharedSpanTakesLongestLength(t *testing.T) {
+	ix := newRangeIndex([]citations.CaseSpan[int64]{
+		{Cite: "1 Test 10", ID: 101, Length: 5}, // sorted first, and the shorter
+		{Cite: "1 Test 10", ID: 102, Length: 8},
+		{Cite: "1 Test 40", ID: 400, Length: 5},
+	})
+
+	_, outcome := ix.lookup("1", "Test", 16)
+	assert.Equal(t, rangeAmbiguous, outcome,
+		"page 16 is inside the 8-page case, so it is not a gap")
+}
+
+// TestRangeIndexSharedSpanUnknownLengthIsUnbounded checks that one case with no
+// recorded length makes the whole shared group's extent unknown, rather than the
+// group inheriting the maximum of the lengths that happen to be recorded. The
+// group then falls back to the distance to the next case, as any unbounded span
+// does.
+func TestRangeIndexSharedSpanUnknownLengthIsUnbounded(t *testing.T) {
+	ix := newRangeIndex([]citations.CaseSpan[int64]{
+		{Cite: "1 Test 10", ID: 101, Length: 0}, // no recorded page range
+		{Cite: "1 Test 10", ID: 102, Length: 8},
+		{Cite: "1 Test 30", ID: 300, Length: 5},
+	})
+
+	_, outcome := ix.lookup("1", "Test", 25)
+	assert.Equal(t, rangeAmbiguous, outcome,
+		"an unknown length among the group must not shrink the span to 8 pages")
+
+	_, outcome = ix.lookup("1", "Test", 31)
+	assert.Equal(t, rangeHit, outcome, "the next unshared case still resolves")
+}

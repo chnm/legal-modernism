@@ -25,6 +25,7 @@ func TestLinkCitation(t *testing.T) {
 	alaStd := "Ala."
 	aleynStd := "Al"
 	kebStd := "Keb"
+	amDecStd := "Am. Dec."
 
 	tests := []struct {
 		name         string
@@ -216,20 +217,22 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("5 U.S. 10"),
 		},
 		{
-			name:         "alt_abbr code-reporter hit recovers a no_match",
+			// Issue #292: the code reporter is no longer probed under alternate
+			// spellings. It never produced a link in the history of the table,
+			// and legalhist.code_reporter holds one New York series, so an
+			// alternate reporter spelling has nothing there to reach.
+			name:         "code reporter is not probed under an alternate spelling",
 			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
 			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:     map[string]int64{},
 			freelawCites: map[string]int64{},
 			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
 			codeCites:    map[string]int64{"2 Statx 30": 999},
-			wantStatus:   citations.StatusLinkedCodeReporter,
-			wantTier:     citations.TierCodeAltSpelling,
-			wantCodeID:   ptr(int64(999)),
-			wantLinked:   ptr("2 Statx 30"),
+			wantStatus:   citations.StatusNoMatch,
+			wantTier:     citations.TierUSReporterAbsent,
 		},
 		{
-			name:         "official code cite wins over alt code cite",
+			name:         "code reporter links on the cleaned cite",
 			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
 			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:     map[string]int64{},
@@ -242,31 +245,31 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("2 Stat. 30"),
 		},
 		{
-			// The new code-reporter alt probe runs inside the volumeForms loop:
-			// the detected form is exhausted across every source, alternates
-			// included, before the volume variant is tried.
-			name:       "alt code hit on the detected form wins over CAP hit on the variant",
+			// With the code alt-spelling probe gone (#292), the detected form no
+			// longer has a code hit to win with, so the volume variant's CAP hit
+			// takes the citation. The volumeForms ordering is unchanged: the
+			// detected form is still exhausted across every source that is
+			// probed before the variant is tried.
+			name:       "CAP hit on the volume variant now takes an unprobed alt code cite",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
 			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
 			capCites:   map[string]int64{"1 Toth 123": 777}, // variant form only
 			altAbbrs:   map[string][]string{"Toth": {"Tothill"}},
 			codeCites:  map[string]int64{"Tothill 123": 999}, // detected form, alt spelling
-			wantStatus: citations.StatusLinkedCodeReporter,
-			wantTier:   citations.TierCodeAltSpelling,
-			wantCodeID: ptr(int64(999)),
-			wantLinked: ptr("Tothill 123"),
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(777)),
+			wantLinked: ptr("1 Toth 123"),
 		},
 		{
-			name:       "nil-volume alt code hit",
+			name:       "nil-volume alt code cite is not probed",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Stat.", Page: 30},
 			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:   map[string]int64{},
 			altAbbrs:   map[string][]string{"Stat.": {"Stat"}},
 			codeCites:  map[string]int64{"Stat 30": 555},
-			wantStatus: citations.StatusLinkedCodeReporter,
-			wantTier:   citations.TierCodeAltSpelling,
-			wantCodeID: ptr(int64(555)),
-			wantLinked: ptr("Stat 30"),
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
 		},
 		{
 			// Regression test for #218/#226. The single-volume detector for
@@ -670,6 +673,65 @@ func TestLinkCitation(t *testing.T) {
 			// to case 111.
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSDiffVolsMissing,
+		},
+		{
+			// Issue #290. "Am. Dec." carries the alternate "A.D.", which is
+			// itself another reporter (issue #289). CAP holds a span index key
+			// for the alternate and none for the reporter itself, so before the
+			// fix the range probe reached into A.D.'s volume and returned a case
+			// from it as a cap_page_interior link. Alternates no longer reach
+			// the range index, so this is an honest miss.
+			name:      "alternate spelling is not range-probed",
+			cite:      citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 105},
+			whitelist: map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
+			altAbbrs:  map[string][]string{"Am. Dec.": {"A.D."}},
+			capSpans: []citations.CaseSpan[int64]{
+				{Cite: "10 A.D. 100", ID: 900, Length: 20},
+			},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
+		},
+		{
+			// The same split applied to the tier ladder: an alternate's reporter
+			// and volume are not this citation's, so they must not be counted as
+			// how far the cascade got. This was us_page_absent before the fix,
+			// which claimed CAP holds volume 10 of Am. Dec. when what it holds is
+			// volume 10 of A.D.
+			name:       "tier does not credit an alternate spelling's reporter",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 999},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
+			altAbbrs:   map[string][]string{"Am. Dec.": {"A.D."}},
+			capCites:   map[string]int64{"10 A.D. 100": 900},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
+		},
+		{
+			// The alternates are still probed against the exact maps, which is
+			// the whole point of keeping them: only containment and the tier
+			// ladder were withdrawn.
+			name:       "alternate spelling still links on an exact hit",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
+			altAbbrs:   map[string][]string{"Am. Dec.": {"A.D."}},
+			capCites:   map[string]int64{"10 A.D. 100": 900},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPAltSpelling,
+			wantCAPID:  ptr(int64(900)),
+			wantLinked: ptr("10 A.D. 100"),
+		},
+		{
+			// A page-interior link under the citation's own reporter is
+			// unaffected.
+			name:      "canonical form still range-probes",
+			cite:      citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 105},
+			whitelist: map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
+			altAbbrs:  map[string][]string{"Am. Dec.": {"A.D."}},
+			capSpans: []citations.CaseSpan[int64]{
+				{Cite: "10 Am. Dec. 100", ID: 901, Length: 20},
+			},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPPageInterior,
+			wantCAPID:  ptr(int64(901)),
 		},
 	}
 

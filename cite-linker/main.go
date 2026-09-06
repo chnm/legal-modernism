@@ -53,11 +53,9 @@ func exitStartupError(msg string, err error, attrs ...any) {
 }
 
 func main() {
-	var reset bool
 	var batchSize int
 	var workers int
 	var lockTimeout time.Duration
-	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk, skipped_statute) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
 	flag.DurationVar(&lockTimeout, "lock-timeout", time.Minute, "give up on a statement that waits this long for a database lock, instead of blocking forever behind an uncommitted transaction; 0 disables")
@@ -116,19 +114,13 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Handle --reset: delete every non-linked row (no_match,
-	// skipped_not_whitelisted, skipped_junk, skipped_statute) so they are
-	// re-processed by this run. Only linked_* rows are preserved. Done before
-	// everything else so the linking below sees the post-reset state.
-	if reset {
-		slog.Info("resetting unresolved citation links", "statuses", citations.UnresolvedStatuses)
-		deleted, err := store.ResetUnlinked(ctx)
-		if err != nil {
-			exitStartupError("reset failed", err, "deleted", deleted)
-		}
-		slog.Info("reset complete", "deleted", deleted)
-	}
-
+	// There is no --reset. Re-deriving existing rows means TRUNCATE
+	// moml_citations.citation_links from psql and then running this program
+	// unchanged: a full rebuild takes about ten minutes, and the anti-join in
+	// StreamUnprocessedCitations then resumes from wherever a previous job
+	// stopped. A --reset flag could only ever delete the non-linked rows, so it
+	// could not clear a stale link at all, and because it deleted at startup a
+	// job that hit the wall time restarted from scratch (issue #294).
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
 
 	// Pre-load lookup tables into memory
@@ -481,8 +473,7 @@ func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkR
 
 // linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
 // (which also resolves to a CAP case), then both again under alternate reporter
-// spellings, then the Code Reporter (standard form, then alternates), all using
-// in-memory maps. The alternate spellings probe per map, not per alt: CAP is
+// spellings, then the Code Reporter, all using in-memory maps. The alternate spellings probe per map, not per alt: CAP is
 // exhausted across every alternate before FreeLaw is consulted, because the
 // source ranking is meaningful (CAP's own citation index over the FreeLaw
 // cluster crosswalk, matching the direct-probe order) while the position of an
@@ -499,12 +490,39 @@ func linkCAPThenCode(
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeNormalized
 
-	// Every cite string probed below, in order, so a no_match can be attributed to
-	// the tier the cascade actually reached rather than to a second, drifting
-	// reimplementation of which forms get tried. The capacity covers the common
-	// case (one volume form, cleaned plus normalized, a couple of alternates)
-	// without reallocating.
-	probes := make([]string, 0, 8)
+	// The cite strings built from this citation's own reporter, in the order they
+	// are probed, so a no_match can be attributed to the tier the cascade
+	// actually reached rather than to a second, drifting reimplementation of
+	// which forms get tried.
+	//
+	// Alternate spellings are deliberately NOT collected here, though they are
+	// probed against the exact maps below. Two reasons, and either alone is
+	// enough (issue #290):
+	//
+	// buildAltCites bypasses buildCAPCite's reporter_cap and diffvols handling,
+	// because an alternate is the other source's own spelling and remapping its
+	// volume would be wrong. That makes an alternate's volume number
+	// untranslated, which is harmless for an exact probe -- a miss costs
+	// nothing -- but not for containment, for exactly the reason diffvolsMissing
+	// already suppresses range matching: the wrong volume of the right reporter
+	// is densely populated, so containment would confidently return a case from
+	// it.
+	//
+	// And an alternate may not name this reporter at all. 76 rows in
+	// legalhist.reporters_abbreviations carry an alt_abbr that is itself another
+	// reporter's reporter_standard (issue #289), so a probe under one asks the
+	// index about a different reporter. Feeding those to the range index turned
+	// them into links: CAP holds no official or nominative cite under "Am. Dec.",
+	// "P." or "Paine", so the span index has no key for them at all, and every
+	// one of their 281,132 cap_page_interior links came from an alternate. The
+	// same probes reaching citeIndex made the failure tiers claim a reporter and
+	// volume that belong to some other reporter.
+	//
+	// Keeping the alternates out also makes a page-interior link auditable
+	// after the fact, which it was not: CiteLinked is nil on those rows, but the
+	// link can now only have come from cite_cleaned or cite_normalized, and both
+	// are recorded.
+	probes := make([]string, 0, 4)
 
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
@@ -542,7 +560,6 @@ func linkCAPThenCode(
 		// against CAP first, then all of them against FreeLaw. A hit links to the
 		// CAP case (status linked_cap).
 		altCites := buildAltCites(f, t.altAbbrs[*entry.ReporterStandard])
-		probes = append(probes, altCites...)
 		for i := range altCites {
 			if caseID, ok := t.capCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCAP
@@ -562,22 +579,17 @@ func linkCAPThenCode(
 			}
 		}
 
-		// Try Code Reporter with the cleaned cite, then the alternate spellings
+		// Try Code Reporter with the cleaned cite. There is deliberately no
+		// alternate-spelling probe here: it never produced a link in the whole
+		// history of the table, and legalhist.code_reporter holds 633 rows of
+		// one New York series, so an alternate reporter spelling has nothing to
+		// reach (issue #292).
 		if codeID, ok := t.codeCites[cleaned]; ok {
 			result.Status = citations.StatusLinkedCodeReporter
 			result.MatchTier = citations.TierCodeDirect
 			result.CodeReporterID = &codeID
 			result.CiteLinked = &cleaned
 			return result
-		}
-		for i := range altCites {
-			if codeID, ok := t.codeCites[altCites[i]]; ok {
-				result.Status = citations.StatusLinkedCodeReporter
-				result.MatchTier = citations.TierCodeAltSpelling
-				result.CodeReporterID = &codeID
-				result.CiteLinked = &altCites[i]
-				return result
-			}
 		}
 	}
 
