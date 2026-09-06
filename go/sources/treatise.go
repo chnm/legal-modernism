@@ -35,10 +35,10 @@ func (t *TreatisePage) HasParent() bool {
 	return true
 }
 
-// CorrectOCR takes a set of OCR mistakes to be corrected via substitution and
-// and fixes them in the document.
-func (t *TreatisePage) CorrectOCR(subs []*OCRSubstitution) {
-	t.FullText = fixOCRSubstitutions(t.FullText, subs)
+// CorrectOCR applies the OCR corrections to the page in a single pass. A nil
+// replacer leaves the text alone.
+func (t *TreatisePage) CorrectOCR(r *OCRReplacer) {
+	t.FullText = r.Replace(t.FullText)
 }
 
 // NewTreatisePage creates a new treatise document

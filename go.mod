@@ -5,7 +5,6 @@ go 1.25.0
 require (
 	github.com/agnivade/levenshtein v1.2.1
 	github.com/air-verse/air v1.64.5
-	github.com/gammazero/workerpool v1.2.1
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/schollz/progressbar/v3 v3.19.0
@@ -26,7 +25,6 @@ require (
 	github.com/ebitengine/purego v0.9.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
-	github.com/gammazero/deque v1.2.1 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gohugoio/hashstructure v0.6.0 // indirect

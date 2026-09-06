@@ -6,9 +6,11 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+	"sync"
+	"sync/atomic"
 	"syscall"
 
-	"github.com/gammazero/workerpool"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	"github.com/lmullen/legal-modernism/go/sources"
@@ -17,21 +19,20 @@ import (
 )
 
 func main() {
-	showProgress := flag.Bool("progress", false, "show a progress bar")
+	showProgress := flag.Bool("progress", false, "show a progress bar (costs one count of moml.page_ocrtext at startup)")
+	workers := flag.Int("workers", runtime.NumCPU(), "number of concurrent page workers (each uses one DB connection for its insert)")
 	flag.Parse()
 
-	slog.Info("starting the citation detector")
-
-	// Create the worker pool
-	// The bottleneck is the database, so running more jobs than the CPU should
-	// be fine, even preferrable
-	cpuAvail := runtime.NumCPU()
-	cpu := cpuAvail * 2
-	if cpu < 1 {
-		slog.Error("invalid number of CPUs", "available", cpuAvail, "using", cpu)
+	if *workers < 1 {
+		*workers = 1
 	}
-	slog.Info("CPUs", "available", cpuAvail, "using", cpu)
-	wp := workerpool.New(cpu)
+
+	slog.Info("starting the citation detector")
+	// The detector once ran twice as many workers as CPUs on the grounds that it
+	// waited on the database. It no longer does: the pages arrive from one
+	// streaming read and each page's citations are written in a single batch, so
+	// the work in a worker is the regex scan, which is CPU-bound.
+	slog.Info("CPUs", "available", runtime.NumCPU(), "workers", *workers)
 
 	// Create a context and listen for signals to gracefully shutdown the application
 	ctx, cancel := context.WithCancel(context.Background())
@@ -48,13 +49,18 @@ func main() {
 		case <-quit:
 			slog.Info("quitting because shutdown signal received")
 			cancel()
-			// wp.Stop()
 		case <-ctx.Done():
 		}
 	}()
 
 	slog.Info("connecting to database", "database", db.Host())
-	pool, err := db.Connect(ctx)
+	// Size the pool to the workers plus one dedicated connection for the
+	// long-lived streaming read, with a small margin, as cite-linker does.
+	// Without this the default pool could starve either the reader or the
+	// workers.
+	pool, err := db.ConnectPool(ctx, func(c *pgxpool.Config) {
+		c.MaxConns = int32(*workers + 2)
+	})
 	if err != nil {
 		slog.Error("could not connect to database", "database", db.Host(), "error", err)
 		os.Exit(1)
@@ -98,71 +104,127 @@ func main() {
 	}
 	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
 
+	// Both loaders below are fatal. Continuing without the OCR corrections
+	// would detect the whole corpus under different semantics than every
+	// previous run, and continuing without the pages would leave nothing to do --
+	// the stream would be empty and the run would log "done detecting citations"
+	// and exit 0 after producing nothing (issue #285).
 	slog.Info("getting OCR corrections")
 	ocrSubs, err := sourcesDB.GetOCRSubstitutions(ctx)
 	if err != nil {
 		slog.Error("error getting OCR substitutions", "error", err)
+		os.Exit(1)
 	}
-
-	slog.Info("getting all treatise/page IDs")
-	pageIDs, err := sourcesDB.GetAllTreatisePageIDs(ctx)
-	if err != nil {
-		slog.Error("error getting treatise/page IDs", "error", err)
-	}
-	slog.Info("found pages", "num_pages", len(pageIDs))
+	slog.Info("loaded OCR corrections", "num_corrections", len(ocrSubs))
+	// Built once and shared by every worker: the replacer is read-only, and
+	// rebuilding it per page would repeat the sort 10.5M times.
+	ocrReplacer := sources.NewOCRReplacer(ocrSubs)
 
 	var pb *progressbar.ProgressBar
 	if *showProgress {
-		pb = progressbar.Default(int64(len(pageIDs)))
+		total, err := sourcesDB.CountTreatisePages(ctx)
+		if err != nil {
+			slog.Error("error counting treatise pages", "error", err)
+			os.Exit(1)
+		}
+		pb = progressbar.Default(total)
 	}
 
-	slog.Info("detecting citations on the treatise pages")
+	// Bounded pipeline, the same shape cite-linker uses. One streaming reader
+	// (this goroutine, inside StreamTreatisePages) feeds pages to a fixed pool
+	// of workers through a bounded channel. The channel capacity bounds how many
+	// pages are in flight, so the reader blocks -- applying backpressure -- when
+	// the workers fall behind, instead of buffering the 25 GB corpus in memory.
+	pageCh := make(chan *sources.TreatisePage, *workers)
+	var wg sync.WaitGroup
+	var processed, failedPages, savedCites atomic.Int64
 
-	for _, pageID := range pageIDs {
-		select {
-		case <-ctx.Done():
-			return
-		default:
-			id := pageID
-			wp.Submit(func() {
+	slog.Info("detecting citations on the treatise pages", "workers", *workers)
+
+	for i := 0; i < *workers; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for page := range pageCh {
 				select {
 				case <-ctx.Done():
-					return
+					continue // drain the channel without doing work
 				default:
-					// Do the actual work for each treatise page
-					page, err := sourcesDB.GetTreatisePage(ctx, id.TreatiseID, id.PageID)
-					if err != nil {
-						slog.Error("could not fetch page from database", "treatise_id", id.TreatiseID, "page_id", id.PageID, "error", err)
-						return
-					}
-					page.CorrectOCR(ocrSubs)
-
-					// Run every detector over the page before saving anything,
-					// so that a single-volume match found inside a longer
-					// citation can be recognized as a shadow of it and dropped.
-					var found []*citations.Citation
-					for _, detector := range detectors {
-						found = append(found, detector.Detect(page)...)
-					}
-					kept := citations.RemoveShadows(found)
-					if len(kept) < len(found) {
-						slog.Debug("dropped shadow citations", "treatise_id", id.TreatiseID, "page_id", id.PageID, "dropped", len(found)-len(kept))
-					}
-					for _, cite := range kept {
-						err = citationsDB.SaveCitation(ctx, cite)
-						if err != nil {
-							slog.Error("could not save citation", "citation", cite, "error", err)
-						}
-					}
 				}
+
+				page.CorrectOCR(ocrReplacer)
+
+				// Run every detector over the page before saving anything, so
+				// that a single-volume match found inside a longer citation can
+				// be recognized as a shadow of it and dropped.
+				var found []*citations.Citation
+				for _, detector := range detectors {
+					found = append(found, detector.Detect(page)...)
+				}
+				kept := citations.RemoveShadows(found)
+				if len(kept) < len(found) {
+					slog.Debug("dropped shadow citations", "treatise_id", page.ParentID(), "page_id", page.ID(), "dropped", len(found)-len(kept))
+				}
+
+				// One insert per page rather than one per citation. Duplicate
+				// spans -- which RemoveShadows deliberately keeps, because two
+				// abbreviations that are prefixes of one another find the same
+				// citation -- are collapsed by SaveCitations on the key of the
+				// citations_unlinked_uq unique index before the write.
+				if err := citationsDB.SaveCitations(ctx, kept); err != nil {
+					if ctx.Err() != nil {
+						slog.Warn("page not saved because of shutdown", "treatise_id", page.ParentID(), "page_id", page.ID())
+						continue
+					}
+					failedPages.Add(1)
+					slog.Error("could not save citations for page", "treatise_id", page.ParentID(), "page_id", page.ID(), "citations", len(kept), "error", err)
+					continue
+				}
+				savedCites.Add(int64(len(kept)))
+				processed.Add(1)
 				if pb != nil {
 					pb.Add(1)
 				}
-			})
-		}
+			}
+		}()
 	}
 
-	wp.StopWait()
-	slog.Info("done detecting citations")
+	streamErr := sourcesDB.StreamTreatisePages(ctx, func(page *sources.TreatisePage) error {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case pageCh <- page:
+			return nil
+		}
+	})
+	close(pageCh)
+	wg.Wait()
 
+	// A shutdown signal cancels ctx, which surfaces as an error from whichever
+	// query was in flight, so it has to be checked before streamErr: the run was
+	// interrupted, not broken. Committed pages are saved, and re-processing is
+	// idempotent thanks to ON CONFLICT DO NOTHING, so the run is simply
+	// resubmitted.
+	if ctx.Err() != nil {
+		slog.Warn("interrupted before finishing; committed work is saved, resubmit to resume",
+			"pages_processed", processed.Load(), "citations_saved", savedCites.Load())
+		os.Exit(1)
+	}
+
+	if streamErr != nil {
+		slog.Error("streaming treatise pages failed", "pages_processed", processed.Load(), "error", streamErr)
+		os.Exit(1)
+	}
+
+	// A page whose insert failed is left undetected rather than lost, but the
+	// run must not report success -- swallowing that would turn a visible
+	// failure into a silently partial corpus.
+	if n := failedPages.Load(); n > 0 {
+		slog.Error("finished with unsaved pages; re-run to pick them up",
+			"pages_processed", processed.Load(), "failed_pages", n, "citations_saved", savedCites.Load())
+		os.Exit(1)
+	}
+
+	slog.Info("done detecting citations",
+		"pages_processed", processed.Load(), "citations_saved", savedCites.Load())
 }
