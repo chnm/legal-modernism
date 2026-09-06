@@ -481,8 +481,7 @@ func linkCitation(c *citations.UnlinkedCitation, t *linkTables) *citations.LinkR
 
 // linkCAPThenCode tries CAP first, then the FreeLaw parallel-citation crosswalk
 // (which also resolves to a CAP case), then both again under alternate reporter
-// spellings, then the Code Reporter (standard form, then alternates), all using
-// in-memory maps. The alternate spellings probe per map, not per alt: CAP is
+// spellings, then the Code Reporter, all using in-memory maps. The alternate spellings probe per map, not per alt: CAP is
 // exhausted across every alternate before FreeLaw is consulted, because the
 // source ranking is meaningful (CAP's own citation index over the FreeLaw
 // cluster crosswalk, matching the direct-probe order) while the position of an
@@ -588,22 +587,17 @@ func linkCAPThenCode(
 			}
 		}
 
-		// Try Code Reporter with the cleaned cite, then the alternate spellings
+		// Try Code Reporter with the cleaned cite. There is deliberately no
+		// alternate-spelling probe here: it never produced a link in the whole
+		// history of the table, and legalhist.code_reporter holds 633 rows of
+		// one New York series, so an alternate reporter spelling has nothing to
+		// reach (issue #292).
 		if codeID, ok := t.codeCites[cleaned]; ok {
 			result.Status = citations.StatusLinkedCodeReporter
 			result.MatchTier = citations.TierCodeDirect
 			result.CodeReporterID = &codeID
 			result.CiteLinked = &cleaned
 			return result
-		}
-		for i := range altCites {
-			if codeID, ok := t.codeCites[altCites[i]]; ok {
-				result.Status = citations.StatusLinkedCodeReporter
-				result.MatchTier = citations.TierCodeAltSpelling
-				result.CodeReporterID = &codeID
-				result.CiteLinked = &altCites[i]
-				return result
-			}
 		}
 	}
 

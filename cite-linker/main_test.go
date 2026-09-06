@@ -217,20 +217,22 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("5 U.S. 10"),
 		},
 		{
-			name:         "alt_abbr code-reporter hit recovers a no_match",
+			// Issue #292: the code reporter is no longer probed under alternate
+			// spellings. It never produced a link in the history of the table,
+			// and legalhist.code_reporter holds one New York series, so an
+			// alternate reporter spelling has nothing there to reach.
+			name:         "code reporter is not probed under an alternate spelling",
 			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
 			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:     map[string]int64{},
 			freelawCites: map[string]int64{},
 			altAbbrs:     map[string][]string{"Stat.": {"Statx"}},
 			codeCites:    map[string]int64{"2 Statx 30": 999},
-			wantStatus:   citations.StatusLinkedCodeReporter,
-			wantTier:     citations.TierCodeAltSpelling,
-			wantCodeID:   ptr(int64(999)),
-			wantLinked:   ptr("2 Statx 30"),
+			wantStatus:   citations.StatusNoMatch,
+			wantTier:     citations.TierUSReporterAbsent,
 		},
 		{
-			name:         "official code cite wins over alt code cite",
+			name:         "code reporter links on the cleaned cite",
 			cite:         citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
 			whitelist:    map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:     map[string]int64{},
@@ -243,31 +245,31 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked:   ptr("2 Stat. 30"),
 		},
 		{
-			// The new code-reporter alt probe runs inside the volumeForms loop:
-			// the detected form is exhausted across every source, alternates
-			// included, before the volume variant is tried.
-			name:       "alt code hit on the detected form wins over CAP hit on the variant",
+			// With the code alt-spelling probe gone (#292), the detected form no
+			// longer has a code hit to win with, so the volume variant's CAP hit
+			// takes the citation. The volumeForms ordering is unchanged: the
+			// detected form is still exhausted across every source that is
+			// probed before the variant is tried.
+			name:       "CAP hit on the volume variant now takes an unprobed alt code cite",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
 			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
 			capCites:   map[string]int64{"1 Toth 123": 777}, // variant form only
 			altAbbrs:   map[string][]string{"Toth": {"Tothill"}},
 			codeCites:  map[string]int64{"Tothill 123": 999}, // detected form, alt spelling
-			wantStatus: citations.StatusLinkedCodeReporter,
-			wantTier:   citations.TierCodeAltSpelling,
-			wantCodeID: ptr(int64(999)),
-			wantLinked: ptr("Tothill 123"),
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(777)),
+			wantLinked: ptr("1 Toth 123"),
 		},
 		{
-			name:       "nil-volume alt code hit",
+			name:       "nil-volume alt code cite is not probed",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Stat.", Page: 30},
 			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			capCites:   map[string]int64{},
 			altAbbrs:   map[string][]string{"Stat.": {"Stat"}},
 			codeCites:  map[string]int64{"Stat 30": 555},
-			wantStatus: citations.StatusLinkedCodeReporter,
-			wantTier:   citations.TierCodeAltSpelling,
-			wantCodeID: ptr(int64(555)),
-			wantLinked: ptr("Stat 30"),
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
 		},
 		{
 			// Regression test for #218/#226. The single-volume detector for

@@ -160,7 +160,6 @@ const (
 	TierCAPFreelawAltSpelling = "cap_freelaw_alt_spelling" // freelaw.cite_to_cap, under an alternate
 	TierCAPPageInterior       = "cap_page_interior"        // cap.citations page range, pin cite to an interior page
 	TierCodeDirect            = "code_direct"              // legalhist.code_reporter, under the cleaned cite
-	TierCodeAltSpelling       = "code_alt_spelling"        // legalhist.code_reporter, under an alternate
 	TierERDirect              = "er_direct"                // english_reports.cases
 	TierERPageInterior        = "er_page_interior"         // english_reports.cases page range, pin cite to an interior page
 )

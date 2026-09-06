@@ -57,12 +57,26 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	return whitelist, nil
 }
 
+// GetDiffVols loads the volume mapping for reporters whose volumes are numbered
+// differently in CAP.
+//
+// A row with a NULL vol is a single-volume reporter mapped wholesale onto one
+// CAP volume -- "Bail. Eq." is volume 8 of "S.C. Eq." -- and there are 18 of
+// them, 17 for reporters flagged single_vol. Dropping those rows was wrong in
+// both directions: the mapping was unavailable, so every probe carried the
+// untranslated volume, while GetReporterWhitelist's cap_different is a bare
+// EXISTS over the same table and still saw the row, which put the reporter on
+// the diffvols path and made diffvolsMissing suppress range matching too
+// (issue #292).
+//
+// They are loaded under volume 1, which is the form volumeForms already probes
+// for a single-volume reporter beside the bare one, so the translated cite is
+// reached without any special case in the cascade.
 func (s *LinkerDBStore) GetDiffVols(ctx context.Context) (map[string]map[int]*DiffVolEntry, error) {
 	query := `
-	SELECT reporter_standard, vol, cap_vol, cap_reporter
+	SELECT reporter_standard, COALESCE(vol, 1) AS vol, cap_vol, cap_reporter
 	FROM legalhist.reporters_diffvols
 	WHERE reporter_standard IS NOT NULL
-	  AND vol IS NOT NULL
 	  AND cap_vol IS NOT NULL
 	`
 	rows, err := s.DB.Query(ctx, query)
@@ -250,7 +264,10 @@ func (s *LinkerDBStore) LoadReporterAltAbbrs(ctx context.Context) (map[string][]
 // citation -> id, keyed by both official_citation and the individual
 // parallel_citation entries. parallel_citation is a "; "-separated list
 // ("4 Sandf. 21; 6 N.Y. Super. Ct. 21"), so it is split on semicolons, with a
-// trailing parenthetical year ("1 Code Rep. 91 (1848)") stripped. Commas are
+// trailing parenthetical year ("1 Code Rep. 91 (1848)") stripped.
+// official_citation is trimmed for the same reason the segments are: four rows
+// carry a trailing space ("2 Code Rep. 4 ", "3 Code Rep. 21 " three times), and
+// an untrimmed key can never equal a probe string (issue #292). Commas are
 // NOT split on: reporter names legitimately contain them ("Cox, Manual
 // Trade-Mark Cas. 51"), so the few comma-joined pairs inside one segment stay
 // as harmless keys no probe string will ever match. As with the CAP map, a
@@ -261,7 +278,7 @@ func (s *LinkerDBStore) LoadCodeReporterCitations(ctx context.Context) (map[stri
 	query := `
 	SELECT cite, min(id) AS id
 	FROM (
-		SELECT official_citation AS cite, id FROM legalhist.code_reporter
+		SELECT btrim(official_citation) AS cite, id FROM legalhist.code_reporter
 		UNION ALL
 		SELECT regexp_replace(trim(seg), '\s*\(\d{4}\)$', ''), id
 		FROM legalhist.code_reporter,
