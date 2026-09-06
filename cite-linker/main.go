@@ -499,12 +499,39 @@ func linkCAPThenCode(
 	result.CiteCleaned = &citeCleaned
 	result.CiteNormalized = &citeNormalized
 
-	// Every cite string probed below, in order, so a no_match can be attributed to
-	// the tier the cascade actually reached rather than to a second, drifting
-	// reimplementation of which forms get tried. The capacity covers the common
-	// case (one volume form, cleaned plus normalized, a couple of alternates)
-	// without reallocating.
-	probes := make([]string, 0, 8)
+	// The cite strings built from this citation's own reporter, in the order they
+	// are probed, so a no_match can be attributed to the tier the cascade
+	// actually reached rather than to a second, drifting reimplementation of
+	// which forms get tried.
+	//
+	// Alternate spellings are deliberately NOT collected here, though they are
+	// probed against the exact maps below. Two reasons, and either alone is
+	// enough (issue #290):
+	//
+	// buildAltCites bypasses buildCAPCite's reporter_cap and diffvols handling,
+	// because an alternate is the other source's own spelling and remapping its
+	// volume would be wrong. That makes an alternate's volume number
+	// untranslated, which is harmless for an exact probe -- a miss costs
+	// nothing -- but not for containment, for exactly the reason diffvolsMissing
+	// already suppresses range matching: the wrong volume of the right reporter
+	// is densely populated, so containment would confidently return a case from
+	// it.
+	//
+	// And an alternate may not name this reporter at all. 76 rows in
+	// legalhist.reporters_abbreviations carry an alt_abbr that is itself another
+	// reporter's reporter_standard (issue #289), so a probe under one asks the
+	// index about a different reporter. Feeding those to the range index turned
+	// them into links: CAP holds no official or nominative cite under "Am. Dec.",
+	// "P." or "Paine", so the span index has no key for them at all, and every
+	// one of their 281,132 cap_page_interior links came from an alternate. The
+	// same probes reaching citeIndex made the failure tiers claim a reporter and
+	// volume that belong to some other reporter.
+	//
+	// Keeping the alternates out also makes a page-interior link auditable
+	// after the fact, which it was not: CiteLinked is nil on those rows, but the
+	// link can now only have come from cite_cleaned or cite_normalized, and both
+	// are recorded.
+	probes := make([]string, 0, 4)
 
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
@@ -542,7 +569,6 @@ func linkCAPThenCode(
 		// against CAP first, then all of them against FreeLaw. A hit links to the
 		// CAP case (status linked_cap).
 		altCites := buildAltCites(f, t.altAbbrs[*entry.ReporterStandard])
-		probes = append(probes, altCites...)
 		for i := range altCites {
 			if caseID, ok := t.capCites[altCites[i]]; ok {
 				result.Status = citations.StatusLinkedCAP
