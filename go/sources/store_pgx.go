@@ -82,6 +82,53 @@ func (p *PgxStore) GetAllTreatisePageIDs(ctx context.Context) ([]*TreatisePage, 
 	return pages, nil
 }
 
+// StreamTreatisePages reads every treatise page, text included, in a single
+// pass and hands each one to fn.
+//
+// This replaces fetching all 10.5M page IDs into a slice and then issuing one
+// GetTreatisePage query per page: two round trips per page, and about 1.3 GB of
+// resident memory for the IDs alone. One streaming read costs neither.
+//
+// The query holds a single connection and a consistent snapshot open for the
+// duration of the stream, so pages added while it runs are not seen. Callers
+// MUST apply backpressure inside fn -- the corpus is read as fast as fn accepts
+// pages, and it does not fit in memory.
+func (p *PgxStore) StreamTreatisePages(ctx context.Context, fn func(*TreatisePage) error) error {
+	query := `SELECT psmid, pageid, ocrtext FROM moml.page_ocrtext;`
+
+	rows, err := p.DB.Query(ctx, query)
+	if err != nil {
+		return fmt.Errorf("streaming treatise pages: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var docID, pageID, ocrText string
+		if err := rows.Scan(&docID, &pageID, &ocrText); err != nil {
+			return fmt.Errorf("scanning treatise page: %w", err)
+		}
+		if err := fn(NewTreatisePage(pageID, docID, ocrText)); err != nil {
+			return err
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("iterating treatise pages: %w", err)
+	}
+	return nil
+}
+
+// CountTreatisePages returns how many pages StreamTreatisePages will deliver.
+// It exists only so that --progress can show a total; the detector does not need
+// it otherwise, and it costs a full scan of moml.page_ocrtext.
+func (p *PgxStore) CountTreatisePages(ctx context.Context) (int64, error) {
+	var n int64
+	err := p.DB.QueryRow(ctx, `SELECT count(*) FROM moml.page_ocrtext;`).Scan(&n)
+	if err != nil {
+		return 0, fmt.Errorf("counting treatise pages: %w", err)
+	}
+	return n, nil
+}
+
 // GetOCRSubstitutions gets a complete list of OCR substitutions from the
 // database, longest mistake first.
 //
