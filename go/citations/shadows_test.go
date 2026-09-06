@@ -9,8 +9,9 @@ import (
 )
 
 // TestDetect_RecordsSpan checks that every detector reports where in the text
-// each citation was found, for both matching strategies (the windowed one the
-// generic detectors use and the plain FindAll the single-volume detectors use).
+// each citation was found, for both matching strategies (the anchored match at
+// each starting place that the generic detectors use, and the plain FindAll the
+// single-volume detectors use).
 // The text has a multi-byte character ahead of the citations so that the
 // offsets are exercised as byte offsets, which is what slicing a Go string
 // needs, rather than rune offsets.
