@@ -1,0 +1,1064 @@
+# Every (reporter_standard, spelling) pair cite-detector-moml builds a
+# single-volume detector from, snapshotted read-only from the live database on
+# 2026-09-06 with the query in DBStore.GetSingleVolReporterAbbrs. Tab separated:
+# reporter_standard, then the spelling the detector is built from.
+#
+# The prefilter tests run the real abbreviations, not invented ones, because the
+# literal gate has to hold for the shapes the corpus actually contains --
+# parentheses, ampersands, embedded periods, one-character segments. Refresh it
+# when legalhist.reporters or reporters_abbreviations changes; nothing outside
+# the tests reads this file.
+Al	Al
+Al	Al (Eng)
+Al	Aleyn
+Al	Al (KB)
+Amb	Amb
+Amb	Amb (CH)
+Amb	Amb (Eng)
+Amb	Ambl.
+Amb	Ambler
+Andr	And.
+Andr	Andr
+Andr	Andr (Eng)
+Andr	Andrew
+Andr	Andrews
+Andr	Andr (KB)
+Bail. Eq.	Bai.Eq.
+Bail. Eq.	Bail Eq
+Bail. Eq.	Bail. Eq.
+Bail. Eq.	Bail Eq (SC)
+Bail. Eq.	Bail.Eq.(S.C.)
+Bail. Eq.	Bailey
+Bail. Eq.	Bailey Ch.
+Bail. Eq.	Bailey Eq.
+Bail. Eq.	S.C.Eq.(Bail.Eq.)
+Baldw.	Bald.
+Baldw.	Bald.C.C.
+Baldw.	Baldw
+Baldw.	Baldw.
+Baldw.	Baldw (US)
+Bar N	Bar N
+Bar N	Bar N (CP)
+Bar N	Bar N (Eng)
+Bar N	Barnes
+Bar N	Barnes N.C.
+Bar N	Barnes Notes
+Bar N	Barn.No.
+Barn C	Bar.
+Barn C	Bar.Ch.
+Barn C	Bar.Chy.
+Barn C	Barn.
+Barn C	Barnard.Ch.
+Barn C	Barnard.Ch.Rep.
+Barn C	Barnardiston C.C.
+Barn C	Barn C
+Barn C	Barn C (CH)
+Barn C	Barn C (Eng)
+Barn C	Barn.Ch.
+Barn KB	Barnard.
+Barn KB	Barnard.K.B.
+Barn KB	Barn KB
+Barn KB	Barn. K. B.
+Barn KB	Barn KB (Eng)
+Barn KB	Barn KB (KB)
+Bel	Bel
+Bel	Bel (Eng)
+Bel	Bel (KB)
+Bel	Bell.
+Bel	Bell.Cas.t.Rich.II
+Bel	Bell.Cas.t.R.II
+Bel	Bellewe
+Bel	Bellewe's Ca.temp.R.II
+Bel	Bellewe's Ca.t.R.II
+Bell	Bell
+Bell	Bell C. C.
+Bell	Bell C.C.
+Bell	Bell (CR)
+Bell	Bell Cr.C.
+Bell	Bell Cr.Ca.
+Bell	Bell Cr.Cas.
+Bell	Bell (Eng)
+Bel	Y.B.Rich.II
+Ben & D	B.& D.
+Ben & D	Ben & D
+Ben & D	Ben.& Dal.
+Ben & D	Ben & D (CP)
+Ben & D	Ben & D (Eng)
+Ben & D	Benl.
+Ben & D	Benl.& Dal.
+Ben & D	Benl.Old
+Ben & D	Dal.
+Ben & D	Dal.C.P.
+Ben & D	Dalison
+Benl	Ben.
+Benl	Bendl.
+Benl	Bendloe
+Benl	Ben.in Keil.
+Benl	Benl
+Benl	Benl (Eng)
+Benl	Benl.in Keil.
+Benl	Benl (KB)
+Benl	Benl.K.B.
+Benl	Benl.New
+Benl	Benloe
+Bridg J	Bridg.
+Bridg J	Bridg J
+Bridg J	Bridg J (CP)
+Bridg J	Bridg J (Eng)
+Bridg J	J.Bridg.
+Bridg J	J.Bridgm.
+Bridg O	Ban.Br.
+Bridg O	Bridg O
+Bridg O	Bridg O (CP)
+Bridg O	Bridg O (Eng)
+Bridg O	O.Bridg.
+Bridg O	Orl.Bridg.
+Br & Lush	B.& L.
+Br & Lush	Br.& L.
+Br & Lush	Br & Lush
+Br & Lush	Br & Lush (AD)
+Br & Lush	Br & Lush (Eng)
+Br & Lush	Bro.& L.
+Br & Lush	Bro.& Lush.
+Br & Lush	Brown.& L.
+Br & Lush	Brown.& Lush.
+Brooke	B.N.C.
+Brooke	Br.N.C.
+Brooke	Br.N.Cas.
+Brooke	Brooke
+Brooke	Brooke (Eng)
+Brooke	Brooke (KB)
+Brooke	Brooke N.C.
+Brooke	Brooke(Petit)
+Brooke	Lit.Brooke
+Brooke	Little Brooke
+Brooke	Mar.Br.
+Brooke	March
+Brooke	March(N.C.)
+Bunb	Bunb
+Bunb	Bunb (Eng)
+Bunb	Bunb (EX)
+Bunb	Bunbury
+Bur.	Bur
+Bur.	Bur.
+Bur.	Burnet
+Bur.	Burnett
+Bur.	Burnett (Wis.)
+Bur.	Bur (WI)
+Burrell	Burr.Adm.
+Burrell	Burrcll
+Burrell	Burrell
+Burrell	Burrell (AD)
+Burrell	Burrell (Eng)
+Busb.	Bus.
+Busb.	Busb
+Busb.	Busb.
+Busb.	Busbee
+Busb.	Busb.L.
+Busb.	Busb (NC)
+Busb. Eq.	Busbee Eq.(N.C.)
+Busb. Eq.	Busb Eq
+Busb. Eq.	Busb. Eq.
+Busb. Eq.	Busb Eq (NC)
+Busb. Eq.	N.C.(Busb.Eq.)
+Busb.	N.C.(Busb.)
+Calth	Cal.
+Calth	Calth
+Calth	Calth (Eng)
+Calth	Calth (KB)
+Calth	Calthr.
+Calth	Calthrop
+Cam. & Nor.	Cam.& N.
+Cam. & Nor.	Cam & Nor
+Cam. & Nor.	Cam. & Nor.
+Cam. & Nor.	Cam & Nor (NC)
+Cam. & Nor.	N.C.(Cam.& Nor.)
+Cam. & Nor.	N.C.Conf.
+Cam. & Nor.	N.C.Conf.Rep.
+Car & M	Car & M
+Car & M	Car.& Mar.
+Car & M	Car & M (Eng)
+Car & M	Car & M (NP)
+Car & M	Carr. & M.
+Car & M	Carr.& M.
+Car & M	C. & M.
+Car & M	C.& M.
+Car & M	C. & Mar.
+Car & M	C.& Mar.
+Car & M	C. & Marsh.
+Car & M	C.& Marsh.
+Cart	Cart
+Cart	Cart (CP)
+Cart	Cart (Eng)
+Cart	Carter
+Carth	Cart.
+Carth	Carth
+Carth	Carth (Eng)
+Carth	Carthew
+Carth	Carth (KB)
+Cart	Rep.t.O.Br.
+Cary	Cary
+Cary	Cary (CH)
+Cary	Cary (Eng)
+Cas T H	B.R.H.
+Cas T H	Cas T H
+Cas T H	Cas.t.Hard.
+Cas T H	Cas. T. Hard.
+Cas T H	Cas.t.Hardw.
+Cas T H	Cas T H (Eng)
+Cas T H	Cas T H (KB)
+Cas T H	Lee & H.
+Cas T H	Lee.t.Hard.
+Cas T H	Lee.t.Hardw.
+Cas T H	R.t.H.
+Cas T H	R.t.Hardw.
+Cas T Talbot	Cas.F.T.
+Cas T Talbot	Cas.temp.Talb.
+Cas T Talbot	Cas.t.Tal.
+Cas T Talbot	Cas.t.Talb.
+Cas T Talbot	Cas T Talbot
+Cas T Talbot	Cas T Talbot (CH)
+Cas T Talbot	Cas T Talbot (Eng)
+Cas T Talbot	Ca.t.Talb.
+Cas T Talbot	Rep.t.Talb.
+Cas T Talbot	Tal.
+Cas T Talbot	Talb.
+Charlton	Charl.R.M.
+Charlton	Charlton
+Charlton	Charlton (R.M.)
+Charlton	Charlt.R.M.
+Chev.	Chev
+Chev.	Chev.
+Chev.	Cheves
+Chev.	Cheves L.(S.C.)
+Chev.	Chev (SC)
+Chev. Eq.	Chev.Ch.
+Chev. Eq.	Chev Eq
+Chev. Eq.	Chev. Eq.
+Chev. Eq.	Chev Eq (SC)
+Chev. Eq.	Cheves Eq.(S.C.)
+Chev. Eq.	S.C.Eq.(Chev.Eq.)
+Chev.	S.C.L.(Chev.)
+Choyce Cases	C.C.C.
+Choyce Cases	Ch.Cas.Ch.
+Choyce Cases	Ch.Cas.in Ch.
+Choyce Cases	Cho.Ca.Ca.
+Choyce Cases	Choyce Cas.
+Choyce Cases	Choyce Cas.Ch.
+Choyce Cases	Choyce Cases
+Choyce Cases	Choyce Cases (CH)
+Choyce Cases	Choyce Cases (Eng)
+Colles	Coil.
+Colles	Coll.
+Colles	Colles
+Colles	Colles (Eng)
+Colles	Colles (HL)
+Colles	Colles P.C.
+Colles	Coll.P.C.
+Comb	Com.
+Comb	Comb
+Comb	Comb (Eng)
+Comb	Comberbach
+Comb	Comb (KB)
+Comst.	Coms.
+Comst.	Comst
+Comst.	Comst.
+Comst.	Comst (NY)
+Comst.	Comst. (N. Y.)
+Comst.	Comstock
+Comst.	Comst. R.
+Comst.	Corn.
+Coop T Br	Cooper t.Brougham
+Coop T Br	Coop T Br
+Coop T Br	Coop T Br (CH)
+Coop T Br	Coop T Br (Eng)
+Coop T Br	Coop.t.Brough.
+Coop T Br	Coop.t.Broughham
+Coop T Br	Coop.temp.Brough.
+Coop T Br	Coop.temp.Brougham
+Coop T Br	C.P.C.t.Br.
+Coop T Br	Sel.Cas.t.Br.
+Coxe	Coxe
+Coxe	Coxe (NJ)
+Coxe	N.J.Law (Coxe)
+CP Coop	Coop.
+CP Coop	Coop.Ch.Pr.
+CP Coop	Cooper
+CP Coop	Cooper Pr.Cas.
+CP Coop	Coop.P.C.
+CP Coop	Coop.Pr.C.
+CP Coop	Coop.Pr.Cas.
+CP Coop	C.P.C
+CP Coop	CP Coop
+CP Coop	CP Coop (CH)
+CP Coop	CP Coop (Eng)
+CP Coop	C.P.Cooper
+Cro Car	Cro Car
+Cro Car	Cro Car (Eng)
+Cro Car	Cro Car (KB)
+Cro Eliz	Cro.
+Cro Eliz	Cro Eliz
+Cro Eliz	Cro Eliz (Eng)
+Cro Eliz	Cro Eliz (KB)
+Cro Eliz	Croke
+Cro Jac	Cro Jac
+Cro Jac	Cro Jac (Eng)
+Cro Jac	Cro Jac (KB)
+Cr & Ph	C.& P.
+Cr & Ph	Craig & P.
+Cr & Ph	Cr & Ph
+Cr & Ph	Cr & Ph (CH)
+Cr & Ph	Cr & Ph (Eng)
+Cun	Cun
+Cun	Cun (Eng)
+Cun	Cun (KB)
+Cun	Cunn.
+Cun	Cunningham
+Dan	Dan
+Dan	Dan (Eng)
+Dan	Dan (EX)
+Dan	Daniel
+Dan	Daniell
+Dav	Dav
+Dav	Dav (Eng)
+Dav	Dav (IR)
+Dav	Davis
+Dears & B	D. & B.
+Dears & B	D.& B.
+Dears & B	D.& B.C.C.
+Dears & B	Dears & B
+Dears & B	Dears.& B.C.C.
+Dears & B	Dears & B (CR)
+Dears & B	Dears.& B.Crown Cas.
+Dears & B	Dears & B (Eng)
+Dears	Dears
+Dears	Dears. C. C.
+Dears	Dears.C.C.
+Dears	Dears (CR)
+Dears	Dears (Eng)
+Dears	Dearsly
+Dears	D.& P.
+Dea & Sw	Deane
+Dea & Sw	Deane Ecc.Rep.
+Dea & Sw	Deane Ecc.Rep.B.
+Dea & Sw	Deane.& S.Eccl.
+Dea & Sw	Deane &.S.Eccl.Rep.
+Dea & Sw	Deane & Sw.
+Dea & Sw	Dea & Sw
+Dea & Sw	Dea & Sw (EC)
+Dea & Sw	Dea & Sw (Eng)
+Dea & Sw	D.& S.
+Dea & Sw	D.& Sw.
+Dick	Dick
+Dick	Dick.Ch.
+Dick	Dick (CH)
+Dick	Dick (Eng)
+Dick	Dickens
+Dick	Wy.Dic.
+Donn Eq	Donn.
+Donn Eq	Donnelly
+Donn Eq	Donn Eq
+Donn Eq	Donn Eq (CH)
+Donn Eq	Donn Eq (Eng)
+Dowl & Ry NP	Dowl.& R.N.P.
+Dowl & Ry NP	Dowl.& Ryl.N.P.
+Dowl & Ry NP	Dowl & Ry NP
+Dowl & Ry NP	Dowl & Ry NP (Eng)
+Dowl & Ry NP	Dowl & Ry NP (NP)
+Dowl & Ry NP	Dow.& Ry.
+Dowl & Ry NP	Dow.& Ry.K.B.
+Dowl & Ry NP	Dow.& Ry.N.P.
+Dowl & Ry NP	D.& R.N.P.
+Dowl & Ry NP	D.& R.N.P.C.
+Dud.	Dud
+Dud.	Dud.
+Dud.	Dudl.
+Dud.	Dud.L.
+Dud.	Dudley
+Dud.	Dud.L.(S.C.)
+Dud.	Dud (SC)
+Dud.	Dud.(S.C.)
+Dud. Eq.	Dud.Ch.
+Dud. Eq.	Dud Eq
+Dud. Eq.	Dud. Eq.
+Dud. Eq.	Dud Eq (SC)
+Dud. Eq.	Dud.Eq.(S.C.)
+Dud. Eq.	S.C.Eq.(Dud.Eq.)
+Dud.	S.C.L.(Dud.)
+Edw	Edw
+Edw	Edw (AD)
+Edw	Edw. Adm.
+Edw	Edw.Adm.
+Edw	Edward
+Edw	Edwards
+Edw	Edw (Eng)
+Edw	Edw.Lead.Dec.
+Edw	Edw.P.C.
+Edw	Edw.Pr.Cas.
+Edw	Edw.(Tho).
+El Bl & El	E. B. & E.
+El Bl & El	E.B.& E.
+El Bl & El	El.B.& E.
+El Bl & El	El.B.& El.
+El Bl & El	El Bl & El
+El Bl & El	El Bl & El (Eng)
+El Bl & El	El Bl & El (KB)
+El Bl & El	Ell.B.& Ell.
+El Bl & El	Ell.Bl.& Ell.
+Fin H	Cas.temp.F.
+Fin H	Ca.temp.F.
+Fin H	Ca.t.F.
+Fin H	Fin.
+Fin H	Finch
+Fin H	Fin H
+Fin H	Fin H (CH)
+Fin H	Fin H (Eng)
+Fin H	Nel.
+Fin H	Nels.
+Fin H	Nels.F.
+Fin H	Nels.Fol.
+Fin H	Nels.Fol.Rep.
+Fin H	Nelson
+Fin H	Nelson's Rep.
+Fin H	Rep.t.F.
+Fin H	Rep.t.Finch
+Fin H	R.t.F.
+Fitzg	Fitzg
+Fitzg	Fitz-G.
+Fitzg	Fitzg (Eng)
+Fitzg	Fitzg (KB)
+Forr	For.
+Forr	Forr
+Forr	Forr (Eng)
+Forr	Forrest
+Forr	Forr (EX)
+Fort	Fort
+Fort	Fort (Eng)
+Fort	Fortes.
+Fort	Fortesc.
+Fort	Fortescue
+Fort	Fortes.Rep.
+Fort	Fort (KB)
+Fost	Fos.C.L.
+Fost	Fost
+Fost	Fost (CR)
+Fost	Fost.Cr.Law
+Fost	Fost.Crown Law
+Fost	Fost (Eng)
+Fost	Foster
+G Coop	Coop.Ch.
+G Coop	Cooper.t.Eldon
+G Coop	Coop.G.
+G Coop	Coop.Sel.Ca.
+G Coop	Coop.t.Eld.
+G Coop	Coop.temp.Eldon
+G Coop	G Coop
+G Coop	G Coop (CH)
+G Coop	G Coop (Eng)
+G Coop	G.Cooper
+G Coop	Geo.Coop.
+Gilb Cas	Cas.Eq.
+Gilb Cas	Cas.L.& Eq.
+Gilb Cas	Gil.
+Gilb Cas	Gilb.
+Gilb Cas	Gilb Cas
+Gilb Cas	Gilb Cas (Eng)
+Gilb Cas	Gilb Cas (KB)
+Gilb Cas	Gilb.Cas.L.& Eq.
+Gilb Cas	Gilb.Com.Pl.
+Gilb Cas	Gilb.K.B.
+Gilb Cas	Gilb.P.C.
+Gilb Rep	Gilb.Ch.
+Gilb Rep	Gilb.Exch.
+Gilb Rep	Gilb Rep
+Gilb Rep	Gilb Rep (CH)
+Gilb Rep	Gilb Rep (Eng)
+Gilb Rep	Rep.Cas.Eq.
+Gilb Rep	Rep.Eq.
+Godb	Godb
+Godb	Godb (Eng)
+Godb	Godb (KB)
+Godb	Godbolt
+Gould	Gold.
+Gould	Goldes.
+Gould	Gould
+Gould	Gould (Eng)
+Gould	Gould (KB)
+Gould	Gouldsb.
+Gould	Gouldsborough
+Gow	Gow
+Gow	Gow (Eng)
+Gow	Gow (NP)
+Gow	Gow N.P.
+Hard	Hard
+Hard	Hard (Eng)
+Hard	Hard (EX)
+Hard	Hardr.
+Hard	Hardres
+Harp.	Harp
+Harp.	Harp.
+Harp.	Harp.Eq.
+Harp.	Harp.Eq.(S.C.)
+Harp.	Harper
+Harp.	Harp (SC)
+Harp.	S.C.Eq.(Harp.Eq.)
+Hay & M	Dec.t.H.& M.
+Hay & M	Hay & M
+Hay & M	Hay & M (AD)
+Hay & M	Hay & Mar.
+Hay & M	Hay & Marr.
+Hay & M	Hay & Marriott
+Hay & M	Hay & M (Eng)
+Hay & M	H.& M.
+Hay & M	H.& M.Ch.
+Hay & M	Marr.
+Hay & M	Marr.Adm.
+Het	Het
+Het	Het (CP)
+Het	Het (Eng)
+Het	Hetl
+Het	Hetl.
+Het	Hetley
+Hob	Hob
+Hob	Hobart
+Hob	Hob (Eng)
+Hob	Hob (KB)
+Hoff. Ch.	Hoff.
+Hoff. Ch.	Hoff Ch
+Hoff. Ch.	Hoff. Ch.
+Hoff. Ch.	Hoff.Cha.
+Hoff. Ch.	Hoff. Chan.
+Hoff. Ch.	Hoff Ch (NY)
+Hoff. Ch.	Hoff. Ch. Pr.
+Hoff. Ch.	Hoff. Ch. Prac.
+Hoff. Ch.	Hoff. Ch. R.
+Hoff. Ch.	Hoff. Ch. Rep.
+Hoff. Ch.	Hoff. C. R.
+Hoff. Ch.	Hoffm.
+Hoff. Ch.	Hoffm.Ch.(N.Y.)
+Hoff. Ch.	Hoff.N.Y.
+Hoff. Ch.	Hoff. Pr.
+Holt KB	Holt
+Holt KB	Holt KB
+Holt KB	Holt KB (Eng)
+Holt KB	Holt KB (KB)
+Holt KB	Rep.t.Holt
+Hopk. Ch.	Hopk.
+Hopk. Ch.	Hopk Ch
+Hopk. Ch.	Hopk. Ch.
+Hopk. Ch.	Hopk Ch (NY)
+Hopk. Ch.	Hopk. Ch. R.
+Hopk. Ch.	Hopk. Ch. Rep.
+Hut	Hut
+Hut	Hut (CP)
+Hut	Hut (Eng)
+Hut	Hutt.
+Hut	Hutton
+Jac	Jac
+Jac	Jac (CH)
+Jac	Jac (Eng)
+Jac	Jacob
+Jac & W	Jac. and W.
+Jac & W	Jacob & Walker
+Jac & W	Jac & W
+Jac & W	Jac.& Walk.
+Jac & W	Jac & W (CH)
+Jac & W	Jac & W (Eng)
+Jac & W	J.& W.
+Jenk	Jenk
+Jenk	Jenk.Cent.
+Jenk	Jenk (Eng)
+Jenk	Jenk (EX)
+Jenk	Jenkins
+Johns	John.
+Johns	John.Eng.Ch.
+Johns	Johns
+Johns	Johns. Ch
+Johns	Johns.Ch.
+Johns	Johns (Eng)
+Johns	Johns.Eng.Ch.
+Johns	Johns.H.R.V.
+Johns	Johnson
+Johns	Johns (VC)
+Johns	Johns.(V.C.)
+Kay App	Kay App
+Kay App	Kay App (Eng)
+Kay App	Kay App (VC)
+Kay	Kay
+Kay	Kay (Eng)
+Kay	Kay (VC)
+Keil	Keil
+Keil	Keil (Eng)
+Keil	Keil (KB)
+Keil	Keilw.
+Keil	Keilway
+Keil	Keilwey
+Keil	Keyl.
+Lane	La.
+Lane	Lane
+Lane	Lane (Eng)
+Lane	Lane (EX)
+Latch	Lat.
+Latch	Latch
+Latch	Latch (Eng)
+Latch	Latch (KB)
+Le & Ca	L. & C.
+Le & Ca	L.& C.
+Le & Ca	L. & C. C. C.
+Le & Ca	L.& C.C.C.
+Le & Ca	Le & Ca
+Le & Ca	Le & Ca (CR)
+Le & Ca	Le & Ca (Eng)
+Le & Ca	Leigh & C.
+Le & Ca	Leigh & C.C.C.
+Ley	Ley
+Ley	Ley (Eng)
+Ley	Ley (KB)
+Lilly Ass	Lil.
+Lilly Ass	Lilly
+Lilly Ass	Lilly Ass
+Lilly Ass	Lilly Ass (Eng)
+Lilly Ass	Lilly Ass (NP)
+Lit	Lit
+Lit	Lit (CP)
+Lit	Lit (Eng)
+Lit	Litt.
+Lit	Littleton
+Lit	Litt.Rep.
+Lofft	Lofft
+Lofft	Lofft (Eng)
+Lofft	Lofft (KB)
+Lush	Lush
+Lush	Lush (AD)
+Lush	Lush.Adm.
+Lush	Lush (Eng)
+Lush	Lushington
+Macl & R	Maclean & R.
+Macl & R	Maclean & Rob.
+Macl & R	Macl & R
+Macl & R	Macl & R (Eng)
+Macl & R	Macl & R (HL)
+Macl & R	Macl.& Rob.
+Macl & R	Mac.& R.
+Macl & R	Mac.& Rob.
+Macl & R	McL.& R.
+Macl & R	M.& R.
+Macl & R	M.& Rob.
+March NR	Mar.
+March NR	March N.C.
+March NR	March NR
+March NR	March NR (Eng)
+March NR	March NR (KB)
+March NR	Mar.N.C.
+March NR	Mar.N.R.
+Martin	Mart.
+Martin	Mart.Dec.
+Martin	Martin
+Martin	Martin (NC)
+Martin	Martin R.
+Martin	Martin, R.
+Martin	Mart.N.C.
+Martin	N.C.(Mart.)
+M'Cle	McCl.
+M'Cle	McClell.
+M'Cle	M'Cl.
+M'Cle	M'Cle
+M'Cle	M'Cle (Eng)
+M'Cle	M'Cle (EX)
+M'Cle	M'Clel.
+M'Cle	M'Cleland
+M'Cle & Yo	McClell.& Yo.
+M'Cle & Yo	McCle.& Yo.
+M'Cle & Yo	McCl.& Y.
+M'Cle & Yo	M'Clel.& Y.
+M'Cle & Yo	M'Cle & Yo
+M'Cle & Yo	M'Cle & Yo (Eng)
+M'Cle & Yo	M'Cle & Yo (EX)
+M'Cle & Yo	M'Cl.& Y.
+McMul.	McMul
+McMul.	McMul.
+McMul.	McMull.
+McMul.	McMul.L.(S.C.)
+McMul.	McMul (SC)
+McMul.	S.C.L.(McMul.)
+M & M	M & M
+M & M	M & M (Eng)
+M & M	M & M (NP)
+M & M	Mood. & M.
+M & M	Mood.& M.
+M & M	Mood.& Malk.
+M & M	Moody.& M.
+M & M	Moody & Malkin
+M & M	Moo.& M.
+M & M	Moo.& Mal.
+Moo KB	Arg.Mo.
+Moo KB	Mo.
+Moo KB	Mo.(F.)
+Moo KB	Moo.
+Moo KB	Moo.F.
+Moo KB	Moo KB
+Moo KB	Moo KB (Eng)
+Moo KB	Moo KB (KB)
+Moo KB	Moore
+Moo KB	Moore K.B.
+Moo KB	Moore Q.B.
+Nels	Nels
+Nels	Nels.8vo
+Nels	Nels (CH)
+Nels	Nels (Eng)
+Noy	Noy
+Noy	Noy (Eng)
+Noy	Noy (KB)
+Owen	Ow.
+Owen	Owen
+Owen	Owen (Eng)
+Owen	Owen (KB)
+Palm	Pal.
+Palm	Palm
+Palm	Palm (Eng)
+Palm	Palmer
+Palm	Palm (KB)
+Park	Par.
+Park	Park
+Park	Park (Eng)
+Park	Parker
+Park	Park (EX)
+Park	Park.Exch.
+Park	Park.Rev.Cas.
+Peake Add Cas	Pea.(2)
+Peake Add Cas	Pea.Add.Cas.
+Peake Add Cas	Peake Add Cas
+Peake Add Cas	Peake Add Cas (Eng)
+Peake Add Cas	Peake Add Cas (NP)
+Peake Add Cas	Peake N.P.Add.Cas.
+Peake	Pea.
+Peake	Peake
+Peake	Peake (Eng)
+Peake	Peake (NP)
+Peake	Peake N.P.
+Peake	Peake N.P.Cas.
+Peake	P.N.P.
+Peck	Pec.
+Peck	Peck
+Peck	Peck (Tenn.)
+Peck	Peckw.
+Peck	Peek.
+Peck	Tenn.(Peck)
+Phil. Eq.	N.C.(Phil.Eq.)
+Phil. Eq.	Phil.
+Phil. Eq.	Phil Eq
+Phil. Eq.	Phil. Eq.
+Phil. Eq.	Phil Eq (NC)
+Phil. Eq.	Phil.Eq.(N.C.)
+Phil.	N.C.(Phil.Law)
+Phil.	Phil
+Phil.	Phil.
+Phil.	Phill.
+Phil.	Phil.Law
+Phil.	Phillips
+Phil.	Phill.L.(N.C.)
+Phil.	Phil (NC)
+Phil.	Phil.N.C.
+Pollex	Pol.
+Pollex	Pollex
+Pollex	Pollex (Eng)
+Pollex	Pollexf.
+Pollex	Pollexfen
+Pollex	Pollex (KB)
+Pop	Pop
+Pop	Pop (Eng)
+Pop	Poph.
+Pop	Popham
+Pop	Pop (KB)
+Prec Ch	Ch.Pre.
+Prec Ch	Ch.Prec.
+Prec Ch	Finch Prec.
+Prec Ch	Fin.Pr.
+Prec Ch	Fin.PR
+Prec Ch	Fin.Prec.
+Prec Ch	Fin.T.
+Prec Ch	Prec Ch
+Prec Ch	Prec Ch (CH)
+Prec Ch	Prec Ch (Eng)
+Rice	Rice
+Rice	Rice L.(S.C.)
+Rice	Rice (SC)
+Rice	S.C.L.(Rice)
+Ridg T H	Ridg.
+Ridg T H	Ridg.Cas.
+Ridg T H	Ridgew.
+Ridg T H	Ridgew.t.Hardw.
+Ridg T H	Ridg.temp.H.
+Ridg T H	Ridg.temp.Hard.
+Ridg T H	Ridg T H
+Ridg T H	Ridg T H (CH)
+Ridg T H	Ridg T H (Eng)
+Ril. Eq.	Ril.
+Ril. Eq.	Ril Eq
+Ril. Eq.	Ril. Eq.
+Ril. Eq.	Ril Eq (SC)
+Ril. Eq.	Riley
+Ril. Eq.	Riley Ch.
+Ril. Eq.	Riley Eq.
+Ril. Eq.	Riley Eq.(S.C.)
+Ril. Eq.	S.C.Eq.(Ril.)
+Ril.	Ril
+Ril.	Ril.
+Ril.	Riley L.(S.C.)
+Ril.	Ril (SC)
+Ril.	S.C.L.(Riley)
+Russ & Ry	R. & R.
+Russ & Ry	R.& R.
+Russ & Ry	R.R.C.C.
+Russ & Ry	R.& Ry.C.C.
+Russ & Ry	Rus.& Ry.
+Russ & Ry	Russ. & R.
+Russ & Ry	Russ.& R.
+Russ & Ry	Russ.& R.C.C.
+Russ & Ry	Russ.& R.Cr.Cas.
+Russ & Ry	Russ & Ry
+Russ & Ry	Russ & Ry (CR)
+Russ & Ry	Russ & Ry (Eng)
+Ry & Mood	R.& M.
+Ry & Mood	R.& M.N.P.
+Ry & Mood	Ryan.& M.
+Ry & Mood	Ryan & Moody
+Ry & Mood	Ry.& M.
+Ry & Mood	Ry.& M.N.P.
+Ry & Mood	Ry.& Moo.
+Ry & Mood	Ry & Mood
+Ry & Mood	Ry & Mood (Eng)
+Ry & Mood	Ry & Mood (NP)
+Sav	Sav
+Sav	Sav (CP)
+Sav	Sav (Eng)
+Sav	Savile
+Sav	Saville
+Saxton	N.J.Eq.(Saxton)
+Saxton	Sax.
+Saxton	Saxt.
+Saxton	Saxt. Ch.
+Saxton	Saxt.Ch.
+Saxton	Saxton
+Saxton	Saxton (NJ)
+Say	Say
+Say	Say (Eng)
+Say	Sayer
+Say	Say (KB)
+Sel Cas T King	Cas.temp.
+Sel Cas T King	Ca.temp.King
+Sel Cas T King	Ca.t.King
+Sel Cas T King	King
+Sel Cas T King	S.C.L.
+Sel Cas T King	Sel.Cas.Ch.
+Sel Cas T King	Sel.Cas.Ch.(t.King)
+Sel Cas T King	Sel Cas T King
+Sel Cas T King	Sel Cas T King (CH)
+Sel Cas T King	Sel Cas T King (Eng)
+Sel Cas T King	Sel.Ca.t.King
+Sel Cas T King	Sel.Ch.Cas.
+Sess Cas	Cas.S.M.
+Sess Cas	Sess.Ca.
+Sess Cas	Sess Cas
+Sess Cas	Sess Cas (Eng)
+Sess Cas	Sess Cas (KB)
+Sess Cas	Sess.Cas.K.B.
+Skin	Skin
+Skin	Skin (Eng)
+Skin	Skin (KB)
+Skin	Skinner
+Speers Eq.	S.C.Eq.(Speers Eq.)
+Speers Eq.	Sp.Ch.
+Speers Eq.	Spear Ch.
+Speers Eq.	Spear Eq.
+Speers Eq.	Spears
+Speers Eq.	Spears Eq.
+Speers Eq.	Speer Eq.
+Speers Eq.	Speers
+Speers Eq.	Speers Eq
+Speers Eq.	Speers Eq.
+Speers Eq.	Speers Eq (SC)
+Speers Eq.	Speers Eq.(S.C.)
+Sp PC	Sp.
+Sp PC	Spinks
+Sp PC	Spinks P.C.
+Sp PC	Spinks Prize Cas.
+Sp PC	Sp PC
+Sp PC	Sp PC (AD)
+Sp PC	Sp PC (Eng)
+Sp PC	Sp.Pr.Cas.
+S. & S.	Searle & Sm.
+S. & S.	Sea.& Sm.
+S. & S.	S. & S.
+S. & S.	S.& Sm.
+S. & S.	S. & St.
+Sty	Sty
+Sty	Sty (Eng)
+Sty	Sty (KB)
+Sty	Style
+Swab	Sw.
+Swab	Swab
+Swab	Swab (AD)
+Swab	Swab.Admir.
+Swab	Swab (Eng)
+Swab	Swabey
+Swab	Swabey Adm.
+Taml	Tam.
+Taml	Taml
+Taml	Taml (Eng)
+Taml	Taml (RO)
+Taml	Tamlyn
+Taml	Tamlyn Ch.
+Tapp. Rep.	Tap.
+Tapp. Rep.	Tapp.
+Tapp. Rep.	Tappan
+Tapp. Rep.	Tappan (Ohio)
+Tapp. Rep.	Tapp. Rep.
+Taylor	N.C.(Taylor)
+Taylor	N.C.Term.R.
+Taylor	N.C.Term.Rep.
+Taylor	N.C.T.Rep.
+Taylor	Taylor
+Taylor	Taylor (NC)
+Taylor	Taytor
+Tay.	N.C.(Tay.)
+Tay.	Tay
+Tay.	Tay.
+Tay.	Tay.J.L.
+Tay.	Tayl.
+Tay.	Tayl.N.C.
+Tay.	Taylor
+Tay.	Tay (NC)
+Tay.	Tay.N.C.
+T Jones	Jones(2)
+T Jones	Jones T.
+T Jones	T Jones
+T Jones	T Jones (Eng)
+T Jones	T Jones (KB)
+T Jones	To.Jo.
+Toth	Tot.
+Toth	Toth
+Toth	Toth (CH)
+Toth	Toth (Eng)
+Toth	Tothill
+T Raym	Raym.
+T Raym	Raym.T.
+T Raym	Ray.Sir.T.
+T Raym	T.Ray.
+T Raym	T Raym
+T Raym	T Raym (CP)
+T Raym	T Raym (Eng)
+Tuck. & Cl.	D.C.(Tuck.& Cl.)
+Tuck. & Cl.	Tuck.
+Tuck. & Cl.	Tuck.& C.
+Tuck. & Cl.	Tuck. & Cl.
+Tuck. Surr.	Tucker
+Tuck. Surr.	Tucker(N.Y.)
+Tuck. Surr.	Tuck.Sur.
+Tuck. Surr.	Tuck. Surr.
+Turn & R	T.& R.
+Turn & R	Turn. and R.
+Turn & R	Turn & R
+Turn & R	Turn & R (CH)
+Turn & R	Turn & R (Eng)
+Turn & R	Turn.& Rus.
+Turn & R	Turn.& Russ.
+Turn & R	Tur.& R.
+Turn & R	Tur.& Ru.
+Turn & R	Tur.& Rus.
+Vaugh	Vaug.
+Vaugh	Vaugh
+Vaugh	Vaughan
+Vaugh	Vaugh (CP)
+Vaugh	Vaugh (Eng)
+Vern	Vcrn.
+Vern	Vern
+Vern	Vern (CH)
+Vern	Vern (Eng)
+Vern	Vernon
+Vern	Vern. R.
+Ves Sen Supp	Belt's Supp.
+Ves Sen Supp	Belt Sup.
+Ves Sen Supp	Belt Supp.
+Ves Sen Supp	Belt Sup.Ves.
+Ves Sen Supp	Belt Ves.Sen.
+Ves Sen Supp	B. Sup.
+Ves Sen Supp	Ves Sen Supp
+Ves Sen Supp	Ves Sen Supp (CH)
+Ves Sen Supp	Ves Sen Supp (Eng)
+Ves Sen Supp	Ves.Sr.Supp.
+Walk. Ch.	Walk.
+Walk. Ch.	Walk. Ch.
+Walk. Ch.	Walk.Ch.Cas.
+Walk. Ch.	Walk.Ch.Mich.
+Walk. Ch.	Walker
+West T Hard	West.
+West T Hard	West Ch.
+West T Hard	West Chy.
+West T Hard	West temp.Hard.
+West T Hard	West t.H.
+West T Hard	West T Hard
+West T Hard	West T Hard (CH)
+West T Hard	West T Hard (Eng)
+West T Hard	West t.Hardw.
+West	We.
+West	West
+West	West (Eng)
+West	West (HL)
+West	West H.L.
+White & W.	Tex.A.Civ.
+White & W.	Tex.A.Civ.Cas.
+White & W.	Tex.App.
+White & W.	Tex.C.C.
+White & W.	Tex.Civ.Cas.
+White & W.	Tex.Ct.App.Dec.Civ.
+White & W.	White & W.
+White & W.	White & W.Civ.Cas.Ct.App.
+White & W.	White & W.(Tex.)
+White & W.	Wi.& Will.
+White & W.	W.& W.
+Wight	Wight
+Wight	Wight (Eng)
+Wight	Wight (EX)
+Wight	Wightw.
+Wight	Wightwick
+Wilm	Not.Op.
+Wilm	Wilm
+Wilm	Wilm (Eng)
+Wilm	Wilm.Judg.
+Wilm	Wilm (KB)
+Wilm	Wilm.Op.
+Wilm	Wilmot
+Wils Ex	Wils Ex
+Wils Ex	Wils Ex (Eng)
+Wils Ex	Wils Ex (EX)
+Wils Ex	Wilson
+Winch	Win.
+Winch	Winch
+Winch	Winch (CP)
+Winch	Winch (Eng)
+Win. Eq.	N.C.(Win.Eq.)
+Win. Eq.	Win Eq
+Win. Eq.	Win. Eq.
+Win. Eq.	Win Eq (NC)
+Win. Eq.	Winst.
+Win. Eq.	Winst.Eq.(N.C.)
+Win.	N.C.(Win.)
+Win.	Win
+Win.	Win.
+Win.	Win.Law
+Win.	Win.L.(N.C.)
+Win.	Win (NC)
+Win.	WVm.
+W. P. C.	Wol.
+W. P. C.	Woll.
+W. P. C.	W. P. C.
+Yel	Yel
+Yel	Yel (Eng)
+Yel	Yel (KB)
+Yel	Yelv.
+You	Yo.
+You	You
+You	You (Eng)
+You	You (EX)
+You	Younge
