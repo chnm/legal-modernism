@@ -31,6 +31,17 @@
     <h1 class="h4 mb-1">Citation linking progress</h1>
     <p class="small text-secondary mb-3">Progress of linking detected citations to caselaw databases.</p>
 
+    <!-- Shown only when citations remain unlinked. Without it a partial linker
+         run is indistinguishable from a finished one: the status counts simply
+         come out smaller and every percentage below silently rebases on them
+         (issue #296). -->
+    <div id="unprocessed-warning" class="alert alert-warning py-2 px-3 small mb-3" hidden>
+        <strong>Linking is incomplete.</strong>
+        <span id="unprocessed-count"></span> detected citations have no link row yet,
+        so the counts and percentages below describe a partial run.
+        Re-run <code>cite-linker</code>, then <code>make db-maintenance</code>.
+    </div>
+
     <div id="chart-container" class="mb-4">
         <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading citation data&hellip;</div>
     </div>
@@ -223,6 +234,12 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
                 sub.style.cssText = "font-size:0.85rem;font-weight:400;color:#6c757d;margin-left:0.4rem;";
                 sub.textContent = "(" + pctFn(value) + ")";
                 el.append(sub);
+            }
+
+            if (d.Unprocessed > 0) {
+                document.getElementById("unprocessed-count").textContent =
+                    d.Unprocessed.toLocaleString();
+                document.getElementById("unprocessed-warning").hidden = false;
             }
 
             // Row 1: raw totals
