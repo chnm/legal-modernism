@@ -1295,7 +1295,7 @@ CREATE VIEW moml.us_treatises AS
     subjects,
     psmid
    FROM moml.treatises
-  WHERE (('UK'::text <> ALL ((subjects)::text[])) AND ('Biography'::text <> ALL ((subjects)::text[])) AND ('Collected Essays'::text <> ALL ((subjects)::text[])) AND ('Trials'::text <> ALL ((subjects)::text[])) AND (NOT (title ~* '\Woration\W'::text)) AND (NOT (title ~* '\Wremarks of\W'::text)) AND (NOT (title ~* '\Waddress\W'::text)));
+  WHERE (('UK'::text <> ALL ((subjects)::text[])) AND ('Biography'::text <> ALL ((subjects)::text[])) AND ('Collected Essays'::text <> ALL ((subjects)::text[])) AND ('Trials'::text <> ALL ((subjects)::text[])) AND (NOT (title ~* '\Wremarks of\W'::text)) AND (NOT (title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)));
 
 
 --
@@ -2619,4 +2619,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260905120600'),
     ('20260906120000'),
     ('20260906120100'),
-    ('20260906120200');
+    ('20260906120200'),
+    ('20260906120300');
