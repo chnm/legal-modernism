@@ -18,21 +18,39 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
+// maxDBConns caps how many connections the detector will open. PostgreSQL is
+// configured with max_connections = 100 for every client of the database
+// together, so a detector run that sized its pool to a large --workers would
+// exhaust the server rather than go faster.
+const maxDBConns = 64
+
 func main() {
 	showProgress := flag.Bool("progress", false, "show a progress bar (costs one count of moml.page_ocrtext at startup)")
-	workers := flag.Int("workers", runtime.NumCPU(), "number of concurrent page workers (each uses one DB connection for its insert)")
+	workers := flag.Int("workers", runtime.NumCPU(), "number of concurrent page workers")
+	dbConns := flag.Int("db-conns", 0, "maximum database connections (default: workers plus one for the reader, capped at 64)")
 	flag.Parse()
 
 	if *workers < 1 {
 		*workers = 1
 	}
 
+	// The pool is sized separately from the workers because the two are bounded
+	// by different things. A worker costs a core; a connection costs one of the
+	// server's max_connections, which is 100 for the whole database and shared
+	// with everything else that talks to it. Running more workers than
+	// connections is fine and deliberate -- a worker spends nearly all its time
+	// in the regex scan, so a handful of connections serves many workers, and
+	// one that finds the pool busy simply waits.
+	maxConns := *workers + 1
+	if maxConns > maxDBConns {
+		maxConns = maxDBConns
+	}
+	if *dbConns > 0 {
+		maxConns = *dbConns
+	}
+
 	slog.Info("starting the citation detector")
-	// The detector once ran twice as many workers as CPUs on the grounds that it
-	// waited on the database. It no longer does: the pages arrive from one
-	// streaming read and each page's citations are written in a single batch, so
-	// the work in a worker is the regex scan, which is CPU-bound.
-	slog.Info("CPUs", "available", runtime.NumCPU(), "workers", *workers)
+	slog.Info("CPUs", "available", runtime.NumCPU(), "workers", *workers, "db_conns", maxConns)
 
 	// Create a context and listen for signals to gracefully shutdown the application
 	ctx, cancel := context.WithCancel(context.Background())
@@ -54,12 +72,10 @@ func main() {
 	}()
 
 	slog.Info("connecting to database", "database", db.Host())
-	// Size the pool to the workers plus one dedicated connection for the
-	// long-lived streaming read, with a small margin, as cite-linker does.
-	// Without this the default pool could starve either the reader or the
-	// workers.
+	// One of these connections is held for the whole run by the streaming read;
+	// the rest are what the workers insert through.
 	pool, err := db.ConnectPool(ctx, func(c *pgxpool.Config) {
-		c.MaxConns = int32(*workers + 2)
+		c.MaxConns = int32(maxConns)
 	})
 	if err != nil {
 		slog.Error("could not connect to database", "database", db.Host(), "error", err)
