@@ -2,6 +2,7 @@ package citations
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -65,6 +66,12 @@ func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolRep
 			return nil, err
 		}
 		reporters = append(reporters, sv)
+	}
+	// This slice gates every single-volume detector, so a mid-stream failure
+	// that returned a short list and a nil error would quietly scan the corpus
+	// with only some of them (issue #285).
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating single volume reporters: %w", err)
 	}
 
 	return reporters, nil

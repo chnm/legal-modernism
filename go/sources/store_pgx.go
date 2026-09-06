@@ -72,13 +72,28 @@ func (p *PgxStore) GetAllTreatisePageIDs(ctx context.Context) ([]*TreatisePage, 
 		page := NewTreatisePage(pageID, docID, "")
 		pages = append(pages, page)
 	}
+	// Without this a mid-stream failure returns a short slice and a nil error,
+	// so the detector would silently scan part of the corpus and report success
+	// (issue #285).
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating treatise page IDs: %w", err)
+	}
 
 	return pages, nil
 }
 
-// GetOCRSubstitutions gets a complete list of OCR substitutions from the database
+// GetOCRSubstitutions gets a complete list of OCR substitutions from the
+// database, longest mistake first.
+//
+// The order is load-bearing rather than cosmetic. Several corrections begin with
+// another ("Cusl" and "Cuslr", "Wvis" and "Wvisc", "Johns. Cl" and "Johns. Cll"),
+// and NewOCRReplacer resolves a position in favour of whichever rule it is given
+// first. Sorting here as well as there keeps the slice itself meaningful to any
+// other caller, and makes two runs over the same table identical (issue #285).
 func (p *PgxStore) GetOCRSubstitutions(ctx context.Context) ([]*OCRSubstitution, error) {
-	query := `SELECT mistake, correction FROM legalhist.ocr_corrections;`
+	query := `
+	SELECT mistake, correction FROM legalhist.ocr_corrections
+	ORDER BY length(mistake) DESC, mistake COLLATE "C";`
 	var subs []*OCRSubstitution
 
 	rows, err := p.DB.Query(ctx, query)
@@ -94,6 +109,9 @@ func (p *PgxStore) GetOCRSubstitutions(ctx context.Context) ([]*OCRSubstitution,
 			return nil, err
 		}
 		subs = append(subs, &sub)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating OCR substitutions: %w", err)
 	}
 
 	return subs, nil
@@ -142,6 +160,9 @@ func (p *PgxStore) GetBatchOfUnprocessedPages(ctx context.Context, batchSize int
 		}
 		page := NewTreatisePage(pageID, docID, ocrText)
 		pages = append(pages, page)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating unprocessed pages: %w", err)
 	}
 
 	return pages, nil

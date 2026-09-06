@@ -58,6 +58,9 @@ func TestOCRDigitYield(t *testing.T) {
 		require.NoError(t, rows.Scan(&s.Mistake, &s.Correction))
 		subs = append(subs, &s)
 	}
+	// Built once, as cite-detector-moml does: the replacer sorts its rules on
+	// construction, so rebuilding it per page would repeat that work.
+	ocrReplacer := sources.NewOCRReplacer(subs)
 	rows.Close()
 
 	type wl struct {
@@ -106,7 +109,7 @@ func TestOCRDigitYield(t *testing.T) {
 		pages++
 
 		doc := sources.NewDoc(psmid+"/"+pageid, text)
-		doc.CorrectOCR(subs)
+		doc.CorrectOCR(ocrReplacer)
 
 		// What the page yields today, keyed as the table would store it.
 		existing := map[string]bool{}

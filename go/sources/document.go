@@ -6,7 +6,7 @@ type Document interface {
 	ParentID() string
 	HasParent() bool
 	Text() string
-	CorrectOCR([]*OCRSubstitution)
+	CorrectOCR(*OCRReplacer)
 	// Pages() []*Document
 	// HasPages() bool
 }
@@ -44,10 +44,10 @@ func (d *Doc) HasParent() bool {
 	return false
 }
 
-// CorrectOCR takes a set of OCR mistakes to be corrected via substitution and
-// and fixes them in the document.
-func (d *Doc) CorrectOCR(subs []*OCRSubstitution) {
-	d.FullText = fixOCRSubstitutions(d.FullText, subs)
+// CorrectOCR applies the OCR corrections to the document in a single pass. A nil
+// replacer leaves the text alone.
+func (d *Doc) CorrectOCR(r *OCRReplacer) {
+	d.FullText = r.Replace(d.FullText)
 }
 
 // Pages returns an empty slice of Documents, because a Doc by definition has no

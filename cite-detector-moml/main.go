@@ -98,16 +98,28 @@ func main() {
 	}
 	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
 
+	// Both loaders below are fatal. Continuing without the OCR corrections
+	// would detect the whole corpus under different semantics than every
+	// previous run, and continuing without the page IDs would leave nothing to
+	// do -- the submit loop would be empty, StopWait would return at once, and
+	// the run would log "done detecting citations" and exit 0 after producing
+	// nothing (issue #285).
 	slog.Info("getting OCR corrections")
 	ocrSubs, err := sourcesDB.GetOCRSubstitutions(ctx)
 	if err != nil {
 		slog.Error("error getting OCR substitutions", "error", err)
+		os.Exit(1)
 	}
+	slog.Info("loaded OCR corrections", "num_corrections", len(ocrSubs))
+	// Built once and shared by every worker: the replacer is read-only, and
+	// rebuilding it per page would repeat the sort 10.5M times.
+	ocrReplacer := sources.NewOCRReplacer(ocrSubs)
 
 	slog.Info("getting all treatise/page IDs")
 	pageIDs, err := sourcesDB.GetAllTreatisePageIDs(ctx)
 	if err != nil {
 		slog.Error("error getting treatise/page IDs", "error", err)
+		os.Exit(1)
 	}
 	slog.Info("found pages", "num_pages", len(pageIDs))
 
@@ -135,7 +147,7 @@ func main() {
 						slog.Error("could not fetch page from database", "treatise_id", id.TreatiseID, "page_id", id.PageID, "error", err)
 						return
 					}
-					page.CorrectOCR(ocrSubs)
+					page.CorrectOCR(ocrReplacer)
 
 					// Run every detector over the page before saving anything,
 					// so that a single-volume match found inside a longer
