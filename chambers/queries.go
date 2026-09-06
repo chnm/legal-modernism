@@ -52,6 +52,15 @@ type CitationDetail struct {
 	ERYear  *int
 	ERCourt *string
 
+	// Stub case info (issue #248): the legalhist.stub_cases row a linked_stub
+	// citation points at. StubCite is nil when the link is stale -- the stub
+	// was pruned by a later refresh and the linker has not been rerun since.
+	StubCite      *string
+	StubCitations *int
+	StubTreatises *int
+	StubFirstYear *int
+	StubLastYear  *int
+
 	// MOML source info
 	BibliographicID *string
 	PubYear         *int
@@ -62,9 +71,10 @@ type CitationDetail struct {
 	OCRText         *string
 }
 
-// HasLink returns true if the citation was linked to any case.
+// HasLink returns true if the citation was linked to any case, a stub case
+// included.
 func (c *CitationDetail) HasLink() bool {
-	return c.Status != nil && (*c.Status == "linked_cap" || *c.Status == "linked_code_reporter" || *c.Status == "linked_english_reports")
+	return c.Status != nil && (*c.Status == "linked_cap" || *c.Status == "linked_code_reporter" || *c.Status == "linked_english_reports" || *c.Status == "linked_stub")
 }
 
 // IsCAP returns true if linked to a CAP case.
@@ -80,6 +90,12 @@ func (c *CitationDetail) IsCodeReporter() bool {
 // IsEnglishReports returns true if linked to an English Reports case.
 func (c *CitationDetail) IsEnglishReports() bool {
 	return c.Status != nil && *c.Status == "linked_english_reports"
+}
+
+// IsStub returns true if linked to a stub case: a case no source holds, known
+// only by its cite string and how often the corpus cites it (issue #248).
+func (c *CitationDetail) IsStub() bool {
+	return c.Status != nil && *c.Status == "linked_stub"
 }
 
 // momlVolumeURL builds a Gale MOML volume URL from the stored productlink,
@@ -151,6 +167,11 @@ SELECT
     er.er_cite,
     er.er_year,
     er.court,
+    st.cite,
+    st.n_citations,
+    st.n_treatises,
+    st.first_cited_year,
+    st.last_cited_year,
     bi.bibliographicid,
     bi.year,
     bc.displaytitle,
@@ -166,6 +187,7 @@ LEFT JOIN cap.courts ct ON ct.id = cc.court
 LEFT JOIN cap.jurisdictions j ON j.id = cc.jurisdiction
 LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
 LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
+LEFT JOIN legalhist.stub_cases st ON st.cite = cl.stub_cite
 LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
 LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
 LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
@@ -536,9 +558,13 @@ type ReporterStats struct {
 
 // DashboardData holds aggregated linking status data for the dashboard.
 type DashboardData struct {
-	LinkedCAP             int
-	LinkedEnglishReports  int
-	LinkedCodeReporter    int
+	LinkedCAP            int
+	LinkedEnglishReports int
+	LinkedCodeReporter   int
+	// LinkedStub counts links to legalhist.stub_cases (issue #248). It is part
+	// of TotalLinked: the dashboard measures citations found, and a stub link
+	// is one, with match_tier splitting it out where the distinction matters.
+	LinkedStub            int
 	SkippedNotWhiteListed int
 	NoMatch               int
 	SkippedJunk           int
@@ -556,7 +582,7 @@ type DashboardData struct {
 
 // TotalLinked returns the sum of all linked statuses.
 func (d *DashboardData) TotalLinked() int {
-	return d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter
+	return d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter + d.LinkedStub
 }
 
 // loadReporterStats fills in d.Reporters from the per-reporter materialized
@@ -617,6 +643,8 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 			d.LinkedEnglishReports = n
 		case "linked_code_reporter":
 			d.LinkedCodeReporter = n
+		case "linked_stub":
+			d.LinkedStub = n
 		case "skipped_not_whitelisted":
 			d.SkippedNotWhiteListed = n
 		case "no_match":
@@ -653,6 +681,7 @@ func getDashboardData(ctx context.Context, db *pgxpool.Pool) (*DashboardData, er
 		"linked_cap", d.LinkedCAP,
 		"linked_english_reports", d.LinkedEnglishReports,
 		"linked_code_reporter", d.LinkedCodeReporter,
+		"linked_stub", d.LinkedStub,
 		"skipped_not_whitelisted", d.SkippedNotWhiteListed,
 		"no_match", d.NoMatch,
 		"skipped_junk", d.SkippedJunk,
@@ -982,6 +1011,11 @@ func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*Ci
 		&c.ERCite,
 		&c.ERYear,
 		&c.ERCourt,
+		&c.StubCite,
+		&c.StubCitations,
+		&c.StubTreatises,
+		&c.StubFirstYear,
+		&c.StubLastYear,
 		&c.BibliographicID,
 		&c.PubYear,
 		&c.BookTitle,

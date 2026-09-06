@@ -104,28 +104,34 @@
 
     <h2 class="h6 text-secondary mb-2">Linked cites</h2>
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
+        <div class="col-md">
             <div class="stat-card stat-positive">
                 <div class="big-number placeholder-number" id="stat-linked-total">&mdash;</div>
                 <div class="big-label">Total linked</div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md">
             <div class="stat-card stat-positive">
                 <div class="big-number placeholder-number" id="stat-linked-cap">&mdash;</div>
                 <div class="big-label">Caselaw Access Project</div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md">
             <div class="stat-card stat-positive">
                 <div class="big-number placeholder-number" id="stat-linked-er">&mdash;</div>
                 <div class="big-label">English Reports</div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md">
             <div class="stat-card stat-positive">
                 <div class="big-number placeholder-number" id="stat-linked-code">&mdash;</div>
                 <div class="big-label">Code Reporter</div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="stat-card stat-positive">
+                <div class="big-number placeholder-number" id="stat-linked-stub">&mdash;</div>
+                <div class="big-label">Stub cases</div>
             </div>
         </div>
     </div>
@@ -210,7 +216,7 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const d = await resp.json();
 
-            const totalLinked = d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter;
+            const totalLinked = d.LinkedCAP + d.LinkedEnglishReports + d.LinkedCodeReporter + d.LinkedStub;
 
             // Statutes are real citations but not to cases, so like junk they
             // are excluded from the potential pool rather than counted against it.
@@ -263,6 +269,7 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
             setStatWithPct("stat-linked-cap", d.LinkedCAP, pctOfLinked);
             setStatWithPct("stat-linked-er", d.LinkedEnglishReports, pctOfLinked);
             setStatWithPct("stat-linked-code", d.LinkedCodeReporter, pctOfLinked, fmt);
+            setStatWithPct("stat-linked-stub", d.LinkedStub, pctOfLinked);
 
             // Match tier tables. The gloss covers the whole tier vocabulary in
             // go/citations/linker.go, not only the tiers a given run produced, so a
@@ -289,10 +296,11 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
                 code_direct: "matched a code reporter entry",
                 er_direct: "matched an English Reports case",
                 er_page_interior: "matched inside an English Reports case's page range — a pin cite",
+                stub_direct: "matched a stub case — a cite string no source holds, cited often enough to treat as a case (#248)",
             };
 
             const STATUS_ORDER = [
-                "linked_cap", "linked_english_reports", "linked_code_reporter",
+                "linked_cap", "linked_english_reports", "linked_code_reporter", "linked_stub",
                 "no_match", "skipped_statute", "unprocessed",
             ];
 
@@ -433,6 +441,7 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
                 { status: "Linked (CAP)", n: d.LinkedCAP, color: "#198754" },
                 { status: "Linked (English Reports)", n: d.LinkedEnglishReports, color: "#0d6efd" },
                 { status: "Linked (Code Reporter)", n: d.LinkedCodeReporter, color: "#0dcaf0" },
+                { status: "Linked (stub case)", n: d.LinkedStub, color: "#6f42c1" },
                 { status: "Not whitelisted", n: d.SkippedNotWhiteListed, color: "#e87a7a" },
                 { status: "No match", n: d.NoMatch, color: "#dc3545" },
             ];
