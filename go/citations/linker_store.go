@@ -65,6 +65,14 @@ type LinkerStore interface {
 	// records no page range, so spans there can only be bounded by the next cite.
 	LoadERCaseSpans(ctx context.Context) ([]CaseSpan[string], error)
 
+	// LoadStubCases loads the keys of legalhist.stub_cases as a set: the cite
+	// strings of cases no source holds but that the corpus cites often enough
+	// to treat as real (issue #248). The keys take the "{volume}
+	// {reporter_standard} {page}" form of cite_cleaned, which is what the linker
+	// probes with. An empty set is not an error; it is the state before the
+	// registry has been built (make db-stubs).
+	LoadStubCases(ctx context.Context) (map[string]struct{}, error)
+
 	// SaveLinkResults batch-inserts multiple link results in a single query.
 	SaveLinkResults(ctx context.Context, results []*LinkResult) error
 }

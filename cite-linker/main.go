@@ -201,11 +201,26 @@ func main() {
 	}
 	slog.Info("loaded English Reports case page spans", "entries", len(erSpans))
 
+	// The stub registry is built from this program's own misses (make db-stubs),
+	// so on the first run after a re-detection it is empty or stale; that is
+	// expected, and the truncate-and-relink that follows db-stubs is what links
+	// the citations to it. Warn rather than fail so the pipeline order is
+	// visible in the log without blocking a run that does not need it.
+	slog.Info("loading stub cases")
+	stubs, err := store.LoadStubCases(ctx)
+	if err != nil {
+		exitStartupError("could not load stub cases", err)
+	}
+	if len(stubs) == 0 {
+		slog.Warn("no stub cases loaded; citations to reporters no source covers stay no_match — run make db-stubs after this run, then truncate and relink")
+	}
+	slog.Info("loaded stub cases", "entries", len(stubs))
+
 	// Assemble the lookup tables, which also walks every loaded cite string once
 	// to build the reporter/volume indexes a no_match is attributed with, and the
 	// page-range indexes that resolve pin cites.
 	slog.Info("indexing cite strings by reporter and volume")
-	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites, capSpans, erSpans)
+	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites, capSpans, erSpans, stubs)
 	slog.Info("indexed cite strings",
 		"us_reporters", len(tables.us.reporters), "us_volumes", len(tables.us.volumes),
 		"uk_reporters", len(tables.uk.reporters), "uk_volumes", len(tables.uk.volumes))
@@ -406,6 +421,14 @@ type linkTables struct {
 	// case range matching is simply skipped.
 	capRanges *rangeIndex[int64]
 	erRanges  *rangeIndex[string]
+
+	// stubs is the registry of cases no source holds (legalhist.stub_cases),
+	// probed last and only for a citation whose reporter no source knows. It
+	// is deliberately kept out of the us/uk cite indexes: a stub is evidence
+	// that a case exists, not a source that holds it, and counting it as a
+	// reached reporter would make reporter_absent -- the very condition a stub
+	// depends on -- impossible to report. May be nil.
+	stubs stubIndex
 }
 
 func newLinkTables(
@@ -418,6 +441,7 @@ func newLinkTables(
 	erCites map[string]citations.ERCase,
 	capSpans []citations.CaseSpan[int64],
 	erSpans []citations.CaseSpan[string],
+	stubs map[string]struct{},
 ) *linkTables {
 	return &linkTables{
 		whitelist:    whitelist,
@@ -431,6 +455,7 @@ func newLinkTables(
 		uk:           newCiteIndex(erCites),
 		capRanges:    newRangeIndex(capSpans),
 		erRanges:     newRangeIndex(erSpans),
+		stubs:        stubIndex(stubs),
 	}
 }
 
@@ -524,6 +549,11 @@ func linkCAPThenCode(
 	// are recorded.
 	probes := make([]string, 0, 4)
 
+	// The standard-form strings alone, for the stub registry, which is keyed on
+	// cite_cleaned: a CAP-spelled or volume-translated form is a different
+	// reporter's string as far as the registry is concerned.
+	standard := make([]string, 0, 2)
+
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
 	// turns a no_match into a link.
@@ -531,6 +561,7 @@ func linkCAPThenCode(
 		cleaned := buildStandardCite(f, entry)
 		normalized := buildCAPCite(f, entry, t.diffvols)
 		probes = append(probes, normalized, cleaned)
+		standard = append(standard, cleaned)
 
 		// Try CAP with the normalized cite
 		if caseID, ok := t.capCites[normalized]; ok {
@@ -624,8 +655,22 @@ func linkCAPThenCode(
 		span = outcome
 	}
 
+	// Last of all, the stub registry (issue #248), and only when the failure
+	// would be reporter_absent: no probed spelling of this reporter is in any US
+	// source, so there is no case this could have been and nothing a stub can
+	// outrank. A deeper tier means a source does hold the reporter, and its
+	// misses are coverage gaps or pin cites, which the registry is built to
+	// exclude -- checking the tier here rather than trusting the registry keeps
+	// that true even when the registry is stale.
+	tier := usTier(probes, t.us, missingDiffvols, span)
+	if tier == citations.TierUSReporterAbsent {
+		if cite, ok := t.stubs.lookup(standard); ok {
+			return linkStub(result, cite)
+		}
+	}
+
 	result.Status = citations.StatusNoMatch
-	result.MatchTier = usTier(probes, t.us, missingDiffvols, span)
+	result.MatchTier = tier
 	return result
 }
 
@@ -700,8 +745,17 @@ func linkEnglishReports(
 		span = outcome
 	}
 
+	// The stub registry, under the same gate as the US route: the probes here
+	// are already the standard forms the registry is keyed on.
+	tier := ukTier(probes, t.uk, ambiguous, span)
+	if tier == citations.TierUKReporterAbsent {
+		if cite, ok := t.stubs.lookup(probes); ok {
+			return linkStub(result, cite)
+		}
+	}
+
 	result.Status = citations.StatusNoMatch
-	result.MatchTier = ukTier(probes, t.uk, ambiguous, span)
+	result.MatchTier = tier
 	return result
 }
 

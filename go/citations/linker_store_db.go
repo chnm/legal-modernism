@@ -453,15 +453,40 @@ func (s *LinkerDBStore) LoadERCaseSpans(ctx context.Context) ([]CaseSpan[string]
 	return spans, nil
 }
 
+// LoadStubCases loads the cite strings of legalhist.stub_cases. The table is
+// small -- about 120K rows at the default threshold -- and only its key is
+// needed: the counts that justify a stub are for people and later passes, not
+// for the probe.
+func (s *LinkerDBStore) LoadStubCases(ctx context.Context) (map[string]struct{}, error) {
+	rows, err := s.DB.Query(ctx, `SELECT cite FROM legalhist.stub_cases`)
+	if err != nil {
+		return nil, fmt.Errorf("loading stub cases: %w", err)
+	}
+	defer rows.Close()
+
+	m := make(map[string]struct{})
+	for rows.Next() {
+		var cite string
+		if err := rows.Scan(&cite); err != nil {
+			return nil, fmt.Errorf("scanning stub case: %w", err)
+		}
+		m[cite] = struct{}{}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating stub cases: %w", err)
+	}
+	return m, nil
+}
+
 // SaveLinkResults batch-inserts multiple link results in a single statement.
 //
-// Rather than build a VALUES list with up to batchSize*9 placeholders (which
+// Rather than build a VALUES list with up to batchSize*10 placeholders (which
 // runs into Postgres's 65535-parameter limit at large batch sizes and forces
 // the server to parse a huge statement on every batch), it passes one array per
-// column and expands them server-side with unnest(). That is a fixed 9-parameter
-// statement regardless of batch size, so it parses/plans cheaply and keeps the
-// wire payload compact. citation_id is sent as text[] and cast to uuid in SQL to
-// avoid relying on driver-side uuid-array encoding.
+// column and expands them server-side with unnest(). That is a fixed
+// 10-parameter statement regardless of batch size, so it parses/plans cheaply
+// and keeps the wire payload compact. citation_id is sent as text[] and cast to
+// uuid in SQL to avoid relying on driver-side uuid-array encoding.
 //
 // An empty MatchTier is sent as SQL NULL: the skip statuses reach no tier, and a
 // NULL keeps them out of every tier aggregate instead of inventing a bucket for
@@ -477,6 +502,7 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 	capIDs := make([]*int64, len(results))
 	codeIDs := make([]*int64, len(results))
 	erIDs := make([]*string, len(results))
+	stubs := make([]*string, len(results))
 	cleaned := make([]*string, len(results))
 	normalized := make([]*string, len(results))
 	linked := make([]*string, len(results))
@@ -489,6 +515,7 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 		capIDs[i] = r.CAPCaseID
 		codeIDs[i] = r.CodeReporterID
 		erIDs[i] = r.ERCaseID
+		stubs[i] = r.StubCite
 		cleaned[i] = r.CiteCleaned
 		normalized[i] = r.CiteNormalized
 		linked[i] = r.CiteLinked
@@ -496,13 +523,13 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 
 	query := `
 	INSERT INTO moml_citations.citation_links
-		(citation_id, status, match_tier, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked)
-	SELECT u.citation_id::uuid, u.status, u.match_tier, u.cap_case_id, u.code_reporter_id, u.er_case_id, u.cite_cleaned, u.cite_normalized, u.cite_linked
-	FROM unnest($1::text[], $2::text[], $3::text[], $4::bigint[], $5::bigint[], $6::text[], $7::text[], $8::text[], $9::text[])
-		AS u(citation_id, status, match_tier, cap_case_id, code_reporter_id, er_case_id, cite_cleaned, cite_normalized, cite_linked)
+		(citation_id, status, match_tier, cap_case_id, code_reporter_id, er_case_id, stub_cite, cite_cleaned, cite_normalized, cite_linked)
+	SELECT u.citation_id::uuid, u.status, u.match_tier, u.cap_case_id, u.code_reporter_id, u.er_case_id, u.stub_cite, u.cite_cleaned, u.cite_normalized, u.cite_linked
+	FROM unnest($1::text[], $2::text[], $3::text[], $4::bigint[], $5::bigint[], $6::text[], $7::text[], $8::text[], $9::text[], $10::text[])
+		AS u(citation_id, status, match_tier, cap_case_id, code_reporter_id, er_case_id, stub_cite, cite_cleaned, cite_normalized, cite_linked)
 	ON CONFLICT (citation_id) DO NOTHING`
 
-	_, err := s.DB.Exec(ctx, query, ids, statuses, tiers, capIDs, codeIDs, erIDs, cleaned, normalized, linked)
+	_, err := s.DB.Exec(ctx, query, ids, statuses, tiers, capIDs, codeIDs, erIDs, stubs, cleaned, normalized, linked)
 	if err != nil {
 		return fmt.Errorf("batch saving %d link results: %w", len(results), err)
 	}

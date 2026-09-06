@@ -83,6 +83,7 @@ type LinkResult struct {
 	CAPCaseID      *int64
 	CodeReporterID *int64
 	ERCaseID       *string
+	StubCite       *string // legalhist.stub_cases key, set only for StatusLinkedStub
 	CiteCleaned    *string // reporter abbreviation standardized via whitelist; nil for skipped
 	CiteNormalized *string // after diffvols transformation (equals CiteCleaned if no transformation); nil for skipped
 	CiteLinked     *string // the cite string that matched, nil if no match
@@ -90,9 +91,19 @@ type LinkResult struct {
 
 // Status constants for link results.
 const (
-	StatusLinkedCAP             = "linked_cap"
-	StatusLinkedCodeReporter    = "linked_code_reporter"
-	StatusLinkedEnglishReports  = "linked_english_reports"
+	StatusLinkedCAP            = "linked_cap"
+	StatusLinkedCodeReporter   = "linked_code_reporter"
+	StatusLinkedEnglishReports = "linked_english_reports"
+	// StatusLinkedStub: the citation names a case no source holds, but the
+	// cite string recurs across the corpus often enough that
+	// legalhist.stub_cases carries a record for it (issue #248). The link
+	// carries less than a link to a real case -- the record knows only the
+	// cite string and how often it is cited -- which is why it has its own
+	// status rather than borrowing one of the source-backed ones. It still
+	// matches the linked% pattern every dashboard consumer keys on, by
+	// design: a stub link is a citation found, and match_tier is what splits
+	// it out.
+	StatusLinkedStub            = "linked_stub"
 	StatusSkippedNotWhitelisted = "skipped_not_whitelisted"
 	StatusSkippedJunk           = "skipped_junk"
 	StatusSkippedStatute        = "skipped_statute"
@@ -150,4 +161,5 @@ const (
 	TierCodeDirect            = "code_direct"              // legalhist.code_reporter, under the cleaned cite
 	TierERDirect              = "er_direct"                // english_reports.cases
 	TierERPageInterior        = "er_page_interior"         // english_reports.cases page range, pin cite to an interior page
+	TierStubDirect            = "stub_direct"              // legalhist.stub_cases, under the cleaned cite (#248)
 )
