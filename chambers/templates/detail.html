@@ -104,6 +104,13 @@ LIMIT 1</code></pre>
         <span class="label text-secondary">Year</span><span>{{if .Cite.ERYear}}{{deref .Cite.ERYear}}{{else}}&mdash;{{end}}</span>
         <span class="label text-secondary">Court</span><span>{{ptrOr .Cite.ERCourt "&mdash;"}}</span>
     </div>
+    {{else if .Cite.IsStub}}
+    <div class="detail-grid">
+        <span class="label text-secondary">Source</span><span>Stub case</span>
+        <span class="label text-secondary">Citation</span><span>{{if .Cite.StubCite}}{{derefStr .Cite.StubCite}}{{else}}{{ptrOr .Cite.CiteLinked "&mdash;"}} <span class="text-secondary fst-italic">(stub since pruned; relink pending)</span>{{end}}</span>
+        <span class="label text-secondary">Cited</span><span>{{if .Cite.StubCitations}}{{deref .Cite.StubCitations}} times in {{deref .Cite.StubTreatises}} treatises{{else}}&mdash;{{end}}</span>
+        <span class="label text-secondary">Cited in</span><span>{{if .Cite.StubFirstYear}}{{deref .Cite.StubFirstYear}}&ndash;{{deref .Cite.StubLastYear}}{{else}}&mdash;{{end}}</span>
+    </div>
     {{else}}<p class="text-secondary fst-italic">No case linked.</p>{{end}}
     </div>
     </div>
