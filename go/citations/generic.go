@@ -34,10 +34,14 @@ var GenericDetector = NewDetector("Generic", abbrChar+`{3,16}`+edition)
 // since abbrOCRDigit is itself three characters wide.
 //
 // This is deliberately a second detector rather than a widened GenericDetector.
-// Detect keeps only one match per 25-character window, so folding the corrupted
+// Detect keeps only one match per starting place, so folding the corrupted
 // branch into GenericDetector lets a newly matchable corrupt span displace the
-// clean citation that window would otherwise have yielded -- measured at 16 lost
-// detections per 26k pages, several of them real citations, against 235 gained.
+// clean citation that starting place would otherwise have yielded -- measured at
+// 16 lost detections per 26k pages, several of them real citations, against 235
+// gained. That measurement was taken when a starting place was a 25-character
+// window rather than an anchored match (issue #281); the displacement it
+// describes is a property of keeping one match per starting place, which has not
+// changed, but the numbers are worth re-taking after the next full run.
 // Running it separately makes the yield purely additive: the two detectors scan
 // independently and SaveCitation's ON CONFLICT DO NOTHING collapses any citation
 // they both produce.

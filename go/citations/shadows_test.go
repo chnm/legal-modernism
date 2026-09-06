@@ -9,8 +9,9 @@ import (
 )
 
 // TestDetect_RecordsSpan checks that every detector reports where in the text
-// each citation was found, for both matching strategies (the windowed one the
-// generic detectors use and the plain FindAll the single-volume detectors use).
+// each citation was found, for both matching strategies (the anchored match at
+// each starting place that the generic detectors use, and the plain FindAll the
+// single-volume detectors use).
 // The text has a multi-byte character ahead of the citations so that the
 // offsets are exercised as byte offsets, which is what slicing a Go string
 // needs, rather than rune offsets.
@@ -96,10 +97,12 @@ func TestRemoveShadows(t *testing.T) {
 			// Two detectors whose abbreviations are prefixes of one another
 			// match the same span. That is the same citation twice, not a
 			// shadow; the unique index on citations_unlinked collapses it.
+			// Both abbreviations have to reach stemMinAbbrLen for the shorter
+			// one to stem this far -- "Toth" no longer reaches "Tothill".
 			name:      "equal spans from two detectors are both kept",
-			text:      "See Tothill 876 for the early statement.",
-			detectors: []*Detector{NewSingleVolDetector("Toth", "Toth"), NewSingleVolDetector("Tothill", "Tothill")},
-			want:      []string{"Tothill 876", "Tothill 876"},
+			text:      "The federal view in Baldwin 125 was different.",
+			detectors: []*Detector{NewSingleVolDetector("Baldw.", "Baldw"), NewSingleVolDetector("Baldw.", "Baldwin")},
+			want:      []string{"Baldwin 125", "Baldwin 125"},
 		},
 		{
 			name:      "no citations",
