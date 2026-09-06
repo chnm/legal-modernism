@@ -163,6 +163,73 @@ func TestCleanCite_NonNilVolume(t *testing.T) {
 	assert.Equal(t, "5 U.S. 100", c.CleanCite())
 }
 
+// TestDetector_LongCitationsAreNotTruncated covers issue #281. Detect used to
+// look for the match inside a 25-byte window opened at the starting place, which
+// bounded how long the match could be as well as where it could start. The
+// pattern's trailing \d{1,4} has no right-hand boundary, so a citation reaching
+// past the window edge had its page number cut mid-number and the truncated row
+// went on to link to a different case than the real one.
+func TestDetector_LongCitationsAreNotTruncated(t *testing.T) {
+	tests := []struct {
+		name string
+		text string
+		want []string
+		// truncated is the reading the 25-byte window produced, which must no
+		// longer appear anywhere in the output.
+		truncated string
+	}{
+		{
+			// The match begins 14 bytes into the old window, so it had only 11
+			// bytes to work in. Real text, from treatise 19000712500 page 00300.
+			name:      "match starts partway past the volume number",
+			text:      `) ........ 33 - v. Smith (13 Gray, 209) ......... 179`,
+			want:      []string{"13 Gray, 209"},
+			truncated: "13 Gray, 2",
+		},
+		{
+			// The match begins at the starting place but is 27 bytes long, so
+			// the window took only the first digit of the page.
+			name:      "edition suffix pushes the page past the window",
+			text:      `See 2 Lind. (Comp.) 6th ed. 123 on the point.`,
+			want:      []string{"2 Lind. (Comp.) 6th ed. 123"},
+			truncated: "2 Lind. (Comp.) 6th ed. 1",
+		},
+		{
+			name:      "long abbreviation with an edition suffix",
+			text:      `Compare 123 Am. & Eng. Enc. 4th ed. 1234 with the rule.`,
+			want:      []string{"123 Am. & Eng. Enc. 4th ed. 1234"},
+			truncated: "123 Am. & Eng. Enc. 4",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			doc := sources.NewDoc("test-long", tt.text)
+			var got []string
+			for _, c := range GenericDetector.Detect(doc) {
+				got = append(got, c.Raw)
+			}
+			for _, w := range tt.want {
+				assert.Contains(t, got, w)
+			}
+			assert.NotContains(t, got, tt.truncated,
+				"the window-truncated reading must not be detected")
+		})
+	}
+}
+
+// TestDetector_TruncatedPageIsNotRecorded is the consequence the previous test
+// guards against, stated in the terms the database sees: the page column.
+func TestDetector_TruncatedPageIsNotRecorded(t *testing.T) {
+	doc := sources.NewDoc("test-page", `) ........ 33 - v. Smith (13 Gray, 209) ......... 179`)
+	cites := GenericDetector.Detect(doc)
+	require.NotEmpty(t, cites)
+	for _, c := range cites {
+		assert.NotEqual(t, 2, c.Page, "page 2 is the truncation of page 209")
+	}
+	assert.Equal(t, 209, cites[0].Page)
+}
+
 func TestDetector_VolumeIsNonNil(t *testing.T) {
 	text := `This has 30 Missis. 673 as a citation.`
 	doc := sources.NewDoc("test", text)

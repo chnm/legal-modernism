@@ -15,15 +15,23 @@ type Detector struct {
 	Abbreviation string
 	initial      *regexp.Regexp // A subset of the regex that finds the starting place
 	regex        *regexp.Regexp
+	anchored     *regexp.Regexp // regex pinned to the start of the text it is given
 }
 
 // NewDetector creates a new citation detector and initializes its regular expression.
 func NewDetector(reporter string, abbreviation string) *Detector {
+	pattern := `\d{1,3}\s+` + abbreviation + `\s+\d{1,4}`
 	detector := &Detector{
 		Reporter:     reporter,
 		Abbreviation: abbreviation,
 		initial:      regexp.MustCompile(`\d{1,3}\s`),
-		regex:        regexp.MustCompile(`\d{1,3}\s+` + abbreviation + `\s+\d{1,4}`),
+		regex:        regexp.MustCompile(pattern),
+		// \A pins the match to the first byte of whatever string Detect hands
+		// it, so the match may run as far as the pattern needs without a window
+		// to cut it short. Anchoring also makes the search cheaper than the
+		// window scan it replaces: RE2 tries exactly one start position instead
+		// of every position in the window.
+		anchored: regexp.MustCompile(`\A(?:` + pattern + `)`),
 	}
 	return detector
 }
@@ -75,19 +83,35 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 	// Some kinds of detectors need to be able to find overlapping strings. If so
 	// We need to use a different strategy.
 	if d.initial != nil {
-		// If the initial detector is present, then we need to find the start of potential
-		// matches, get a substring, check if there is a match, and if so, add it to
-		// the list of matches.
+		// If the initial detector is present, then we find every place a
+		// citation could begin -- a volume number followed by whitespace -- and
+		// try to match the whole pattern there. One match per starting place.
+		//
+		// The match is anchored at the starting place rather than sought inside
+		// a fixed-width window. A window bounded how long the match could be as
+		// well as where it could start, and the pattern's trailing \d{1,4} has
+		// no right-hand boundary, so a citation that ran past the window edge
+		// had its page number cut mid-number: "13 Gray, 209" was recorded as
+		// page 2, and the truncated row went on to link to a different case
+		// than the real one (issue #281).
+		//
+		// Nothing is lost by requiring the match to begin at the starting place.
+		// Every match begins with \d{1,3}\s+, so its own first byte is itself a
+		// starting place unless it falls inside an earlier one -- and because
+		// the starting places do not overlap, that can only happen inside their
+		// digit run, where the alternative is a suffix of the same number
+		// ("3 Gray, 209" for "13 Gray, 209"). Those readings are worse than the
+		// one already found, not additional citations.
 		starts := d.initial.FindAllStringIndex(text, -1)
 
 		for _, start := range starts {
 			i := start[0]
-			substr := getSubstr(text, i, 25)
-			loc := d.regex.FindStringIndex(substr) // Only look for one match
+			loc := d.anchored.FindStringIndex(text[i:])
 			if loc != nil {
-				// The location is relative to the window, so shift it back
-				// into the coordinates of the whole text.
-				matches = append(matches, []int{i + loc[0], i + loc[1]})
+				// The location is relative to text[i:], and loc[0] is always 0
+				// because the pattern is anchored, so shift the end back into
+				// the coordinates of the whole text.
+				matches = append(matches, []int{i, i + loc[1]})
 			}
 		}
 	} else {
@@ -153,19 +177,4 @@ func (d *Detector) Detect(doc sources.Document) []*Citation {
 		citations = append(citations, c)
 	}
 	return citations
-}
-
-// Given a string s, start at i and get a substring of length l, but don't
-// run beyond the end of the string.
-func getSubstr(s string, i int, l int) string {
-	end := min(i+l, len(s))
-	return s[i:end]
-}
-
-// Return the minimum of two integers
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }
