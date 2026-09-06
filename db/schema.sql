@@ -1313,7 +1313,7 @@ CREATE TABLE moml_citations.citation_links (
     cite_linked text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     match_tier text,
-    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'code_alt_spelling'::text, 'er_direct'::text, 'er_page_interior'::text]))))
+    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'er_direct'::text, 'er_page_interior'::text]))))
 );
 
 
@@ -1441,6 +1441,11 @@ UNION ALL
     count(*) AS n
    FROM moml_citations.citation_links
   GROUP BY citation_links.status
+UNION ALL
+ SELECT 'unprocessed'::text AS metric,
+    (( SELECT count(*) AS count
+           FROM moml_citations.citations_unlinked) - ( SELECT count(*) AS count
+           FROM moml_citations.citation_links)) AS n
   WITH NO DATA;
 
 
@@ -2611,4 +2616,7 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260905120300'),
     ('20260905120400'),
     ('20260905120500'),
-    ('20260905120600');
+    ('20260905120600'),
+    ('20260906120000'),
+    ('20260906120100'),
+    ('20260906120200');
