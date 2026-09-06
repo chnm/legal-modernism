@@ -4,7 +4,7 @@
 # tables, then refresh every materialized view.
 #
 # Table maintenance runs first. The cite-linker churns the moml_citations
-# tables hard — a --reset run deletes and re-inserts tens of millions of rows in
+# tables hard — a full re-link deletes and re-inserts tens of millions of rows in
 # moml_citations.citation_links — which leaves dead tuples, a stale visibility
 # map (forcing needless heap fetches during index-only scans), and outdated
 # planner statistics. VACUUM (ANALYZE) recovers the space, sets the visibility

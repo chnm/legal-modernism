@@ -3,7 +3,6 @@ package citations
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -508,30 +507,4 @@ func (s *LinkerDBStore) SaveLinkResults(ctx context.Context, results []*LinkResu
 		return fmt.Errorf("batch saving %d link results: %w", len(results), err)
 	}
 	return nil
-}
-
-// ResetUnlinked deletes every citation_links row that was not resolved to a case
-// (every status in UnresolvedStatuses: no_match, skipped_not_whitelisted,
-// skipped_junk, skipped_statute) so the linker re-processes them on the next
-// run; only linked_* rows are preserved. Deleting the skip statuses too lets a
-// re-run re-derive them from the current whitelist, so a reporter later
-// corrected from junk to legit is no longer stuck as skipped_junk. The delete
-// runs as a single statement — one all-or-nothing transaction — and returns the
-// number of rows deleted.
-func (s *LinkerDBStore) ResetUnlinked(ctx context.Context) (int64, error) {
-	placeholders := make([]string, len(UnresolvedStatuses))
-	args := make([]any, len(UnresolvedStatuses))
-	for i, status := range UnresolvedStatuses {
-		placeholders[i] = fmt.Sprintf("$%d", i+1)
-		args[i] = status
-	}
-	query := fmt.Sprintf(`
-	DELETE FROM moml_citations.citation_links
-	WHERE status IN (%s)
-	`, strings.Join(placeholders, ", "))
-	tag, err := s.DB.Exec(ctx, query, args...)
-	if err != nil {
-		return 0, fmt.Errorf("resetting unlinked citations: %w", err)
-	}
-	return tag.RowsAffected(), nil
 }

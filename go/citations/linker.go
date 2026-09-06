@@ -99,18 +99,6 @@ const (
 	StatusNoMatch               = "no_match"
 )
 
-// UnresolvedStatuses are the statuses that did not resolve a citation to a
-// case, i.e. everything but linked_*. ResetUnlinked deletes exactly these so a
-// rerun re-derives them from the current whitelist; a status listed here and
-// nowhere else would silently survive --reset, which
-// TestUnresolvedStatusesCoverEverySkip guards against.
-var UnresolvedStatuses = []string{
-	StatusNoMatch,
-	StatusSkippedNotWhitelisted,
-	StatusSkippedJunk,
-	StatusSkippedStatute,
-}
-
 // Tier constants for LinkResult.MatchTier: how far the linking cascade got with
 // a citation. Status says whether a citation linked; the tier says why it did
 // not, or which probe succeeded when it did. Without it the 20M no_match rows

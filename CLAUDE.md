@@ -53,7 +53,7 @@ Log levels:
 
 ```go
 slog.Debug("saved batch", batch.LogID()...)        // per-iteration progress → DEBUG
-slog.Info("reset complete", "deleted", n)          // final result → INFO
+slog.Info("done linking citations", "processed", n) // final result → INFO
 slog.Error("batch failed", batch.LogID("error", err)...)
 ```
 
@@ -86,8 +86,8 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 After a change to the detector, the whitelist, or the reporter tables:
 
 1. `make db-up`, then `make db-schema` and commit `db/schema.sql`.
-2. If the detector or its inputs (`legalhist.reporters.single_vol`, `reporters_abbreviations`) changed: `TRUNCATE moml_citations.citations_unlinked CASCADE` (this also empties `citation_links`), then run `cite-detector-moml` (`slurm/cite-detector-moml.sh`, about a day on the cluster).
-3. Run `cite-linker` (`slurm/cite-linker.sh`): a plain run after a re-detection, or `--reset` after whitelist-only changes so the non-linked rows are re-derived.
+2. If the detector or its inputs (`legalhist.reporters.single_vol`, `reporters_abbreviations`) changed: `TRUNCATE moml_citations.citations_unlinked CASCADE` (this also empties `citation_links`), then run `cite-detector-moml` (`slurm/cite-detector-moml.sh`). The 2026-09-05 run took **3h36m**, measured from the `created_at` span in `citations_unlinked`.
+3. Run `cite-linker` (`slurm/cite-linker.sh`). There is no `--reset` flag: to re-derive existing rows after a whitelist or linking change, `TRUNCATE moml_citations.citation_links` first and then run it unchanged. A full rebuild takes about ten minutes.
 4. `make db-maintenance` to vacuum the churned tables and refresh every materialized view, which the chambers dashboard reads.
 
 ## Environment variables

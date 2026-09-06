@@ -53,11 +53,9 @@ func exitStartupError(msg string, err error, attrs ...any) {
 }
 
 func main() {
-	var reset bool
 	var batchSize int
 	var workers int
 	var lockTimeout time.Duration
-	flag.BoolVar(&reset, "reset", false, "before linking, delete every non-linked citation_links row (status no_match, skipped_not_whitelisted, skipped_junk, skipped_statute) so they are re-processed; only linked_* rows are kept")
 	flag.IntVar(&batchSize, "batch-size", 5000, "number of citations per insert batch")
 	flag.IntVar(&workers, "workers", 32, "number of concurrent insert workers (each uses one DB connection)")
 	flag.DurationVar(&lockTimeout, "lock-timeout", time.Minute, "give up on a statement that waits this long for a database lock, instead of blocking forever behind an uncommitted transaction; 0 disables")
@@ -116,19 +114,13 @@ func main() {
 
 	store := citations.NewLinkerDBStore(pool)
 
-	// Handle --reset: delete every non-linked row (no_match,
-	// skipped_not_whitelisted, skipped_junk, skipped_statute) so they are
-	// re-processed by this run. Only linked_* rows are preserved. Done before
-	// everything else so the linking below sees the post-reset state.
-	if reset {
-		slog.Info("resetting unresolved citation links", "statuses", citations.UnresolvedStatuses)
-		deleted, err := store.ResetUnlinked(ctx)
-		if err != nil {
-			exitStartupError("reset failed", err, "deleted", deleted)
-		}
-		slog.Info("reset complete", "deleted", deleted)
-	}
-
+	// There is no --reset. Re-deriving existing rows means TRUNCATE
+	// moml_citations.citation_links from psql and then running this program
+	// unchanged: a full rebuild takes about ten minutes, and the anti-join in
+	// StreamUnprocessedCitations then resumes from wherever a previous job
+	// stopped. A --reset flag could only ever delete the non-linked rows, so it
+	// could not clear a stale link at all, and because it deleted at startup a
+	// job that hit the wall time restarted from scratch (issue #294).
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
 
 	// Pre-load lookup tables into memory
