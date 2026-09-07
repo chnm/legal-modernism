@@ -45,7 +45,8 @@ func newTestStore(t *testing.T) *LinkerDBStore {
 			volume integer,
 			reporter_abbr text NOT NULL,
 			page integer NOT NULL,
-			created_at timestamp without time zone NOT NULL DEFAULT now()
+			created_at timestamp without time zone NOT NULL DEFAULT now(),
+			year integer
 		)`,
 		`CREATE TABLE moml_citations.citation_links (
 			citation_id uuid PRIMARY KEY,

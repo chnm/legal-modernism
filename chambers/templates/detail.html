@@ -63,7 +63,7 @@ LIMIT 1</code></pre>
     <h2 class="h6 border-bottom pb-1 mt-3">Detected</h2>
     <div class="detail-grid">
         <span class="label text-secondary">Raw</span><span>{{.Cite.Raw}}</span>
-        <span class="label text-secondary">Parsed</span><span>{{if .Cite.Volume}}{{deref .Cite.Volume}}{{else}}?{{end}} {{.Cite.ReporterAbbr}} {{.Cite.Page}}</span>
+        <span class="label text-secondary">Parsed</span><span>{{if .Cite.Year}}[{{deref .Cite.Year}}] {{end}}{{if .Cite.Volume}}{{deref .Cite.Volume}}{{else}}?{{end}} {{.Cite.ReporterAbbr}} {{.Cite.Page}}</span>
     </div>
 
     <h2 class="h6 border-bottom pb-1 mt-3">Linking</h2>

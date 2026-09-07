@@ -72,6 +72,7 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 - Full schema: `db/schema.sql`
 - Schemas: `cap`, `cap_citations`, `english_reports`, `legalhist`, `moml`, `moml_citations`, `stats`, `sys_admin`, `textbooks`
 - Migrations should be idempotent: use `IF NOT EXISTS` / `IF EXISTS` guards on `CREATE INDEX`, `CREATE TABLE`, `ADD CONSTRAINT`, `DROP CONSTRAINT`, etc.
+- `legalhist.reporters.cited_by_year` flags reporters cited by year (K.B., the Irish Reports). The detector records the year in `citations_unlinked.year` and drops the year-less reading of the same citation; the linker and `db/stub_cases.sql` key such a citation on it (`[1905] 2 K.B. 1`).
 - Don't update `db/schema.sql`: this file is auto-generated.
 
 ### Writing a migration

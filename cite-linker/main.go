@@ -810,12 +810,32 @@ func buildAltCites(c *citations.UnlinkedCitation, alts []string) []string {
 	return altCites
 }
 
-// buildStandardCite constructs "{volume} {reporter_standard} {page}".
+// buildStandardCite constructs "{volume} {reporter_standard} {page}", led by
+// the year for a reporter cited by year: "[1905] 2 K.B. 1". See yearPrefix.
 func buildStandardCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) string {
 	if c.Volume == nil {
-		return fmt.Sprintf("%s %d", *entry.ReporterStandard, c.Page)
+		return yearPrefix(c, entry) + fmt.Sprintf("%s %d", *entry.ReporterStandard, c.Page)
 	}
-	return fmt.Sprintf("%d %s %d", *c.Volume, *entry.ReporterStandard, c.Page)
+	return yearPrefix(c, entry) + fmt.Sprintf("%d %s %d", *c.Volume, *entry.ReporterStandard, c.Page)
+}
+
+// yearPrefix is the "[1905] " that leads the cite string of a citation to a
+// reporter cited by year, when the citation carries a year, and "" otherwise.
+// For such a reporter the volume restarts every year, so without the year the
+// string names a different case for every year of the series (issue #312).
+// The year goes into the string rather than into a separate probe because
+// the string is what every target is keyed on -- the stub registry above all,
+// which is where these citations end up, no source holding the reporter -- and
+// what cite_cleaned records for the row.
+//
+// A reporter that is not cited by year keeps its plain string even when the
+// citation carries a year: on the volume-cited series a year is decoration,
+// "(1889) 14 App. Cas. 337", and would split one case's citations in two.
+func yearPrefix(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) string {
+	if !entry.CitedByYear || c.Year == nil {
+		return ""
+	}
+	return fmt.Sprintf("[%d] ", *c.Year)
 }
 
 // buildCAPCite constructs the citation string appropriate for CAP lookup,
@@ -825,7 +845,7 @@ func buildCAPCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry
 	if entry.CAPDifferent && c.Volume != nil {
 		if vols, ok := diffvols[*entry.ReporterStandard]; ok {
 			if dv, ok := vols[*c.Volume]; ok {
-				return fmt.Sprintf("%d %s %d", dv.CAPVol, dv.CAPReporter, c.Page)
+				return yearPrefix(c, entry) + fmt.Sprintf("%d %s %d", dv.CAPVol, dv.CAPReporter, c.Page)
 			}
 		}
 	}
@@ -837,7 +857,7 @@ func buildCAPCite(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry
 	}
 
 	if c.Volume == nil {
-		return fmt.Sprintf("%s %d", reporter, c.Page)
+		return yearPrefix(c, entry) + fmt.Sprintf("%s %d", reporter, c.Page)
 	}
-	return fmt.Sprintf("%d %s %d", *c.Volume, reporter, c.Page)
+	return yearPrefix(c, entry) + fmt.Sprintf("%d %s %d", *c.Volume, reporter, c.Page)
 }

@@ -23,7 +23,12 @@
 --      multi-volume reporter identifies nothing; for a single-volume reporter
 --      the detected volume-less form and the volume-1 form are the same cite,
 --      and are written as volume 1, the equivalence the linker's volumeForms
---      applies when it probes.
+--      applies when it probes. For a reporter cited by year
+--      (legalhist.reporters.cited_by_year, issue #312) the year is part of
+--      the key when the citation carries one, "[1905] 2 K.B. 1", because the
+--      volume restarts every year; a citation of such a reporter detected
+--      without its year keeps the plain key, and collapses across the years
+--      as before, which is visible as a stub without a year.
 --
 --   3. It recurs at least :threshold times across the corpus (default 10, set
 --      with psql -v threshold=N). Measured on the covered reporters, where
@@ -76,8 +81,11 @@ HAVING bool_and(
 --    treatise years come from moml.book_info, keyed by psmid, which is what
 --    citations_unlinked.moml_treatise holds.
 CREATE TEMP TABLE stub_candidates ON COMMIT DROP AS
-SELECT format('%s %s %s', v.volume, wl.reporter_standard, cu.page) AS cite,
+SELECT format('%s%s %s %s',
+              CASE WHEN v.year IS NOT NULL THEN format('[%s] ', v.year) ELSE '' END,
+              v.volume, wl.reporter_standard, cu.page) AS cite,
        wl.reporter_standard,
+       v.year,
        v.volume,
        cu.page,
        count(*)::integer                        AS n_citations,
@@ -92,7 +100,9 @@ JOIN stub_eligible_reporters e ON e.reporter_standard = wl.reporter_standard
 CROSS JOIN LATERAL (
     SELECT CASE WHEN coalesce(r.single_vol, false)
                 THEN coalesce(cu.volume, 1)
-                ELSE cu.volume END AS volume
+                ELSE cu.volume END AS volume,
+           CASE WHEN coalesce(r.cited_by_year, false)
+                THEN cu.year END AS year
 ) v
 LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
 WHERE (cl.status = 'linked_stub'
@@ -101,7 +111,7 @@ WHERE (cl.status = 'linked_stub'
   AND coalesce(r.type, '') <> 'statute'
   AND cu.page > 0
   AND v.volume > 0
-GROUP BY wl.reporter_standard, v.volume, cu.page
+GROUP BY wl.reporter_standard, v.year, v.volume, cu.page
 HAVING count(*) >= :threshold;
 
 -- 3. Upsert. A row whose counts have not changed is left alone, so updated_at
@@ -109,9 +119,9 @@ HAVING count(*) >= :threshold;
 --    update in the RETURNING set.
 WITH upserted AS (
     INSERT INTO legalhist.stub_cases AS s
-        (cite, reporter_standard, volume, page,
+        (cite, reporter_standard, year, volume, page,
          n_citations, n_treatises, first_cited_year, last_cited_year)
-    SELECT cite, reporter_standard, volume, page,
+    SELECT cite, reporter_standard, year, volume, page,
            n_citations, n_treatises, first_cited_year, last_cited_year
     FROM stub_candidates
     ON CONFLICT (cite) DO UPDATE

@@ -30,7 +30,8 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 			WHERE d.reporter_standard = w.reporter_standard
 		) AS cap_different,
 		COALESCE(r.single_vol, false) AS single_vol,
-		COALESCE(r.type = 'statute', false) AS statute
+		COALESCE(r.type = 'statute', false) AS statute,
+		COALESCE(r.cited_by_year, false) AS cited_by_year
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	`
@@ -44,7 +45,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	for rows.Next() {
 		var found string
 		var e WhitelistEntry
-		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute)
+		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute, &e.CitedByYear)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}
@@ -125,7 +126,7 @@ func (s *LinkerDBStore) GetDiffVols(ctx context.Context) (map[string]map[int]*Di
 // the whole table is read as fast as fn accepts batches.
 func (s *LinkerDBStore) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error {
 	query := `
-	SELECT cu.id, cu.moml_treatise, cu.moml_page, cu.raw, cu.volume, cu.reporter_abbr, cu.page
+	SELECT cu.id, cu.moml_treatise, cu.moml_page, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year
 	FROM moml_citations.citations_unlinked cu
 	WHERE NOT EXISTS (
 		SELECT 1 FROM moml_citations.citation_links cl WHERE cl.citation_id = cu.id
@@ -140,7 +141,7 @@ func (s *LinkerDBStore) StreamUnprocessedCitations(ctx context.Context, batchSiz
 	batch := make([]UnlinkedCitation, 0, batchSize)
 	for rows.Next() {
 		var c UnlinkedCitation
-		if err := rows.Scan(&c.ID, &c.MomlTreatise, &c.MomlPage, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page); err != nil {
+		if err := rows.Scan(&c.ID, &c.MomlTreatise, &c.MomlPage, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year); err != nil {
 			return fmt.Errorf("scanning unlinked citation: %w", err)
 		}
 		batch = append(batch, c)

@@ -85,6 +85,14 @@ func volumeKey(vol, reporter string) string {
 // numerically. A page that does not fit an int yields ok false rather than a
 // wrapped value.
 func splitCite(cite string) (vol, reporter string, page int, ok bool) {
+	// A citation to a reporter cited by year leads with the year in brackets,
+	// "[1905] 2 K.B. 1". The year is part of the cite string, not of the
+	// reporter or the volume, so it is set aside before the split.
+	if strings.HasPrefix(cite, "[") {
+		if end := strings.Index(cite, "] "); end > 1 && allDigits(cite[1:end]) {
+			cite = cite[end+2:]
+		}
+	}
 	sp := strings.LastIndexByte(cite, ' ')
 	if sp <= 0 || !allDigits(cite[sp+1:]) {
 		return "", "", 0, false // no page, so not a cite

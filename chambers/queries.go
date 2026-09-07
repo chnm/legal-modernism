@@ -22,6 +22,7 @@ type CitationDetail struct {
 	Volume       *int
 	ReporterAbbr string
 	Page         int
+	Year         *int // set for a reporter cited by year, "[1905] 2 K.B. 1"
 	MomlTreatise string
 	MomlPage     string
 
@@ -146,6 +147,7 @@ SELECT
     cu.volume,
     cu.reporter_abbr,
     cu.page,
+    cu.year,
     cu.moml_treatise,
     cu.moml_page,
     cl.status,
@@ -990,6 +992,7 @@ func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*Ci
 		&c.Volume,
 		&c.ReporterAbbr,
 		&c.Page,
+		&c.Year,
 		&c.MomlTreatise,
 		&c.MomlPage,
 		&c.Status,
