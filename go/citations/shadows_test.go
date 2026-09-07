@@ -46,7 +46,7 @@ func TestRemoveShadows(t *testing.T) {
 	tests := []struct {
 		name      string
 		text      string
-		detectors []*Detector
+		detectors []Finder
 		want      []string // CleanCite of every citation kept, in order
 	}{
 		{
@@ -54,7 +54,7 @@ func TestRemoveShadows(t *testing.T) {
 			// matches the tail of a citation to the California Reports.
 			name:      "same abbreviation inside a volumed citation",
 			text:      "The rule in 123 Cal. 185 was different.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Cal.", "Cal.")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Cal.", "Cal.")},
 			want:      []string{"123 Cal. 185"},
 		},
 		{
@@ -63,13 +63,13 @@ func TestRemoveShadows(t *testing.T) {
 			// could not have caught.
 			name:      "abbreviation is the tail of a longer abbreviation",
 			text:      "See 5 Ld. Raym. 45 for the point.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Raym.", "Raym.")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Raym.", "Raym.")},
 			want:      []string{"5 Ld. Raym. 45"},
 		},
 		{
 			name:      "single-volume match inside a longer single-volume match",
 			text:      "See Ch. Cas. 45 for the point.",
-			detectors: []*Detector{NewSingleVolDetector("Ch. Cas.", "Ch. Cas."), NewSingleVolDetector("Cas.", "Cas.")},
+			detectors: []Finder{NewSingleVolDetector("Ch. Cas.", "Ch. Cas."), NewSingleVolDetector("Cas.", "Cas.")},
 			want:      []string{"Ch. Cas. 45"},
 		},
 		{
@@ -78,19 +78,19 @@ func TestRemoveShadows(t *testing.T) {
 			// the bare form, so no link is lost by dropping the shadow.
 			name:      "redundant volume 1 on a single-volume reporter",
 			text:      "See 1 Toth 123 for the point.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Toth", "Toth")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Toth", "Toth")},
 			want:      []string{"1 Toth 123"},
 		},
 		{
 			name:      "a bare single-volume citation is kept",
 			text:      "See Hob. 423 for the ruling.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Hob.", "Hob.")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Hob.", "Hob.")},
 			want:      []string{"Hob. 423"},
 		},
 		{
 			name:      "adjacent citations are not shadows of each other",
 			text:      "See Cal. 185; Hob. 12 for the ruling.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Cal.", "Cal."), NewSingleVolDetector("Hob.", "Hob.")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Cal.", "Cal."), NewSingleVolDetector("Hob.", "Hob.")},
 			want:      []string{"Cal. 185", "Hob. 12"},
 		},
 		{
@@ -101,14 +101,38 @@ func TestRemoveShadows(t *testing.T) {
 			// one to stem this far -- "Toth" no longer reaches "Tothill".
 			name:      "equal spans from two detectors are both kept",
 			text:      "The federal view in Baldwin 125 was different.",
-			detectors: []*Detector{NewSingleVolDetector("Baldw.", "Baldw"), NewSingleVolDetector("Baldw.", "Baldwin")},
+			detectors: []Finder{NewSingleVolDetector("Baldw.", "Baldw"), NewSingleVolDetector("Baldw.", "Baldwin")},
 			want:      []string{"Baldwin 125", "Baldwin 125"},
 		},
 		{
 			name:      "no citations",
 			text:      "Nothing to see here.",
-			detectors: []*Detector{GenericDetector, NewSingleVolDetector("Hob.", "Hob.")},
+			detectors: []Finder{GenericDetector, NewSingleVolDetector("Hob.", "Hob.")},
 			want:      []string{},
+		},
+		{
+			// A reporter cited by year: the generic detector's reading without
+			// the year is inside the year detector's span and names no case in
+			// particular, so only the citation that carries the year is kept.
+			name:      "year-cited citation shadows its year-less reading",
+			text:      "Hinton v. Doe [1906] 2 K. B. 171.",
+			detectors: []Finder{GenericDetector, NewYearDetector("K.B.", "K. B.")},
+			want:      []string{"[1906] 2 K. B. 171"},
+		},
+		{
+			// The year detector matches only its own reporter, so a neighbouring
+			// citation to another reporter, year or no year, is untouched.
+			name:      "year-cited citation does not shadow its neighbours",
+			text:      "(1911) 28 T. L. R. 93; (1912) 1 K. B. 158; 76 J. P. 12.",
+			detectors: []Finder{GenericDetector, NewYearDetector("K.B.", "K. B.")},
+			want:      []string{"28 T. L. R. 93", "76 J. P. 12", "[1912] 1 K. B. 158"},
+		},
+		{
+			// Without a year the generic reading is all there is, and it stays.
+			name:      "year-less citation to a year-cited reporter is kept",
+			text:      "See 2 K. B. 293 for the point.",
+			detectors: []Finder{GenericDetector, NewYearDetector("K.B.", "K. B.")},
+			want:      []string{"2 K. B. 293"},
 		},
 	}
 
@@ -132,8 +156,9 @@ func TestRemoveShadows(t *testing.T) {
 
 // TestRemoveShadows_VolumedInsideWiderSpan pins down the rule directly, with
 // hand-built citations, for the one case the detectors cannot produce: a
-// citation that carries a volume yet lies strictly inside another span. It must
-// survive, because only the single-volume detectors produce shadows.
+// citation that carries a volume yet lies strictly inside another span that
+// carries no year. It must survive, because among year-less citations only the
+// single-volume detectors produce shadows.
 func TestRemoveShadows_VolumedInsideWiderSpan(t *testing.T) {
 	vol := 5
 	inner := &Citation{Raw: "5 Cal. 185", Volume: &vol, ReporterAbbr: "Cal.", Page: 185, Start: 3, End: 13}
@@ -141,4 +166,11 @@ func TestRemoveShadows_VolumedInsideWiderSpan(t *testing.T) {
 
 	kept := RemoveShadows([]*Citation{inner, outer})
 	assert.Equal(t, []*Citation{inner, outer}, kept)
+
+	// The same span relation with a year on the outer citation is the
+	// year-cited case, and then the inner reading goes.
+	year := 1905
+	outer.Year = &year
+	kept = RemoveShadows([]*Citation{inner, outer})
+	assert.Equal(t, []*Citation{outer}, kept)
 }
