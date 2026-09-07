@@ -26,6 +26,8 @@ func TestLinkCitation(t *testing.T) {
 	aleynStd := "Al"
 	kebStd := "Keb"
 	amDecStd := "Am. Dec."
+	abrStd := "A.B.R."
+	ltStd := "L.T."
 
 	tests := []struct {
 		name         string
@@ -39,12 +41,14 @@ func TestLinkCitation(t *testing.T) {
 		erCites      map[string]citations.ERCase
 		capSpans     []citations.CaseSpan[int64]
 		erSpans      []citations.CaseSpan[string]
+		stubs        map[string]struct{}
 		wantStatus   string
 		wantTier     string
 		wantCAPID    *int64
 		wantCodeID   *int64
 		wantERID     *string
 		wantLinked   *string
+		wantStub     *string
 	}{
 		{
 			name:         "exact CAP hit wins over FreeLaw",
@@ -733,11 +737,106 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierCAPPageInterior,
 			wantCAPID:  ptr(int64(901)),
 		},
+		{
+			// Issue #248. No US source holds the American Bankruptcy Reports, so
+			// the failure would be us_reporter_absent; the registry carries the
+			// string, so the citation links to the stub under its own status.
+			name:       "stub links a citation whose reporter no US source holds",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(4), ReporterAbbr: "Am. B. R.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. B. R.": {ReporterStandard: &abrStd}},
+			stubs:      map[string]struct{}{"4 A.B.R. 1": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("4 A.B.R. 1"),
+			wantStub:   ptr("4 A.B.R. 1"),
+		},
+		{
+			name:       "stub links a citation whose reporter the English Reports do not hold",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(34), ReporterAbbr: "L. T.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"L. T.": {ReporterStandard: &ltStd, UK: true}},
+			stubs:      map[string]struct{}{"34 L.T. 100": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("34 L.T. 100"),
+			wantStub:   ptr("34 L.T. 100"),
+		},
+		{
+			// The registry is consulted only when the failure would be
+			// reporter_absent. Here CAP holds another volume of the reporter, so
+			// the miss is us_volume_absent -- a coverage gap in a source we have
+			// -- and a stub, even one that exists for the string, must not claim
+			// it. This is the guard that keeps a stale registry from capturing a
+			// reporter after a dataset covering it is imported.
+			name:       "stub is not consulted when a source holds the reporter",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(4), ReporterAbbr: "Am. B. R.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. B. R.": {ReporterStandard: &abrStd}},
+			capCites:   map[string]int64{"3 A.B.R. 99": 5},
+			stubs:      map[string]struct{}{"4 A.B.R. 1": {}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSVolumeAbsent,
+		},
+		{
+			name:       "stub is not consulted when the English Reports hold the reporter",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(34), ReporterAbbr: "L. T.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"L. T.": {ReporterStandard: &ltStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"1 L.T. 5": {ID: "er-lt", Cases: 1}},
+			stubs:      map[string]struct{}{"34 L.T. 100": {}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKVolumeAbsent,
+		},
+		{
+			// A real case always outranks a stub: the registry is probed after
+			// every source has missed.
+			name:       "exact CAP hit wins over a stub for the same string",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 10": 111},
+			stubs:      map[string]struct{}{"5 U.S. 10": {}},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("5 U.S. 10"),
+		},
+		{
+			// db/stub_cases.sql writes a single-volume reporter's stub under
+			// volume 1, so the volume-less detected form has to reach it through
+			// the variant volumeForms adds, exactly as it reaches CAP.
+			name:       "single-volume reporter reaches its stub under the volume-1 form",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			stubs:      map[string]struct{}{"1 Toth 123": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("1 Toth 123"),
+			wantStub:   ptr("1 Toth 123"),
+		},
+		{
+			// A volume-less citation to a multi-volume reporter is not resolved
+			// against volume 1 for the stubs either: the registry never holds a
+			// volume-less key, and no volume is guessed.
+			name:       "volume-less cite to a multi-volume reporter does not reach a stub",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "L. T.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"L. T.": {ReporterStandard: &ltStd, UK: true}},
+			stubs:      map[string]struct{}{"1 L.T. 100": {}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKReporterAbsent,
+		},
+		{
+			// The registry is keyed on the standard form, never the CAP spelling
+			// or a translated volume: a reporter with reporter_cap set builds a
+			// different normalized string, and only the cleaned one may match.
+			name:       "stub matches the standard form, not the CAP spelling",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(4), ReporterAbbr: "Am. B. R.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. B. R.": {ReporterStandard: &abrStd, ReporterCAP: ptr("Am. Bankr. Rep.")}},
+			stubs:      map[string]struct{}{"4 Am. Bankr. Rep. 1": {}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSReporterAbsent,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans)
+			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans, tt.stubs)
 			got := linkCitation(&tt.cite, tables)
 
 			assert.Equal(t, tt.wantStatus, got.Status)
@@ -773,6 +872,14 @@ func TestLinkCitation(t *testing.T) {
 			} else {
 				if assert.NotNil(t, got.CiteLinked) {
 					assert.Equal(t, *tt.wantLinked, *got.CiteLinked)
+				}
+			}
+
+			if tt.wantStub == nil {
+				assert.Nil(t, got.StubCite)
+			} else {
+				if assert.NotNil(t, got.StubCite) {
+					assert.Equal(t, *tt.wantStub, *got.StubCite)
 				}
 			}
 		})
@@ -829,7 +936,7 @@ func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
 	whitelist := map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &std, SingleVol: true}}
 
 	tables := newLinkTables(whitelist, map[string]map[int]*citations.DiffVolEntry{},
-		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil)
+		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil, nil)
 	got := linkCitation(c, tables)
 
 	assert.Equal(t, citations.StatusLinkedCAP, got.Status)

@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet sync-hopper db-up db-down db-status db-schema db-maintenance chambers
+.PHONY: binaries clean test vet sync-hopper db-up db-down db-status db-schema db-stubs db-maintenance chambers
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -50,6 +50,17 @@ db-status:
 
 db-schema:
 	dbmate --env DBMATE_URL dump
+
+# A cite string must recur this many times across the corpus to get a row in
+# legalhist.stub_cases (issue #248); override with make db-stubs STUB_THRESHOLD=N.
+STUB_THRESHOLD ?= 10
+
+# Rebuild legalhist.stub_cases from the linker's misses. Uses LAW_DBSTR directly
+# (needs write access). Run after cite-linker, then TRUNCATE
+# moml_citations.citation_links and run cite-linker again so the citations to
+# those reporters link to the stubs.
+db-stubs:
+	psql "$(DBMATE_URL)" -X -v ON_ERROR_STOP=1 -v threshold=$(STUB_THRESHOLD) -f db/stub_cases.sql
 
 # Post-linker maintenance: vacuum/analyze the churned tables, then refresh all
 # materialized views in dependency order (parallel within each level). Uses

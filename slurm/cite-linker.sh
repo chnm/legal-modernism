@@ -53,6 +53,13 @@
 # has a foreign key onto citation_links, so the truncate needs no cascade, and
 # the whole rebuild takes about ten minutes.
 #
+# Stub cases (issue #248): at startup the linker loads legalhist.stub_cases, the
+# registry of cite strings in reporters no source covers, and links a citation
+# to one under status linked_stub once every source has missed. The registry is
+# built from this program's own misses (`make db-stubs` after a run), so a full
+# rebuild goes: linker, db-stubs, TRUNCATE, linker again. A routine run needs no
+# second pass; it links new citations to the registry that already exists.
+#
 # Sizing: a full rebuild of all ~62.2M citations on 2026-09-04 fit comfortably in
 # the 1 hour wall time above — 8m21s wall, of which 32s was loading the lookup
 # tables and 7m49s was linking at a steady 105–140K rows/sec (roughly 1 core and

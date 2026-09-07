@@ -57,7 +57,8 @@ func newTestStore(t *testing.T) *LinkerDBStore {
 			cite_cleaned text,
 			cite_normalized text,
 			cite_linked text,
-			created_at timestamp with time zone DEFAULT now() NOT NULL
+			created_at timestamp with time zone DEFAULT now() NOT NULL,
+			stub_cite text
 		)`,
 	}
 	for _, stmt := range setup {
@@ -469,4 +470,78 @@ func TestLoadEnglishReportsCitationsIntegration(t *testing.T) {
 		// A NULL parallel cite contributes only its reprint cite.
 		"99 E.R. 944": {ID: "c7", Cases: 1},
 	}, got)
+}
+
+func TestLoadStubCasesIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// The minimal slice of legalhist.stub_cases the loader reads: only the key.
+	for _, stmt := range []string{
+		`CREATE SCHEMA IF NOT EXISTS legalhist`,
+		`DROP TABLE IF EXISTS legalhist.stub_cases`,
+		`CREATE TABLE legalhist.stub_cases (cite text PRIMARY KEY, n_citations integer NOT NULL)`,
+		`INSERT INTO legalhist.stub_cases VALUES ('14 L.R.A.C. 337', 1001), ('4 A.B.R. 1', 468)`,
+	} {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.LoadStubCases(ctx)
+	require.NoError(t, err)
+	assert.Equal(t, map[string]struct{}{"14 L.R.A.C. 337": {}, "4 A.B.R. 1": {}}, got)
+
+	// An empty registry is the state before make db-stubs has run; it loads as
+	// an empty set, not an error.
+	_, err = s.DB.Exec(ctx, `DELETE FROM legalhist.stub_cases`)
+	require.NoError(t, err)
+	got, err = s.LoadStubCases(ctx)
+	require.NoError(t, err)
+	assert.Empty(t, got)
+}
+
+// TestSaveLinkResultsStubIntegration covers the tenth column: a stub link
+// records its key in stub_cite, and every other kind of result leaves it NULL.
+func TestSaveLinkResultsStubIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	stub := "34 L.T. 100"
+	cleaned := "34 L.T. 100"
+	idStub := uuid.New()
+	idNoMatch := uuid.New()
+	seedUnlinked(t, s, idStub, nil)
+	seedUnlinked(t, s, idNoMatch, nil)
+
+	results := []*LinkResult{
+		{CitationID: idStub, Status: StatusLinkedStub, MatchTier: TierStubDirect,
+			StubCite: &stub, CiteCleaned: &cleaned, CiteNormalized: &cleaned, CiteLinked: &stub},
+		{CitationID: idNoMatch, Status: StatusNoMatch, MatchTier: TierUKReporterAbsent,
+			CiteCleaned: &cleaned, CiteNormalized: &cleaned},
+	}
+	require.NoError(t, s.SaveLinkResults(ctx, results))
+
+	var status, tier string
+	var stubCite, linked *string
+	err := s.DB.QueryRow(ctx,
+		`SELECT status, match_tier, stub_cite, cite_linked FROM moml_citations.citation_links WHERE citation_id = $1`, idStub).
+		Scan(&status, &tier, &stubCite, &linked)
+	require.NoError(t, err)
+	assert.Equal(t, StatusLinkedStub, status)
+	assert.Equal(t, TierStubDirect, tier)
+	if assert.NotNil(t, stubCite) {
+		assert.Equal(t, stub, *stubCite)
+	}
+	if assert.NotNil(t, linked) {
+		assert.Equal(t, stub, *linked)
+	}
+
+	err = s.DB.QueryRow(ctx,
+		`SELECT status, match_tier, stub_cite, cite_linked FROM moml_citations.citation_links WHERE citation_id = $1`, idNoMatch).
+		Scan(&status, &tier, &stubCite, &linked)
+	require.NoError(t, err)
+	assert.Equal(t, StatusNoMatch, status)
+	assert.Equal(t, TierUKReporterAbsent, tier)
+	assert.Nil(t, stubCite)
+	assert.Nil(t, linked)
 }
