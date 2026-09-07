@@ -36,6 +36,7 @@ func (r *DBStore) SaveCitation(ctx context.Context, c *Citation) error {
 // batch size. The id is sent as text[] and cast to uuid in SQL rather than
 // relying on driver-side uuid-array encoding, and created_at is a single scalar
 // because every citation in a batch comes off the same page at the same moment.
+// The year is NULL for every citation but a YearDetector's.
 //
 // Duplicates are collapsed twice over. citationKey drops them inside the batch,
 // on exactly the columns of the citations_unlinked_uq unique index, and the
@@ -57,6 +58,7 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 	volumes := make([]*int32, 0, len(cites))
 	abbrs := make([]string, 0, len(cites))
 	pageNums := make([]int32, 0, len(cites))
+	years := make([]*int32, 0, len(cites))
 
 	for _, c := range cites {
 		k := citationKey(c)
@@ -77,17 +79,23 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 		}
 		abbrs = append(abbrs, c.ReporterAbbr)
 		pageNums = append(pageNums, int32(c.Page))
+		if c.Year == nil {
+			years = append(years, nil)
+		} else {
+			y := int32(*c.Year)
+			years = append(years, &y)
+		}
 	}
 
 	query := `
 	INSERT INTO moml_citations.citations_unlinked
-		(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, created_at)
-	SELECT u.id::uuid, u.moml_treatise, u.moml_page, u.raw, u.volume, u.reporter_abbr, u.page, $8
-	FROM unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::int4[], $6::text[], $7::int4[])
-		AS u(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page)
+		(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year, created_at)
+	SELECT u.id::uuid, u.moml_treatise, u.moml_page, u.raw, u.volume, u.reporter_abbr, u.page, u.year, $9
+	FROM unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::int4[], $6::text[], $7::int4[], $8::int4[])
+		AS u(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year)
 	ON CONFLICT DO NOTHING;
 	`
-	_, err := r.DB.Exec(ctx, query, ids, treatises, pages, raws, volumes, abbrs, pageNums, time.Now())
+	_, err := r.DB.Exec(ctx, query, ids, treatises, pages, raws, volumes, abbrs, pageNums, years, time.Now())
 	if err != nil {
 		return fmt.Errorf("batch saving %d citations: %w", len(ids), err)
 	}
@@ -95,17 +103,21 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 }
 
 // citationKey is the key of the citations_unlinked_uq unique index --
-// (moml_treatise, moml_page, COALESCE(volume, -1), reporter_abbr, page) -- so
-// that dropping duplicates in Go removes exactly the rows the database would
-// have refused. The NUL separator cannot occur in any part, so no two distinct
-// citations can share a key.
+// (moml_treatise, moml_page, COALESCE(volume, -1), reporter_abbr, page,
+// COALESCE(year, -1)) -- so that dropping duplicates in Go removes exactly the
+// rows the database would have refused. The NUL separator cannot occur in any
+// part, so no two distinct citations can share a key.
 func citationKey(c *Citation) string {
 	vol := "-1"
 	if c.Volume != nil {
 		vol = strconv.Itoa(*c.Volume)
 	}
+	year := "-1"
+	if c.Year != nil {
+		year = strconv.Itoa(*c.Year)
+	}
 	return strings.Join([]string{
-		c.Source.ParentID(), c.Source.ID(), vol, c.ReporterAbbr, strconv.Itoa(c.Page),
+		c.Source.ParentID(), c.Source.ID(), vol, c.ReporterAbbr, strconv.Itoa(c.Page), year,
 	}, "\x00")
 }
 
@@ -150,5 +162,40 @@ func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolRep
 		return nil, fmt.Errorf("iterating single volume reporters: %w", err)
 	}
 
+	return reporters, nil
+}
+
+// GetYearCitedReporterAbbrs returns one row per (reporter_standard, spelling)
+// pair for every reporter flagged cited_by_year. The spellings come from the
+// whitelist rather than from reporters_abbreviations, because the year detector
+// has to match the citation as the OCR rendered it -- "K.B.", "K. B.", "I. B."
+// -- and the whitelist is where those renderings are recorded. Junk spellings
+// are left out; the whitelist would reject what they found anyway.
+func (r *DBStore) GetYearCitedReporterAbbrs(ctx context.Context) ([]YearCitedReporter, error) {
+	query := `
+	SELECT w.reporter_standard, w.reporter_found
+	  FROM legalhist.whitelist w
+	  JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
+	 WHERE r.cited_by_year = true
+	   AND w.junk = false
+	 ORDER BY w.reporter_standard, w.reporter_found;
+	`
+	rows, err := r.DB.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("querying year-cited reporters: %w", err)
+	}
+	defer rows.Close()
+
+	var reporters []YearCitedReporter
+	for rows.Next() {
+		var yc YearCitedReporter
+		if err := rows.Scan(&yc.Standard, &yc.Abbr); err != nil {
+			return nil, fmt.Errorf("scanning year-cited reporter: %w", err)
+		}
+		reporters = append(reporters, yc)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating year-cited reporters: %w", err)
+	}
 	return reporters, nil
 }

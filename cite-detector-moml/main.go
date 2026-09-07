@@ -89,7 +89,7 @@ func main() {
 	citationsDB := citations.NewDBStore(pool)
 
 	// Create the detectors
-	var detectors []*citations.Detector
+	var detectors []citations.Finder
 
 	// Load the general-purpose detectors. The second finds citations whose
 	// abbreviation the OCR corrupted by reading a letter as a digit ("F1ed."
@@ -119,6 +119,22 @@ func main() {
 		detectors = append(detectors, d)
 	}
 	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
+
+	// The year-cited detectors, one per whitelisted spelling of every reporter
+	// flagged cited_by_year (issue #312). A reporter cited by year restarts its
+	// volume numbers every year, so "2 K. B. 1" without the year names a
+	// different case for every year of the series; these record the year, and
+	// their match covers the generic detector's year-less reading of the same
+	// citation, which RemoveShadows then drops.
+	yearCitedReporters, err := citationsDB.GetYearCitedReporterAbbrs(ctx)
+	if err != nil {
+		slog.Error("could not get year-cited reporters from database", "error", err)
+		os.Exit(1)
+	}
+	for _, yc := range yearCitedReporters {
+		detectors = append(detectors, citations.NewYearDetector(yc.Standard, yc.Abbr))
+	}
+	slog.Info("prepared year-cited detectors", "spellings", len(yearCitedReporters), "num_detectors", len(detectors))
 
 	// Both loaders below are fatal. Continuing without the OCR corrections
 	// would detect the whole corpus under different semantics than every

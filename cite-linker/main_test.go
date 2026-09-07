@@ -28,6 +28,7 @@ func TestLinkCitation(t *testing.T) {
 	amDecStd := "Am. Dec."
 	abrStd := "A.B.R."
 	ltStd := "L.T."
+	kbStd := "K.B."
 
 	tests := []struct {
 		name         string
@@ -822,6 +823,43 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierUKReporterAbsent,
 		},
 		{
+			// Issue #312. K.B. is cited by year and its volumes restart every
+			// year, so the cite string carries the year and the stub registry is
+			// keyed on it: "[1905] 2 K.B. 1" is one case, "[1906] 2 K.B. 1"
+			// another.
+			name:       "year-cited reporter keys its stub on the year",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Year: ptr(1905), Volume: ptr(2), ReporterAbbr: "K. B.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYear: true}},
+			stubs:      map[string]struct{}{"[1905] 2 K.B. 1": {}, "2 K.B. 1": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("[1905] 2 K.B. 1"),
+			wantStub:   ptr("[1905] 2 K.B. 1"),
+		},
+		{
+			// The same citation detected without its year is the collapsed
+			// string, and may only ever reach a stub keyed without a year.
+			name:       "year-cited reporter without a year keeps the plain string",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "K. B.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYear: true}},
+			stubs:      map[string]struct{}{"[1905] 2 K.B. 1": {}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKReporterAbsent,
+		},
+		{
+			// On a volume-cited reporter a year is decoration -- "(1880) 34 L.T.
+			// 100" -- and must not split the case's citations from the year-less
+			// ones.
+			name:       "year is ignored for a reporter not cited by year",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Year: ptr(1880), Volume: ptr(34), ReporterAbbr: "L. T.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"L. T.": {ReporterStandard: &ltStd, UK: true}},
+			stubs:      map[string]struct{}{"34 L.T. 100": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("34 L.T. 100"),
+			wantStub:   ptr("34 L.T. 100"),
+		},
+		{
 			// The registry is keyed on the standard form, never the CAP spelling
 			// or a translated volume: a reporter with reporter_cap set builds a
 			// different normalized string, and only the cleaned one may match.
@@ -991,4 +1029,21 @@ func TestStartProgressHeartbeat(t *testing.T) {
 	mu.Lock()
 	defer mu.Unlock()
 	assert.Equal(t, atStop, len(counts), "heartbeat kept reporting after stop returned")
+}
+
+// TestYearPrefix pins the two conditions on the year: the reporter must be
+// cited by year, and the citation must carry one.
+func TestYearPrefix(t *testing.T) {
+	std := "K.B."
+	flagged := &citations.WhitelistEntry{ReporterStandard: &std, CitedByYear: true}
+	plain := &citations.WhitelistEntry{ReporterStandard: &std}
+	withYear := &citations.UnlinkedCitation{Year: ptr(1905), Volume: ptr(2), Page: 1}
+	noYear := &citations.UnlinkedCitation{Volume: ptr(2), Page: 1}
+	noVolume := &citations.UnlinkedCitation{Year: ptr(1893), Page: 22}
+
+	assert.Equal(t, "[1905] 2 K.B. 1", buildStandardCite(withYear, flagged))
+	assert.Equal(t, "2 K.B. 1", buildStandardCite(noYear, flagged))
+	assert.Equal(t, "2 K.B. 1", buildStandardCite(withYear, plain))
+	assert.Equal(t, "[1893] K.B. 22", buildStandardCite(noVolume, flagged))
+	assert.Equal(t, "[1905] 2 K.B. 1", buildCAPCite(withYear, flagged, nil))
 }

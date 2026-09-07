@@ -41,11 +41,12 @@ func newTestDBStore(t *testing.T) *DBStore {
 			volume integer,
 			reporter_abbr text NOT NULL,
 			page integer NOT NULL,
-			created_at timestamp without time zone NOT NULL
+			created_at timestamp without time zone NOT NULL,
+			year integer
 		)`,
 		`CREATE UNIQUE INDEX citations_unlinked_uq
 			ON moml_citations.citations_unlinked
-			USING btree (moml_treatise, moml_page, COALESCE(volume, '-1'::integer), reporter_abbr, page)`,
+			USING btree (moml_treatise, moml_page, COALESCE(volume, '-1'::integer), reporter_abbr, page, COALESCE(year, '-1'::integer))`,
 	}
 	for _, stmt := range setup {
 		_, err := pool.Exec(ctx, stmt)
@@ -151,4 +152,43 @@ func TestSaveCitationIntegration(t *testing.T) {
 	vol := 43
 	require.NoError(t, s.SaveCitation(ctx, testCitation("t1", "p1", &vol, "Md.", 295)))
 	assert.Equal(t, 1, countCitations(t, s))
+}
+
+// TestSaveCitationsIntegration_Year covers the year column: citations that
+// differ only in their year are different rows, both inside a batch and against
+// the table, and a citation without one stores NULL.
+func TestSaveCitationsIntegration_Year(t *testing.T) {
+	s := newTestDBStore(t)
+	ctx := context.Background()
+
+	vol := 2
+	y1905, y1906 := 1905, 1906
+	a := testCitation("t1", "p1", &vol, "K. B.", 1)
+	a.Year = &y1905
+	b := testCitation("t1", "p1", &vol, "K. B.", 1)
+	b.Year = &y1906
+	c := testCitation("t1", "p1", &vol, "K. B.", 1) // the year-less reading
+	dup := testCitation("t1", "p1", &vol, "K. B.", 1)
+	dup.Year = &y1905
+
+	require.NoError(t, s.SaveCitations(ctx, []*Citation{a, b, c, dup}))
+	assert.Equal(t, 3, countCitations(t, s))
+
+	require.NoError(t, s.SaveCitations(ctx, []*Citation{dup}))
+	assert.Equal(t, 3, countCitations(t, s), "a re-run must not duplicate a year-bearing row")
+
+	var years []*int
+	rows, err := s.DB.Query(ctx, `SELECT year FROM moml_citations.citations_unlinked ORDER BY year NULLS FIRST`)
+	require.NoError(t, err)
+	defer rows.Close()
+	for rows.Next() {
+		var y *int
+		require.NoError(t, rows.Scan(&y))
+		years = append(years, y)
+	}
+	require.NoError(t, rows.Err())
+	require.Len(t, years, 3)
+	assert.Nil(t, years[0])
+	assert.Equal(t, 1905, *years[1])
+	assert.Equal(t, 1906, *years[2])
 }

@@ -15,6 +15,11 @@ type Citation struct {
 	Volume       *int
 	ReporterAbbr string
 	Page         int
+	// Year is the year a year-cited reporter is cited by ("[1905] 2 K.B. 1"),
+	// recorded by YearDetector and nil for every other detector. For such a
+	// reporter the volume restarts every year, so the year is part of what
+	// identifies the case.
+	Year *int
 
 	// Start and End are the byte offsets of Raw in Source.Text(), so that
 	// Source.Text()[Start:End] == Raw. They are not persisted: SaveCitation
@@ -29,12 +34,19 @@ func (c Citation) String() string {
 	return fmt.Sprintf("[%s] cites [%s]", c.Source.ID(), c.CleanCite())
 }
 
-// CleanCite returns a clean citation without spaces.
+// CleanCite returns a clean citation without spaces. A year, when the
+// citation carries one, leads in brackets: "[1905] 2 K.B. 1".
 func (c *Citation) CleanCite() string {
+	var cite string
 	if c.Volume == nil {
-		return fmt.Sprintf("%s %v", c.CleanReporter(), c.Page)
+		cite = fmt.Sprintf("%s %v", c.CleanReporter(), c.Page)
+	} else {
+		cite = fmt.Sprintf("%v %s %v", *c.Volume, c.CleanReporter(), c.Page)
 	}
-	return fmt.Sprintf("%v %s %v", *c.Volume, c.CleanReporter(), c.Page)
+	if c.Year != nil {
+		return fmt.Sprintf("[%d] %s", *c.Year, cite)
+	}
+	return cite
 }
 
 // CleanReporter returns a normalized string for the reporter abbreviation.

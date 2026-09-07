@@ -278,3 +278,25 @@ func TestDiffvolsMissing(t *testing.T) {
 	assert.False(t, diffvolsMissing(cite(nil), renumbering, diffvols),
 		"no volume to translate, and buildCAPCite does not consult diffvols either")
 }
+
+func TestSplitCite_YearCited(t *testing.T) {
+	tests := []struct {
+		cite     string
+		wantVol  string
+		wantRep  string
+		wantPage int
+	}{
+		{"[1905] 2 K.B. 1", "2", "K.B.", 1},
+		// The Appeal Cases after 1890 have a year and no volume.
+		{"[1893] A.C. 22", "", "A.C.", 22},
+		// A bracket that does not hold a year is part of the reporter.
+		{"[Ch.] 5", "", "[Ch.]", 5},
+	}
+	for _, tt := range tests {
+		vol, rep, page, ok := splitCite(tt.cite)
+		assert.True(t, ok, tt.cite)
+		assert.Equal(t, tt.wantVol, vol, tt.cite)
+		assert.Equal(t, tt.wantRep, rep, tt.cite)
+		assert.Equal(t, tt.wantPage, page, tt.cite)
+	}
+}
