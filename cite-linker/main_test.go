@@ -829,7 +829,7 @@ func TestLinkCitation(t *testing.T) {
 			// another.
 			name:       "year-cited reporter keys its stub on the year",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Year: ptr(1905), Volume: ptr(2), ReporterAbbr: "K. B.", Page: 1},
-			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYear: true}},
+			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYearFrom: 1901}},
 			stubs:      map[string]struct{}{"[1905] 2 K.B. 1": {}, "2 K.B. 1": {}},
 			wantStatus: citations.StatusLinkedStub,
 			wantTier:   citations.TierStubDirect,
@@ -841,7 +841,7 @@ func TestLinkCitation(t *testing.T) {
 			// string, and may only ever reach a stub keyed without a year.
 			name:       "year-cited reporter without a year keeps the plain string",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "K. B.", Page: 1},
-			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYear: true}},
+			whitelist:  map[string]*citations.WhitelistEntry{"K. B.": {ReporterStandard: &kbStd, UK: true, CitedByYearFrom: 1901}},
 			stubs:      map[string]struct{}{"[1905] 2 K.B. 1": {}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKReporterAbsent,
@@ -858,6 +858,39 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierStubDirect,
 			wantLinked: ptr("34 L.T. 100"),
 			wantStub:   ptr("34 L.T. 100"),
+		},
+		{
+			// Issue #314. "Q. B." is both the English Reports' Queen's Bench
+			// (1841-1852, volume-cited) and the Law Reports' Q.B. (1891 on,
+			// cited by year), on one row with cited_by_year_from = 1891. A
+			// year-bearing citation must not reach the 1842 volume: the year
+			// stays on the reporter, so the index knows no such reporter, the
+			// range index no such volume, and the citation is reporter_absent
+			// and free to take a stub.
+			name:      "year-cited continuation does not reach the volume-cited series",
+			cite:      citations.UnlinkedCitation{ID: uuid.New(), Year: ptr(1895), Volume: ptr(2), ReporterAbbr: "Q. B.", Page: 1},
+			whitelist: map[string]*citations.WhitelistEntry{"Q. B.": {ReporterStandard: &qbStd, UK: true, CitedByYearFrom: 1891}},
+			erCites:   map[string]citations.ERCase{"2 Q.B. 1": {ID: "er-1842", Cases: 1}},
+			erSpans: []citations.CaseSpan[string]{
+				{Cite: "2 Q.B. 1", ID: "er-1842"}, {Cite: "2 Q.B. 40", ID: "er-1842b"},
+			},
+			stubs:      map[string]struct{}{"[1895] 2 Q.B. 1": {}},
+			wantStatus: citations.StatusLinkedStub,
+			wantTier:   citations.TierStubDirect,
+			wantLinked: ptr("[1895] 2 Q.B. 1"),
+			wantStub:   ptr("[1895] 2 Q.B. 1"),
+		},
+		{
+			// The same row, a year before the continuation: the volume-cited
+			// series, linked as before.
+			name:       "year before cited_by_year_from links to the volume-cited series",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Year: ptr(1845), Volume: ptr(2), ReporterAbbr: "Q. B.", Page: 1},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q. B.": {ReporterStandard: &qbStd, UK: true, CitedByYearFrom: 1891}},
+			erCites:    map[string]citations.ERCase{"2 Q.B. 1": {ID: "er-1842", Cases: 1}},
+			wantStatus: citations.StatusLinkedEnglishReports,
+			wantTier:   citations.TierERDirect,
+			wantERID:   ptr("er-1842"),
+			wantLinked: ptr("2 Q.B. 1"),
 		},
 		{
 			// The registry is keyed on the standard form, never the CAP spelling
@@ -1035,15 +1068,22 @@ func TestStartProgressHeartbeat(t *testing.T) {
 // cited by year, and the citation must carry one.
 func TestYearPrefix(t *testing.T) {
 	std := "K.B."
-	flagged := &citations.WhitelistEntry{ReporterStandard: &std, CitedByYear: true}
+	flagged := &citations.WhitelistEntry{ReporterStandard: &std, CitedByYearFrom: 1901}
 	plain := &citations.WhitelistEntry{ReporterStandard: &std}
 	withYear := &citations.UnlinkedCitation{Year: ptr(1905), Volume: ptr(2), Page: 1}
 	noYear := &citations.UnlinkedCitation{Volume: ptr(2), Page: 1}
-	noVolume := &citations.UnlinkedCitation{Year: ptr(1893), Page: 22}
+	noVolume := &citations.UnlinkedCitation{Year: ptr(1905), Page: 22}
 
 	assert.Equal(t, "[1905] 2 K.B. 1", buildStandardCite(withYear, flagged))
 	assert.Equal(t, "2 K.B. 1", buildStandardCite(noYear, flagged))
 	assert.Equal(t, "2 K.B. 1", buildStandardCite(withYear, plain))
-	assert.Equal(t, "[1893] K.B. 22", buildStandardCite(noVolume, flagged))
+	assert.Equal(t, "[1905] K.B. 22", buildStandardCite(noVolume, flagged))
 	assert.Equal(t, "[1905] 2 K.B. 1", buildCAPCite(withYear, flagged, nil))
+
+	// One row for a volume-cited series and its year-cited continuation: a
+	// year before cited_by_year_from is decoration and stays out of the string.
+	qb := "QB"
+	mixed := &citations.WhitelistEntry{ReporterStandard: &qb, CitedByYearFrom: 1891}
+	assert.Equal(t, "7 QB 100", buildStandardCite(&citations.UnlinkedCitation{Year: ptr(1845), Volume: ptr(7), Page: 100}, mixed))
+	assert.Equal(t, "[1895] 2 QB 1", buildStandardCite(&citations.UnlinkedCitation{Year: ptr(1895), Volume: ptr(2), Page: 1}, mixed))
 }

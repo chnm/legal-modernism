@@ -286,9 +286,11 @@ func TestSplitCite_YearCited(t *testing.T) {
 		wantRep  string
 		wantPage int
 	}{
-		{"[1905] 2 K.B. 1", "2", "K.B.", 1},
+		// The year stays on the reporter, so a year-cited series never reaches
+		// the index of a volume-cited series of the same name.
+		{"[1905] 2 K.B. 1", "2", "[1905] K.B.", 1},
 		// The Appeal Cases after 1890 have a year and no volume.
-		{"[1893] A.C. 22", "", "A.C.", 22},
+		{"[1893] A.C. 22", "", "[1893] A.C.", 22},
 		// A bracket that does not hold a year is part of the reporter.
 		{"[Ch.] 5", "", "[Ch.]", 5},
 	}

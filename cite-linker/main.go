@@ -820,19 +820,22 @@ func buildStandardCite(c *citations.UnlinkedCitation, entry *citations.Whitelist
 }
 
 // yearPrefix is the "[1905] " that leads the cite string of a citation to a
-// reporter cited by year, when the citation carries a year, and "" otherwise.
-// For such a reporter the volume restarts every year, so without the year the
-// string names a different case for every year of the series (issue #312).
-// The year goes into the string rather than into a separate probe because
-// the string is what every target is keyed on -- the stub registry above all,
-// which is where these citations end up, no source holding the reporter -- and
-// what cite_cleaned records for the row.
+// reporter cited by year, when the citation carries a year from the reporter's
+// cited_by_year_from on, and "" otherwise. From that year the volume restarts
+// every year, so without the year the string names a different case for every
+// year of the series (issue #312). The year goes into the string rather than
+// into a separate probe because the string is what every target is keyed on
+// -- the stub registry above all, which is where these citations end up, no
+// source holding the reporter -- and what cite_cleaned records for the row.
 //
-// A reporter that is not cited by year keeps its plain string even when the
-// citation carries a year: on the volume-cited series a year is decoration,
-// "(1889) 14 App. Cas. 337", and would split one case's citations in two.
+// A year before cited_by_year_from, or on a reporter that is never cited by
+// year, is decoration on a volume-cited citation -- "(1889) 14 App. Cas. 337",
+// "(1845) 7 Q. B. 100" -- and stays out of the string, which would otherwise
+// split one case's citations in two. That is what lets one reporter row hold a
+// volume-cited series and its year-cited continuation: the Appeal Cases and
+// A.C., the Queen's Bench of 1841-1852 and the Q.B. of 1891 on (issue #314).
 func yearPrefix(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) string {
-	if !entry.CitedByYear || c.Year == nil {
+	if entry.CitedByYearFrom == 0 || c.Year == nil || *c.Year < entry.CitedByYearFrom {
 		return ""
 	}
 	return fmt.Sprintf("[%d] ", *c.Year)

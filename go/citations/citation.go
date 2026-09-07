@@ -16,9 +16,9 @@ type Citation struct {
 	ReporterAbbr string
 	Page         int
 	// Year is the year a year-cited reporter is cited by ("[1905] 2 K.B. 1"),
-	// recorded by YearDetector and nil for every other detector. For such a
-	// reporter the volume restarts every year, so the year is part of what
-	// identifies the case.
+	// recorded by YearDetector and nil for every other detector. From the
+	// reporter's cited_by_year_from on, the volume restarts every year, so the
+	// year is part of what identifies the case.
 	Year *int
 
 	// Start and End are the byte offsets of Raw in Source.Text(), so that

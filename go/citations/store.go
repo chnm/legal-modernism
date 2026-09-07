@@ -10,7 +10,7 @@ type SingleVolReporter struct {
 }
 
 // YearCitedReporter pairs a reporter that is cited by year
-// (legalhist.reporters.cited_by_year) with one of its whitelisted spellings.
+// (legalhist.reporters.cited_by_year_from) with one of its whitelisted spellings.
 // Each pair becomes one YearDetector.
 type YearCitedReporter struct {
 	Standard string
@@ -27,7 +27,7 @@ type Store interface {
 	SaveCitations(ctx context.Context, cites []*Citation) error
 	GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolReporter, error)
 	// GetYearCitedReporterAbbrs returns one row per (reporter_standard,
-	// spelling) pair for every reporter flagged cited_by_year, drawn from the
+	// spelling) pair for every reporter with cited_by_year_from set, drawn from the
 	// non-junk whitelist so that the OCR variants the corpus actually uses are
 	// covered.
 	GetYearCitedReporterAbbrs(ctx context.Context) ([]YearCitedReporter, error)
