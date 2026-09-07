@@ -874,7 +874,8 @@ CREATE TABLE legalhist.reporters (
     year_end integer,
     single_vol boolean,
     type text,
-    reporter_cap text
+    reporter_cap text,
+    cited_by_year_from integer
 );
 
 
@@ -1028,6 +1029,29 @@ COMMENT ON TABLE legalhist.reporters_diffvols IS 'The mapping between volumes fr
 
 
 --
+-- Name: stub_cases; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.stub_cases (
+    cite text NOT NULL,
+    reporter_standard text NOT NULL,
+    volume integer,
+    page integer NOT NULL,
+    n_citations integer NOT NULL,
+    n_treatises integer NOT NULL,
+    first_cited_year integer,
+    last_cited_year integer,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    year integer,
+    CONSTRAINT stub_cases_n_citations_check CHECK ((n_citations > 0)),
+    CONSTRAINT stub_cases_n_treatises_check CHECK ((n_treatises > 0)),
+    CONSTRAINT stub_cases_page_check CHECK ((page > 0)),
+    CONSTRAINT stub_cases_volume_or_year_check CHECK ((((volume IS NOT NULL) AND (volume > 0)) OR (year IS NOT NULL)))
+);
+
+
+--
 -- Name: textbooks_vols; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -1072,7 +1096,8 @@ CREATE TABLE moml_citations.citations_unlinked (
     volume integer,
     reporter_abbr text NOT NULL,
     page integer NOT NULL,
-    created_at timestamp without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    year integer
 );
 
 
@@ -1313,7 +1338,8 @@ CREATE TABLE moml_citations.citation_links (
     cite_linked text,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     match_tier text,
-    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'er_direct'::text, 'er_page_interior'::text]))))
+    stub_cite text,
+    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'er_direct'::text, 'er_page_interior'::text, 'stub_direct'::text]))))
 );
 
 
@@ -1760,6 +1786,22 @@ ALTER TABLE ONLY legalhist.reporters
 
 
 --
+-- Name: stub_cases stub_cases_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.stub_cases
+    ADD CONSTRAINT stub_cases_pkey PRIMARY KEY (cite);
+
+
+--
+-- Name: stub_cases stub_cases_reporter_year_volume_page_uq; Type: CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.stub_cases
+    ADD CONSTRAINT stub_cases_reporter_year_volume_page_uq UNIQUE NULLS NOT DISTINCT (reporter_standard, year, volume, page);
+
+
+--
 -- Name: textbooks_works textbooks_works_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2073,6 +2115,13 @@ CREATE INDEX idx_reporters_jurisdiction ON legalhist.reporters USING btree (juri
 
 
 --
+-- Name: idx_stub_cases_n_citations; Type: INDEX; Schema: legalhist; Owner: -
+--
+
+CREATE INDEX idx_stub_cases_n_citations ON legalhist.stub_cases USING btree (n_citations DESC);
+
+
+--
 -- Name: reporters_alt_diffvols_volumes_cap_reporter_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
@@ -2188,7 +2237,7 @@ CREATE INDEX citations_unlinked_reporter_abbr_idx ON moml_citations.citations_un
 -- Name: citations_unlinked_uq; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
-CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked USING btree (moml_treatise, moml_page, COALESCE(volume, '-1'::integer), reporter_abbr, page);
+CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked USING btree (moml_treatise, moml_page, COALESCE(volume, '-1'::integer), reporter_abbr, page, COALESCE(year, '-1'::integer));
 
 
 --
@@ -2231,6 +2280,13 @@ CREATE INDEX idx_citation_links_er ON moml_citations.citation_links USING btree 
 --
 
 CREATE INDEX idx_citation_links_status ON moml_citations.citation_links USING btree (status);
+
+
+--
+-- Name: idx_citation_links_stub; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX idx_citation_links_stub ON moml_citations.citation_links USING btree (stub_cite) WHERE (stub_cite IS NOT NULL);
 
 
 --
@@ -2453,6 +2509,14 @@ ALTER TABLE ONLY legalhist.reporters_abbreviations
 
 
 --
+-- Name: stub_cases stub_cases_reporter_standard_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.stub_cases
+    ADD CONSTRAINT stub_cases_reporter_standard_fkey FOREIGN KEY (reporter_standard) REFERENCES legalhist.reporters(reporter_standard);
+
+
+--
 -- Name: textbooks_vols textbooks_psmid_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2620,4 +2684,9 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260906120000'),
     ('20260906120100'),
     ('20260906120200'),
-    ('20260906120300');
+    ('20260906120300'),
+    ('20260906130000'),
+    ('20260906140000'),
+    ('20260906140100'),
+    ('20260907120000'),
+    ('20260907130000');
