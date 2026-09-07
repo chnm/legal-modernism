@@ -121,7 +121,7 @@ func main() {
 	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
 
 	// The year-cited detectors, one per whitelisted spelling of every reporter
-	// flagged cited_by_year (issue #312). A reporter cited by year restarts its
+	// with cited_by_year_from set (issue #312). A reporter cited by year restarts its
 	// volume numbers every year, so "2 K. B. 1" without the year names a
 	// different case for every year of the series; these record the year, and
 	// their match covers the generic detector's year-less reading of the same
@@ -185,6 +185,11 @@ func main() {
 				}
 
 				page.CorrectOCR(ocrReplacer)
+				// Then the one normalization that is not a literal substitution:
+				// the Law Reports' series prefix, "L. R. 5 Ch. 100", is moved
+				// behind the volume so the series spelling survives detection
+				// (issue #314).
+				page.Rewrite(citations.NormalizeSeriesPrefix)
 
 				// Run every detector over the page before saving anything, so
 				// that a single-volume match found inside a longer citation can
