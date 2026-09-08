@@ -86,11 +86,20 @@ func volumeKey(vol, reporter string) string {
 // wrapped value.
 func splitCite(cite string) (vol, reporter string, page int, ok bool) {
 	// A citation to a reporter cited by year leads with the year in brackets,
-	// "[1905] 2 K.B. 1". The year is part of the cite string, not of the
-	// reporter or the volume, so it is set aside before the split.
+	// "[1905] 2 K.B. 1". The year is carried on the reporter -- "[1905] K.B."
+	// -- rather than set aside, so that as far as every index is concerned the
+	// year-cited series is a different reporter from a volume-cited series of
+	// the same name. That is not hypothetical: "Q. B." is the English Reports'
+	// Queen's Bench of 1841-1852 and the Law Reports' Q.B. of 1891 on, and
+	// with the year stripped "[1895] 2 Q.B. 1" would reach the 1842 volume,
+	// count as present, and be range-matched to a case fifty years off
+	// (issue #314). No source holds a year-cited series, so a year-bearing
+	// probe finds no reporter and the cascade reports reporter_absent, which
+	// is the truth and is what lets the stub registry take the citation.
+	var year string
 	if strings.HasPrefix(cite, "[") {
 		if end := strings.Index(cite, "] "); end > 1 && allDigits(cite[1:end]) {
-			cite = cite[end+2:]
+			year, cite = cite[:end+2], cite[end+2:]
 		}
 	}
 	sp := strings.LastIndexByte(cite, ' ')
@@ -103,9 +112,9 @@ func splitCite(cite string) (vol, reporter string, page int, ok bool) {
 	}
 	head := cite[:sp]
 	if v := strings.IndexByte(head, ' '); v > 0 && allDigits(head[:v]) {
-		return head[:v], head[v+1:], page, true
+		return head[:v], year + head[v+1:], page, true
 	}
-	return "", head, page, true
+	return "", year + head, page, true
 }
 
 // allDigits reports whether s is a non-empty run of ASCII digits.

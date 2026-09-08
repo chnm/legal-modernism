@@ -41,6 +41,11 @@ func (t *TreatisePage) CorrectOCR(r *OCRReplacer) {
 	t.FullText = r.Replace(t.FullText)
 }
 
+// Rewrite replaces the text with f(text).
+func (t *TreatisePage) Rewrite(f func(string) string) {
+	t.FullText = f(t.FullText)
+}
+
 // NewTreatisePage creates a new treatise document
 func NewTreatisePage(pageID string, treatiseID, text string) *TreatisePage {
 	return &TreatisePage{

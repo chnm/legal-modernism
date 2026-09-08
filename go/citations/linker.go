@@ -20,12 +20,16 @@ type WhitelistEntry struct {
 	// reporter "Will.", page 4), which names no case in any source. The linker
 	// skips it rather than probing (issue #246).
 	Statute bool
-	// CitedByYear reports that the reporter is cited by year
-	// (legalhist.reporters.cited_by_year): its volume numbers restart every
-	// year, so "2 K.B. 1" names a different case for every year of the series
-	// and the year is part of the cite string the linker builds when the
-	// citation carries one, "[1905] 2 K.B. 1" (issue #312).
-	CitedByYear bool
+	// CitedByYearFrom is the first year from which the reporter is cited by
+	// year (legalhist.reporters.cited_by_year_from), or 0 when it never is.
+	// From that year on its volume numbers restart every year, so "2 K.B. 1"
+	// names a different case for every year of the series and the year is
+	// part of the cite string the linker builds: "[1905] 2 K.B. 1" (issue
+	// #312). A year before it is decoration on a volume-cited citation --
+	// "(1889) 14 App. Cas. 337" -- and stays out of the string, which is what
+	// lets one reporter row hold a volume-cited series and its year-cited
+	// continuation (issue #314).
+	CitedByYearFrom int
 }
 
 // DiffVolEntry maps an original volume number to the corresponding CAP volume

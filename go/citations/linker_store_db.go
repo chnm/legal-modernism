@@ -31,7 +31,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 		) AS cap_different,
 		COALESCE(r.single_vol, false) AS single_vol,
 		COALESCE(r.type = 'statute', false) AS statute,
-		COALESCE(r.cited_by_year, false) AS cited_by_year
+		COALESCE(r.cited_by_year_from, 0) AS cited_by_year_from
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	`
@@ -45,7 +45,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 	for rows.Next() {
 		var found string
 		var e WhitelistEntry
-		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute, &e.CitedByYear)
+		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute, &e.CitedByYearFrom)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}

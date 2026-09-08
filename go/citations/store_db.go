@@ -166,7 +166,7 @@ func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolRep
 }
 
 // GetYearCitedReporterAbbrs returns one row per (reporter_standard, spelling)
-// pair for every reporter flagged cited_by_year. The spellings come from the
+// pair for every reporter with cited_by_year_from set. The spellings come from the
 // whitelist rather than from reporters_abbreviations, because the year detector
 // has to match the citation as the OCR rendered it -- "K.B.", "K. B.", "I. B."
 // -- and the whitelist is where those renderings are recorded. Junk spellings
@@ -176,7 +176,7 @@ func (r *DBStore) GetYearCitedReporterAbbrs(ctx context.Context) ([]YearCitedRep
 	SELECT w.reporter_standard, w.reporter_found
 	  FROM legalhist.whitelist w
 	  JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
-	 WHERE r.cited_by_year = true
+	 WHERE r.cited_by_year_from IS NOT NULL
 	   AND w.junk = false
 	 ORDER BY w.reporter_standard, w.reporter_found;
 	`

@@ -7,6 +7,10 @@ type Document interface {
 	HasParent() bool
 	Text() string
 	CorrectOCR(*OCRReplacer)
+	// Rewrite replaces the text with f(text). It is how a normalization that
+	// is not a literal substitution -- citations.NormalizeSeriesPrefix, which
+	// moves a volume number -- is applied before detection.
+	Rewrite(f func(string) string)
 	// Pages() []*Document
 	// HasPages() bool
 }
@@ -48,6 +52,11 @@ func (d *Doc) HasParent() bool {
 // replacer leaves the text alone.
 func (d *Doc) CorrectOCR(r *OCRReplacer) {
 	d.FullText = r.Replace(d.FullText)
+}
+
+// Rewrite replaces the text with f(text).
+func (d *Doc) Rewrite(f func(string) string) {
+	d.FullText = f(d.FullText)
 }
 
 // Pages returns an empty slice of Documents, because a Doc by definition has no

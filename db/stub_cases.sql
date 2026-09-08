@@ -24,11 +24,14 @@
 --      the detected volume-less form and the volume-1 form are the same cite,
 --      and are written as volume 1, the equivalence the linker's volumeForms
 --      applies when it probes. For a reporter cited by year
---      (legalhist.reporters.cited_by_year, issue #312) the year is part of
---      the key when the citation carries one, "[1905] 2 K.B. 1", because the
---      volume restarts every year; a citation of such a reporter detected
---      without its year keeps the plain key, and collapses across the years
---      as before, which is visible as a stub without a year.
+--      (legalhist.reporters.cited_by_year_from, issues #312 and #314) the
+--      year is part of the key when the citation carries one from that year
+--      on, "[1905] 2 K.B. 1", because the volume restarts every year, and a
+--      year-cited citation may have no volume at all, "[1893] L.R.A.C. 22".
+--      A year before cited_by_year_from is decoration on a volume-cited
+--      citation and stays out of the key. A citation of such a reporter
+--      detected without its year keeps the plain key, and collapses across
+--      the years as before, which is visible as a stub without a year.
 --
 --   3. It recurs at least :threshold times across the corpus (default 10, set
 --      with psql -v threshold=N). Measured on the covered reporters, where
@@ -81,9 +84,9 @@ HAVING bool_and(
 --    treatise years come from moml.book_info, keyed by psmid, which is what
 --    citations_unlinked.moml_treatise holds.
 CREATE TEMP TABLE stub_candidates ON COMMIT DROP AS
-SELECT format('%s%s %s %s',
-              CASE WHEN v.year IS NOT NULL THEN format('[%s] ', v.year) ELSE '' END,
-              v.volume, wl.reporter_standard, cu.page) AS cite,
+SELECT concat_ws(' ',
+                 CASE WHEN v.year IS NOT NULL THEN format('[%s]', v.year) END,
+                 v.volume, wl.reporter_standard, cu.page) AS cite,
        wl.reporter_standard,
        v.year,
        v.volume,
@@ -101,7 +104,7 @@ CROSS JOIN LATERAL (
     SELECT CASE WHEN coalesce(r.single_vol, false)
                 THEN coalesce(cu.volume, 1)
                 ELSE cu.volume END AS volume,
-           CASE WHEN coalesce(r.cited_by_year, false)
+           CASE WHEN cu.year >= r.cited_by_year_from
                 THEN cu.year END AS year
 ) v
 LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
@@ -110,7 +113,7 @@ WHERE (cl.status = 'linked_stub'
            AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent')))
   AND coalesce(r.type, '') <> 'statute'
   AND cu.page > 0
-  AND v.volume > 0
+  AND (v.volume > 0 OR (v.volume IS NULL AND v.year IS NOT NULL))
 GROUP BY wl.reporter_standard, v.year, v.volume, cu.page
 HAVING count(*) >= :threshold;
 
