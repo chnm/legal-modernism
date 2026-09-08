@@ -1033,3 +1033,70 @@ func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*Ci
 	slog.Debug("fetched citation detail", "id", id, "status", c.Status, "reporter_abbr", c.ReporterAbbr)
 	return &c, nil
 }
+
+// ReporterTierRow is one (reporter, status, tier) cell of
+// moml_citations.linking_dashboard_tiers in the tidy shape the tiers page
+// stacks into a bar per reporter. Tier is empty for the statuses that never
+// reach a probe and so carry no tier.
+type ReporterTierRow struct {
+	Reporter string `json:"reporter"`
+	Status   string `json:"status"`
+	Tier     string `json:"tier"`
+	N        int    `json:"n"`
+}
+
+// TiersData is everything /tiers shows: the corpus-wide status × match_tier
+// breakdown, and the same breakdown for every reporter.
+type TiersData struct {
+	Tiers     []TierStat        `json:"tiers"`
+	Reporters []ReporterTierRow `json:"reporters"`
+}
+
+// getReporterTierRows reads every reporter's citations grouped by status and
+// match tier. Unlike getReporterTiers, which keeps only the no_match pool for
+// the dashboard's failure table, this covers every status the view holds, so a
+// reporter's bar shows its links and its failures side by side. Rows come back
+// with the heaviest reporter first and each reporter's cells together, largest
+// first, which is the order the page draws them in.
+func getReporterTierRows(ctx context.Context, db *pgxpool.Pool) ([]ReporterTierRow, error) {
+	slog.Debug("querying per-reporter tier rows")
+	rows, err := db.Query(ctx, `
+		SELECT reporter_standard, COALESCE(status, 'unprocessed'), COALESCE(match_tier, ''), n
+		FROM moml_citations.linking_dashboard_tiers
+		ORDER BY sum(n) OVER (PARTITION BY reporter_standard) DESC, reporter_standard, n DESC
+	`)
+	if err != nil {
+		return nil, fmt.Errorf("querying reporter tier rows: %w", err)
+	}
+	defer rows.Close()
+
+	var results []ReporterTierRow
+	for rows.Next() {
+		var r ReporterTierRow
+		if err := rows.Scan(&r.Reporter, &r.Status, &r.Tier, &r.N); err != nil {
+			return nil, fmt.Errorf("scanning reporter tier row: %w", err)
+		}
+		results = append(results, r)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating reporter tier rows: %w", err)
+	}
+	slog.Debug("fetched reporter tier rows", "count", len(results))
+	return results, nil
+}
+
+// getTiersData assembles the tiers page from linking_tier_summary and
+// linking_dashboard_tiers. Both read the same materialized view, so unlike the
+// dashboard's optional sections there is no partial page worth rendering: if
+// the view is unpopulated, the page has nothing to show.
+func getTiersData(ctx context.Context, db *pgxpool.Pool) (*TiersData, error) {
+	tiers, err := getTierSummary(ctx, db)
+	if err != nil {
+		return nil, err
+	}
+	reporters, err := getReporterTierRows(ctx, db)
+	if err != nil {
+		return nil, err
+	}
+	return &TiersData{Tiers: tiers, Reporters: reporters}, nil
+}
