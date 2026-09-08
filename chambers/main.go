@@ -86,6 +86,7 @@ func parseTemplates() map[string]*template.Template {
 		"unmatched.html",
 		"unmatched-cites.html",
 		"dashboard.html",
+		"tiers.html",
 		"whitelist-extender.html",
 		"treatises.html",
 		"treatise.html",
@@ -155,6 +156,10 @@ func main() {
 		handleDashboard(w, r, tmpls["dashboard.html"])
 	})
 	mux.HandleFunc("/api/linking-dashboard", handleDashboardAPI)
+	mux.HandleFunc("/tiers", func(w http.ResponseWriter, r *http.Request) {
+		handleTiers(w, r, tmpls["tiers.html"])
+	})
+	mux.HandleFunc("/api/tiers", handleTiersAPI)
 	mux.HandleFunc("/whitelist-extender", func(w http.ResponseWriter, r *http.Request) {
 		handleWhitelistExtender(w, r, tmpls["whitelist-extender.html"])
 	})
@@ -319,6 +324,34 @@ func handleDashboardAPI(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		slog.Error("error encoding dashboard JSON", "error", err)
+	}
+}
+
+func handleTiers(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "tiers")
+	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
+		slog.Error("error rendering tiers", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+	}
+}
+
+func handleTiersAPI(w http.ResponseWriter, r *http.Request) {
+	slog.Debug("handling request", "path", r.URL.Path, "handler", "tiers-api")
+	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
+	defer cancel()
+
+	data, err := getTiersData(ctx, pool)
+	if err != nil {
+		slog.Error("error querying tiers data", "error", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	slog.Debug("sending tiers JSON response", "tiers", len(data.Tiers), "reporter_rows", len(data.Reporters))
+	w.Header().Set("Cache-Control", "max-age=3600")
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		slog.Error("error encoding tiers JSON", "error", err)
 	}
 }
 

@@ -1,0 +1,367 @@
+{{define "title"}}Match tiers — Chambers{{end}}
+
+{{define "styles"}}
+        .loading-text { color: #6c757d; font-size: 0.9rem; }
+        .spinner-border { width: 1.2rem; height: 1.2rem; border-width: 0.15em; }
+        .chart { min-height: 80px; }
+        .legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.5rem; font-size: 0.8rem; }
+        .legend .group { flex-basis: 100%; color: #6c757d; font-weight: 600; margin-top: 0.25rem; }
+        .legend .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+        .legend code { color: inherit; font-size: 0.8rem; }
+        .controls { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; margin-bottom: 0.5rem; }
+        .controls .form-select { width: auto; }
+{{end}}
+
+{{define "nav"}}
+    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mb-1">Match tiers</h1>
+    <p class="small text-secondary mb-3">
+        How far the linker got with each citation. The status says whether a citation linked;
+        the match tier says which probe produced the link, or which step of the cascade ran out
+        of things to match against. Citations turned away before any probe
+        (<code>skipped_junk</code>, <code>skipped_not_whitelisted</code>) carry no tier and are
+        not counted here. The <a href="/linking-dashboard">linking dashboard</a> has the same
+        figures as tables.
+    </p>
+
+    <h2 class="h6 text-secondary mb-2">Whole corpus</h2>
+    <div id="corpus-chart" class="chart mb-4">
+        <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading tier data&hellip;</div>
+    </div>
+
+    <h2 class="h6 text-secondary mb-2">Citations by tier</h2>
+    <p class="small text-secondary mb-2">
+        One bar per tier, grouped by status. The label gives the count and the tier's share
+        of its status, not of the corpus.
+    </p>
+    <div id="tier-chart" class="chart mb-4"></div>
+
+    <h2 class="h6 text-secondary mb-2">Tiers by reporter</h2>
+    <p class="small text-secondary mb-2">
+        One bar per <code>reporter_standard</code>, heaviest first. Share puts every reporter
+        on the same 100% so the shapes compare; count shows how much each tier weighs.
+        Hover a segment for its count. Click a reporter to see its raw citations.
+    </p>
+    <div class="controls">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Measure">
+            <input type="radio" class="btn-check" name="measure" id="measure-share" value="share" checked>
+            <label class="btn btn-outline-secondary" for="measure-share">Share</label>
+            <input type="radio" class="btn-check" name="measure" id="measure-count" value="count">
+            <label class="btn btn-outline-secondary" for="measure-count">Count</label>
+        </div>
+        <label class="small text-secondary" for="limit">Reporters</label>
+        <select id="limit" class="form-select form-select-sm">
+            <option value="50">Top 50</option>
+            <option value="100" selected>Top 100</option>
+            <option value="250">Top 250</option>
+            <option value="all">All</option>
+        </select>
+        <span id="reporter-note" class="small text-secondary"></span>
+    </div>
+    <div id="reporter-chart" class="chart mb-4"></div>
+
+    <details class="mb-3">
+        <summary class="small text-secondary">SQL queries</summary>
+        <pre class="bg-light p-2 rounded small mt-2"><code>SELECT status, match_tier, n, pct_of_status
+FROM moml_citations.linking_tier_summary
+ORDER BY n DESC;
+
+SELECT reporter_standard, COALESCE(status, 'unprocessed'), COALESCE(match_tier, ''), n
+FROM moml_citations.linking_dashboard_tiers
+ORDER BY sum(n) OVER (PARTITION BY reporter_standard) DESC, reporter_standard, n DESC;</code></pre>
+        <p class="small text-secondary mt-2 mb-0">
+            Both read <code>moml_citations.linking_dashboard_tiers</code>, a materialized view
+            refreshed by <code>make db-maintenance</code>. Every figure on this page is as of
+            that last refresh, not as of the last linker run.
+        </p>
+    </details>
+
+    <script type="module">
+        import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
+
+        function fmt(n) {
+            if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + "M";
+            if (n >= 1_000) return (n / 1_000).toFixed(0) + "K";
+            return n.toString();
+        }
+
+        function escapeHTML(s) {
+            const div = document.createElement("div");
+            div.textContent = s;
+            return div.innerHTML;
+        }
+
+        const STATUS_ORDER = [
+            "linked_cap", "linked_english_reports", "linked_code_reporter", "linked_stub",
+            "no_match", "skipped_statute", "unprocessed",
+        ];
+
+        const STATUS_LABEL = {
+            linked_cap: "Linked (CAP)",
+            linked_english_reports: "Linked (English Reports)",
+            linked_code_reporter: "Linked (Code Reporter)",
+            linked_stub: "Linked (stub case)",
+            no_match: "No match",
+            skipped_statute: "Skipped as statute",
+            unprocessed: "Unprocessed",
+        };
+
+        // The tier vocabulary from go/citations/linker.go, in display order: the
+        // linked tiers by source, the failure tiers by route in cascade order, then
+        // the statuses that carry no tier. Each status family shares a hue, and
+        // within a family the color darkens with the directness of the match (or
+        // how early in the cascade the failure came), so a reporter's bar reads as
+        // "mostly dark green" or "mostly pale red" before any label is consulted.
+        const TIERS = [
+            ["cap_direct", "linked_cap", "#0f5132", "matched a first-page cite in cap.citations"],
+            ["cap_freelaw", "linked_cap", "#198754", "matched through the FreeLaw crosswalk"],
+            ["cap_alt_spelling", "linked_cap", "#3fa76f", "matched cap.citations under an alternate spelling"],
+            ["cap_freelaw_alt_spelling", "linked_cap", "#75c79a", "matched the FreeLaw crosswalk under an alternate spelling"],
+            ["cap_page_interior", "linked_cap", "#a8ddc0", "matched inside a case's page range — a pin cite"],
+            ["er_direct", "linked_english_reports", "#0a58ca", "matched an English Reports case"],
+            ["er_page_interior", "linked_english_reports", "#6ea8fe", "matched inside an English Reports case's page range — a pin cite"],
+            ["code_direct", "linked_code_reporter", "#0dcaf0", "matched a code reporter entry"],
+            ["stub_direct", "linked_stub", "#6f42c1", "matched a stub case — a cite string no source holds, cited often enough to treat as a case (#248)"],
+            ["us_reporter_absent", "no_match", "#5c0a14", "no probed spelling of the reporter appears in any US source"],
+            ["us_diffvols_missing", "no_match", "#8a1421", "the reporter renumbers in CAP, but no diffvols row covers this volume"],
+            ["us_volume_absent", "no_match", "#b02333", "reporter present, this volume never appears"],
+            ["us_volume_missing", "no_match", "#dc3545", "reporter present, but the citation carries no volume to look up"],
+            ["us_page_absent", "no_match", "#e5626f", "reporter and volume present, no case begins on or spans this page"],
+            ["us_page_ambiguous", "no_match", "#ee929b", "the page falls in a span, but several cases begin on that span's first page"],
+            ["us_page_gap", "no_match", "#f5bfc4", "the page falls past the end of the preceding case, in a hole in CAP's coverage"],
+            ["uk_reporter_absent", "no_match", "#7a2e0e", "the reporter does not appear in the English Reports index"],
+            ["uk_volume_absent", "no_match", "#a0420f", "reporter present, this volume never appears"],
+            ["uk_volume_missing", "no_match", "#c45a12", "reporter present, but the citation carries no volume to look up"],
+            ["uk_page_absent", "no_match", "#e2761a", "reporter and volume present, no case begins on or spans this page"],
+            ["uk_page_ambiguous", "no_match", "#f09a4f", "the cite, or the span covering it, belongs to more than one case"],
+            ["uk_page_gap", "no_match", "#f7c08d", "the page falls past the end of the preceding case, in a hole in the corpus"],
+            ["skipped_statute", "skipped_statute", "#8fa4bd", "no tier: a regnal-year statute citation, never probed"],
+            ["unprocessed", "unprocessed", "#adb5bd", "no tier: not yet linked"],
+        ].map(([key, status, color, gloss]) => ({ key, status, color, gloss }));
+
+        const tierByKey = new Map(TIERS.map(t => [t.key, t]));
+
+        // A row's segment key is its tier, or its status for the tier-less rows.
+        function keyOf(d) {
+            return d.tier || d.status;
+        }
+
+        // A tier the vocabulary above does not know yet still gets drawn, in a
+        // neutral color, rather than silently dropped.
+        function ensureKnown(d) {
+            const key = keyOf(d);
+            if (!tierByKey.has(key)) {
+                const t = { key, status: d.status, color: "#495057", gloss: "" };
+                TIERS.push(t);
+                tierByKey.set(key, t);
+            }
+        }
+
+        function rank(d) {
+            return TIERS.indexOf(tierByKey.get(keyOf(d)));
+        }
+
+        // Dark labels on the pale segments, white on the dark ones.
+        function textColor(hex) {
+            const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+            return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#212529" : "white";
+        }
+
+        function colorScale(keys) {
+            return { domain: keys, range: keys.map(k => tierByKey.get(k).color) };
+        }
+
+        function pct(n, total) {
+            return total === 0 ? "0%" : (100 * n / total).toFixed(n / total < 0.01 ? 2 : 1) + "%";
+        }
+
+        function renderLegend(keys) {
+            const legend = document.createElement("div");
+            legend.className = "legend";
+            for (const status of STATUS_ORDER.concat([...new Set(keys.map(k => tierByKey.get(k).status))].filter(s => !STATUS_ORDER.includes(s)))) {
+                const members = keys.filter(k => tierByKey.get(k).status === status);
+                if (members.length === 0) continue;
+                const group = document.createElement("span");
+                group.className = "group";
+                group.textContent = STATUS_LABEL[status] || status;
+                legend.append(group);
+                for (const k of members) {
+                    const t = tierByKey.get(k);
+                    const item = document.createElement("span");
+                    item.title = t.gloss;
+                    item.innerHTML = `<span class="swatch" style="background:${t.color}"></span><code>${escapeHTML(k)}</code>`;
+                    legend.append(item);
+                }
+            }
+            return legend;
+        }
+
+        function renderCorpus(tiers, keys) {
+            const container = document.getElementById("corpus-chart");
+            const total = tiers.reduce((sum, t) => sum + t.n, 0);
+            const chart = Plot.plot({
+                width: container.clientWidth,
+                height: 80,
+                x: { label: "Citations", tickFormat: v => Math.round(v / 1_000_000) + "M" },
+                y: { axis: null },
+                color: colorScale(keys),
+                marks: [
+                    Plot.barX(tiers, Plot.stackX({
+                        x: "n",
+                        fill: keyOf,
+                        order: rank,
+                        title: d => `${keyOf(d)} (${STATUS_LABEL[d.status] || d.status}): ${d.n.toLocaleString()}, ${pct(d.n, total)} of the corpus`,
+                    })),
+                    // Label only the segments wide enough to hold a number; filtering
+                    // the data instead would shift the stack.
+                    Plot.text(tiers, Plot.stackX({
+                        x: "n",
+                        text: d => d.n / total >= 0.04 ? fmt(d.n) : "",
+                        order: rank,
+                        fill: d => textColor(tierByKey.get(keyOf(d)).color),
+                        fontSize: 12,
+                        fontWeight: 600,
+                    })),
+                ],
+            });
+            container.innerHTML = "";
+            container.append(chart);
+            container.append(renderLegend(keys));
+            const note = document.createElement("div");
+            note.className = "small text-secondary mt-1";
+            note.textContent = `${total.toLocaleString()} citations reached the linker. The legend applies to every chart on this page.`;
+            container.append(note);
+        }
+
+        function renderTierBars(tiers) {
+            const container = document.getElementById("tier-chart");
+            const statusTotals = new Map();
+            for (const t of tiers) statusTotals.set(t.status, (statusTotals.get(t.status) || 0) + t.n);
+            const rows = tiers.slice().sort((a, b) => rank(a) - rank(b));
+            const keys = rows.map(keyOf);
+            const chart = Plot.plot({
+                width: container.clientWidth,
+                height: rows.length * 22 + 40,
+                marginLeft: 190,
+                marginRight: 110,
+                x: { label: "Citations", tickFormat: fmt },
+                y: { label: null, domain: keys },
+                color: colorScale(keys),
+                marks: [
+                    Plot.barX(rows, {
+                        x: "n",
+                        y: keyOf,
+                        fill: keyOf,
+                        title: d => `${keyOf(d)} (${STATUS_LABEL[d.status] || d.status}): ${d.n.toLocaleString()}, ${pct(d.n, statusTotals.get(d.status))} of ${d.status}`,
+                    }),
+                    Plot.text(rows, {
+                        x: "n",
+                        y: keyOf,
+                        text: d => `${fmt(d.n)} · ${pct(d.n, statusTotals.get(d.status))}`,
+                        textAnchor: "start",
+                        dx: 4,
+                        fontSize: 11,
+                        fill: "#495057",
+                    }),
+                ],
+            });
+            container.innerHTML = "";
+            container.append(chart);
+        }
+
+        function renderReporters(reporters, keys) {
+            const container = document.getElementById("reporter-chart");
+            const measure = document.querySelector('input[name="measure"]:checked').value;
+            const limit = document.getElementById("limit").value;
+
+            // The API orders rows heaviest reporter first, so first appearance is
+            // the display order.
+            const order = [];
+            const totals = new Map();
+            for (const r of reporters) {
+                if (!totals.has(r.reporter)) {
+                    totals.set(r.reporter, 0);
+                    order.push(r.reporter);
+                }
+                totals.set(r.reporter, totals.get(r.reporter) + r.n);
+            }
+            const shown = limit === "all" ? order : order.slice(0, Number(limit));
+            const shownSet = new Set(shown);
+            const rows = reporters.filter(r => shownSet.has(r.reporter));
+            const share = measure === "share";
+
+            const chart = Plot.plot({
+                width: container.clientWidth,
+                height: shown.length * 20 + 40,
+                marginLeft: 200,
+                x: share
+                    ? { label: "Share of the reporter's citations", tickFormat: v => Math.round(v * 100) + "%" }
+                    : { label: "Citations", tickFormat: fmt },
+                y: { label: null, domain: shown },
+                color: colorScale(keys),
+                marks: [
+                    Plot.barX(rows, Plot.stackX({
+                        x: "n",
+                        y: "reporter",
+                        fill: keyOf,
+                        order: rank,
+                        offset: share ? "normalize" : null,
+                        title: d => `${d.reporter} — ${keyOf(d)}: ${d.n.toLocaleString()} (${pct(d.n, totals.get(d.reporter))})`,
+                    })),
+                ],
+            });
+
+            container.innerHTML = "";
+            container.append(chart);
+
+            // Make y-axis reporter labels clickable.
+            chart.querySelectorAll("text").forEach(text => {
+                const name = text.textContent.trim();
+                if (!shownSet.has(name)) return;
+                text.style.cursor = "pointer";
+                text.addEventListener("click", () => {
+                    window.location.href = "/reporters/check?r=" + encodeURIComponent(name);
+                });
+            });
+
+            document.getElementById("reporter-note").textContent =
+                shown.length < order.length
+                    ? `Showing the ${shown.length} reporters with the most citations, of ${order.length}.`
+                    : `All ${order.length} reporters.`;
+        }
+
+        try {
+            const resp = await fetch("/api/tiers");
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const d = await resp.json();
+            const tiers = d.tiers || [];
+            const reporters = d.reporters || [];
+            if (tiers.length === 0) {
+                document.getElementById("corpus-chart").innerHTML =
+                    '<div class="text-secondary small">No tier data available. ' +
+                    'Run <code>make db-maintenance</code> to refresh the materialized views.</div>';
+            } else {
+                tiers.forEach(ensureKnown);
+                reporters.forEach(ensureKnown);
+
+                // One color domain for every chart: the tiers that occur anywhere,
+                // in vocabulary order.
+                const present = new Set([...tiers, ...reporters].map(keyOf));
+                const keys = TIERS.map(t => t.key).filter(k => present.has(k));
+
+                renderCorpus(tiers, keys);
+                renderTierBars(tiers);
+                renderReporters(reporters, keys);
+                for (const el of document.querySelectorAll('input[name="measure"], #limit')) {
+                    el.addEventListener("change", () => renderReporters(reporters, keys));
+                }
+            }
+        } catch (err) {
+            document.getElementById("corpus-chart").innerHTML =
+                '<div class="text-danger">Failed to load tier data: ' + err.message + '</div>';
+        }
+    </script>
+{{end}}

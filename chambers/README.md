@@ -34,6 +34,10 @@ Single-binary Go web server using `net/http` (no external router), `html/templat
 | `GET /cite?id={uuid}` | `handleCiteLookup` | `detail.html` | Full citation detail page |
 | `GET /reporters` | `handleReporters` | `reporters.html` | List all standard reporters |
 | `GET /reporters/check?r={name}[&tier={tier}]` | `handleReporterCites` | `reporter-cites.html` | Color-coded citations for a reporter, optionally narrowed to one match tier |
+| `GET /linking-dashboard` | `handleDashboard` | `dashboard.html` | Linking progress: status counts, per-reporter bars, and tier tables |
+| `GET /api/linking-dashboard` | `handleDashboardAPI` | — | JSON behind the dashboard |
+| `GET /tiers` | `handleTiers` | `tiers.html` | Match tiers charted over the corpus and stacked per reporter |
+| `GET /api/tiers` | `handleTiersAPI` | — | JSON behind the tiers page |
 | `GET /static/...` | `http.FileServer` | — | Embedded static files (portrait image) |
 
 ### Templates and static files
@@ -78,6 +82,10 @@ The `moml.page` and `moml.page_ocrtext` joins must include `psmid` (treatise ID)
 **`getTierSummary`** — The corpus-wide `status` × `match_tier` breakdown from the `linking_tier_summary` view, with each tier's share of its status. The view aggregates `linking_dashboard_tiers`, which joins the whitelist, so it covers exactly the citations the linker probes — `linked_*`, `no_match`, `skipped_statute`, and unprocessed — and omits `skipped_junk` and `skipped_not_whitelisted`, which are turned away before any target is consulted.
 
 **`getReporterTiers`** — Every reporter's `no_match` pool broken down by failure tier, pivoted in Go into one row per reporter so the dashboard can show the shape of a reporter's failures rather than only their total.
+
+**`getReporterTierRows`** — Every reporter's citations grouped by status and match tier, all statuses included, read from `linking_dashboard_tiers` in tidy form (one row per reporter × status × tier). Ordered heaviest reporter first, with each reporter's cells together, which is the order `/tiers` stacks them in.
+
+**`getTiersData`** — Everything `/tiers` shows: `getTierSummary` for the corpus and `getReporterTierRows` for the reporters. Both read the same materialized view, so unlike the dashboard's optional sections a failure is fatal to the request.
 
 ### CitationDetail methods
 
