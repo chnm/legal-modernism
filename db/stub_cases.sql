@@ -33,13 +33,14 @@
 --      detected without its year keeps the plain key, and collapses across
 --      the years as before, which is visible as a stub without a year.
 --
---   3. It recurs at least :threshold times across the corpus (default 10, set
+--   3. It recurs at least :threshold times across the corpus (default 5, set
 --      with psql -v threshold=N). Measured on the covered reporters, where
---      the truth is known, 80% of distinct strings cited ten or more times
---      are first pages of cases (US 90%, UK 55%) against 67% at five; the
---      threshold trades that purity against coverage, which is 68% of the
---      eligible pool at ten and 82% at five. n_treatises is stored so a
---      stricter test can be evaluated without a rebuild.
+--      the truth is known, 67% of distinct strings cited five or more times
+--      are first pages of cases (US 82%, UK 45%) against 80% at ten; the
+--      threshold trades that purity against coverage, which is 82% of the
+--      eligible pool at five and 68% at ten. Five was chosen on 2026-09-08
+--      for the coverage. n_treatises is stored so a stricter test can be
+--      evaluated without a rebuild.
 --
 -- The pipeline is linker -> db-stubs -> truncate-and-relink: the registry is
 -- built from misses, and the linker then links those citations to it under
@@ -51,7 +52,7 @@
 \set ON_ERROR_STOP on
 \if :{?threshold}
 \else
-    \set threshold 10
+    \set threshold 5
 \endif
 \echo Rebuilding legalhist.stub_cases with threshold :threshold
 
