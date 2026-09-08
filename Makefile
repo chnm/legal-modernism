@@ -53,7 +53,7 @@ db-schema:
 
 # A cite string must recur this many times across the corpus to get a row in
 # legalhist.stub_cases (issue #248); override with make db-stubs STUB_THRESHOLD=N.
-STUB_THRESHOLD ?= 10
+STUB_THRESHOLD ?= 5
 
 # Rebuild legalhist.stub_cases from the linker's misses. Uses LAW_DBSTR directly
 # (needs write access). Run after cite-linker, then TRUNCATE

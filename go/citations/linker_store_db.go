@@ -455,9 +455,9 @@ func (s *LinkerDBStore) LoadERCaseSpans(ctx context.Context) ([]CaseSpan[string]
 }
 
 // LoadStubCases loads the cite strings of legalhist.stub_cases. The table is
-// small -- about 120K rows at the default threshold -- and only its key is
-// needed: the counts that justify a stub are for people and later passes, not
-// for the probe.
+// small -- about 225K rows at the default threshold of five -- and only its
+// key is needed: the counts that justify a stub are for people and later
+// passes, not for the probe.
 func (s *LinkerDBStore) LoadStubCases(ctx context.Context) (map[string]struct{}, error) {
 	rows, err := s.DB.Query(ctx, `SELECT cite FROM legalhist.stub_cases`)
 	if err != nil {
