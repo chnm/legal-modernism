@@ -1,6 +1,6 @@
 \restrict dbmate
 
--- Dumped from database version 17.10 (Debian 17.10-0+deb13u1)
+-- Dumped from database version 17.11 (Debian 17.11-0+deb13u1)
 -- Dumped by pg_dump version 17.11 (Homebrew)
 
 SET statement_timeout = 0;
@@ -1029,6 +1029,21 @@ COMMENT ON TABLE legalhist.reporters_diffvols IS 'The mapping between volumes fr
 
 
 --
+-- Name: stub_case_metadata; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.stub_case_metadata (
+    cite text NOT NULL,
+    party_names text,
+    year_decided integer,
+    jurisdiction text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT stub_case_metadata_some_value_check CHECK (((party_names IS NOT NULL) OR (year_decided IS NOT NULL) OR (jurisdiction IS NOT NULL))),
+    CONSTRAINT stub_case_metadata_year_decided_check CHECK (((year_decided >= 1000) AND (year_decided <= 2100)))
+);
+
+
+--
 -- Name: stub_cases; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -1037,17 +1052,10 @@ CREATE TABLE legalhist.stub_cases (
     reporter_standard text NOT NULL,
     volume integer,
     page integer NOT NULL,
-    n_citations integer NOT NULL,
-    n_treatises integer NOT NULL,
-    first_cited_year integer,
-    last_cited_year integer,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    updated_at timestamp with time zone DEFAULT now() NOT NULL,
-    year integer,
-    CONSTRAINT stub_cases_n_citations_check CHECK ((n_citations > 0)),
-    CONSTRAINT stub_cases_n_treatises_check CHECK ((n_treatises > 0)),
+    vol_year integer,
     CONSTRAINT stub_cases_page_check CHECK ((page > 0)),
-    CONSTRAINT stub_cases_volume_or_year_check CHECK ((((volume IS NOT NULL) AND (volume > 0)) OR (year IS NOT NULL)))
+    CONSTRAINT stub_cases_volume_or_vol_year_check CHECK ((((volume IS NOT NULL) AND (volume > 0)) OR (vol_year IS NOT NULL)))
 );
 
 
@@ -1786,6 +1794,14 @@ ALTER TABLE ONLY legalhist.reporters
 
 
 --
+-- Name: stub_case_metadata stub_case_metadata_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.stub_case_metadata
+    ADD CONSTRAINT stub_case_metadata_pkey PRIMARY KEY (cite);
+
+
+--
 -- Name: stub_cases stub_cases_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -1794,11 +1810,11 @@ ALTER TABLE ONLY legalhist.stub_cases
 
 
 --
--- Name: stub_cases stub_cases_reporter_year_volume_page_uq; Type: CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: stub_cases stub_cases_reporter_vol_year_volume_page_uq; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
 ALTER TABLE ONLY legalhist.stub_cases
-    ADD CONSTRAINT stub_cases_reporter_year_volume_page_uq UNIQUE NULLS NOT DISTINCT (reporter_standard, year, volume, page);
+    ADD CONSTRAINT stub_cases_reporter_vol_year_volume_page_uq UNIQUE NULLS NOT DISTINCT (reporter_standard, vol_year, volume, page);
 
 
 --
@@ -2112,13 +2128,6 @@ CREATE INDEX code_reporter_volume_number_idx ON legalhist.code_reporter USING bt
 --
 
 CREATE INDEX idx_reporters_jurisdiction ON legalhist.reporters USING btree (jurisdiction text_pattern_ops);
-
-
---
--- Name: idx_stub_cases_n_citations; Type: INDEX; Schema: legalhist; Owner: -
---
-
-CREATE INDEX idx_stub_cases_n_citations ON legalhist.stub_cases USING btree (n_citations DESC);
 
 
 --
@@ -2509,6 +2518,14 @@ ALTER TABLE ONLY legalhist.reporters_abbreviations
 
 
 --
+-- Name: stub_case_metadata stub_case_metadata_cite_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.stub_case_metadata
+    ADD CONSTRAINT stub_case_metadata_cite_fkey FOREIGN KEY (cite) REFERENCES legalhist.stub_cases(cite) ON UPDATE CASCADE;
+
+
+--
 -- Name: stub_cases stub_cases_reporter_standard_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -2689,4 +2706,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260906140000'),
     ('20260906140100'),
     ('20260907120000'),
-    ('20260907130000');
+    ('20260907130000'),
+    ('20260918120000'),
+    ('20260918130000');

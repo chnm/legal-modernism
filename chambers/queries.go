@@ -56,11 +56,12 @@ type CitationDetail struct {
 	// Stub case info (issue #248): the legalhist.stub_cases row a linked_stub
 	// citation points at. StubCite is nil when the link is stale -- the stub
 	// was pruned by a later refresh and the linker has not been rerun since.
-	StubCite      *string
-	StubCitations *int
-	StubTreatises *int
-	StubFirstYear *int
-	StubLastYear  *int
+	// The rest come from legalhist.stub_case_metadata (issue #320) and are nil
+	// until something fills them in.
+	StubCite         *string
+	StubPartyNames   *string
+	StubYearDecided  *int
+	StubJurisdiction *string
 
 	// MOML source info
 	BibliographicID *string
@@ -170,10 +171,9 @@ SELECT
     er.er_year,
     er.court,
     st.cite,
-    st.n_citations,
-    st.n_treatises,
-    st.first_cited_year,
-    st.last_cited_year,
+    sm.party_names,
+    sm.year_decided,
+    sm.jurisdiction,
     bi.bibliographicid,
     bi.year,
     bc.displaytitle,
@@ -190,6 +190,7 @@ LEFT JOIN cap.jurisdictions j ON j.id = cc.jurisdiction
 LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
 LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
 LEFT JOIN legalhist.stub_cases st ON st.cite = cl.stub_cite
+LEFT JOIN legalhist.stub_case_metadata sm ON sm.cite = st.cite
 LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
 LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
 LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
@@ -1015,10 +1016,9 @@ func getCitationDetail(ctx context.Context, db *pgxpool.Pool, id uuid.UUID) (*Ci
 		&c.ERYear,
 		&c.ERCourt,
 		&c.StubCite,
-		&c.StubCitations,
-		&c.StubTreatises,
-		&c.StubFirstYear,
-		&c.StubLastYear,
+		&c.StubPartyNames,
+		&c.StubYearDecided,
+		&c.StubJurisdiction,
 		&c.BibliographicID,
 		&c.PubYear,
 		&c.BookTitle,
