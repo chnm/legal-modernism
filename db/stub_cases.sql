@@ -25,13 +25,14 @@
 --      and are written as volume 1, the equivalence the linker's volumeForms
 --      applies when it probes. For a reporter cited by year
 --      (legalhist.reporters.cited_by_year_from, issues #312 and #314) the
---      year is part of the key when the citation carries one from that year
---      on, "[1905] 2 K.B. 1", because the volume restarts every year, and a
---      year-cited citation may have no volume at all, "[1893] L.R.A.C. 22".
---      A year before cited_by_year_from is decoration on a volume-cited
---      citation and stays out of the key. A citation of such a reporter
---      detected without its year keeps the plain key, and collapses across
---      the years as before, which is visible as a stub without a year.
+--      year is part of the key, stored as vol_year, when the citation
+--      carries one from that year on, "[1905] 2 K.B. 1", because the volume
+--      restarts every year, and a year-cited citation may have no volume at
+--      all, "[1893] L.R.A.C. 22". A year before cited_by_year_from is
+--      decoration on a volume-cited citation and stays out of the key. A
+--      citation of such a reporter detected without its year keeps the
+--      plain key, and collapses across the years as before, which is
+--      visible as a stub without a vol_year.
 --
 --   3. It recurs at least :threshold times across the corpus (default 5, set
 --      with psql -v threshold=N). Measured on the covered reporters, where
@@ -42,8 +43,8 @@
 --      for the coverage. db/queries/stub-case-threshold.sql is the sizing.
 --
 -- The registry records identity only (issue #320): the cite string, the
--- reporter, year, volume and page it was built from, and when the row was
--- minted. How often a stub is cited is not stored; it is derived from
+-- reporter, vol_year, volume and page it was built from, and when the row
+-- was minted. How often a stub is cited is not stored; it is derived from
 -- citation_links whenever it is wanted. What is known about the case beyond
 -- its cite -- party names, year decided, jurisdiction -- lives in
 -- legalhist.stub_case_metadata, which this script never writes. Its foreign
@@ -96,10 +97,10 @@ HAVING bool_and(
 --    threshold applies to and what the summary reports; it is not stored.
 CREATE TEMP TABLE stub_candidates ON COMMIT DROP AS
 SELECT concat_ws(' ',
-                 CASE WHEN v.year IS NOT NULL THEN format('[%s]', v.year) END,
+                 CASE WHEN v.vol_year IS NOT NULL THEN format('[%s]', v.vol_year) END,
                  v.volume, wl.reporter_standard, cu.page) AS cite,
        wl.reporter_standard,
-       v.year,
+       v.vol_year,
        v.volume,
        cu.page,
        count(*)::integer AS n_citations
@@ -113,15 +114,15 @@ CROSS JOIN LATERAL (
                 THEN coalesce(cu.volume, 1)
                 ELSE cu.volume END AS volume,
            CASE WHEN cu.year >= r.cited_by_year_from
-                THEN cu.year END AS year
+                THEN cu.year END AS vol_year
 ) v
 WHERE (cl.status = 'linked_stub'
        OR (cl.status = 'no_match'
            AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent')))
   AND coalesce(r.type, '') <> 'statute'
   AND cu.page > 0
-  AND (v.volume > 0 OR (v.volume IS NULL AND v.year IS NOT NULL))
-GROUP BY wl.reporter_standard, v.year, v.volume, cu.page
+  AND (v.volume > 0 OR (v.volume IS NULL AND v.vol_year IS NOT NULL))
+GROUP BY wl.reporter_standard, v.vol_year, v.volume, cu.page
 HAVING count(*) >= :threshold;
 
 SELECT count(*)                          AS candidates,
@@ -133,8 +134,8 @@ FROM stub_candidates;
 --    nothing on it to update, and created_at should keep the date the stub
 --    was first minted.
 WITH inserted AS (
-    INSERT INTO legalhist.stub_cases (cite, reporter_standard, year, volume, page)
-    SELECT cite, reporter_standard, year, volume, page
+    INSERT INTO legalhist.stub_cases (cite, reporter_standard, vol_year, volume, page)
+    SELECT cite, reporter_standard, vol_year, volume, page
     FROM stub_candidates
     ON CONFLICT (cite) DO NOTHING
     RETURNING 1
