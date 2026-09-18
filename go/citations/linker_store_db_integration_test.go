@@ -481,8 +481,8 @@ func TestLoadStubCasesIntegration(t *testing.T) {
 	for _, stmt := range []string{
 		`CREATE SCHEMA IF NOT EXISTS legalhist`,
 		`DROP TABLE IF EXISTS legalhist.stub_cases`,
-		`CREATE TABLE legalhist.stub_cases (cite text PRIMARY KEY, n_citations integer NOT NULL)`,
-		`INSERT INTO legalhist.stub_cases VALUES ('14 L.R.A.C. 337', 1001), ('4 A.B.R. 1', 468)`,
+		`CREATE TABLE legalhist.stub_cases (cite text PRIMARY KEY)`,
+		`INSERT INTO legalhist.stub_cases VALUES ('14 L.R.A.C. 337'), ('4 A.B.R. 1')`,
 	} {
 		_, err := s.DB.Exec(ctx, stmt)
 		require.NoError(t, err, "setup: %s", stmt)
