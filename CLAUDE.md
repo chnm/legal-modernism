@@ -85,13 +85,15 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 
 ## Pipeline run order
 
-After a change to the detector, the whitelist, or the reporter tables:
+`scripts/pipeline.sh` runs the whole rebuild from a workstation with ssh access to hopper (issue #321): `make sync-hopper`, the truncates, the detector and linker Slurm jobs, `make db-stubs`, the second linker pass, and `make db-maintenance`, in the order below. It waits for a job by polling `squeue` over fresh ssh connections rather than holding one open, so a laptop that sleeps resumes where it left off; run it under `caffeinate -i` anyway, since the local steps wait for the laptop to wake. It asks once, up front, before the TRUNCATE statements (`--yes` skips the prompt), fails loudly naming the phase and the `--from PHASE` command that resumes the run, and never cancels a Slurm job: Ctrl-C prints `--from PHASE --job ID` to reattach. Pass or fail comes from the Slurm job state, not the exit code, because the detector exits 1 on a wall-time SIGTERM as well as on a real failure; a job that hits its wall time is resubmitted once. `--dry-run` prints every command without running any. Logs go to `logs/pipeline/<timestamp>/`. `scripts/README.md` documents it in full.
 
-1. `make db-up`, then `make db-schema` and commit `db/schema.sql`.
-2. If the detector or its inputs (`legalhist.reporters.single_vol`, `reporters_abbreviations`) changed: `TRUNCATE moml_citations.citations_unlinked CASCADE` (this also empties `citation_links`), then run `cite-detector-moml` (`slurm/cite-detector-moml.sh`). The 2026-09-05 run took **3h36m**, measured from the `created_at` span in `citations_unlinked`.
-3. Run `cite-linker` (`slurm/cite-linker.sh`). There is no `--reset` flag: to re-derive existing rows after a whitelist or linking change, `TRUNCATE moml_citations.citation_links` first and then run it unchanged. A full rebuild takes about ten minutes.
-4. `make db-stubs` to rebuild `legalhist.stub_cases` from the linker's misses (issue #248), then `TRUNCATE moml_citations.citation_links` and run `cite-linker` again so that citations to reporters no source covers link to the stubs (status `linked_stub`). A routine incremental run needs neither step: the linker links new citations to the existing registry. The threshold is `STUB_THRESHOLD` (default 5 citations); `db/queries/stub-case-threshold.sql` is how it was sized.
-5. `make db-maintenance` to vacuum the churned tables and refresh every materialized view, which the chambers dashboard reads.
+The phases, and the manual steps they replace. After a change to the detector, the whitelist, or the reporter tables:
+
+1. Before running: `make db-up`, then `make db-schema` and commit `db/schema.sql`. The script's preflight refuses to start while migrations are pending.
+2. `truncate-citations`, `detect`: if the detector or its inputs (`legalhist.reporters.single_vol`, `reporters_abbreviations`) changed: `TRUNCATE moml_citations.citations_unlinked CASCADE` (this also empties `citation_links`), then run `cite-detector-moml` (`slurm/cite-detector-moml.sh`). The detector always rescans every page, so it is only worth running after the truncate. The 2026-09-05 run took **3h36m**, measured from the `created_at` span in `citations_unlinked`.
+3. `link`: run `cite-linker` (`slurm/cite-linker.sh`). There is no `--reset` flag: to re-derive existing rows after a whitelist or linking change, `TRUNCATE moml_citations.citation_links` first and then run it unchanged, which is `./scripts/pipeline.sh --from truncate-links`. A full rebuild takes about ten minutes.
+4. `stubs`, `truncate-links`, `relink`: `make db-stubs` to rebuild `legalhist.stub_cases` from the linker's misses (issue #248), then `TRUNCATE moml_citations.citation_links` and run `cite-linker` again so that citations to reporters no source covers link to the stubs (status `linked_stub`). A routine incremental run (`./scripts/pipeline.sh --from link`) needs neither step: the linker links new citations to the existing registry. The threshold is `STUB_THRESHOLD` (default 5 citations); `db/queries/stub-case-threshold.sql` is how it was sized.
+5. `maintenance`: `make db-maintenance` to vacuum the churned tables and refresh every materialized view, which the chambers dashboard reads.
 
 ## Environment variables
 
