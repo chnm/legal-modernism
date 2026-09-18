@@ -1053,9 +1053,9 @@ CREATE TABLE legalhist.stub_cases (
     volume integer,
     page integer NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
-    year integer,
+    vol_year integer,
     CONSTRAINT stub_cases_page_check CHECK ((page > 0)),
-    CONSTRAINT stub_cases_volume_or_year_check CHECK ((((volume IS NOT NULL) AND (volume > 0)) OR (year IS NOT NULL)))
+    CONSTRAINT stub_cases_volume_or_vol_year_check CHECK ((((volume IS NOT NULL) AND (volume > 0)) OR (vol_year IS NOT NULL)))
 );
 
 
@@ -1810,11 +1810,11 @@ ALTER TABLE ONLY legalhist.stub_cases
 
 
 --
--- Name: stub_cases stub_cases_reporter_year_volume_page_uq; Type: CONSTRAINT; Schema: legalhist; Owner: -
+-- Name: stub_cases stub_cases_reporter_vol_year_volume_page_uq; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
 ALTER TABLE ONLY legalhist.stub_cases
-    ADD CONSTRAINT stub_cases_reporter_year_volume_page_uq UNIQUE NULLS NOT DISTINCT (reporter_standard, year, volume, page);
+    ADD CONSTRAINT stub_cases_reporter_vol_year_volume_page_uq UNIQUE NULLS NOT DISTINCT (reporter_standard, vol_year, volume, page);
 
 
 --
@@ -2707,4 +2707,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260906140100'),
     ('20260907120000'),
     ('20260907130000'),
-    ('20260918120000');
+    ('20260918120000'),
+    ('20260918130000');
