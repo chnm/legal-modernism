@@ -37,7 +37,7 @@ func main() {
 
 	csvPath := flag.String("csv", "tmp/side_corpus.csv", "path to the CSV file")
 	tmpDir := flag.String("dir", "tmp", "path to the directory containing page text directories")
-	subject := flag.String("subject", "US", "Gale subject term recorded for each edition, which moml.us_treatises filters on")
+	subject := flag.String("subject", "US", "Gale subject term recorded for each edition; US or UK is the edition's jurisdiction in moml.treatises")
 	flag.Parse()
 
 	ctx := context.Background()
@@ -220,8 +220,8 @@ func pageIDFromFilename(filename string) (string, error) {
 
 // importBook records a volume, its edition, and the edition's subject. The
 // edition and subject may already exist when the CSV holds several volumes of
-// one set. Without a subject an edition drops out of moml.us_treatises, whose
-// filters on subjects are never true for an empty list.
+// one set. moml.treatises takes an edition's jurisdiction from its subject US
+// or UK, and leaves out an edition that has neither.
 func importBook(ctx context.Context, tx pgx.Tx, book Book, subject string) error {
 	timeout, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()

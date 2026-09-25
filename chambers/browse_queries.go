@@ -147,9 +147,10 @@ func getUSTreatises(ctx context.Context, db *pgxpool.Pool, q, sort string, limit
 	slog.Debug("querying US treatises", "q", q, "sort", sort, "limit", limit, "offset", offset)
 	query := `
 	WITH t AS (
-		SELECT bibliographicid, year, title, vols, psmid
-		FROM moml.us_treatises
-		WHERE ($1 = '' OR title ILIKE '%' || $1 || '%')
+		SELECT bibliographicid, year, title, vols
+		FROM moml.treatises
+		WHERE jurisdiction = 'US'
+		  AND ($1 = '' OR title ILIKE '%' || $1 || '%')
 	),
 	c AS (
 		SELECT t.bibliographicid AS id,
@@ -157,8 +158,9 @@ func getUSTreatises(ctx context.Context, db *pgxpool.Pool, q, sort string, limit
 		       sum(tcc.linked)     AS linked,
 		       sum(tcc.not_linked) AS not_linked
 		FROM t
+		JOIN moml.volumes v ON v.bibliographicid = t.bibliographicid
 		JOIN moml_citations.treatise_citation_counts tcc
-		  ON tcc.moml_treatise = ANY(t.psmid)
+		  ON tcc.moml_treatise = v.psmid
 		GROUP BY t.bibliographicid
 	)
 	SELECT t.bibliographicid, t.title, t.year, t.vols, e.author,
