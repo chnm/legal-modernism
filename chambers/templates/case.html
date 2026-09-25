@@ -1,0 +1,122 @@
+{{define "styles"}}
+        #decade-chart { min-height: 1px; }
+        .spelling { font-family: monospace; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">{{.Display}} <span class="badge {{.BadgeClass}} align-middle">{{.SourceLabel}}</span></h1>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="detail-grid small mb-3">
+                {{if and .FullName (ne (derefStr .FullName) .Display)}}<span class="label">Full name</span><span>{{derefStr .FullName}}</span>{{end}}
+                {{if .Cites}}<span class="label">Cited as</span><span>{{join .Cites " · "}}</span>{{end}}
+                <span class="label">Year</span><span>{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}{{if .VolYear}} <span class="text-secondary">(citation year {{deref .VolYear}})</span>{{end}}</span>
+                {{if .Court}}<span class="label">Court</span><span>{{derefStr .Court}}</span>{{end}}
+                {{if .Jurisdiction}}<span class="label">Jurisdiction</span><span>{{derefStr .Jurisdiction}}</span>{{end}}
+                {{if .Reporter}}<span class="label">Reporter</span><span><a href="{{.ReporterURL}}">{{derefStr .Reporter}}</a></span>{{end}}
+                {{if eq .Source "stub"}}<span class="label">Stub case</span><span class="text-secondary">A cite string no source holds, recorded in <code>legalhist.stub_cases</code> because it recurs across the corpus{{if .Pruned}}; this one has since been pruned from the registry and its links remain only until the linker is rerun{{end}}.</span>{{end}}
+                {{if .ExternalURL}}<span class="label">Source</span><span><a href="{{derefStr .ExternalURL}}" target="_blank" rel="noopener">view the case &nearr;</a></span>{{end}}
+                <span class="label">Citations</span><span><a href="{{.CitationsURL}}">every citation linked to this case</a></span>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            {{with .Summary}}
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <div class="stat"><div class="n">{{num .Editions}}</div><div class="l">citing editions{{if ne .Editions .EditionsDirect}}, {{num .EditionsDirect}} other than by pin cite only{{end}}</div></div>
+                <div class="stat"><div class="n">{{num .Works}}</div><div class="l">works</div></div>
+                <div class="stat"><div class="n">{{num .Cites}}</div><div class="l">citations</div></div>
+                <div class="stat"><div class="n">{{.Span}}</div><div class="l">years of the citing editions</div></div>
+                <div class="stat"><div class="n">{{num .USEditions}} / {{num .UKEditions}}</div><div class="l">US / UK editions</div></div>
+            </div>
+            {{else}}
+            <p class="small text-secondary">No edition in the treatise view cites this case.</p>
+            {{end}}
+        </div>
+    </div>
+
+    {{if .Decades}}
+    <h2 class="section">Citing editions by decade</h2>
+    <div id="decade-chart" class="mb-2"></div>
+    {{end}}
+
+    <h2 class="section">Cited as</h2>
+    <p class="small text-secondary">
+        The spellings under which the citations linked to this case were detected, with the reporter the
+        whitelist maps each to and the tier the linker reached.
+        {{if .CitedAsTotal}}Of the {{num .CitedAsTotal}} citations, {{.NonBodyPct}} were found on pages that are not body pages: indexes, tables of contents, front or back matter, where tables of cases live.{{end}}
+        A spelling that is a party name and a section number, or a page-one cite that recurs across the corpus,
+        is the detector's noise rather than a citation, and this is where it shows.
+    </p>
+    {{if .CitedAs}}
+    <table class="table table-sm table-hover align-middle" style="max-width: 60rem;">
+        <thead><tr><th>Spelling</th><th>Reporter</th><th>Link</th><th class="num">Citations</th></tr></thead>
+        <tbody>
+        {{range .CitedAs}}
+            <tr>
+                <td class="spelling">{{.Raw}}</td>
+                <td class="small">{{if .ReporterURL}}<a href="{{.ReporterURL}}">{{derefStr .ReporterStandard}}</a>{{else}}&mdash;{{end}}</td>
+                <td>{{template "chip" .Chip}}</td>
+                <td class="num">{{num .N}}</td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{if lt (len .CitedAs) 30}}{{else}}<p class="small text-secondary">The 30 most frequent spellings.</p>{{end}}
+    {{else}}
+    <p class="small text-secondary fst-italic">No citation is linked to this case.</p>
+    {{end}}
+
+    <h2 class="section">Citing editions</h2>
+    <p class="small text-secondary">
+        The editions in the treatise view that cite this case, with how many citations each makes. A
+        <span class="badge text-bg-light">pin</span> marks an edition that reaches the case only through pin
+        cites to its interior pages. Click <em>pages</em> for the citations themselves.
+    </p>
+    <div class="btn-group btn-group-sm mb-2" role="group" aria-label="Sort">
+        <a href="{{.URL}}?sort=cites" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most citations</a>
+        <a href="{{.URL}}?sort=year" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Earliest edition</a>
+    </div>
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr><th class="num">Year</th><th>In</th><th class="title-col">Edition</th><th class="title-col">Work</th><th class="num">Citations</th><th></th></tr>
+        </thead>
+        <tbody>
+        {{range .Citing}}
+            <tr>
+                <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+                <td><span class="badge jur">{{.Jurisdiction}}</span></td>
+                <td class="title-col"><a href="{{.URL}}">{{.Title}}</a></td>
+                <td class="title-col small text-secondary"><a href="{{.WorkURL}}" class="text-secondary">{{.WorkTitle}}</a></td>
+                <td class="num">{{num .Cites}}{{if .PincitesOnly}} <span class="badge text-bg-light" title="Every citation from this edition was a pin cite to an interior page of the case.">pin</span>{{end}}</td>
+                <td><a href="{{.PagesURL}}" class="small">pages</a></td>
+            </tr>
+        {{else}}
+            <tr><td colspan="6" class="text-secondary">No edition in the treatise view cites this case.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{template "pagination" .Nav}}
+{{end}}
+
+{{define "scripts"}}
+    {{if .Decades}}
+    <script type="module">
+        import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
+        const rows = {{.Decades}};
+        const el = document.getElementById("decade-chart");
+        el.append(Plot.plot({
+            width: Math.min(el.clientWidth, 720),
+            height: 200,
+            marginLeft: 50,
+            x: { label: "Decade of the citing edition", tickFormat: d => String(d), interval: 10 },
+            y: { label: "Citing editions", grid: true },
+            color: { domain: ["US", "UK"], range: ["#6f42c1", "#0d9488"], legend: true },
+            marks: [
+                Plot.rectY(rows, { x: "decade", y: "editions", fill: "jurisdiction", interval: 10,
+                    title: d => `${d.decade}s, ${d.jurisdiction}: ${d.editions.toLocaleString()} editions` }),
+                Plot.ruleY([0]),
+            ],
+        }));
+    </script>
+    {{end}}
+{{end}}

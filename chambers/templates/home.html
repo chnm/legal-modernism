@@ -1,93 +1,85 @@
-{{define "title"}}Chambers{{end}}
-
 {{define "styles"}}
-        .card { border-color: var(--border-color); }
         .card:hover { box-shadow: 0 2px 8px rgba(111, 66, 193, 0.15); }
-        .portrait-card img { max-height: 180px; border-radius: 4px; opacity: 0.8; }
+        .card-title a { text-decoration: none; }
+        .portrait img { max-height: 150px; border-radius: 4px; opacity: 0.8; }
 {{end}}
 
 {{define "content"}}
-    <h1 class="h4 mb-3">Chambers</h1>
+    <h1 class="h4 mb-1">Chambers</h1>
+    <p class="text-secondary mb-3">
+        The citations that the treatises of the <em>Making of Modern Law</em> make to reported cases:
+        found by the detector, resolved by the linker, and browsable here by the entities they connect.
+    </p>
     <div class="row g-3">
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="/cite" class="text-decoration-none">Citation lookup</a></h5>
-                    <p class="card-text text-secondary small">Look up a citation by its UUID to inspect detection and linking details.</p>
+                    <h5 class="card-title"><a href="/works">Treatises</a></h5>
+                    <p class="card-text text-secondary small">
+                        The works in the treatise view, US and UK, from a work to its editions, to each
+                        volume's pages, to the citations on a page in the order they appear. Each work and
+                        edition shows the cases it cites most.
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="/reporters" class="text-decoration-none">Check citations via <code>reporter_standard</code></a></h5>
-                    <p class="card-text text-secondary small">Browse citations grouped by reporter standard values.</p>
+                    <h5 class="card-title"><a href="/cases">Cases</a></h5>
+                    <p class="card-text text-secondary small">
+                        The cases the treatises cite, from the Caselaw Access Project, the English Reports,
+                        the Code Reporter, and the stub cases no source holds, ranked by the editions that
+                        cite them. Each case shows the editions that cite it and the spellings they used.
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="/unmatched" class="text-decoration-none">Top unmatched citations</a></h5>
-                    <p class="card-text text-secondary small">Browse the most frequent citations still to be linked, ranked by count.</p>
+                    <h5 class="card-title"><a href="/reporters">Reporters</a></h5>
+                    <p class="card-text text-secondary small">
+                        The series of law reports the treatises cite: their spellings, how their citations
+                        fared in linking, the cases reached through them, and the editions that cite them most.
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="/linking-dashboard" class="text-decoration-none">Linking dashboard</a></h5>
-                    <p class="card-text text-secondary small">Dashboard of citation linking progress.</p>
+                    <h5 class="card-title"><a href="/citations">Citations</a></h5>
+                    <p class="card-text text-secondary small">
+                        The individual citations: find them by a cite string, a reporter, an edition, or a
+                        case, and inspect one in full, from the page it was found on to the case it linked to.
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="/tiers" class="text-decoration-none">Match tiers</a></h5>
-                    <p class="card-text text-secondary small">Where the linker's cascade ended for each citation, charted over the whole corpus and by reporter.</p>
+                    <h5 class="card-title"><a href="/linking">Detecting &amp; linking</a></h5>
+                    <p class="card-text text-secondary small">
+                        How the linker fared over the whole corpus: the <a href="/linking">dashboard</a>,
+                        the <a href="/linking/tiers">match tiers</a> charted by reporter, and the
+                        <a href="/linking/whitelist">whitelist extender</a> for the spellings it does not know yet.
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/whitelist-extender" class="text-decoration-none">Whitelist extender</a></h5>
-                    <p class="card-text text-secondary small">Top reporter abbreviations not yet in the whitelist, ranked by citation count.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/treatises" class="text-decoration-none">U.S. treatises</a></h5>
-                    <p class="card-text text-secondary small">Browse U.S. treatises, walk to their pages, and see the citations detected on each &mdash; green for linked, red for not yet linked.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/cases" class="text-decoration-none">Most-cited cases</a></h5>
-                    <p class="card-text text-secondary small">Cases ranked by how many treatise pages cite them, across CAP, English Reports, and code reporters.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/normalized" class="text-decoration-none">Normalized citations</a></h5>
-                    <p class="card-text text-secondary small">Citations grouped by normalized form, ranked by frequency, linking out to the treatise pages where they appear.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100 portrait-card">
+            <div class="card h-100 portrait">
                 <div class="card-body text-center">
-                    <img src="/static/portrait.jpg" alt="Portrait" class="mb-2">
-                    <blockquote class="small text-secondary fst-italic" style="line-height: 1.3;">&ldquo;All your codes are belong to me.&rdquo; &mdash;David Dudley Field II (1805&ndash;1894)</blockquote>
+                    <img src="/static/portrait.jpg" alt="Portrait of David Dudley Field II" class="mb-2">
+                    <blockquote class="small text-secondary fst-italic mb-0" style="line-height: 1.3;">&ldquo;All your codes are belong to me.&rdquo; &mdash;David Dudley Field II (1805&ndash;1894)</blockquote>
                 </div>
             </div>
         </div>
     </div>
+    <p class="small text-secondary mt-4 mb-0">
+        Counts and rankings come from materialized views and are as of the last <code>make db-maintenance</code>,
+        not the last linker run. Pages, citations and their links are read live.
+    </p>
 {{end}}

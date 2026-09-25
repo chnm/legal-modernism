@@ -1,0 +1,73 @@
+{{define "content"}}
+    <h1 class="h4 mt-2">Reporters</h1>
+    <p class="small text-secondary mb-2">
+        The series of law reports the treatises cite, from <code>legalhist.reporters</code>: each with the
+        spellings the whitelist maps to it and how its citations fared in linking. <em>Citations</em> counts
+        the whitelisted citations the linker probed; statute series and junk spellings are not probed.
+    </p>
+
+    <form method="get" class="row g-2 align-items-center mb-3">
+        <div class="col-auto">
+            <input type="search" name="q" value="{{.Q}}" class="form-control form-control-sm" placeholder="Abbreviation or title&hellip;" style="min-width: 16rem;">
+        </div>
+        <div class="col-auto">
+            <select name="jur" class="form-select form-select-sm">
+                <option value="" {{if eq .Side ""}}selected{{end}}>US and UK</option>
+                <option value="us" {{if eq .Side "us"}}selected{{end}}>US</option>
+                <option value="uk" {{if eq .Side "uk"}}selected{{end}}>UK</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select name="type" class="form-select form-select-sm">
+                <option value="" {{if eq .Type ""}}selected{{end}}>Every type</option>
+                <option value="official" {{if eq .Type "official"}}selected{{end}}>Official</option>
+                <option value="nominate" {{if eq .Type "nominate"}}selected{{end}}>Nominate</option>
+                <option value="specialized" {{if eq .Type "specialized"}}selected{{end}}>Specialized</option>
+                <option value="statute" {{if eq .Type "statute"}}selected{{end}}>Statute</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select name="sort" class="form-select form-select-sm">
+                <option value="cites" {{if eq .Sort "cites"}}selected{{end}}>Most citations</option>
+                <option value="linked" {{if eq .Sort "linked"}}selected{{end}}>Best linked</option>
+                <option value="name" {{if eq .Sort "name"}}selected{{end}}>Abbreviation</option>
+                <option value="title" {{if eq .Sort "title"}}selected{{end}}>Title</option>
+                <option value="earliest" {{if eq .Sort "earliest"}}selected{{end}}>Earliest</option>
+            </select>
+        </div>
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Show</button></div>
+    </form>
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Reporter</th>
+                <th>Title</th>
+                <th>Jurisdiction</th>
+                <th>Type</th>
+                <th>Years</th>
+                <th class="num">Spellings</th>
+                <th class="num">Citations</th>
+                <th class="num">Linked</th>
+                <th class="num">No match</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Items}}
+            <tr>
+                <td><a href="{{.URL}}">{{.Standard}}</a>{{if .SingleVol}}{{if deref .SingleVol}} <span class="badge text-bg-light" title="A single-volume reporter, cited without a volume number">1 vol</span>{{end}}{{end}}{{if .CitedByYearFrom}} <span class="badge text-bg-light" title="Cited by year from {{deref .CitedByYearFrom}}">by year</span>{{end}}</td>
+                <td class="small">{{ptrOr .Title "&mdash;"}}</td>
+                <td class="small">{{.Side}}{{if .Place}} <span class="text-secondary">{{.Place}}</span>{{end}}{{if .Level}} <span class="text-secondary">&middot; {{derefStr .Level}}</span>{{end}}</td>
+                <td class="small text-secondary">{{ptrOr .Type "&mdash;"}}</td>
+                <td class="small">{{.Years}}</td>
+                <td class="num">{{num .Spellings}}</td>
+                <td class="num">{{num .Cites}}</td>
+                <td class="num">{{.LinkedPct}}</td>
+                <td class="num">{{num .NoMatch}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="9" class="text-secondary">No reporters match.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+{{end}}

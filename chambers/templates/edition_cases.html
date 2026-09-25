@@ -1,0 +1,17 @@
+{{define "content"}}
+    <h1 class="h4 mt-2">Cases cited by <a href="{{.Edition.URL}}">{{.Edition.Title}}</a></h1>
+    <p class="small text-secondary">
+        Every case this edition's linked citations reach, with how many citations reach it. A
+        <span class="badge text-bg-light">pin</span> marks a case reached only through pin cites to its
+        interior pages. Click <em>pages</em> for the citations themselves.
+        {{if .ExcludePincite}}Cases reached only through pin cites are left out. <a href="{{.Edition.AllCasesURL}}?sort={{.Sort}}">Include them.</a>{{else}}<a href="{{.Edition.AllCasesURL}}?sort={{.Sort}}&pincite=exclude">Leave them out.</a>{{end}}
+    </p>
+    <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Sort">
+        {{$pin := ""}}{{if .ExcludePincite}}{{$pin = "&pincite=exclude"}}{{end}}
+        <a href="{{.Edition.AllCasesURL}}?sort=cites{{$pin}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most cited</a>
+        <a href="{{.Edition.AllCasesURL}}?sort=year{{$pin}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Oldest case</a>
+        <a href="{{.Edition.AllCasesURL}}?sort=name{{$pin}}" class="btn {{if eq .Sort "name"}}btn-primary{{else}}btn-outline-secondary{{end}}">Name</a>
+    </div>
+    {{template "top_cases" .Cases}}
+    {{template "pagination" .Nav}}
+{{end}}

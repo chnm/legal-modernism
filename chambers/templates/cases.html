@@ -1,0 +1,83 @@
+{{define "content"}}
+    <h1 class="h4 mt-2">Cases</h1>
+    <p class="small text-secondary mb-2">
+        The cases the treatises cite, ranked by how many editions in the treatise view cite each one. A case is
+        a record in the Caselaw Access Project (<span class="badge src-cap">CAP</span>), the English Reports
+        (<span class="badge src-er">Eng. Rep.</span>), the Code Reporter (<span class="badge src-code">Code rep.</span>),
+        or a stub (<span class="badge src-stub">Stub</span>): a cite string no source holds, cited often enough to
+        count. <em>Works</em> is how many different works the citing editions belong to, since a work of many
+        editions weighs as many times in <em>Editions</em>.
+    </p>
+
+    <form method="get" class="row g-2 align-items-center mb-2">
+        <div class="col-auto">
+            <input type="search" name="q" value="{{.Q}}" class="form-control form-control-sm"
+                   placeholder="Case name, or an exact cite (2 Mass. 420)" style="min-width: 22rem;">
+        </div>
+        <div class="col-auto">
+            <select name="source" class="form-select form-select-sm">
+                <option value="" {{if eq .Source ""}}selected{{end}}>Every source</option>
+                <option value="cap" {{if eq .Source "cap"}}selected{{end}}>CAP</option>
+                <option value="er" {{if eq .Source "er"}}selected{{end}}>English Reports</option>
+                <option value="code" {{if eq .Source "code"}}selected{{end}}>Code Reporter</option>
+                <option value="stub" {{if eq .Source "stub"}}selected{{end}}>Stub cases</option>
+            </select>
+        </div>
+        <input type="hidden" name="sort" value="{{.Sort}}">
+        {{if .ExcludePincite}}<input type="hidden" name="pincite" value="exclude">{{end}}
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Search</button></div>
+        {{if .Q}}<div class="col-auto"><a href="/cases?source={{.Source}}&sort={{.Sort}}" class="small">clear</a></div>{{end}}
+    </form>
+
+    {{if not .Q}}
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        {{$src := .Source}}{{$pin := ""}}{{if .ExcludePincite}}{{$pin = "&pincite=exclude"}}{{end}}
+        <div class="btn-group btn-group-sm" role="group" aria-label="Sort">
+            <a href="/cases?sort=editions&source={{$src}}{{$pin}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
+            <a href="/cases?sort=works&source={{$src}}{{$pin}}" class="btn {{if eq .Sort "works"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most works</a>
+            <a href="/cases?sort=cites&source={{$src}}{{$pin}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most citations</a>
+        </div>
+        <span class="small">
+            {{if .ExcludePincite}}Ranked by editions that reach the case other than only through pin cites. <a href="/cases?source={{$src}}">Count every edition.</a>{{else}}<a href="/cases?source={{$src}}&pincite=exclude">Leave out</a> editions that reach a case only through pin cites.{{end}}
+        </span>
+    </div>
+    {{else}}
+    <p class="small text-secondary">
+        {{if .ByCite}}Cases with the citation <strong>{{.Q}}</strong> in any source.{{else}}Cases whose name contains <strong>{{.Q}}</strong>{{if ge .Nav.Total 0}}: {{num .Nav.Total}}{{end}}.{{end}}
+    </p>
+    {{end}}
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th class="num">#</th>
+                <th class="title-col">Case</th>
+                <th class="num">Year</th>
+                <th>Cite</th>
+                <th class="num">Editions</th>
+                {{if .ExcludePincite}}<th class="num" title="Editions that reach the case other than only through pin cites">Not by pin cite only</th>{{end}}
+                <th class="num">Works</th>
+                <th class="num">Citations</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{$from := .Nav.From}}{{$ex := .ExcludePincite}}
+        {{range $i, $c := .Items}}
+            <tr>
+                <td class="num text-secondary small">{{add $from $i}}</td>
+                <td class="title-col">{{template "case" $c.CaseRef}}</td>
+                <td class="num">{{if $c.Year}}{{deref $c.Year}}{{else}}&mdash;{{end}}</td>
+                <td class="small text-secondary">{{ptrOr $c.Cite "&mdash;"}}</td>
+                <td class="num">{{num $c.Editions}}</td>
+                {{if $ex}}<td class="num">{{num $c.EditionsDirect}}</td>{{end}}
+                <td class="num">{{num $c.Works}}</td>
+                <td class="num">{{num $c.Cites}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="8" class="text-secondary">No cases{{if .Q}} match{{end}}.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{template "pagination" .Nav}}
+{{end}}

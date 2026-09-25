@@ -1,0 +1,87 @@
+{{define "styles"}}
+        pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; position: sticky; top: 1rem; max-height: calc(100vh - 3rem); overflow-y: auto; font-size: 0.8rem; }
+        pre.ocrtext mark { scroll-margin-top: 4rem; }
+        .cites { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.5rem; }
+        .cite { padding: 0.35rem 0.55rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid transparent; }
+        .cite .raw { font-weight: 600; font-family: monospace; }
+        .cite .raw a { color: #212529; text-decoration: none; }
+        .cite .meta { display: block; font-size: 0.75rem; margin-top: 0.15rem; }
+        .cite .n { color: #6c757d; font-variant-numeric: tabular-nums; margin-right: 0.3rem; }
+        .cite.chip-linked, .cite.chip-nomatch, .cite.chip-junk, .cite.chip-skip { color: inherit; }
+        .cite.unfound { border-style: dashed; }
+        .legend-dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; border: 1px solid rgba(0,0,0,.15); vertical-align: -1px; }
+        .pager a { text-decoration: none; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2">
+        {{.VolumeTitle}}
+        <span class="text-secondary fw-normal">&middot; {{if gt .VolumeCount 1}}vol. {{.VolumeNumber}}, {{end}}{{.Label}}</span>
+    </h1>
+    <div class="d-flex flex-wrap gap-3 small text-secondary mb-2 align-items-center">
+        <span class="pager">
+            {{if .Prev}}<a href="{{.Prev}}">&larr; previous page</a>{{else}}<span class="text-secondary">&larr; first page</span>{{end}}
+            &middot;
+            {{if .Next}}<a href="{{.Next}}">next page &rarr;</a>{{else}}<span class="text-secondary">last page &rarr;</span>{{end}}
+        </span>
+        <span class="pager">
+            {{if .PrevCited}}<a href="{{.PrevCited}}">&laquo; previous page with citations</a>{{end}}
+            {{if and .PrevCited .NextCited}}&middot;{{end}}
+            {{if .NextCited}}<a href="{{.NextCited}}">next page with citations &raquo;</a>{{end}}
+        </span>
+        <span><code>{{.PSMID}}</code> / <code>{{.PageID}}</code>{{if .Type}} &middot; {{.Type}}{{end}}{{if .Year}} &middot; {{deref .Year}}{{end}}</span>
+        {{if .Gale.GMU}}<span>Image on Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+    </div>
+    {{if .Sections}}<p class="small text-secondary mb-2">Section: {{join .Sections " · "}}</p>{{end}}
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <h2 class="h6 border-bottom pb-1">
+                Page text
+                <span class="text-secondary fw-normal small">
+                    {{if .Original}}as scanned &middot; <a href="{{.URL}}">as the detector read it</a>{{else}}as the detector read it &middot; <a href="{{.OriginalURL}}">as scanned</a>{{end}}
+                </span>
+            </h2>
+            {{if .Text}}
+                <pre class="ocrtext bg-light border rounded p-3">{{.Highlighted}}</pre>
+            {{else}}
+                <p class="text-secondary fst-italic small">No OCR text for this page.</p>
+            {{end}}
+            {{if not .Original}}
+            <p class="small text-secondary mt-2">
+                The text the detector read: the scan's OCR text with the corrections of
+                <code>legalhist.ocr_corrections</code> applied and the Law Reports series prefix moved behind
+                the volume, which is why every citation it found can be marked.
+            </p>
+            {{end}}
+        </div>
+        <div class="col-lg-6">
+            <h2 class="h6 border-bottom pb-1">
+                Citations <span class="text-secondary fw-normal">({{len .Citations}} detected, {{.LinkedCount}} linked)</span>
+            </h2>
+            <p class="small mb-1">
+                In the order they appear on the page.
+                <span class="legend-dot chip-linked"></span> linked &nbsp;
+                <span class="legend-dot chip-nomatch"></span> no match &nbsp;
+                <span class="legend-dot chip-skip"></span> not attempted &nbsp;
+                <span class="legend-dot chip-junk"></span> junk or statute
+            </p>
+            <div class="cites">
+            {{range .Citations}}
+                <div class="cite {{.Chip.Class}}{{if not .Found}} unfound{{end}}">
+                    <span class="raw"><span class="n">{{.Index}}.</span>{{if .Found}}<a href="#cite-{{.Index}}" title="Find it in the text">{{.Raw}}</a>{{else}}<span title="Not found verbatim in the text shown">{{.Raw}}</span>{{end}}</span>
+                    <span class="meta">
+                        {{template "chip" .Chip}}
+                        {{if .Case}}&rarr; {{template "case" .Case}}{{if .Case.Year}} <span class="text-secondary">({{deref .Case.Year}})</span>{{end}}{{end}}
+                        {{if .CiteLinked}}<span class="text-secondary">as {{derefStr .CiteLinked}}</span>{{end}}
+                        {{if .ReporterURL}}&middot; <a href="{{.ReporterURL}}">{{derefStr .ReporterStandard}}</a>{{end}}
+                        &middot; <a href="{{.DetailURL}}">detail</a>
+                    </span>
+                </div>
+            {{else}}
+                <span class="text-secondary small">No citations detected on this page.</span>
+            {{end}}
+            </div>
+        </div>
+    </div>
+{{end}}

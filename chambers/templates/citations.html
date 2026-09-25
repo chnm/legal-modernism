@@ -1,0 +1,93 @@
+{{define "styles"}}
+        .raw { font-family: monospace; font-size: 0.85rem; }
+        form.search .form-label { font-size: 0.8rem; color: #6c757d; margin-bottom: 0.1rem; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">Citations</h1>
+    <p class="small text-secondary mb-2">
+        Find the citations the detector found, one row each, with what the linker made of them. Give one of:
+        an exact normalized cite (the whitelist's spelling of the reporter with its volume and page, as the linker
+        wrote it); a reporter, with a volume and page for one cite or alone for a sample; an edition; a case; or a
+        citation's id. Status and tier narrow any of them.
+    </p>
+
+    <form method="get" class="search row g-2 align-items-end mb-3">
+        <div class="col-auto">
+            <label class="form-label" for="cite">Normalized cite</label>
+            <input type="text" id="cite" name="cite" value="{{.Filter.Cite}}" class="form-control form-control-sm" placeholder="2 Mass. 420" style="width: 12rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="reporter">Reporter</label>
+            <input type="text" id="reporter" name="reporter" value="{{.Filter.Reporter}}" class="form-control form-control-sm" placeholder="Mass." style="width: 8rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="volume">Vol.</label>
+            <input type="text" id="volume" name="volume" value="{{.Filter.Volume}}" class="form-control form-control-sm" style="width: 4.5rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="page">Page</label>
+            <input type="text" id="page" name="page" value="{{.Filter.Page}}" class="form-control form-control-sm" style="width: 4.5rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="year">Year</label>
+            <input type="text" id="year" name="year" value="{{.Filter.Year}}" class="form-control form-control-sm" style="width: 4.5rem;" title="For a reporter cited by year, such as K.B. from 1901">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="edition">Edition (bibliographic id)</label>
+            <input type="text" id="edition" name="edition" value="{{.Filter.Edition}}" class="form-control form-control-sm" style="width: 10rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="case">Case (source:id)</label>
+            <input type="text" id="case" name="case" value="{{.Filter.Case}}" class="form-control form-control-sm" placeholder="cap:6754004" style="width: 10rem;">
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="status">Status</label>
+            <select id="status" name="status" class="form-select form-select-sm">
+                <option value="" {{if eq .Filter.Status ""}}selected{{end}}>any</option>
+                {{$st := .Filter.Status}}
+                {{range .Statuses}}<option value="{{.}}" {{if eq $st .}}selected{{end}}>{{.}}</option>{{end}}
+            </select>
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="tier">Tier</label>
+            <select id="tier" name="tier" class="form-select form-select-sm">
+                <option value="" {{if eq .Filter.Tier ""}}selected{{end}}>any</option>
+                {{$tier := .Filter.Tier}}
+                {{range .Tiers}}{{if ne .Key .Status}}<option value="{{.Key}}" {{if eq $tier .Key}}selected{{end}}>{{.Key}}</option>{{end}}{{end}}
+            </select>
+        </div>
+        <div class="col-auto">
+            <label class="form-label" for="id">Citation id</label>
+            <input type="text" id="id" name="id" class="form-control form-control-sm font-monospace" placeholder="UUID" style="width: 13rem;">
+        </div>
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Find</button></div>
+        {{if .Shape}}<div class="col-auto"><a href="/citations" class="small">clear</a></div>{{end}}
+    </form>
+
+    {{if .Shape}}
+        {{if .Note}}<p class="small text-secondary">{{.Note}}</p>{{end}}
+        <p class="small text-secondary">
+            {{if .More}}{{if .Ordered}}The first {{len .Items}} citations, in the order of their editions and pages; there are more.{{else}}{{len .Items}} of the citations, in no particular order; there are more.{{end}}{{else}}{{len .Items}} citation{{if ne (len .Items) 1}}s{{end}}{{if .Ordered}}, in the order of their editions and pages{{end}}.{{end}}
+        </p>
+        <table class="table table-sm table-hover align-middle">
+            <thead>
+                <tr><th>Detected</th><th>Link</th><th class="title-col">Edition</th><th>Page</th><th class="title-col">Case</th><th></th></tr>
+            </thead>
+            <tbody>
+            {{range .Items}}
+                <tr>
+                    <td class="raw">{{.Raw}}{{if .CiteNormalized}}<br><span class="text-secondary small">{{derefStr .CiteNormalized}}</span>{{end}}</td>
+                    <td>{{template "chip" .Chip}}</td>
+                    <td class="title-col small">{{if .EditionURL}}<a href="{{.EditionURL}}">{{ptrOr .Title "(untitled)"}}</a>{{if .Year}} <span class="text-secondary">({{deref .Year}})</span>{{end}}{{else}}<code>{{.PSMID}}</code>{{end}}</td>
+                    <td class="small"><a href="{{.PageURL}}">{{.PageLabel}}</a>{{if .PageType}} <span class="text-secondary">{{.PageType}}</span>{{end}}</td>
+                    <td class="title-col small">{{if .Case}}{{template "case" .Case}}{{if .Case.Year}} <span class="text-secondary">({{deref .Case.Year}})</span>{{end}}{{end}}</td>
+                    <td><a href="{{.DetailURL}}" class="small">detail</a></td>
+                </tr>
+            {{else}}
+                <tr><td colspan="6" class="text-secondary">No citations match.</td></tr>
+            {{end}}
+            </tbody>
+        </table>
+    {{end}}
+{{end}}

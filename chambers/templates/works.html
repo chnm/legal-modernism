@@ -1,0 +1,71 @@
+{{define "content"}}
+    <h1 class="h4 mt-2">Treatises</h1>
+    <p class="small text-secondary mb-2">
+        Every work with at least one edition in the treatise view, US and UK. A work is a treatise across
+        all its editions, later editors' revisions, translations and derivatives included; only its
+        editions in the treatise view are counted here. Click a work for its editions and the cases they cite.
+    </p>
+
+    <form method="get" class="row g-2 align-items-center mb-2">
+        <div class="col-auto">
+            <input type="search" name="q" value="{{.Q}}" class="form-control form-control-sm"
+                   placeholder="Title or author&hellip;" style="min-width: 18rem;">
+        </div>
+        <div class="col-auto">
+            <select name="jur" class="form-select form-select-sm">
+                <option value="" {{if eq .Jur ""}}selected{{end}}>US and UK</option>
+                <option value="us" {{if eq .Jur "us"}}selected{{end}}>US editions</option>
+                <option value="uk" {{if eq .Jur "uk"}}selected{{end}}>UK editions</option>
+                <option value="both" {{if eq .Jur "both"}}selected{{end}}>Editions on both sides</option>
+            </select>
+        </div>
+        <input type="hidden" name="sort" value="{{.Sort}}">
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Search</button></div>
+        {{if .Q}}<div class="col-auto"><a href="/works?sort={{.Sort}}&jur={{.Jur}}" class="small">clear</a></div>{{end}}
+    </form>
+
+    <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Sort">
+        {{$q := .Q}}{{$jur := .Jur}}
+        <a href="/works?sort=cites&q={{$q}}&jur={{$jur}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most citations</a>
+        <a href="/works?sort=cases&q={{$q}}&jur={{$jur}}" class="btn {{if eq .Sort "cases"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most cases</a>
+        <a href="/works?sort=editions&q={{$q}}&jur={{$jur}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
+        <a href="/works?sort=earliest&q={{$q}}&jur={{$jur}}" class="btn {{if eq .Sort "earliest"}}btn-primary{{else}}btn-outline-secondary{{end}}">Earliest</a>
+        <a href="/works?sort=title&q={{$q}}&jur={{$jur}}" class="btn {{if eq .Sort "title"}}btn-primary{{else}}btn-outline-secondary{{end}}">Title</a>
+    </div>
+
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th class="num">#</th>
+                <th class="title-col">Work</th>
+                <th>Author</th>
+                <th class="num">Editions</th>
+                <th>Years</th>
+                <th>Editions in</th>
+                <th class="num">Citations</th>
+                <th class="num">Linked</th>
+                <th class="num">Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{$from := .Nav.From}}
+        {{range $i, $w := .Items}}
+            <tr>
+                <td class="num text-secondary small">{{add $from $i}}</td>
+                <td class="title-col"><a href="{{$w.URL}}">{{$w.Title}}</a></td>
+                <td class="small text-secondary">{{ptrOr $w.Author "&mdash;"}}</td>
+                <td class="num">{{$w.Editions}}{{if ne $w.Editions $w.AllEditions}} <span class="text-secondary small">of {{$w.AllEditions}}</span>{{end}}</td>
+                <td class="small">{{$w.Years}}</td>
+                <td class="small">{{$w.Jurisdictions}}</td>
+                <td class="num">{{num $w.Cites}}</td>
+                <td class="num">{{$w.LinkedPct}}</td>
+                <td class="num">{{num $w.Cases}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="9" class="text-secondary">No works match.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{template "pagination" .Nav}}
+{{end}}

@@ -1,0 +1,99 @@
+{{define "styles"}}
+        .pages-table td, .pages-table th { padding-top: 0.15rem; padding-bottom: 0.15rem; }
+        .pages-table { max-width: 56rem; }
+        details.volume summary { cursor: pointer; }
+        .section-col { max-width: 22rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">{{.Title}}</h1>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="detail-grid small mb-3">
+                {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}{{if .AuthorRole}} <span class="text-secondary">({{derefStr .AuthorRole}})</span>{{end}}</span>{{end}}
+                <span class="label">Work</span><span><a href="{{.WorkURL}}">{{.WorkTitle}}</a>{{if .Derivative}} <span class="badge text-bg-light" title="Derived from the work: an abridgment, analysis, question book, supplement or translation">derivative</span>{{end}}</span>
+                {{if .EditionStatement}}<span class="label">Edition</span><span>{{derefStr .EditionStatement}}</span>{{end}}
+                {{if .Imprint}}<span class="label">Imprint</span><span>{{derefStr .Imprint}}</span>{{end}}
+                {{if .Place}}<span class="label">Place</span><span>{{derefStr .Place}}</span>{{end}}
+                <span class="label">Year</span><span>{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</span>
+                <span class="label">Treatise view</span><span>{{if .InTreatises}}<span class="badge jur">{{derefStr .Jurisdiction}}</span>{{else}}<span class="text-secondary">Not in the treatise view: this edition is not counted anywhere else in Chambers.</span>{{end}}</span>
+                <span class="label">Volumes</span><span>{{len .Volumes}} in MOML{{if .TotalVolumes}}{{if ne (deref .TotalVolumes) 0}}, {{deref .TotalVolumes}} catalogued{{end}}{{end}}{{if .Collation}} <span class="text-secondary">&middot; {{derefStr .Collation}}</span>{{end}}</span>
+                {{if .Subjects}}<span class="label">Subjects</span><span>{{range .Subjects}}<span class="badge jur me-1">{{.}}</span>{{end}}</span>{{end}}
+                {{if .LoCHeadings}}<span class="label">LoC headings</span><span>{{range $i, $h := .LoCHeadings}}{{if $i}}<br>{{end}}{{$h}}{{end}}</span>{{end}}
+                <span class="label">Bibliographic id</span><span><code>{{.BiblioID}}</code></span>
+                {{if .Gale.GMU}}<span class="label">On Gale</span><span><a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+            </div>
+        </div>
+        <div class="col-lg-5">
+            {{with .Counts}}
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <div class="stat"><div class="n">{{num .Cites}}</div><div class="l">citations detected</div></div>
+                <div class="stat"><div class="n">{{.LinkedPct}}</div><div class="l">linked to a case</div></div>
+                <div class="stat"><div class="n">{{num .Cases}}</div><div class="l">cases cited{{if ne .Cases .CasesDirect}}, {{num .CasesDirect}} other than by pin cite only{{end}}</div></div>
+            </div>
+            {{end}}
+            {{if .Reporters}}
+            <p class="small mb-1">
+                <span class="text-secondary">Reporters cited:</span>
+                {{$total := .ReporterCites}}
+                {{if $total}}{{pct .USCites $total}} US, {{pct .UKCites $total}} UK.{{end}}
+            </p>
+            <p class="small mb-0">
+                {{range $i, $r := .Reporters}}{{if lt $i 12}}{{if $i}} &middot; {{end}}<a href="{{$r.URL}}" title="{{ptrOr $r.Title ""}}">{{$r.Standard}}</a> <span class="text-secondary">{{num $r.Cites}}</span>{{end}}{{end}}
+                {{if gt (len .Reporters) 12}}<span class="text-secondary">&middot; and {{sub (len .Reporters) 12}} more</span>{{end}}
+            </p>
+            {{end}}
+        </div>
+    </div>
+
+    <h2 class="section">Cases cited most</h2>
+    <p class="small text-secondary">
+        The cases this edition cites most often, over every volume.
+        <a href="{{.AllCasesURL}}">All the cases it cites</a> &middot;
+        <a href="{{.CitationsURL}}">Every citation in it</a>.
+        {{if .ExcludePincite}}Cases reached only through pin cites are left out. <a href="{{.URL}}">Include them.</a>{{else}}<a href="{{.URL}}?pincite=exclude">Leave out</a> cases reached only through pin cites.{{end}}
+    </p>
+    {{template "top_cases" .TopCases}}
+
+    <h2 class="section">Pages with citations</h2>
+    <p class="small text-secondary">
+        Volume by volume, the pages on which the detector found citations, with the printed page number, the
+        page's type in the scan, and any section header the catalogue records. Click a page to read it with its
+        citations marked.
+    </p>
+    {{$single := eq (len .Volumes) 1}}
+    {{range .Volumes}}
+    <details class="volume mb-2" id="{{.PSMID}}" {{if $single}}open{{end}}>
+        <summary class="small">
+            <strong>{{.Label}}</strong>
+            {{if not $single}}<span class="text-secondary">&middot; {{.Title}}</span>{{end}}
+            {{if .Year}}<span class="text-secondary">&middot; {{deref .Year}}</span>{{end}}
+            <span class="text-secondary">&middot; {{num .Cites}} citations on {{len .Pages}} pages{{if .TotalPages}} of {{num .TotalPages}}{{end}}, {{pct .Linked .Cites}} linked</span>
+            <span class="text-secondary">&middot; <code>{{.PSMID}}</code></span>
+            {{if .Gale.GMU}}<span class="text-secondary">&middot; Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+        </summary>
+        {{if .Pages}}
+        <table class="table table-sm table-hover align-middle pages-table small mt-2">
+            <thead>
+                <tr><th>Page</th><th>Type</th><th>Section</th><th class="num">Citations</th><th class="num">Linked</th></tr>
+            </thead>
+            <tbody>
+            {{range .Pages}}
+                <tr>
+                    <td><a href="{{.URL}}">{{.Label}}</a></td>
+                    <td class="text-secondary">{{.Type}}</td>
+                    <td class="text-secondary section-col" title="{{ptrOr .Section ""}}">{{ptrOr .Section ""}}</td>
+                    <td class="num">{{num .Cites}}</td>
+                    <td class="num">{{num .Linked}} <span class="text-secondary">({{pct .Linked .Cites}})</span></td>
+                </tr>
+            {{end}}
+            </tbody>
+        </table>
+        {{else}}
+        <p class="small text-secondary fst-italic mt-2">No citations detected in this volume.</p>
+        {{end}}
+    </details>
+    {{else}}
+    <p class="small text-secondary fst-italic">This edition has no volumes in MOML.</p>
+    {{end}}
+{{end}}
