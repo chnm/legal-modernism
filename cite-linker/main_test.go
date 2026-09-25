@@ -26,6 +26,7 @@ func TestLinkCitation(t *testing.T) {
 	aleynStd := "Al"
 	kebStd := "Keb"
 	amDecStd := "Am. Dec."
+	sergStd := "Serg. & Rawl."
 	abrStd := "A.B.R."
 	ltStd := "L.T."
 	kbStd := "K.B."
@@ -680,12 +681,14 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierUSDiffVolsMissing,
 		},
 		{
-			// Issue #290. "Am. Dec." carries the alternate "A.D.", which is
-			// itself another reporter (issue #289). CAP holds a span index key
-			// for the alternate and none for the reporter itself, so before the
-			// fix the range probe reached into A.D.'s volume and returned a case
-			// from it as a cap_page_interior link. Alternates no longer reach
-			// the range index, so this is an honest miss.
+			// Issue #290. "Am. Dec." carried the alternate "A.D.", which is
+			// itself another reporter. CAP holds a span index key for the
+			// alternate and none for the reporter itself, so before the fix the
+			// range probe reached into A.D.'s volume and returned a case from
+			// it as a cap_page_interior link. Alternates no longer reach the
+			// range index, so this is an honest miss. The loader has excluded
+			// this pair since issue #289; it is fed directly here because
+			// linkCitation must stay correct whatever map it is handed.
 			name:      "alternate spelling is not range-probed",
 			cite:      citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 105},
 			whitelist: map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
@@ -701,7 +704,8 @@ func TestLinkCitation(t *testing.T) {
 			// and volume are not this citation's, so they must not be counted as
 			// how far the cascade got. This was us_page_absent before the fix,
 			// which claimed CAP holds volume 10 of Am. Dec. when what it holds is
-			// volume 10 of A.D.
+			// volume 10 of A.D. As above, the colliding pair is fed directly; the
+			// loader itself no longer produces it (issue #289).
 			name:       "tier does not credit an alternate spelling's reporter",
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 999},
 			whitelist:  map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
@@ -711,18 +715,19 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierUSReporterAbsent,
 		},
 		{
-			// The alternates are still probed against the exact maps, which is
-			// the whole point of keeping them: only containment and the tier
-			// ladder were withdrawn.
+			// An alternate that is a spelling of this reporter, not another
+			// reporter's name (issue #289), is still probed against the exact
+			// maps, which is the whole point of keeping alternates: only
+			// containment and the tier ladder were withdrawn.
 			name:       "alternate spelling still links on an exact hit",
-			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 100},
-			whitelist:  map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
-			altAbbrs:   map[string][]string{"Am. Dec.": {"A.D."}},
-			capCites:   map[string]int64{"10 A.D. 100": 900},
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Serg. & Rawl.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"Serg. & Rawl.": {ReporterStandard: &sergStd}},
+			altAbbrs:   map[string][]string{"Serg. & Rawl.": {"Serg. & Rawle"}},
+			capCites:   map[string]int64{"10 Serg. & Rawle 100": 900},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPAltSpelling,
 			wantCAPID:  ptr(int64(900)),
-			wantLinked: ptr("10 A.D. 100"),
+			wantLinked: ptr("10 Serg. & Rawle 100"),
 		},
 		{
 			// A page-interior link under the citation's own reporter is
@@ -730,7 +735,6 @@ func TestLinkCitation(t *testing.T) {
 			name:      "canonical form still range-probes",
 			cite:      citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(10), ReporterAbbr: "Am. Dec.", Page: 105},
 			whitelist: map[string]*citations.WhitelistEntry{"Am. Dec.": {ReporterStandard: &amDecStd}},
-			altAbbrs:  map[string][]string{"Am. Dec.": {"A.D."}},
 			capSpans: []citations.CaseSpan[int64]{
 				{Cite: "10 Am. Dec. 100", ID: 901, Length: 20},
 			},

@@ -160,7 +160,13 @@ func main() {
 	if err != nil {
 		exitStartupError("could not load reporter alternate abbreviations", err)
 	}
-	slog.Info("loaded reporter alternate abbreviations", "reporters", len(altAbbrs))
+	altCount := 0
+	for _, alts := range altAbbrs {
+		altCount += len(alts)
+	}
+	// The alternate total is the number that shows #289's rule took effect: the
+	// loader leaves out every alternate that is another reporter's standard.
+	slog.Info("loaded reporter alternate abbreviations", "reporters", len(altAbbrs), "alternates", altCount)
 
 	slog.Info("loading code reporter citations")
 	codeCites, err := store.LoadCodeReporterCitations(ctx)
@@ -521,27 +527,28 @@ func linkCAPThenCode(
 	// which forms get tried.
 	//
 	// Alternate spellings are deliberately NOT collected here, though they are
-	// probed against the exact maps below. Two reasons, and either alone is
-	// enough (issue #290):
+	// probed against the exact maps below (issue #290). buildAltCites bypasses
+	// buildCAPCite's reporter_cap and diffvols handling, because an alternate is
+	// the other source's own spelling and remapping its volume would be wrong.
+	// That makes an alternate's volume number untranslated, which is harmless
+	// for an exact probe -- a miss costs nothing -- but not for containment, for
+	// exactly the reason diffvolsMissing already suppresses range matching: the
+	// wrong volume of the right reporter is densely populated, so containment
+	// would confidently return a case from it.
 	//
-	// buildAltCites bypasses buildCAPCite's reporter_cap and diffvols handling,
-	// because an alternate is the other source's own spelling and remapping its
-	// volume would be wrong. That makes an alternate's volume number
-	// untranslated, which is harmless for an exact probe -- a miss costs
-	// nothing -- but not for containment, for exactly the reason diffvolsMissing
-	// already suppresses range matching: the wrong volume of the right reporter
-	// is densely populated, so containment would confidently return a case from
-	// it.
-	//
-	// And an alternate may not name this reporter at all. 76 rows in
-	// legalhist.reporters_abbreviations carry an alt_abbr that is itself another
-	// reporter's reporter_standard (issue #289), so a probe under one asks the
-	// index about a different reporter. Feeding those to the range index turned
-	// them into links: CAP holds no official or nominative cite under "Am. Dec.",
-	// "P." or "Paine", so the span index has no key for them at all, and every
-	// one of their 281,132 cap_page_interior links came from an alternate. The
-	// same probes reaching citeIndex made the failure tiers claim a reporter and
-	// volume that belong to some other reporter.
+	// The same split once guarded against a second failure. Until issue #289
+	// the loader also delivered alternates that were themselves another
+	// reporter's reporter_standard ("A.D." under "Am. Dec."; 75 such rows), so
+	// a probe under one asked the index about a different reporter. Feeding
+	// those to the range index turned them into links: CAP holds no official or
+	// nominative cite under "Am. Dec.", "P." or "Paine", so the span index had
+	// no key for them at all, and every one of their 281,132 cap_page_interior
+	// links came from an alternate; the same probes reaching citeIndex made the
+	// failure tiers claim a reporter and volume that belong to some other
+	// reporter. LoadReporterAltAbbrs now leaves those rows out, so every
+	// alternate that reaches this function is a spelling of this citation's own
+	// reporter. The range index and the tier ladder still see only the standard
+	// forms, because the volume argument stands on its own.
 	//
 	// Keeping the alternates out also makes a page-interior link auditable
 	// after the fact, which it was not: CiteLinked is nil on those rows, but the
