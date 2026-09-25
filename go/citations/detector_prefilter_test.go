@@ -85,7 +85,7 @@ var (
 )
 
 // loadSnapshot reads the (reporter, spelling) pairs the detector is built from
-// in production, snapshotted from the database. Compiling 1,054 detectors costs
+// in production, snapshotted from the database. Compiling 1,035 detectors costs
 // enough to be worth doing once for the whole package.
 func loadSnapshot(t *testing.T) ([]snapshotAbbr, []*Detector) {
 	t.Helper()
