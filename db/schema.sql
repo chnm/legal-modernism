@@ -1347,7 +1347,7 @@ CREATE TABLE moml_citations.citation_links (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     match_tier text,
     stub_cite text,
-    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'er_direct'::text, 'er_page_interior'::text, 'stub_direct'::text]))))
+    CONSTRAINT chk_citation_links_match_tier CHECK (((match_tier IS NULL) OR (match_tier = ANY (ARRAY['us_reporter_absent'::text, 'us_diffvols_missing'::text, 'us_volume_absent'::text, 'us_volume_missing'::text, 'us_page_absent'::text, 'us_page_ambiguous'::text, 'us_page_gap'::text, 'us_anachronistic'::text, 'uk_reporter_absent'::text, 'uk_volume_absent'::text, 'uk_volume_missing'::text, 'uk_page_absent'::text, 'uk_page_ambiguous'::text, 'uk_page_gap'::text, 'uk_anachronistic'::text, 'cap_direct'::text, 'cap_freelaw'::text, 'cap_alt_spelling'::text, 'cap_freelaw_alt_spelling'::text, 'cap_page_interior'::text, 'code_direct'::text, 'er_direct'::text, 'er_page_interior'::text, 'stub_direct'::text]))))
 );
 
 
@@ -2708,4 +2708,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260907120000'),
     ('20260907130000'),
     ('20260918120000'),
-    ('20260918130000');
+    ('20260918130000'),
+    ('20260925120000');
