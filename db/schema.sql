@@ -1383,41 +1383,29 @@ COMMENT ON COLUMN moml.volumes.gale_id IS 'Gale''s document id (book_info.id); N
 --
 
 CREATE VIEW moml.treatises AS
- SELECT (v.bibliographicid)::character varying(510) AS bibliographicid,
+ SELECT v.bibliographicid,
+    j.subject AS jurisdiction,
     min(v.year) AS year,
-    (array_agg(DISTINCT v.display_title))[1] AS title,
+    min(v.display_title) AS title,
         CASE
             WHEN (max(v.current_volume) = 0) THEN 1
             ELSE max(v.current_volume)
-        END AS vols,
-    array_agg(DISTINCT (s.subject)::character varying) AS subjects,
-    array_agg(DISTINCT (v.psmid)::character varying) AS psmid
+        END AS vols
    FROM (moml.volumes v
-     LEFT JOIN moml.edition_subjects s ON ((s.bibliographicid = v.bibliographicid)))
-  GROUP BY v.bibliographicid
-  ORDER BY (min(v.year)), (array_agg(DISTINCT v.display_title))[1];
+     JOIN moml.edition_subjects j ON (((j.bibliographicid = v.bibliographicid) AND (j.subject = ANY (ARRAY['US'::text, 'UK'::text])))))
+  WHERE (NOT (EXISTS ( SELECT 1
+           FROM moml.edition_subjects s
+          WHERE ((s.bibliographicid = v.bibliographicid) AND (s.subject = ANY (ARRAY['Biography'::text, 'Collected Essays'::text, 'Trials'::text]))))))
+  GROUP BY v.bibliographicid, j.subject
+ HAVING ((NOT (min(v.display_title) ~* '\Wremarks of\W'::text)) AND (NOT (min(v.display_title) ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)))
+  ORDER BY (min(v.year)), (min(v.display_title));
 
 
 --
 -- Name: VIEW treatises; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON VIEW moml.treatises IS 'Treatises aggregated from their individual volumes';
-
-
---
--- Name: us_treatises; Type: VIEW; Schema: moml; Owner: -
---
-
-CREATE VIEW moml.us_treatises AS
- SELECT (bibliographicid)::text AS bibliographicid,
-    year,
-    title,
-    vols,
-    subjects,
-    psmid
-   FROM moml.treatises
-  WHERE (('UK'::text <> ALL ((subjects)::text[])) AND ('Biography'::text <> ALL ((subjects)::text[])) AND ('Collected Essays'::text <> ALL ((subjects)::text[])) AND ('Trials'::text <> ALL ((subjects)::text[])) AND (NOT (title ~* '\Wremarks of\W'::text)) AND (NOT (title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)));
+COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, with their jurisdiction (US or UK); excludes biographies, collected essays, trials and commemorative pieces. Join moml.volumes on bibliographicid for the volumes.';
 
 
 --
@@ -3325,4 +3313,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260925120000'),
     ('20260925140000'),
     ('20260925140100'),
-    ('20260925140200');
+    ('20260925140200'),
+    ('20260925150000');
