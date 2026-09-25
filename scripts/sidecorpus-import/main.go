@@ -218,20 +218,27 @@ func pageIDFromFilename(filename string) (string, error) {
 	return fmt.Sprintf("%05d", pageNum*10), nil
 }
 
-// importBook records a volume, its edition, and the edition's subject. The
-// edition and subject may already exist when the CSV holds several volumes of
-// one set. moml.treatises takes an edition's jurisdiction from its subject US
+// importBook records a volume, its edition and work, and the edition's
+// subject. The edition and subject may already exist when the CSV holds several
+// volumes of one set. moml.treatises takes an edition's jurisdiction from its subject US
 // or UK, and leaves out an edition that has neither.
 func importBook(ctx context.Context, tx pgx.Tx, book Book, subject string) error {
 	timeout, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 
+	// A new edition is its own work until someone decides otherwise; an
+	// edition already recorded keeps the work it has.
 	queryEdition := `
-	INSERT INTO moml.editions (bibliographicid, author)
-	VALUES ($1, NULLIF($2, ''))
-	ON CONFLICT DO NOTHING;`
+	WITH w AS (
+	  INSERT INTO moml.works (author, title)
+	  SELECT NULLIF($2, ''), $3
+	  WHERE NOT EXISTS (SELECT 1 FROM moml.editions WHERE bibliographicid = $1)
+	  RETURNING work_id)
+	INSERT INTO moml.editions (bibliographicid, author, work_id)
+	SELECT $1, NULLIF($2, ''), work_id FROM w;`
 
-	_, err := tx.Exec(timeout, queryEdition, book.BibliographicID, book.AuthorByLine)
+	mainTitle := strings.SplitN(book.Title, " : ", 2)[0]
+	_, err := tx.Exec(timeout, queryEdition, book.BibliographicID, book.AuthorByLine, mainTitle)
 	if err != nil {
 		return fmt.Errorf("inserting edition for %s: %w", book.PSMID, err)
 	}
