@@ -1945,6 +1945,60 @@ CREATE MATERIALIZED VIEW moml_citations.citations_unmatched_top AS
 
 
 --
+-- Name: edition_case_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.edition_case_citations AS
+ SELECT v.bibliographicid,
+        CASE
+            WHEN (cl.cap_case_id IS NOT NULL) THEN 'cap'::text
+            WHEN (cl.er_case_id IS NOT NULL) THEN 'er'::text
+            WHEN (cl.code_reporter_id IS NOT NULL) THEN 'code'::text
+            ELSE 'stub'::text
+        END AS source,
+    cl.cap_case_id,
+    cl.er_case_id,
+    cl.code_reporter_id,
+    cl.stub_cite,
+    count(*) AS cite_count,
+    (count(*) FILTER (WHERE (cl.match_tier = ANY (ARRAY['cap_page_interior'::text, 'er_page_interior'::text]))) = count(*)) AS pincite_only
+   FROM ((moml_citations.citation_links cl
+     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+     JOIN moml.volumes v ON ((v.psmid = cu.moml_treatise)))
+  WHERE (cl.status ~~ 'linked%'::text)
+  GROUP BY v.bibliographicid, cl.cap_case_id, cl.er_case_id, cl.code_reporter_id, cl.stub_cite
+  WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW edition_case_citations; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW moml_citations.edition_case_citations IS 'One row for each MOML edition and each case it cites, from the linked citations in citation_links (issue #213). Exactly one of cap_case_id, er_case_id, code_reporter_id and stub_cite is set. Refreshed by make db-maintenance.';
+
+
+--
+-- Name: COLUMN edition_case_citations.source; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.source IS 'Which column holds the case: cap, er, code or stub.';
+
+
+--
+-- Name: COLUMN edition_case_citations.cite_count; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.cite_count IS 'Number of linked citations from the edition to the case.';
+
+
+--
+-- Name: COLUMN edition_case_citations.pincite_only; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.pincite_only IS 'True when every citation from the edition to the case was linked through an interior page (cap_page_interior or er_page_interior), so the link exists only because of a pin cite.';
+
+
+--
 -- Name: linking_dashboard_reporters; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
 --
 
@@ -2903,6 +2957,41 @@ CREATE UNIQUE INDEX citations_unmatched_top_uq ON moml_citations.citations_unmat
 
 
 --
+-- Name: edition_case_citations_cap_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_case_citations_cap_idx ON moml_citations.edition_case_citations USING btree (cap_case_id) WHERE (cap_case_id IS NOT NULL);
+
+
+--
+-- Name: edition_case_citations_code_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_case_citations_code_idx ON moml_citations.edition_case_citations USING btree (code_reporter_id) WHERE (code_reporter_id IS NOT NULL);
+
+
+--
+-- Name: edition_case_citations_er_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_case_citations_er_idx ON moml_citations.edition_case_citations USING btree (er_case_id) WHERE (er_case_id IS NOT NULL);
+
+
+--
+-- Name: edition_case_citations_stub_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_case_citations_stub_idx ON moml_citations.edition_case_citations USING btree (stub_cite) WHERE (stub_cite IS NOT NULL);
+
+
+--
+-- Name: edition_case_citations_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX edition_case_citations_uq ON moml_citations.edition_case_citations USING btree (bibliographicid, cap_case_id, er_case_id, code_reporter_id, stub_cite) NULLS NOT DISTINCT;
+
+
+--
 -- Name: idx_citation_links_cap; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -3410,4 +3499,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260925140200'),
     ('20260925150000'),
     ('20260925160000'),
-    ('20260925170000');
+    ('20260925170000'),
+    ('20260925180000');
