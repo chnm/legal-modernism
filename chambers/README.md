@@ -63,7 +63,7 @@ Key joins:
 - `cap.cases` + `cap.reporters` + `cap.courts` + `cap.jurisdictions` — CAP case details
 - `legalhist.code_reporter` — code reporter cases
 - `english_reports.cases` — English Reports cases
-- `moml.book_info` + `moml.book_citation` — treatise metadata (title, author, productlink)
+- `moml.volumes` + `moml.editions` — treatise metadata: the volume's title, year and productlink, and its edition's author
 - `moml.page` — page metadata (sourcepage number); joined on BOTH `psmid` and `pageid`
 - `moml.page_ocrtext` — full OCR text; joined on BOTH `psmid` and `pageid`
 

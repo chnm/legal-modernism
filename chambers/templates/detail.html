@@ -33,15 +33,16 @@
     <details class="small my-2">
         <summary class="text-secondary">Show SQL query</summary>
         <pre class="bg-light border rounded p-2 mt-1 small"><code>SELECT
-    cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page,
+    cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year,
     cu.moml_treatise, cu.moml_page,
     cl.status, cl.cite_cleaned, cl.cite_normalized, cl.cite_linked,
     cc.name, cc.name_abbreviation, cc.decision_year, cc.volume, cc.frontend_url,
     cr_rep.full_name, ct.name, j.name,
     code.name, code.official_citation, code.decision_year,
     er.er_name, er.er_cite, er.er_year, er.court,
-    bi.bibliographicid, bi.year, bc.displaytitle, bc.author_composed,
-    bi.productlink, mp.sourcepage, po.ocrtext
+    st.cite, sm.party_names, sm.year_decided, sm.jurisdiction,
+    v.bibliographicid, v.year, v.display_title, e.author,
+    v.product_link, mp.sourcepage, po.ocrtext
 FROM moml_citations.citations_unlinked cu
 LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
 LEFT JOIN cap.cases cc ON cc.id = cl.cap_case_id
@@ -50,9 +51,11 @@ LEFT JOIN cap.courts ct ON ct.id = cc.court
 LEFT JOIN cap.jurisdictions j ON j.id = cc.jurisdiction
 LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
 LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
-LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
-LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
-LEFT JOIN moml.page mp ON mp.pageid = cu.moml_page
+LEFT JOIN legalhist.stub_cases st ON st.cite = cl.stub_cite
+LEFT JOIN legalhist.stub_case_metadata sm ON sm.cite = st.cite
+LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
+LEFT JOIN moml.editions e ON e.bibliographicid = v.bibliographicid
+LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 LEFT JOIN moml.page_ocrtext po ON po.psmid = cu.moml_treatise AND po.pageid = cu.moml_page
 WHERE cu.id = $1
 LIMIT 1</code></pre>

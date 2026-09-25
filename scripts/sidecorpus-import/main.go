@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/csv"
-	flag "github.com/spf13/pflag"
 	"fmt"
+	flag "github.com/spf13/pflag"
 	"io"
 	"log/slog"
 	"os"
@@ -19,15 +19,17 @@ import (
 	"github.com/schollz/progressbar/v3"
 )
 
+// Book is one side-corpus volume. A volume with no bibliographicid in the CSV
+// is its own edition, keyed by its psmid, as MOML's single volumes are.
 type Book struct {
 	PSMID           string
-	BibliographicID *string
+	BibliographicID string
 	WebID           string
 	Year            int
 	ProductLink     string
 	AuthorByLine    string
 	Title           string
-	CurrentVolume   string
+	CurrentVolume   int
 }
 
 func main() {
@@ -35,6 +37,7 @@ func main() {
 
 	csvPath := flag.String("csv", "tmp/side_corpus.csv", "path to the CSV file")
 	tmpDir := flag.String("dir", "tmp", "path to the directory containing page text directories")
+	subject := flag.String("subject", "US", "Gale subject term recorded for each edition; US or UK is the edition's jurisdiction in moml.treatises")
 	flag.Parse()
 
 	ctx := context.Background()
@@ -79,7 +82,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		err = importBook(ctx, tx, book)
+		err = importBook(ctx, tx, book, *subject)
 		if err != nil {
 			tx.Rollback(ctx)
 			slog.Error("failed to import book metadata", "psmid", book.PSMID, "error", err)
@@ -171,26 +174,35 @@ func readCSV(path string) ([]Book, error) {
 			return nil, fmt.Errorf("row %d has %d fields, expected 8", i+2, len(row))
 		}
 
-		// Handle "NULL" literal for bibliographicid.
-		var bibID *string
-		if row[0] != "NULL" && row[0] != "" {
-			s := row[0]
-			bibID = &s
-		}
+		psmid := strings.TrimSpace(row[6])
 
 		year, err := strconv.Atoi(strings.TrimSpace(row[1]))
 		if err != nil {
 			return nil, fmt.Errorf("parsing year %q on row %d: %w", row[1], i+2, err)
 		}
 
+		// A volume with no bibliographicid (empty or the literal "NULL") is its
+		// own edition and not part of a numbered set, so its volume number is 0
+		// whatever the CSV says. A volume of a set keeps the CSV's number.
+		bibID := strings.TrimSpace(row[0])
+		curVol := 0
+		if bibID == "NULL" || bibID == "" {
+			bibID = psmid
+		} else if v := strings.TrimSpace(row[3]); v != "" {
+			curVol, err = strconv.Atoi(v)
+			if err != nil {
+				return nil, fmt.Errorf("parsing current volume %q on row %d: %w", row[3], i+2, err)
+			}
+		}
+
 		books = append(books, Book{
-			PSMID:           strings.TrimSpace(row[6]),
+			PSMID:           psmid,
 			BibliographicID: bibID,
 			WebID:           strings.TrimSpace(row[5]),
 			Year:            year,
 			ProductLink:     strings.TrimSpace(row[4]),
 			Title:           strings.TrimSpace(row[2]),
-			CurrentVolume:   strings.TrimSpace(row[3]),
+			CurrentVolume:   curVol,
 			AuthorByLine:    strings.TrimSpace(row[7]),
 		})
 	}
@@ -206,30 +218,45 @@ func pageIDFromFilename(filename string) (string, error) {
 	return fmt.Sprintf("%05d", pageNum*10), nil
 }
 
-func importBook(ctx context.Context, tx pgx.Tx, book Book) error {
+// importBook records a volume, its edition, and the edition's subject. The
+// edition and subject may already exist when the CSV holds several volumes of
+// one set. moml.treatises takes an edition's jurisdiction from its subject US
+// or UK, and leaves out an edition that has neither.
+func importBook(ctx context.Context, tx pgx.Tx, book Book, subject string) error {
 	timeout, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
 
-	queryBookInfo := `
-	INSERT INTO moml.book_info (psmid, bibliographicid, webid, year, productlink)
-	VALUES ($1, $2, $3, $4, $5)
+	queryEdition := `
+	INSERT INTO moml.editions (bibliographicid, author)
+	VALUES ($1, NULLIF($2, ''))
 	ON CONFLICT DO NOTHING;`
 
-	_, err := tx.Exec(timeout, queryBookInfo,
-		book.PSMID, book.BibliographicID, book.WebID, book.Year, book.ProductLink)
+	_, err := tx.Exec(timeout, queryEdition, book.BibliographicID, book.AuthorByLine)
 	if err != nil {
-		return fmt.Errorf("inserting book_info for %s: %w", book.PSMID, err)
+		return fmt.Errorf("inserting edition for %s: %w", book.PSMID, err)
 	}
 
-	queryMetadata := `
-	INSERT INTO moml.legal_treatises_metadata (psmid, author_by_line, title, current_volume)
-	VALUES ($1, $2, $3, $4)
+	queryVolume := `
+	INSERT INTO moml.volumes
+	  (psmid, bibliographicid, current_volume, display_title, full_title, year, webid, product_link)
+	VALUES ($1, $2, $3, $4, $4, $5, $6, $7)
 	ON CONFLICT DO NOTHING;`
 
-	_, err = tx.Exec(timeout, queryMetadata,
-		book.PSMID, book.AuthorByLine, book.Title, book.CurrentVolume)
+	_, err = tx.Exec(timeout, queryVolume,
+		book.PSMID, book.BibliographicID, book.CurrentVolume, book.Title, book.Year,
+		book.WebID, book.ProductLink)
 	if err != nil {
-		return fmt.Errorf("inserting legal_treatises_metadata for %s: %w", book.PSMID, err)
+		return fmt.Errorf("inserting volume %s: %w", book.PSMID, err)
+	}
+
+	querySubject := `
+	INSERT INTO moml.edition_subjects (bibliographicid, position, subject)
+	VALUES ($1, 1, $2)
+	ON CONFLICT DO NOTHING;`
+
+	_, err = tx.Exec(timeout, querySubject, book.BibliographicID, subject)
+	if err != nil {
+		return fmt.Errorf("inserting subject for %s: %w", book.PSMID, err)
 	}
 
 	return nil

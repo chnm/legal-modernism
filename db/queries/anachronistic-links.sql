@@ -1,7 +1,7 @@
 -- Links to a case decided after the treatise that cites it was published
 -- (issue #319).
 --
--- The treatise's year is its volume's moml.book_info.year. The case's year is
+-- The treatise's year is its volume's moml.volumes.year. The case's year is
 -- cap.cases.decision_year, legalhist.code_reporter.decision_year, or for the
 -- English Reports murrell_year, falling back to er_year. A treatise and a case
 -- of the same year are not anachronistic, and a link with either year unknown
@@ -19,24 +19,24 @@ SET statement_timeout = '30min';
 -- 1. Anachronistic links by source and tier, with how far the case postdates
 --    the treatise.
 WITH linked AS (
-  SELECT 'cap' AS source, cl.match_tier, bi.year AS treatise_year, c.decision_year AS case_year
+  SELECT 'cap' AS source, cl.match_tier, v.year AS treatise_year, c.decision_year AS case_year
   FROM moml_citations.citation_links cl
   JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-  LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
+  LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
   JOIN cap.cases c ON c.id = cl.cap_case_id
   WHERE cl.status = 'linked_cap'
   UNION ALL
-  SELECT 'code', cl.match_tier, bi.year, cr.decision_year
+  SELECT 'code', cl.match_tier, v.year, cr.decision_year
   FROM moml_citations.citation_links cl
   JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-  LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
+  LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
   JOIN legalhist.code_reporter cr ON cr.id = cl.code_reporter_id
   WHERE cl.status = 'linked_code_reporter'
   UNION ALL
-  SELECT 'er', cl.match_tier, bi.year, coalesce(e.murrell_year, e.er_year)
+  SELECT 'er', cl.match_tier, v.year, coalesce(e.murrell_year, e.er_year)
   FROM moml_citations.citation_links cl
   JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-  LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
+  LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
   JOIN english_reports.cases e ON e.id = cl.er_case_id
   WHERE cl.status = 'linked_english_reports'
 )

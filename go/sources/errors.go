@@ -10,6 +10,3 @@ var ErrInvalidID = errors.New("invalid ID(s)")
 
 // ErrNoDocument means no document matches that query
 var ErrNoDocument = errors.New("no matching document")
-
-// ErrBatchSize makes sure the batch size is reasonable
-var ErrBatchSize = errors.New("batch size must be a positive integer")

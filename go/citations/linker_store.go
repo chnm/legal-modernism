@@ -76,7 +76,7 @@ type LinkerStore interface {
 	LoadStubCases(ctx context.Context) (map[string]struct{}, error)
 
 	// LoadTreatiseYears loads the year each MOML treatise volume was published
-	// (moml.book_info.year), keyed by psmid, which is what
+	// (moml.volumes.year), keyed by psmid, which is what
 	// citations_unlinked.moml_treatise holds. The linker refuses a link to a
 	// case decided after that year (issue #319). A volume with no year is left
 	// out, so its citations are never refused.

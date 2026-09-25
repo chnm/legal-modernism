@@ -58,6 +58,20 @@ CREATE SCHEMA moml;
 
 
 --
+-- Name: moml_archive; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA moml_archive;
+
+
+--
+-- Name: SCHEMA moml_archive; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA moml_archive IS 'Original MOML metadata tables, kept unchanged after the move to moml.volumes and moml.editions (issue #142); to be dropped by a later migration';
+
+
+--
 -- Name: moml_citations; Type: SCHEMA; Schema: -; Owner: -
 --
 
@@ -1136,122 +1150,133 @@ CREATE TABLE legalhist.whitelist (
 
 
 --
--- Name: book_citation; Type: TABLE; Schema: moml; Owner: -
+-- Name: duplicate_copies; Type: TABLE; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.book_citation (
-    psmid character varying(510),
-    author_role character varying(510),
-    author_composed character varying(510),
-    author_first character varying(510),
-    author_middle character varying(510),
-    author_last character varying(510),
-    author_birthdate character varying(510),
-    author_deathdate character varying(510),
-    fulltitle text,
-    displaytitle text,
-    varianttitle text,
-    edition character varying(510),
-    editionstatement character varying(510),
-    currentvolume character varying(510),
-    volume character varying(510),
-    totalvolume character varying(510),
-    imprintfull character varying(510),
-    imprintpublisher character varying(510),
-    book_collation character varying(510),
-    publicationplacecity character varying(510),
-    publicationplacecomposed character varying(510),
-    totalpages character varying(510)
+CREATE TABLE moml.duplicate_copies (
+    removed_psmid text NOT NULL,
+    removed_bibliographicid text NOT NULL,
+    kept_bibliographicid text NOT NULL,
+    kept_psmid text NOT NULL,
+    kind text NOT NULL,
+    removed_linked integer NOT NULL,
+    kept_linked integer NOT NULL,
+    CONSTRAINT duplicate_copies_check CHECK ((removed_psmid <> kept_psmid)),
+    CONSTRAINT duplicate_copies_kind_check CHECK ((kind = ANY (ARRAY['twin_edition'::text, 'same_edition'::text])))
 );
 
 
 --
--- Name: book_info; Type: TABLE; Schema: moml; Owner: -
+-- Name: TABLE duplicate_copies; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.book_info (
-    psmid character varying(510) NOT NULL,
-    contenttype character varying(510),
-    id character varying(510),
-    faid character varying(510),
-    colid character varying(510),
-    ocr character varying(510),
-    assetid character varying(510),
-    assetidetoc character varying(510),
-    dvicollectionid character varying(510),
-    bibliographicid character varying(510),
-    bibliographicid_type character varying(510),
-    unit character varying(510),
-    ficherange character varying(510),
-    mcode character varying(510),
-    pubdate_year character varying(510),
-    pubdate_composed character varying(510),
-    pubdate_pubdatestart character varying(510),
-    releasedate character varying(510),
-    sourcelibrary_libraryname character varying(510),
-    sourcelibrary_librarylocation character varying(510),
-    language character varying(510),
-    language_ocr character varying(510),
-    language_primary character varying(510),
-    documenttype character varying(510),
-    notes character varying(510),
-    categorycode character varying(510),
-    categorycode_source character varying(510),
-    productlink text,
-    webid text,
-    year integer
+COMMENT ON TABLE moml.duplicate_copies IS 'Volumes removed because MOML held a second copy of the same edition (issue #142), with the volume kept in their place; the removed data is in moml_archive.removed_*';
+
+
+--
+-- Name: COLUMN duplicate_copies.kind; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.duplicate_copies.kind IS 'twin_edition: the edition was catalogued twice and the whole removed edition is gone; same_edition: a second scan of one volume within an edition';
+
+
+--
+-- Name: COLUMN duplicate_copies.removed_linked; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.duplicate_copies.removed_linked IS 'Linked citations in the removed copy on 2026-09-25 (for a twin edition, counted over the whole edition)';
+
+
+--
+-- Name: edition_loc_subjects; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.edition_loc_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    type text NOT NULL,
+    subfield text NOT NULL,
+    locsubject text,
+    CONSTRAINT edition_loc_subjects_position_check CHECK (("position" > 0))
 );
 
 
 --
--- Name: book_locsubjecthead; Type: TABLE; Schema: moml; Owner: -
+-- Name: TABLE edition_loc_subjects; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.book_locsubjecthead (
-    psmid character varying(510),
-    type character varying(510),
-    subfield character varying(510),
-    locsubject character varying(510)
+COMMENT ON TABLE moml.edition_loc_subjects IS 'Library of Congress subject headings of an edition, one row per MARC subfield in catalogue order; subfield ''a'' begins a heading. Rows may repeat.';
+
+
+--
+-- Name: edition_subjects; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.edition_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    subject text NOT NULL,
+    source text,
+    CONSTRAINT edition_subjects_position_check CHECK (("position" > 0))
 );
 
 
 --
--- Name: book_subject; Type: TABLE; Schema: moml; Owner: -
+-- Name: TABLE edition_subjects; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.book_subject (
-    psmid character varying(510),
-    subject character varying(510),
-    source character varying(510)
+COMMENT ON TABLE moml.edition_subjects IS 'Gale subject terms of an edition, in catalogue order (sub-topic, topic, jurisdiction).';
+
+
+--
+-- Name: editions; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.editions (
+    bibliographicid text NOT NULL,
+    bibliographicid_type text,
+    author text,
+    author_role text,
+    total_volumes integer,
+    book_collation text,
+    publication_place text,
+    publication_city text,
+    language text,
+    language_ocr text,
+    language_primary text,
+    content_type text,
+    document_type text,
+    category_code text,
+    category_code_source text,
+    unit text,
+    mcode text,
+    faid text,
+    colid text,
+    dvi_collection_id text,
+    release_date text,
+    CONSTRAINT editions_total_volumes_check CHECK ((total_volumes >= 0))
 );
 
 
 --
--- Name: book_volumeset; Type: TABLE; Schema: moml; Owner: -
+-- Name: TABLE editions; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.book_volumeset (
-    psmid character varying(510),
-    volumeid character varying(510),
-    assetid character varying(510),
-    filmedvolume character varying(510)
-);
+COMMENT ON TABLE moml.editions IS 'A MOML edition, identified by its bibliographicid; it has one or more volumes in moml.volumes. Only attributes shared by every volume of the edition are kept here.';
 
 
 --
--- Name: legal_treatises_metadata; Type: TABLE; Schema: moml; Owner: -
+-- Name: COLUMN editions.author; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.legal_treatises_metadata (
-    psmid character varying(510) NOT NULL,
-    author_by_line text,
-    title text,
-    edition text,
-    current_volume character varying(510),
-    imprint character varying(510),
-    book_collation character varying(510),
-    pages character varying(510)
-);
+COMMENT ON COLUMN moml.editions.author IS 'The author line as catalogued (legal_treatises_metadata.author_by_line); NULL where it was empty.';
+
+
+--
+-- Name: COLUMN editions.total_volumes; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.editions.total_volumes IS 'Number of volumes the catalogue gives for the edition; 0 for a work not in numbered volumes. MOML may hold fewer.';
 
 
 --
@@ -1289,46 +1314,460 @@ CREATE TABLE moml.page_content (
 
 
 --
+-- Name: volumes; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.volumes (
+    psmid text NOT NULL,
+    bibliographicid text NOT NULL,
+    current_volume integer NOT NULL,
+    display_title text NOT NULL,
+    full_title text NOT NULL,
+    edition_statement text,
+    imprint text,
+    year integer,
+    pubdate_composed text,
+    pubdate_start text,
+    total_pages integer,
+    source_library text,
+    source_library_location text,
+    gale_id text,
+    asset_id text,
+    asset_id_etoc text,
+    webid text NOT NULL,
+    product_link text NOT NULL,
+    fiche_range text,
+    ocr_confidence numeric,
+    CONSTRAINT volumes_current_volume_check CHECK ((current_volume >= 0)),
+    CONSTRAINT volumes_total_pages_check CHECK ((total_pages > 0))
+);
+
+
+--
+-- Name: TABLE volumes; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON TABLE moml.volumes IS 'A MOML volume, identified by its psmid, belonging to the edition moml.editions.bibliographicid. Attributes that can differ between the volumes of an edition (title, edition statement, imprint, dates) are kept here.';
+
+
+--
+-- Name: COLUMN volumes.current_volume; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.volumes.current_volume IS 'Volume number within the edition; 0 means the volume is not part of a numbered set. Not unique within an edition.';
+
+
+--
+-- Name: COLUMN volumes.edition_statement; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.volumes.edition_statement IS 'Edition statement as catalogued (legal_treatises_metadata.edition), e.g. ''9th ed., rev.''; NULL where it was empty.';
+
+
+--
+-- Name: COLUMN volumes.year; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.volumes.year IS 'Publication year of the volume, used by cite-linker''s anachronism rule.';
+
+
+--
+-- Name: COLUMN volumes.gale_id; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.volumes.gale_id IS 'Gale''s document id (book_info.id); NULL for the side-corpus volumes, which have no Gale record.';
+
+
+--
 -- Name: treatises; Type: VIEW; Schema: moml; Owner: -
 --
 
 CREATE VIEW moml.treatises AS
- SELECT bi.bibliographicid,
-    min(bi.year) AS year,
-    (array_agg(DISTINCT bc.displaytitle))[1] AS title,
-        CASE
-            WHEN (max((bc.currentvolume)::integer) = 0) THEN 1
-            ELSE max((bc.currentvolume)::integer)
-        END AS vols,
-    array_agg(DISTINCT bs.subject) AS subjects,
-    array_agg(DISTINCT bi.psmid) AS psmid
-   FROM ((moml.book_info bi
-     LEFT JOIN moml.book_citation bc ON (((bi.psmid)::text = (bc.psmid)::text)))
-     LEFT JOIN moml.book_subject bs ON (((bi.psmid)::text = (bs.psmid)::text)))
-  GROUP BY bi.bibliographicid
-  ORDER BY (min(bi.year)), (array_agg(DISTINCT bc.displaytitle))[1];
+ WITH edition AS (
+         SELECT v.bibliographicid,
+            min(v.year) AS year,
+            min(v.display_title) AS title,
+                CASE
+                    WHEN (max(v.current_volume) = 0) THEN 1
+                    ELSE max(v.current_volume)
+                END AS vols,
+            sum(v.total_pages) AS pages
+           FROM moml.volumes v
+          GROUP BY v.bibliographicid
+        )
+ SELECT e.bibliographicid,
+    j.subject AS jurisdiction,
+    e.year,
+    e.title,
+    e.vols
+   FROM (edition e
+     JOIN moml.edition_subjects j ON (((j.bibliographicid = e.bibliographicid) AND (j.subject = ANY (ARRAY['US'::text, 'UK'::text])))))
+  WHERE ((NOT (EXISTS ( SELECT 1
+           FROM moml.edition_subjects s
+          WHERE ((s.bibliographicid = e.bibliographicid) AND (s.subject = ANY (ARRAY['Biography'::text, 'Collected Essays'::text, 'Trials'::text])))))) AND (NOT (e.title ~* '\Wremarks of\W'::text)) AND (NOT (e.title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)) AND ((e.title ~* '\ytreatise\y'::text) OR ((COALESCE(e.pages, (50)::bigint) >= 50) AND (NOT (e.title ~* ((((('^(the )?((first|second|third|fourth|fifth|final|annual|special|preliminary|majority|minority|supplementary) )*reports? (of|from|to) (the )?(\w+ ){0,6}(committee|commission|commissioners|board|council|delegates|attorney|secretary|comptroller|superintendent)'::text || '|^(the )?(hearings?|message|debates?|journal of the|proceedings of the (senate|house|convention|legislature))\y'::text) || '|^(the )?(argument|closing argument|opening argument|brief|reply brief)s? (of|for|on behalf of|in|by|against|submitted)\y'::text) || '|^in the (supreme )?court\y'::text) || '|(^|: )(the )?speech(es)? (of|delivered|in the|on)\y'::text) || '|(^|: )(a |an |the )?(second |third |open |plain )?letters? (to|addressed to)\y'::text))) AND (NOT (EXISTS ( SELECT 1
+           FROM moml.edition_loc_subjects l
+          WHERE ((l.bibliographicid = e.bibliographicid) AND (((l.subfield = ANY (ARRAY['v'::text, 'x'::text])) AND (btrim(l.locsubject) = ANY (ARRAY['Biography'::text, 'Speeches in Congress'::text]))) OR ((l.subfield = 'a'::text) AND ((l.locsubject = ANY (ARRAY['Campaign biography'::text, 'Forensic orations'::text, 'Fourth of July orations'::text, 'Baccalaureate addresses'::text])) OR (l.locsubject ~ '^Campaign speeches'::text)))))))))))
+  ORDER BY e.year, e.title;
 
 
 --
 -- Name: VIEW treatises; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON VIEW moml.treatises IS 'Treatises aggregated from their individual volumes';
+COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, with their jurisdiction (US or UK); excludes pamphlets under 50 pages, public documents and arguments in a case, biographies, speeches, collected essays, trials and commemorative pieces, unless the title calls the work a treatise. Join moml.volumes on bibliographicid for the volumes.';
 
 
 --
--- Name: us_treatises; Type: VIEW; Schema: moml; Owner: -
+-- Name: volume_sets; Type: TABLE; Schema: moml; Owner: -
 --
 
-CREATE VIEW moml.us_treatises AS
- SELECT (bibliographicid)::text AS bibliographicid,
-    year,
-    title,
-    vols,
-    subjects,
-    psmid
-   FROM moml.treatises
-  WHERE (('UK'::text <> ALL ((subjects)::text[])) AND ('Biography'::text <> ALL ((subjects)::text[])) AND ('Collected Essays'::text <> ALL ((subjects)::text[])) AND ('Trials'::text <> ALL ((subjects)::text[])) AND (NOT (title ~* '\Wremarks of\W'::text)) AND (NOT (title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)));
+CREATE TABLE moml.volume_sets (
+    psmid text NOT NULL,
+    sibling_psmid text NOT NULL,
+    filmed_volume integer NOT NULL,
+    CONSTRAINT volume_sets_check CHECK ((psmid <> sibling_psmid))
+);
+
+
+--
+-- Name: TABLE volume_sets; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON TABLE moml.volume_sets IS 'For each volume of a multi-volume set, its sibling volumes as Gale records them. Siblings are usually volumes of the same edition, but a few pairs cross two editions (a work and its separately catalogued supplement).';
+
+
+--
+-- Name: book_citation; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.book_citation (
+    psmid character varying(510),
+    author_role character varying(510),
+    author_composed character varying(510),
+    author_first character varying(510),
+    author_middle character varying(510),
+    author_last character varying(510),
+    author_birthdate character varying(510),
+    author_deathdate character varying(510),
+    fulltitle text,
+    displaytitle text,
+    varianttitle text,
+    edition character varying(510),
+    editionstatement character varying(510),
+    currentvolume character varying(510),
+    volume character varying(510),
+    totalvolume character varying(510),
+    imprintfull character varying(510),
+    imprintpublisher character varying(510),
+    book_collation character varying(510),
+    publicationplacecity character varying(510),
+    publicationplacecomposed character varying(510),
+    totalpages character varying(510)
+);
+
+
+--
+-- Name: book_info; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.book_info (
+    psmid character varying(510) NOT NULL,
+    contenttype character varying(510),
+    id character varying(510),
+    faid character varying(510),
+    colid character varying(510),
+    ocr character varying(510),
+    assetid character varying(510),
+    assetidetoc character varying(510),
+    dvicollectionid character varying(510),
+    bibliographicid character varying(510),
+    bibliographicid_type character varying(510),
+    unit character varying(510),
+    ficherange character varying(510),
+    mcode character varying(510),
+    pubdate_year character varying(510),
+    pubdate_composed character varying(510),
+    pubdate_pubdatestart character varying(510),
+    releasedate character varying(510),
+    sourcelibrary_libraryname character varying(510),
+    sourcelibrary_librarylocation character varying(510),
+    language character varying(510),
+    language_ocr character varying(510),
+    language_primary character varying(510),
+    documenttype character varying(510),
+    notes character varying(510),
+    categorycode character varying(510),
+    categorycode_source character varying(510),
+    productlink text,
+    webid text,
+    year integer
+);
+
+
+--
+-- Name: book_locsubjecthead; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.book_locsubjecthead (
+    psmid character varying(510),
+    type character varying(510),
+    subfield character varying(510),
+    locsubject character varying(510)
+);
+
+
+--
+-- Name: book_subject; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.book_subject (
+    psmid character varying(510),
+    subject character varying(510),
+    source character varying(510)
+);
+
+
+--
+-- Name: book_volumeset; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.book_volumeset (
+    psmid character varying(510),
+    volumeid character varying(510),
+    assetid character varying(510),
+    filmedvolume character varying(510)
+);
+
+
+--
+-- Name: legal_treatises_metadata; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.legal_treatises_metadata (
+    psmid character varying(510) NOT NULL,
+    author_by_line text,
+    title text,
+    edition text,
+    current_volume character varying(510),
+    imprint character varying(510),
+    book_collation character varying(510),
+    pages character varying(510)
+);
+
+
+--
+-- Name: removed_citation_links; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_citation_links (
+    citation_id uuid NOT NULL,
+    status text NOT NULL,
+    cap_case_id bigint,
+    code_reporter_id bigint,
+    er_case_id text,
+    cite_cleaned text,
+    cite_normalized text,
+    cite_linked text,
+    created_at timestamp with time zone NOT NULL,
+    match_tier text,
+    stub_cite text
+);
+
+
+--
+-- Name: removed_citations_unlinked; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_citations_unlinked (
+    id uuid NOT NULL,
+    moml_treatise text NOT NULL,
+    moml_page text NOT NULL,
+    raw text NOT NULL,
+    volume integer,
+    reporter_abbr text NOT NULL,
+    page integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    year integer
+);
+
+
+--
+-- Name: removed_edition_loc_subjects; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_edition_loc_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    type text NOT NULL,
+    subfield text NOT NULL,
+    locsubject text
+);
+
+
+--
+-- Name: removed_edition_subjects; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_edition_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    subject text NOT NULL,
+    source text
+);
+
+
+--
+-- Name: removed_editions; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_editions (
+    bibliographicid text NOT NULL,
+    bibliographicid_type text,
+    author text,
+    author_role text,
+    total_volumes integer,
+    book_collation text,
+    publication_place text,
+    publication_city text,
+    language text,
+    language_ocr text,
+    language_primary text,
+    content_type text,
+    document_type text,
+    category_code text,
+    category_code_source text,
+    unit text,
+    mcode text,
+    faid text,
+    colid text,
+    dvi_collection_id text,
+    release_date text
+);
+
+
+--
+-- Name: removed_page; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_page (
+    pageid character varying(510) NOT NULL,
+    psmid character varying(510) NOT NULL,
+    type character varying(510),
+    firstpage character varying(510),
+    assetid character varying(510),
+    ocrlanguage character varying(510),
+    sourcepage character varying(510),
+    ocr character varying(510),
+    imagelink_pageindicator character varying(510),
+    imagelink_width character varying(510),
+    imagelink_height character varying(510),
+    imagelink_type character varying(510),
+    imagelink_colorimage character varying(510),
+    imagelink character varying(510)
+);
+
+
+--
+-- Name: removed_page_content; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_page_content (
+    pageid character varying(510),
+    psmid character varying(510),
+    sectionheader_type character varying(510),
+    sectionheader character varying(510)
+);
+
+
+--
+-- Name: removed_page_ocrtext; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_page_ocrtext (
+    pageid character varying(510) NOT NULL,
+    psmid character varying(510) NOT NULL,
+    ocrtext text
+);
+
+
+--
+-- Name: removed_textbooks_vols; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_textbooks_vols (
+    bibliographicid text,
+    psmid text,
+    webid text,
+    school text NOT NULL,
+    title text NOT NULL,
+    edition text,
+    topic text,
+    year_begin integer NOT NULL,
+    year_end integer NOT NULL,
+    course text,
+    subtopic text,
+    school_state text NOT NULL,
+    region text,
+    class_year text
+);
+
+
+--
+-- Name: removed_volume_sets; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_volume_sets (
+    psmid text NOT NULL,
+    sibling_psmid text NOT NULL,
+    filmed_volume integer NOT NULL
+);
+
+
+--
+-- Name: removed_volumes; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.removed_volumes (
+    psmid text NOT NULL,
+    bibliographicid text NOT NULL,
+    current_volume integer NOT NULL,
+    display_title text NOT NULL,
+    full_title text NOT NULL,
+    edition_statement text,
+    imprint text,
+    year integer,
+    pubdate_composed text,
+    pubdate_start text,
+    total_pages integer,
+    source_library text,
+    source_library_location text,
+    gale_id text,
+    asset_id text,
+    asset_id_etoc text,
+    webid text NOT NULL,
+    product_link text NOT NULL,
+    fiche_range text,
+    ocr_confidence numeric
+);
+
+
+--
+-- Name: volume_year_changes; Type: TABLE; Schema: moml_archive; Owner: -
+--
+
+CREATE TABLE moml_archive.volume_year_changes (
+    psmid text NOT NULL,
+    old_year integer NOT NULL,
+    new_year integer NOT NULL,
+    CONSTRAINT volume_year_changes_check CHECK ((new_year > old_year))
+);
+
+
+--
+-- Name: TABLE volume_year_changes; Type: COMMENT; Schema: moml_archive; Owner: -
+--
+
+COMMENT ON TABLE moml_archive.volume_year_changes IS 'Volumes of multi-year sets whose year was changed from the set''s first year to their own pubdate_start year (issue #142)';
 
 
 --
@@ -1826,19 +2265,43 @@ ALTER TABLE ONLY legalhist.textbooks_works
 
 
 --
--- Name: book_info book_info_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+-- Name: duplicate_copies duplicate_copies_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
 --
 
-ALTER TABLE ONLY moml.book_info
-    ADD CONSTRAINT book_info_pkey PRIMARY KEY (psmid);
+ALTER TABLE ONLY moml.duplicate_copies
+    ADD CONSTRAINT duplicate_copies_pkey PRIMARY KEY (removed_psmid);
 
 
 --
--- Name: legal_treatises_metadata legal_treatises_metadata_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+-- Name: edition_loc_subjects edition_loc_subjects_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
 --
 
-ALTER TABLE ONLY moml.legal_treatises_metadata
-    ADD CONSTRAINT legal_treatises_metadata_pkey PRIMARY KEY (psmid);
+ALTER TABLE ONLY moml.edition_loc_subjects
+    ADD CONSTRAINT edition_loc_subjects_pkey PRIMARY KEY (bibliographicid, "position");
+
+
+--
+-- Name: edition_subjects edition_subjects_bibliographicid_position_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.edition_subjects
+    ADD CONSTRAINT edition_subjects_bibliographicid_position_key UNIQUE (bibliographicid, "position");
+
+
+--
+-- Name: edition_subjects edition_subjects_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.edition_subjects
+    ADD CONSTRAINT edition_subjects_pkey PRIMARY KEY (bibliographicid, subject);
+
+
+--
+-- Name: editions editions_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.editions
+    ADD CONSTRAINT editions_pkey PRIMARY KEY (bibliographicid);
 
 
 --
@@ -1855,6 +2318,70 @@ ALTER TABLE ONLY moml.page_ocrtext
 
 ALTER TABLE ONLY moml.page
     ADD CONSTRAINT page_pkey PRIMARY KEY (pageid, psmid);
+
+
+--
+-- Name: volume_sets volume_sets_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volume_sets
+    ADD CONSTRAINT volume_sets_pkey PRIMARY KEY (psmid, sibling_psmid);
+
+
+--
+-- Name: volumes volumes_asset_id_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volumes
+    ADD CONSTRAINT volumes_asset_id_key UNIQUE (asset_id);
+
+
+--
+-- Name: volumes volumes_gale_id_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volumes
+    ADD CONSTRAINT volumes_gale_id_key UNIQUE (gale_id);
+
+
+--
+-- Name: volumes volumes_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volumes
+    ADD CONSTRAINT volumes_pkey PRIMARY KEY (psmid);
+
+
+--
+-- Name: volumes volumes_webid_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volumes
+    ADD CONSTRAINT volumes_webid_key UNIQUE (webid);
+
+
+--
+-- Name: book_info book_info_pkey; Type: CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.book_info
+    ADD CONSTRAINT book_info_pkey PRIMARY KEY (psmid);
+
+
+--
+-- Name: legal_treatises_metadata legal_treatises_metadata_pkey; Type: CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.legal_treatises_metadata
+    ADD CONSTRAINT legal_treatises_metadata_pkey PRIMARY KEY (psmid);
+
+
+--
+-- Name: volume_year_changes volume_year_changes_pkey; Type: CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.volume_year_changes
+    ADD CONSTRAINT volume_year_changes_pkey PRIMARY KEY (psmid);
 
 
 --
@@ -2187,24 +2714,10 @@ CREATE INDEX top_reporters_reporter_abbr_idx ON legalhist.top_reporters USING bt
 
 
 --
--- Name: book_info_bibliographicid_idx; Type: INDEX; Schema: moml; Owner: -
+-- Name: edition_subjects_subject_idx; Type: INDEX; Schema: moml; Owner: -
 --
 
-CREATE INDEX book_info_bibliographicid_idx ON moml.book_info USING btree (bibliographicid);
-
-
---
--- Name: book_info_webid_idx; Type: INDEX; Schema: moml; Owner: -
---
-
-CREATE INDEX book_info_webid_idx ON moml.book_info USING btree (webid);
-
-
---
--- Name: book_subject_subject_idx; Type: INDEX; Schema: moml; Owner: -
---
-
-CREATE INDEX book_subject_subject_idx ON moml.book_subject USING btree (subject);
+CREATE INDEX edition_subjects_subject_idx ON moml.edition_subjects USING btree (subject);
 
 
 --
@@ -2212,6 +2725,55 @@ CREATE INDEX book_subject_subject_idx ON moml.book_subject USING btree (subject)
 --
 
 CREATE INDEX page_bodytype_idx ON moml.page USING btree (type) WHERE ((type)::text = 'bodyPage'::text);
+
+
+--
+-- Name: page_content_psmid_pageid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX page_content_psmid_pageid_idx ON moml.page_content USING btree (psmid, pageid);
+
+
+--
+-- Name: page_psmid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX page_psmid_idx ON moml.page USING btree (psmid);
+
+
+--
+-- Name: volume_sets_sibling_psmid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX volume_sets_sibling_psmid_idx ON moml.volume_sets USING btree (sibling_psmid);
+
+
+--
+-- Name: volumes_bibliographicid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX volumes_bibliographicid_idx ON moml.volumes USING btree (bibliographicid);
+
+
+--
+-- Name: book_info_bibliographicid_idx; Type: INDEX; Schema: moml_archive; Owner: -
+--
+
+CREATE INDEX book_info_bibliographicid_idx ON moml_archive.book_info USING btree (bibliographicid);
+
+
+--
+-- Name: book_info_webid_idx; Type: INDEX; Schema: moml_archive; Owner: -
+--
+
+CREATE INDEX book_info_webid_idx ON moml_archive.book_info USING btree (webid);
+
+
+--
+-- Name: book_subject_subject_idx; Type: INDEX; Schema: moml_archive; Owner: -
+--
+
+CREATE INDEX book_subject_subject_idx ON moml_archive.book_subject USING btree (subject);
 
 
 --
@@ -2538,39 +3100,39 @@ ALTER TABLE ONLY legalhist.stub_cases
 --
 
 ALTER TABLE ONLY legalhist.textbooks_vols
-    ADD CONSTRAINT textbooks_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
+    ADD CONSTRAINT textbooks_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.volumes(psmid);
 
 
 --
--- Name: book_citation book_citation_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+-- Name: duplicate_copies duplicate_copies_kept_bibliographicid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
-ALTER TABLE ONLY moml.book_citation
-    ADD CONSTRAINT book_citation_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
-
-
---
--- Name: book_locsubjecthead book_locsubjecthead_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
---
-
-ALTER TABLE ONLY moml.book_locsubjecthead
-    ADD CONSTRAINT book_locsubjecthead_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
+ALTER TABLE ONLY moml.duplicate_copies
+    ADD CONSTRAINT duplicate_copies_kept_bibliographicid_fkey FOREIGN KEY (kept_bibliographicid) REFERENCES moml.editions(bibliographicid);
 
 
 --
--- Name: book_subject book_subject_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+-- Name: duplicate_copies duplicate_copies_kept_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
-ALTER TABLE ONLY moml.book_subject
-    ADD CONSTRAINT book_subject_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
+ALTER TABLE ONLY moml.duplicate_copies
+    ADD CONSTRAINT duplicate_copies_kept_psmid_fkey FOREIGN KEY (kept_psmid) REFERENCES moml.volumes(psmid);
 
 
 --
--- Name: book_volumeset book_volumeset_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+-- Name: edition_loc_subjects edition_loc_subjects_bibliographicid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
-ALTER TABLE ONLY moml.book_volumeset
-    ADD CONSTRAINT book_volumeset_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
+ALTER TABLE ONLY moml.edition_loc_subjects
+    ADD CONSTRAINT edition_loc_subjects_bibliographicid_fkey FOREIGN KEY (bibliographicid) REFERENCES moml.editions(bibliographicid);
+
+
+--
+-- Name: edition_subjects edition_subjects_bibliographicid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.edition_subjects
+    ADD CONSTRAINT edition_subjects_bibliographicid_fkey FOREIGN KEY (bibliographicid) REFERENCES moml.editions(bibliographicid);
 
 
 --
@@ -2590,19 +3152,67 @@ ALTER TABLE ONLY moml.page_ocrtext
 
 
 --
--- Name: page_ocrtext page_ocrtext_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
---
-
-ALTER TABLE ONLY moml.page_ocrtext
-    ADD CONSTRAINT page_ocrtext_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.legal_treatises_metadata(psmid);
-
-
---
 -- Name: page page_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
 ALTER TABLE ONLY moml.page
-    ADD CONSTRAINT page_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.book_info(psmid);
+    ADD CONSTRAINT page_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.volumes(psmid);
+
+
+--
+-- Name: volume_sets volume_sets_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volume_sets
+    ADD CONSTRAINT volume_sets_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.volumes(psmid);
+
+
+--
+-- Name: volume_sets volume_sets_sibling_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volume_sets
+    ADD CONSTRAINT volume_sets_sibling_psmid_fkey FOREIGN KEY (sibling_psmid) REFERENCES moml.volumes(psmid);
+
+
+--
+-- Name: volumes volumes_bibliographicid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.volumes
+    ADD CONSTRAINT volumes_bibliographicid_fkey FOREIGN KEY (bibliographicid) REFERENCES moml.editions(bibliographicid);
+
+
+--
+-- Name: book_citation book_citation_psmid_fkey; Type: FK CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.book_citation
+    ADD CONSTRAINT book_citation_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml_archive.book_info(psmid);
+
+
+--
+-- Name: book_locsubjecthead book_locsubjecthead_psmid_fkey; Type: FK CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.book_locsubjecthead
+    ADD CONSTRAINT book_locsubjecthead_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml_archive.book_info(psmid);
+
+
+--
+-- Name: book_subject book_subject_psmid_fkey; Type: FK CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.book_subject
+    ADD CONSTRAINT book_subject_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml_archive.book_info(psmid);
+
+
+--
+-- Name: book_volumeset book_volumeset_psmid_fkey; Type: FK CONSTRAINT; Schema: moml_archive; Owner: -
+--
+
+ALTER TABLE ONLY moml_archive.book_volumeset
+    ADD CONSTRAINT book_volumeset_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml_archive.book_info(psmid);
 
 
 --
@@ -2709,4 +3319,9 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260907130000'),
     ('20260918120000'),
     ('20260918130000'),
-    ('20260925120000');
+    ('20260925120000'),
+    ('20260925140000'),
+    ('20260925140100'),
+    ('20260925140200'),
+    ('20260925150000'),
+    ('20260925160000');
