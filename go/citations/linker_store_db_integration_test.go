@@ -534,8 +534,8 @@ func TestLoadYearsIntegration(t *testing.T) {
 	setup := []string{
 		`DROP SCHEMA IF EXISTS moml CASCADE`,
 		`CREATE SCHEMA moml`,
-		`CREATE TABLE moml.book_info (psmid varchar(510) PRIMARY KEY, year integer)`,
-		`INSERT INTO moml.book_info VALUES ('19003000100', 1850), ('19003000200', NULL)`,
+		`CREATE TABLE moml.volumes (psmid text PRIMARY KEY, year integer)`,
+		`INSERT INTO moml.volumes VALUES ('19003000100', 1850), ('19003000200', NULL)`,
 		`DROP SCHEMA IF EXISTS cap CASCADE`,
 		`CREATE SCHEMA cap`,
 		`CREATE TABLE cap.cases (id bigint PRIMARY KEY, decision_year integer)`,

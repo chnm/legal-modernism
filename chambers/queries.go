@@ -174,11 +174,11 @@ SELECT
     sm.party_names,
     sm.year_decided,
     sm.jurisdiction,
-    bi.bibliographicid,
-    bi.year,
-    bc.displaytitle,
-    bc.author_composed,
-    bi.productlink,
+    v.bibliographicid,
+    v.year,
+    v.display_title,
+    e.author,
+    v.product_link,
     mp.sourcepage,
     po.ocrtext
 FROM moml_citations.citations_unlinked cu
@@ -191,8 +191,8 @@ LEFT JOIN legalhist.code_reporter code ON code.id = cl.code_reporter_id
 LEFT JOIN english_reports.cases er ON er.id = cl.er_case_id
 LEFT JOIN legalhist.stub_cases st ON st.cite = cl.stub_cite
 LEFT JOIN legalhist.stub_case_metadata sm ON sm.cite = st.cite
-LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
-LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
+LEFT JOIN moml.editions e ON e.bibliographicid = v.bibliographicid
 LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 LEFT JOIN moml.page_ocrtext po ON po.psmid = cu.moml_treatise AND po.pageid = cu.moml_page
 WHERE cu.id = $1
@@ -947,20 +947,20 @@ func getUnmatchedCites(ctx context.Context, db *pgxpool.Pool, volume *int, repor
 	slog.Debug("querying cites for unmatched citation", "page", page)
 	query := `
 	SELECT cu.id, cu.raw, cl.status,
-	       COALESCE(bc.displaytitle, '') AS treatise,
+	       COALESCE(v.display_title, '') AS treatise,
 	       COALESCE(NULLIF(mp.sourcepage, ''), cu.moml_page) AS found_page,
 	       count(*) OVER() AS total
 	FROM moml_citations.citations_unlinked cu
 	JOIN legalhist.whitelist wl
 	  ON cu.reporter_abbr = wl.reporter_found AND wl.junk = false
 	LEFT JOIN moml_citations.citation_links cl ON cl.citation_id = cu.id
-	LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+	LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
 	LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 	WHERE wl.reporter_standard IS NOT DISTINCT FROM $1::text
 	  AND cu.volume IS NOT DISTINCT FROM $2::int
 	  AND cu.page = $3
 	  AND (cl.citation_id IS NULL OR cl.status = 'no_match')
-	ORDER BY bc.displaytitle NULLS LAST, mp.sourcepage, cu.id
+	ORDER BY v.display_title NULLS LAST, mp.sourcepage, cu.id
 	LIMIT $4
 	`
 	rows, err := db.Query(ctx, query, reporter, volume, page, unmatchedCitesLimit)

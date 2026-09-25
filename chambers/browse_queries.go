@@ -161,11 +161,11 @@ func getUSTreatises(ctx context.Context, db *pgxpool.Pool, q, sort string, limit
 		  ON tcc.moml_treatise = ANY(t.psmid)
 		GROUP BY t.bibliographicid
 	)
-	SELECT t.bibliographicid, t.title, t.year, t.vols,
-	       (SELECT bc.author_composed FROM moml.book_citation bc
-	         WHERE bc.psmid = t.psmid[1]) AS author,
+	SELECT t.bibliographicid, t.title, t.year, t.vols, e.author,
 	       COALESCE(c.n, 0), COALESCE(c.linked, 0), COALESCE(c.not_linked, 0)
-	FROM t LEFT JOIN c ON c.id = t.bibliographicid
+	FROM t
+	LEFT JOIN moml.editions e ON e.bibliographicid = t.bibliographicid
+	LEFT JOIN c ON c.id = t.bibliographicid
 	ORDER BY ` + order + `
 	LIMIT $2 OFFSET $3
 	`
@@ -262,11 +262,11 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 
 	// Volumes, ordered by psmid so multi-volume works read v.1, v.2, ...
 	volRows, err := db.Query(ctx, `
-		SELECT bi.psmid, bi.year, bc.currentvolume, bc.displaytitle, bc.author_composed
-		FROM moml.book_info bi
-		LEFT JOIN moml.book_citation bc ON bc.psmid = bi.psmid
-		WHERE bi.bibliographicid = $1
-		ORDER BY bi.psmid
+		SELECT v.psmid, v.year, v.current_volume, v.display_title, e.author
+		FROM moml.volumes v
+		JOIN moml.editions e ON e.bibliographicid = v.bibliographicid
+		WHERE v.bibliographicid = $1
+		ORDER BY v.psmid
 	`, biblioID)
 	if err != nil {
 		return nil, fmt.Errorf("querying treatise volumes: %w", err)
@@ -279,19 +279,15 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 	for volRows.Next() {
 		var psmid string
 		var year *int
-		var curVol, title, author *string
+		var curVol int
+		var title string
+		var author *string
 		if err := volRows.Scan(&psmid, &year, &curVol, &title, &author); err != nil {
 			return nil, fmt.Errorf("scanning treatise volume: %w", err)
 		}
-		v := TreatiseVolume{PSMID: psmid}
-		if curVol != nil {
-			v.VolumeLabel = *curVol
-		}
-		if title != nil {
-			v.Title = *title
-			if d.Title == "" {
-				d.Title = *title
-			}
+		v := TreatiseVolume{PSMID: psmid, VolumeLabel: strconv.Itoa(curVol), Title: title}
+		if d.Title == "" {
+			d.Title = title
 		}
 		if author != nil && *author != "" && d.Author == nil {
 			d.Author = author
@@ -310,12 +306,12 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 		return nil, nil
 	}
 
-	// Subjects across the work's volumes.
+	// The edition's subjects.
 	subjRows, err := db.Query(ctx, `
-		SELECT DISTINCT subject FROM moml.book_subject
-		WHERE psmid = ANY($1::text[]) AND subject IS NOT NULL AND subject <> ''
+		SELECT subject FROM moml.edition_subjects
+		WHERE bibliographicid = $1 AND subject <> ''
 		ORDER BY subject
-	`, psmids)
+	`, biblioID)
 	if err != nil {
 		return nil, fmt.Errorf("querying treatise subjects: %w", err)
 	}
@@ -484,12 +480,11 @@ func getTreatisePage(ctx context.Context, db *pgxpool.Pool, psmid, pageid string
 	var productLink *string
 	var sourcePage *string
 	err := db.QueryRow(ctx, `
-		SELECT bc.displaytitle, bi.bibliographicid, bi.productlink,
+		SELECT v.display_title, v.bibliographicid, v.product_link,
 		       (SELECT NULLIF(mp.sourcepage, '') FROM moml.page mp
 		         WHERE mp.psmid = $1 AND mp.pageid = $2)
-		FROM moml.book_info bi
-		LEFT JOIN moml.book_citation bc ON bc.psmid = bi.psmid
-		WHERE bi.psmid = $1
+		FROM moml.volumes v
+		WHERE v.psmid = $1
 	`, psmid, pageid).Scan(&title, &biblioID, &productLink, &sourcePage)
 	if err != nil && !errors.Is(err, pgx.ErrNoRows) {
 		return nil, fmt.Errorf("querying page header: %w", err)
@@ -796,18 +791,17 @@ func getCaseDetail(ctx context.Context, db *pgxpool.Pool, source, id string) (*C
 	// order; they are grouped into one row per treatise below.
 	query := `
 	SELECT cu.moml_treatise, cu.moml_page,
-	       bi.bibliographicid,
-	       bc.displaytitle,
+	       v.bibliographicid,
+	       v.display_title,
 	       COALESCE(NULLIF(mp.sourcepage, ''), cu.moml_page) AS sourcepage,
 	       count(*) AS cites
 	FROM moml_citations.citation_links cl
 	JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-	LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
-	LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+	LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
 	LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 	WHERE cl.status = '` + status + `' AND cl.` + col + `::text = $1
-	GROUP BY cu.moml_treatise, cu.moml_page, bi.bibliographicid, bc.displaytitle, sourcepage
-	ORDER BY COALESCE(bi.bibliographicid, cu.moml_treatise), cu.moml_treatise, cu.moml_page
+	GROUP BY cu.moml_treatise, cu.moml_page, v.bibliographicid, v.display_title, sourcepage
+	ORDER BY COALESCE(v.bibliographicid, cu.moml_treatise), cu.moml_treatise, cu.moml_page
 	LIMIT $2
 	`
 	rows, err := db.Query(ctx, query, id, caseDetailCitingLimit)
@@ -993,17 +987,16 @@ func getNormalizedCites(ctx context.Context, db *pgxpool.Pool, cite string) ([]N
 	slog.Debug("querying instances of normalized citation", "cite", cite)
 	query := `
 	SELECT cu.id, cu.raw, cl.status,
-	       bi.bibliographicid, bc.displaytitle,
+	       v.bibliographicid, v.display_title,
 	       cu.moml_treatise, cu.moml_page,
 	       COALESCE(NULLIF(mp.sourcepage, ''), cu.moml_page) AS sourcepage,
 	       count(*) OVER() AS total
 	FROM moml_citations.citation_links cl
 	JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-	LEFT JOIN moml.book_info bi ON bi.psmid = cu.moml_treatise
-	LEFT JOIN moml.book_citation bc ON bc.psmid = cu.moml_treatise
+	LEFT JOIN moml.volumes v ON v.psmid = cu.moml_treatise
 	LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
 	WHERE cl.cite_normalized = $1
-	ORDER BY bc.displaytitle NULLS LAST, cu.moml_treatise, cu.moml_page
+	ORDER BY v.display_title NULLS LAST, cu.moml_treatise, cu.moml_page
 	LIMIT $2
 	`
 	rows, err := db.Query(ctx, query, cite, normalizedCitesLimit)

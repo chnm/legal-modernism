@@ -12,7 +12,7 @@ import (
 // on such a case is a wrong link, however exactly the cite string matched. A nil
 // map holds no years, so every lookup in it misses and every link is kept.
 type caseYears struct {
-	treatise map[string]int // moml.book_info.year, by psmid
+	treatise map[string]int // moml.volumes.year, by psmid
 	cap      map[int64]int  // cap.cases.decision_year
 	code     map[int64]int  // legalhist.code_reporter.decision_year
 	er       map[string]int // english_reports.cases.murrell_year, else er_year
@@ -45,7 +45,7 @@ func loadCaseYears(ctx context.Context, store citations.LinkerStore) (caseYears,
 // whose tiers all claim that no case was there to be found.
 type yearGate struct {
 	published int  // the treatise volume's year
-	known     bool // false when moml.book_info has no year for the volume
+	known     bool // false when moml.volumes has no year for the volume
 	refused   bool // set once any hit has been refused
 }
 

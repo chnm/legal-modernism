@@ -496,12 +496,12 @@ func (s *LinkerDBStore) LoadStubCases(ctx context.Context) (map[string]struct{},
 	return m, nil
 }
 
-// LoadTreatiseYears loads moml.book_info.year by psmid. The year is per volume,
-// not per work: a multi-volume treatise issued over several years dates each
+// LoadTreatiseYears loads moml.volumes.year by psmid. The year is per volume,
+// not per edition: a multi-volume treatise issued over several years dates each
 // citation by the volume it appears in.
 func (s *LinkerDBStore) LoadTreatiseYears(ctx context.Context) (map[string]int, error) {
 	return loadYears[string](ctx, s.DB, "treatise years",
-		`SELECT psmid, year FROM moml.book_info WHERE year IS NOT NULL`, 25_000)
+		`SELECT psmid, year FROM moml.volumes WHERE year IS NOT NULL`, 25_000)
 }
 
 // LoadCAPCaseYears loads cap.cases.decision_year by case id.

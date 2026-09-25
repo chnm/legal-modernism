@@ -1,8 +1,7 @@
-SELECT s.psmid, s.subject, bi.year, bc.displaytitle, bi.productlink FROM
-(SELECT psmid, array_agg(subject) AS subject
-FROM moml.book_subject
-GROUP BY psmid
+SELECT v.psmid, s.subject, v.year, v.display_title, v.product_link FROM
+(SELECT bibliographicid, array_agg(subject ORDER BY position) AS subject
+FROM moml.edition_subjects
+GROUP BY bibliographicid
 HAVING 'UK' != ALL(array_agg(subject))) s
-LEFT JOIN moml.book_info bi ON s.psmid = bi.psmid
-LEFT JOIN moml.book_citation bc ON s.psmid = bc.psmid
-ORDER BY bi.year;
+JOIN moml.volumes v ON s.bibliographicid = v.bibliographicid
+ORDER BY v.year;
