@@ -275,7 +275,9 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 
 	d := &TreatiseDetail{BiblioID: biblioID}
 	var psmids []string
-	volIndex := make(map[string]*TreatiseVolume)
+	// Index into d.Volumes by position, not by pointer: appending may move the
+	// slice, and a pointer taken before the move would miss the pages.
+	volIndex := make(map[string]int)
 	for volRows.Next() {
 		var psmid string
 		var year *int
@@ -296,7 +298,7 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 			d.Year = year
 		}
 		d.Volumes = append(d.Volumes, v)
-		volIndex[psmid] = &d.Volumes[len(d.Volumes)-1]
+		volIndex[psmid] = len(d.Volumes) - 1
 		psmids = append(psmids, psmid)
 	}
 	if err := volRows.Err(); err != nil {
@@ -351,8 +353,8 @@ func getTreatiseDetail(ctx context.Context, db *pgxpool.Pool, biblioID string) (
 		if err := pageRows.Scan(&p.PSMID, &p.PageID, &p.SourcePage, &p.Cites, &p.Linked, &p.NotLinked); err != nil {
 			return nil, fmt.Errorf("scanning treatise page: %w", err)
 		}
-		if v, ok := volIndex[p.PSMID]; ok {
-			v.Pages = append(v.Pages, p)
+		if i, ok := volIndex[p.PSMID]; ok {
+			d.Volumes[i].Pages = append(d.Volumes[i].Pages, p)
 		}
 	}
 	if err := pageRows.Err(); err != nil {
