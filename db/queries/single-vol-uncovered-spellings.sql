@@ -30,6 +30,9 @@ patterns AS (
   SELECT reporter_standard AS abbr FROM sv
   UNION
   SELECT a.alt_abbr FROM legalhist.reporters_abbreviations a JOIN sv USING (reporter_standard)
+  -- A standard spelling trumps an alternative one: the loader skips an
+  -- alternate that is itself a reporter_standard (issue #289).
+  WHERE NOT EXISTS (SELECT 1 FROM legalhist.reporters r WHERE r.reporter_standard = a.alt_abbr)
 ),
 rx AS (
   SELECT abbr,

@@ -227,18 +227,35 @@ func (s *LinkerDBStore) LoadFreelawCites(ctx context.Context) (map[string]int64,
 }
 
 // LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into an in-memory
-// map of reporter_standard -> []alt_abbr. The linker probes the CAP, FreeLaw,
-// and code-reporter maps with each alternate spelling (keyed by the canonical
-// reporter_standard, like the diffvols mapping) after the standard/reporter_cap
-// forms miss. The ORDER BY makes the probe order — and therefore which alt wins
-// when more than one would hit — deterministic across runs; COLLATE "C" keeps
-// that order byte-identical across environments regardless of locale.
+// map of reporter_standard -> []alt_abbr. The linker probes the CAP and FreeLaw
+// maps with each alternate spelling (keyed by the canonical reporter_standard,
+// like the diffvols mapping) after the standard/reporter_cap forms miss.
+//
+// An alternate that is itself some reporter's reporter_standard is left out. A
+// standard spelling always trumps an alternative one: the spelling belongs to
+// the reporter whose standard it is, so no other reporter may probe under it,
+// or the probe asks CAP about a different reporter and links to whatever sits
+// at that volume and page there — American Decisions under "A.D.", the Pacific
+// Reporter under "P.R." (75 such rows, which had made 112,179 links; issue
+// #289). The rows stay in the table, and the NOT EXISTS here is the one the
+// seed migrations apply to new rows, so this is a load-time rule rather than a
+// data change. A reporter whose only alternate collides ("Am. Dec.") is absent
+// from the map, exactly like a reporter with no alternates at all.
+//
+// The ORDER BY makes the probe order — and therefore which alt wins when more
+// than one would hit — deterministic across runs; COLLATE "C" keeps that order
+// byte-identical across environments regardless of locale. alt_abbr is NOT
+// NULL, so there is no null filter: a null would fail Scan loudly rather than
+// be skipped.
 func (s *LinkerDBStore) LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error) {
 	query := `
-	SELECT reporter_standard, alt_abbr
-	FROM legalhist.reporters_abbreviations
-	WHERE alt_abbr IS NOT NULL
-	ORDER BY reporter_standard COLLATE "C", alt_abbr COLLATE "C"
+	SELECT ra.reporter_standard, ra.alt_abbr
+	FROM legalhist.reporters_abbreviations ra
+	WHERE NOT EXISTS (
+		SELECT 1 FROM legalhist.reporters r
+		WHERE r.reporter_standard = ra.alt_abbr
+	)
+	ORDER BY ra.reporter_standard COLLATE "C", ra.alt_abbr COLLATE "C"
 	`
 	rows, err := s.DB.Query(ctx, query)
 	if err != nil {

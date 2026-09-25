@@ -121,12 +121,22 @@ func citationKey(c *Citation) string {
 	}, "\x00")
 }
 
-// GetSingleVolReporterAbbrs returns one row per (reporter_standard, abbreviation)
-// pair for every single-volume reporter, covering both the canonical
-// reporter_standard form and every alt_abbr in legalhist.reporters_abbreviations.
-// Pairing each abbreviation with its canonical reporter_standard lets the
-// detector normalize the saved reporter_abbr to the canonical form regardless
-// of which spelling appeared in the OCR.
+// GetSingleVolReporterAbbrs returns one row per (reporter_standard, spelling)
+// pair for every single-volume reporter: the reporter_standard itself and every
+// alt_abbr registered for it in legalhist.reporters_abbreviations. Each pair
+// becomes one volume-less detector (NewSingleVolDetector), which records the
+// spelling it matched rather than the reporter it was built from;
+// legalhist.whitelist decides the reporter at link time.
+//
+// An alt_abbr that is itself some reporter's reporter_standard is left out: a
+// standard spelling always trumps an alternative one (issue #289). A
+// volume-less detector for "Cal.", built because Calthrop's Reports listed it
+// as an alternate, finds "Cal. 123" wherever it appears, and the whitelist then
+// routes the spelling to the California Reports, where a citation without a
+// volume is never right. The rows stay in the table; the NOT EXISTS is the one
+// the seed migrations apply to new rows. Where the owning reporter is itself
+// single-volume ("Phil." beside "Phil. Eq."), its own detector still looks for
+// the spelling, so those detections are unchanged.
 func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolReporter, error) {
 	query := `
 	SELECT r.reporter_standard, r.reporter_standard AS abbr
@@ -138,7 +148,10 @@ func (r *DBStore) GetSingleVolReporterAbbrs(ctx context.Context) ([]SingleVolRep
 	  JOIN legalhist.reporters_abbreviations ra
 	    ON ra.reporter_standard = r.reporter_standard
 	 WHERE r.single_vol = true
-	   AND ra.alt_abbr IS NOT NULL;
+	   AND NOT EXISTS (
+	     SELECT 1 FROM legalhist.reporters r2
+	     WHERE r2.reporter_standard = ra.alt_abbr
+	   );
 	`
 	var reporters []SingleVolReporter
 

@@ -192,3 +192,56 @@ func TestSaveCitationsIntegration_Year(t *testing.T) {
 	assert.Equal(t, 1905, *years[1])
 	assert.Equal(t, 1906, *years[2])
 }
+
+func TestGetSingleVolReporterAbbrsIntegration(t *testing.T) {
+	s := newTestDBStore(t)
+	ctx := context.Background()
+
+	// Build the legalhist slice the loader reads, as the linker's alt-abbr test
+	// does: reporters with single_vol, and the abbreviations table with its FK
+	// and distinct CHECK. Kept inside this test so the save tests don't depend
+	// on a legalhist schema.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS legalhist CASCADE`,
+		`CREATE SCHEMA legalhist`,
+		`CREATE TABLE legalhist.reporters (reporter_standard text PRIMARY KEY, single_vol boolean)`,
+		`CREATE TABLE legalhist.reporters_abbreviations (
+			reporter_standard text NOT NULL REFERENCES legalhist.reporters(reporter_standard),
+			alt_abbr text NOT NULL,
+			CONSTRAINT reporters_abbreviations_distinct_check CHECK (reporter_standard <> alt_abbr)
+		)`,
+		`INSERT INTO legalhist.reporters (reporter_standard, single_vol) VALUES
+			('Calth', true),     -- single-volume; its alternate "Cal." is another reporter
+			('Cal.', NULL),      -- California Reports: owns the spelling, not single-volume
+			('Phil. Eq.', true), -- lists "Phil." as an alternate
+			('Phil.', true),     -- owns the spelling and is single-volume itself
+			('Hob.', true),      -- an ordinary single-volume reporter with a real alternate
+			('U.S.', false)      -- not single-volume: contributes nothing`,
+		`INSERT INTO legalhist.reporters_abbreviations (reporter_standard, alt_abbr) VALUES
+			('Calth', 'Cal.'),
+			('Calth', 'Calthrop'),
+			('Phil. Eq.', 'Phil.'),
+			('Hob.', 'Hobart'),
+			('U.S.', 'US')`,
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	got, err := s.GetSingleVolReporterAbbrs(ctx)
+	require.NoError(t, err)
+
+	// A standard spelling trumps an alternative one (issue #289): "Cal." and
+	// "Phil." are not built under Calth or Phil. Eq., but "Phil." survives under
+	// its own reporter, and the non-colliding alternates are untouched. The
+	// query has no ORDER BY, so order is not asserted.
+	assert.ElementsMatch(t, []SingleVolReporter{
+		{Standard: "Calth", Abbr: "Calth"},
+		{Standard: "Calth", Abbr: "Calthrop"},
+		{Standard: "Phil. Eq.", Abbr: "Phil. Eq."},
+		{Standard: "Phil.", Abbr: "Phil."},
+		{Standard: "Hob.", Abbr: "Hob."},
+		{Standard: "Hob.", Abbr: "Hobart"},
+	}, got)
+}

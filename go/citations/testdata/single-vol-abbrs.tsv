@@ -7,7 +7,9 @@
 # literal gate has to hold for the shapes the corpus actually contains --
 # parentheses, ampersands, embedded periods, one-character segments. Refresh it
 # when legalhist.reporters or reporters_abbreviations changes; nothing outside
-# the tests reads this file.
+# the tests reads this file. Alternates that are themselves another reporter's
+# reporter_standard are absent, as the query has excluded them since issue #289
+# (a standard spelling trumps an alternative one; 19 pairs left on 2026-09-25).
 Al	Al
 Al	Al (Eng)
 Al	Aleyn
@@ -90,7 +92,6 @@ Ben & D	Benl.Old
 Ben & D	Dal.
 Ben & D	Dal.C.P.
 Ben & D	Dalison
-Benl	Ben.
 Benl	Bendl.
 Benl	Bendloe
 Benl	Ben.in Keil.
@@ -133,7 +134,6 @@ Brooke	Brooke(Petit)
 Brooke	Lit.Brooke
 Brooke	Little Brooke
 Brooke	Mar.Br.
-Brooke	March
 Brooke	March(N.C.)
 Bunb	Bunb
 Bunb	Bunb (Eng)
@@ -162,7 +162,6 @@ Busb. Eq.	Busb. Eq.
 Busb. Eq.	Busb Eq (NC)
 Busb. Eq.	N.C.(Busb.Eq.)
 Busb.	N.C.(Busb.)
-Calth	Cal.
 Calth	Calth
 Calth	Calth (Eng)
 Calth	Calth (KB)
@@ -191,7 +190,6 @@ Cart	Cart
 Cart	Cart (CP)
 Cart	Cart (Eng)
 Cart	Carter
-Carth	Cart.
 Carth	Carth
 Carth	Carth (Eng)
 Carth	Carthew
@@ -445,7 +443,6 @@ Fost	Fost (CR)
 Fost	Fost.Cr.Law
 Fost	Fost.Crown Law
 Fost	Fost (Eng)
-Fost	Foster
 G Coop	Coop.Ch.
 G Coop	Cooper.t.Eldon
 G Coop	Coop.G.
@@ -459,7 +456,6 @@ G Coop	G.Cooper
 G Coop	Geo.Coop.
 Gilb Cas	Cas.Eq.
 Gilb Cas	Cas.L.& Eq.
-Gilb Cas	Gil.
 Gilb Cas	Gilb.
 Gilb Cas	Gilb Cas
 Gilb Cas	Gilb Cas (Eng)
@@ -538,7 +534,6 @@ Hoff. Ch.	Hoffm.
 Hoff. Ch.	Hoffm.Ch.(N.Y.)
 Hoff. Ch.	Hoff.N.Y.
 Hoff. Ch.	Hoff. Pr.
-Holt KB	Holt
 Holt KB	Holt KB
 Holt KB	Holt KB (Eng)
 Holt KB	Holt KB (KB)
@@ -594,7 +589,6 @@ Keil	Keilw.
 Keil	Keilway
 Keil	Keilwey
 Keil	Keyl.
-Lane	La.
 Lane	Lane
 Lane	Lane (Eng)
 Lane	Lane (EX)
@@ -622,7 +616,6 @@ Lilly Ass	Lilly Ass (NP)
 Lit	Lit
 Lit	Lit (CP)
 Lit	Lit (Eng)
-Lit	Litt.
 Lit	Littleton
 Lit	Litt.Rep.
 Lofft	Lofft
@@ -651,7 +644,6 @@ March NR	March NR (Eng)
 March NR	March NR (KB)
 March NR	Mar.N.C.
 March NR	Mar.N.R.
-Martin	Mart.
 Martin	Mart.Dec.
 Martin	Martin
 Martin	Martin (NC)
@@ -692,7 +684,6 @@ M & M	Moody & Malkin
 M & M	Moo.& M.
 M & M	Moo.& Mal.
 Moo KB	Arg.Mo.
-Moo KB	Mo.
 Moo KB	Mo.(F.)
 Moo KB	Moo.
 Moo KB	Moo.F.
@@ -745,7 +736,6 @@ Peck	Peckw.
 Peck	Peek.
 Peck	Tenn.(Peck)
 Phil. Eq.	N.C.(Phil.Eq.)
-Phil. Eq.	Phil.
 Phil. Eq.	Phil Eq
 Phil. Eq.	Phil. Eq.
 Phil. Eq.	Phil Eq (NC)
@@ -793,7 +783,6 @@ Ridg T H	Ridg.temp.Hard.
 Ridg T H	Ridg T H
 Ridg T H	Ridg T H (CH)
 Ridg T H	Ridg T H (Eng)
-Ril. Eq.	Ril.
 Ril. Eq.	Ril Eq
 Ril. Eq.	Ril. Eq.
 Ril. Eq.	Ril Eq (SC)
@@ -874,7 +863,6 @@ Speers Eq.	Spear Eq.
 Speers Eq.	Spears
 Speers Eq.	Spears Eq.
 Speers Eq.	Speer Eq.
-Speers Eq.	Speers
 Speers Eq.	Speers Eq
 Speers Eq.	Speers Eq.
 Speers Eq.	Speers Eq (SC)
@@ -927,7 +915,6 @@ Tay.	Tay.
 Tay.	Tay.J.L.
 Tay.	Tayl.
 Tay.	Tayl.N.C.
-Tay.	Taylor
 Tay.	Tay (NC)
 Tay.	Tay.N.C.
 T Jones	Jones(2)
@@ -987,11 +974,9 @@ Ves Sen Supp	Ves Sen Supp
 Ves Sen Supp	Ves Sen Supp (CH)
 Ves Sen Supp	Ves Sen Supp (Eng)
 Ves Sen Supp	Ves.Sr.Supp.
-Walk. Ch.	Walk.
 Walk. Ch.	Walk. Ch.
 Walk. Ch.	Walk.Ch.Cas.
 Walk. Ch.	Walk.Ch.Mich.
-Walk. Ch.	Walker
 West T Hard	West.
 West T Hard	West Ch.
 West T Hard	West Chy.
@@ -1032,8 +1017,6 @@ Wilm	Wilmot
 Wils Ex	Wils Ex
 Wils Ex	Wils Ex (Eng)
 Wils Ex	Wils Ex (EX)
-Wils Ex	Wilson
-Winch	Win.
 Winch	Winch
 Winch	Winch (CP)
 Winch	Winch (Eng)

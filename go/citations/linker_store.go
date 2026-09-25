@@ -33,10 +33,12 @@ type LinkerStore interface {
 
 	// LoadReporterAltAbbrs loads legalhist.reporters_abbreviations into memory as
 	// reporter_standard -> list of alternate abbreviations, in a deterministic
-	// order. The linker probes the CAP, FreeLaw, and code-reporter maps with each
-	// alternate spelling after the canonical reporter_standard / reporter_cap
-	// forms miss, recovering matches where our reporter string and the other
-	// source's disagree.
+	// order. The linker probes the CAP and FreeLaw maps with each alternate
+	// spelling after the canonical reporter_standard / reporter_cap forms miss,
+	// recovering matches where our reporter string and the other source's
+	// disagree. An alternate that is itself a reporter_standard in
+	// legalhist.reporters is not loaded: a standard spelling trumps an
+	// alternative one (issue #289).
 	LoadReporterAltAbbrs(ctx context.Context) (map[string][]string, error)
 
 	// LoadCodeReporterCitations loads code reporter citations into memory as
