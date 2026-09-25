@@ -115,6 +115,10 @@ ORDER BY sum(n) OVER (PARTITION BY reporter_standard) DESC, reporter_standard, n
         // within a family the color darkens with the directness of the match (or
         // how early in the cascade the failure came), so a reporter's bar reads as
         // "mostly dark green" or "mostly pale red" before any label is consulted.
+        // The anachronistic tiers stand outside the failure ladder -- a case was
+        // found and refused on its date (#319) -- so each takes an off-ramp shade
+        // of its route's hue, magenta for the US and brown for the UK, rather than
+        // a step on the ramp.
         const TIERS = [
             ["cap_direct", "linked_cap", "#0f5132", "matched a first-page cite in cap.citations"],
             ["cap_freelaw", "linked_cap", "#198754", "matched through the FreeLaw crosswalk"],
@@ -132,12 +136,14 @@ ORDER BY sum(n) OVER (PARTITION BY reporter_standard) DESC, reporter_standard, n
             ["us_page_absent", "no_match", "#e5626f", "reporter and volume present, no case begins on or spans this page"],
             ["us_page_ambiguous", "no_match", "#ee929b", "the page falls in a span, but several cases begin on that span's first page"],
             ["us_page_gap", "no_match", "#f5bfc4", "the page falls past the end of the preceding case, in a hole in CAP's coverage"],
+            ["us_anachronistic", "no_match", "#c2185b", "a case was found, but decided after the treatise was published (#319)"],
             ["uk_reporter_absent", "no_match", "#7a2e0e", "the reporter does not appear in the English Reports index"],
             ["uk_volume_absent", "no_match", "#a0420f", "reporter present, this volume never appears"],
             ["uk_volume_missing", "no_match", "#c45a12", "reporter present, but the citation carries no volume to look up"],
             ["uk_page_absent", "no_match", "#e2761a", "reporter and volume present, no case begins on or spans this page"],
             ["uk_page_ambiguous", "no_match", "#f09a4f", "the cite, or the span covering it, belongs to more than one case"],
             ["uk_page_gap", "no_match", "#f7c08d", "the page falls past the end of the preceding case, in a hole in the corpus"],
+            ["uk_anachronistic", "no_match", "#8d5524", "a case was found, but decided after the treatise was published (#319)"],
             ["skipped_statute", "skipped_statute", "#8fa4bd", "no tier: a regnal-year statute citation, never probed"],
             ["unprocessed", "unprocessed", "#adb5bd", "no tier: not yet linked"],
         ].map(([key, status, color, gloss]) => ({ key, status, color, gloss }));
