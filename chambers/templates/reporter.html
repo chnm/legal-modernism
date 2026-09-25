@@ -1,0 +1,101 @@
+{{define "styles"}}
+        .spellings .spelling { display: inline-block; font-family: monospace; font-size: 0.8rem; background: #f5f0fc; border: 1px solid #c9b3e6; border-radius: 4px; padding: 0.05rem 0.4rem; margin: 0.1rem 0.15rem 0.1rem 0; }
+        .spellings .spelling .n { color: #6c757d; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.72rem; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">{{.Standard}}{{if .ReporterListItem.Title}} <span class="text-secondary fw-normal">{{derefStr .ReporterListItem.Title}}</span>{{end}}</h1>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="detail-grid small mb-3">
+                <span class="label">Jurisdiction</span><span>{{.Side}}{{if .Place}} &middot; {{.Place}}{{end}}{{if .Level}} &middot; {{derefStr .Level}}{{end}}</span>
+                <span class="label">Type</span><span>{{ptrOr .Type "&mdash;"}}</span>
+                <span class="label">Years</span><span>{{.Years}}</span>
+                {{if .SingleVol}}{{if deref .SingleVol}}<span class="label">Volumes</span><span>A single volume, cited without a volume number</span>{{end}}{{end}}
+                {{if .CitedByYearFrom}}<span class="label">Cited by year</span><span>From {{deref .CitedByYearFrom}}: the year is part of the cite, as in [1905] 2 K.B. 1</span>{{end}}
+                {{if .ReporterCap}}<span class="label">CAP spelling</span><span>{{derefStr .ReporterCap}}</span>{{end}}
+                {{if .DiffVols}}<span class="label">Renumbered in CAP</span><span>{{range $i, $d := .DiffVols}}{{if $i}}, {{end}}{{if $d.Vol}}vol. {{deref $d.Vol}}{{else}}the volume{{end}} &rarr; {{$d.CAPVol}} {{$d.CAPReporter}}{{end}}</span>{{end}}
+                {{if .AltAbbrs}}<span class="label">Alternate abbreviations</span><span>{{join .AltAbbrs ", "}}</span>{{end}}
+                <span class="label">Citations</span><span><a href="{{.CitationsURL}}">a sample of the citations to this reporter</a></span>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                <div class="stat"><div class="n">{{num .Cites}}</div><div class="l">citations probed</div></div>
+                <div class="stat"><div class="n">{{.LinkedPct}}</div><div class="l">linked to a case</div></div>
+                <div class="stat"><div class="n">{{num .NoMatch}}</div><div class="l">no match</div></div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section">Spellings</h2>
+    <p class="small text-secondary">The spellings the whitelist maps to this reporter, with how often the detector found each.</p>
+    <p class="spellings mb-1">
+        {{range .Spellings}}<span class="spelling">{{.Found}} <span class="n">{{num .N}}</span></span>{{else}}<span class="text-secondary small">No whitelisted spelling maps to this reporter.</span>{{end}}
+    </p>
+
+    <h2 class="section">Linking outcomes</h2>
+    <p class="small text-secondary">The reporter's citations by status and match tier. Click a row for a sample of its citations.</p>
+    {{if .Outcomes}}
+    <table class="table table-sm table-hover align-middle" style="max-width: 48rem;">
+        <thead><tr><th>Outcome</th><th>Meaning</th><th class="num">Citations</th><th class="num">Share</th></tr></thead>
+        <tbody>
+        {{$total := .Cites}}
+        {{range .Outcomes}}
+            <tr>
+                <td><a href="{{.URL}}" class="text-decoration-none">{{template "chip" .Chip}}</a></td>
+                <td class="small text-secondary">{{.Chip.Gloss}}</td>
+                <td class="num">{{num .N}}</td>
+                <td class="num">{{pct .N $total}}</td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="small text-secondary fst-italic">No citation to this reporter reached the linker.</p>
+    {{end}}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="section">Cases reached through this reporter</h2>
+            <p class="small text-secondary">
+                The cases that citations to this reporter resolved to, ranked by the editions citing them. A
+                case reached through a parallel cite in another reporter counts there too.
+            </p>
+            {{template "top_cases" .TopCases}}
+        </div>
+        <div class="col-lg-6">
+            <h2 class="section">Editions citing it most</h2>
+            <table class="table table-sm table-hover align-middle">
+                <thead><tr><th class="num">Year</th><th>In</th><th class="title-col">Edition</th><th class="num">Citations</th><th class="num">Linked</th></tr></thead>
+                <tbody>
+                {{range .TopEditions}}
+                    <tr>
+                        <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+                        <td><span class="badge jur">{{.Jurisdiction}}</span></td>
+                        <td class="title-col"><a href="{{.URL}}">{{.Title}}</a></td>
+                        <td class="num">{{num .Cites}}</td>
+                        <td class="num">{{.LinkedPct}}</td>
+                    </tr>
+                {{else}}
+                    <tr><td colspan="5" class="text-secondary">No edition in the treatise view cites this reporter.</td></tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h2 class="section">Unmatched cites that recur</h2>
+    <p class="small text-secondary">
+        The cite strings of this reporter that the linker could not match, ranked by how often they recur
+        across the corpus (five times or more). Click one for the citations behind it.
+    </p>
+    {{if .Unmatched}}
+    <p class="small">
+        {{$std := .Standard}}
+        {{range $i, $u := .Unmatched}}{{if $i}} &middot; {{end}}<a href="{{$u.URL}}">{{$u.Cite $std}}</a> <span class="text-secondary">{{num $u.N}}</span>{{end}}
+    </p>
+    {{else}}
+    <p class="small text-secondary fst-italic">No unmatched cite of this reporter recurs five times.</p>
+    {{end}}
+{{end}}

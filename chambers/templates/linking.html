@@ -1,5 +1,3 @@
-{{define "title"}}Citation linking progress — Chambers{{end}}
-
 {{define "styles"}}
         .big-number { font-size: 2rem; font-weight: 600; line-height: 1.2; }
         .big-label { font-size: 0.85rem; color: #6c757d; }
@@ -23,13 +21,14 @@
         .reporter-link { cursor: pointer; text-decoration: none; }
 {{end}}
 
-{{define "nav"}}
-    <a href="/" class="small text-decoration-none">&larr; Back to Chambers</a>
-{{end}}
-
 {{define "content"}}
-    <h1 class="h4 mb-1">Citation linking progress</h1>
-    <p class="small text-secondary mb-3">Progress of linking detected citations to caselaw databases.</p>
+    <h1 class="h4 mb-1">Linking dashboard</h1>
+    <p class="small text-secondary mb-2">
+        How the linker fared over every citation the detector found: what was skipped, what linked, and to
+        which source. Every figure is as of the last <code>make db-maintenance</code>, which refreshes the
+        views behind this page, not as of the last linker run.
+    </p>
+    {{template "linking_nav" .}}
 
     <!-- Shown only when citations remain unlinked. Without it a partial linker
          run is indistinguishable from a finished one: the status counts simply
@@ -158,33 +157,11 @@
         Where each reporter's <code>no_match</code> citations gave out. A reporter whose
         failures pile up in one tier has a single fixable cause; one spread across tiers
         does not. Cells show the share of that reporter's <code>no_match</code> pool;
-        hover for the count. Click a reporter to see its raw citations.
+        hover for the count. Click a reporter for its page.
     </p>
     <div id="reporter-tier-container" class="mb-4">
         <div class="loading-text"><span class="spinner-border text-secondary me-2"></span> Loading reporter tier data&hellip;</div>
     </div>
-
-    <details class="mb-3">
-        <summary class="small text-secondary">SQL queries</summary>
-        <pre class="bg-light p-2 rounded small mt-2"><code>SELECT metric, n FROM moml_citations.linking_dashboard_summary;
-
-SELECT reporter_standard, linked, no_match, unprocessed, uk
-FROM moml_citations.linking_dashboard_reporters
-ORDER BY linked + no_match + unprocessed DESC;
-
-SELECT status, match_tier, n, pct_of_status
-FROM moml_citations.linking_tier_summary
-ORDER BY n DESC;
-
-SELECT reporter_standard, match_tier, n
-FROM moml_citations.linking_dashboard_tiers
-WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
-        <p class="small text-secondary mt-2 mb-0">
-            All four read materialized views, refreshed by <code>make db-maintenance</code>.
-            Every figure on this page is as of that last refresh, not as of the last
-            linker run.
-        </p>
-    </details>
 
     <script type="module">
         import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
@@ -272,39 +249,12 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
             setStatWithPct("stat-linked-stub", d.LinkedStub, pctOfLinked);
 
             // Match tier tables. The gloss covers the whole tier vocabulary in
-            // go/citations/linker.go, not only the tiers a given run produced, so a
-            // tier that appears for the first time still arrives with a label.
-            const TIER_GLOSS = {
-                us_reporter_absent: "no probed spelling of the reporter appears in any US source",
-                us_diffvols_missing: "the reporter renumbers in CAP, but no diffvols row covers this volume",
-                us_volume_absent: "reporter present, this volume never appears",
-                us_volume_missing: "reporter present, but the citation carries no volume to look up",
-                us_page_absent: "reporter and volume present, no case begins on or spans this page",
-                us_page_ambiguous: "the page falls in a span, but several cases begin on that span's first page",
-                us_page_gap: "the page falls past the end of the preceding case, in a hole in CAP's coverage",
-                us_anachronistic: "a case was found, but decided after the treatise was published (#319)",
-                uk_reporter_absent: "the reporter does not appear in the English Reports index",
-                uk_volume_absent: "reporter present, this volume never appears",
-                uk_volume_missing: "reporter present, but the citation carries no volume to look up",
-                uk_page_absent: "reporter and volume present, no case begins on or spans this page",
-                uk_page_ambiguous: "the cite, or the span covering it, belongs to more than one case",
-                uk_page_gap: "the page falls past the end of the preceding case, in a hole in the corpus",
-                uk_anachronistic: "a case was found, but decided after the treatise was published (#319)",
-                cap_direct: "matched a first-page cite in cap.citations",
-                cap_freelaw: "matched through the FreeLaw crosswalk",
-                cap_alt_spelling: "matched cap.citations under an alternate spelling",
-                cap_freelaw_alt_spelling: "matched the FreeLaw crosswalk under an alternate spelling",
-                cap_page_interior: "matched inside a case's page range — a pin cite",
-                code_direct: "matched a code reporter entry",
-                er_direct: "matched an English Reports case",
-                er_page_interior: "matched inside an English Reports case's page range — a pin cite",
-                stub_direct: "matched a stub case — a cite string no source holds, cited often enough to treat as a case (#248)",
-            };
-
-            const STATUS_ORDER = [
-                "linked_cap", "linked_english_reports", "linked_code_reporter", "linked_stub",
-                "no_match", "skipped_statute", "unprocessed",
-            ];
+            // go/citations/linker.go (handed to the page by vocabulary.go), not only
+            // the tiers a given run produced, so a tier that appears for the first
+            // time still arrives with a label.
+            const TIERS = {{.Tiers}};
+            const TIER_GLOSS = Object.fromEntries(TIERS.map(t => [t.key, t.gloss]));
+            const STATUS_ORDER = {{.StatusOrder}};
 
             function statusRank(s) {
                 const i = STATUS_ORDER.indexOf(s);
@@ -414,7 +364,7 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
                     }).join("");
                     const tr = document.createElement("tr");
                     tr.innerHTML =
-                        `<td><a class="reporter-link" href="/reporters/check?r=${encodeURIComponent(r.reporter)}">` +
+                        `<td><a class="reporter-link" href="/reporters/${encodeURIComponent(r.reporter)}">` +
                         `${escapeHTML(r.reporter)}</a></td>` +
                         `<td class="num">${r.noMatch.toLocaleString()}</td>${cells}`;
                     tbody.append(tr);
@@ -539,7 +489,7 @@ WHERE status = 'no_match' AND match_tier IS NOT NULL;</code></pre>
                     text.style.cursor = "pointer";
                     text.addEventListener("click", () => {
                         const rawName = name.replace(/ \(UK\)$/, "");
-                        window.location.href = "/reporters/check?r=" + encodeURIComponent(rawName);
+                        window.location.href = "/reporters/" + encodeURIComponent(rawName);
                     });
                 });
             }

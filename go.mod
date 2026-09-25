@@ -6,6 +6,7 @@ require (
 	github.com/agnivade/levenshtein v1.2.1
 	github.com/air-verse/air v1.64.5
 	github.com/google/uuid v1.6.0
+	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/schollz/progressbar/v3 v3.19.0
 	github.com/shirou/gopsutil/v4 v4.26.1
@@ -30,7 +31,6 @@ require (
 	github.com/gohugoio/hashstructure v0.6.0 // indirect
 	github.com/gohugoio/hugo v0.161.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
-	github.com/jackc/pgconn v1.14.3 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgproto3/v2 v2.3.3 // indirect

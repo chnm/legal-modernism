@@ -1,0 +1,63 @@
+{{define "styles"}}
+        pre.ocrtext { white-space: pre-wrap; word-wrap: break-word; max-height: 30rem; overflow-y: auto; font-size: 0.8rem; }
+        .raw { font-family: monospace; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h5 mt-2"><span class="raw">{{.Raw}}</span> <span class="text-secondary fw-normal small">citation <code>{{.ID}}</code></span></h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="section mt-3">Detected</h2>
+            <div class="detail-grid small">
+                <span class="label">Raw</span><span class="raw">{{.Raw}}</span>
+                <span class="label">Parsed</span><span>{{.Parsed}}</span>
+                <span class="label">Reporter</span><span>{{if .ReporterStd}}<a href="{{.ReporterURL}}">{{derefStr .ReporterStd}}</a> <span class="text-secondary">by the whitelist, from the spelling <code>{{.ReporterAbbr}}</code></span>{{else if .Junk}}<span class="text-secondary">the spelling <code>{{.ReporterAbbr}}</code> is junk in the whitelist</span>{{else}}<span class="text-secondary">the spelling <code>{{.ReporterAbbr}}</code> is not in the whitelist</span>{{end}}</span>
+            </div>
+
+            <h2 class="section">Linking</h2>
+            <div class="detail-grid small">
+                <span class="label">Outcome</span><span>{{template "chip" .Chip}}</span>
+                {{if .Chip.Tier}}<span class="label">Tier</span><span class="text-secondary">{{.Chip.Gloss}}</span>{{end}}
+                <span class="label">Cleaned</span><span>{{ptrOr .CiteCleaned "&mdash;"}} <span class="text-secondary">(the whitelist's standard spelling)</span></span>
+                <span class="label">Normalized</span><span>{{ptrOr .CiteNormalized "&mdash;"}} <span class="text-secondary">(after any volume renumbering into CAP)</span></span>
+                <span class="label">Linked</span><span>{{ptrOr .CiteLinked "&mdash;"}} <span class="text-secondary">(the string that matched)</span></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="section mt-3">Case</h2>
+            {{if .Case}}
+            <div class="detail-grid small">
+                <span class="label">Case</span><span>{{template "case" .Case}}</span>
+                {{if .FullName}}<span class="label">Full name</span><span>{{derefStr .FullName}}</span>{{end}}
+                <span class="label">Cite</span><span>{{ptrOr .Case.Cite "&mdash;"}}</span>
+                <span class="label">Year</span><span>{{if .Case.Year}}{{deref .Case.Year}}{{else}}&mdash;{{end}}{{if .VolYear}} <span class="text-secondary">(citation year {{deref .VolYear}})</span>{{end}}</span>
+                {{if .Court}}<span class="label">Court</span><span>{{derefStr .Court}}</span>{{end}}
+                {{if .Jurisdiction}}<span class="label">Jurisdiction</span><span>{{derefStr .Jurisdiction}}</span>{{end}}
+                {{if .StubPruned}}<span class="label">Stub</span><span class="text-secondary">This stub has since been pruned from the registry; the link remains until the linker is rerun.</span>{{end}}
+                {{if .ExternalURL}}<span class="label">Source</span><span><a href="{{derefStr .ExternalURL}}" target="_blank" rel="noopener">view the case &nearr;</a></span>{{end}}
+            </div>
+            {{else}}
+            <p class="small text-secondary fst-italic">No case linked.</p>
+            {{end}}
+
+            <h2 class="section">Where it was found</h2>
+            <div class="detail-grid small">
+                <span class="label">Edition</span><span>{{if .BiblioID}}<a href="{{.EditionURL}}">{{ptrOr .VolumeTitle "(untitled)"}}</a>{{if .VolumeYear}} ({{deref .VolumeYear}}){{end}}{{else}}&mdash;{{end}}</span>
+                {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
+                {{if .WorkTitle}}<span class="label">Work</span><span><a href="{{.WorkURL}}">{{derefStr .WorkTitle}}</a></span>{{end}}
+                <span class="label">Treatise view</span><span>{{if .Treatise}}<span class="badge jur">{{derefStr .Treatise}}</span>{{else}}<span class="text-secondary">not in the treatise view</span>{{end}}</span>
+                <span class="label">Page</span><span><a href="{{.PageURL}}">{{if .SourcePage}}p. {{derefStr .SourcePage}}{{else}}image {{.PageID}}{{end}}</a>{{if .PageType}} <span class="text-secondary">{{derefStr .PageType}}</span>{{end}} &middot; <code>{{.PSMID}}</code> / <code>{{.PageID}}</code>{{if .Gale.GMU}} &middot; on Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a>{{end}}</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section">Page text</h2>
+    {{if .OCRText}}
+    <pre class="ocrtext bg-light border rounded p-3">{{.Highlighted}}</pre>
+    <p class="small text-secondary">The scan's OCR text, with the first occurrence of the raw citation marked. <a href="{{.PageURL}}">Read the page with every citation marked.</a></p>
+    {{else}}
+    <p class="text-secondary fst-italic small">No OCR text for this page.</p>
+    {{end}}
+{{end}}

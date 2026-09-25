@@ -1,0 +1,97 @@
+{{define "styles"}}
+        #work-chart { min-height: 1px; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">{{.Title}}</h1>
+    <div class="detail-grid small mb-3">
+        {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
+        <span class="label">Work id</span><span><code>{{.WorkID}}</code></span>
+        {{with .Counts}}
+        <span class="label">Editions in the treatise view</span><span>{{.Editions}}{{if ne .Editions .AllEditions}} of {{.AllEditions}} in MOML{{end}}{{if .Derivative}}, {{.Derivative}} derivative{{end}}</span>
+        <span class="label">Years</span><span>{{.Years}}</span>
+        <span class="label">Jurisdictions</span><span>{{.Jurisdictions}}</span>
+        <span class="label">Citations</span><span>{{num .Cites}}, {{.LinkedPct}} linked to a case</span>
+        <span class="label">Cases cited</span><span>{{num .Cases}}</span>
+        {{end}}
+    </div>
+
+    <h2 class="section">Editions</h2>
+    <p class="small text-secondary">
+        Earliest first. An edition outside the treatise view (a pamphlet, a document, a biography) is shown in
+        gray and left out of every count; a derivative edition (an abridgment, a question book, a translation)
+        is flagged.
+    </p>
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th class="num">Year</th>
+                <th>In</th>
+                <th class="title-col">Edition</th>
+                <th>Statement</th>
+                <th>Imprint</th>
+                <th class="num">Vols</th>
+                <th class="num">Pages</th>
+                <th class="num">Citations</th>
+                <th class="num">Linked</th>
+                <th class="num">Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Editions}}
+            <tr{{if not .InTreatises}} class="muted-row"{{end}}>
+                <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+                <td class="small">{{if .InTreatises}}<span class="badge jur">{{.JurisdictionLabel}}</span>{{else}}<span class="text-secondary" title="Outside the treatise view">&mdash;</span>{{end}}</td>
+                <td class="title-col"><a href="{{.URL}}">{{.Title}}</a>{{if .Derivative}} <span class="badge text-bg-light" title="Derived from the work: an abridgment, analysis, question book, supplement or translation">derivative</span>{{end}}</td>
+                <td class="small">{{ptrOr .EditionStatement "&mdash;"}}</td>
+                <td class="small text-secondary">{{ptrOr .Imprint "&mdash;"}}</td>
+                <td class="num">{{.Volumes}}</td>
+                <td class="num">{{num .Pages}}</td>
+                <td class="num">{{if .HasCounts}}{{num .Cites}}{{else}}&mdash;{{end}}</td>
+                <td class="num">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>
+                <td class="num">{{if .HasCounts}}{{num .Cases}}{{else}}&mdash;{{end}}</td>
+            </tr>
+        {{else}}
+            <tr><td colspan="10" class="text-secondary">This work has no editions in MOML.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{if gt (len .Chart) 1}}
+    <h2 class="section">Citations by edition</h2>
+    <p class="small text-secondary">One dot per edition in the treatise view, by its year. Click a dot for the edition.</p>
+    <div id="work-chart" class="mb-3"></div>
+    {{end}}
+
+    <h2 class="section">Cases cited most</h2>
+    <p class="small text-secondary">
+        Across the work's editions in the treatise view: how many of them cite each case, and how many
+        citations they make to it. A case cited by many editions of one work is cited by one work.
+        {{if .ExcludePincite}}Editions that reach a case only through pin cites are left out. <a href="{{.URL}}">Count them.</a>{{else}}<a href="{{.URL}}?pincite=exclude">Leave out</a> editions that reach a case only through pin cites.{{end}}
+    </p>
+    {{template "top_cases" .TopCases}}
+{{end}}
+
+{{define "scripts"}}
+    {{if gt (len .Chart) 1}}
+    <script type="module">
+        import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
+        const rows = {{.Chart}};
+        const el = document.getElementById("work-chart");
+        el.append(Plot.plot({
+            width: el.clientWidth,
+            height: 220,
+            marginLeft: 60,
+            x: { label: "Year", tickFormat: d => String(d) },
+            y: { label: "Citations", grid: true },
+            marks: [
+                Plot.ruleY([0]),
+                Plot.dot(rows, {
+                    x: "year", y: "cites", r: 5, fill: "#6f42c1", href: "url",
+                    title: d => `${d.title} (${d.year}): ${d.cites.toLocaleString()} citations`,
+                }),
+            ],
+        }));
+    </script>
+    {{end}}
+{{end}}

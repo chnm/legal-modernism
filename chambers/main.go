@@ -1,109 +1,26 @@
+// Chambers is the project's internal web app for browsing the citation data:
+// the treatises of the Making of Modern Law (works, editions, volumes, pages),
+// the cases they cite, the reporters those cases are cited from, the citations
+// themselves, and how the detector and linker fared. See README.md.
 package main
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"html/template"
-	"io/fs"
 	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
-	"strings"
 	"syscall"
 	"time"
 
-	"github.com/google/uuid"
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/lmullen/legal-modernism/go/db"
 	flag "github.com/spf13/pflag"
 )
 
-var pool *pgxpool.Pool
-
-// Template functions for dereferencing pointers in templates.
-var funcMap = template.FuncMap{
-	"deref": func(v any) any {
-		switch p := v.(type) {
-		case *int:
-			if p != nil {
-				return *p
-			}
-		case *string:
-			if p != nil {
-				return *p
-			}
-		}
-		return nil
-	},
-	"derefStr": func(v *string) string {
-		if v != nil {
-			return *v
-		}
-		return ""
-	},
-	"ptrOr": func(v *string, fallback string) template.HTML {
-		if v != nil && *v != "" {
-			return template.HTML(template.HTMLEscapeString(*v))
-		}
-		return template.HTML(fallback)
-	},
-	"highlightRaw": func(ocrtext, raw string) template.HTML {
-		escaped := template.HTMLEscapeString(ocrtext)
-		rawEscaped := template.HTMLEscapeString(raw)
-		highlighted := strings.ReplaceAll(escaped, rawEscaped, "<mark>"+rawEscaped+"</mark>")
-		return template.HTML(highlighted)
-	},
-	// Small integer helpers for computing list rank numbers in templates.
-	"add": func(nums ...int) int {
-		sum := 0
-		for _, n := range nums {
-			sum += n
-		}
-		return sum
-	},
-	"sub": func(a, b int) int { return a - b },
-	"mul": func(a, b int) int { return a * b },
-}
-
 func init() {
 	initLogger()
-}
-
-// parseTemplates parses each page template together with baseof.html so that
-// block overrides work correctly.
-func parseTemplates() map[string]*template.Template {
-	pages := []string{
-		"home.html",
-		"detail.html",
-		"cite-lookup.html",
-		"reporters.html",
-		"reporter-cites.html",
-		"unmatched.html",
-		"unmatched-cites.html",
-		"dashboard.html",
-		"tiers.html",
-		"whitelist-extender.html",
-		"treatises.html",
-		"treatise.html",
-		"treatise-page.html",
-		"cases.html",
-		"case.html",
-		"normalized.html",
-		"normalized-cite.html",
-	}
-	tmpls := make(map[string]*template.Template, len(pages))
-	for _, page := range pages {
-		t := template.Must(
-			template.New("").Funcs(funcMap).ParseFS(templateFS, "templates/baseof.html", "templates/"+page),
-		)
-		tmpls[page] = t
-	}
-	return tmpls
 }
 
 func main() {
@@ -121,8 +38,7 @@ func main() {
 		cancel()
 	}()
 
-	var err error
-	pool, err = db.Connect(ctx)
+	pool, err := db.Connect(ctx)
 	if err != nil {
 		slog.Error("error connecting to database", "database", db.Host(), "error", err)
 		os.Exit(1)
@@ -133,66 +49,13 @@ func main() {
 	tmpls := parseTemplates()
 	slog.Debug("parsed templates", "count", len(tmpls))
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		handleHome(w, r, tmpls["home.html"])
-	})
-	mux.HandleFunc("/cite", func(w http.ResponseWriter, r *http.Request) {
-		handleCiteLookup(w, r, tmpls["cite-lookup.html"], tmpls["detail.html"])
-	})
-	mux.HandleFunc("/reporters", func(w http.ResponseWriter, r *http.Request) {
-		handleReporters(w, r, tmpls["reporters.html"])
-	})
-	mux.HandleFunc("/reporters/check", func(w http.ResponseWriter, r *http.Request) {
-		handleReporterCites(w, r, tmpls["reporter-cites.html"])
-	})
-	mux.HandleFunc("/unmatched", func(w http.ResponseWriter, r *http.Request) {
-		handleUnmatched(w, r, tmpls["unmatched.html"])
-	})
-	mux.HandleFunc("/unmatched/cites", func(w http.ResponseWriter, r *http.Request) {
-		handleUnmatchedCites(w, r, tmpls["unmatched-cites.html"])
-	})
-	mux.HandleFunc("/linking-dashboard", func(w http.ResponseWriter, r *http.Request) {
-		handleDashboard(w, r, tmpls["dashboard.html"])
-	})
-	mux.HandleFunc("/api/linking-dashboard", handleDashboardAPI)
-	mux.HandleFunc("/tiers", func(w http.ResponseWriter, r *http.Request) {
-		handleTiers(w, r, tmpls["tiers.html"])
-	})
-	mux.HandleFunc("/api/tiers", handleTiersAPI)
-	mux.HandleFunc("/whitelist-extender", func(w http.ResponseWriter, r *http.Request) {
-		handleWhitelistExtender(w, r, tmpls["whitelist-extender.html"])
-	})
-	mux.HandleFunc("/api/whitelist-extender", handleWhitelistExtenderAPI)
-	mux.HandleFunc("/treatises", func(w http.ResponseWriter, r *http.Request) {
-		handleTreatises(w, r, tmpls["treatises.html"])
-	})
-	mux.HandleFunc("/treatise", func(w http.ResponseWriter, r *http.Request) {
-		handleTreatise(w, r, tmpls["treatise.html"])
-	})
-	mux.HandleFunc("/treatise/page", func(w http.ResponseWriter, r *http.Request) {
-		handleTreatisePage(w, r, tmpls["treatise-page.html"])
-	})
-	mux.HandleFunc("/api/page-text", handlePageText)
-	mux.HandleFunc("/cases", func(w http.ResponseWriter, r *http.Request) {
-		handleCases(w, r, tmpls["cases.html"])
-	})
-	mux.HandleFunc("/case", func(w http.ResponseWriter, r *http.Request) {
-		handleCase(w, r, tmpls["case.html"])
-	})
-	mux.HandleFunc("/normalized", func(w http.ResponseWriter, r *http.Request) {
-		handleNormalized(w, r, tmpls["normalized.html"])
-	})
-	mux.HandleFunc("/normalized/cite", func(w http.ResponseWriter, r *http.Request) {
-		handleNormalizedCite(w, r, tmpls["normalized-cite.html"])
-	})
-	staticSub, _ := fs.Sub(staticFS, "static")
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
-
+	s := newServer(pool, tmpls)
 	addr := fmt.Sprintf(":%d", port)
 	srv := &http.Server{
-		Addr:    addr,
-		Handler: mux,
+		Addr:              addr,
+		Handler:           s.routes(),
+		ReadHeaderTimeout: 10 * time.Second,
+		IdleTimeout:       2 * time.Minute,
 	}
 
 	go func() {
@@ -213,336 +76,5 @@ func main() {
 	if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		slog.Error("server error", "error", err)
 		os.Exit(1)
-	}
-}
-
-func handleHome(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "home")
-	if r.URL.Path != "/" {
-		slog.Debug("not found", "path", r.URL.Path)
-		http.NotFound(w, r)
-		return
-	}
-	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
-		slog.Error("error rendering home", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-	}
-}
-
-func handleCiteLookup(w http.ResponseWriter, r *http.Request, lookupTmpl, detailTmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "cite-lookup")
-	idStr := r.URL.Query().Get("id")
-	if idStr == "" {
-		slog.Debug("rendering cite-lookup form (no id)")
-		data := struct{ Error string }{}
-		if err := lookupTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-			slog.Error("error rendering cite-lookup", "error", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
-		}
-		return
-	}
-
-	slog.Debug("cite lookup requested", "id", idStr)
-	id, err := uuid.Parse(idStr)
-	if err != nil {
-		slog.Debug("invalid UUID", "id", idStr)
-		w.WriteHeader(http.StatusBadRequest)
-		data := struct{ Error string }{Error: fmt.Sprintf("Invalid UUID: %s", idStr)}
-		lookupTmpl.ExecuteTemplate(w, "baseof", data)
-		return
-	}
-
-	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
-	defer cancel()
-
-	cite, err := getCitationDetail(ctx, pool, id)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			slog.Debug("citation not found", "id", id)
-			w.WriteHeader(http.StatusNotFound)
-			data := struct{ Error string }{Error: fmt.Sprintf("Citation not found: %s", id)}
-			lookupTmpl.ExecuteTemplate(w, "baseof", data)
-			return
-		}
-		slog.Error("error querying citation", "id", id, "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("rendering citation detail", "id", id, "status", cite.Status)
-	data := struct{ Cite *CitationDetail }{Cite: cite}
-	if err := detailTmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering detail", "id", id, "error", err)
-	}
-}
-
-func handleReporters(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "reporters")
-	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
-	defer cancel()
-
-	reporters, err := getReporterStandards(ctx, pool)
-	if err != nil {
-		slog.Error("error querying reporters", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("rendering reporters page", "count", len(reporters))
-	data := struct{ Reporters []ReporterStandard }{Reporters: reporters}
-	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering reporters", "error", err)
-	}
-}
-
-func handleDashboard(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "dashboard")
-	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
-		slog.Error("error rendering dashboard", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-	}
-}
-
-func handleDashboardAPI(w http.ResponseWriter, r *http.Request) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "dashboard-api")
-	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
-	defer cancel()
-
-	slog.Debug("fetching dashboard data from database")
-	data, err := getDashboardData(ctx, pool)
-	if err != nil {
-		slog.Error("error querying dashboard data", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("sending dashboard JSON response",
-		"total_raw_cites", data.TotalRawCites,
-		"total_linked", data.TotalLinked(),
-	)
-	w.Header().Set("Cache-Control", "max-age=3600")
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		slog.Error("error encoding dashboard JSON", "error", err)
-	}
-}
-
-func handleTiers(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "tiers")
-	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
-		slog.Error("error rendering tiers", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-	}
-}
-
-func handleTiersAPI(w http.ResponseWriter, r *http.Request) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "tiers-api")
-	ctx, cancel := context.WithTimeout(r.Context(), 30*time.Second)
-	defer cancel()
-
-	data, err := getTiersData(ctx, pool)
-	if err != nil {
-		slog.Error("error querying tiers data", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("sending tiers JSON response", "tiers", len(data.Tiers), "reporter_rows", len(data.Reporters))
-	w.Header().Set("Cache-Control", "max-age=3600")
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		slog.Error("error encoding tiers JSON", "error", err)
-	}
-}
-
-func handleReporterCites(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "reporter-cites")
-	reporter := r.URL.Query().Get("r")
-	if reporter == "" {
-		slog.Debug("no reporter specified, redirecting to /reporters")
-		http.Redirect(w, r, "/reporters", http.StatusFound)
-		return
-	}
-
-	tier := r.URL.Query().Get("tier")
-
-	slog.Debug("looking up reporter cites", "reporter", reporter, "tier", tier)
-	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
-	defer cancel()
-
-	variants, err := getReporterVariants(ctx, pool, reporter)
-	if err != nil {
-		slog.Error("error querying variants for reporter", "reporter", reporter, "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	tiers, err := getReporterTierCounts(ctx, pool, reporter)
-	if err != nil {
-		// The tier counts come from a materialized view that a migration can
-		// leave unpopulated until the next make db-maintenance. Losing the
-		// filter bar is better than losing the citations it filters.
-		slog.Warn("tier counts unavailable for reporter", "reporter", reporter, "error", err)
-	}
-
-	cites, err := getCitesForReporter(ctx, pool, reporter, tier)
-	if err != nil {
-		slog.Error("error querying cites for reporter", "reporter", reporter, "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("rendering reporter cites", "reporter", reporter, "tier", tier,
-		"variants", len(variants), "tiers", len(tiers), "cites", len(cites))
-	data := struct {
-		Reporter string
-		Tier     string
-		Variants []string
-		Tiers    []ReporterTierCount
-		Cites    []ReporterCite
-	}{Reporter: reporter, Tier: tier, Variants: variants, Tiers: tiers, Cites: cites}
-	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering reporter cites", "reporter", reporter, "error", err)
-	}
-}
-
-func handleUnmatched(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "unmatched")
-	filter := NormalizeUnmatchedFilter(r.URL.Query().Get("filter"))
-
-	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
-	defer cancel()
-
-	cites, err := getTopUnmatched(ctx, pool, filter)
-	if err != nil {
-		slog.Error("error querying top unmatched citations", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	summary, err := getUnmatchedSummary(ctx, pool, filter)
-	if err != nil {
-		slog.Error("error querying unmatched summary", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	total, err := getUnmatchedSummary(ctx, pool, "all")
-	if err != nil {
-		slog.Error("error querying overall unmatched summary", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	slog.Debug("rendering unmatched page", "filter", filter, "shown", len(cites))
-	data := struct {
-		Filter  string
-		Cites   []UnmatchedCitation
-		Summary UnmatchedSummary
-		Total   UnmatchedSummary
-		Shown   int
-	}{Filter: filter, Cites: cites, Summary: summary, Total: total, Shown: len(cites)}
-	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering unmatched", "error", err)
-	}
-}
-
-func handleUnmatchedCites(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "unmatched-cites")
-	q := r.URL.Query()
-
-	pageStr := q.Get("page")
-	if pageStr == "" {
-		slog.Debug("no page specified, redirecting to /unmatched")
-		http.Redirect(w, r, "/unmatched", http.StatusFound)
-		return
-	}
-	page, err := strconv.Atoi(pageStr)
-	if err != nil {
-		slog.Debug("invalid page", "page", pageStr)
-		http.Error(w, fmt.Sprintf("Invalid page: %s", pageStr), http.StatusBadRequest)
-		return
-	}
-
-	// volume and reporter are omitted from the URL when NULL; treat absence
-	// (and an unparseable/empty value) as NULL.
-	var volume *int
-	if q.Has("volume") {
-		if v, err := strconv.Atoi(q.Get("volume")); err == nil {
-			volume = &v
-		}
-	}
-	var reporter *string
-	if s := q.Get("reporter"); s != "" {
-		reporter = &s
-	}
-
-	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
-	defer cancel()
-
-	cites, total, err := getUnmatchedCites(ctx, pool, volume, reporter, page)
-	if err != nil {
-		slog.Error("error querying unmatched cites", "page", page, "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	agg := &UnmatchedCitation{Volume: volume, ReporterStandard: reporter, Page: page, N: total}
-	slog.Debug("rendering unmatched cites", "cite", agg.Cite(), "shown", len(cites), "total", total)
-	data := struct {
-		Agg       *UnmatchedCitation
-		Cites     []UnmatchedCite
-		Shown     int
-		Total     int
-		Truncated bool
-	}{Agg: agg, Cites: cites, Shown: len(cites), Total: total, Truncated: total > len(cites)}
-	if err := tmpl.ExecuteTemplate(w, "baseof", data); err != nil {
-		slog.Error("error rendering unmatched cites", "error", err)
-	}
-}
-
-func handleWhitelistExtender(w http.ResponseWriter, r *http.Request, tmpl *template.Template) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "whitelist-extender")
-	if err := tmpl.ExecuteTemplate(w, "baseof", nil); err != nil {
-		slog.Error("error rendering whitelist extender", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-	}
-}
-
-func handleWhitelistExtenderAPI(w http.ResponseWriter, r *http.Request) {
-	slog.Debug("handling request", "path", r.URL.Path, "handler", "whitelist-extender-api")
-	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Minute)
-	defer cancel()
-
-	reporters, err := getUnwhitelistedReporters(ctx, pool)
-	if err != nil {
-		slog.Error("error querying unwhitelisted reporters", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	standards, err := getDistinctReporterStandards(ctx, pool)
-	if err != nil {
-		slog.Error("error querying reporter standards", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	capMap, err := getCapInfoMap(ctx, pool)
-	if err != nil {
-		slog.Error("error querying cap info", "error", err)
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	for i := range reporters {
-		reporters[i].Matches = computeMatches(reporters[i].ReporterAbbr, standards, capMap)
-	}
-
-	slog.Debug("sending whitelist extender JSON response", "count", len(reporters))
-	w.Header().Set("Cache-Control", "public, max-age=3600")
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(reporters); err != nil {
-		slog.Error("error encoding whitelist extender JSON", "error", err)
 	}
 }

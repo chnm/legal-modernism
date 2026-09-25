@@ -114,6 +114,20 @@ CREATE SCHEMA to_delete;
 
 
 --
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -1853,37 +1867,200 @@ CREATE TABLE moml_citations.citation_links (
 
 
 --
--- Name: case_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+-- Name: edition_case_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
 --
 
-CREATE MATERIALIZED VIEW moml_citations.case_citation_counts AS
- SELECT 'cap'::text AS source,
-    (cl.cap_case_id)::text AS case_id,
-    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
-    count(*) AS cite_count
-   FROM (moml_citations.citation_links cl
+CREATE MATERIALIZED VIEW moml_citations.edition_case_citations AS
+ SELECT v.bibliographicid,
+        CASE
+            WHEN (cl.cap_case_id IS NOT NULL) THEN 'cap'::text
+            WHEN (cl.er_case_id IS NOT NULL) THEN 'er'::text
+            WHEN (cl.code_reporter_id IS NOT NULL) THEN 'code'::text
+            ELSE 'stub'::text
+        END AS source,
+    cl.cap_case_id,
+    cl.er_case_id,
+    cl.code_reporter_id,
+    cl.stub_cite,
+    count(*) AS cite_count,
+    (count(*) FILTER (WHERE (cl.match_tier = ANY (ARRAY['cap_page_interior'::text, 'er_page_interior'::text]))) = count(*)) AS pincite_only
+   FROM ((moml_citations.citation_links cl
      JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
-  WHERE (cl.status = 'linked_cap'::text)
-  GROUP BY cl.cap_case_id
-UNION ALL
- SELECT 'er'::text AS source,
-    cl.er_case_id AS case_id,
-    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
-    count(*) AS cite_count
-   FROM (moml_citations.citation_links cl
-     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
-  WHERE (cl.status = 'linked_english_reports'::text)
-  GROUP BY cl.er_case_id
-UNION ALL
- SELECT 'code'::text AS source,
-    (cl.code_reporter_id)::text AS case_id,
-    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count,
-    count(*) AS cite_count
-   FROM (moml_citations.citation_links cl
-     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
-  WHERE (cl.status = 'linked_code_reporter'::text)
-  GROUP BY cl.code_reporter_id
+     JOIN moml.volumes v ON ((v.psmid = cu.moml_treatise)))
+  WHERE (cl.status ~~ 'linked%'::text)
+  GROUP BY v.bibliographicid, cl.cap_case_id, cl.er_case_id, cl.code_reporter_id, cl.stub_cite
   WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW edition_case_citations; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW moml_citations.edition_case_citations IS 'One row for each MOML edition and each case it cites, from the linked citations in citation_links (issue #213). Exactly one of cap_case_id, er_case_id, code_reporter_id and stub_cite is set. Refreshed by make db-maintenance.';
+
+
+--
+-- Name: COLUMN edition_case_citations.source; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.source IS 'Which column holds the case: cap, er, code or stub.';
+
+
+--
+-- Name: COLUMN edition_case_citations.cite_count; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.cite_count IS 'Number of linked citations from the edition to the case.';
+
+
+--
+-- Name: COLUMN edition_case_citations.pincite_only; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_case_citations.pincite_only IS 'True when every citation from the edition to the case was linked through an interior page (cap_page_interior or er_page_interior), so the link exists only because of a pin cite.';
+
+
+--
+-- Name: treatise_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.treatise_citation_counts AS
+ SELECT cu.moml_treatise,
+    count(*) AS n,
+    count(*) FILTER (WHERE (cl.status ~~ 'linked_%'::text)) AS linked,
+    count(*) FILTER (WHERE ((cl.status IS NULL) OR (cl.status !~~ 'linked_%'::text))) AS not_linked
+   FROM (moml_citations.citations_unlinked cu
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+  GROUP BY cu.moml_treatise
+  WITH NO DATA;
+
+
+--
+-- Name: edition_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.edition_citation_counts AS
+ WITH vols AS (
+         SELECT v.bibliographicid,
+            count(*) AS volumes,
+            sum(v.total_pages) AS pages,
+            (COALESCE(sum(tcc.n), (0)::numeric))::bigint AS cites,
+            (COALESCE(sum(tcc.linked), (0)::numeric))::bigint AS linked
+           FROM (moml.volumes v
+             LEFT JOIN moml_citations.treatise_citation_counts tcc ON ((tcc.moml_treatise = v.psmid)))
+          GROUP BY v.bibliographicid
+        ), cases AS (
+         SELECT edition_case_citations.bibliographicid,
+            count(*) AS cases,
+            count(*) FILTER (WHERE (NOT edition_case_citations.pincite_only)) AS cases_not_pincite_only
+           FROM moml_citations.edition_case_citations
+          GROUP BY edition_case_citations.bibliographicid
+        )
+ SELECT t.bibliographicid,
+    e.work_id,
+    t.jurisdiction,
+    t.year,
+    t.title,
+    e.author,
+    t.vols,
+    vols.volumes,
+    vols.pages,
+    e.derivative,
+    vols.cites,
+    vols.linked,
+    COALESCE(cases.cases, (0)::bigint) AS cases,
+    COALESCE(cases.cases_not_pincite_only, (0)::bigint) AS cases_not_pincite_only
+   FROM (((moml.treatises t
+     JOIN moml.editions e ON ((e.bibliographicid = t.bibliographicid)))
+     JOIN vols ON ((vols.bibliographicid = t.bibliographicid)))
+     LEFT JOIN cases ON ((cases.bibliographicid = t.bibliographicid)))
+  WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW edition_citation_counts; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW moml_citations.edition_citation_counts IS 'One row per treatise edition (moml.treatises, materialized) with its work, jurisdiction, year, title, volumes, pages, detected and linked citations, and the distinct cases it cites (issue #305). Refreshed by make db-maintenance.';
+
+
+--
+-- Name: COLUMN edition_citation_counts.cases_not_pincite_only; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.edition_citation_counts.cases_not_pincite_only IS 'Cases the edition reaches other than only through pin cites (edition_case_citations.pincite_only is false).';
+
+
+--
+-- Name: case_edition_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.case_edition_counts AS
+ WITH agg AS (
+         SELECT c.source,
+            c.cap_case_id,
+            c.er_case_id,
+            c.code_reporter_id,
+            c.stub_cite,
+            count(*) AS editions,
+            count(*) FILTER (WHERE (NOT c.pincite_only)) AS editions_not_pincite_only,
+            count(DISTINCT ecc.work_id) AS works,
+            (sum(c.cite_count))::bigint AS cites,
+            count(*) FILTER (WHERE (ecc.jurisdiction = 'US'::text)) AS us_editions,
+            min(ecc.year) AS first_cited,
+            max(ecc.year) AS last_cited
+           FROM (moml_citations.edition_case_citations c
+             JOIN moml_citations.edition_citation_counts ecc ON ((ecc.bibliographicid = c.bibliographicid)))
+          GROUP BY c.source, c.cap_case_id, c.er_case_id, c.code_reporter_id, c.stub_cite
+        )
+ SELECT a.source,
+    ((a.source || ':'::text) || COALESCE((a.cap_case_id)::text, a.er_case_id, (a.code_reporter_id)::text, a.stub_cite)) AS case_key,
+    a.cap_case_id,
+    a.er_case_id,
+    a.code_reporter_id,
+    a.stub_cite,
+    COALESCE(cc.name_abbreviation, er.murrell_title, er.er_name, code.name, sm.party_names) AS name,
+    COALESCE(cc.decision_year, er.murrell_year, er.er_year, code.decision_year, sm.year_decided) AS year,
+    COALESCE(capcite.cite, er.er_cite, code.official_citation, a.stub_cite) AS cite,
+    a.editions,
+    a.editions_not_pincite_only,
+    a.works,
+    a.cites,
+    a.us_editions,
+    a.first_cited,
+    a.last_cited
+   FROM (((((agg a
+     LEFT JOIN cap.cases cc ON ((cc.id = a.cap_case_id)))
+     LEFT JOIN LATERAL ( SELECT ci.cite
+           FROM cap.citations ci
+          WHERE (ci."case" = a.cap_case_id)
+          ORDER BY (ci.type = 'official'::text) DESC, ci.cite
+         LIMIT 1) capcite ON (true))
+     LEFT JOIN english_reports.cases er ON ((er.id = a.er_case_id)))
+     LEFT JOIN legalhist.code_reporter code ON ((code.id = a.code_reporter_id)))
+     LEFT JOIN legalhist.stub_case_metadata sm ON ((sm.cite = a.stub_cite)))
+  WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW case_edition_counts; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW moml_citations.case_edition_counts IS 'One row per case cited by treatise editions, with the case''s name, year and citation copied from its source, and the treatise editions, works and citations behind it (issue #305). case_key is source:id. Refreshed by make db-maintenance.';
+
+
+--
+-- Name: COLUMN case_edition_counts.editions_not_pincite_only; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.case_edition_counts.editions_not_pincite_only IS 'Citing editions that reach the case other than only through pin cites.';
+
+
+--
+-- Name: COLUMN case_edition_counts.works; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.case_edition_counts.works IS 'Distinct works the citing editions belong to.';
 
 
 --
@@ -1945,57 +2122,27 @@ CREATE MATERIALIZED VIEW moml_citations.citations_unmatched_top AS
 
 
 --
--- Name: edition_case_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+-- Name: edition_reporter_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
 --
 
-CREATE MATERIALIZED VIEW moml_citations.edition_case_citations AS
+CREATE MATERIALIZED VIEW moml_citations.edition_reporter_citations AS
  SELECT v.bibliographicid,
-        CASE
-            WHEN (cl.cap_case_id IS NOT NULL) THEN 'cap'::text
-            WHEN (cl.er_case_id IS NOT NULL) THEN 'er'::text
-            WHEN (cl.code_reporter_id IS NOT NULL) THEN 'code'::text
-            ELSE 'stub'::text
-        END AS source,
-    cl.cap_case_id,
-    cl.er_case_id,
-    cl.code_reporter_id,
-    cl.stub_cite,
-    count(*) AS cite_count,
-    (count(*) FILTER (WHERE (cl.match_tier = ANY (ARRAY['cap_page_interior'::text, 'er_page_interior'::text]))) = count(*)) AS pincite_only
-   FROM ((moml_citations.citation_links cl
-     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+    wl.reporter_standard,
+    count(*) AS cites,
+    count(*) FILTER (WHERE (cl.status ~~ 'linked%'::text)) AS linked
+   FROM (((moml_citations.citations_unlinked cu
+     JOIN legalhist.whitelist wl ON (((wl.reporter_found = cu.reporter_abbr) AND (wl.reporter_standard IS NOT NULL))))
      JOIN moml.volumes v ON ((v.psmid = cu.moml_treatise)))
-  WHERE (cl.status ~~ 'linked%'::text)
-  GROUP BY v.bibliographicid, cl.cap_case_id, cl.er_case_id, cl.code_reporter_id, cl.stub_cite
+     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
+  GROUP BY v.bibliographicid, wl.reporter_standard
   WITH NO DATA;
 
 
 --
--- Name: MATERIALIZED VIEW edition_case_citations; Type: COMMENT; Schema: moml_citations; Owner: -
+-- Name: MATERIALIZED VIEW edition_reporter_citations; Type: COMMENT; Schema: moml_citations; Owner: -
 --
 
-COMMENT ON MATERIALIZED VIEW moml_citations.edition_case_citations IS 'One row for each MOML edition and each case it cites, from the linked citations in citation_links (issue #213). Exactly one of cap_case_id, er_case_id, code_reporter_id and stub_cite is set. Refreshed by make db-maintenance.';
-
-
---
--- Name: COLUMN edition_case_citations.source; Type: COMMENT; Schema: moml_citations; Owner: -
---
-
-COMMENT ON COLUMN moml_citations.edition_case_citations.source IS 'Which column holds the case: cap, er, code or stub.';
-
-
---
--- Name: COLUMN edition_case_citations.cite_count; Type: COMMENT; Schema: moml_citations; Owner: -
---
-
-COMMENT ON COLUMN moml_citations.edition_case_citations.cite_count IS 'Number of linked citations from the edition to the case.';
-
-
---
--- Name: COLUMN edition_case_citations.pincite_only; Type: COMMENT; Schema: moml_citations; Owner: -
---
-
-COMMENT ON COLUMN moml_citations.edition_case_citations.pincite_only IS 'True when every citation from the edition to the case was linked through an interior page (cap_page_interior or er_page_interior), so the link exists only because of a pin cite.';
+COMMENT ON MATERIALIZED VIEW moml_citations.edition_reporter_citations IS 'Citations from each MOML edition to each reporter standard, whitelisted and non-junk, with how many linked (issue #305). Refreshed by make db-maintenance.';
 
 
 --
@@ -2070,34 +2217,91 @@ CREATE VIEW moml_citations.linking_tier_summary AS
 
 
 --
--- Name: normalized_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+-- Name: reporter_case_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
 --
 
-CREATE MATERIALIZED VIEW moml_citations.normalized_citation_counts AS
- SELECT cl.cite_normalized,
-    count(*) AS cite_count,
-    count(*) FILTER (WHERE (cl.status ~~ 'linked_%'::text)) AS linked_count,
-    count(DISTINCT ROW(cu.moml_treatise, cu.moml_page)) AS page_count
-   FROM (moml_citations.citation_links cl
-     JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
-  WHERE (cl.cite_normalized IS NOT NULL)
-  GROUP BY cl.cite_normalized
+CREATE MATERIALIZED VIEW moml_citations.reporter_case_citations AS
+ WITH links AS (
+         SELECT wl.reporter_standard,
+            v.bibliographicid,
+                CASE
+                    WHEN (cl.cap_case_id IS NOT NULL) THEN 'cap'::text
+                    WHEN (cl.er_case_id IS NOT NULL) THEN 'er'::text
+                    WHEN (cl.code_reporter_id IS NOT NULL) THEN 'code'::text
+                    ELSE 'stub'::text
+                END AS source,
+            cl.cap_case_id,
+            cl.er_case_id,
+            cl.code_reporter_id,
+            cl.stub_cite
+           FROM ((((moml_citations.citation_links cl
+             JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
+             JOIN legalhist.whitelist wl ON (((wl.reporter_found = cu.reporter_abbr) AND (wl.reporter_standard IS NOT NULL))))
+             JOIN moml.volumes v ON ((v.psmid = cu.moml_treatise)))
+             JOIN moml.treatises t ON ((t.bibliographicid = v.bibliographicid)))
+          WHERE (cl.status ~~ 'linked%'::text)
+        )
+ SELECT reporter_standard,
+    source,
+    ((source || ':'::text) || COALESCE((cap_case_id)::text, er_case_id, (code_reporter_id)::text, stub_cite)) AS case_key,
+    cap_case_id,
+    er_case_id,
+    code_reporter_id,
+    stub_cite,
+    count(DISTINCT bibliographicid) AS editions,
+    count(*) AS cites
+   FROM links
+  GROUP BY reporter_standard, source, cap_case_id, er_case_id, code_reporter_id, stub_cite
   WITH NO DATA;
 
 
 --
--- Name: treatise_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+-- Name: MATERIALIZED VIEW reporter_case_citations; Type: COMMENT; Schema: moml_citations; Owner: -
 --
 
-CREATE MATERIALIZED VIEW moml_citations.treatise_citation_counts AS
- SELECT cu.moml_treatise,
-    count(*) AS n,
-    count(*) FILTER (WHERE (cl.status ~~ 'linked_%'::text)) AS linked,
-    count(*) FILTER (WHERE ((cl.status IS NULL) OR (cl.status !~~ 'linked_%'::text))) AS not_linked
-   FROM (moml_citations.citations_unlinked cu
-     LEFT JOIN moml_citations.citation_links cl ON ((cl.citation_id = cu.id)))
-  GROUP BY cu.moml_treatise
+COMMENT ON MATERIALIZED VIEW moml_citations.reporter_case_citations IS 'For each reporter standard and each case reached through a citation to it, the treatise editions and citations behind the link (issue #305). Refreshed by make db-maintenance.';
+
+
+--
+-- Name: work_citation_counts; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW moml_citations.work_citation_counts AS
+ WITH cases AS (
+         SELECT ecc_1.work_id,
+            count(DISTINCT ((c.source || ':'::text) || COALESCE((c.cap_case_id)::text, c.er_case_id, (c.code_reporter_id)::text, c.stub_cite))) AS cases
+           FROM (moml_citations.edition_case_citations c
+             JOIN moml_citations.edition_citation_counts ecc_1 ON ((ecc_1.bibliographicid = c.bibliographicid)))
+          GROUP BY ecc_1.work_id
+        ), all_editions AS (
+         SELECT editions.work_id,
+            count(*) AS n
+           FROM moml.editions
+          GROUP BY editions.work_id
+        )
+ SELECT ecc.work_id,
+    count(*) AS editions,
+    ae.n AS all_editions,
+    count(*) FILTER (WHERE ecc.derivative) AS derivative_editions,
+    min(ecc.year) AS first_year,
+    max(ecc.year) AS last_year,
+    bool_or((ecc.jurisdiction = 'US'::text)) AS us,
+    bool_or((ecc.jurisdiction = 'UK'::text)) AS uk,
+    (sum(ecc.cites))::bigint AS cites,
+    (sum(ecc.linked))::bigint AS linked,
+    COALESCE(max(cases.cases), (0)::bigint) AS cases
+   FROM ((moml_citations.edition_citation_counts ecc
+     JOIN all_editions ae ON ((ae.work_id = ecc.work_id)))
+     LEFT JOIN cases ON ((cases.work_id = ecc.work_id)))
+  GROUP BY ecc.work_id, ae.n
   WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW work_citation_counts; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW moml_citations.work_citation_counts IS 'One row per work with at least one treatise edition: its treatise editions, all its editions, the span of years, jurisdictions, citation totals and distinct cases cited (issue #305). Refreshed by make db-maintenance.';
 
 
 --
@@ -2831,6 +3035,13 @@ CREATE INDEX textbooks_psmid_idx ON legalhist.textbooks_vols USING btree (psmid)
 
 
 --
+-- Name: top_reporters_n_idx; Type: INDEX; Schema: legalhist; Owner: -
+--
+
+CREATE INDEX top_reporters_n_idx ON legalhist.top_reporters USING btree (n DESC);
+
+
+--
 -- Name: top_reporters_reporter_abbr_idx; Type: INDEX; Schema: legalhist; Owner: -
 --
 
@@ -2908,17 +3119,59 @@ CREATE INDEX book_subject_subject_idx ON moml_archive.book_subject USING btree (
 
 
 --
--- Name: case_citation_counts_page_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
+-- Name: case_edition_counts_cite_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
-CREATE INDEX case_citation_counts_page_count_idx ON moml_citations.case_citation_counts USING btree (page_count DESC);
+CREATE INDEX case_edition_counts_cite_idx ON moml_citations.case_edition_counts USING btree (cite);
 
 
 --
--- Name: case_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+-- Name: case_edition_counts_cites_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
-CREATE UNIQUE INDEX case_citation_counts_uq ON moml_citations.case_citation_counts USING btree (source, case_id);
+CREATE INDEX case_edition_counts_cites_idx ON moml_citations.case_edition_counts USING btree (cites DESC, case_key);
+
+
+--
+-- Name: case_edition_counts_editions_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_edition_counts_editions_idx ON moml_citations.case_edition_counts USING btree (editions DESC, case_key);
+
+
+--
+-- Name: case_edition_counts_key_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX case_edition_counts_key_uq ON moml_citations.case_edition_counts USING btree (case_key);
+
+
+--
+-- Name: case_edition_counts_name_trgm_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_edition_counts_name_trgm_idx ON moml_citations.case_edition_counts USING gin (name public.gin_trgm_ops);
+
+
+--
+-- Name: case_edition_counts_not_pincite_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_edition_counts_not_pincite_idx ON moml_citations.case_edition_counts USING btree (editions_not_pincite_only DESC, case_key);
+
+
+--
+-- Name: case_edition_counts_source_editions_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_edition_counts_source_editions_idx ON moml_citations.case_edition_counts USING btree (source, editions DESC, case_key);
+
+
+--
+-- Name: case_edition_counts_works_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX case_edition_counts_works_idx ON moml_citations.case_edition_counts USING btree (works DESC, case_key);
 
 
 --
@@ -2947,6 +3200,13 @@ CREATE UNIQUE INDEX citations_unlinked_uq ON moml_citations.citations_unlinked U
 --
 
 CREATE INDEX citations_unmatched_top_n_idx ON moml_citations.citations_unmatched_top USING btree (n DESC);
+
+
+--
+-- Name: citations_unmatched_top_reporter_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX citations_unmatched_top_reporter_idx ON moml_citations.citations_unmatched_top USING btree (reporter_standard, n DESC);
 
 
 --
@@ -2989,6 +3249,41 @@ CREATE INDEX edition_case_citations_stub_idx ON moml_citations.edition_case_cita
 --
 
 CREATE UNIQUE INDEX edition_case_citations_uq ON moml_citations.edition_case_citations USING btree (bibliographicid, cap_case_id, er_case_id, code_reporter_id, stub_cite) NULLS NOT DISTINCT;
+
+
+--
+-- Name: edition_citation_counts_cites_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_citation_counts_cites_idx ON moml_citations.edition_citation_counts USING btree (cites DESC);
+
+
+--
+-- Name: edition_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX edition_citation_counts_uq ON moml_citations.edition_citation_counts USING btree (bibliographicid);
+
+
+--
+-- Name: edition_citation_counts_work_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_citation_counts_work_idx ON moml_citations.edition_citation_counts USING btree (work_id);
+
+
+--
+-- Name: edition_reporter_citations_reporter_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX edition_reporter_citations_reporter_idx ON moml_citations.edition_reporter_citations USING btree (reporter_standard, cites DESC);
+
+
+--
+-- Name: edition_reporter_citations_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX edition_reporter_citations_uq ON moml_citations.edition_reporter_citations USING btree (bibliographicid, reporter_standard);
 
 
 --
@@ -3048,24 +3343,17 @@ CREATE UNIQUE INDEX linking_dashboard_tiers_uq ON moml_citations.linking_dashboa
 
 
 --
--- Name: normalized_citation_counts_count_idx; Type: INDEX; Schema: moml_citations; Owner: -
+-- Name: reporter_case_citations_editions_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
-CREATE INDEX normalized_citation_counts_count_idx ON moml_citations.normalized_citation_counts USING btree (cite_count DESC);
-
-
---
--- Name: normalized_citation_counts_prefix_idx; Type: INDEX; Schema: moml_citations; Owner: -
---
-
-CREATE INDEX normalized_citation_counts_prefix_idx ON moml_citations.normalized_citation_counts USING btree (cite_normalized text_pattern_ops);
+CREATE INDEX reporter_case_citations_editions_idx ON moml_citations.reporter_case_citations USING btree (reporter_standard, editions DESC);
 
 
 --
--- Name: normalized_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+-- Name: reporter_case_citations_uq; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
-CREATE UNIQUE INDEX normalized_citation_counts_uq ON moml_citations.normalized_citation_counts USING btree (cite_normalized);
+CREATE UNIQUE INDEX reporter_case_citations_uq ON moml_citations.reporter_case_citations USING btree (reporter_standard, case_key);
 
 
 --
@@ -3073,6 +3361,20 @@ CREATE UNIQUE INDEX normalized_citation_counts_uq ON moml_citations.normalized_c
 --
 
 CREATE UNIQUE INDEX treatise_citation_counts_uq ON moml_citations.treatise_citation_counts USING btree (moml_treatise);
+
+
+--
+-- Name: work_citation_counts_cites_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX work_citation_counts_cites_idx ON moml_citations.work_citation_counts USING btree (cites DESC);
+
+
+--
+-- Name: work_citation_counts_uq; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX work_citation_counts_uq ON moml_citations.work_citation_counts USING btree (work_id);
 
 
 --
@@ -3500,4 +3802,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260925150000'),
     ('20260925160000'),
     ('20260925170000'),
-    ('20260925180000');
+    ('20260925180000'),
+    ('20260926120000');

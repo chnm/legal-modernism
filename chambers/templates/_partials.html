@@ -1,0 +1,60 @@
+{{/* Partials shared by every page. */}}
+
+{{define "notice"}}<div class="alert alert-warning py-2 px-3 small">{{.}}</div>{{end}}
+
+{{define "pagination"}}
+    {{if or .HasPrev .HasNext}}
+    <nav class="my-3 d-flex align-items-center gap-2">
+        {{if .HasPrev}}<a href="{{.PrevURL}}" class="btn btn-sm btn-outline-secondary">&larr; Prev</a>{{end}}
+        <span class="small text-secondary">{{if ge .Total 0}}{{num .From}}&ndash;{{num .To}} of {{num .Total}}{{else}}Page {{.Page}}{{end}}</span>
+        {{if .HasNext}}<a href="{{.NextURL}}" class="btn btn-sm btn-outline-secondary">Next &rarr;</a>{{end}}
+    </nav>
+    {{end}}
+{{end}}
+
+{{/* chip renders a Chip: the link status, coloured, with the tier and its gloss. */}}
+{{define "chip"}}<span class="chip {{.Class}}" title="{{.Gloss}}">{{.Label}}{{if .Tier}} <code>{{.Tier}}</code>{{end}}</span>{{end}}
+
+{{/* case renders a CaseRef as a link with its source badge. */}}
+{{define "case"}}<a href="{{.URL}}">{{.Display}}</a> <span class="badge {{.BadgeClass}}">{{.SourceLabel}}</span>{{end}}
+
+{{/* top_cases renders a TopCasesView: the cases a set of editions cites most. */}}
+{{define "top_cases"}}
+    {{if .Rows}}
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Case</th>
+                <th class="num">Year</th>
+                <th>Cite</th>
+                {{if .ShowEditions}}<th class="num">Editions</th>{{end}}
+                <th class="num">Citations</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Rows}}
+            <tr>
+                <td class="title-col">{{template "case" .CaseRef}}</td>
+                <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+                <td class="small text-secondary">{{ptrOr .Cite "&mdash;"}}</td>
+                {{if $.ShowEditions}}<td class="num">{{num .Editions}}{{if $.TotalEditions}} <span class="text-secondary small">of {{$.TotalEditions}}</span>{{end}}</td>{{end}}
+                <td class="num">{{num .Cites}}{{if .PincitesOnly}} <span class="badge text-bg-light" title="Every citation was a pin cite to an interior page of the case.">pin</span>{{end}}</td>
+                <td>{{if .PagesURL}}<a href="{{.PagesURL}}" class="small">pages</a>{{end}}</td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p class="small text-secondary fst-italic">{{.Empty}}</p>
+    {{end}}
+{{end}}
+
+{{/* linking_nav is the sub-navigation of the Detecting & linking section. */}}
+{{define "linking_nav"}}
+    <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Detecting and linking">
+        <a href="/linking" class="btn {{if eq .Page.Title "Linking dashboard"}}btn-primary{{else}}btn-outline-secondary{{end}}">Dashboard</a>
+        <a href="/linking/tiers" class="btn {{if eq .Page.Title "Match tiers"}}btn-primary{{else}}btn-outline-secondary{{end}}">Match tiers</a>
+        <a href="/linking/whitelist" class="btn {{if eq .Page.Title "Whitelist extender"}}btn-primary{{else}}btn-outline-secondary{{end}}">Whitelist extender</a>
+    </div>
+{{end}}
