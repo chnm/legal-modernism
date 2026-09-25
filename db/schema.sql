@@ -1383,29 +1383,38 @@ COMMENT ON COLUMN moml.volumes.gale_id IS 'Gale''s document id (book_info.id); N
 --
 
 CREATE VIEW moml.treatises AS
- SELECT v.bibliographicid,
+ WITH edition AS (
+         SELECT v.bibliographicid,
+            min(v.year) AS year,
+            min(v.display_title) AS title,
+                CASE
+                    WHEN (max(v.current_volume) = 0) THEN 1
+                    ELSE max(v.current_volume)
+                END AS vols,
+            sum(v.total_pages) AS pages
+           FROM moml.volumes v
+          GROUP BY v.bibliographicid
+        )
+ SELECT e.bibliographicid,
     j.subject AS jurisdiction,
-    min(v.year) AS year,
-    min(v.display_title) AS title,
-        CASE
-            WHEN (max(v.current_volume) = 0) THEN 1
-            ELSE max(v.current_volume)
-        END AS vols
-   FROM (moml.volumes v
-     JOIN moml.edition_subjects j ON (((j.bibliographicid = v.bibliographicid) AND (j.subject = ANY (ARRAY['US'::text, 'UK'::text])))))
-  WHERE (NOT (EXISTS ( SELECT 1
+    e.year,
+    e.title,
+    e.vols
+   FROM (edition e
+     JOIN moml.edition_subjects j ON (((j.bibliographicid = e.bibliographicid) AND (j.subject = ANY (ARRAY['US'::text, 'UK'::text])))))
+  WHERE ((NOT (EXISTS ( SELECT 1
            FROM moml.edition_subjects s
-          WHERE ((s.bibliographicid = v.bibliographicid) AND (s.subject = ANY (ARRAY['Biography'::text, 'Collected Essays'::text, 'Trials'::text]))))))
-  GROUP BY v.bibliographicid, j.subject
- HAVING ((NOT (min(v.display_title) ~* '\Wremarks of\W'::text)) AND (NOT (min(v.display_title) ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)))
-  ORDER BY (min(v.year)), (min(v.display_title));
+          WHERE ((s.bibliographicid = e.bibliographicid) AND (s.subject = ANY (ARRAY['Biography'::text, 'Collected Essays'::text, 'Trials'::text])))))) AND (NOT (e.title ~* '\Wremarks of\W'::text)) AND (NOT (e.title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)) AND ((e.title ~* '\ytreatise\y'::text) OR ((COALESCE(e.pages, (50)::bigint) >= 50) AND (NOT (e.title ~* ((((('^(the )?((first|second|third|fourth|fifth|final|annual|special|preliminary|majority|minority|supplementary) )*reports? (of|from|to) (the )?(\w+ ){0,6}(committee|commission|commissioners|board|council|delegates|attorney|secretary|comptroller|superintendent)'::text || '|^(the )?(hearings?|message|debates?|journal of the|proceedings of the (senate|house|convention|legislature))\y'::text) || '|^(the )?(argument|closing argument|opening argument|brief|reply brief)s? (of|for|on behalf of|in|by|against|submitted)\y'::text) || '|^in the (supreme )?court\y'::text) || '|(^|: )(the )?speech(es)? (of|delivered|in the|on)\y'::text) || '|(^|: )(a |an |the )?(second |third |open |plain )?letters? (to|addressed to)\y'::text))) AND (NOT (EXISTS ( SELECT 1
+           FROM moml.edition_loc_subjects l
+          WHERE ((l.bibliographicid = e.bibliographicid) AND (((l.subfield = ANY (ARRAY['v'::text, 'x'::text])) AND (btrim(l.locsubject) = ANY (ARRAY['Biography'::text, 'Speeches in Congress'::text]))) OR ((l.subfield = 'a'::text) AND ((l.locsubject = ANY (ARRAY['Campaign biography'::text, 'Forensic orations'::text, 'Fourth of July orations'::text, 'Baccalaureate addresses'::text])) OR (l.locsubject ~ '^Campaign speeches'::text)))))))))))
+  ORDER BY e.year, e.title;
 
 
 --
 -- Name: VIEW treatises; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, with their jurisdiction (US or UK); excludes biographies, collected essays, trials and commemorative pieces. Join moml.volumes on bibliographicid for the volumes.';
+COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, with their jurisdiction (US or UK); excludes pamphlets under 50 pages, public documents and arguments in a case, biographies, speeches, collected essays, trials and commemorative pieces, unless the title calls the work a treatise. Join moml.volumes on bibliographicid for the volumes.';
 
 
 --
@@ -3314,4 +3323,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20260925140000'),
     ('20260925140100'),
     ('20260925140200'),
-    ('20260925150000');
+    ('20260925150000'),
+    ('20260925160000');
