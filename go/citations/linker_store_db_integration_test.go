@@ -303,7 +303,10 @@ func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
 	// Build the minimal legalhist slice the loader touches, mirroring the
 	// production shape (FK to reporters + the distinct CHECK). Kept inside this
 	// test rather than in newTestStore so the unrelated stream/save tests don't
-	// depend on a legalhist schema.
+	// depend on a legalhist schema. The fixture includes two real colliding
+	// rows, an alternate that is itself another reporter's standard: A.D. is
+	// Am. Dec.'s only alternate, and S.C. is one of S. Ct.'s three.
+	reporters := []string{"Serg. & Rawl.", "U.S.", "Mass.", "Am. Dec.", "A.D.", "S. Ct.", "S.C."}
 	setup := []string{
 		`DROP SCHEMA IF EXISTS legalhist CASCADE`,
 		`CREATE SCHEMA legalhist`,
@@ -313,11 +316,16 @@ func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
 			alt_abbr text NOT NULL,
 			CONSTRAINT reporters_abbreviations_distinct_check CHECK (reporter_standard <> alt_abbr)
 		)`,
-		`INSERT INTO legalhist.reporters (reporter_standard) VALUES ('Serg. & Rawl.'), ('U.S.'), ('Mass.')`,
+		`INSERT INTO legalhist.reporters (reporter_standard) VALUES
+			('Serg. & Rawl.'), ('U.S.'), ('Mass.'), ('Am. Dec.'), ('A.D.'), ('S. Ct.'), ('S.C.')`,
 		`INSERT INTO legalhist.reporters_abbreviations (reporter_standard, alt_abbr) VALUES
 			('Serg. & Rawl.', 'Serg. & Rawle'),
 			('U.S.', 'US'),
-			('U.S.', 'U. S.')`,
+			('U.S.', 'U. S.'),
+			('Am. Dec.', 'A.D.'),
+			('S. Ct.', 'S.C.'),
+			('S. Ct.', 'Sup.Ct.'),
+			('S. Ct.', 'Sup.Ct.Rep.')`,
 		// 'Mass.' deliberately has no alt rows: it must be absent from the map.
 	}
 	for _, stmt := range setup {
@@ -334,7 +342,20 @@ func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
 	assert.Equal(t, []string{"Serg. & Rawle"}, got["Serg. & Rawl."])
 	_, hasMass := got["Mass."]
 	assert.False(t, hasMass, "a reporter with no alt rows should be absent from the map")
-	assert.Len(t, got, 2)
+
+	// A standard spelling trumps an alternative one (issue #289): an alternate
+	// that is another reporter's reporter_standard is not loaded. "S.C." sorts
+	// first under COLLATE "C" ('.' < 'u'), so its exclusion must not disturb
+	// the order of what remains.
+	assert.Equal(t, []string{"Sup.Ct.", "Sup.Ct.Rep."}, got["S. Ct."])
+	_, hasAmDec := got["Am. Dec."]
+	assert.False(t, hasAmDec, "a reporter whose only alternate is another reporter's standard is absent, like one with no alternates")
+	assert.Len(t, got, 3)
+	for std, alts := range got {
+		for _, alt := range alts {
+			assert.NotContains(t, reporters, alt, "alternate %q of %q is a reporter_standard", alt, std)
+		}
+	}
 }
 
 func TestLoadCAPCitationsIntegration(t *testing.T) {
