@@ -92,33 +92,43 @@ func looksLikeCite(q string) bool { return reCiteLike.MatchString(strings.TrimSp
 
 // searchCases finds cases by an exact citation or by a name substring. An
 // exact cite is looked up in every source's own citation columns (indexed) and
-// in the ranking's denormalized cite; a name goes through the trigram index on
-// the ranking's name column.
+// in the ranking's denormalized cite, and the keys found are then fetched from
+// the ranking by its unique key; a name goes through the trigram index on the
+// ranking's name column. The keys are resolved first because an OR between a
+// subquery and an equality made the planner scan the whole ranking.
 func (s *server) searchCases(ctx context.Context, q, source string, limit, offset int) ([]CaseListItem, int, bool, error) {
 	q = strings.TrimSpace(q)
 	total := 0
 	if looksLikeCite(q) {
 		slog.Debug("searching cases by cite", "q", q)
-		query := `
-		WITH keys AS (
-		  SELECT 'cap:' || ci."case"::text AS case_key FROM cap.citations ci WHERE ci.cite = $1
-		  UNION SELECT 'er:' || id FROM english_reports.cases WHERE er_cite = $1 OR er_parallel_cite = $1
-		  UNION SELECT 'code:' || id::text FROM legalhist.code_reporter WHERE official_citation = $1 OR parallel_citation = $1
-		  UNION SELECT 'stub:' || cite FROM legalhist.stub_cases WHERE cite = $1
-		)
-		SELECT ` + caseListColumns + `, count(*) OVER()
-		FROM moml_citations.case_edition_counts c
-		WHERE (c.case_key IN (SELECT case_key FROM keys) OR c.cite = $1) AND ($2 = '' OR c.source = $2)
-		ORDER BY editions DESC, case_key
-		LIMIT $3 OFFSET $4`
-		items, err := collect(ctx, s.db, query, []any{q, source, limit, offset}, func(rows pgx.Rows) (CaseListItem, error) {
-			return scanCaseListItem(rows, &total)
-		})
+		keys, err := collect(ctx, s.db, `
+			SELECT 'cap:' || ci."case"::text FROM cap.citations ci WHERE ci.cite = $1
+			UNION SELECT 'er:' || id FROM english_reports.cases WHERE er_cite = $1 OR er_parallel_cite = $1
+			UNION SELECT 'code:' || id::text FROM legalhist.code_reporter WHERE official_citation = $1 OR parallel_citation = $1
+			UNION SELECT 'stub:' || cite FROM legalhist.stub_cases WHERE cite = $1
+			UNION SELECT case_key FROM moml_citations.case_edition_counts WHERE cite = $1`, []any{q},
+			func(rows pgx.Rows) (string, error) {
+				var k string
+				return k, rows.Scan(&k)
+			})
 		if err != nil {
 			return nil, 0, true, fmt.Errorf("searching cases by cite: %w", err)
 		}
-		if len(items) > 0 {
-			return items, total, true, nil
+		if len(keys) > 0 {
+			items, err := collect(ctx, s.db, `
+				SELECT `+caseListColumns+`, count(*) OVER()
+				FROM moml_citations.case_edition_counts
+				WHERE case_key = ANY($1::text[]) AND ($2 = '' OR source = $2)
+				ORDER BY editions DESC, case_key
+				LIMIT $3 OFFSET $4`, []any{keys, source, limit, offset}, func(rows pgx.Rows) (CaseListItem, error) {
+				return scanCaseListItem(rows, &total)
+			})
+			if err != nil {
+				return nil, 0, true, fmt.Errorf("searching cases by cite: %w", err)
+			}
+			if len(items) > 0 {
+				return items, total, true, nil
+			}
 		}
 	}
 	slog.Debug("searching cases by name", "q", q)
