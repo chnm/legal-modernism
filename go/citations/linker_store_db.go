@@ -496,6 +496,59 @@ func (s *LinkerDBStore) LoadStubCases(ctx context.Context) (map[string]struct{},
 	return m, nil
 }
 
+// LoadTreatiseYears loads moml.book_info.year by psmid. The year is per volume,
+// not per work: a multi-volume treatise issued over several years dates each
+// citation by the volume it appears in.
+func (s *LinkerDBStore) LoadTreatiseYears(ctx context.Context) (map[string]int, error) {
+	return loadYears[string](ctx, s.DB, "treatise years",
+		`SELECT psmid, year FROM moml.book_info WHERE year IS NOT NULL`, 25_000)
+}
+
+// LoadCAPCaseYears loads cap.cases.decision_year by case id.
+func (s *LinkerDBStore) LoadCAPCaseYears(ctx context.Context) (map[int64]int, error) {
+	return loadYears[int64](ctx, s.DB, "CAP case years",
+		`SELECT id, decision_year FROM cap.cases WHERE decision_year IS NOT NULL`, 7_000_000)
+}
+
+// LoadCodeReporterYears loads legalhist.code_reporter.decision_year by id.
+func (s *LinkerDBStore) LoadCodeReporterYears(ctx context.Context) (map[int64]int, error) {
+	return loadYears[int64](ctx, s.DB, "code reporter years",
+		`SELECT id, decision_year FROM legalhist.code_reporter WHERE decision_year IS NOT NULL`, 1_000)
+}
+
+// LoadERCaseYears loads the year of each English Reports case by id. Murrell's
+// year is preferred; er_year stands in for the cases Murrell does not date.
+func (s *LinkerDBStore) LoadERCaseYears(ctx context.Context) (map[string]int, error) {
+	return loadYears[string](ctx, s.DB, "English Reports case years",
+		`SELECT id, coalesce(murrell_year, er_year) FROM english_reports.cases
+		WHERE coalesce(murrell_year, er_year) IS NOT NULL`, 125_000)
+}
+
+// loadYears runs a query that returns (id, year) rows and collects them into a
+// map. The queries leave out rows with no year, so a missing key means the year
+// is unknown.
+func loadYears[K comparable](ctx context.Context, db *pgxpool.Pool, what, query string, sizeHint int) (map[K]int, error) {
+	rows, err := db.Query(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("loading %s: %w", what, err)
+	}
+	defer rows.Close()
+
+	m := make(map[K]int, sizeHint)
+	for rows.Next() {
+		var id K
+		var year int
+		if err := rows.Scan(&id, &year); err != nil {
+			return nil, fmt.Errorf("scanning %s: %w", what, err)
+		}
+		m[id] = year
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterating %s: %w", what, err)
+	}
+	return m, nil
+}
+
 // SaveLinkResults batch-inserts multiple link results in a single statement.
 //
 // Rather than build a VALUES list with up to batchSize*10 placeholders (which

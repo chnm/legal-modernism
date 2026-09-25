@@ -222,11 +222,22 @@ func main() {
 	}
 	slog.Info("loaded stub cases", "entries", len(stubs))
 
+	// The years that refuse an anachronistic link (issue #319). The CAP map is
+	// the large one, a year for each of the 6.9M cases.
+	slog.Info("loading treatise and case years")
+	years, err := loadCaseYears(ctx, store)
+	if err != nil {
+		exitStartupError("could not load treatise and case years", err)
+	}
+	slog.Info("loaded treatise and case years",
+		"treatises", len(years.treatise), "cap_cases", len(years.cap),
+		"code_cases", len(years.code), "er_cases", len(years.er))
+
 	// Assemble the lookup tables, which also walks every loaded cite string once
 	// to build the reporter/volume indexes a no_match is attributed with, and the
 	// page-range indexes that resolve pin cites.
 	slog.Info("indexing cite strings by reporter and volume")
-	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites, capSpans, erSpans, stubs)
+	tables := newLinkTables(whitelist, diffvols, capCites, freelawCites, altAbbrs, codeCites, erCites, capSpans, erSpans, stubs, years)
 	slog.Info("indexed cite strings",
 		"us_reporters", len(tables.us.reporters), "us_volumes", len(tables.us.volumes),
 		"uk_reporters", len(tables.uk.reporters), "uk_volumes", len(tables.uk.volumes))
@@ -435,6 +446,11 @@ type linkTables struct {
 	// reached reporter would make reporter_absent -- the very condition a stub
 	// depends on -- impossible to report. May be nil.
 	stubs stubIndex
+
+	// years refuses a hit on a case decided after the citing treatise was
+	// published (issue #319). Its zero value holds no years and refuses
+	// nothing.
+	years caseYears
 }
 
 func newLinkTables(
@@ -448,6 +464,7 @@ func newLinkTables(
 	capSpans []citations.CaseSpan[int64],
 	erSpans []citations.CaseSpan[string],
 	stubs map[string]struct{},
+	years caseYears,
 ) *linkTables {
 	return &linkTables{
 		whitelist:    whitelist,
@@ -462,6 +479,7 @@ func newLinkTables(
 		capRanges:    newRangeIndex(capSpans),
 		erRanges:     newRangeIndex(erSpans),
 		stubs:        stubIndex(stubs),
+		years:        years,
 	}
 }
 
@@ -561,6 +579,12 @@ func linkCAPThenCode(
 	// reporter's string as far as the registry is concerned.
 	standard := make([]string, 0, 2)
 
+	// Every hit, exact or by page range, must also pass the year test: a case
+	// decided after the treatise was published cannot be the one it cites
+	// (issue #319). A refused hit is passed over rather than returned on, so
+	// the rest of the cascade still runs and can reach a case of the right date.
+	gate := newYearGate(c, t.years)
+
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
 	// turns a no_match into a link.
@@ -571,7 +595,7 @@ func linkCAPThenCode(
 		standard = append(standard, cleaned)
 
 		// Try CAP with the normalized cite
-		if caseID, ok := t.capCites[normalized]; ok {
+		if caseID, ok := t.capCites[normalized]; ok && admits(gate, t.years.cap, caseID) {
 			result.Status = citations.StatusLinkedCAP
 			result.MatchTier = citations.TierCAPDirect
 			result.CAPCaseID = &caseID
@@ -583,7 +607,7 @@ func linkCAPThenCode(
 		// is in our CAP data, this reaches the CAP case from the form we detected.
 		// The result is still a CAP link (status linked_cap), distinguished from a
 		// direct hit only by the tier.
-		if caseID, ok := t.freelawCites[normalized]; ok {
+		if caseID, ok := t.freelawCites[normalized]; ok && admits(gate, t.years.cap, caseID) {
 			result.Status = citations.StatusLinkedCAP
 			result.MatchTier = citations.TierCAPFreelaw
 			result.CAPCaseID = &caseID
@@ -599,7 +623,7 @@ func linkCAPThenCode(
 		// CAP case (status linked_cap).
 		altCites := buildAltCites(f, t.altAbbrs[*entry.ReporterStandard])
 		for i := range altCites {
-			if caseID, ok := t.capCites[altCites[i]]; ok {
+			if caseID, ok := t.capCites[altCites[i]]; ok && admits(gate, t.years.cap, caseID) {
 				result.Status = citations.StatusLinkedCAP
 				result.MatchTier = citations.TierCAPAltSpelling
 				result.CAPCaseID = &caseID
@@ -608,7 +632,7 @@ func linkCAPThenCode(
 			}
 		}
 		for i := range altCites {
-			if caseID, ok := t.freelawCites[altCites[i]]; ok {
+			if caseID, ok := t.freelawCites[altCites[i]]; ok && admits(gate, t.years.cap, caseID) {
 				result.Status = citations.StatusLinkedCAP
 				result.MatchTier = citations.TierCAPFreelawAltSpelling
 				result.CAPCaseID = &caseID
@@ -622,7 +646,7 @@ func linkCAPThenCode(
 		// history of the table, and legalhist.code_reporter holds 633 rows of
 		// one New York series, so an alternate reporter spelling has nothing to
 		// reach (issue #292).
-		if codeID, ok := t.codeCites[cleaned]; ok {
+		if codeID, ok := t.codeCites[cleaned]; ok && admits(gate, t.years.code, codeID) {
 			result.Status = citations.StatusLinkedCodeReporter
 			result.MatchTier = citations.TierCodeDirect
 			result.CodeReporterID = &codeID
@@ -648,7 +672,7 @@ func linkCAPThenCode(
 	span := rangeMiss
 	if t.capRanges != nil && !missingDiffvols {
 		caseID, outcome := t.capRanges.probe(probes)
-		if outcome == rangeHit {
+		if outcome == rangeHit && admits(gate, t.years.cap, caseID) {
 			result.Status = citations.StatusLinkedCAP
 			result.MatchTier = citations.TierCAPPageInterior
 			result.CAPCaseID = &caseID
@@ -660,6 +684,15 @@ func linkCAPThenCode(
 		// A refusal is not a link but is still a finding, so it is carried to
 		// usTier to sharpen the page step rather than dropped.
 		span = outcome
+	}
+
+	// A case was found but refused as anachronistic. That outranks every tier
+	// below, each of which says no case was there to be found, and it rules
+	// out a stub, which stands in only for a reporter no source holds.
+	if gate.refused {
+		result.Status = citations.StatusNoMatch
+		result.MatchTier = citations.TierUSAnachronistic
+		return result
 	}
 
 	// Last of all, the stub registry (issue #248), and only when the failure
@@ -716,6 +749,10 @@ func linkEnglishReports(
 	// Only after every form has missed does it decide the tier.
 	ambiguous := false
 
+	// The year test, as on the US route: a refused hit is passed over, and
+	// decides the tier only if nothing else links.
+	gate := newYearGate(c, t.years)
+
 	// The English Reports are inconsistent about the redundant volume on
 	// single-volume nominate reporters: most are stored bare ("Cro Eliz 1") but
 	// some carry it ("1 Vern 1"), so try both forms.
@@ -728,6 +765,9 @@ func linkEnglishReports(
 		}
 		if er.Ambiguous {
 			ambiguous = true
+			continue
+		}
+		if !admits(gate, t.years.er, er.ID) {
 			continue
 		}
 		result.Status = citations.StatusLinkedEnglishReports
@@ -743,13 +783,22 @@ func linkEnglishReports(
 	span := rangeMiss
 	if t.erRanges != nil {
 		erID, outcome := t.erRanges.probe(probes)
-		if outcome == rangeHit {
+		if outcome == rangeHit && admits(gate, t.years.er, erID) {
 			result.Status = citations.StatusLinkedEnglishReports
 			result.MatchTier = citations.TierERPageInterior
 			result.ERCaseID = &erID
 			return result
 		}
 		span = outcome
+	}
+
+	// A refused case outranks the failure ladder and the stub registry, as on
+	// the US route. It also outranks an ambiguous cite: one form found a single
+	// case, and only its date ruled it out.
+	if gate.refused {
+		result.Status = citations.StatusNoMatch
+		result.MatchTier = citations.TierUKAnachronistic
+		return result
 	}
 
 	// The stub registry, under the same gate as the US route: the probes here

@@ -522,6 +522,58 @@ func TestLoadStubCasesIntegration(t *testing.T) {
 	assert.Empty(t, got)
 }
 
+// TestLoadYearsIntegration covers the four year loaders behind the
+// anachronism test (issue #319): rows with no year are left out, so the linker
+// reads a missing key as an unknown year, and the English Reports fall back to
+// er_year where Murrell gives none.
+func TestLoadYearsIntegration(t *testing.T) {
+	s := newTestStore(t)
+	ctx := context.Background()
+
+	// Minimal slices of the four tables: only the columns the loaders read.
+	setup := []string{
+		`DROP SCHEMA IF EXISTS moml CASCADE`,
+		`CREATE SCHEMA moml`,
+		`CREATE TABLE moml.book_info (psmid varchar(510) PRIMARY KEY, year integer)`,
+		`INSERT INTO moml.book_info VALUES ('19003000100', 1850), ('19003000200', NULL)`,
+		`DROP SCHEMA IF EXISTS cap CASCADE`,
+		`CREATE SCHEMA cap`,
+		`CREATE TABLE cap.cases (id bigint PRIMARY KEY, decision_year integer)`,
+		`INSERT INTO cap.cases VALUES (111, 1851), (222, NULL)`,
+		`CREATE SCHEMA IF NOT EXISTS legalhist`,
+		`DROP TABLE IF EXISTS legalhist.code_reporter`,
+		`CREATE TABLE legalhist.code_reporter (id bigint PRIMARY KEY, decision_year integer NOT NULL)`,
+		`INSERT INTO legalhist.code_reporter VALUES (1, 1848)`,
+		`DROP SCHEMA IF EXISTS english_reports CASCADE`,
+		`CREATE SCHEMA english_reports`,
+		`CREATE TABLE english_reports.cases (id text PRIMARY KEY, er_year integer NOT NULL, murrell_year integer)`,
+		`INSERT INTO english_reports.cases VALUES ('er-m', 1790, 1788), ('er-y', 1790, NULL)`,
+	}
+	for _, stmt := range setup {
+		_, err := s.DB.Exec(ctx, stmt)
+		require.NoError(t, err, "setup: %s", stmt)
+	}
+
+	treatises, err := s.LoadTreatiseYears(ctx)
+	require.NoError(t, err)
+	assert.Equal(t, map[string]int{"19003000100": 1850}, treatises)
+
+	capYears, err := s.LoadCAPCaseYears(ctx)
+	require.NoError(t, err)
+	assert.Equal(t, map[int64]int{111: 1851}, capYears)
+
+	codeYears, err := s.LoadCodeReporterYears(ctx)
+	require.NoError(t, err)
+	assert.Equal(t, map[int64]int{1: 1848}, codeYears)
+
+	erYears, err := s.LoadERCaseYears(ctx)
+	require.NoError(t, err)
+	assert.Equal(t, map[string]int{
+		"er-m": 1788, // murrell_year wins over er_year
+		"er-y": 1790, // er_year stands in where Murrell gives none
+	}, erYears)
+}
+
 // TestSaveLinkResultsStubIntegration covers the tenth column: a stub link
 // records its key in stub_cite, and every other kind of result leaves it NULL.
 func TestSaveLinkResultsStubIntegration(t *testing.T) {

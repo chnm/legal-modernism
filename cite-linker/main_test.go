@@ -44,6 +44,7 @@ func TestLinkCitation(t *testing.T) {
 		capSpans     []citations.CaseSpan[int64]
 		erSpans      []citations.CaseSpan[string]
 		stubs        map[string]struct{}
+		years        caseYears
 		wantStatus   string
 		wantTier     string
 		wantCAPID    *int64
@@ -907,11 +908,147 @@ func TestLinkCitation(t *testing.T) {
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSReporterAbsent,
 		},
+		{
+			// Issue #319: a treatise cannot cite a case decided after it was
+			// published, so an exact hit on one is a wrong link.
+			name:       "CAP hit on a case decided after the treatise is us_anachronistic",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 10": 111},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1851}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSAnachronistic,
+		},
+		{
+			// The book could have gone to press after the decision.
+			name:       "CAP hit on a case decided the year the treatise was published links",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 10": 111},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1850}},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("5 U.S. 10"),
+		},
+		{
+			name:       "treatise with no year never refuses a link",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "undated", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 10": 111},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1900}},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("5 U.S. 10"),
+		},
+		{
+			name:       "case with no year never refuses a link",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:   map[string]int64{"5 U.S. 10": 111},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{}},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("5 U.S. 10"),
+		},
+		{
+			// A refusal is passed over rather than returned on, so the rest of
+			// the cascade can still reach a case of the right date.
+			name:         "refused CAP hit, FreeLaw reaches a case of the right date",
+			cite:         citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
+			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
+			capCites:     map[string]int64{"5 U.S. 10": 111},
+			freelawCites: map[string]int64{"5 U.S. 10": 222},
+			years:        caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1900, 222: 1849}},
+			wantStatus:   citations.StatusLinkedCAP,
+			wantTier:     citations.TierCAPFreelaw,
+			wantCAPID:    ptr(int64(222)),
+			wantLinked:   ptr("5 U.S. 10"),
+		},
+		{
+			name:       "refused hit on the detected volume form, the variant links",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: nil, ReporterAbbr: "Toth", Page: 123},
+			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
+			capCites:   map[string]int64{"Toth 123": 776, "1 Toth 123": 777},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{776: 1900, 777: 1840}},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(777)),
+			wantLinked: ptr("1 Toth 123"),
+		},
+		{
+			name:       "CAP pin cite into a case decided after the treatise is us_anachronistic",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(17), ReporterAbbr: "Mass.", Page: 479},
+			whitelist:  map[string]*citations.WhitelistEntry{"Mass.": {ReporterStandard: &massStd}},
+			capCites:   map[string]int64{"17 Mass. 478": 478},
+			capSpans:   span17Mass,
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{478: 1900}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSAnachronistic,
+		},
+		{
+			name:       "code reporter hit on a later case is us_anachronistic",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
+			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
+			codeCites:  map[string]int64{"2 Stat. 30": 999},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, code: map[int64]int{999: 1851}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSAnachronistic,
+		},
+		{
+			// The span index is built from cap.citations with ambiguous cites
+			// kept, so a range hit can land in a reporter the cite index never
+			// saw. Left to the failure ladder that would read as reporter_absent
+			// and reach the stub registry; the refusal comes first.
+			name:       "refused range hit does not fall through to a stub",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(4), ReporterAbbr: "Am. B. R.", Page: 2},
+			whitelist:  map[string]*citations.WhitelistEntry{"Am. B. R.": {ReporterStandard: &abrStd}},
+			capSpans:   []citations.CaseSpan[int64]{{Cite: "4 A.B.R. 1", ID: 5, Length: 5}},
+			stubs:      map[string]struct{}{"4 A.B.R. 2": {}},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{5: 1900}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSAnachronistic,
+		},
+		{
+			name:       "English Reports hit on a later case is uk_anachronistic",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"1 Q.B. 20": {ID: "er-20", Cases: 1}},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-20": 1851}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKAnachronistic,
+		},
+		{
+			name:       "English Reports pin cite into a later case is uk_anachronistic",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 23},
+			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
+			erCites:    map[string]citations.ERCase{"1 Q.B. 20": {ID: "er-20", Cases: 1}},
+			erSpans:    []citations.CaseSpan[string]{{Cite: "1 Q.B. 20", ID: "er-20"}, {Cite: "1 Q.B. 30", ID: "er-30"}},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-20": 1900}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKAnachronistic,
+		},
+		{
+			// One form found a single case and only its date ruled it out, which
+			// says more than the other form's collision does.
+			name:      "refused hit outranks an ambiguous volume form",
+			cite:      citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: nil, ReporterAbbr: "Cro Eliz", Page: 5},
+			whitelist: map[string]*citations.WhitelistEntry{"Cro Eliz": {ReporterStandard: &croStd, UK: true, SingleVol: true}},
+			erCites: map[string]citations.ERCase{
+				"Cro Eliz 5":   {Ambiguous: true, Cases: 2},
+				"1 Cro Eliz 5": {ID: "er-cro-5", Cases: 1},
+			},
+			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-cro-5": 1900}},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUKAnachronistic,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans, tt.stubs)
+			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans, tt.stubs, tt.years)
 			got := linkCitation(&tt.cite, tables)
 
 			assert.Equal(t, tt.wantStatus, got.Status)
@@ -1011,7 +1148,7 @@ func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
 	whitelist := map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &std, SingleVol: true}}
 
 	tables := newLinkTables(whitelist, map[string]map[int]*citations.DiffVolEntry{},
-		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil, nil)
+		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil, nil, caseYears{})
 	got := linkCitation(c, tables)
 
 	assert.Equal(t, citations.StatusLinkedCAP, got.Status)
