@@ -48,6 +48,11 @@ PSQL=(psql "$CONN" -X -v ON_ERROR_STOP=1)
 MAINTENANCE_SQL=(
   "VACUUM (ANALYZE) moml_citations.citation_links;"
   "VACUUM (ANALYZE) moml_citations.citations_unlinked;"
+  # The CAP twins (issue #74), churned the same way by cite-linker-cap. Their
+  # migration must be applied (make db-up) before make db-maintenance is run:
+  # VACUUM of a missing table is an error, and the loop below stops at it.
+  "VACUUM (ANALYZE) opinion_citations.citation_links;"
+  "VACUUM (ANALYZE) opinion_citations.citations_unlinked;"
 )
 
 echo "Running ${#MAINTENANCE_SQL[@]} table maintenance statement(s)."
