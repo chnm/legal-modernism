@@ -112,6 +112,31 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 	return s
 }
 
+// NewOpinionCorpusStore returns the store over opinion_citations: the
+// citations cite-detector-cap finds in the text of CAP opinions, and
+// cite-linker-cap's results (issue #74). The citing document is the case the
+// opinion belongs to, so its year is cap.cases.decision_year, joined into the
+// stream; a citation whose case has no year, or no row, streams with a nil
+// SourceYear and is never refused as anachronistic. A case is of the same
+// year as itself, so an opinion's citation of its own case links.
+func NewOpinionCorpusStore(db *pgxpool.Pool) *CorpusStore {
+	return &CorpusStore{
+		DB: db,
+		stream: `
+		SELECT cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year, k.decision_year
+		FROM opinion_citations.citations_unlinked cu
+		LEFT JOIN cap.cases k ON k.id = cu.cap_case
+		WHERE NOT EXISTS (
+			SELECT 1 FROM opinion_citations.citation_links cl WHERE cl.citation_id = cu.id
+		)
+		`,
+		insert: linksInsertSQL("opinion_citations.citation_links"),
+		scan: func(rows pgx.Rows, c *UnlinkedCitation) error {
+			return rows.Scan(&c.ID, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year, &c.SourceYear)
+		},
+	}
+}
+
 // linksInsertSQL is the insert every corpus's SaveLinkResults runs, against its
 // own citation_links table. Every such table has PRIMARY KEY (citation_id), so
 // the ON CONFLICT clause holds for all of them.
