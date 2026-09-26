@@ -101,18 +101,20 @@ func Load(ctx context.Context, store citations.LinkerStore) (*Tables, error) {
 	}
 	slog.Info("loaded English Reports case page spans", "entries", len(erSpans))
 
-	// The stub registry is built from this program's own misses (make db-stubs),
+	// The stub registry is built from the MOML linker's misses (make db-stubs),
 	// so on the first run after a re-detection it is empty or stale; that is
 	// expected, and the truncate-and-relink that follows db-stubs is what links
-	// the citations to it. Warn rather than fail so the pipeline order is
-	// visible in the log without blocking a run that does not need it.
+	// the citations to it. The CAP linker reads the same registry and never
+	// feeds it (issue #74), so for it an empty registry means the MOML
+	// pipeline has not built one yet. Warn rather than fail so the pipeline
+	// order is visible in the log without blocking a run that does not need it.
 	slog.Info("loading stub cases")
 	stubs, err := store.LoadStubCases(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("could not load stub cases: %w", err)
 	}
 	if len(stubs) == 0 {
-		slog.Warn("no stub cases loaded; citations to reporters no source covers stay no_match — run make db-stubs after this run, then truncate and relink")
+		slog.Warn("no stub cases loaded; citations to reporters no source covers stay no_match — the registry is built by make db-stubs from the MOML linker's misses, then a truncate and relink links citations to it")
 	}
 	slog.Info("loaded stub cases", "entries", len(stubs))
 
