@@ -18,6 +18,14 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
+// cite-detector-cap detects case citations in the text of the opinions in the
+// Caselaw Access Project (cap.opinions) for cases decided in or before
+// --max-year, and saves them to opinion_citations.citations_unlinked, the CAP
+// twin of the table cite-detector-moml fills from the treatises (issue #74).
+// The two programs share their detectors, their per-document detection and
+// their shape; this one differs in what it streams, where it saves, and the
+// year cutoff.
+
 // maxDBConns caps how many connections the detector will open. PostgreSQL is
 // configured with max_connections = 100 for every client of the database
 // together, so a detector run that sized its pool to a large --workers would
@@ -25,9 +33,10 @@ import (
 const maxDBConns = 64
 
 func main() {
-	showProgress := flag.Bool("progress", false, "show a progress bar (costs one count of moml.page_ocrtext at startup)")
-	workers := flag.Int("workers", runtime.NumCPU(), "number of concurrent page workers")
+	showProgress := flag.Bool("progress", false, "show a progress bar (costs one pass over cap.opinions at startup)")
+	workers := flag.Int("workers", runtime.NumCPU(), "number of concurrent opinion workers")
 	dbConns := flag.Int("db-conns", 0, "maximum database connections (default: workers plus one for the reader, capped at 64)")
+	maxYear := flag.Int("max-year", 1920, "detect in the opinions of cases decided in or before this year")
 	flag.Parse()
 
 	if *workers < 1 {
@@ -49,7 +58,7 @@ func main() {
 		maxConns = *dbConns
 	}
 
-	slog.Info("starting the citation detector")
+	slog.Info("starting the CAP citation detector", "max_year", *maxYear)
 	slog.Info("CPUs", "available", runtime.NumCPU(), "workers", *workers, "db_conns", maxConns)
 
 	// Create a context and listen for signals to gracefully shutdown the application
@@ -84,11 +93,12 @@ func main() {
 	defer pool.Close()
 	slog.Info("connected to the database", "database", db.Host())
 
-	// Create the repositories
+	// Create the repositories. The detections go to opinion_citations, the
+	// CAP twin of moml_citations (issue #74).
 	sourcesDB := sources.NewPgxStore(pool)
-	citationsDB := citations.NewDBStore(pool)
+	citationsDB := citations.NewOpinionDBStore(pool)
 
-	// The detectors, shared with cite-detector-cap so the two corpora are
+	// The detectors, shared with cite-detector-moml so the two corpora are
 	// detected under the same semantics. Fatal on failure: continuing without
 	// the single-volume or year detectors would detect the whole corpus under
 	// different semantics than every previous run.
@@ -99,10 +109,15 @@ func main() {
 	}
 
 	// Both loaders below are fatal. Continuing without the OCR corrections
-	// would detect the whole corpus under different semantics than every
-	// previous run, and continuing without the pages would leave nothing to do --
-	// the stream would be empty and the run would log "done detecting citations"
-	// and exit 0 after producing nothing (issue #285).
+	// would detect the corpus under different semantics than the treatises, and
+	// continuing without the opinions would leave nothing to do -- the stream
+	// would be empty and the run would log "done detecting citations" and exit
+	// 0 after producing nothing (issue #285).
+	//
+	// The corrections are the ones built from the treatises' OCR
+	// (legalhist.ocr_corrections), applied unchanged so that the two corpora are
+	// detected alike; whether CAP's own OCR wants a table of its own is a
+	// measurement still to make (issue #74).
 	slog.Info("getting OCR corrections")
 	ocrSubs, err := sourcesDB.GetOCRSubstitutions(ctx)
 	if err != nil {
@@ -111,35 +126,38 @@ func main() {
 	}
 	slog.Info("loaded OCR corrections", "num_corrections", len(ocrSubs))
 	// Built once and shared by every worker: the replacer is read-only, and
-	// rebuilding it per page would repeat the sort 10.5M times.
+	// rebuilding it per opinion would repeat the sort 1.6M times.
 	ocrReplacer := sources.NewOCRReplacer(ocrSubs)
 
 	var pb *progressbar.ProgressBar
 	if *showProgress {
-		total, err := sourcesDB.CountTreatisePages(ctx)
+		total, err := sourcesDB.CountCAPOpinions(ctx, *maxYear)
 		if err != nil {
-			slog.Error("error counting treatise pages", "error", err)
+			slog.Error("error counting CAP opinions", "error", err)
 			os.Exit(1)
 		}
 		pb = progressbar.Default(total)
 	}
 
-	// Bounded pipeline, the same shape cite-linker uses. One streaming reader
-	// (this goroutine, inside StreamTreatisePages) feeds pages to a fixed pool
-	// of workers through a bounded channel. The channel capacity bounds how many
-	// pages are in flight, so the reader blocks -- applying backpressure -- when
-	// the workers fall behind, instead of buffering the 25 GB corpus in memory.
-	pageCh := make(chan *sources.TreatisePage, *workers)
+	// Bounded pipeline, the same shape cite-detector-moml and cite-linker use.
+	// One streaming reader (this goroutine, inside StreamCAPOpinions) feeds
+	// opinions to a fixed pool of workers through a bounded channel. The channel
+	// capacity bounds how many opinions are in flight, so the reader blocks --
+	// applying backpressure -- when the workers fall behind, instead of
+	// buffering the corpus in memory. An opinion is a few pages long (about 6 KB
+	// on average, the longest before 1921 about 140 KB), so even the largest in
+	// flight together are a few tens of megabytes.
+	opinionCh := make(chan *sources.CAPOpinion, *workers)
 	var wg sync.WaitGroup
-	var processed, failedPages, savedCites atomic.Int64
+	var processed, failedOpinions, savedCites atomic.Int64
 
-	slog.Info("detecting citations on the treatise pages", "workers", *workers)
+	slog.Info("detecting citations in the CAP opinions", "workers", *workers, "max_year", *maxYear)
 
 	for i := 0; i < *workers; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			for page := range pageCh {
+			for opinion := range opinionCh {
 				select {
 				case <-ctx.Done():
 					continue // drain the channel without doing work
@@ -148,24 +166,28 @@ func main() {
 
 				// Correct the OCR, move the Law Reports' series prefix behind the
 				// volume, run every detector and drop the shadows (see
-				// citations.DetectDocument).
-				kept, dropped := citations.DetectDocument(page, detectors, ocrReplacer)
+				// citations.DetectDocument). The unit of work is an opinion, a
+				// few pages long, which RemoveShadows' quadratic comparison of
+				// the citations found in it easily affords.
+				kept, dropped := citations.DetectDocument(opinion, detectors, ocrReplacer)
 				if dropped > 0 {
-					slog.Debug("dropped shadow citations", append(page.LogID(), "dropped", dropped)...)
+					slog.Debug("dropped shadow citations", append(opinion.LogID(), "dropped", dropped)...)
 				}
 
-				// One insert per page rather than one per citation. Duplicate
+				// One insert per opinion rather than one per citation. Duplicate
 				// spans -- which RemoveShadows deliberately keeps, because two
 				// abbreviations that are prefixes of one another find the same
 				// citation -- are collapsed by SaveCitations on the key of the
-				// citations_unlinked_uq unique index before the write.
+				// citations_unlinked_uq unique index before the write; so is the
+				// same cite repeated in one opinion, which the per-opinion key
+				// makes one row.
 				if err := citationsDB.SaveCitations(ctx, kept); err != nil {
 					if ctx.Err() != nil {
-						slog.Warn("page not saved because of shutdown", page.LogID()...)
+						slog.Warn("opinion not saved because of shutdown", opinion.LogID()...)
 						continue
 					}
-					failedPages.Add(1)
-					slog.Error("could not save citations for page", append(page.LogID(), "citations", len(kept), "error", err)...)
+					failedOpinions.Add(1)
+					slog.Error("could not save citations for opinion", append(opinion.LogID(), "citations", len(kept), "error", err)...)
 					continue
 				}
 				savedCites.Add(int64(len(kept)))
@@ -177,42 +199,45 @@ func main() {
 		}()
 	}
 
-	streamErr := sourcesDB.StreamTreatisePages(ctx, func(page *sources.TreatisePage) error {
+	streamErr := sourcesDB.StreamCAPOpinions(ctx, *maxYear, func(opinion *sources.CAPOpinion) error {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
-		case pageCh <- page:
+		case opinionCh <- opinion:
 			return nil
 		}
 	})
-	close(pageCh)
+	close(opinionCh)
 	wg.Wait()
 
 	// A shutdown signal cancels ctx, which surfaces as an error from whichever
 	// query was in flight, so it has to be checked before streamErr: the run was
-	// interrupted, not broken. Committed pages are saved, and re-processing is
-	// idempotent thanks to ON CONFLICT DO NOTHING, so the run is simply
-	// resubmitted.
+	// interrupted, not broken. Committed opinions are saved, and re-processing
+	// is idempotent thanks to ON CONFLICT DO NOTHING, so the run is simply
+	// resubmitted; like cite-detector-moml it has no resume point and rescans
+	// from the first opinion.
 	if ctx.Err() != nil {
 		slog.Warn("interrupted before finishing; committed work is saved, resubmit to resume",
-			"pages_processed", processed.Load(), "citations_saved", savedCites.Load())
+			"opinions_processed", processed.Load(), "citations_saved", savedCites.Load())
 		os.Exit(1)
 	}
 
 	if streamErr != nil {
-		slog.Error("streaming treatise pages failed", "pages_processed", processed.Load(), "error", streamErr)
+		slog.Error("streaming CAP opinions failed", "opinions_processed", processed.Load(), "error", streamErr)
 		os.Exit(1)
 	}
 
-	// A page whose insert failed is left undetected rather than lost, but the
-	// run must not report success -- swallowing that would turn a visible
+	// An opinion whose insert failed is left undetected rather than lost, but
+	// the run must not report success -- swallowing that would turn a visible
 	// failure into a silently partial corpus.
-	if n := failedPages.Load(); n > 0 {
-		slog.Error("finished with unsaved pages; re-run to pick them up",
-			"pages_processed", processed.Load(), "failed_pages", n, "citations_saved", savedCites.Load())
+	if n := failedOpinions.Load(); n > 0 {
+		slog.Error("finished with unsaved opinions; re-run to pick them up",
+			"opinions_processed", processed.Load(), "failed_opinions", n, "citations_saved", savedCites.Load())
 		os.Exit(1)
 	}
 
+	// The same last line cite-detector-moml logs, which scripts/pipeline.sh
+	// looks for; only the count's name differs.
 	slog.Info("done detecting citations",
-		"pages_processed", processed.Load(), "citations_saved", savedCites.Load())
+		"opinions_processed", processed.Load(), "citations_saved", savedCites.Load())
 }
