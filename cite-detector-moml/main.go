@@ -88,53 +88,15 @@ func main() {
 	sourcesDB := sources.NewPgxStore(pool)
 	citationsDB := citations.NewDBStore(pool)
 
-	// Create the detectors
-	var detectors []citations.Finder
-
-	// Load the general-purpose detectors. The second finds citations whose
-	// abbreviation the OCR corrupted by reading a letter as a digit ("F1ed."
-	// for "Fed."), which the first cannot match at all. It scans separately so
-	// that it can only add citations, never displace one.
-	detectors = append(detectors, citations.GenericDetector, citations.GenericOCRDigitDetector)
-	slog.Info("prepared general-purpose detectors", "num_detectors", len(detectors))
-
-	// Create and load the single volume detectors. Each row is a
-	// (reporter_standard, abbreviation) pair. The saved reporter_abbr is the
-	// spelling that actually appeared in the OCR, not the reporter_standard the
-	// detector was built from; cite-linker normalizes it through
-	// legalhist.whitelist, so a spelling that belongs to a different reporter is
-	// linked to that reporter instead of to this single volume.
-	//
-	// These detectors do not check what precedes the abbreviation, so they also
-	// match inside longer citations ("Cal. 185" in "123 Cal. 185"). Those
-	// shadows are dropped per page below, once every detector has run, by
-	// citations.RemoveShadows.
-	singleVolReporters, err := citationsDB.GetSingleVolReporterAbbrs(ctx)
+	// The detectors, shared with cite-detector-cap so the two corpora are
+	// detected under the same semantics. Fatal on failure: continuing without
+	// the single-volume or year detectors would detect the whole corpus under
+	// different semantics than every previous run.
+	detectors, err := citations.LoadFinders(ctx, citationsDB)
 	if err != nil {
-		slog.Error("could not get single volume reporters from database", "error", err)
+		slog.Error("could not load the detectors", "error", err)
 		os.Exit(1)
 	}
-	for _, sv := range singleVolReporters {
-		d := citations.NewSingleVolDetector(sv.Standard, sv.Abbr)
-		detectors = append(detectors, d)
-	}
-	slog.Info("prepared single volume detectors", "num_detectors", len(detectors))
-
-	// The year-cited detectors, one per whitelisted spelling of every reporter
-	// with cited_by_year_from set (issue #312). A reporter cited by year restarts its
-	// volume numbers every year, so "2 K. B. 1" without the year names a
-	// different case for every year of the series; these record the year, and
-	// their match covers the generic detector's year-less reading of the same
-	// citation, which RemoveShadows then drops.
-	yearCitedReporters, err := citationsDB.GetYearCitedReporterAbbrs(ctx)
-	if err != nil {
-		slog.Error("could not get year-cited reporters from database", "error", err)
-		os.Exit(1)
-	}
-	for _, yc := range yearCitedReporters {
-		detectors = append(detectors, citations.NewYearDetector(yc.Standard, yc.Abbr))
-	}
-	slog.Info("prepared year-cited detectors", "spellings", len(yearCitedReporters), "num_detectors", len(detectors))
 
 	// Both loaders below are fatal. Continuing without the OCR corrections
 	// would detect the whole corpus under different semantics than every
@@ -184,23 +146,12 @@ func main() {
 				default:
 				}
 
-				page.CorrectOCR(ocrReplacer)
-				// Then the one normalization that is not a literal substitution:
-				// the Law Reports' series prefix, "L. R. 5 Ch. 100", is moved
-				// behind the volume so the series spelling survives detection
-				// (issue #314).
-				page.Rewrite(citations.NormalizeSeriesPrefix)
-
-				// Run every detector over the page before saving anything, so
-				// that a single-volume match found inside a longer citation can
-				// be recognized as a shadow of it and dropped.
-				var found []*citations.Citation
-				for _, detector := range detectors {
-					found = append(found, detector.Detect(page)...)
-				}
-				kept := citations.RemoveShadows(found)
-				if len(kept) < len(found) {
-					slog.Debug("dropped shadow citations", "treatise_id", page.ParentID(), "page_id", page.ID(), "dropped", len(found)-len(kept))
+				// Correct the OCR, move the Law Reports' series prefix behind the
+				// volume, run every detector and drop the shadows (see
+				// citations.DetectDocument).
+				kept, dropped := citations.DetectDocument(page, detectors, ocrReplacer)
+				if dropped > 0 {
+					slog.Debug("dropped shadow citations", "treatise_id", page.ParentID(), "page_id", page.ID(), "dropped", dropped)
 				}
 
 				// One insert per page rather than one per citation. Duplicate
