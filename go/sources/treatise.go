@@ -46,6 +46,11 @@ func (t *TreatisePage) Rewrite(f func(string) string) {
 	t.FullText = f(t.FullText)
 }
 
+// LogID returns the key-value pairs that identify the page in a log line.
+func (t *TreatisePage) LogID() []any {
+	return []any{"treatise_id", t.TreatiseID, "page_id", t.PageID}
+}
+
 // NewTreatisePage creates a new treatise document
 func NewTreatisePage(pageID string, treatiseID, text string) *TreatisePage {
 	return &TreatisePage{
