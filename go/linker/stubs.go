@@ -1,4 +1,4 @@
-package main
+package linker
 
 import "github.com/lmullen/legal-modernism/go/citations"
 

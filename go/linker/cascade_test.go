@@ -1,10 +1,7 @@
-package main
+package linker
 
 import (
-	"sync"
-	"sync/atomic"
 	"testing"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/lmullen/legal-modernism/go/citations"
@@ -44,7 +41,7 @@ func TestLinkCitation(t *testing.T) {
 		capSpans     []citations.CaseSpan[int64]
 		erSpans      []citations.CaseSpan[string]
 		stubs        map[string]struct{}
-		years        caseYears
+		years        Years
 		wantStatus   string
 		wantTier     string
 		wantCAPID    *int64
@@ -915,7 +912,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"5 U.S. 10": 111},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1851}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{111: 1851}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSAnachronistic,
 		},
@@ -925,7 +922,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"5 U.S. 10": 111},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1850}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{111: 1850}},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(111)),
@@ -936,7 +933,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "undated", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"5 U.S. 10": 111},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1900}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{111: 1900}},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(111)),
@@ -947,7 +944,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(5), ReporterAbbr: "U.S.", Page: 10},
 			whitelist:  map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:   map[string]int64{"5 U.S. 10": 111},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{}},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(111)),
@@ -961,7 +958,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:    map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &usStd}},
 			capCites:     map[string]int64{"5 U.S. 10": 111},
 			freelawCites: map[string]int64{"5 U.S. 10": 222},
-			years:        caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{111: 1900, 222: 1849}},
+			years:        Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{111: 1900, 222: 1849}},
 			wantStatus:   citations.StatusLinkedCAP,
 			wantTier:     citations.TierCAPFreelaw,
 			wantCAPID:    ptr(int64(222)),
@@ -972,7 +969,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: nil, ReporterAbbr: "Toth", Page: 123},
 			whitelist:  map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &tothStd, SingleVol: true}},
 			capCites:   map[string]int64{"Toth 123": 776, "1 Toth 123": 777},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{776: 1900, 777: 1840}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{776: 1900, 777: 1840}},
 			wantStatus: citations.StatusLinkedCAP,
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(777)),
@@ -984,7 +981,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Mass.": {ReporterStandard: &massStd}},
 			capCites:   map[string]int64{"17 Mass. 478": 478},
 			capSpans:   span17Mass,
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{478: 1900}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{478: 1900}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSAnachronistic,
 		},
@@ -993,7 +990,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(2), ReporterAbbr: "Stat.", Page: 30},
 			whitelist:  map[string]*citations.WhitelistEntry{"Stat.": {ReporterStandard: &statStd}},
 			codeCites:  map[string]int64{"2 Stat. 30": 999},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, code: map[int64]int{999: 1851}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, Code: map[int64]int{999: 1851}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSAnachronistic,
 		},
@@ -1007,7 +1004,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Am. B. R.": {ReporterStandard: &abrStd}},
 			capSpans:   []citations.CaseSpan[int64]{{Cite: "4 A.B.R. 1", ID: 5, Length: 5}},
 			stubs:      map[string]struct{}{"4 A.B.R. 2": {}},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, cap: map[int64]int{5: 1900}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, CAP: map[int64]int{5: 1900}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUSAnachronistic,
 		},
@@ -1016,7 +1013,7 @@ func TestLinkCitation(t *testing.T) {
 			cite:       citations.UnlinkedCitation{ID: uuid.New(), MomlTreatise: "t1850", Volume: ptr(1), ReporterAbbr: "Q.B.", Page: 20},
 			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
 			erCites:    map[string]citations.ERCase{"1 Q.B. 20": {ID: "er-20", Cases: 1}},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-20": 1851}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, ER: map[string]int{"er-20": 1851}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKAnachronistic,
 		},
@@ -1026,7 +1023,7 @@ func TestLinkCitation(t *testing.T) {
 			whitelist:  map[string]*citations.WhitelistEntry{"Q.B.": {ReporterStandard: &qbStd, UK: true}},
 			erCites:    map[string]citations.ERCase{"1 Q.B. 20": {ID: "er-20", Cases: 1}},
 			erSpans:    []citations.CaseSpan[string]{{Cite: "1 Q.B. 20", ID: "er-20"}, {Cite: "1 Q.B. 30", ID: "er-30"}},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-20": 1900}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, ER: map[string]int{"er-20": 1900}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKAnachronistic,
 		},
@@ -1040,7 +1037,7 @@ func TestLinkCitation(t *testing.T) {
 				"Cro Eliz 5":   {Ambiguous: true, Cases: 2},
 				"1 Cro Eliz 5": {ID: "er-cro-5", Cases: 1},
 			},
-			years:      caseYears{treatise: map[string]int{"t1850": 1850}, er: map[string]int{"er-cro-5": 1900}},
+			years:      Years{Treatise: map[string]int{"t1850": 1850}, ER: map[string]int{"er-cro-5": 1900}},
 			wantStatus: citations.StatusNoMatch,
 			wantTier:   citations.TierUKAnachronistic,
 		},
@@ -1048,7 +1045,7 @@ func TestLinkCitation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tables := newLinkTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans, tt.stubs, tt.years)
+			tables := NewTables(tt.whitelist, tt.diffvols, tt.capCites, tt.freelawCites, tt.altAbbrs, tt.codeCites, tt.erCites, tt.capSpans, tt.erSpans, tt.stubs, tt.years)
 			got := linkCitation(&tt.cite, tables)
 
 			assert.Equal(t, tt.wantStatus, got.Status)
@@ -1147,8 +1144,8 @@ func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
 	c := &citations.UnlinkedCitation{ID: uuid.New(), Volume: nil, ReporterAbbr: "Toth", Page: 123}
 	whitelist := map[string]*citations.WhitelistEntry{"Toth": {ReporterStandard: &std, SingleVol: true}}
 
-	tables := newLinkTables(whitelist, map[string]map[int]*citations.DiffVolEntry{},
-		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil, nil, caseYears{})
+	tables := NewTables(whitelist, map[string]map[int]*citations.DiffVolEntry{},
+		map[string]int64{"1 Toth 123": 777}, nil, nil, nil, nil, nil, nil, nil, Years{})
 	got := linkCitation(c, tables)
 
 	assert.Equal(t, citations.StatusLinkedCAP, got.Status)
@@ -1161,48 +1158,6 @@ func TestVolumeVariantRecordsDetectedForm(t *testing.T) {
 	if assert.NotNil(t, got.CiteNormalized) {
 		assert.Equal(t, "Toth 123", *got.CiteNormalized, "cite_normalized stays the detected form")
 	}
-}
-
-func TestStartProgressHeartbeat(t *testing.T) {
-	var processed atomic.Int64
-	processed.Store(42)
-
-	var mu sync.Mutex
-	var counts []int64
-	var elapseds []time.Duration
-
-	stop := startProgressHeartbeat(5*time.Millisecond, &processed,
-		func(n int64, elapsed time.Duration) {
-			mu.Lock()
-			defer mu.Unlock()
-			counts = append(counts, n)
-			elapseds = append(elapseds, elapsed)
-		})
-
-	// It reports repeatedly on the timer, not just once.
-	require.Eventually(t, func() bool {
-		mu.Lock()
-		defer mu.Unlock()
-		return len(counts) >= 3
-	}, 2*time.Second, time.Millisecond, "heartbeat did not report repeatedly")
-
-	stop()
-
-	mu.Lock()
-	atStop := len(counts)
-	firstCount := counts[0]
-	firstElapsed := elapseds[0]
-	mu.Unlock()
-
-	// It reports the live count and a positive elapsed time.
-	assert.Equal(t, int64(42), firstCount, "heartbeat should report the current processed count")
-	assert.Positive(t, firstElapsed, "heartbeat should report elapsed time since it started")
-
-	// stop() waits for the goroutine to exit, so nothing is reported afterward.
-	time.Sleep(50 * time.Millisecond)
-	mu.Lock()
-	defer mu.Unlock()
-	assert.Equal(t, atStop, len(counts), "heartbeat kept reporting after stop returned")
 }
 
 // TestYearPrefix pins the two conditions on the year: the reporter must be

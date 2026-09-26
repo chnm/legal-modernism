@@ -1,4 +1,4 @@
-package main
+package linker
 
 import (
 	"context"
@@ -7,31 +7,31 @@ import (
 	"github.com/lmullen/legal-modernism/go/citations"
 )
 
-// caseYears holds the years that decide whether a link is anachronistic (issue
+// Years holds the years that decide whether a link is anachronistic (issue
 // #319): a treatise cannot cite a case decided after it was published, so a hit
 // on such a case is a wrong link, however exactly the cite string matched. A nil
 // map holds no years, so every lookup in it misses and every link is kept.
-type caseYears struct {
-	treatise map[string]int // moml.volumes.year, by psmid
-	cap      map[int64]int  // cap.cases.decision_year
-	code     map[int64]int  // legalhist.code_reporter.decision_year
-	er       map[string]int // english_reports.cases.murrell_year, else er_year
+type Years struct {
+	Treatise map[string]int // moml.volumes.year, by psmid
+	CAP      map[int64]int  // cap.cases.decision_year
+	Code     map[int64]int  // legalhist.code_reporter.decision_year
+	ER       map[string]int // english_reports.cases.murrell_year, else er_year
 }
 
-// loadCaseYears loads every table caseYears holds.
-func loadCaseYears(ctx context.Context, store citations.LinkerStore) (caseYears, error) {
-	var y caseYears
+// LoadYears loads every table Years holds.
+func LoadYears(ctx context.Context, store citations.LinkerStore) (Years, error) {
+	var y Years
 	var err error
-	if y.treatise, err = store.LoadTreatiseYears(ctx); err != nil {
+	if y.Treatise, err = store.LoadTreatiseYears(ctx); err != nil {
 		return y, fmt.Errorf("treatise years: %w", err)
 	}
-	if y.cap, err = store.LoadCAPCaseYears(ctx); err != nil {
+	if y.CAP, err = store.LoadCAPCaseYears(ctx); err != nil {
 		return y, fmt.Errorf("CAP case years: %w", err)
 	}
-	if y.code, err = store.LoadCodeReporterYears(ctx); err != nil {
+	if y.Code, err = store.LoadCodeReporterYears(ctx); err != nil {
 		return y, fmt.Errorf("code reporter years: %w", err)
 	}
-	if y.er, err = store.LoadERCaseYears(ctx); err != nil {
+	if y.ER, err = store.LoadERCaseYears(ctx); err != nil {
 		return y, fmt.Errorf("English Reports case years: %w", err)
 	}
 	return y, nil
@@ -49,8 +49,8 @@ type yearGate struct {
 	refused   bool // set once any hit has been refused
 }
 
-func newYearGate(c *citations.UnlinkedCitation, years caseYears) *yearGate {
-	published, known := years.treatise[c.MomlTreatise]
+func newYearGate(c *citations.UnlinkedCitation, years Years) *yearGate {
+	published, known := years.Treatise[c.MomlTreatise]
 	return &yearGate{published: published, known: known}
 }
 
