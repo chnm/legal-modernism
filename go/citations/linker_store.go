@@ -4,7 +4,11 @@ import (
 	"context"
 )
 
-// LinkerStore is an interface for the data operations needed by the cite-linker.
+// LinkerStore is the lookup tables every linker loads before it links anything:
+// the whitelist, the cite strings of every source, the page spans, the stub
+// registry and the years. None of them belongs to a corpus, which is why
+// cite-linker and cite-linker-cap share one implementation. The corpus's own
+// tables, where the citations come from and the results go, are a CorpusStore.
 type LinkerStore interface {
 	// GetReporterWhitelist loads the full reporter whitelist into memory.
 	GetReporterWhitelist(ctx context.Context) (map[string]*WhitelistEntry, error)
@@ -12,13 +16,6 @@ type LinkerStore interface {
 	// GetDiffVols loads the volume mapping for reporters with different numbering.
 	// The outer key is reporter_standard, inner key is original volume number.
 	GetDiffVols(ctx context.Context) (map[string]map[int]*DiffVolEntry, error)
-
-	// StreamUnprocessedCitations runs a single anti-join over the whole
-	// citations_unlinked table and delivers every citation not yet in
-	// citation_links to fn in batches of at most batchSize. The full set is read
-	// in one streaming pass, so callers must apply their own backpressure inside
-	// fn (e.g. a bounded channel) to avoid buffering the entire table in memory.
-	StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error
 
 	// LoadCAPCitations loads CAP citations into memory as cite -> case ID.
 	// Cites that belong to more than one case are dropped, mirroring
@@ -75,15 +72,9 @@ type LinkerStore interface {
 	// registry has been built (make db-stubs).
 	LoadStubCases(ctx context.Context) (map[string]struct{}, error)
 
-	// LoadTreatiseYears loads the year each MOML treatise volume was published
-	// (moml.volumes.year), keyed by psmid, which is what
-	// citations_unlinked.moml_treatise holds. The linker refuses a link to a
-	// case decided after that year (issue #319). A volume with no year is left
-	// out, so its citations are never refused.
-	LoadTreatiseYears(ctx context.Context) (map[string]int, error)
-
-	// LoadCAPCaseYears loads cap.cases.decision_year keyed by case id, for the
-	// same test.
+	// LoadCAPCaseYears loads cap.cases.decision_year keyed by case id. The
+	// linker refuses a link to a case decided after the citing document's year
+	// (issue #319), which the corpus store puts on each citation as SourceYear.
 	LoadCAPCaseYears(ctx context.Context) (map[int64]int, error)
 
 	// LoadCodeReporterYears loads legalhist.code_reporter.decision_year keyed
@@ -94,7 +85,4 @@ type LinkerStore interface {
 	// for the same test: murrell_year, falling back to er_year where Murrell
 	// gives none.
 	LoadERCaseYears(ctx context.Context) (map[string]int, error)
-
-	// SaveLinkResults batch-inserts multiple link results in a single query.
-	SaveLinkResults(ctx context.Context, results []*LinkResult) error
 }

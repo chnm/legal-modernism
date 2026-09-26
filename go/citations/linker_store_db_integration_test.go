@@ -37,6 +37,11 @@ func newTestStore(t *testing.T) *LinkerDBStore {
 	setup := []string{
 		`DROP SCHEMA IF EXISTS moml_citations CASCADE`,
 		`CREATE SCHEMA moml_citations`,
+		// The corpus store dates each citation by its volume before it streams.
+		`DROP SCHEMA IF EXISTS moml CASCADE`,
+		`CREATE SCHEMA moml`,
+		`CREATE TABLE moml.volumes (psmid text PRIMARY KEY, year integer)`,
+		`INSERT INTO moml.volumes VALUES ('treatise', 1850), ('undated', NULL)`,
 		`CREATE TABLE moml_citations.citations_unlinked (
 			id uuid PRIMARY KEY,
 			moml_treatise text NOT NULL,
@@ -95,33 +100,48 @@ func TestStreamUnprocessedCitationsIntegration(t *testing.T) {
 		require.NoError(t, err)
 	}
 
+	// One more from a volume with no year, so SourceYear's nil case is seen.
+	undated := uuid.New()
+	_, err := s.DB.Exec(ctx,
+		`INSERT INTO moml_citations.citations_unlinked (id, moml_treatise, moml_page, raw, volume, reporter_abbr, page)
+		 VALUES ($1, 'undated', 'p1', 'raw cite', 1, 'U.S.', 10)`, undated)
+	require.NoError(t, err)
+	all = append(all, undated)
+
 	// Stream with a small batch size and collect everything delivered.
 	var got []uuid.UUID
 	var batchSizes []int
-	err := s.StreamUnprocessedCitations(ctx, 3, func(batch []UnlinkedCitation) error {
+	err = NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 3, func(batch []UnlinkedCitation) error {
 		batchSizes = append(batchSizes, len(batch))
 		for _, c := range batch {
 			got = append(got, c.ID)
+			// The store dates each citation by its volume (moml.volumes.year)
+			// before the cascade sees it; a volume with no year leaves it nil.
+			if c.ID == undated {
+				assert.Nil(t, c.SourceYear, "a volume with no year gives no SourceYear")
+			} else if assert.NotNil(t, c.SourceYear, "SourceYear from moml.volumes") {
+				assert.Equal(t, 1850, *c.SourceYear)
+			}
 		}
 		return nil
 	})
 	require.NoError(t, err)
 
-	// Should deliver exactly the 7 unprocessed citations, none of the processed.
-	want := make([]uuid.UUID, 0, 7)
+	// Should deliver exactly the 8 unprocessed citations, none of the processed.
+	want := make([]uuid.UUID, 0, 8)
 	for _, id := range all {
 		if !processed[id] {
 			want = append(want, id)
 		}
 	}
-	assert.Len(t, got, 7)
+	assert.Len(t, got, 8)
 	for _, id := range got {
 		assert.False(t, processed[id], "streamed an already-processed citation %s", id)
 	}
 	assert.ElementsMatch(t, want, got)
 
-	// Batching: 7 rows at batch size 3 => batches of 3, 3, 1.
-	assert.Equal(t, []int{3, 3, 1}, batchSizes)
+	// Batching: 8 rows at batch size 3 => batches of 3, 3, 2.
+	assert.Equal(t, []int{3, 3, 2}, batchSizes)
 }
 
 // errStopStream aborts a stream from inside the callback, standing in for a
@@ -147,13 +167,13 @@ func TestStreamUnprocessedCitationsResumesIntegration(t *testing.T) {
 
 	// First run: stream, but only save the first batch before "dying".
 	var saved []uuid.UUID
-	err := s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+	err := NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
 		results := make([]*LinkResult, len(batch))
 		for i := range batch {
 			results[i] = &LinkResult{CitationID: batch[i].ID, Status: StatusSkippedNotWhitelisted}
 			saved = append(saved, batch[i].ID)
 		}
-		if err := s.SaveLinkResults(ctx, results); err != nil {
+		if err := NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results); err != nil {
 			return err
 		}
 		return errStopStream // simulate the job being killed after one batch
@@ -163,7 +183,7 @@ func TestStreamUnprocessedCitationsResumesIntegration(t *testing.T) {
 
 	// Second run: the resubmitted job sees only the 6 that were never saved.
 	var got []uuid.UUID
-	err = s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+	err = NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
 		for _, c := range batch {
 			got = append(got, c.ID)
 		}
@@ -216,7 +236,7 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 		{CitationID: idSkipped, Status: StatusSkippedNotWhitelisted},
 	}
 
-	require.NoError(t, s.SaveLinkResults(ctx, results))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results))
 
 	// Read each row back and verify the values (and the NULLs) round-tripped.
 	type row struct {
@@ -284,11 +304,11 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 	// ON CONFLICT DO NOTHING: re-saving the same citation_id with a different
 	// status must not overwrite the existing row.
 	conflicting := []*LinkResult{{CitationID: idCAP, Status: StatusNoMatch}}
-	require.NoError(t, s.SaveLinkResults(ctx, conflicting))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, conflicting))
 	assert.Equal(t, StatusLinkedCAP, read(idCAP).status, "ON CONFLICT should have preserved the original row")
 
 	// Empty input is a no-op, not an error.
-	require.NoError(t, s.SaveLinkResults(ctx, nil))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, nil))
 
 	// Sanity: exactly the five rows we inserted exist.
 	var n int
@@ -532,10 +552,6 @@ func TestLoadYearsIntegration(t *testing.T) {
 
 	// Minimal slices of the four tables: only the columns the loaders read.
 	setup := []string{
-		`DROP SCHEMA IF EXISTS moml CASCADE`,
-		`CREATE SCHEMA moml`,
-		`CREATE TABLE moml.volumes (psmid text PRIMARY KEY, year integer)`,
-		`INSERT INTO moml.volumes VALUES ('19003000100', 1850), ('19003000200', NULL)`,
 		`DROP SCHEMA IF EXISTS cap CASCADE`,
 		`CREATE SCHEMA cap`,
 		`CREATE TABLE cap.cases (id bigint PRIMARY KEY, decision_year integer)`,
@@ -553,10 +569,6 @@ func TestLoadYearsIntegration(t *testing.T) {
 		_, err := s.DB.Exec(ctx, stmt)
 		require.NoError(t, err, "setup: %s", stmt)
 	}
-
-	treatises, err := s.LoadTreatiseYears(ctx)
-	require.NoError(t, err)
-	assert.Equal(t, map[string]int{"19003000100": 1850}, treatises)
 
 	capYears, err := s.LoadCAPCaseYears(ctx)
 	require.NoError(t, err)
@@ -593,7 +605,7 @@ func TestSaveLinkResultsStubIntegration(t *testing.T) {
 		{CitationID: idNoMatch, Status: StatusNoMatch, MatchTier: TierUKReporterAbsent,
 			CiteCleaned: &cleaned, CiteNormalized: &cleaned},
 	}
-	require.NoError(t, s.SaveLinkResults(ctx, results))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results))
 
 	var status, tier string
 	var stubCite, linked *string

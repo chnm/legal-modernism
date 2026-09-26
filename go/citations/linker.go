@@ -75,10 +75,10 @@ type CaseSpan[ID comparable] struct {
 }
 
 // UnlinkedCitation is a raw citation fetched from the database for linking.
+// It carries nothing that says which corpus it came from: the cascade links a
+// citation from a treatise page and one from a CAP opinion the same way.
 type UnlinkedCitation struct {
 	ID           uuid.UUID
-	MomlTreatise string
-	MomlPage     string
 	Raw          string
 	Volume       *int
 	ReporterAbbr string
@@ -86,6 +86,14 @@ type UnlinkedCitation struct {
 	// Year is the year the citation was cited by, recorded by the year detector
 	// for reporters flagged cited_by_year, and nil otherwise.
 	Year *int
+	// SourceYear is the year of the document the citation appears in:
+	// moml.volumes.year for a treatise page, cap.cases.decision_year for a CAP
+	// opinion, and nil when it is unknown. The linker refuses a link to a case
+	// decided in a later year (issue #319); a nil year refuses nothing. The
+	// corpus store fills it when it streams the citation, which is how the
+	// one corpus-specific fact the cascade needs reaches it without the
+	// cascade knowing the corpus.
+	SourceYear *int
 }
 
 // LinkResult records the outcome of attempting to link a single citation.
@@ -138,7 +146,8 @@ const (
 // but for a different reason — the citation carried no volume for the probes to
 // look up, so nothing is known about coverage (issue #261). anachronistic stands
 // apart from that ladder: the cascade did find a case, and refused it because
-// the case was decided after the treatise was published (issue #319). The
+// the case was decided after the citing document, a treatise volume or an
+// opinion's case (issue #319). The
 // success tiers name the target that produced the link, since exactly one did.
 //
 // The values are constrained in SQL by chk_citation_links_match_tier; adding one
@@ -152,7 +161,7 @@ const (
 	TierUSPageAbsent      = "us_page_absent"      // reporter and volume present, page is not a first-page cite and no case's page span covers it
 	TierUSPageAmbiguous   = "us_page_ambiguous"   // the page falls in a span, but more than one case begins on that span's first page
 	TierUSPageGap         = "us_page_gap"         // the page falls past the end of the preceding case, in a hole in CAP's coverage
-	TierUSAnachronistic   = "us_anachronistic"    // every case found was decided after the treatise was published
+	TierUSAnachronistic   = "us_anachronistic"    // every case found was decided after the citing document
 
 	// no_match, UK route (English Reports).
 	TierUKReporterAbsent = "uk_reporter_absent"
@@ -167,8 +176,8 @@ const (
 	// TierUKPageGap: the page falls past the end of the preceding case, in a hole
 	// in the corpus rather than inside a case.
 	TierUKPageGap = "uk_page_gap"
-	// TierUKAnachronistic: every case found was decided after the treatise was
-	// published, judged by murrell_year, or er_year where Murrell gives none.
+	// TierUKAnachronistic: every case found was decided after the citing
+	// document, judged by murrell_year, or er_year where Murrell gives none.
 	TierUKAnachronistic = "uk_anachronistic"
 
 	// linked_*: which probe produced the link.
