@@ -52,8 +52,10 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 
 	seen := make(map[string]struct{}, len(cites))
 	ids := make([]string, 0, len(cites))
-	treatises := make([]string, 0, len(cites))
-	pages := make([]string, 0, len(cites))
+	// The citing document and its parent as the Document interface carries
+	// them: a page and its treatise, or an opinion and its case.
+	parents := make([]string, 0, len(cites))
+	docs := make([]string, 0, len(cites))
 	raws := make([]string, 0, len(cites))
 	volumes := make([]*int32, 0, len(cites))
 	abbrs := make([]string, 0, len(cites))
@@ -68,8 +70,8 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 		seen[k] = struct{}{}
 
 		ids = append(ids, c.ID.String())
-		treatises = append(treatises, c.Source.ParentID())
-		pages = append(pages, c.Source.ID())
+		parents = append(parents, c.Source.ParentID())
+		docs = append(docs, c.Source.ID())
 		raws = append(raws, c.Raw)
 		if c.Volume == nil {
 			volumes = append(volumes, nil)
@@ -95,7 +97,7 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 		AS u(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year)
 	ON CONFLICT DO NOTHING;
 	`
-	_, err := r.DB.Exec(ctx, query, ids, treatises, pages, raws, volumes, abbrs, pageNums, years, time.Now())
+	_, err := r.DB.Exec(ctx, query, ids, parents, docs, raws, volumes, abbrs, pageNums, years, time.Now())
 	if err != nil {
 		return fmt.Errorf("batch saving %d citations: %w", len(ids), err)
 	}

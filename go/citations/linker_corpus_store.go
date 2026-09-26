@@ -2,11 +2,18 @@ package citations
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"log/slog"
 
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
+
+// ErrNoCorpus is returned by a CorpusStore built as a bare literal rather than
+// by NewMOMLCorpusStore or NewOpinionCorpusStore: such a store knows no tables,
+// and without this it would stream nothing and report success.
+var ErrNoCorpus = errors.New("citations: corpus store built without a corpus; use NewMOMLCorpusStore or NewOpinionCorpusStore")
 
 // CorpusStore is one corpus's citation ledger: the citations_unlinked table
 // its detector fills and the citation_links table its linker writes. The MOML
@@ -24,10 +31,33 @@ type CorpusStore struct {
 	// so the row's shape and where the year comes from are the store's to
 	// know; the cascade sees only the year.
 	scan func(rows pgx.Rows, c *UnlinkedCitation) error
-	// prepare runs once before the stream, for a store that resolves the
-	// citing document's year through a table of its own rather than in the
-	// query. May be nil.
-	prepare func(ctx context.Context) error
+	// prepare is what Prepare runs once before the stream: loading what scan
+	// needs, or checking that the ledger's tables exist. May be nil.
+	prepare  func(ctx context.Context) error
+	prepared bool
+}
+
+// Prepare readies the store for a run: the MOML store loads the volume years
+// its scan dates citations by, and logs how many. A driver calls it after the
+// lookup tables load and before linking starts, so that whatever the ledger
+// needs is loaded and logged with the other tables and a failure is a startup
+// failure rather than a stream failure minutes in. StreamUnprocessedCitations
+// calls it itself if no one has, so a store is never streamed unprepared. A
+// store is for one run, on one goroutine at a time.
+func (s *CorpusStore) Prepare(ctx context.Context) error {
+	if s.stream == "" || s.scan == nil {
+		return ErrNoCorpus
+	}
+	if s.prepared {
+		return nil
+	}
+	if s.prepare != nil {
+		if err := s.prepare(ctx); err != nil {
+			return err
+		}
+	}
+	s.prepared = true
+	return nil
 }
 
 // NewMOMLCorpusStore returns the store over moml_citations: the citations
@@ -54,10 +84,20 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 		insert: linksInsertSQL("moml_citations.citation_links"),
 	}
 	s.prepare = func(ctx context.Context) error {
+		slog.Info("loading treatise years")
 		var err error
 		years, err = loadYears[string](ctx, db, "treatise years",
 			`SELECT psmid, year FROM moml.volumes WHERE year IS NOT NULL`, 25_000)
-		return err
+		if err != nil {
+			return err
+		}
+		// The count is the one number that shows the anachronism gate has its
+		// input: with no years loaded no MOML link is ever refused.
+		if len(years) == 0 {
+			slog.Warn("no treatise years loaded; no link will be refused as anachronistic (issue #319)")
+		}
+		slog.Info("loaded treatise years", "treatises", len(years))
+		return nil
 	}
 	s.scan = func(rows pgx.Rows, c *UnlinkedCitation) error {
 		var psmid string
@@ -102,10 +142,8 @@ func linksInsertSQL(table string) string {
 // connections are invisible to it. Callers MUST apply backpressure inside fn;
 // the whole table is read as fast as fn accepts batches.
 func (s *CorpusStore) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error {
-	if s.prepare != nil {
-		if err := s.prepare(ctx); err != nil {
-			return fmt.Errorf("preparing to stream unprocessed citations: %w", err)
-		}
+	if err := s.Prepare(ctx); err != nil {
+		return fmt.Errorf("preparing to stream unprocessed citations: %w", err)
 	}
 	rows, err := s.DB.Query(ctx, s.stream)
 	if err != nil {
@@ -152,6 +190,9 @@ func (s *CorpusStore) StreamUnprocessedCitations(ctx context.Context, batchSize 
 // NULL keeps them out of every tier aggregate instead of inventing a bucket for
 // them.
 func (s *CorpusStore) SaveLinkResults(ctx context.Context, results []*LinkResult) error {
+	if s.insert == "" {
+		return ErrNoCorpus
+	}
 	if len(results) == 0 {
 		return nil
 	}
