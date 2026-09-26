@@ -21,8 +21,10 @@ These programs run the various data creation tasks for the project.
 - `adj2edge/`: Convert a network adjacency list to a network edge list.
 - `cap-import`: Import data from the Caselaw Access Project.
 - `cite-detector-moml/`: Detect citations in the *Making of Modern Law* treatises.
+- `cite-detector-cap/`: Detect citations in the opinions of the Caselaw Access Project, for cases decided by 1920.
 - `cite-predictor/`: Augment citation detection using generative AI.
-- `cite-linker/`: Link detected citations to a database of English and American caselaw.
+- `cite-linker/`: Link the citations detected in the treatises to a database of English and American caselaw.
+- `cite-linker-cap/`: Link the citations detected in the CAP opinions the same way.
 - `freelaw-import/`: Import CourtListener (Free Law Project) parallel-citation and cluster-to-CAP crosswalks.
 - `lm-diagnostic/`: Run various diagnostic checks on the high-performance cluster.
 - `chambers/`: An internal-only web app for understanding our data
@@ -52,11 +54,12 @@ These programs run the various data creation tasks for the project.
 
 `scripts/pipeline.sh` rebuilds all citation data from a workstation with ssh access to the cluster: it syncs the programs, truncates the detected citations, runs the detector and the linker as Slurm jobs and waits for them, rebuilds the stub cases, links again, and refreshes the materialized views. It needs `LAW_DBSTR` set locally and exported in the login shell on the cluster, and it asks once, up front, before truncating anything.
 
-    caffeinate -i ./scripts/pipeline.sh            # the full rebuild, about four hours
+    caffeinate -i ./scripts/pipeline.sh            # the full rebuild, well under an hour
     ./scripts/pipeline.sh --from truncate-links    # relink after a whitelist change
+    ./scripts/pipeline.sh --corpus cap             # the same for the citations in CAP opinions
     ./scripts/pipeline.sh --dry-run                # print every command, run none
 
-A failed run names the phase and the `--from PHASE` command that resumes it. Ctrl-C leaves a running Slurm job alone and prints how to reattach to it. Logs land in `logs/pipeline/<timestamp>/`. `scripts/README.md` documents the script in full.
+`--corpus cap` runs the CAP corpus instead: `cite-detector-cap` over the opinions of cases decided by 1920 and `cite-linker-cap` over what it found, into the `opinion_citations` schema, with no stub phases. A failed run names the phase and the `--from PHASE` command that resumes it. Ctrl-C leaves a running Slurm job alone and prints how to reattach to it. Logs land in `logs/pipeline/<timestamp>/`. `scripts/README.md` documents the script in full.
 
 ## License
 

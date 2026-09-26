@@ -112,6 +112,44 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 	return s
 }
 
+// NewOpinionCorpusStore returns the store over opinion_citations: the
+// citations cite-detector-cap finds in the text of CAP opinions, and
+// cite-linker-cap's results (issue #74). The citing document is the case the
+// opinion belongs to, so its year is cap.cases.decision_year, joined into the
+// stream; a citation whose case has no year, or no row, streams with a nil
+// SourceYear and is never refused as anachronistic. A case is of the same
+// year as itself, so an opinion's citation of its own case links.
+//
+// Its Prepare has nothing to load; it checks that the ledger's tables exist,
+// which they do not until the migration that creates them is applied, so that
+// a run against a database still waiting for make db-up fails at startup
+// rather than after the lookup tables have loaded.
+func NewOpinionCorpusStore(db *pgxpool.Pool) *CorpusStore {
+	return &CorpusStore{
+		DB: db,
+		prepare: func(ctx context.Context) error {
+			for _, table := range []string{"opinion_citations.citations_unlinked", "opinion_citations.citation_links"} {
+				if _, err := db.Exec(ctx, "SELECT 1 FROM "+table+" LIMIT 0"); err != nil {
+					return fmt.Errorf("the opinion_citations ledger is not available (run make db-up?): %w", err)
+				}
+			}
+			return nil
+		},
+		stream: `
+		SELECT cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year, k.decision_year
+		FROM opinion_citations.citations_unlinked cu
+		LEFT JOIN cap.cases k ON k.id = cu.cap_case
+		WHERE NOT EXISTS (
+			SELECT 1 FROM opinion_citations.citation_links cl WHERE cl.citation_id = cu.id
+		)
+		`,
+		insert: linksInsertSQL("opinion_citations.citation_links"),
+		scan: func(rows pgx.Rows, c *UnlinkedCitation) error {
+			return rows.Scan(&c.ID, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year, &c.SourceYear)
+		},
+	}
+}
+
 // linksInsertSQL is the insert every corpus's SaveLinkResults runs, against its
 // own citation_links table. Every such table has PRIMARY KEY (citation_id), so
 // the ON CONFLICT clause holds for all of them.

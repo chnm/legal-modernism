@@ -151,7 +151,7 @@ func main() {
 				// citations.DetectDocument).
 				kept, dropped := citations.DetectDocument(page, detectors, ocrReplacer)
 				if dropped > 0 {
-					slog.Debug("dropped shadow citations", "treatise_id", page.ParentID(), "page_id", page.ID(), "dropped", dropped)
+					slog.Debug("dropped shadow citations", append(page.LogID(), "dropped", dropped)...)
 				}
 
 				// One insert per page rather than one per citation. Duplicate
@@ -161,11 +161,11 @@ func main() {
 				// citations_unlinked_uq unique index before the write.
 				if err := citationsDB.SaveCitations(ctx, kept); err != nil {
 					if ctx.Err() != nil {
-						slog.Warn("page not saved because of shutdown", "treatise_id", page.ParentID(), "page_id", page.ID())
+						slog.Warn("page not saved because of shutdown", page.LogID()...)
 						continue
 					}
 					failedPages.Add(1)
-					slog.Error("could not save citations for page", "treatise_id", page.ParentID(), "page_id", page.ID(), "citations", len(kept), "error", err)
+					slog.Error("could not save citations for page", append(page.LogID(), "citations", len(kept), "error", err)...)
 					continue
 				}
 				savedCites.Add(int64(len(kept)))

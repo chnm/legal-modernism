@@ -129,6 +129,64 @@ func (p *PgxStore) CountTreatisePages(ctx context.Context) (int64, error) {
 	return n, nil
 }
 
+// StreamCAPOpinions reads every opinion of a CAP case decided in or before
+// maxYear, text included, in a single pass and hands each one to fn. It is
+// StreamTreatisePages for the CAP corpus (issue #74), with the same
+// discipline: one connection and one snapshot held for the duration, so
+// callers MUST apply backpressure inside fn.
+//
+// The year cutoff lives here and nowhere else: nothing in the tables the
+// detections go to records it, and the citing case's year is a join away
+// (cap.cases.decision_year). cap.opinions has no index, and needs none for
+// this: the query is one pass over its heap, with a lookup on cases_pkey for
+// each row's year, and the text is fetched from TOAST only for the rows that
+// pass the cutoff.
+func (p *PgxStore) StreamCAPOpinions(ctx context.Context, maxYear int, fn func(*CAPOpinion) error) error {
+	query := `
+	SELECT o.id, o."case", o.type, o.text
+	FROM cap.opinions o
+	JOIN cap.cases c ON c.id = o."case"
+	WHERE c.decision_year <= $1;`
+
+	rows, err := p.DB.Query(ctx, query, maxYear)
+	if err != nil {
+		return fmt.Errorf("streaming CAP opinions: %w", err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var opinionID, caseID int64
+		var typ, text string
+		if err := rows.Scan(&opinionID, &caseID, &typ, &text); err != nil {
+			return fmt.Errorf("scanning CAP opinion: %w", err)
+		}
+		if err := fn(NewCAPOpinion(opinionID, caseID, typ, text)); err != nil {
+			return err
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("iterating CAP opinions: %w", err)
+	}
+	return nil
+}
+
+// CountCAPOpinions returns how many opinions StreamCAPOpinions will deliver for
+// maxYear, with the same join and filter so that the two agree. It exists only
+// so that --progress can show a total, and costs a pass over cap.opinions.
+func (p *PgxStore) CountCAPOpinions(ctx context.Context, maxYear int) (int64, error) {
+	query := `
+	SELECT count(*)
+	FROM cap.opinions o
+	JOIN cap.cases c ON c.id = o."case"
+	WHERE c.decision_year <= $1;`
+
+	var n int64
+	if err := p.DB.QueryRow(ctx, query, maxYear).Scan(&n); err != nil {
+		return 0, fmt.Errorf("counting CAP opinions: %w", err)
+	}
+	return n, nil
+}
+
 // GetOCRSubstitutions gets a complete list of OCR substitutions from the
 // database, longest mistake first.
 //

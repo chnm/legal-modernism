@@ -47,6 +47,11 @@ CREATE TABLE IF NOT EXISTS cap.jurisdictions (
   whitelisted bool NOT NULL,
   url text NOT NULL
 );
+-- The table as the import created it. It has since gained an id (bigint,
+-- identity, primary key) and an index on "case", added by
+-- db/migrations/20260926130000_cap-opinion-ids.sql (issue #74), which
+-- backfills the id instead of rewriting the 38 GB table; the migration, not
+-- this script, is where the live table's shape is recorded.
 CREATE TABLE IF NOT EXISTS cap.opinions (
   "case" bigint NOT NULL,
   "type" text NOT NULL,
