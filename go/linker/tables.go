@@ -47,12 +47,15 @@ type Tables struct {
 	// depends on -- impossible to report. May be nil.
 	stubs stubIndex
 
-	// years refuses a hit on a case decided after the citing treatise was
-	// published (issue #319). Its zero value holds no years and refuses
-	// nothing.
+	// years refuses a hit on a case decided after the citing document, a
+	// treatise volume or an opinion's case (issue #319). Its zero value holds
+	// no years and refuses nothing.
 	years Years
 }
 
+// NewTables assembles the linking tables from the loaded lookups, building the
+// cite and page-range indexes as it goes. Load is the usual caller; tests
+// build them directly, passing nil for what they do not need.
 func NewTables(
 	whitelist map[string]*citations.WhitelistEntry,
 	diffvols map[string]map[int]*citations.DiffVolEntry,

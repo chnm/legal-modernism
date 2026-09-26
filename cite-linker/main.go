@@ -112,7 +112,7 @@ func main() {
 	slog.Info("connected to the database", "database", db.Host())
 
 	store := citations.NewLinkerDBStore(pool)
-	src := citations.NewMOMLCorpusStore(pool)
+	ledger := citations.NewMOMLCorpusStore(pool)
 
 	// There is no --reset. Re-deriving existing rows means TRUNCATE
 	// moml_citations.citation_links from psql and then running this program
@@ -128,6 +128,13 @@ func main() {
 		exitStartupError("could not load the lookup tables", err)
 	}
 
+	// Ready the ledger before linking starts: what it needs (the volume years
+	// that date each MOML citation for the anachronism rule) loads and logs
+	// with the other tables, and a failure is a startup failure.
+	if err := ledger.Prepare(ctx); err != nil {
+		exitStartupError("could not prepare the citation ledger", err)
+	}
+
 	// Mark the transition out of the loading phase. Without this the log goes
 	// quiet after the last lookup table is loaded, so there is no way to tell
 	// that linking has actually begun.
@@ -135,7 +142,7 @@ func main() {
 		"workers", workers, "batch_size", batchSize,
 		"lock_timeout", lockTimeout.String(), "progress_every", progressInterval.String())
 
-	sum, streamErr := linker.Run(ctx, tables, src, linker.Options{
+	sum, streamErr := linker.Run(ctx, tables, ledger, linker.Options{
 		BatchSize:     batchSize,
 		Workers:       workers,
 		ProgressEvery: progressInterval,

@@ -14,9 +14,9 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// memSource is a Source over a fixed list of batches, recording what was
+// memLedger is a Ledger over a fixed list of batches, recording what was
 // saved and failing the saves it is told to.
-type memSource struct {
+type memLedger struct {
 	batches   [][]citations.UnlinkedCitation
 	streamErr error        // returned after every batch has been delivered
 	failSave  map[int]bool // batch index (by first citation) -> fail its save
@@ -25,7 +25,7 @@ type memSource struct {
 	saved [][]*citations.LinkResult
 }
 
-func (s *memSource) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]citations.UnlinkedCitation) error) error {
+func (s *memLedger) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]citations.UnlinkedCitation) error) error {
 	for _, b := range s.batches {
 		if err := fn(b); err != nil {
 			return err
@@ -34,7 +34,7 @@ func (s *memSource) StreamUnprocessedCitations(ctx context.Context, batchSize in
 	return s.streamErr
 }
 
-func (s *memSource) SaveLinkResults(ctx context.Context, results []*citations.LinkResult) error {
+func (s *memLedger) SaveLinkResults(ctx context.Context, results []*citations.LinkResult) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	for i, b := range s.batches {
@@ -62,7 +62,7 @@ func TestRun(t *testing.T) {
 	tables := NewTables(map[string]*citations.WhitelistEntry{"U.S.": {ReporterStandard: &std}},
 		nil, map[string]int64{"5 U.S. 10": 111}, nil, nil, nil, nil, nil, nil, nil, Years{})
 
-	src := &memSource{
+	src := &memLedger{
 		batches:  [][]citations.UnlinkedCitation{batchOf(3), batchOf(2), batchOf(4)},
 		failSave: map[int]bool{1: true},
 	}
@@ -78,9 +78,21 @@ func TestRun(t *testing.T) {
 	}
 }
 
+// TestRunClampsOptions pins that the zero Options still run: without the
+// clamp a Workers of 0 left the stream with nobody to receive from it.
+func TestRunClampsOptions(t *testing.T) {
+	tables := NewTables(map[string]*citations.WhitelistEntry{}, nil, nil, nil, nil, nil, nil, nil, nil, nil, Years{})
+	src := &memLedger{batches: [][]citations.UnlinkedCitation{batchOf(3)}}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	sum, err := Run(ctx, tables, src, Options{})
+	require.NoError(t, err)
+	assert.Equal(t, int64(3), sum.Processed)
+}
+
 func TestRunReturnsStreamError(t *testing.T) {
 	tables := NewTables(map[string]*citations.WhitelistEntry{}, nil, nil, nil, nil, nil, nil, nil, nil, nil, Years{})
-	src := &memSource{batches: [][]citations.UnlinkedCitation{batchOf(1)}, streamErr: errors.New("connection lost")}
+	src := &memLedger{batches: [][]citations.UnlinkedCitation{batchOf(1)}, streamErr: errors.New("connection lost")}
 	sum, err := Run(context.Background(), tables, src, Options{BatchSize: 1, Workers: 1})
 	assert.EqualError(t, err, "connection lost")
 	assert.Equal(t, int64(1), sum.Processed, "batches delivered before the error are still saved")

@@ -10,10 +10,12 @@ import (
 	"github.com/lmullen/legal-modernism/go/citations"
 )
 
-// Source is where a linker reads the citations still to be linked and writes
+// Ledger is where a linker reads the citations still to be linked and writes
 // what it made of them: one corpus's citations_unlinked and citation_links
-// tables. cite-linker and cite-linker-cap differ in nothing else.
-type Source interface {
+// tables. cite-linker and cite-linker-cap differ in nothing else. (A "source"
+// in this package is a database of cases the cascade probes, which is why the
+// ledger is not called one.)
+type Ledger interface {
 	// StreamUnprocessedCitations delivers every citation not yet in
 	// citation_links to fn in batches of at most batchSize, in one streaming
 	// pass; Run applies backpressure inside fn.
@@ -23,7 +25,7 @@ type Source interface {
 	SaveLinkResults(ctx context.Context, results []*citations.LinkResult) error
 }
 
-// Options sizes a run.
+// Options sizes a run. A BatchSize or Workers below 1 is treated as 1.
 type Options struct {
 	BatchSize int // citations per batch, and per insert
 	Workers   int // concurrent link-and-insert workers, each on one connection
@@ -42,14 +44,23 @@ type Summary struct {
 	FailedRows    int64
 }
 
-// Run links every unprocessed citation src delivers, with opts.Workers workers
+// Run links every unprocessed citation the ledger delivers, with opts.Workers workers
 // linking and saving in batches, until the stream ends or ctx is cancelled.
 // The error is the stream's: a cancelled context surfaces here as an error
 // from whichever query was in flight, so a driver that was interrupted checks
 // its own signal state before treating it as a failure. Committed batches are
 // saved either way, and re-processing is idempotent, so an interrupted run is
 // simply resubmitted.
-func Run(ctx context.Context, t *Tables, src Source, opts Options) (Summary, error) {
+func Run(ctx context.Context, t *Tables, ledger Ledger, opts Options) (Summary, error) {
+	// The channel and the worker count below are sized from these; zero of
+	// either would leave the stream with nobody to receive from it.
+	if opts.Workers < 1 {
+		opts.Workers = 1
+	}
+	if opts.BatchSize < 1 {
+		opts.BatchSize = 1
+	}
+
 	// Bounded pipeline. A single streaming reader (this goroutine, inside
 	// StreamUnprocessedCitations) feeds batches to a fixed pool of insert
 	// workers through a bounded channel. The channel capacity bounds how many
@@ -92,7 +103,7 @@ func Run(ctx context.Context, t *Tables, src Source, opts Options) (Summary, err
 					statusCounts[r.Status]++
 				}
 
-				if err := src.SaveLinkResults(ctx, results); err != nil {
+				if err := ledger.SaveLinkResults(ctx, results); err != nil {
 					if ctx.Err() != nil {
 						// Shutting down. The insert was cancelled in flight, so
 						// this batch is simply not committed and will be picked
@@ -118,7 +129,7 @@ func Run(ctx context.Context, t *Tables, src Source, opts Options) (Summary, err
 
 	// Stream the whole unprocessed set in one pass, pushing batches into the
 	// bounded channel. The send blocks when the channel is full (backpressure).
-	streamErr := src.StreamUnprocessedCitations(ctx, opts.BatchSize, func(batch []citations.UnlinkedCitation) error {
+	streamErr := ledger.StreamUnprocessedCitations(ctx, opts.BatchSize, func(batch []citations.UnlinkedCitation) error {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()

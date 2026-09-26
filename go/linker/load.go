@@ -16,7 +16,7 @@ import (
 //
 // The lookups are the same for every corpus: what differs between cite-linker
 // and cite-linker-cap is only where the citations come from and where the
-// results go, which is Run's Source.
+// results go, which is Run's Ledger.
 func Load(ctx context.Context, store citations.LinkerStore) (*Tables, error) {
 	slog.Info("loading reporter whitelist")
 	whitelist, err := store.GetReporterWhitelist(ctx)

@@ -103,8 +103,8 @@ func linkCAPThenCode(
 	standard := make([]string, 0, 2)
 
 	// Every hit, exact or by page range, must also pass the year test: a case
-	// decided after the treatise was published cannot be the one it cites
-	// (issue #319). A refused hit is passed over rather than returned on, so
+	// decided after the citing document, a treatise volume or an opinion's
+	// case, cannot be the one it cites (issue #319). A refused hit is passed over rather than returned on, so
 	// the rest of the cascade still runs and can reach a case of the right date.
 	gate := newYearGate(c)
 
