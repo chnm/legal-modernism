@@ -72,15 +72,9 @@ type LinkerStore interface {
 	// registry has been built (make db-stubs).
 	LoadStubCases(ctx context.Context) (map[string]struct{}, error)
 
-	// LoadTreatiseYears loads the year each MOML treatise volume was published
-	// (moml.volumes.year), keyed by psmid, which is what
-	// citations_unlinked.moml_treatise holds. The linker refuses a link to a
-	// case decided after that year (issue #319). A volume with no year is left
-	// out, so its citations are never refused.
-	LoadTreatiseYears(ctx context.Context) (map[string]int, error)
-
-	// LoadCAPCaseYears loads cap.cases.decision_year keyed by case id, for the
-	// same test.
+	// LoadCAPCaseYears loads cap.cases.decision_year keyed by case id. The
+	// linker refuses a link to a case decided after the citing document's year
+	// (issue #319), which the corpus store puts on each citation as SourceYear.
 	LoadCAPCaseYears(ctx context.Context) (map[int64]int, error)
 
 	// LoadCodeReporterYears loads legalhist.code_reporter.decision_year keyed

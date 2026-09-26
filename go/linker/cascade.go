@@ -106,7 +106,7 @@ func linkCAPThenCode(
 	// decided after the treatise was published cannot be the one it cites
 	// (issue #319). A refused hit is passed over rather than returned on, so
 	// the rest of the cascade still runs and can reach a case of the right date.
-	gate := newYearGate(c, t.years)
+	gate := newYearGate(c)
 
 	// Run the whole cascade for the form we detected before trying the volume
 	// variant, so an existing link can never be rewired: the variant only ever
@@ -274,7 +274,7 @@ func linkEnglishReports(
 
 	// The year test, as on the US route: a refused hit is passed over, and
 	// decides the tier only if nothing else links.
-	gate := newYearGate(c, t.years)
+	gate := newYearGate(c)
 
 	// The English Reports are inconsistent about the redundant volume on
 	// single-volume nominate reporters: most are stored bare ("Cro Eliz 1") but

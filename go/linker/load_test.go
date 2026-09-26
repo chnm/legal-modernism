@@ -62,7 +62,9 @@ func (f *fakeStore) LoadStubCases(context.Context) (map[string]struct{}, error) 
 func (f *fakeStore) LoadTreatiseYears(context.Context) (map[string]int, error) {
 	return nil, f.step("years")
 }
-func (f *fakeStore) LoadCAPCaseYears(context.Context) (map[int64]int, error) { return nil, nil }
+func (f *fakeStore) LoadCAPCaseYears(context.Context) (map[int64]int, error) {
+	return nil, f.step("years")
+}
 func (f *fakeStore) LoadCodeReporterYears(context.Context) (map[int64]int, error) {
 	return nil, nil
 }

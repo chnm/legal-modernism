@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -18,16 +19,33 @@ type CorpusStore struct {
 	DB     *pgxpool.Pool
 	stream string // the anti-join that delivers the unprocessed citations
 	insert string // the INSERT ... unnest that saves a batch of results
+	// scan reads one streamed row into a citation, including its SourceYear.
+	// Each corpus keys the citing document differently (a psmid, a case id),
+	// so the row's shape and where the year comes from are the store's to
+	// know; the cascade sees only the year.
+	scan func(rows pgx.Rows, c *UnlinkedCitation) error
+	// prepare runs once before the stream, for a store that resolves the
+	// citing document's year through a table of its own rather than in the
+	// query. May be nil.
+	prepare func(ctx context.Context) error
 }
 
 // NewMOMLCorpusStore returns the store over moml_citations: the citations
 // cite-detector-moml finds on the pages of the treatises, and cite-linker's
 // results.
+//
+// The citing document's year comes from moml.volumes.year by psmid, the
+// volume the page belongs to, looked up at scan time in a map the store loads
+// before it streams (about 25K volumes). Looking it up here rather than joining
+// moml.volumes into the stream keeps the anti-join's SQL, and so its plan,
+// exactly what it was; a volume with no year, or none in the table, leaves
+// SourceYear nil, which is what left the psmid out of the map before.
 func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
-	return &CorpusStore{
+	var years map[string]int
+	s := &CorpusStore{
 		DB: db,
 		stream: `
-		SELECT cu.id, cu.moml_treatise, cu.moml_page, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year
+		SELECT cu.id, cu.moml_treatise, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year
 		FROM moml_citations.citations_unlinked cu
 		WHERE NOT EXISTS (
 			SELECT 1 FROM moml_citations.citation_links cl WHERE cl.citation_id = cu.id
@@ -35,6 +53,23 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 		`,
 		insert: linksInsertSQL("moml_citations.citation_links"),
 	}
+	s.prepare = func(ctx context.Context) error {
+		var err error
+		years, err = loadYears[string](ctx, db, "treatise years",
+			`SELECT psmid, year FROM moml.volumes WHERE year IS NOT NULL`, 25_000)
+		return err
+	}
+	s.scan = func(rows pgx.Rows, c *UnlinkedCitation) error {
+		var psmid string
+		if err := rows.Scan(&c.ID, &psmid, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year); err != nil {
+			return err
+		}
+		if y, ok := years[psmid]; ok {
+			c.SourceYear = &y
+		}
+		return nil
+	}
+	return s
 }
 
 // linksInsertSQL is the insert every corpus's SaveLinkResults runs, against its
@@ -67,6 +102,11 @@ func linksInsertSQL(table string) string {
 // connections are invisible to it. Callers MUST apply backpressure inside fn;
 // the whole table is read as fast as fn accepts batches.
 func (s *CorpusStore) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error {
+	if s.prepare != nil {
+		if err := s.prepare(ctx); err != nil {
+			return fmt.Errorf("preparing to stream unprocessed citations: %w", err)
+		}
+	}
 	rows, err := s.DB.Query(ctx, s.stream)
 	if err != nil {
 		return fmt.Errorf("streaming unprocessed citations: %w", err)
@@ -76,7 +116,7 @@ func (s *CorpusStore) StreamUnprocessedCitations(ctx context.Context, batchSize 
 	batch := make([]UnlinkedCitation, 0, batchSize)
 	for rows.Next() {
 		var c UnlinkedCitation
-		if err := rows.Scan(&c.ID, &c.MomlTreatise, &c.MomlPage, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year); err != nil {
+		if err := s.scan(rows, &c); err != nil {
 			return fmt.Errorf("scanning unlinked citation: %w", err)
 		}
 		batch = append(batch, c)

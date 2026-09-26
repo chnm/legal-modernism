@@ -116,16 +116,16 @@ func Load(ctx context.Context, store citations.LinkerStore) (*Tables, error) {
 	}
 	slog.Info("loaded stub cases", "entries", len(stubs))
 
-	// The years that refuse an anachronistic link (issue #319). The CAP map is
-	// the large one, a year for each of the 6.9M cases.
-	slog.Info("loading treatise and case years")
+	// The years that refuse an anachronistic link (issue #319): those of the
+	// cases; the citing document's year arrives on each citation. The CAP map
+	// is the large one, a year for each of the 6.9M cases.
+	slog.Info("loading case years")
 	years, err := LoadYears(ctx, store)
 	if err != nil {
-		return nil, fmt.Errorf("could not load treatise and case years: %w", err)
+		return nil, fmt.Errorf("could not load case years: %w", err)
 	}
-	slog.Info("loaded treatise and case years",
-		"treatises", len(years.Treatise), "cap_cases", len(years.CAP),
-		"code_cases", len(years.Code), "er_cases", len(years.ER))
+	slog.Info("loaded case years",
+		"cap_cases", len(years.CAP), "code_cases", len(years.Code), "er_cases", len(years.ER))
 
 	// Assemble the lookup tables, which also walks every loaded cite string once
 	// to build the reporter/volume indexes a no_match is attributed with, and the
