@@ -28,9 +28,10 @@
 # relink phase, because CAP misses never feed make db-stubs (the stub registry
 # is MOML-built and read-only for this corpus). truncate-links stays so that
 # `--corpus cap --from truncate-links` relinks after a whitelist or linker
-# change; in a full CAP run it is a no-op after the CASCADE. The first CAP
-# detector run is unmeasured (hours at most; slurm/cite-detector-cap.sh has
-# the sizing), and its linker takes minutes. A CAP run's maintenance phase is
+# change; in a full CAP run it is a no-op after the CASCADE. A CAP detector
+# run takes a few minutes of scanning (the first, job 1223521 on 2026-09-26,
+# scanned 1.56M opinions in 3m10s) and its linker about three minutes, so a
+# full CAP run is about ten minutes. A CAP run's maintenance phase is
 # the same db/maintenance.sh, which refreshes every materialized view in the
 # database, MOML's included. A MOML stubs run can leave CAP linked_stub rows
 # pointing at pruned stubs, so follow it with --corpus cap --from
@@ -144,7 +145,7 @@ set_corpus() {  # set_corpus moml|cap; fails on any other name
       DETECTOR_FIELDS=(opinions_processed citations_saved)
       TRUNCATE_CITATIONS_SQL='TRUNCATE opinion_citations.citations_unlinked CASCADE;'
       TRUNCATE_LINKS_SQL='TRUNCATE opinion_citations.citation_links;'
-      TRUNCATE_CITATIONS_NOTE='every detected citation, about 6.5M rows; the rebuild is unmeasured, hours at most; CASCADE also empties citation_links'
+      TRUNCATE_CITATIONS_NOTE='every detected citation, about 9.8M rows and a few minutes of scanning to rebuild; CASCADE also empties citation_links'
       TRUNCATE_LINKS_NOTE='every link; the linker rebuilds them in minutes'
       # No stubs or relink: CAP misses never feed make db-stubs. truncate-links
       # stays so that --from truncate-links relinks after a whitelist or linker
@@ -704,8 +705,9 @@ the database. For the MOML treatises (the default) that includes building the
 stub cases, truncating the links and linking again, and a full run takes well
 under an hour: the detector about 21 minutes, 12 of them scanning, and each
 linker pass about 10. For the CAP opinions (--corpus cap) there is no stubs
-pass, and the first detector run is unmeasured, hours at most. Run it from the
-repository root, under caffeinate -i on a laptop.
+pass, and a full run takes about ten minutes: a few of scanning, three of
+linking, and the maintenance. Run it from the repository root, under
+caffeinate -i on a laptop.
 
 options
   --corpus NAME   which corpus to detect and link: moml (the default) or cap
