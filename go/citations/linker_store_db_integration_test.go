@@ -98,7 +98,7 @@ func TestStreamUnprocessedCitationsIntegration(t *testing.T) {
 	// Stream with a small batch size and collect everything delivered.
 	var got []uuid.UUID
 	var batchSizes []int
-	err := s.StreamUnprocessedCitations(ctx, 3, func(batch []UnlinkedCitation) error {
+	err := NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 3, func(batch []UnlinkedCitation) error {
 		batchSizes = append(batchSizes, len(batch))
 		for _, c := range batch {
 			got = append(got, c.ID)
@@ -147,13 +147,13 @@ func TestStreamUnprocessedCitationsResumesIntegration(t *testing.T) {
 
 	// First run: stream, but only save the first batch before "dying".
 	var saved []uuid.UUID
-	err := s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+	err := NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
 		results := make([]*LinkResult, len(batch))
 		for i := range batch {
 			results[i] = &LinkResult{CitationID: batch[i].ID, Status: StatusSkippedNotWhitelisted}
 			saved = append(saved, batch[i].ID)
 		}
-		if err := s.SaveLinkResults(ctx, results); err != nil {
+		if err := NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results); err != nil {
 			return err
 		}
 		return errStopStream // simulate the job being killed after one batch
@@ -163,7 +163,7 @@ func TestStreamUnprocessedCitationsResumesIntegration(t *testing.T) {
 
 	// Second run: the resubmitted job sees only the 6 that were never saved.
 	var got []uuid.UUID
-	err = s.StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
+	err = NewMOMLCorpusStore(s.DB).StreamUnprocessedCitations(ctx, 4, func(batch []UnlinkedCitation) error {
 		for _, c := range batch {
 			got = append(got, c.ID)
 		}
@@ -216,7 +216,7 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 		{CitationID: idSkipped, Status: StatusSkippedNotWhitelisted},
 	}
 
-	require.NoError(t, s.SaveLinkResults(ctx, results))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results))
 
 	// Read each row back and verify the values (and the NULLs) round-tripped.
 	type row struct {
@@ -284,11 +284,11 @@ func TestSaveLinkResultsIntegration(t *testing.T) {
 	// ON CONFLICT DO NOTHING: re-saving the same citation_id with a different
 	// status must not overwrite the existing row.
 	conflicting := []*LinkResult{{CitationID: idCAP, Status: StatusNoMatch}}
-	require.NoError(t, s.SaveLinkResults(ctx, conflicting))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, conflicting))
 	assert.Equal(t, StatusLinkedCAP, read(idCAP).status, "ON CONFLICT should have preserved the original row")
 
 	// Empty input is a no-op, not an error.
-	require.NoError(t, s.SaveLinkResults(ctx, nil))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, nil))
 
 	// Sanity: exactly the five rows we inserted exist.
 	var n int
@@ -593,7 +593,7 @@ func TestSaveLinkResultsStubIntegration(t *testing.T) {
 		{CitationID: idNoMatch, Status: StatusNoMatch, MatchTier: TierUKReporterAbsent,
 			CiteCleaned: &cleaned, CiteNormalized: &cleaned},
 	}
-	require.NoError(t, s.SaveLinkResults(ctx, results))
+	require.NoError(t, NewMOMLCorpusStore(s.DB).SaveLinkResults(ctx, results))
 
 	var status, tier string
 	var stubCite, linked *string

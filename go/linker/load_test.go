@@ -35,9 +35,6 @@ func (f *fakeStore) GetReporterWhitelist(context.Context) (map[string]*citations
 func (f *fakeStore) GetDiffVols(context.Context) (map[string]map[int]*citations.DiffVolEntry, error) {
 	return nil, f.step("diffvols")
 }
-func (f *fakeStore) StreamUnprocessedCitations(context.Context, int, func([]citations.UnlinkedCitation) error) error {
-	return nil
-}
 func (f *fakeStore) LoadCAPCitations(context.Context) (map[string]int64, error) {
 	return f.capCites, f.step("cap")
 }
@@ -70,9 +67,6 @@ func (f *fakeStore) LoadCodeReporterYears(context.Context) (map[int64]int, error
 	return nil, nil
 }
 func (f *fakeStore) LoadERCaseYears(context.Context) (map[string]int, error) { return nil, nil }
-func (f *fakeStore) SaveLinkResults(context.Context, []*citations.LinkResult) error {
-	return nil
-}
 
 func TestLoad(t *testing.T) {
 	std := "Mass."

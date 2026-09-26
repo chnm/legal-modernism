@@ -112,6 +112,7 @@ func main() {
 	slog.Info("connected to the database", "database", db.Host())
 
 	store := citations.NewLinkerDBStore(pool)
+	src := citations.NewMOMLCorpusStore(pool)
 
 	// There is no --reset. Re-deriving existing rows means TRUNCATE
 	// moml_citations.citation_links from psql and then running this program
@@ -134,7 +135,7 @@ func main() {
 		"workers", workers, "batch_size", batchSize,
 		"lock_timeout", lockTimeout.String(), "progress_every", progressInterval.String())
 
-	sum, streamErr := linker.Run(ctx, tables, store, linker.Options{
+	sum, streamErr := linker.Run(ctx, tables, src, linker.Options{
 		BatchSize:     batchSize,
 		Workers:       workers,
 		ProgressEvery: progressInterval,
