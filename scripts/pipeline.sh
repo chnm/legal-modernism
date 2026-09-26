@@ -7,7 +7,7 @@
 #   sync                make sync-hopper: build the linux binaries, rsync them
 #                       and the slurm scripts to hopper
 #   truncate-citations  TRUNCATE moml_citations.citations_unlinked CASCADE
-#   detect              sbatch cite-detector-moml on hopper and wait (~3h36m)
+#   detect              sbatch cite-detector-moml on hopper and wait (~20m)
 #   link                sbatch cite-linker and wait (~10m for a full rebuild)
 #   stubs               make db-stubs: rebuild legalhist.stub_cases from misses
 #   truncate-links      TRUNCATE moml_citations.citation_links
@@ -464,10 +464,10 @@ phase_preflight() {
 
   # One confirmation for every destructive statement this run will execute.
   # It comes here rather than at each truncate because truncate-links fires
-  # hours in, when nobody is watching the terminal.
+  # half an hour in, when nobody may be watching the terminal.
   if phase_active truncate-citations; then
     statements="$statements
-    $TRUNCATE_CITATIONS_SQL   (every detected citation, about 62M rows and 3.5 hours to rebuild; CASCADE also empties citation_links)"
+    $TRUNCATE_CITATIONS_SQL   (every detected citation, about 56M rows and twenty minutes to rebuild; CASCADE also empties citation_links)"
   fi
   if phase_active truncate-links; then
     statements="$statements

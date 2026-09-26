@@ -16,9 +16,10 @@ waiting is needed, and fails loudly.
 caffeinate -i ./scripts/pipeline.sh
 ```
 
-Run it from the repository root. It takes about four hours, most of it the
-detector. `caffeinate -i` keeps a laptop from sleeping; the script survives a
-sleep, but the local steps after a job wait for the laptop to wake.
+Run it from the repository root. It takes about an hour: the detector, the
+two linker passes, and the maintenance each take ten to twenty minutes.
+`caffeinate -i` keeps a laptop from sleeping; the script survives a sleep, but
+the local steps after a job wait for the laptop to wake.
 
 ### What it does
 
@@ -27,12 +28,12 @@ sleep, but the local steps after a job wait for the laptop to wake.
 | `preflight` | Checks tools, database, migrations, ssh, hopper's environment, and the queue; asks once before the truncates | local and hopper | seconds |
 | `sync` | `make sync-hopper`: build the linux binaries, rsync them and `slurm/` to hopper | local | a minute |
 | `truncate-citations` | `TRUNCATE moml_citations.citations_unlinked CASCADE`, which also empties `citation_links` | local psql | seconds |
-| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 3h36m |
+| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 20 minutes, including the wait for a bigmem node |
 | `link` | `sbatch` `cite-linker`, wait, fetch its log | hopper | about 10 minutes |
-| `stubs` | `make db-stubs`: rebuild `legalhist.stub_cases` from the linker's misses | local psql | a few minutes |
+| `stubs` | `make db-stubs`: rebuild `legalhist.stub_cases` from the linker's misses | local psql | about a minute |
 | `truncate-links` | `TRUNCATE moml_citations.citation_links` | local psql | seconds |
 | `relink` | `sbatch` `cite-linker` again, so citations to reporters no source covers link to the stubs | hopper | about 10 minutes |
-| `maintenance` | `make db-maintenance`: vacuum the churned tables, refresh every materialized view | local psql | minutes |
+| `maintenance` | `make db-maintenance`: vacuum the churned tables, refresh every materialized view | local psql | about 12 minutes |
 
 The database steps are the existing Makefile targets, run locally against
 `LAW_DBSTR`. The Slurm jobs are the existing scripts in `slurm/`, unchanged.
@@ -117,9 +118,9 @@ A run that includes a truncate prints the statements it will execute and asks
 once, at the end of preflight, before anything is changed. `--yes` answers for
 you, for a run started from a script or left unattended from the start. The
 question comes at the start rather than at each truncate because
-`truncate-links` fires about four hours in, when nobody is at the terminal.
-There is no terminal to ask on under `nohup` or cron, so those runs need
-`--yes`.
+`truncate-links` fires about half an hour in, when nobody may be at the
+terminal. There is no terminal to ask on under `nohup` or cron, so those runs
+need `--yes`.
 
 ### How it waits on hopper
 
@@ -160,8 +161,8 @@ Resume with the printed `--from PHASE` command. Preflight runs again, the
 skipped phases are listed, and the run picks up at the named phase. A phase
 that failed partway is safe to repeat: the truncates are idempotent, the
 linker skips citations already linked, the detector rescans every page but
-inserts nothing twice (so a repeated `detect` still costs the full 3.5 hours),
-`make db-stubs` upserts, and maintenance is maintenance.
+inserts nothing twice (so a repeated `detect` still costs a full run of about
+twenty minutes), `make db-stubs` upserts, and maintenance is maintenance.
 
 Ctrl-C never cancels a Slurm job. The script prints the job id, how to watch
 or cancel it by hand, and the `--from PHASE --job ID` command that reattaches
