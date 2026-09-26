@@ -119,9 +119,22 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 // stream; a citation whose case has no year, or no row, streams with a nil
 // SourceYear and is never refused as anachronistic. A case is of the same
 // year as itself, so an opinion's citation of its own case links.
+//
+// Its Prepare has nothing to load; it checks that the ledger's tables exist,
+// which they do not until the migration that creates them is applied, so that
+// a run against a database still waiting for make db-up fails at startup
+// rather than after the lookup tables have loaded.
 func NewOpinionCorpusStore(db *pgxpool.Pool) *CorpusStore {
 	return &CorpusStore{
 		DB: db,
+		prepare: func(ctx context.Context) error {
+			for _, table := range []string{"opinion_citations.citations_unlinked", "opinion_citations.citation_links"} {
+				if _, err := db.Exec(ctx, "SELECT 1 FROM "+table+" LIMIT 0"); err != nil {
+					return fmt.Errorf("the opinion_citations ledger is not available (run make db-up?): %w", err)
+				}
+			}
+			return nil
+		},
 		stream: `
 		SELECT cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year, k.decision_year
 		FROM opinion_citations.citations_unlinked cu

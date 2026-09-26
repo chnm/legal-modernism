@@ -123,7 +123,7 @@ func main() {
 	// the citations cite-detector-cap found in the CAP opinions, and this
 	// program's results, in opinion_citations (issue #74).
 	store := citations.NewLinkerDBStore(pool)
-	src := citations.NewOpinionCorpusStore(pool)
+	ledger := citations.NewOpinionCorpusStore(pool)
 
 	// There is no --reset, for the reasons cite-linker has none (issue #294).
 	// Re-deriving existing rows means TRUNCATE opinion_citations.citation_links
@@ -140,6 +140,13 @@ func main() {
 		exitStartupError("could not load the lookup tables", err)
 	}
 
+	// Ready the ledger before linking starts. For this corpus that is a check
+	// that the opinion_citations tables exist, so a run against a database
+	// still waiting for make db-up fails here rather than at the stream.
+	if err := ledger.Prepare(ctx); err != nil {
+		exitStartupError("could not prepare the citation ledger", err)
+	}
+
 	// Mark the transition out of the loading phase. Without this the log goes
 	// quiet after the last lookup table is loaded, so there is no way to tell
 	// that linking has actually begun.
@@ -147,7 +154,7 @@ func main() {
 		"workers", workers, "batch_size", batchSize,
 		"lock_timeout", lockTimeout.String(), "progress_every", progressInterval.String())
 
-	sum, streamErr := linker.Run(ctx, tables, src, linker.Options{
+	sum, streamErr := linker.Run(ctx, tables, ledger, linker.Options{
 		BatchSize:     batchSize,
 		Workers:       workers,
 		ProgressEvery: progressInterval,

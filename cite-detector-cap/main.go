@@ -98,6 +98,14 @@ func main() {
 	sourcesDB := sources.NewPgxStore(pool)
 	citationsDB := citations.NewOpinionDBStore(pool)
 
+	// The table the detections go to is created by a migration. Without it
+	// every opinion's insert would fail, one ERROR at a time, for the whole
+	// scan of the corpus before the run exited 1; so check once, up front.
+	if _, err := pool.Exec(ctx, "SELECT 1 FROM opinion_citations.citations_unlinked LIMIT 0"); err != nil {
+		slog.Error("opinion_citations.citations_unlinked is not available; run make db-up", "error", err)
+		os.Exit(1)
+	}
+
 	// The detectors, shared with cite-detector-moml so the two corpora are
 	// detected under the same semantics. Fatal on failure: continuing without
 	// the single-volume or year detectors would detect the whole corpus under

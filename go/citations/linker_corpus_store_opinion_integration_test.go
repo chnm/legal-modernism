@@ -179,3 +179,22 @@ func TestSaveOpinionLinkResultsIntegration(t *testing.T) {
 	}))
 	assert.Equal(t, 0, delivered)
 }
+
+// TestPrepareOpinionCorpusStoreIntegration: Prepare passes when the ledger's
+// tables exist and fails, naming the ledger, when they do not, so a linker run
+// before the migration is applied stops at startup.
+func TestPrepareOpinionCorpusStoreIntegration(t *testing.T) {
+	s := newTestOpinionCorpusStore(t)
+	ctx := context.Background()
+
+	require.NoError(t, s.Prepare(ctx))
+
+	_, err := s.DB.Exec(ctx, `DROP SCHEMA opinion_citations CASCADE`)
+	require.NoError(t, err)
+	fresh := NewOpinionCorpusStore(s.DB)
+	err = fresh.Prepare(ctx)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "opinion_citations ledger is not available")
+	assert.ErrorContains(t, fresh.StreamUnprocessedCitations(ctx, 10, func([]UnlinkedCitation) error { return nil }),
+		"opinion_citations ledger is not available", "the stream prepares itself too")
+}
