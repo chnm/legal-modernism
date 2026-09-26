@@ -13,7 +13,9 @@ import (
 // newTestPgxStore builds the slice of cap.cases and cap.opinions that
 // StreamCAPOpinions reads, in a throwaway database. Skipped unless
 // LAW_TEST_DBSTR is set, exactly as the go/citations integration tests are;
-// see newTestStore there for the docker one-liner.
+// see newTestStore there for the docker one-liner. Those tests rebuild the cap
+// schema too, so when both packages run against the database they must run
+// one at a time: go test -p 1.
 func newTestPgxStore(t *testing.T) *PgxStore {
 	t.Helper()
 	dsn := os.Getenv("LAW_TEST_DBSTR")

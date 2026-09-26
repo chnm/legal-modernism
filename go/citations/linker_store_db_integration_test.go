@@ -21,6 +21,11 @@ import (
 //	docker run -d --name lm-linker-test -e POSTGRES_PASSWORD=test \
 //	    -e POSTGRES_DB=lawtest -p 55432:5432 postgres:17
 //	LAW_TEST_DBSTR='postgres://postgres:test@localhost:55432/lawtest' go test ./go/citations/ -run Integration -v
+//
+// The integration tests of every package share that one database and each
+// drops and rebuilds the schemas it needs, so more than one package at a time
+// must run one package at a time: go test -p 1 ./... (go/sources rebuilds the
+// cap schema too).
 func newTestStore(t *testing.T) *LinkerDBStore {
 	t.Helper()
 	dsn := os.Getenv("LAW_TEST_DBSTR")
