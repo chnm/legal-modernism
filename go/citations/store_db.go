@@ -10,24 +10,72 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-// DBStore is a database store for citation objects
+// DBStore is a database store for citation objects: the reporter tables a
+// detector builds its detectors from, and the citations_unlinked table its
+// detections go to. Which corpus's table that is comes from the constructor;
+// everything else is the same for the treatises and the CAP opinions.
 type DBStore struct {
 	DB *pgxpool.Pool
+	// insert is the statement SaveCitations runs. Empty means the MOML table,
+	// so a store built as a bare literal behaves as it always did.
+	insert string
 }
 
-// NewDBStore returns an citation repo using PostgreSQL with the pgx native interface.
+// NewDBStore returns the store over moml_citations, the citations
+// cite-detector-moml finds on the pages of the treatises.
 func NewDBStore(db *pgxpool.Pool) *DBStore {
 	return &DBStore{
-		DB: db,
+		DB:     db,
+		insert: insertMOMLCitations,
 	}
 }
+
+// NewOpinionDBStore returns the store over opinion_citations, the citations
+// cite-detector-cap finds in the text of CAP opinions (issue #74). The
+// documents it saves must be *sources.CAPOpinion: their ParentID and ID are
+// the citing case's and the opinion's ids, which the statement casts to
+// bigint, so a treatise page handed to this store fails at the cast rather
+// than being written under the wrong key.
+func NewOpinionDBStore(db *pgxpool.Pool) *DBStore {
+	return &DBStore{
+		DB:     db,
+		insert: insertOpinionCitations,
+	}
+}
+
+// insertMOMLCitations and insertOpinionCitations are the two shapes of the
+// insert SaveCitations runs: the same eight arrays and created_at scalar,
+// expanded with unnest, into the corpus's citations_unlinked. The MOML table
+// keys a page by two strings; the opinion table keys an opinion and its case
+// by bigint ids, cast from the strings the Document interface carries the way
+// the id is cast to uuid. Both rely on a bare ON CONFLICT DO NOTHING covering
+// the primary key and the unique index citations_unlinked_uq alike.
+const (
+	insertMOMLCitations = `
+	INSERT INTO moml_citations.citations_unlinked
+		(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year, created_at)
+	SELECT u.id::uuid, u.moml_treatise, u.moml_page, u.raw, u.volume, u.reporter_abbr, u.page, u.year, $9
+	FROM unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::int4[], $6::text[], $7::int4[], $8::int4[])
+		AS u(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year)
+	ON CONFLICT DO NOTHING;
+	`
+	insertOpinionCitations = `
+	INSERT INTO opinion_citations.citations_unlinked
+		(id, cap_case, cap_opinion, raw, volume, reporter_abbr, page, year, created_at)
+	SELECT u.id::uuid, u.cap_case::bigint, u.cap_opinion::bigint, u.raw, u.volume, u.reporter_abbr, u.page, u.year, $9
+	FROM unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::int4[], $6::text[], $7::int4[], $8::int4[])
+		AS u(id, cap_case, cap_opinion, raw, volume, reporter_abbr, page, year)
+	ON CONFLICT DO NOTHING;
+	`
+)
 
 // SaveCitation saves a single citation to the database.
 func (r *DBStore) SaveCitation(ctx context.Context, c *Citation) error {
 	return r.SaveCitations(ctx, []*Citation{c})
 }
 
-// SaveCitations inserts a page's worth of citations in one statement.
+// SaveCitations inserts a document's worth of citations in one statement, into
+// the corpus's citations_unlinked table the store was built for.
 //
 // Rather than build a VALUES list, which would grow the statement with the
 // batch and run into Postgres's 65535-parameter limit, it passes one array per
@@ -89,15 +137,11 @@ func (r *DBStore) SaveCitations(ctx context.Context, cites []*Citation) error {
 		}
 	}
 
-	query := `
-	INSERT INTO moml_citations.citations_unlinked
-		(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year, created_at)
-	SELECT u.id::uuid, u.moml_treatise, u.moml_page, u.raw, u.volume, u.reporter_abbr, u.page, u.year, $9
-	FROM unnest($1::text[], $2::text[], $3::text[], $4::text[], $5::int4[], $6::text[], $7::int4[], $8::int4[])
-		AS u(id, moml_treatise, moml_page, raw, volume, reporter_abbr, page, year)
-	ON CONFLICT DO NOTHING;
-	`
-	_, err := r.DB.Exec(ctx, query, ids, parents, docs, raws, volumes, abbrs, pageNums, years, time.Now())
+	insert := r.insert
+	if insert == "" {
+		insert = insertMOMLCitations
+	}
+	_, err := r.DB.Exec(ctx, insert, ids, parents, docs, raws, volumes, abbrs, pageNums, years, time.Now())
 	if err != nil {
 		return fmt.Errorf("batch saving %d citations: %w", len(ids), err)
 	}
