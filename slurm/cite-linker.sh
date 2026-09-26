@@ -65,6 +65,14 @@
 # tables and 7m49s was linking at a steady 105–140K rows/sec (roughly 1 core and
 # 2.6GB RSS, the same profile as a routine run). An earlier attempt the same day
 # (job 9552356) crawled at ~8,000 rows/min and hit the wall time without
-# finishing; the cause was never identified. If a rebuild is running far below
-# ~100K rows/sec in the "linking progress" log lines, cancel and resubmit rather
-# than raising --time.
+# finishing, and so did the relink job 1193569 on 2026-09-25. The cause is the
+# query planner, not the linker. After a linker pass, TRUNCATE leaves behind the
+# count of rows inserted since citation_links was last analyzed, so within a
+# minute autovacuum analyzes the now-empty table. A linker that starts after
+# that sees a table of zero rows and plans the anti-join in
+# StreamUnprocessedCitations as a nested loop that re-reads citation_links for
+# every citation, slower and slower as the workers fill it. A linker that starts
+# before the analyze, or a resubmit once the table has rows and fresh
+# statistics, gets a hash join. If a rebuild is running far below ~100K rows/sec
+# in the "linking progress" log lines, cancel and resubmit rather than raising
+# --time.
