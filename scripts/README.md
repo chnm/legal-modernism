@@ -23,8 +23,9 @@ Run it from the repository root. A MOML rebuild takes well under an hour: the
 detector about 21 minutes (12 of them scanning, most of the rest waiting for
 a bigmem node), each of the two linker passes about 10, and the maintenance
 about 12. A CAP rebuild is one detector job, one linker pass of a few
-minutes, and the same maintenance; the first CAP detector run is unmeasured,
-hours at most (`slurm/cite-detector-cap.sh` has the sizing). `caffeinate -i`
+minutes, and the same maintenance: about ten minutes in all (the first run,
+on 2026-09-26, scanned 1.56M opinions in 3m10s and linked 9.76M citations in
+3m00s). `caffeinate -i`
 keeps a laptop from sleeping; the script survives a sleep, but the local
 steps after a job wait for the laptop to wake.
 
@@ -52,7 +53,7 @@ For the CAP opinions, `--corpus cap`, the phases keep their names so that
 | `preflight` | As above; the queue check covers the jobs of both corpora | local and hopper | seconds |
 | `sync` | As above | local | a minute |
 | `truncate-citations` | `TRUNCATE opinion_citations.citations_unlinked CASCADE`, which also empties `opinion_citations.citation_links` | local psql | seconds |
-| `detect` | `sbatch` `cite-detector-cap`, wait, fetch its log | hopper | unmeasured until the first run; hours at most |
+| `detect` | `sbatch` `cite-detector-cap`, wait, fetch its log | hopper | a few minutes of scanning (3m10s on 2026-09-26) plus the wait for a bigmem node |
 | `truncate-links` | `TRUNCATE opinion_citations.citation_links`; a no-op in a full run after the CASCADE, kept so that `--from truncate-links` relinks | local psql | seconds |
 | `link` | `sbatch` `cite-linker-cap`, wait, fetch its log | hopper | minutes: about 6.5M citations at 100K+ rows a second, after the lookup tables load |
 | `maintenance` | `make db-maintenance`, the same script: it vacuums the churned tables and refreshes every materialized view in the database, MOML's included | local psql | about 12 minutes |

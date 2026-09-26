@@ -14,11 +14,11 @@
 # a maximum near 137 KB, against a treatise page of a few KB. That weakens the
 # detector's literal prefilter, which skips a single-volume reporter's regex
 # whenever its literal is absent from the document: a longer text contains more
-# literals, so more of the thousand-odd regexes run over more bytes. So the first CAP
-# run is the measurement; the 6 hour wall time is a ceiling with room, not an
-# estimate. Record the result here, as cite-linker.sh does for its job:
-#
-#   first run: job ______, ____ wall, ____ peak RSS (fill in from sacct)
+# literals, so more of the thousand-odd regexes run over more bytes. The first
+# run, job 1223521 on 2026-09-26, settled it: 1,558,490 opinions scanned in
+# 3m10s (09:52:26 to 09:55:36 by the program's own log, after 3m43s in the
+# queue), 10,340,323 citations saved, 9,763,117 distinct rows. The wall time
+# below is twenty times that. Peak RSS is still to be read off sacct.
 #
 # Connection budget. The database allows 97 non-superuser connections
 # (max_connections 100, 3 reserved). This detector opens up to 64 (maxDBConns
@@ -46,7 +46,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=64
-#SBATCH --time=0-06:00:00
+#SBATCH --time=01:00:00
 #SBATCH --mem=64GB
 #SBATCH --partition bigmem
 #SBATCH --mail-user lmullen@gmu.edu
