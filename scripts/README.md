@@ -6,38 +6,75 @@ One-off R, Python, and SQL scripts for data manipulation and import, and
 ## pipeline.sh: the citation rebuild in one command
 
 `pipeline.sh` rebuilds all citation data from a workstation with ssh access to
-hopper, the HPC cluster (issue #321). Before it existed, a rebuild was five
-hand-offs across two machines: sync the programs, log in to hopper, submit the
+hopper, the HPC cluster (issue #321), for one corpus at a time: the MOML
+treatises by default, or the opinions of the Caselaw Access Project with
+`--corpus cap` (issue #74). Before it existed, a rebuild was five hand-offs
+across two machines: sync the programs, log in to hopper, submit the
 detector, notice when it finished, submit the linker, notice when it finished,
 then run the local database steps. The script does all of it, waits where
 waiting is needed, and fails loudly.
 
 ```
 caffeinate -i ./scripts/pipeline.sh
+caffeinate -i ./scripts/pipeline.sh --corpus cap
 ```
 
-Run it from the repository root. It takes about an hour: the detector, the
-two linker passes, and the maintenance each take ten to twenty minutes.
-`caffeinate -i` keeps a laptop from sleeping; the script survives a sleep, but
-the local steps after a job wait for the laptop to wake.
+Run it from the repository root. A MOML rebuild takes well under an hour: the
+detector about 21 minutes (12 of them scanning, most of the rest waiting for
+a bigmem node), each of the two linker passes about 10, and the maintenance
+about 12. A CAP rebuild is one detector job, one linker pass of a few
+minutes, and the same maintenance; the first CAP detector run is unmeasured,
+hours at most (`slurm/cite-detector-cap.sh` has the sizing). `caffeinate -i`
+keeps a laptop from sleeping; the script survives a sleep, but the local
+steps after a job wait for the laptop to wake.
 
 ### What it does
+
+For the MOML treatises, the default:
 
 | Phase | Runs | Where | Takes |
 |---|---|---|---|
 | `preflight` | Checks tools, database, migrations, ssh, hopper's environment, and the queue; asks once before the truncates | local and hopper | seconds |
 | `sync` | `make sync-hopper`: build the linux binaries, rsync them and `slurm/` to hopper | local | a minute |
 | `truncate-citations` | `TRUNCATE moml_citations.citations_unlinked CASCADE`, which also empties `citation_links` | local psql | seconds |
-| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 20 minutes, including the wait for a bigmem node |
+| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 21 minutes, 12 of them scanning and most of the rest waiting for a bigmem node |
 | `link` | `sbatch` `cite-linker`, wait, fetch its log | hopper | about 10 minutes |
 | `stubs` | `make db-stubs`: rebuild `legalhist.stub_cases` from the linker's misses | local psql | about a minute |
 | `truncate-links` | `TRUNCATE moml_citations.citation_links` | local psql | seconds |
 | `relink` | `sbatch` `cite-linker` again, so citations to reporters no source covers link to the stubs | hopper | about 10 minutes |
 | `maintenance` | `make db-maintenance`: vacuum the churned tables, refresh every materialized view | local psql | about 12 minutes |
 
+For the CAP opinions, `--corpus cap`, the phases keep their names so that
+`--from` and `--job` read the same way:
+
+| Phase | Runs | Where | Takes |
+|---|---|---|---|
+| `preflight` | As above; the queue check covers the jobs of both corpora | local and hopper | seconds |
+| `sync` | As above | local | a minute |
+| `truncate-citations` | `TRUNCATE opinion_citations.citations_unlinked CASCADE`, which also empties `opinion_citations.citation_links` | local psql | seconds |
+| `detect` | `sbatch` `cite-detector-cap`, wait, fetch its log | hopper | unmeasured until the first run; hours at most |
+| `truncate-links` | `TRUNCATE opinion_citations.citation_links`; a no-op in a full run after the CASCADE, kept so that `--from truncate-links` relinks | local psql | seconds |
+| `link` | `sbatch` `cite-linker-cap`, wait, fetch its log | hopper | minutes: about 6.5M citations at 100K+ rows a second, after the lookup tables load |
+| `maintenance` | `make db-maintenance`, the same script: it vacuums the churned tables and refreshes every materialized view in the database, MOML's included | local psql | about 12 minutes |
+
+There is no `stubs` or `relink` phase for CAP. `make db-stubs` builds
+`legalhist.stub_cases` from the MOML linker's misses only, so the registry is
+read-only for this corpus: `cite-linker-cap` links to the stubs that exist and
+CAP misses never add any. The dependency runs the other way: a MOML `stubs`
+phase can prune stubs that CAP `linked_stub` rows point at (nothing enforces
+the reference), so a MOML run that rebuilds the stubs should be followed by
+`./scripts/pipeline.sh --corpus cap --from truncate-links`.
+
+A CAP job and a MOML job must never run at the same time. The database
+allows 97 non-superuser connections (`max_connections` 100, 3 reserved); a
+detector opens up to 64 and a linker `--workers + 2 = 34`, so a detector of
+one corpus beside a linker of the other over-subscribes the server. The
+preflight refuses to submit while any of the four job names is queued or
+running, whichever corpus was asked for.
+
 The database steps are the existing Makefile targets, run locally against
-`LAW_DBSTR`. The Slurm jobs are the existing scripts in `slurm/`, unchanged.
-The order and the reasons for it are in the "Pipeline run order" section of
+`LAW_DBSTR`. The Slurm jobs are the scripts in `slurm/`, unchanged. The order
+and the reasons for it are in the "Pipeline run order" section of
 `CLAUDE.md`.
 
 ### Prerequisites
@@ -53,6 +90,19 @@ On the workstation:
 - No pending migrations: `make db-up`, then `make db-schema`, and commit
   `db/schema.sql`. The preflight refuses to start otherwise.
 
+Before the first CAP run, the migrations that give `cap.opinions` a primary
+key and create the `opinion_citations` schema must be applied, in this order:
+
+1. `make db-up`, in a quiet ten minutes: the migration backfills an id over
+   every row of `cap.opinions` under an exclusive lock, with a one-minute
+   lock timeout, so it fails fast rather than waits if `cap-import` or an ad
+   hoc session is reading the table. The MOML jobs never touch it.
+2. By hand, `VACUUM (ANALYZE, PROCESS_TOAST false) cap.opinions;` against
+   `LAW_DBSTR`, to make the space the backfill left reusable and refresh the
+   statistics without reading the 36 GB of TOASTed text.
+3. `make db-schema` and commit `db/schema.sql`.
+4. `caffeinate -i ./scripts/pipeline.sh --corpus cap`.
+
 On hopper:
 
 - `LAW_DBSTR` exported from the login shell's rc file (`~/.bash_profile` or
@@ -66,6 +116,7 @@ On hopper:
 ### Options
 
 ```
+--corpus NAME   which corpus to detect and link: moml (the default) or cap
 --from PHASE    resume at PHASE; earlier phases are skipped (preflight always runs)
 --job ID        with --from detect, link, or relink: attach to Slurm job ID
                 instead of submitting a new one
@@ -77,11 +128,12 @@ On hopper:
 ```
 
 `STUB_THRESHOLD` in the environment passes through to `make db-stubs`
-(default 5).
+(default 5). `--from` and `--job` are checked against the phases of the
+corpus chosen, so `--corpus cap --from stubs` is an unknown phase.
 
 ### Recipes
 
-The full rebuild, after a change to the detector or its inputs:
+The full MOML rebuild, after a change to the detector or its inputs:
 
 ```
 caffeinate -i ./scripts/pipeline.sh
@@ -97,6 +149,14 @@ A routine incremental link of new citations, then maintenance:
 
 ```
 ./scripts/pipeline.sh --from link
+```
+
+The CAP corpus end to end, and a CAP relink after a whitelist or linker
+change or after a MOML run rebuilt the stubs:
+
+```
+caffeinate -i ./scripts/pipeline.sh --corpus cap
+./scripts/pipeline.sh --corpus cap --from truncate-links
 ```
 
 See what a run would do without doing any of it:
@@ -118,9 +178,10 @@ A run that includes a truncate prints the statements it will execute and asks
 once, at the end of preflight, before anything is changed. `--yes` answers for
 you, for a run started from a script or left unattended from the start. The
 question comes at the start rather than at each truncate because
-`truncate-links` fires about half an hour in, when nobody may be at the
-terminal. There is no terminal to ask on under `nohup` or cron, so those runs
-need `--yes`.
+`truncate-links` fires about half an hour into a MOML run, and after the
+detector in a CAP one, when nobody may be at the terminal. The statements it
+prints are the chosen corpus's, with what each costs to rebuild. There is no
+terminal to ask on under `nohup` or cron, so those runs need `--yes`.
 
 ### How it waits on hopper
 
@@ -138,16 +199,20 @@ accounting catches up, and falling back to `scontrol show job` if accounting
 has nothing. Then it copies the job's stderr, the JSON log, and stdout from
 `/scratch/$USER/logs/` on hopper into the run directory and checks that the
 log ends with the program's "done" line, reporting the counts it carries
-(`pages_processed` and `citations_saved` for the detector, `processed` for
-the linker).
+(`pages_processed` for the MOML detector or `opinions_processed` for the CAP
+one, with `citations_saved`; `processed` for either linker). The CAP
+programs log the same "done" lines as the MOML ones, so the markers are
+shared.
 
 Pass or fail is the Slurm job state, not the program's exit code. The detector
 exits 1 both on a real failure and on the SIGTERM that Slurm sends at the wall
 time, so the exit code cannot tell the two apart; the state can (`FAILED`
 against `TIMEOUT`). A job that ends `TIMEOUT` is resubmitted once, because
 both programs commit as they go: the linker picks up where it stopped, and
-the detector rescans every page but inserts nothing twice. A second timeout,
-or any other state, fails the run.
+the detector rescans every page (or opinion) from the first but inserts
+nothing twice. A second timeout, or any other state, fails the run. For the
+CAP detector, whose whole run is a rescan, a timeout is a reason to raise the
+wall time in `slurm/cite-detector-cap.sh` rather than to resubmit unchanged.
 
 ### When it fails
 
@@ -161,8 +226,10 @@ Resume with the printed `--from PHASE` command. Preflight runs again, the
 skipped phases are listed, and the run picks up at the named phase. A phase
 that failed partway is safe to repeat: the truncates are idempotent, the
 linker skips citations already linked, the detector rescans every page but
-inserts nothing twice (so a repeated `detect` still costs a full run of about
-twenty minutes), `make db-stubs` upserts, and maintenance is maintenance.
+inserts nothing twice (so a repeated `detect` still costs a full run: about
+21 minutes for MOML, the whole job for CAP), `make db-stubs` upserts, and
+maintenance is maintenance. The resume command carries `--corpus cap` when
+that is what was running.
 
 Ctrl-C never cancels a Slurm job. The script prints the job id, how to watch
 or cancel it by hand, and the `--from PHASE --job ID` command that reattaches
@@ -179,7 +246,7 @@ Refusals in preflight, and what to do:
 | migrations are pending | `make db-up`, `make db-schema`, commit `db/schema.sql`. |
 | cannot ssh to hopper | Check the `hopper` ssh alias and that a key is loaded. |
 | `LAW_DBSTR` is not exported in the login shell on hopper | Export it from `~/.bash_profile` on hopper. |
-| a pipeline job is already queued or running | Wait for it, cancel it, or attach to it with `--from PHASE --job ID`. |
+| a pipeline job is already queued or running | Wait for it, cancel it, or attach to it with `--from PHASE --job ID`. The check covers the jobs of both corpora, because a CAP job and a MOML job together exceed the database's connections. |
 
 A truncate that waits more than sixty seconds for its lock fails rather than
 hanging, with PostgreSQL's lock timeout error. Something else holds a lock on
@@ -190,10 +257,12 @@ resume.
 
 Each run gets a directory `logs/pipeline/<timestamp>/`, ignored by git:
 
-- `pipeline.log`, everything the run printed, with the commit and the number
-  of uncommitted changes recorded at the top.
-- `<jobid>-cite-detector-moml.log` and `<jobid>-cite-linker.log`, the JSON
-  logs of the jobs, copied from hopper, one per job including resubmissions.
+- `pipeline.log`, everything the run printed, with the commit, the number
+  of uncommitted changes, and the corpus recorded at the top.
+- `<jobid>-cite-detector-moml.log` and `<jobid>-cite-linker.log`, or for a
+  CAP run `<jobid>-cite-detector-cap.log` and `<jobid>-cite-linker-cap.log`,
+  the JSON logs of the jobs, copied from hopper, one per job including
+  resubmissions.
 - The matching `.out` files, usually empty because the programs log to stderr.
 
 Commands are logged as they run, prefixed `+`, with the connection string

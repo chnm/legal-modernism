@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 #
 # Rebuild all citation data in one run, from a workstation with ssh access to
-# hopper (issue #321). The phases, in order:
+# hopper (issue #321), for one of two corpora: the MOML treatises (--corpus
+# moml, the default) or the opinions of the Caselaw Access Project (--corpus
+# cap, issue #74). The phases of a MOML run, in order:
 #
 #   preflight           check tools, database, migrations, ssh, and the queue
 #   sync                make sync-hopper: build the linux binaries, rsync them
 #                       and the slurm scripts to hopper
 #   truncate-citations  TRUNCATE moml_citations.citations_unlinked CASCADE
-#   detect              sbatch cite-detector-moml on hopper and wait (~20m)
+#   detect              sbatch cite-detector-moml on hopper and wait (~21m,
+#                       12 of them scanning, the rest waiting for a node)
 #   link                sbatch cite-linker and wait (~10m for a full rebuild)
 #   stubs               make db-stubs: rebuild legalhist.stub_cases from misses
 #   truncate-links      TRUNCATE moml_citations.citation_links
@@ -15,13 +18,32 @@
 #                       source covers link to the stubs
 #   maintenance         make db-maintenance: vacuum, refresh materialized views
 #
+# A full MOML rebuild takes well under an hour. A CAP run has the phases
+#
+#   preflight sync truncate-citations detect truncate-links link maintenance
+#
+# with the same names, so --from and --job read the same way. What differs:
+# the tables are opinion_citations.citations_unlinked and citation_links, the
+# jobs are cite-detector-cap and cite-linker-cap, and there is no stubs or
+# relink phase, because CAP misses never feed make db-stubs (the stub registry
+# is MOML-built and read-only for this corpus). truncate-links stays so that
+# `--corpus cap --from truncate-links` relinks after a whitelist or linker
+# change; in a full CAP run it is a no-op after the CASCADE. The first CAP
+# detector run is unmeasured (hours at most; slurm/cite-detector-cap.sh has
+# the sizing), and its linker takes minutes. A CAP run's maintenance phase is
+# the same db/maintenance.sh, which refreshes every materialized view in the
+# database, MOML's included. A MOML stubs run can leave CAP linked_stub rows
+# pointing at pruned stubs, so follow it with --corpus cap --from
+# truncate-links.
+#
 # The database steps run here, through the Makefile targets, against
-# LAW_DBSTR. The two Slurm jobs run on hopper and are watched by polling
+# LAW_DBSTR. The Slurm jobs run on hopper and are watched by polling
 # squeue over fresh ssh connections, so a laptop that sleeps or loses its
 # network picks up where it left off instead of losing the run. Pass or fail
 # comes from the Slurm job state, not the program's exit code: the detector
 # exits 1 on a wall-time SIGTERM as well as on a real failure. A job that hits
-# its wall time is resubmitted once; both programs resume from committed work.
+# its wall time is resubmitted once: the linker resumes from committed work,
+# and a detector rescans from the first row but inserts nothing twice.
 #
 # Failure is loud: a non-zero exit, a banner naming the phase and the command
 # to resume, the tail of the fetched job log, a terminal bell, and a macOS
@@ -34,9 +56,11 @@
 # indexed arrays only, no mapfile, no associative arrays.
 #
 # Usage:
-#   caffeinate -i ./scripts/pipeline.sh            # the full rebuild
+#   caffeinate -i ./scripts/pipeline.sh            # the full MOML rebuild
 #   ./scripts/pipeline.sh --from truncate-links    # relink after a whitelist change
 #   ./scripts/pipeline.sh --from link              # routine incremental link
+#   caffeinate -i ./scripts/pipeline.sh --corpus cap             # the CAP corpus
+#   ./scripts/pipeline.sh --corpus cap --from truncate-links     # relink CAP
 #   ./scripts/pipeline.sh --dry-run                # print every command, run none
 #   ./scripts/pipeline.sh --help
 
@@ -51,28 +75,86 @@ cd "$REPO_ROOT"
 HOPPER=hopper
 SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=2)
 
-# Slurm job names (the --job-name in each slurm script) and where make
-# sync-hopper puts the scripts on hopper (slurm/ lands in ~/legal-modernism/jobs/).
-DETECTOR_JOB=cite-detector-moml
-LINKER_JOB=cite-linker
-# shellcheck disable=SC2088  # the tilde is expanded by the shell on hopper
-DETECTOR_SCRIPT='~/legal-modernism/jobs/cite-detector-moml.sh'
-# shellcheck disable=SC2088
-LINKER_SCRIPT='~/legal-modernism/jobs/cite-linker.sh'
+# The corpus, chosen by --corpus: moml (the default) or cap. set_corpus below
+# fills the settings that depend on it.
+CORPUS=moml
+
+# Slurm job names (the --job-name in each slurm script), for both corpora.
+# Preflight checks the queue for all four whatever the corpus, because a CAP
+# job and a MOML job must never run at the same time (the reason is there).
+MOML_DETECTOR_JOB=cite-detector-moml
+MOML_LINKER_JOB=cite-linker
+CAP_DETECTOR_JOB=cite-detector-cap
+CAP_LINKER_JOB=cite-linker-cap
+ALL_JOBS="$MOML_DETECTOR_JOB,$MOML_LINKER_JOB,$CAP_DETECTOR_JOB,$CAP_LINKER_JOB"
 
 # The last line each program logs (JSON to stderr) when it finishes properly.
+# The CAP programs log the same lines as the MOML ones, so the markers are
+# shared; only the numeric fields on the detector's line differ, and those
+# are per corpus (DETECTOR_FIELDS).
 DETECTOR_DONE='"msg":"done detecting citations"'
 LINKER_DONE='"msg":"done linking citations"'
 
-TRUNCATE_CITATIONS_SQL='TRUNCATE moml_citations.citations_unlinked CASCADE;'
-TRUNCATE_LINKS_SQL='TRUNCATE moml_citations.citation_links;'
 LOCK_TIMEOUT=60s   # how long a TRUNCATE waits for a lock before failing
-
-PHASES=(preflight sync truncate-citations detect link stubs truncate-links relink maintenance)
-JOB_PHASES=(detect link relink)   # phases that --job can attach to
 
 HEARTBEAT=600   # seconds between "still running" lines while waiting on a job
 SACCT_RETRIES=6 # how many times, 10s apart, to ask sacct for a final state
+
+# Per-corpus settings, filled by set_corpus once the command line is parsed:
+# the jobs to submit and where make sync-hopper puts their scripts on hopper
+# (slurm/ lands in ~/legal-modernism/jobs/), the numeric fields to report from
+# the detector's done line, the TRUNCATE statements and what the confirmation
+# says each costs to rebuild, and the phases.
+DETECTOR_JOB=""
+LINKER_JOB=""
+DETECTOR_SCRIPT=""
+LINKER_SCRIPT=""
+DETECTOR_FIELDS=()
+TRUNCATE_CITATIONS_SQL=""
+TRUNCATE_LINKS_SQL=""
+TRUNCATE_CITATIONS_NOTE=""
+TRUNCATE_LINKS_NOTE=""
+PHASES=()
+JOB_PHASES=()   # phases that --job can attach to
+
+set_corpus() {  # set_corpus moml|cap; fails on any other name
+  case "$1" in
+    moml)
+      DETECTOR_JOB=$MOML_DETECTOR_JOB
+      LINKER_JOB=$MOML_LINKER_JOB
+      # shellcheck disable=SC2088  # the tilde is expanded by the shell on hopper
+      DETECTOR_SCRIPT='~/legal-modernism/jobs/cite-detector-moml.sh'
+      # shellcheck disable=SC2088
+      LINKER_SCRIPT='~/legal-modernism/jobs/cite-linker.sh'
+      DETECTOR_FIELDS=(pages_processed citations_saved)
+      TRUNCATE_CITATIONS_SQL='TRUNCATE moml_citations.citations_unlinked CASCADE;'
+      TRUNCATE_LINKS_SQL='TRUNCATE moml_citations.citation_links;'
+      TRUNCATE_CITATIONS_NOTE='every detected citation, about 56M rows and 12 minutes of scanning to rebuild; CASCADE also empties citation_links'
+      TRUNCATE_LINKS_NOTE='every link; the linker rebuilds them in about ten minutes'
+      PHASES=(preflight sync truncate-citations detect link stubs truncate-links relink maintenance)
+      JOB_PHASES=(detect link relink)
+      ;;
+    cap)
+      DETECTOR_JOB=$CAP_DETECTOR_JOB
+      LINKER_JOB=$CAP_LINKER_JOB
+      # shellcheck disable=SC2088
+      DETECTOR_SCRIPT='~/legal-modernism/jobs/cite-detector-cap.sh'
+      # shellcheck disable=SC2088
+      LINKER_SCRIPT='~/legal-modernism/jobs/cite-linker-cap.sh'
+      DETECTOR_FIELDS=(opinions_processed citations_saved)
+      TRUNCATE_CITATIONS_SQL='TRUNCATE opinion_citations.citations_unlinked CASCADE;'
+      TRUNCATE_LINKS_SQL='TRUNCATE opinion_citations.citation_links;'
+      TRUNCATE_CITATIONS_NOTE='every detected citation, about 6.5M rows; the rebuild is unmeasured, hours at most; CASCADE also empties citation_links'
+      TRUNCATE_LINKS_NOTE='every link; the linker rebuilds them in minutes'
+      # No stubs or relink: CAP misses never feed make db-stubs. truncate-links
+      # stays so that --from truncate-links relinks after a whitelist or linker
+      # change; in a full run it is a no-op after the CASCADE above.
+      PHASES=(preflight sync truncate-citations detect truncate-links link maintenance)
+      JOB_PHASES=(detect link)
+      ;;
+    *) return 1 ;;
+  esac
+}
 
 # --- Options and state -------------------------------------------------------
 
@@ -186,6 +268,7 @@ print_summary() {
 # failed, attaching to the Slurm job that is still running if there is one.
 resume_cmd() {
   local cmd="./scripts/pipeline.sh"
+  if [[ "$CORPUS" != moml ]]; then cmd="$cmd --corpus $CORPUS"; fi
   if [[ -n "$CURRENT_PHASE" && "$CURRENT_PHASE" != preflight ]]; then
     cmd="$cmd --from $CURRENT_PHASE"
     if [[ -n "$CURRENT_JOB_ID" ]]; then cmd="$cmd --job $CURRENT_JOB_ID"; fi
@@ -340,7 +423,8 @@ fetch_job_log() {  # fetch_job_log ID JOBNAME
 }
 
 # Require the program's "done" line at the end of its log, and report the
-# numeric fields it carries (pages_processed, citations_saved, processed).
+# numeric fields it carries (pages_processed or opinions_processed and
+# citations_saved for a detector, processed for a linker).
 check_done_line() {  # check_done_line FILE MARKER FIELD...
   local file="$1" marker="$2" field val summary=""
   shift 2
@@ -448,9 +532,14 @@ phase_preflight() {
     || die "sbatch, squeue, or sacct is not on the PATH of the login shell on $HOPPER"
   hopper "mkdir -p /scratch/$HUSER/logs" || die "cannot create /scratch/$HUSER/logs on $HOPPER"
 
-  # Two detectors would double a 3.5 hour job; two linkers are correct but
-  # double the read work. Refuse unless the queued job is the one to attach to.
-  out=$(hopper_value "squeue -u $HUSER -h -n $DETECTOR_JOB,$LINKER_JOB -o \"%i %j %T\"" "") || rc=$?
+  # Refuse to submit beside any pipeline job, whichever corpus it belongs to,
+  # unless the queued job is the one to attach to. Within a corpus, two
+  # detectors would double the job and two linkers are correct but double the
+  # read work. Across corpora the limit is the database: it allows 97
+  # non-superuser connections (max_connections 100, 3 reserved), a detector
+  # opens up to 64 and a linker --workers + 2 = 34, so a CAP job beside a MOML
+  # job over-subscribes the server. Hence all four job names, in every mode.
+  out=$(hopper_value "squeue -u $HUSER -h -n $ALL_JOBS -o \"%i %j %T\"" "") || rc=$?
   if [[ $rc -eq 255 ]]; then die "ssh to $HOPPER failed while checking the queue"; fi
   if [[ -n "$out" ]]; then
     n=$(printf '%s\n' "$out" | wc -l | tr -d ' ')
@@ -464,14 +553,16 @@ phase_preflight() {
 
   # One confirmation for every destructive statement this run will execute.
   # It comes here rather than at each truncate because truncate-links fires
-  # half an hour in, when nobody may be watching the terminal.
+  # half an hour into a MOML run, and after the detector in a CAP one, when
+  # nobody may be watching the terminal. The statements and the notes name
+  # the corpus's tables and what rebuilding them costs.
   if phase_active truncate-citations; then
     statements="$statements
-    $TRUNCATE_CITATIONS_SQL   (every detected citation, about 56M rows and twenty minutes to rebuild; CASCADE also empties citation_links)"
+    $TRUNCATE_CITATIONS_SQL   ($TRUNCATE_CITATIONS_NOTE)"
   fi
   if phase_active truncate-links; then
     statements="$statements
-    $TRUNCATE_LINKS_SQL   (every link; the linker rebuilds them in about ten minutes)"
+    $TRUNCATE_LINKS_SQL   ($TRUNCATE_LINKS_NOTE)"
   fi
   if [[ -n "$statements" ]]; then
     log "this run will execute against \$LAW_DBSTR:$statements"
@@ -488,7 +579,7 @@ phase_truncate_citations() {
 }
 
 phase_detect() {
-  run_slurm_job "$DETECTOR_JOB" "$DETECTOR_SCRIPT" "$DETECTOR_DONE" pages_processed citations_saved
+  run_slurm_job "$DETECTOR_JOB" "$DETECTOR_SCRIPT" "$DETECTOR_DONE" "${DETECTOR_FIELDS[@]}"
 }
 
 phase_link() {
@@ -607,12 +698,17 @@ usage() {
   cat <<EOF
 usage: scripts/pipeline.sh [options]
 
-Rebuild all citation data: sync the programs to $HOPPER, truncate the
-detections, run the detector and the linker there, build the stub cases,
-truncate the links and link again, then refresh the database. Run it from the
-repository root, under caffeinate -i on a laptop; it takes about four hours.
+Rebuild all citation data for one corpus: sync the programs to $HOPPER,
+truncate the detections, run the detector and the linker there, then refresh
+the database. For the MOML treatises (the default) that includes building the
+stub cases, truncating the links and linking again, and a full run takes well
+under an hour: the detector about 21 minutes, 12 of them scanning, and each
+linker pass about 10. For the CAP opinions (--corpus cap) there is no stubs
+pass, and the first detector run is unmeasured, hours at most. Run it from the
+repository root, under caffeinate -i on a laptop.
 
 options
+  --corpus NAME   which corpus to detect and link: moml (the default) or cap
   --from PHASE    resume at PHASE; earlier phases are skipped (preflight always runs)
   --job ID        with --from detect, link, or relink: attach to Slurm job ID
                   instead of submitting a new one
@@ -627,13 +723,19 @@ environment
   STUB_THRESHOLD  passed through to make db-stubs (default $STUB_THRESHOLD)
 
 phases, in order
-  ${PHASES[*]}
+  moml: $(set_corpus moml && echo "${PHASES[*]}")
+  cap:  $(set_corpus cap && echo "${PHASES[*]}")
+        (no stubs or relink: CAP misses never feed make db-stubs, and
+        truncate-links is kept for --from truncate-links; a cap maintenance
+        refreshes every materialized view, MOML's included)
 
 examples
-  caffeinate -i ./scripts/pipeline.sh              the full rebuild
+  caffeinate -i ./scripts/pipeline.sh              the full MOML rebuild
   ./scripts/pipeline.sh --from truncate-links      relink after a whitelist or linker change
   ./scripts/pipeline.sh --from link                routine incremental link and maintenance
   ./scripts/pipeline.sh --from detect --job 12345  reattach to a detector job already running
+  caffeinate -i ./scripts/pipeline.sh --corpus cap             the CAP corpus, end to end
+  ./scripts/pipeline.sh --corpus cap --from truncate-links     relink the CAP corpus
 
 Logs land in logs/pipeline/<timestamp>/: pipeline.log for the run and the
 fetched <jobid>-<jobname>.log for each Slurm job.
@@ -649,6 +751,10 @@ parse_args() {
   local p found
   while [[ $# -gt 0 ]]; do
     case "$1" in
+      --corpus)
+        if [[ $# -lt 2 ]]; then usage_error "--corpus needs a corpus name"; fi
+        CORPUS="$2"; shift 2 ;;
+      --corpus=*) CORPUS="${1#--corpus=}"; shift ;;
       --from)
         if [[ $# -lt 2 ]]; then usage_error "--from needs a phase name"; fi
         FROM="$2"; shift 2 ;;
@@ -668,6 +774,10 @@ parse_args() {
       *) usage_error "unknown argument: $1" ;;
     esac
   done
+
+  # The phases, and so what --from and --job may name, depend on the corpus,
+  # so it is fixed before either is checked.
+  set_corpus "$CORPUS" || usage_error "unknown corpus '$CORPUS'; corpora are: moml cap"
 
   if [[ -n "$FROM" ]]; then
     found=0
@@ -713,6 +823,7 @@ main() {
   log "pipeline start: $0 $*"
   if [[ $DRY_RUN -eq 1 ]]; then log "DRY RUN: commands are printed, not executed"; fi
   log "repository $REPO_ROOT at $(git rev-parse --short HEAD 2>/dev/null || echo unknown) with $(git status --porcelain 2>/dev/null | wc -l | tr -d ' ') uncommitted change(s)"
+  log "corpus: $CORPUS ($DETECTOR_JOB, $LINKER_JOB)"
   log "phases to run: ${ACTIVE_PHASES[*]}"
   run_phases
 }
