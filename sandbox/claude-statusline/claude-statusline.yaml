@@ -1,0 +1,55 @@
+# syntax=docker/sandbox-kit:3
+# Docker Sandbox kit (Sandbox Kit spec v3, companion-pair form: this descriptor
+# plus claude-statusline.dockerfile beside it) that installs the legal-modernism
+# Claude Code status line into a sandbox. The layout follows Docker's
+# claude-sbx-statusline kit (docker.io/docker/sbx-kit-claude-sbx-statusline).
+schemaVersion: "3"
+kind: mixin
+# The kit's own version: the tag it publishes under, and the fallback that
+# versions an unversioned provide when it is consumed from a directory or a git
+# ref. Bump it when the script or these declarations change.
+version: "1.0.0"
+displayName: Claude Code Status Line (legal-modernism)
+description: Adds a one-line Claude Code status line to a Docker Sandbox (sandbox name, model, project/branch, 5-hour session usage with time to reset). Ships ~/.claude/statusline.sh and sets the statusLine key in ~/.claude/settings.json, merging so every other setting is preserved (an existing statusLine is intentionally replaced, since installing this status line is the point of the kit).
+sourceUrl: https://github.com/chnm/legal-modernism/tree/main/sandbox/claude-statusline
+licenses: [MIT]
+# Everything this kit writes lands in ~/.claude/settings.json, which only Claude
+# Code reads; on any other base agent the kit is silently inert. The install hook
+# merges the statusLine key with jq under `set -e`, so a base without jq fails
+# sandbox creation; the script needs jq and git at render time as well.
+requires: ["claude", "deb/jq"]
+# No network-policy entry: in v3 an absent phase grants nothing, which is the
+# correct statement here. The status line reads the session JSON on stdin and
+# the local git checkout, and opens no socket.
+capabilities:
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - command: |
+            set -e
+            mkdir -p /home/agent/.claude
+            f=/home/agent/.claude/settings.json
+            [ -f "$f" ] || echo '{}' > "$f"
+            # Set only the statusLine key (any existing one is replaced by design);
+            # the jq merge leaves all other settings untouched. Temp file lives in the
+            # same dir as $f so the mv below is an atomic rename, not a cross-fs copy.
+            tmp=$(mktemp -p /home/agent/.claude)
+            jq '.statusLine = {type: "command", command: "~/.claude/statusline.sh", padding: 0}' "$f" > "$tmp"
+            mv "$tmp" "$f"
+            # The recipe installs the script 0755, but without the executable bit
+            # Claude Code silently renders no status line, so make sure of it.
+            chmod +x /home/agent/.claude/statusline.sh
+            # Enumerated, not recursive: ~/.claude holds runtime-managed content
+            # this kit doesn't own, so `chown -R` on the parent would take
+            # ownership of paths outside the kit's control.
+            chown agent:agent /home/agent/.claude "$f" /home/agent/.claude/statusline.sh
+          user: "0"
+          # No `env:`. The hook reads nothing beyond the platform baseline (PATH
+          # and HOME); `$f` and `$tmp` are its own locals.
+          description: Set the statusLine key in ~/.claude/settings.json to ~/.claude/statusline.sh (jq merge, so all other keys are preserved; any existing statusLine is replaced by design) and make the script executable
+  # A mixin contributes a context body only; the profile (CLAUDE.md) belongs to
+  # the claude kit this one composes onto. The frontend stages the file into the
+  # image under /usr/share/sandbox/kit/claude-statusline/ at publish.
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: ./claude-statusline-context.md
