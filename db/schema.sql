@@ -2680,7 +2680,7 @@ CREATE MATERIALIZED VIEW opinion_citations.jurisdiction_citations AS
             WHEN (ccc.source = 'cap'::text) THEN kj.slug
             ELSE 'uk'::text
         END AS cited_jurisdiction,
-    (sum(ccc.cite_count))::bigint AS citations,
+    (sum(ccc.opinion_count))::bigint AS citations,
     count(DISTINCT ccc.citing_case_id) AS citing_cases
    FROM ((((opinion_citations.case_case_citations ccc
      JOIN cap.cases c ON ((c.id = ccc.citing_case_id)))
@@ -2700,7 +2700,7 @@ CREATE MATERIALIZED VIEW opinion_citations.jurisdiction_citations AS
 -- Name: MATERIALIZED VIEW jurisdiction_citations; Type: COMMENT; Schema: opinion_citations; Owner: -
 --
 
-COMMENT ON MATERIALIZED VIEW opinion_citations.jurisdiction_citations IS 'Our CAP citation links rolled up by the citing case''s jurisdiction and decision year and the cited case''s jurisdiction (cap.jurisdictions slugs; a cited English Reports case is uk), with the citations and the distinct citing cases (issue #216). Self-cites, stubs and Code Reporter cases are left out. Read by chambers'' /viz/jurisdictions. Refreshed by make db-maintenance.';
+COMMENT ON MATERIALIZED VIEW opinion_citations.jurisdiction_citations IS 'Our CAP citation links rolled up by the citing case''s jurisdiction and decision year and the cited case''s jurisdiction (cap.jurisdictions slugs; a cited English Reports case is uk), with the citations (one per opinion and cited case, however many strings cite it) and the distinct citing cases (issue #216). Self-cites, stubs and Code Reporter cases are left out. Read by chambers'' /viz/jurisdictions. Refreshed by make db-maintenance.';
 
 
 --
