@@ -1,7 +1,7 @@
 \restrict dbmate
 
--- Dumped from database version 17.11 (Debian 17.11-0+deb13u1)
--- Dumped by pg_dump version 17.11 (Homebrew)
+-- Dumped from database version 17.11 (Debian 17.11-1.pgdg13+2)
+-- Dumped by pg_dump version 18.6 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -2670,6 +2670,40 @@ COMMENT ON MATERIALIZED VIEW opinion_citations.case_name_summary IS 'Citations p
 
 
 --
+-- Name: jurisdiction_citations; Type: MATERIALIZED VIEW; Schema: opinion_citations; Owner: -
+--
+
+CREATE MATERIALIZED VIEW opinion_citations.jurisdiction_citations AS
+ SELECT c.decision_year AS citing_year,
+    cj.slug AS citing_jurisdiction,
+        CASE
+            WHEN (ccc.source = 'cap'::text) THEN kj.slug
+            ELSE 'uk'::text
+        END AS cited_jurisdiction,
+    (sum(ccc.cite_count))::bigint AS citations,
+    count(DISTINCT ccc.citing_case_id) AS citing_cases
+   FROM ((((opinion_citations.case_case_citations ccc
+     JOIN cap.cases c ON ((c.id = ccc.citing_case_id)))
+     JOIN cap.jurisdictions cj ON ((cj.id = c.jurisdiction)))
+     LEFT JOIN cap.cases k ON ((k.id = ccc.cap_case_id)))
+     LEFT JOIN cap.jurisdictions kj ON ((kj.id = k.jurisdiction)))
+  WHERE ((ccc.source = ANY (ARRAY['cap'::text, 'er'::text])) AND (NOT ccc.self_cite) AND (c.decision_year IS NOT NULL))
+  GROUP BY c.decision_year, cj.slug,
+        CASE
+            WHEN (ccc.source = 'cap'::text) THEN kj.slug
+            ELSE 'uk'::text
+        END
+  WITH NO DATA;
+
+
+--
+-- Name: MATERIALIZED VIEW jurisdiction_citations; Type: COMMENT; Schema: opinion_citations; Owner: -
+--
+
+COMMENT ON MATERIALIZED VIEW opinion_citations.jurisdiction_citations IS 'Our CAP citation links rolled up by the citing case''s jurisdiction and decision year and the cited case''s jurisdiction (cap.jurisdictions slugs; a cited English Reports case is uk), with the citations and the distinct citing cases (issue #216). Self-cites, stubs and Code Reporter cases are left out. Read by chambers'' /viz/jurisdictions. Refreshed by make db-maintenance.';
+
+
+--
 -- Name: linking_dashboard_reporters; Type: MATERIALIZED VIEW; Schema: opinion_citations; Owner: -
 --
 
@@ -4062,6 +4096,13 @@ CREATE INDEX idx_citation_links_stub ON opinion_citations.citation_links USING b
 
 
 --
+-- Name: jurisdiction_citations_uq; Type: INDEX; Schema: opinion_citations; Owner: -
+--
+
+CREATE UNIQUE INDEX jurisdiction_citations_uq ON opinion_citations.jurisdiction_citations USING btree (citing_jurisdiction, cited_jurisdiction, citing_year);
+
+
+--
 -- Name: linking_dashboard_reporters_uq; Type: INDEX; Schema: opinion_citations; Owner: -
 --
 
@@ -4521,8 +4562,11 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('0005'),
     ('0006'),
     ('0007'),
+    ('0008'),
     ('0015'),
+    ('0031'),
     ('0051'),
+    ('0052'),
     ('20250227185605'),
     ('20260211115029'),
     ('20260220221029'),
@@ -4599,4 +4643,5 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261023150000'),
     ('20261023180000'),
     ('20261023200000'),
-    ('20261023210000');
+    ('20261023210000'),
+    ('20261106193524');
