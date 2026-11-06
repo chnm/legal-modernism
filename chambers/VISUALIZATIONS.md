@@ -99,6 +99,20 @@ There is no link to download the data.
   purple (`#ba02e8`), which chambers shares; it is not yet fixed for any category in charts.
 - **Consistency:** once a category has a colour, it keeps it in every chart.
   Record each decision in the colour registry below.
+- **Jurisdictions:** a state is coloured by its Census Bureau division, and the
+  divisions of a region are shades of one hue: the Northeast blue, the Midwest
+  green, the South orange, the West purple, from the five-class ColorBrewer
+  schemes (d3's `schemeBlues[5]` and so on), the Census Bureau's first division
+  of a region darkest. The District of Columbia is in the South Atlantic
+  division, as the Bureau has it; Dakota Territory goes with the Dakotas. The
+  federal courts, the United Kingdom, and the territories and tribal courts are
+  outside the regions and have colours of their own. The regions, divisions and
+  the map from `cap.jurisdictions` slugs are in `static/viz/census.js`, the
+  colours in `style.js` under `groupColors`; a chart that colours jurisdictions
+  imports both rather than defining its own. Pair the colour with the division's
+  name in the tooltip or a table column: two divisions of one region are told
+  apart by lightness only, and the four hues do not all survive colour
+  blindness (blue and purple merge under deuteranopia).
 - **Restraint:** light grid lines or none, no chart borders, no 3-D, no
   gradients that encode nothing. Label lines and series directly where that is
   clearer than a legend.
@@ -145,9 +159,21 @@ chart to chart. Add a row whenever a visualization fixes one.
 
 | Category | Colour | Scheme / source | First used in |
 | -------- | ------ | --------------- | ------------- |
-| A U.S. jurisdiction (a state, territory or the federal courts) | `#4269d0` | `observable10` blue | `/viz/jurisdictions` |
-| The United Kingdom | `#ff725c` | `observable10` red-orange | `/viz/jurisdictions` |
+| New England (Northeast) | `#08519c` | `schemeBlues[5][4]` | `/viz/jurisdictions` |
+| Middle Atlantic (Northeast) | `#6baed6` | `schemeBlues[5][2]` | `/viz/jurisdictions` |
+| East North Central (Midwest) | `#006d2c` | `schemeGreens[5][4]` | `/viz/jurisdictions` |
+| West North Central (Midwest) | `#74c476` | `schemeGreens[5][2]` | `/viz/jurisdictions` |
+| South Atlantic (South) | `#a63603` | `schemeOranges[5][4]` | `/viz/jurisdictions` |
+| East South Central (South) | `#e6550d` | `schemeOranges[5][3]` | `/viz/jurisdictions` |
+| West South Central (South) | `#fd8d3c` | `schemeOranges[5][2]` | `/viz/jurisdictions` |
+| Mountain (West) | `#54278f` | `schemePurples[5][4]` | `/viz/jurisdictions` |
+| Pacific (West) | `#9e9ac8` | `schemePurples[5][2]` | `/viz/jurisdictions` |
+| The federal courts of the United States | `#636363` | `schemeGreys[5][3]` | `/viz/jurisdictions` |
+| The United Kingdom | `#ff8ab7` | `observable10` pink | `/viz/jurisdictions` |
+| Territories and tribal courts | `#bdbdbd` | `schemeGreys[6][2]` | `/viz/jurisdictions` |
 
-The two keep their separation under protanopia, deuteranopia and tritanopia
-(ΔE above 20 in OKLab under each). The red-orange is below 3:1 against white,
-so a mark in it always carries a direct label.
+The lighter shades (`#6baed6`, `#74c476`, `#fd8d3c`, `#9e9ac8`, `#ff8ab7`,
+`#bdbdbd`) are below 3:1 against white, so a mark in one always carries a
+direct label. The first version of `/viz/jurisdictions` used `observable10`
+blue (`#4269d0`) for any U.S. jurisdiction and red-orange (`#ff725c`) for the
+United Kingdom; both are retired and free for another category.
