@@ -107,7 +107,9 @@ There is no link to download the data.
   Northeast groups the scheme's two blues. The District of Columbia is in the
   South, as the Bureau has it; Dakota Territory goes with the Dakotas. The
   federal courts, the United Kingdom, and the territories and tribal courts are
-  outside the regions and have colours of their own from the same scheme. The
+  outside the regions and have colours of their own from the same scheme; the
+  federal courts and the United Kingdom, often the longest bars, take its two
+  most vivid, yellow and red-orange. The
   regions and the map from `cap.jurisdictions` slugs are in
   `static/viz/census.js`, the colours in `style.js` under `groupColors`; a
   chart that colours jurisdictions imports both rather than defining its own.
@@ -162,13 +164,13 @@ chart to chart. Add a row whenever a visualization fixes one.
 | New England | `#4269d0` | `observable10` blue | `/viz/jurisdictions` |
 | Mid-Atlantic | `#97bbf5` | `observable10` light blue | `/viz/jurisdictions` |
 | Midwest | `#3ca951` | `observable10` green | `/viz/jurisdictions` |
-| South | `#ff725c` | `observable10` red-orange | `/viz/jurisdictions` |
+| South | `#9c6b4e` | `observable10` brown | `/viz/jurisdictions` |
 | Mountain West | `#a463f2` | `observable10` purple | `/viz/jurisdictions` |
 | Pacific West | `#6cc5b0` | `observable10` teal | `/viz/jurisdictions` |
-| The federal courts of the United States | `#9498a0` | `observable10` grey | `/viz/jurisdictions` |
-| The United Kingdom | `#ff8ab7` | `observable10` pink | `/viz/jurisdictions` |
-| Territories and tribal courts | `#efb118` | `observable10` yellow | `/viz/jurisdictions` |
+| The federal courts of the United States | `#efb118` | `observable10` yellow | `/viz/jurisdictions` |
+| The United Kingdom | `#ff725c` | `observable10` red-orange | `/viz/jurisdictions` |
+| Territories and tribal courts | `#9498a0` | `observable10` grey | `/viz/jurisdictions` |
 
-Only the brown (`#9c6b4e`) of `observable10` is still free. The lighter
-colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#ff8ab7`, `#efb118`, `#9498a0`) are
-below 3:1 against white, so a mark in one always carries a direct label.
+Only the pink (`#ff8ab7`) of `observable10` is still free. The lighter
+colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#efb118`, `#9498a0`) are below 3:1
+against white, so a mark in one always carries a direct label.
