@@ -28,6 +28,7 @@ func TestRoutes(t *testing.T) {
 	require.Equal(t, http.StatusOK, get(t, "/static/portrait.jpg").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/style.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/jurisdictions.js").StatusCode)
+	require.Equal(t, http.StatusOK, get(t, "/static/viz/census.js").StatusCode)
 	require.Equal(t, http.StatusNotFound, get(t, "/nope").StatusCode)
 	require.Equal(t, http.StatusGone, get(t, "/api/page-text?psmid=1&pageid=2").StatusCode)
 

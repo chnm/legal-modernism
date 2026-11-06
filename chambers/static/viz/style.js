@@ -17,12 +17,30 @@ const FONTS_URL =
   "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap";
 
 // Colours. The categories come from the registry in VISUALIZATIONS.md; the
-// rest is the chart furniture. The two category colours are observable10's
-// blue and red-orange, which keep their separation under the common forms of
-// colour blindness.
+// rest is the chart furniture.
+//
+// A state is coloured by its Census Bureau division (census.js), and the
+// divisions of a region are shades of one hue: the Northeast blue, the Midwest
+// green, the South orange, the West purple, each from the five-class
+// ColorBrewer scheme of that name (d3's schemeBlues[5] and so on), darkest
+// first. The federal courts, the United Kingdom and the territories are
+// outside the regions: grey, observable10's pink, and a lighter grey.
+export const groupColors = {
+  "new-england": "#08519c", // Blues[5][4]
+  "middle-atlantic": "#6baed6", // Blues[5][2]
+  "east-north-central": "#006d2c", // Greens[5][4]
+  "west-north-central": "#74c476", // Greens[5][2]
+  "south-atlantic": "#a63603", // Oranges[5][4]
+  "east-south-central": "#e6550d", // Oranges[5][3]
+  "west-south-central": "#fd8d3c", // Oranges[5][2]
+  mountain: "#54278f", // Purples[5][4]
+  pacific: "#9e9ac8", // Purples[5][2]
+  federal: "#636363", // Greys[5][3]
+  uk: "#ff8ab7", // observable10 pink
+  territories: "#bdbdbd", // Greys[6][2]
+};
+
 export const colors = {
-  us: "#4269d0", // a U.S. jurisdiction: a state, territory or the federal courts
-  uk: "#ff725c", // the United Kingdom
   ink: "#212529",
   muted: "#6c757d",
   faint: "#adb5bd",
