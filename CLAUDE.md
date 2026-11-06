@@ -70,7 +70,7 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 - PostgreSQL 17.x, connected via `go/db/db.go` using pgx v5 connection pooling
 - Connection string from `LAW_DBSTR` environment variable
 - Migrations managed by [dbmate](https://github.com/amacneil/dbmate) in `db/migrations/`
-- Migration naming: `YYYYMMDDHHMMSS_description.sql`
+- Migration naming: `YYYYMMDDHHMMSS_description.sql`, the version taken from the clock (`date -u +%Y%m%d%H%M%S`), never a round or hand-picked time. dbmate records an applied migration by its version alone, so two files sharing one are one migration to it and the second is silently skipped; `go/db/migrations_test.go` fails on a duplicate.
 - Full schema: `db/schema.sql`
 - Schemas: `cap`, `cap_citations`, `english_reports`, `legalhist`, `moml`, `moml_archive`, `moml_citations`, `opinion_citations`, `stats`, `sys_admin`, `textbooks`
 - MOML's `psmid` identifies a volume (`moml.volumes`), `bibliographicid` an edition of one or more volumes (`moml.editions`), and `editions.work_id` its work (`moml.works`, issue #335): a treatise across all its editions, taken broadly to include later editors' revisions, translations, and what was made from it (abridgments, analyses, question books, supplements), which `editions.derivative` marks. Every edition has a work, most of them a work of one edition. The works were built from three title-and-author rules and a reviewed list of links in `db/migrations/20260925170000_moml-works.sql`; `db/queries/work-candidates.sql` lists pairs that may still belong together, and a correction is a migration that moves `work_id`. A column lives on `editions` only if every volume of the edition shares it (author, collation, total volumes); title, edition statement, imprint and dates stay on `volumes`, because a few editions mix volumes of different printings. `current_volume` 0 means not part of a numbered set, and is not unique within an edition. Subjects and LoC headings belong to the edition (`edition_subjects`, `edition_loc_subjects`), in catalogue order by `position`; a LoC heading is one row per MARC subfield and subfield `a` begins one. `volume_sets` records Gale's sibling volumes, a few of which cross editions. The side-corpus volumes (`momlextra*`) have no Gale id and are each their own edition. `volumes.year` is the volume's own year, not its set's first year. Editions MOML scanned twice were reduced to one copy, recorded in `moml.duplicate_copies`. `moml.treatises` is the editions that count as treatises, with `jurisdiction` `US` or `UK` taken from the edition's subjects; join `moml.volumes` for the volumes. It leaves out pamphlets under 50 pages, public documents and arguments in a case (by title), biographies and speeches (by Gale subject or LoC heading), collected essays, trials and commemorative pieces, but never an edition whose title calls it a treatise; digests, casebooks, dictionaries and form books stay. `db/queries/treatises-excluded.sql` lists what is left out and why. The original tables, the four catalog records with no volume, and everything the duplicate removal took are in `moml_archive`, which a later migration drops.
@@ -88,10 +88,11 @@ slog.Error("batch failed", batch.LogID("error", err)...)
 
 ### Writing a migration
 
-1. Create `db/migrations/YYYYMMDDHHMMSS_description.sql` with `-- migrate:up` / `-- migrate:down` sections; the `down` must fully reverse the `up`. Start the `migrate:up` with `SET ROLE = law_admin;`, as the existing migrations do.
-2. Before adding a constraint, verify existing rows won't violate it (query with the read-only `LAW_CLAUDE` connection); a constraint that current data violates fails to apply.
-3. Apply with `make db-up`. dbmate dumps the schema after `up`, so that one command also regenerates `db/schema.sql`; `make db-schema` only redoes the dump and is not needed after `db-up`. It needs write access via `LAW_DBSTR`, so Claude cannot run it — ask the user to, giving first the command that puts them in the branch's worktree (see Claude database access).
-4. Commit **both** the migration file and the regenerated `db/schema.sql`. "Don't update `db/schema.sql`" means don't hand-edit it, not don't commit it.
+1. Create `db/migrations/YYYYMMDDHHMMSS_description.sql`, naming it with the current UTC time from `date -u +%Y%m%d%H%M%S` (not a rounded or invented one: parallel branches that both guess "noon" collide, and dbmate then applies only one of them). The version must sort after every migration on `origin/main`, not just on the branch. It has `-- migrate:up` / `-- migrate:down` sections; the `down` must fully reverse the `up`. Start the `migrate:up` with `SET ROLE = law_admin;`, as the existing migrations do.
+2. After merging `main` into a branch that adds a migration, check that no version is shared (`ls db/migrations | cut -c1-14 | sort | uniq -d` prints nothing) and that the branch's migration still sorts last; if not, rename it to the current time. `go test ./go/db/` checks the first.
+3. Before adding a constraint, verify existing rows won't violate it (query with the read-only `LAW_CLAUDE` connection); a constraint that current data violates fails to apply.
+4. Apply with `make db-up`. dbmate dumps the schema after `up`, so that one command also regenerates `db/schema.sql`; `make db-schema` only redoes the dump and is not needed after `db-up`. It needs write access via `LAW_DBSTR`, so Claude cannot run it — ask the user to, giving first the command that puts them in the branch's worktree (see Claude database access).
+5. Commit **both** the migration file and the regenerated `db/schema.sql`. "Don't update `db/schema.sql`" means don't hand-edit it, not don't commit it.
 
 ## Pipeline run order
 
@@ -133,6 +134,7 @@ Internal web app for browsing and inspecting citation data. Located in `chambers
 
 - Build: `go build ./chambers/`
 - Run: `go run ./chambers/` (default port 4567)
+- To show the user a running server from the sandbox, listen on one of ports 4313–4316 (`go run ./chambers/ --port 4313`): those four ports are exposed from the container to the same ports on the user's machine, so the server is at `http://localhost:4313` for them too. Connect it with the read-only user, `LAW_DBSTR="$LAW_CLAUDE"`, since chambers only reads.
 - Dev with live reload: `air` (configured via `chambers/.air.toml`)
 - Templates and static files are embedded via `//go:embed`
 - Routes registered on `http.NewServeMux()` in `main.go`
@@ -140,7 +142,7 @@ Internal web app for browsing and inspecting citation data. Located in `chambers
 
 **Frontend:** Use the latest version of Bootstrap CSS via CDN (no Bootstrap JavaScript). Use Observable Plot (`@observablehq/plot`) for data visualizations when possible, and D3.js otherwise.
 
-**Public visualizations:** visualizations meant for readers outside the project (articles, talks, eventually the website) follow `chambers/VISUALIZATIONS.md`: anatomy, typography, colour, interactivity, accessibility, sizing, and how they consume JSON. Read it before building one, ask whether it is full screen or in the viewport before starting, and record every colour assigned to a category in its colour registry.
+**Public visualizations:** visualizations meant for readers outside the project (articles, talks, eventually the website) follow `chambers/VISUALIZATIONS.md`: anatomy, typography, colour, interactivity, accessibility, sizing, and how they consume JSON. Read it before building one, ask whether it is full screen or in the viewport before starting, and record every colour assigned to a category in its colour registry. They live under "Draft public visualizations" on the home page, at `/viz/<name>` with their JSON at `/api/viz/<name>`; the first is `/viz/jurisdictions` (issue #216), which reads `opinion_citations.jurisdiction_citations`, our CAP links rolled up by the citing case's jurisdiction and year and the cited case's jurisdiction, with the English Reports as `uk`; a citation is one opinion citing one case, counted once however many cite strings link it (`case_case_citations.opinion_count`).
 
 ## Branches and worktrees
 

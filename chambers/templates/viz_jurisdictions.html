@@ -1,0 +1,301 @@
+{{define "styles"}}
+        /* Full screen: the chart fills the window below the navbar, and the
+           source, notes and data table follow. A chart with more bars than
+           fit grows past the window, and the page scrolls, not the chart. */
+        .viz-page { display: flex; flex-direction: column; min-height: calc(100dvh - 5.5rem); }
+        .viz-page .viz-chart { flex: 1 0 auto; min-height: 240px; }
+        .viz-page .viz-foot { flex: 0 0 auto; padding-top: 0.5rem; }
+        .viz-page .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
+{{end}}
+
+{{define "content"}}
+    <div class="viz viz-page">
+        <header>
+            <p class="viz-draft">Draft public visualization</p>
+            <h1 class="viz-title" id="viz-title">Citations between jurisdictions</h1>
+            <p class="viz-subtitle" id="viz-subtitle">Loading the citation graph&hellip;</p>
+        </header>
+
+        <form class="viz-controls" id="viz-controls" onsubmit="return false" aria-label="Chart controls">
+            <div class="viz-control">
+                <label for="jurisdiction">Jurisdiction</label>
+                <select id="jurisdiction" class="viz-select" disabled><option>Loading&hellip;</option></select>
+            </div>
+            <fieldset class="viz-control" aria-label="Direction">
+                <span class="viz-label">Show</span>
+                <span class="viz-toggle">
+                    <input type="radio" name="direction" id="dir-cites" value="cites" checked><label for="dir-cites">the jurisdictions it cites</label>
+                    <input type="radio" name="direction" id="dir-cited" value="cited"><label for="dir-cited">the jurisdictions citing it</label>
+                </span>
+            </fieldset>
+            <fieldset class="viz-control" aria-label="Measure">
+                <span class="viz-label">Count</span>
+                <span class="viz-toggle">
+                    <input type="radio" name="measure" id="m-citations" value="citations" checked><label for="m-citations">citations</label>
+                    <input type="radio" name="measure" id="m-cases" value="cases"><label for="m-cases">citing cases</label>
+                    <input type="radio" name="measure" id="m-share" value="share"><label for="m-share">share of their citations</label>
+                </span>
+            </fieldset>
+            <fieldset class="viz-control" aria-label="Years of the citing cases">
+                <span class="viz-label">Years</span>
+                <span class="viz-range" id="viz-range">
+                    <span class="viz-range-track"></span>
+                    <span class="viz-range-fill" id="range-fill"></span>
+                    <input type="range" id="year-from" aria-label="First year" step="1">
+                    <input type="range" id="year-to" aria-label="Last year" step="1">
+                </span>
+                <output class="viz-years" id="years" for="year-from year-to"></output>
+                <button type="button" class="viz-button" id="years-reset">All years</button>
+            </fieldset>
+        </form>
+
+        <div class="viz-chart" id="viz-chart" aria-live="polite">
+            <p class="viz-message">Loading&hellip;</p>
+        </div>
+
+        <footer class="viz-foot">
+            <p class="viz-source"><strong>Source:</strong> Caselaw Access Project; the English Reports; Legal Modernism citation detector and linker.</p>
+            <p class="viz-notes"><strong>Notes:</strong>
+                Each bar counts the citations that the opinions of the cases decided in one jurisdiction make to the reported cases of another,
+                as the project's detector found them in the text of the opinions and its linker resolved them to a case in the Caselaw Access Project
+                or the English Reports. A citation is one opinion citing one case: an opinion that cites a case under more than one string, as in a parallel
+                citation, counts once. A jurisdiction is a state, a territory, the federal courts (U.S.) or the United Kingdom, the courts of
+                England and Wales, Scotland and Ireland as the English Reports gather them. The bars are coloured by region, as the legend shows: New England,
+                the Mid-Atlantic, the Midwest, the South, the Mountain West and the Pacific West, drawn from the Census Bureau's regions and
+                divisions; the federal courts, the United Kingdom and the territories have colours of their own, and Dakota Territory is placed
+                with the Dakotas. The years are those of the citing cases,
+                in both directions, and run to 1920, where the opinions end. Citations to the jurisdiction's own cases are given in the
+                subtitle and the table, not as a bar, and an opinion's citation of its own case is left out. The share of their citations is a
+                bar's citations as a share of the other jurisdiction's own total in those years: the citations its cases make to all other
+                jurisdictions, or the citations its cases receive from them, so that a jurisdiction with much law does not lead merely by
+                having much law. A jurisdiction with fewer than 100 such citations in the years is not ranked by share; the table lists it. Citations the linker could resolve
+                only to a stub case, or to the New York Code Reporter, are not counted. The counts are of linked citations: a case cited
+                under a spelling or in a reporter the linker does not know yet is missing, and a few links are wrong.
+            </p>
+            <details class="viz-data">
+                <summary>Show the data</summary>
+                <div id="viz-table"></div>
+            </details>
+        </footer>
+    </div>
+{{end}}
+
+{{define "scripts"}}
+    <script type="module">
+        import { ensureStyles, fmt } from "/static/viz/style.js";
+        import { summarize, chart, table, height, yearSpan } from "/static/viz/jurisdictions.js";
+
+        const API = "/api/viz/jurisdictions";
+        const DEFAULT = "ny";
+
+        ensureStyles();
+
+        const el = {
+            title: document.getElementById("viz-title"),
+            subtitle: document.getElementById("viz-subtitle"),
+            select: document.getElementById("jurisdiction"),
+            from: document.getElementById("year-from"),
+            to: document.getElementById("year-to"),
+            fill: document.getElementById("range-fill"),
+            years: document.getElementById("years"),
+            reset: document.getElementById("years-reset"),
+            chart: document.getElementById("viz-chart"),
+            table: document.getElementById("viz-table"),
+            controls: document.getElementById("viz-controls"),
+        };
+
+        const message = (text) => {
+            el.chart.replaceChildren(Object.assign(document.createElement("p"), { className: "viz-message", textContent: text }));
+        };
+
+        async function getJSON(url) {
+            const r = await fetch(url);
+            if (!r.ok) throw new Error(`${await r.text()} (${r.status})`.trim());
+            return r.json();
+        }
+
+        // State: the controls, mirrored into the query string so a view can be
+        // shared. The edges of the selected jurisdiction are fetched once per
+        // jurisdiction; the years, direction and measure filter them here.
+        // minYear and maxYear are the slider's range: the first and last year
+        // in which the selected jurisdiction has a citation in the current
+        // direction, so that no year the slider offers is empty.
+        let jurisdictions = [];
+        let totals = []; // every jurisdiction's citations by year in each direction, the share's denominators
+        let edges = [];
+        let minYear = 1700, maxYear = 1920;
+        let pendingYears = null; // the years the URL asked for, applied once the first edges arrive
+        let loading = null;
+
+        const state = () => ({
+            jurisdiction: el.select.value,
+            direction: el.controls.elements.direction.value,
+            measure: el.controls.elements.measure.value,
+            from: Number(el.from.value),
+            to: Number(el.to.value),
+        });
+
+        function readURL() {
+            const q = new URLSearchParams(location.search);
+            return {
+                jurisdiction: q.get("j"),
+                direction: q.get("dir") === "cited" ? "cited" : "cites",
+                measure: ["cases", "share"].includes(q.get("count")) ? q.get("count") : "citations",
+                from: Number(q.get("from")),
+                to: Number(q.get("to")),
+            };
+        }
+
+        function writeURL(s) {
+            const q = new URLSearchParams();
+            q.set("j", s.jurisdiction);
+            if (s.direction !== "cites") q.set("dir", s.direction);
+            if (s.measure !== "citations") q.set("count", s.measure);
+            if (s.from !== minYear) q.set("from", s.from);
+            if (s.to !== maxYear) q.set("to", s.to);
+            history.replaceState(null, "", `${location.pathname}?${q}`);
+        }
+
+        // spanOf is the first and last citing year of the selected jurisdiction's
+        // edges in a direction, or null when it has none.
+        function spanOf(direction) {
+            const key = direction === "cites" ? "citing_jurisdiction" : "cited_jurisdiction";
+            const slug = el.select.value;
+            let lo = Infinity, hi = -Infinity;
+            for (const e of edges) {
+                if (e[key] !== slug) continue;
+                if (e.citing_year < lo) lo = e.citing_year;
+                if (e.citing_year > hi) hi = e.citing_year;
+            }
+            return lo <= hi ? [lo, hi] : null;
+        }
+
+        // setSpan fits the slider to the years that have citations, after the
+        // jurisdiction or the direction changes. A selection of all the years
+        // stays all the years; a narrower one is kept where the new span still
+        // holds it and otherwise widened to the whole span.
+        function setSpan() {
+            const span = spanOf(el.controls.elements.direction.value);
+            if (!span) return;
+            const wasAll = Number(el.from.value) <= minYear && Number(el.to.value) >= maxYear;
+            let from = Number(el.from.value), to = Number(el.to.value);
+            [minYear, maxYear] = span;
+            for (const input of [el.from, el.to]) { input.min = minYear; input.max = maxYear; }
+            if (pendingYears) {
+                from = pendingYears.from || minYear;
+                to = pendingYears.to || maxYear;
+                pendingYears = null;
+            } else if (wasAll || from > maxYear || to < minYear) {
+                from = minYear;
+                to = maxYear;
+            }
+            setYears(from, to);
+        }
+
+        function setYears(from, to) {
+            from = Math.min(Math.max(from, minYear), maxYear);
+            to = Math.min(Math.max(to, minYear), maxYear);
+            if (from > to) [from, to] = [to, from];
+            el.from.value = from;
+            el.to.value = to;
+            const span = maxYear - minYear || 1;
+            el.fill.style.left = `${(100 * (from - minYear)) / span}%`;
+            el.fill.style.width = `${(100 * (to - from)) / span}%`;
+            el.years.value = yearSpan(from, to);
+        }
+
+        let summary = null;
+        function render() {
+            if (!edges.length && !jurisdictions.length) return;
+            const s = state();
+            writeURL(s);
+            summary = summarize(edges, jurisdictions, s, totals);
+            el.title.textContent = summary.title;
+            el.subtitle.innerHTML = summary.subtitle;
+            document.title = `${summary.title} — Chambers`;
+            draw();
+            el.table.replaceChildren(table(summary));
+        }
+
+        function draw() {
+            if (!summary) return;
+            if (summary.bars.length === 0) {
+                message("Nothing to chart for this selection.");
+                return;
+            }
+            // Measure the space the page gives the chart with the chart out of
+            // it, since the container grows to hold a chart taller than that.
+            el.chart.replaceChildren();
+            const width = el.chart.clientWidth || 900;
+            const available = el.chart.clientHeight || 600;
+            el.chart.replaceChildren(chart(summary, { width, height: height(summary, available) }));
+        }
+
+        async function selectJurisdiction(slug) {
+            const url = `${API}/${encodeURIComponent(slug)}`;
+            loading = url;
+            message("Loading…");
+            try {
+                const data = await getJSON(url);
+                if (loading !== url) return; // superseded
+                edges = data;
+                setSpan();
+                render();
+            } catch (err) {
+                if (loading !== url) return;
+                message(err.message);
+            }
+        }
+
+        // Resize: redraw at the new size, once the window settles.
+        let resizeTimer = null;
+        new ResizeObserver(() => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(draw, 80);
+        }).observe(el.chart);
+
+        // Controls.
+        el.select.addEventListener("change", () => selectJurisdiction(el.select.value));
+        for (const input of el.controls.elements.direction) {
+            input.addEventListener("change", () => { setSpan(); render(); });
+        }
+        for (const input of el.controls.elements.measure) {
+            input.addEventListener("change", render);
+        }
+        const onRange = (which) => () => {
+            let from = Number(el.from.value), to = Number(el.to.value);
+            if (from > to) { if (which === "from") to = from; else from = to; }
+            setYears(from, to);
+            render();
+        };
+        el.from.addEventListener("input", onRange("from"));
+        el.to.addEventListener("input", onRange("to"));
+        el.reset.addEventListener("click", () => { setYears(minYear, maxYear); render(); });
+
+        // Start: the list of jurisdictions fills the menu; the years come with
+        // the first jurisdiction's edges.
+        (async () => {
+            try {
+                [jurisdictions, totals] = await Promise.all([getJSON(API), getJSON(`${API}/totals`)]);
+            } catch (err) {
+                el.subtitle.textContent = "The citation graph could not be loaded.";
+                message(err.message);
+                return;
+            }
+            const initial = readURL();
+            pendingYears = { from: initial.from, to: initial.to };
+            el.select.replaceChildren(...jurisdictions.map((j) => {
+                const o = document.createElement("option");
+                o.value = j.jurisdiction;
+                o.textContent = j.name_long === j.name ? j.name : `${j.name_long} (${j.name})`;
+                return o;
+            }));
+            el.select.disabled = false;
+            const slugs = new Set(jurisdictions.map((j) => j.jurisdiction));
+            el.select.value = slugs.has(initial.jurisdiction) ? initial.jurisdiction : (slugs.has(DEFAULT) ? DEFAULT : jurisdictions[0].jurisdiction);
+            el.controls.elements.direction.value = initial.direction;
+            el.controls.elements.measure.value = initial.measure;
+            selectJurisdiction(el.select.value);
+        })();
+    </script>
+{{end}}

@@ -49,6 +49,12 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /linking/cap/cases/{id}", s.handleCAPGraphCase)
 	mux.HandleFunc("GET /linking/cap/reporters/{id}", s.handleCAPGraphReporter)
 
+	// Draft public visualizations (VISUALIZATIONS.md): a page and its JSON.
+	mux.HandleFunc("GET /viz/jurisdictions", s.handleVizJurisdictions)
+	mux.HandleFunc("GET /api/viz/jurisdictions", s.handleVizJurisdictionsAPI)
+	mux.HandleFunc("GET /api/viz/jurisdictions/totals", s.handleVizJurisdictionTotalsAPI)
+	mux.HandleFunc("GET /api/viz/jurisdictions/{slug}", s.handleVizJurisdictionAPI)
+
 	// Static files.
 	staticSub, err := fs.Sub(staticFS, "static")
 	if err != nil {

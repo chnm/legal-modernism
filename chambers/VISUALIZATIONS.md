@@ -25,8 +25,21 @@ Conventions in chambers:
 - Page: `/viz/<name>`, template `templates/viz_<name>.html`.
 - Data: `/api/viz/<name>`, written with `writeJSON` (see `linking.go`), following
   the 503 convention of `apiError` for a view that is not populated yet.
-- Shared style module: `static/viz/style.js`, created with the first chart.
-- Add each visualization to a "Visualizations" section of `home.html`.
+- Shared style module: `static/viz/style.js`. It exports the typefaces, the
+  colours (the registry below), the type sizes, the `plotStyle` every
+  `Plot.plot` call takes, a stylesheet for the anatomy and controls (classes
+  `viz-title`, `viz-subtitle`, `viz-source`, `viz-notes`, `viz-controls`, the
+  toggles and the two-handled year slider), and the number formats.
+  `ensureStyles()` loads the fonts and the stylesheet once.
+- Chart module: `static/viz/<name>.js`, with a `summarize(data, options)` that
+  reduces the JSON to what the chart shows and the words for the title and
+  subtitle, a `chart(summary, {width, height})` that returns Plot's figure, and
+  a `table(summary)` for the accessible table.
+- Add each visualization to the "Draft public visualizations" section of
+  `home.html`; the navbar's "Draft visualizations" links there. The page's
+  `Section` is `viz`.
+- Keep the view's state (the selection, the years) in the query string, so a
+  view can be shared.
 
 ## Before starting one
 
@@ -86,6 +99,22 @@ There is no link to download the data.
   purple (`#ba02e8`), which chambers shares; it is not yet fixed for any category in charts.
 - **Consistency:** once a category has a colour, it keeps it in every chart.
   Record each decision in the colour registry below.
+- **Jurisdictions:** a state is coloured by its region, of which there are six,
+  a hodgepodge of the Census Bureau's regions and divisions: New England and
+  the Mid-Atlantic (the Northeast's two divisions), the Midwest and the South
+  (each Census region whole), and the Mountain West and the Pacific West (the
+  West's two divisions). Each has one colour of `observable10`, the two
+  Northeast groups the scheme's two blues. The District of Columbia is in the
+  South, as the Bureau has it; Dakota Territory goes with the Dakotas. The
+  federal courts, the United Kingdom, and the territories and tribal courts are
+  outside the regions and have colours of their own from the same scheme; the
+  federal courts and the United Kingdom, often the longest bars, take its two
+  most vivid, yellow and red-orange. The
+  regions and the map from `cap.jurisdictions` slugs are in
+  `static/viz/census.js`, the colours in `style.js` under `groupColors`; a
+  chart that colours jurisdictions imports both rather than defining its own.
+  Pair the colour with the region's name in the tooltip or a table column:
+  nine colours do not all survive colour blindness.
 - **Restraint:** light grid lines or none, no chart borders, no 3-D, no
   gradients that encode nothing. Label lines and series directly where that is
   clearer than a legend.
@@ -132,4 +161,16 @@ chart to chart. Add a row whenever a visualization fixes one.
 
 | Category | Colour | Scheme / source | First used in |
 | -------- | ------ | --------------- | ------------- |
-| _none yet_ | | | |
+| New England | `#4269d0` | `observable10` blue | `/viz/jurisdictions` |
+| Mid-Atlantic | `#97bbf5` | `observable10` light blue | `/viz/jurisdictions` |
+| Midwest | `#3ca951` | `observable10` green | `/viz/jurisdictions` |
+| South | `#9c6b4e` | `observable10` brown | `/viz/jurisdictions` |
+| Mountain West | `#a463f2` | `observable10` purple | `/viz/jurisdictions` |
+| Pacific West | `#6cc5b0` | `observable10` teal | `/viz/jurisdictions` |
+| The federal courts of the United States | `#efb118` | `observable10` yellow | `/viz/jurisdictions` |
+| The United Kingdom | `#ff725c` | `observable10` red-orange | `/viz/jurisdictions` |
+| Territories and tribal courts | `#9498a0` | `observable10` grey | `/viz/jurisdictions` |
+
+Only the pink (`#ff8ab7`) of `observable10` is still free. The lighter
+colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#efb118`, `#9498a0`) are below 3:1
+against white, so a mark in one always carries a direct label.
