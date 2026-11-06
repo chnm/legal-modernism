@@ -21,18 +21,19 @@ const FONTS_URL =
 //
 // A state is coloured by its region (census.js), each of the nine groups
 // with one colour of observable10, the two Northeast groups the scheme's two
-// blues. The federal courts, the United Kingdom and the territories are
-// outside the regions: grey, pink and yellow.
+// blues. The federal courts and the United Kingdom, outside the regions and
+// often the longest bars, take the scheme's two most vivid colours, yellow
+// and red-orange; the territories, seldom present, the grey.
 export const groupColors = {
   "new-england": "#4269d0", // observable10 blue
   "mid-atlantic": "#97bbf5", // observable10 light blue
   midwest: "#3ca951", // observable10 green
-  south: "#ff725c", // observable10 red-orange
+  south: "#9c6b4e", // observable10 brown
   "mountain-west": "#a463f2", // observable10 purple
   "pacific-west": "#6cc5b0", // observable10 teal
-  federal: "#9498a0", // observable10 grey
-  uk: "#ff8ab7", // observable10 pink
-  territories: "#efb118", // observable10 yellow
+  federal: "#efb118", // observable10 yellow
+  uk: "#ff725c", // observable10 red-orange
+  territories: "#9498a0", // observable10 grey
 };
 
 export const colors = {
