@@ -112,9 +112,13 @@
         // State: the controls, mirrored into the query string so a view can be
         // shared. The edges of the selected jurisdiction are fetched once per
         // jurisdiction; the years, direction and measure filter them here.
+        // minYear and maxYear are the slider's range: the first and last year
+        // in which the selected jurisdiction has a citation in the current
+        // direction, so that no year the slider offers is empty.
         let jurisdictions = [];
         let edges = [];
         let minYear = 1700, maxYear = 1920;
+        let pendingYears = null; // the years the URL asked for, applied once the first edges arrive
         let loading = null;
 
         const state = () => ({
@@ -144,6 +148,42 @@
             if (s.from !== minYear) q.set("from", s.from);
             if (s.to !== maxYear) q.set("to", s.to);
             history.replaceState(null, "", `${location.pathname}?${q}`);
+        }
+
+        // spanOf is the first and last citing year of the selected jurisdiction's
+        // edges in a direction, or null when it has none.
+        function spanOf(direction) {
+            const key = direction === "cites" ? "citing_jurisdiction" : "cited_jurisdiction";
+            const slug = el.select.value;
+            let lo = Infinity, hi = -Infinity;
+            for (const e of edges) {
+                if (e[key] !== slug) continue;
+                if (e.citing_year < lo) lo = e.citing_year;
+                if (e.citing_year > hi) hi = e.citing_year;
+            }
+            return lo <= hi ? [lo, hi] : null;
+        }
+
+        // setSpan fits the slider to the years that have citations, after the
+        // jurisdiction or the direction changes. A selection of all the years
+        // stays all the years; a narrower one is kept where the new span still
+        // holds it and otherwise widened to the whole span.
+        function setSpan() {
+            const span = spanOf(el.controls.elements.direction.value);
+            if (!span) return;
+            const wasAll = Number(el.from.value) <= minYear && Number(el.to.value) >= maxYear;
+            let from = Number(el.from.value), to = Number(el.to.value);
+            [minYear, maxYear] = span;
+            for (const input of [el.from, el.to]) { input.min = minYear; input.max = maxYear; }
+            if (pendingYears) {
+                from = pendingYears.from || minYear;
+                to = pendingYears.to || maxYear;
+                pendingYears = null;
+            } else if (wasAll || from > maxYear || to < minYear) {
+                from = minYear;
+                to = maxYear;
+            }
+            setYears(from, to);
         }
 
         function setYears(from, to) {
@@ -190,6 +230,7 @@
                 const data = await getJSON(url);
                 if (loading !== url) return; // superseded
                 edges = data;
+                setSpan();
                 render();
             } catch (err) {
                 if (loading !== url) return;
@@ -206,7 +247,10 @@
 
         // Controls.
         el.select.addEventListener("change", () => selectJurisdiction(el.select.value));
-        for (const input of el.controls.querySelectorAll("input[type=radio]")) {
+        for (const input of el.controls.elements.direction) {
+            input.addEventListener("change", () => { setSpan(); render(); });
+        }
+        for (const input of el.controls.elements.measure) {
             input.addEventListener("change", render);
         }
         const onRange = (which) => () => {
@@ -219,7 +263,8 @@
         el.to.addEventListener("input", onRange("to"));
         el.reset.addEventListener("click", () => { setYears(minYear, maxYear); render(); });
 
-        // Start: the list of jurisdictions fills the menu and fixes the years.
+        // Start: the list of jurisdictions fills the menu; the years come with
+        // the first jurisdiction's edges.
         (async () => {
             try {
                 jurisdictions = await getJSON(API);
@@ -228,12 +273,8 @@
                 message(err.message);
                 return;
             }
-            const years = jurisdictions.flatMap((j) => [j.min_year, j.max_year]).filter((y) => y != null);
-            minYear = Math.min(...years);
-            maxYear = Math.max(...years);
-            for (const input of [el.from, el.to]) { input.min = minYear; input.max = maxYear; }
-
             const initial = readURL();
+            pendingYears = { from: initial.from, to: initial.to };
             el.select.replaceChildren(...jurisdictions.map((j) => {
                 const o = document.createElement("option");
                 o.value = j.jurisdiction;
@@ -245,7 +286,6 @@
             el.select.value = slugs.has(initial.jurisdiction) ? initial.jurisdiction : (slugs.has(DEFAULT) ? DEFAULT : jurisdictions[0].jurisdiction);
             el.controls.elements.direction.value = initial.direction;
             el.controls.elements.measure.value = initial.measure;
-            setYears(initial.from || minYear, initial.to || maxYear);
             selectJurisdiction(el.select.value);
         })();
     </script>
