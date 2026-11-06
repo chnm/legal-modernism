@@ -9,10 +9,9 @@
 // and the territories and tribal courts. Dakota Territory is placed with the
 // two states made from it.
 //
-// `census` names the Census region a group draws its hue from, so that the
-// two Northeast groups are blues and the two West groups purples. The colours
-// are in style.js, keyed by the group's key, so that a group has one colour in
-// every chart.
+// `census` names the Census region a group comes from. The colours are in
+// style.js, keyed by the group's key, so that a group has one colour in every
+// chart.
 
 // GROUPS is every group a jurisdiction can belong to, in the order a legend
 // lists them: the six regions from northeast to west, then the three groups
