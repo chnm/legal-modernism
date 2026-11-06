@@ -1,8 +1,9 @@
 {{define "styles"}}
-        /* Full screen: the chart fills the window below the navbar; the source,
-           notes and data table follow below the fold. */
+        /* Full screen: the chart fills the window below the navbar, and the
+           source, notes and data table follow. A chart with more bars than
+           fit grows past the window, and the page scrolls, not the chart. */
         .viz-page { display: flex; flex-direction: column; min-height: calc(100dvh - 5.5rem); }
-        .viz-page .viz-chart { flex: 1 1 0; min-height: 240px; }
+        .viz-page .viz-chart { flex: 1 0 auto; min-height: 240px; }
         .viz-page .viz-foot { flex: 0 0 auto; padding-top: 0.5rem; }
         .viz-page .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
 {{end}}
@@ -222,6 +223,9 @@
                 message("Nothing to chart for this selection.");
                 return;
             }
+            // Measure the space the page gives the chart with the chart out of
+            // it, since the container grows to hold a chart taller than that.
+            el.chart.replaceChildren();
             const width = el.chart.clientWidth || 900;
             const available = el.chart.clientHeight || 600;
             el.chart.replaceChildren(chart(summary, { width, height: height(summary, available) }));

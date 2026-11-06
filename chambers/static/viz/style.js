@@ -101,7 +101,7 @@ const CSS = `
 .viz .viz-years { font-family: ${fonts.mono}; font-size: ${sizes.body}px; min-width: 7.5em; }
 .viz .viz-button { font-family: inherit; font-size: ${sizes.note}px; padding: 0.2rem 0.6rem; border: 1px solid ${colors.faint}; border-radius: 4px; background: ${colors.surface}; color: ${colors.ink}; cursor: pointer; }
 .viz .viz-button:hover { border-color: ${colors.ink}; }
-.viz .viz-chart { position: relative; overflow-y: auto; }
+.viz .viz-chart { position: relative; }
 .viz .viz-chart svg { display: block; }
 .viz .viz-chart figure { margin: 0; }
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }

@@ -196,23 +196,26 @@ function tooltip(d, { selected, direction, otherCitations }) {
 }
 
 // Chart geometry: the pixel height a bar wants and the least it can take
-// before its label collides with the next, and the margins.
+// before its label collides with the next, the height of the legend Plot
+// puts above the SVG, and the margins.
 export const BAR_HEIGHT = 22;
 export const MIN_BAR_HEIGHT = 16;
+export const LEGEND_HEIGHT = 36;
 const MARGIN_TOP = 36;
 const MARGIN_BOTTOM = 8;
 const MARGIN_RIGHT = 110; // room for a label like "4,894 (60%)"
 const MARGIN_RIGHT_SHARE = 180; // and for "20% (2,924 of 14,484)"
 
-// height is the height the chart takes: what its bars want, shrunk to the
-// `available` height down to the least the bars can take, beyond which the
-// chart is taller than the space and its container scrolls.
+// height is the height of the SVG: what its bars want, shrunk to the
+// `available` height (the space the page gives the figure, legend included)
+// down to the least the bars can take, beyond which the chart is taller than
+// the space and the page scrolls. The chart never scrolls inside itself.
 export function height(summary, available) {
   const n = Math.max(1, summary.bars.length);
   const margins = MARGIN_TOP + MARGIN_BOTTOM;
   const wanted = margins + n * BAR_HEIGHT;
   const least = margins + n * MIN_BAR_HEIGHT;
-  return Math.max(120, least, Math.min(wanted, available));
+  return Math.max(120, least, Math.min(wanted, available - LEGEND_HEIGHT));
 }
 
 // chart draws the bars at the given size and returns Plot's figure, the SVG
