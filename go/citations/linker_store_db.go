@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // LinkerDBStore implements LinkerStore using PostgreSQL via pgx.
@@ -40,7 +40,9 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 			WHERE d.reporter_standard = w.fallback_standard
 		) AS fallback_cap_different,
 		COALESCE(f.single_vol, false) AS fallback_single_vol,
-		COALESCE(f.cited_by_year_from, 0) AS fallback_cited_by_year_from
+		COALESCE(f.cited_by_year_from, 0) AS fallback_cited_by_year_from,
+		COALESCE(r.jurisdiction, '') AS jurisdiction,
+		COALESCE(f.jurisdiction, '') AS fallback_jurisdiction
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	LEFT JOIN legalhist.reporters f ON f.reporter_standard = w.fallback_standard
@@ -56,7 +58,8 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 		var found string
 		var e, fb WhitelistEntry
 		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute, &e.CitedByYearFrom,
-			&fb.ReporterStandard, &fb.ReporterCAP, &fb.UK, &fb.CAPDifferent, &fb.SingleVol, &fb.CitedByYearFrom)
+			&fb.ReporterStandard, &fb.ReporterCAP, &fb.UK, &fb.CAPDifferent, &fb.SingleVol, &fb.CitedByYearFrom,
+			&e.Jurisdiction, &fb.Jurisdiction)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}

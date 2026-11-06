@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"syscall"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	"github.com/lmullen/legal-modernism/go/sources"

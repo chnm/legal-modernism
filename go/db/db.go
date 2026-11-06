@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // Connect returns a pool of connections to the database, which is concurrency
@@ -41,7 +41,7 @@ func ConnectPool(ctx context.Context, configure func(*pgxpool.Config)) (*pgxpool
 		configure(config)
 	}
 
-	db, err := pgxpool.ConnectConfig(timeout, config)
+	db, err := pgxpool.NewWithConfig(timeout, config)
 	if err != nil {
 		return nil, fmt.Errorf("error connecting to database: %w", err)
 	}

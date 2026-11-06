@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v5"
 )
 
 // Cases are ranked by the treatise editions that cite them (case_edition_counts)
@@ -209,6 +209,10 @@ type CaseDetail struct {
 	Citing     []CitingEdition
 	Nav        Pagination
 	Sort       string
+	// The CAP cases whose opinions cite this case, and for a CAP case the
+	// cases its opinions cite (issue #347).
+	CitedByOpinions OpinionCases
+	OpinionsCite    OpinionCases
 }
 
 func (d *CaseDetail) ReporterURL() string {
@@ -374,9 +378,13 @@ func (s *server) getCaseMeta(ctx context.Context, d *CaseDetail) (bool, error) {
 			WHERE st.cite = $1`, d.ID).Scan(&d.Reporter, &d.VolYear, &d.Name, &d.Year, &d.Jurisdiction)
 		if isNoRows(err) {
 			// The stub was pruned by a later refresh; links to it remain until
-			// the linker is rerun. Show the page if any do.
+			// the linker is rerun. Show the page if any do, from the treatises
+			// or from the CAP opinions, whose links a MOML stub rebuild can
+			// leave pointing at a pruned stub (issue #346).
 			var n int
-			err = s.db.QueryRow(ctx, `SELECT count(*) FROM moml_citations.edition_case_citations WHERE stub_cite = $1`, d.ID).Scan(&n)
+			err = s.db.QueryRow(ctx, `
+				SELECT (SELECT count(*) FROM moml_citations.edition_case_citations WHERE stub_cite = $1)
+				     + (SELECT count(*) FROM opinion_citations.case_case_citations WHERE stub_cite = $1)`, d.ID).Scan(&n)
 			if err == nil && n == 0 {
 				return false, nil
 			}
@@ -613,6 +621,19 @@ func (s *server) handleCase(w http.ResponseWriter, r *http.Request) {
 	if err = s.getNamedAs(ctx, d, 30); err != nil {
 		s.serverError(w, r, err, "grouping the case's names", "source", source, "id", id)
 		return
+	}
+
+	d.CitedByOpinions, err = s.getCitingOpinionCases(ctx, source, id, opinionCasesLimit)
+	if err := optional(err, &d.Page, "opinion_citations.case_case_citations"); err != nil {
+		s.serverError(w, r, err, "listing the CAP cases that cite the case", "source", source, "id", id)
+		return
+	}
+	if source == "cap" {
+		d.OpinionsCite, err = s.getCitedOpinionCases(ctx, id, opinionCasesLimit)
+		if err := optional(err, &d.Page, "opinion_citations.case_case_citations"); err != nil {
+			s.serverError(w, r, err, "listing the cases the case's opinions cite", "source", source, "id", id)
+			return
+		}
 	}
 
 	s.render(w, r, "case.html", http.StatusOK, d)

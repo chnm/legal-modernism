@@ -138,8 +138,18 @@ func NameCitations(text string, cites []*Citation) {
 			name = f.plaintiff + " v. " + f.defendant
 		case f.plaintiff != "":
 			name = f.plaintiff + " v."
+			if isJunkWords(f.plaintiff) {
+				name = ""
+			}
 		case f.form != "" && f.defendant != "":
 			name = f.form + " " + f.defendant
+			if isJunkName(f.defendant) {
+				name = ""
+			}
+		default:
+			if isJunkName(name) {
+				name = ""
+			}
 		}
 		if name == "" || len(name) > maxCaseNameLen {
 			continue
@@ -290,6 +300,7 @@ func tokenize(text string, cites []*Citation) ([]nameToken, []int) {
 	markOCRVersus(toks)
 	markOCRInitials(toks)
 	markAnnotations(toks)
+	markCourtParens(toks)
 
 	where := make(map[int]int, len(cites))
 	for j, t := range toks {
@@ -690,6 +701,156 @@ func markAnnotations(toks []nameToken) {
 			toks[i].kind = tokAnnot
 		}
 	}
+}
+
+// reCourtParenWord is one word of a court parenthetical: an abbreviation
+// ("C.", "Civ.", "App.", "N.", "Cir."), an ordinal ("7th", "2d"), or a year,
+// with the parenthesis and comma it may carry.
+var reCourtParenWord = regexp.MustCompile(`^\(?(?:[A-Z][A-Za-z]{0,7}\.|\d+(?:st|nd|rd|th|d)\.?|\d{4}),?\)?[,.;]?$`)
+
+// maxCourtParenWords bounds a court parenthetical; the longest in the
+// samples, "(C. C. A., 7th Cir.)", is five words.
+const maxCourtParenWords = 6
+
+// markCourtParens marks the court parenthetical printed between a name and
+// its cite -- "Smith v. Jones (C. C.) 120 Fed. 50", "(D. C., N. Y.)",
+// "(Tex. Civ. App.)", "(C. C. A., 7th Cir.)" -- as an annotation, so the
+// scan skips it and reads the name before it. Without this the scan stopped
+// at the opening parenthesis and recorded "C. C.)" as the name (issue #398).
+func markCourtParens(toks []nameToken) {
+	for i := 0; i < len(toks); i++ {
+		if toks[i].kind != tokWord || !strings.Contains(toks[i].text, ")") {
+			continue
+		}
+		// A year alone, "(1899),", is left to scanBack's year rule, which
+		// skips it; as an annotation it would end the name before it ("In re
+		// Hixon (1899), S. Dist. Ia., Woolson, J., 93 Fed. 440").
+		words, court := 0, false
+		for j := i; j >= 0 && words < maxCourtParenWords; j-- {
+			if toks[j].kind == tokSpace {
+				continue
+			}
+			if toks[j].kind != tokWord || !reCourtParenWord.MatchString(toks[j].text) {
+				break
+			}
+			if j < i && strings.Contains(toks[j].text, ")") {
+				break
+			}
+			words++
+			if !reYearToken.MatchString(toks[j].text) {
+				court = true
+			}
+			if strings.HasPrefix(toks[j].text, "(") {
+				if !court {
+					break
+				}
+				for k := j; k <= i; k++ {
+					if toks[k].kind == tokWord {
+						toks[k].kind = tokAnnot
+					}
+				}
+				break
+			}
+		}
+	}
+}
+
+// What a lone party cannot be (issue #398). The scan takes the capitalised
+// words before a cite, and where no versus is printed it often takes words
+// that are not a party at all: a signal or connective ("Id.", "and", "By
+// the"), the head of a statute ("Section", "Laws of", "Act No."), a month,
+// a court, an author's possessive ("Kent's 2 Comm."), or the tail of a
+// corporate name the scan cut short ("Co.", "R. R. Co."). They are checked
+// only where the whole recorded name is one party -- a bare name, "In re X",
+// or a plaintiff with no defendant -- so "R. R. Co. v. Smith" and "U. S. v.
+// Jones" keep their abbreviated party.
+var (
+	junkNameWords = map[string]bool{
+		"id": true, "ib": true, "ibid": true, "idem": true, "vide": true, "see": true, "note": true,
+		"in": true, "by": true, "by the": true, "the": true, "and": true, "of": true, "al": true, "et al": true,
+		"section": true, "sections": true, "sec": true, "secs": true, "sect": true, "sects": true,
+		"stat": true, "stats": true, "statute": true, "statutes": true, "act": true, "acts": true,
+		"act of": true, "acts of": true, "act no": true, "the act": true, "law": true, "laws": true,
+		"laws of": true, "chapter": true, "chap": true, "rule": true, "rules": true, "article": true,
+		"art": true, "subdivision": true, "form": true, "no": true, "nos": true, "revised statutes": true,
+		"judgment": true, "charges": true, "appeal": true, "court": true, "court of appeals": true,
+		"supreme court": true, "house of lords": true, "year book": true, "law rep": true,
+		"january": true, "february": true, "april": true, "june": true, "july": true, "august": true,
+		"september": true, "october": true, "november": true, "december": true,
+	}
+	// A sovereign alone names no case: it is the plaintiff of one whose
+	// defendant the scan never reached.
+	junkSovereigns = map[string]bool{
+		"state": true, "people": true, "commonwealth": true, "united states": true,
+		"rex": true, "reg": true, "regina": true,
+	}
+	// Words that are an initial, a short abbreviation ("Co.", "Ry.", "St.",
+	// "S.C."), a corporate abbreviation, or a roman numeral: a name made of
+	// nothing else is the tail of a longer one, a judge's title, or a place.
+	reAbbrevOnlyWord = regexp.MustCompile(`^(?:(?:[A-Z][a-z]?\.)+|Ins\.|Rail\.|Soc\.|Bk\.|Mfg\.|Ass'n|Assn\.|[IVXL]+\.?)$`)
+	rePossessiveWord = regexp.MustCompile(`^[A-Z][a-z]+(?:'|’)s$`)
+)
+
+// maxAbbrevOnlyWords is the longest name of nothing but abbreviations that is
+// junk: "R. R. Co." is the tail of a railroad's name, "G. W. Ry. Co." a name.
+const maxAbbrevOnlyWords = 3
+
+// junkKey is a name lowercased without its periods, for the word lists.
+func junkKey(s string) string {
+	key := strings.ToLower(strings.TrimRight(strings.TrimSpace(s), ".,;: "))
+	return strings.ReplaceAll(key, ".", "")
+}
+
+// isJunkWords reports whether a party is words that are never a party: a
+// cut court parenthetical, all lowercase, or a signal, statute head, month
+// or court, with or without a number after it. It is the test for a
+// plaintiff with no defendant, where "State v." and "U. S. v." are kept.
+func isJunkWords(s string) bool {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return true
+	}
+	// A court parenthetical the scan cut in half: "C. C.)", "Tex. Civ. App.)".
+	// Only at the end, since the OCR puts a stray one inside a real name
+	// ("In re Bradfi)rd").
+	if strings.HasSuffix(strings.TrimRight(s, ".,; "), ")") && !strings.Contains(s, "(") {
+		return true
+	}
+	if strings.ToLower(s) == s {
+		return true
+	}
+	key := junkKey(s)
+	if junkNameWords[key] {
+		return true
+	}
+	// "Section 4", "Laws of 1890", "No. 2": a junk word and a number.
+	fields := strings.Fields(key)
+	return len(fields) > 1 && reAllDigits.MatchString(fields[len(fields)-1]) &&
+		junkNameWords[strings.Join(fields[:len(fields)-1], " ")]
+}
+
+// isJunkName reports whether a name that stands alone, with no versus,
+// cannot be a case name: isJunkWords, a bare sovereign, an author's
+// possessive, or nothing but abbreviations.
+func isJunkName(s string) bool {
+	if isJunkWords(s) || junkSovereigns[junkKey(s)] {
+		return true
+	}
+	words := strings.Fields(s)
+	if len(words) == 1 && rePossessiveWord.MatchString(words[0]) {
+		return true
+	}
+	// Up to three words: "G. W. Ry. Co." is the Great Western Railway.
+	if len(words) > maxAbbrevOnlyWords {
+		return false
+	}
+	for _, w := range words {
+		w = strings.ReplaceAll(strings.TrimRight(w, ",;:"), "..", ".")
+		if !reAbbrevOnlyWord.MatchString(w) {
+			return false
+		}
+	}
+	return true
 }
 
 // reversedInRe reads "Stonor's Trusts, Re," or "LAWRENCE, EX PARTE,": the

@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/agnivade/levenshtein"
-	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v5"
 )
 
 // The whitelist extender walks through the reporter spellings the detector

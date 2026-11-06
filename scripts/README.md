@@ -19,9 +19,9 @@ caffeinate -i ./scripts/pipeline.sh
 caffeinate -i ./scripts/pipeline.sh --corpus cap
 ```
 
-Run it from the repository root. A MOML rebuild takes well under an hour: the
-detector about 21 minutes (12 of them scanning, most of the rest waiting for
-a bigmem node), each of the two linker passes about 10, and the maintenance
+Run it from the repository root. A MOML rebuild takes about an hour and a half: the
+detector about 55 minutes (about 50 of them scanning, on 24 CPUs of a
+normal-partition node), each of the two linker passes about 10, and the maintenance
 about 12. A CAP rebuild is one detector job, one linker pass of a few
 minutes, and the same maintenance: about ten minutes in all (the first run,
 on 2026-09-26, scanned 1.56M opinions in 3m10s and linked 9.76M citations in
@@ -38,7 +38,7 @@ For the MOML treatises, the default:
 | `preflight` | Checks tools, database, migrations, ssh, hopper's environment, and the queue; asks once before the truncates | local and hopper | seconds |
 | `sync` | `make sync-hopper`: build the linux binaries, rsync them and `slurm/` to hopper | local | a minute |
 | `truncate-citations` | `TRUNCATE moml_citations.citations_unlinked CASCADE`, which also empties `citation_links` | local psql | seconds |
-| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 21 minutes, 12 of them scanning and most of the rest waiting for a bigmem node |
+| `detect` | `sbatch` `cite-detector-moml`, wait, fetch its log | hopper | about 55 minutes, 50 of them scanning, on 24 CPUs of a normal-partition node, sized to start on a partly used node (19 minutes of scanning on 64 CPUs, which queued for hours on 2026-10-23) |
 | `link` | `sbatch` `cite-linker`, wait, fetch its log | hopper | about 10 minutes |
 | `stubs` | `make db-stubs`: rebuild `legalhist.stub_cases` from the linker's misses | local psql | about a minute |
 | `truncate-links` | `TRUNCATE moml_citations.citation_links` | local psql | seconds |
@@ -53,18 +53,24 @@ For the CAP opinions, `--corpus cap`, the phases keep their names so that
 | `preflight` | As above; the queue check covers the jobs of both corpora | local and hopper | seconds |
 | `sync` | As above | local | a minute |
 | `truncate-citations` | `TRUNCATE opinion_citations.citations_unlinked CASCADE`, which also empties `opinion_citations.citation_links` | local psql | seconds |
-| `detect` | `sbatch` `cite-detector-cap`, wait, fetch its log | hopper | a few minutes of scanning (3m10s on 2026-09-26) plus the wait for a bigmem node |
-| `truncate-links` | `TRUNCATE opinion_citations.citation_links`; a no-op in a full run after the CASCADE, kept so that `--from truncate-links` relinks | local psql | seconds |
+| `detect` | `sbatch` `cite-detector-cap`, wait, fetch its log | hopper | about nine minutes of scanning on 24 CPUs of a normal-partition node (3m10s on 64 CPUs on 2026-09-26) |
 | `link` | `sbatch` `cite-linker-cap`, wait, fetch its log | hopper | minutes: about 6.5M citations at 100K+ rows a second, after the lookup tables load |
+| `stubs` | `make db-stubs`, the same script | local psql | a few minutes |
+| `truncate-links` | `TRUNCATE opinion_citations.citation_links` | local psql | seconds |
+| `relink` | `sbatch` `cite-linker-cap` again | hopper | minutes |
 | `maintenance` | `make db-maintenance`, the same script: it vacuums the churned tables and refreshes every materialized view in the database, MOML's included | local psql | about 12 minutes |
 
-There is no `stubs` or `relink` phase for CAP. `make db-stubs` builds
-`legalhist.stub_cases` from the MOML linker's misses only, so the registry is
-read-only for this corpus: `cite-linker-cap` links to the stubs that exist and
-CAP misses never add any. The dependency runs the other way: a MOML `stubs`
-phase can prune stubs that CAP `linked_stub` rows point at (nothing enforces
-the reference), so a MOML run that rebuilds the stubs should be followed by
-`./scripts/pipeline.sh --corpus cap --from truncate-links`.
+The stub registry, `legalhist.stub_cases`, is built from the misses of both
+corpora (issue #346): `make db-stubs` judges a reporter's eligibility across
+both ledgers and counts a string's citations across both corpora. So the
+`stubs` phase of either corpus's run changes the registry the other corpus
+links to. It can prune a stub the other corpus's `linked_stub` rows point at
+(nothing enforces the reference), and it can mint stubs the other corpus's
+misses could link to. `make db-stubs` ends by printing the stale stub links in
+each ledger, and the phase logs the command that relinks the other corpus:
+follow a MOML rebuild with `./scripts/pipeline.sh --corpus cap --from
+truncate-links`, and a CAP one with `./scripts/pipeline.sh --from
+truncate-links`.
 
 A CAP job and a MOML job must never run at the same time. The database
 allows 97 non-superuser connections (`max_connections` 100, 3 reserved); a
@@ -130,7 +136,7 @@ On hopper:
 
 `STUB_THRESHOLD` in the environment passes through to `make db-stubs`
 (default 5). `--from` and `--job` are checked against the phases of the
-corpus chosen, so `--corpus cap --from stubs` is an unknown phase.
+corpus chosen.
 
 ### Recipes
 
@@ -153,7 +159,8 @@ A routine incremental link of new citations, then maintenance:
 ```
 
 The CAP corpus end to end, and a CAP relink after a whitelist or linker
-change or after a MOML run rebuilt the stubs:
+change or after a MOML run rebuilt the stubs (after a CAP run rebuilt them,
+relink MOML with `--from truncate-links`):
 
 ```
 caffeinate -i ./scripts/pipeline.sh --corpus cap
@@ -228,7 +235,7 @@ skipped phases are listed, and the run picks up at the named phase. A phase
 that failed partway is safe to repeat: the truncates are idempotent, the
 linker skips citations already linked, the detector rescans every page but
 inserts nothing twice (so a repeated `detect` still costs a full run: about
-21 minutes for MOML, the whole job for CAP), `make db-stubs` upserts, and
+about 55 minutes for MOML, the whole job for CAP), `make db-stubs` upserts, and
 maintenance is maintenance. The resume command carries `--corpus cap` when
 that is what was running.
 

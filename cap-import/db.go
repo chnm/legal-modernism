@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func dbConnect() (*pgxpool.Pool, error) {
@@ -17,7 +17,7 @@ func dbConnect() (*pgxpool.Pool, error) {
 	}
 	timeout, cancel := context.WithTimeout(context.Background(), 1*time.Minute)
 	defer cancel()
-	db, err := pgxpool.Connect(timeout, connstr)
+	db, err := pgxpool.New(timeout, connstr)
 	if err != nil {
 		return nil, err
 	}

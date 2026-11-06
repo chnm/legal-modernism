@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // DBStore is a database store for citation objects: the reporter tables a

@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/stretchr/testify/require"
 )
 
@@ -64,7 +64,7 @@ func TestOCRVariantWhitelistSuggestions(t *testing.T) {
 	}
 
 	ctx := context.Background()
-	pool, err := pgxpool.Connect(ctx, dsn)
+	pool, err := pgxpool.New(ctx, dsn)
 	require.NoError(t, err)
 	defer pool.Close()
 	// One connection throughout, so the statement timeout applies to the

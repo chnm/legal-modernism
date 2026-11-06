@@ -9,8 +9,8 @@
 #   sync                make sync-hopper: build the linux binaries, rsync them
 #                       and the slurm scripts to hopper
 #   truncate-citations  TRUNCATE moml_citations.citations_unlinked CASCADE
-#   detect              sbatch cite-detector-moml on hopper and wait (~21m,
-#                       12 of them scanning, the rest waiting for a node)
+#   detect              sbatch cite-detector-moml on hopper and wait (~55m,
+#                       about 50 of them scanning on 24 CPUs)
 #   link                sbatch cite-linker and wait (~10m for a full rebuild)
 #   stubs               make db-stubs: rebuild legalhist.stub_cases from misses
 #   truncate-links      TRUNCATE moml_citations.citation_links
@@ -18,24 +18,21 @@
 #                       source covers link to the stubs
 #   maintenance         make db-maintenance: vacuum, refresh materialized views
 #
-# A full MOML rebuild takes well under an hour. A CAP run has the phases
+# A full MOML rebuild takes about an hour and a half. A CAP run has the same
+# phases, so --from and --job read the same way. What differs: the tables are
+# opinion_citations.citations_unlinked and citation_links, and the jobs are
+# cite-detector-cap and cite-linker-cap. A CAP detector run takes a few
+# minutes of scanning (the first, job 1223521 on 2026-09-26, scanned 1.56M
+# opinions in 3m10s) and its linker about three minutes, so a full CAP run is
+# about a quarter of an hour. A CAP run's maintenance phase is the same
+# db/maintenance.sh, which refreshes every materialized view in the database,
+# MOML's included.
 #
-#   preflight sync truncate-citations detect truncate-links link maintenance
-#
-# with the same names, so --from and --job read the same way. What differs:
-# the tables are opinion_citations.citations_unlinked and citation_links, the
-# jobs are cite-detector-cap and cite-linker-cap, and there is no stubs or
-# relink phase, because CAP misses never feed make db-stubs (the stub registry
-# is MOML-built and read-only for this corpus). truncate-links stays so that
-# `--corpus cap --from truncate-links` relinks after a whitelist or linker
-# change; in a full CAP run it is a no-op after the CASCADE. A CAP detector
-# run takes a few minutes of scanning (the first, job 1223521 on 2026-09-26,
-# scanned 1.56M opinions in 3m10s) and its linker about three minutes, so a
-# full CAP run is about ten minutes. A CAP run's maintenance phase is
-# the same db/maintenance.sh, which refreshes every materialized view in the
-# database, MOML's included. A MOML stubs run can leave CAP linked_stub rows
-# pointing at pruned stubs, so follow it with --corpus cap --from
-# truncate-links.
+# The stub registry is built from both corpora's misses (issue #346), so the
+# stubs phase of either corpus's run can prune stubs the other corpus links
+# to, or mint stubs its misses could link to. make db-stubs prints the stale
+# links per ledger; follow the run with --corpus OTHER --from truncate-links
+# to relink the other corpus.
 #
 # The database steps run here, through the Makefile targets, against
 # LAW_DBSTR. The Slurm jobs run on hopper and are watched by polling
@@ -147,11 +144,9 @@ set_corpus() {  # set_corpus moml|cap; fails on any other name
       TRUNCATE_LINKS_SQL='TRUNCATE opinion_citations.citation_links;'
       TRUNCATE_CITATIONS_NOTE='every detected citation, about 9.8M rows and a few minutes of scanning to rebuild; CASCADE also empties citation_links'
       TRUNCATE_LINKS_NOTE='every link; the linker rebuilds them in minutes'
-      # No stubs or relink: CAP misses never feed make db-stubs. truncate-links
-      # stays so that --from truncate-links relinks after a whitelist or linker
-      # change; in a full run it is a no-op after the CASCADE above.
-      PHASES=(preflight sync truncate-citations detect truncate-links link maintenance)
-      JOB_PHASES=(detect link)
+      # The same phases as MOML: CAP misses feed make db-stubs too (#346).
+      PHASES=(preflight sync truncate-citations detect link stubs truncate-links relink maintenance)
+      JOB_PHASES=(detect link relink)
       ;;
     *) return 1 ;;
   esac
@@ -590,6 +585,12 @@ phase_link() {
 phase_stubs() {
   # -s keeps make from echoing the recipe, which expands the connection string.
   run make -s db-stubs STUB_THRESHOLD="$STUB_THRESHOLD" || die "make db-stubs failed"
+  # The registry is shared by both corpora (#346), and this run relinks only
+  # its own. db-stubs prints each ledger's stale stub links; the other
+  # corpus's are cleared by relinking it.
+  local other=cap
+  if [[ "$CORPUS" == cap ]]; then other=moml; fi
+  log "the stub registry is shared: if make db-stubs reported stale $other links, or to link $other misses to new stubs, run ./scripts/pipeline.sh --corpus $other --from truncate-links"
 }
 
 phase_truncate_links() {
@@ -701,12 +702,13 @@ usage: scripts/pipeline.sh [options]
 
 Rebuild all citation data for one corpus: sync the programs to $HOPPER,
 truncate the detections, run the detector and the linker there, then refresh
-the database. For the MOML treatises (the default) that includes building the
-stub cases, truncating the links and linking again, and a full run takes well
-under an hour: the detector about 21 minutes, 12 of them scanning, and each
-linker pass about 10. For the CAP opinions (--corpus cap) there is no stubs
-pass, and a full run takes about ten minutes: a few of scanning, three of
-linking, and the maintenance. Run it from the repository root, under
+the database. That includes building the stub cases from both corpora's
+misses, truncating the links and linking again. For the MOML treatises (the
+default) a full run takes about an hour and a half: the detector about 55
+minutes, 50 of them scanning, and each linker pass about 10. For the CAP opinions
+(--corpus cap) it takes about a quarter of an hour: a few minutes of scanning,
+two linker passes of about three, the stubs, and the maintenance. Run it from
+the repository root, under
 caffeinate -i on a laptop.
 
 options
@@ -727,9 +729,9 @@ environment
 phases, in order
   moml: $(set_corpus moml && echo "${PHASES[*]}")
   cap:  $(set_corpus cap && echo "${PHASES[*]}")
-        (no stubs or relink: CAP misses never feed make db-stubs, and
-        truncate-links is kept for --from truncate-links; a cap maintenance
-        refreshes every materialized view, MOML's included)
+        (the stub registry is built from both corpora's misses, so after a
+        stubs phase relink the other corpus with --from truncate-links; a
+        cap maintenance refreshes every materialized view, MOML's included)
 
 examples
   caffeinate -i ./scripts/pipeline.sh              the full MOML rebuild

@@ -1,8 +1,12 @@
--- Rebuild legalhist.stub_cases from the linker's misses (issue #248).
+-- Rebuild legalhist.stub_cases from the linkers' misses (issue #248), in both
+-- ledgers: the treatises' (moml_citations) and the CAP opinions'
+-- (opinion_citations, issue #346). A reporter's eligibility is judged and a
+-- string's citations are counted across the two together.
 --
--- Run with `make db-stubs` after cite-linker has finished. It needs write
--- access (LAW_DBSTR), takes a few minutes -- two passes over the join of
--- citation_links and citations_unlinked -- and is safe to repeat: a cite
+-- Run with `make db-stubs` after cite-linker or cite-linker-cap has finished.
+-- It needs write access (LAW_DBSTR), takes a few minutes -- two passes over
+-- the join of citation_links and citations_unlinked in each ledger -- and is
+-- safe to repeat: a cite
 -- string that already has a row is left alone, created_at survives, and only
 -- rows that no longer qualify are deleted.
 --
@@ -60,6 +64,9 @@
 -- linked_stub rows on the reporter's side of the ledger, so a reporter does
 -- not lose its stubs for having been linked to them. A routine incremental
 -- linker run links new citations to the existing registry without a rebuild.
+-- A rebuild run for one corpus can prune stubs the other corpus links to;
+-- the last query counts those stale links per ledger, and a truncate and
+-- relink of that corpus clears them.
 
 \set ON_ERROR_STOP on
 \if :{?threshold}
@@ -78,24 +85,51 @@ BEGIN;
 --    a no_match row (none exist after the 2026-07 tier migration, but the
 --    column is nullable) counts against the reporter rather than being
 --    ignored, since bool_and would otherwise skip it.
+--    Both ledgers are judged together (issue #346): a reporter some CAP
+--    opinion's citation links to a source is not stub-eligible, whatever the
+--    treatises show.
 CREATE TEMP TABLE stub_eligible_reporters ON COMMIT DROP AS
+WITH processed AS (
+    SELECT cu.reporter_abbr, cl.status, cl.match_tier
+    FROM moml_citations.citation_links cl
+    JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
+    UNION ALL
+    SELECT cu.reporter_abbr, cl.status, cl.match_tier
+    FROM opinion_citations.citation_links cl
+    JOIN opinion_citations.citations_unlinked cu ON cu.id = cl.citation_id
+)
 SELECT wl.reporter_standard
-FROM moml_citations.citation_links cl
-JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-JOIN legalhist.whitelist wl ON wl.reporter_found = cu.reporter_abbr
+FROM processed p
+JOIN legalhist.whitelist wl ON wl.reporter_found = p.reporter_abbr
 WHERE wl.junk = false
-  AND cl.status IN ('linked_cap', 'linked_code_reporter', 'linked_english_reports',
-                    'linked_stub', 'no_match')
+  AND p.status IN ('linked_cap', 'linked_code_reporter', 'linked_english_reports',
+                   'linked_stub', 'no_match')
 GROUP BY wl.reporter_standard
 HAVING bool_and(
-    cl.status = 'linked_stub'
-    OR (cl.status = 'no_match'
-        AND coalesce(cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent'), false))
+    p.status = 'linked_stub'
+    OR (p.status = 'no_match'
+        AND coalesce(p.match_tier IN ('us_reporter_absent', 'uk_reporter_absent'), false))
 );
 
 -- 2. Every qualifying cite string in those reporters. n_citations is what the
 --    threshold applies to and what the summary reports; it is not stored.
+--    The threshold counts the citations of both corpora (issue #346).
 CREATE TEMP TABLE stub_candidates ON COMMIT DROP AS
+WITH misses AS (
+    SELECT cu.reporter_abbr, cu.volume, cu.page, cu.year
+    FROM moml_citations.citation_links cl
+    JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
+    WHERE cl.status = 'linked_stub'
+       OR (cl.status = 'no_match'
+           AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent'))
+    UNION ALL
+    SELECT cu.reporter_abbr, cu.volume, cu.page, cu.year
+    FROM opinion_citations.citation_links cl
+    JOIN opinion_citations.citations_unlinked cu ON cu.id = cl.citation_id
+    WHERE cl.status = 'linked_stub'
+       OR (cl.status = 'no_match'
+           AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent'))
+)
 SELECT concat_ws(' ',
                  CASE WHEN v.vol_year IS NOT NULL THEN format('[%s]', v.vol_year) END,
                  v.volume, wl.reporter_standard, cu.page) AS cite,
@@ -104,8 +138,7 @@ SELECT concat_ws(' ',
        v.volume,
        cu.page,
        count(*)::integer AS n_citations
-FROM moml_citations.citation_links cl
-JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
+FROM misses cu
 JOIN legalhist.whitelist wl ON wl.reporter_found = cu.reporter_abbr AND wl.junk = false
 JOIN legalhist.reporters r ON r.reporter_standard = wl.reporter_standard
 JOIN stub_eligible_reporters e ON e.reporter_standard = wl.reporter_standard
@@ -116,10 +149,7 @@ CROSS JOIN LATERAL (
            CASE WHEN cu.year >= r.cited_by_year_from
                 THEN cu.year END AS vol_year
 ) v
-WHERE (cl.status = 'linked_stub'
-       OR (cl.status = 'no_match'
-           AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent')))
-  AND coalesce(r.type, '') <> 'statute'
+WHERE coalesce(r.type, '') <> 'statute'
   AND cu.page > 0
   AND (v.volume > 0 OR (v.volume IS NULL AND v.vol_year IS NOT NULL))
 GROUP BY wl.reporter_standard, v.vol_year, v.volume, cu.page
@@ -171,3 +201,19 @@ SELECT count(*)                            AS stubs,
        count(m.cite)                       AS annotated
 FROM legalhist.stub_cases s
 LEFT JOIN legalhist.stub_case_metadata m ON m.cite = s.cite;
+
+-- 5. The links this rebuild left stale, per ledger: linked_stub rows whose
+--    stub was pruned. Either corpus's links can go stale, whichever pipeline
+--    run rebuilt the registry, and a truncate and relink of that corpus
+--    clears them (scripts/pipeline.sh [--corpus cap] --from truncate-links).
+--    New stubs are not counted: they reach the other corpus's misses on its
+--    next relink, too.
+SELECT 'moml' AS ledger, count(*) AS stale_stub_links
+FROM moml_citations.citation_links cl
+WHERE cl.status = 'linked_stub'
+  AND NOT EXISTS (SELECT 1 FROM legalhist.stub_cases s WHERE s.cite = cl.stub_cite)
+UNION ALL
+SELECT 'cap', count(*)
+FROM opinion_citations.citation_links cl
+WHERE cl.status = 'linked_stub'
+  AND NOT EXISTS (SELECT 1 FROM legalhist.stub_cases s WHERE s.cite = cl.stub_cite);

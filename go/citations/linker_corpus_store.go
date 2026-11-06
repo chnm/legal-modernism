@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 // ErrNoCorpus is returned by a CorpusStore built as a bare literal rather than
@@ -118,7 +118,9 @@ func NewMOMLCorpusStore(db *pgxpool.Pool) *CorpusStore {
 // opinion belongs to, so its year is cap.cases.decision_year, joined into the
 // stream; a citation whose case has no year, or no row, streams with a nil
 // SourceYear and is never refused as anachronistic. A case is of the same
-// year as itself, so an opinion's citation of its own case links.
+// year as itself, so an opinion's citation of its own case links. The case's
+// state, as legalhist.cap_jurisdiction_codes spells it, is joined in the same
+// way as SourceJurisdiction (issue #401).
 //
 // Its Prepare has nothing to load; it checks that the ledger's tables exist,
 // which they do not until the migration that creates them is applied, so that
@@ -128,7 +130,7 @@ func NewOpinionCorpusStore(db *pgxpool.Pool) *CorpusStore {
 	return &CorpusStore{
 		DB: db,
 		prepare: func(ctx context.Context) error {
-			for _, table := range []string{"opinion_citations.citations_unlinked", "opinion_citations.citation_links"} {
+			for _, table := range []string{"opinion_citations.citations_unlinked", "opinion_citations.citation_links", "legalhist.cap_jurisdiction_codes"} {
 				if _, err := db.Exec(ctx, "SELECT 1 FROM "+table+" LIMIT 0"); err != nil {
 					return fmt.Errorf("the opinion_citations ledger is not available (run make db-up?): %w", err)
 				}
@@ -136,16 +138,18 @@ func NewOpinionCorpusStore(db *pgxpool.Pool) *CorpusStore {
 			return nil
 		},
 		stream: `
-		SELECT cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year, k.decision_year
+		SELECT cu.id, cu.raw, cu.volume, cu.reporter_abbr, cu.page, cu.year, k.decision_year,
+		       COALESCE(jc.jurisdiction, '')
 		FROM opinion_citations.citations_unlinked cu
 		LEFT JOIN cap.cases k ON k.id = cu.cap_case
+		LEFT JOIN legalhist.cap_jurisdiction_codes jc ON jc.cap_jurisdiction = k.jurisdiction
 		WHERE NOT EXISTS (
 			SELECT 1 FROM opinion_citations.citation_links cl WHERE cl.citation_id = cu.id
 		)
 		`,
 		insert: linksInsertSQL("opinion_citations.citation_links"),
 		scan: func(rows pgx.Rows, c *UnlinkedCitation) error {
-			return rows.Scan(&c.ID, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year, &c.SourceYear)
+			return rows.Scan(&c.ID, &c.Raw, &c.Volume, &c.ReporterAbbr, &c.Page, &c.Year, &c.SourceYear, &c.SourceJurisdiction)
 		},
 	}
 }
@@ -163,6 +167,10 @@ func linksInsertSQL(table string) string {
 	ON CONFLICT (citation_id) DO NOTHING`
 }
 
+// streamPlanSQL is run before the stream query, in its transaction; see
+// StreamUnprocessedCitations.
+const streamPlanSQL = `SET LOCAL enable_nestloop = off`
+
 // StreamUnprocessedCitations runs a single anti-join over the whole
 // citations_unlinked table, streaming every citation not yet in citation_links
 // to fn in batches of at most batchSize.
@@ -179,11 +187,31 @@ func linksInsertSQL(table string) string {
 // were unprocessed when the query began — concurrent inserts by the worker
 // connections are invisible to it. Callers MUST apply backpressure inside fn;
 // the whole table is read as fast as fn accepts batches.
+//
+// The query runs in a read-only transaction with nested loops turned off
+// (streamPlanSQL), so the planner must use the hash anti-join that reads
+// citation_links once. The stream is planned once, when it starts, and in a
+// relink that is seconds after TRUNCATE citation_links, when the statistics
+// say the table is empty and a nested loop that rescans it for every citation
+// looks cheapest. Then every probe rescans a table the workers are filling,
+// and the run slows without limit: on 2026-10-24 job 2920626 fell from 1,066
+// to 99 rows a second and linked 344,000 citations in its hour, where the
+// resubmitted job, planned after autovacuum had analyzed the table, linked the
+// other 54.2M in six minutes.
 func (s *CorpusStore) StreamUnprocessedCitations(ctx context.Context, batchSize int, fn func([]UnlinkedCitation) error) error {
 	if err := s.Prepare(ctx); err != nil {
 		return fmt.Errorf("preparing to stream unprocessed citations: %w", err)
 	}
-	rows, err := s.DB.Query(ctx, s.stream)
+	tx, err := s.DB.BeginTx(ctx, pgx.TxOptions{AccessMode: pgx.ReadOnly})
+	if err != nil {
+		return fmt.Errorf("opening the stream's transaction: %w", err)
+	}
+	// Nothing is written in it, so a rollback is the end of it either way.
+	defer func() { _ = tx.Rollback(context.Background()) }()
+	if _, err := tx.Exec(ctx, streamPlanSQL); err != nil {
+		return fmt.Errorf("setting the stream's plan: %w", err)
+	}
+	rows, err := tx.Query(ctx, s.stream)
 	if err != nil {
 		return fmt.Errorf("streaming unprocessed citations: %w", err)
 	}

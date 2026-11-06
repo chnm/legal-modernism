@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jackc/pgx/v4"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/schollz/progressbar/v3"
 )
 
@@ -129,7 +129,7 @@ func dbConnect(ctx context.Context) (*pgxpool.Pool, error) {
 	}
 	timeout, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
-	db, err := pgxpool.Connect(timeout, connstr)
+	db, err := pgxpool.New(timeout, connstr)
 	if err != nil {
 		return nil, fmt.Errorf("connecting to database: %w", err)
 	}

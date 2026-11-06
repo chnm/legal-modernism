@@ -45,6 +45,18 @@ func TestLinkCitation(t *testing.T) {
 	howard := &citations.WhitelistEntry{ReporterStandard: &howardStd, Fallback: &citations.WhitelistEntry{ReporterStandard: &howStd}}
 	den := &citations.WhitelistEntry{ReporterStandard: &denStd, UK: true, Fallback: &citations.WhitelistEntry{ReporterStandard: &denioStd}}
 	stewart := &citations.WhitelistEntry{ReporterStandard: &stewartStd, ReporterCAP: &njEqCAP, Fallback: &citations.WhitelistEntry{ReporterStandard: &stewStd}}
+	// Issue #401: bare "Hill" is Hill's three volumes of S.C. Law Reports
+	// (19-21 S.C.L.) and falls back to Hill's New York Reports, which CAP
+	// spells "Hill & Den.".
+	hillStd := "Hill"
+	sclCAP := "S.C.L."
+	hillNYStd := "Hill (N.Y.)"
+	hillDenCAP := "Hill & Den."
+	hill := &citations.WhitelistEntry{ReporterStandard: &hillStd, ReporterCAP: &sclCAP, CAPDifferent: true, Jurisdiction: "us:sc",
+		Fallback: &citations.WhitelistEntry{ReporterStandard: &hillNYStd, ReporterCAP: &hillDenCAP, Jurisdiction: "us:ny"}}
+	hillDiffvols := map[string]map[int]*citations.DiffVolEntry{"Hill": {
+		1: {CAPVol: 19, CAPReporter: "S.C.L."}, 2: {CAPVol: 20, CAPReporter: "S.C.L."}, 3: {CAPVol: 21, CAPReporter: "S.C.L."},
+	}}
 
 	tests := []struct {
 		name         string
@@ -833,6 +845,82 @@ func TestLinkCitation(t *testing.T) {
 			wantTier:   citations.TierCAPDirect,
 			wantCAPID:  ptr(int64(333)),
 			wantLinked: ptr("4 Denio 20"),
+		},
+		{
+			// Issue #401. A New York opinion's "2 Hill 93" is Hill's New York
+			// Reports, though S.C. Hill has a volume 2 and a case on page 93.
+			name:       "the citing state's reading is tried first",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), SourceJurisdiction: "us:ny", Volume: ptr(2), ReporterAbbr: "Hill", Page: 93},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 93": 111, "2 Hill & Den. 93": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(222)),
+			wantLinked: ptr("2 Hill & Den. 93"),
+		},
+		{
+			name:       "an opinion of the spelling's own state keeps its reading",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), SourceJurisdiction: "us:sc", Volume: ptr(2), ReporterAbbr: "Hill", Page: 93},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 93": 111, "2 Hill & Den. 93": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("20 S.C.L. 93"),
+		},
+		{
+			// A treatise records no citing state.
+			name:       "no citing jurisdiction keeps the spelling's own reading",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Hill", Page: 93},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 93": 111, "2 Hill & Den. 93": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("20 S.C.L. 93"),
+		},
+		{
+			// Volumes past S.C. Hill's three reach the New York reading from
+			// any citer, through the #358 fallback, now that it probes CAP's
+			// spelling.
+			name:       "a volume S.C. Hill lacks falls back to Hill & Den.",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(5), ReporterAbbr: "Hill", Page: 10},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 93": 111, "5 Hill & Den. 10": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(222)),
+			wantLinked: ptr("5 Hill & Den. 10"),
+		},
+		{
+			// A New York pin cite misses under the New York reading on the
+			// page, which is no evidence of the wrong reporter, so it is not
+			// tried as South Carolina's, where page 95 begins a case.
+			name:       "a page miss under the citing state's reading does not fall back",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), SourceJurisdiction: "us:ny", Volume: ptr(2), ReporterAbbr: "Hill", Page: 95},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 95": 111, "2 Hill & Den. 93": 222},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSPageAbsent,
+		},
+		{
+			// The spelling's own reading is still the fallback: a New York
+			// opinion citing a volume the New York reporter lacks reads it as
+			// South Carolina's.
+			name:       "the spelling's own reading is the citing state's fallback",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), SourceJurisdiction: "us:ny", Volume: ptr(2), ReporterAbbr: "Hill", Page: 93},
+			whitelist:  map[string]*citations.WhitelistEntry{"Hill": hill},
+			diffvols:   hillDiffvols,
+			capCites:   map[string]int64{"20 S.C.L. 93": 111, "5 Hill & Den. 10": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("20 S.C.L. 93"),
 		},
 		{
 			name:       "UK reporter at another volume is uk_volume_absent",

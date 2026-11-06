@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lmullen/legal-modernism/go/sources"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -25,7 +25,7 @@ func newTestOpinionDBStore(t *testing.T) *DBStore {
 		t.Skip("LAW_TEST_DBSTR not set; skipping DB integration test")
 	}
 	ctx := context.Background()
-	pool, err := pgxpool.Connect(ctx, dsn)
+	pool, err := pgxpool.New(ctx, dsn)
 	require.NoError(t, err)
 	t.Cleanup(pool.Close)
 

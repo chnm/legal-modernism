@@ -228,6 +228,30 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `href="/citations?case=cap%3A1&amp;names=disagree"`)
 	})
 
+	t.Run("case page opinion citations", func(t *testing.T) {
+		name, citing, cited := "Young v. Gibson", "Smith v. Jones", "Doe v. Roe"
+		year := 1890
+		d := &CaseDetail{Page: Page{Title: "C", Section: "cases"}, CaseRef: CaseRef{Source: "cap", ID: "1", Name: &name},
+			CitedByOpinions: OpinionCases{Total: 3, TotalCites: 7, Cases: []OpinionCase{
+				{CaseRef: CaseRef{Source: "cap", ID: "22", Name: &citing, Year: &year}, Cites: 4, Opinions: 2},
+			}},
+			OpinionsCite: OpinionCases{Total: 1, TotalCites: 2, Cases: []OpinionCase{
+				{CaseRef: CaseRef{Source: "er", ID: "er-9", Name: &cited}, Cites: 2, Opinions: 1},
+			}}}
+		out := render(t, "case.html", d)
+		require.Contains(t, out, "Cited by CAP opinions")
+		require.Contains(t, out, "3 cases make 7 citations; the 1 that make the most are shown")
+		require.Contains(t, out, `href="/cases/cap/22"`)
+		require.Contains(t, out, "Cited in its opinions")
+		require.Contains(t, out, `href="/cases/er/er-9"`)
+
+		// Another source's case has no opinions of its own.
+		d.Source = "er"
+		out = render(t, "case.html", d)
+		require.Contains(t, out, "Cited by CAP opinions")
+		require.NotContains(t, out, "Cited in its opinions")
+	})
+
 	t.Run("citation detail with name", func(t *testing.T) {
 		yes := true
 		name := "Smith v. Jones"

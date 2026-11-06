@@ -1025,6 +1025,23 @@ CREATE MATERIALIZED VIEW legalhist.all_page_id AS
 
 
 --
+-- Name: cap_jurisdiction_codes; Type: TABLE; Schema: legalhist; Owner: -
+--
+
+CREATE TABLE legalhist.cap_jurisdiction_codes (
+    cap_jurisdiction bigint NOT NULL,
+    jurisdiction text NOT NULL
+);
+
+
+--
+-- Name: TABLE cap_jurisdiction_codes; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON TABLE legalhist.cap_jurisdiction_codes IS 'CAP jurisdictions mapped to the codes legalhist.reporters.jurisdiction uses (us: and the postal code), so the linker can compare a citing opinion''s state with a reporter''s (issue #401).';
+
+
+--
 -- Name: code_reporter; Type: TABLE; Schema: legalhist; Owner: -
 --
 
@@ -2996,6 +3013,14 @@ ALTER TABLE ONLY freelaw.clusters_to_cap
 
 
 --
+-- Name: cap_jurisdiction_codes cap_jurisdiction_codes_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.cap_jurisdiction_codes
+    ADD CONSTRAINT cap_jurisdiction_codes_pkey PRIMARY KEY (cap_jurisdiction);
+
+
+--
 -- Name: code_reporter code_reporter_pkey; Type: CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -4210,6 +4235,14 @@ ALTER TABLE ONLY freelaw.clusters_to_cap
 
 
 --
+-- Name: cap_jurisdiction_codes cap_jurisdiction_codes_cap_jurisdiction_fkey; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
+--
+
+ALTER TABLE ONLY legalhist.cap_jurisdiction_codes
+    ADD CONSTRAINT cap_jurisdiction_codes_cap_jurisdiction_fkey FOREIGN KEY (cap_jurisdiction) REFERENCES cap.jurisdictions(id);
+
+
+--
 -- Name: code_reporter code_reporter_court_cap_id_fk; Type: FK CONSTRAINT; Schema: legalhist; Owner: -
 --
 
@@ -4564,4 +4597,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261021140000'),
     ('20261023120000'),
     ('20261023150000'),
-    ('20261023180000');
+    ('20261023180000'),
+    ('20261023200000'),
+    ('20261023210000');

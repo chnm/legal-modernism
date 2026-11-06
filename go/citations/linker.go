@@ -30,13 +30,20 @@ type WhitelistEntry struct {
 	// lets one reporter row hold a volume-cited series and its year-cited
 	// continuation (issue #314).
 	CitedByYearFrom int
+	// Jurisdiction is the reporter's legalhist.reporters.jurisdiction
+	// ("us:sc", "uk:kb"), or "" when it has none. The linker compares it with
+	// a citation's SourceJurisdiction to choose which of a spelling's two
+	// readings to try first (issue #401).
+	Jurisdiction string
 	// Fallback is the reporter a spelling means when it does not mean its own
 	// (legalhist.whitelist.fallback_standard), or nil. Some spellings name one
 	// reporter in one jurisdiction or run of volumes and another elsewhere:
 	// "Porter" is Porter's Indiana Reports, but in Alabama Porter's Alabama
 	// Reports (issue #358). The linker tries the fallback only once the
 	// spelling's own reading has failed in a way that says it was the wrong
-	// reporter. Its fields describe the fallback reporter; it never has a
+	// reporter -- unless the citing document is of the fallback's
+	// jurisdiction and not of the spelling's own, when the two trade places
+	// (issue #401). Its fields describe the fallback reporter; it never has a
 	// Fallback of its own.
 	Fallback *WhitelistEntry
 }
@@ -100,6 +107,14 @@ type UnlinkedCitation struct {
 	// one corpus-specific fact the cascade needs reaches it without the
 	// cascade knowing the corpus.
 	SourceYear *int
+	// SourceJurisdiction is the jurisdiction of the document the citation
+	// appears in, in legalhist.reporters.jurisdiction's codes ("us:ny"): the
+	// citing case's state for a CAP opinion, through
+	// legalhist.cap_jurisdiction_codes, and "" for a treatise page or a case
+	// with no code. A spelling whose fallback reporter is of this
+	// jurisdiction, and whose own reporter is not, is read as the fallback
+	// first (issue #401).
+	SourceJurisdiction string
 }
 
 // LinkResult records the outcome of attempting to link a single citation.

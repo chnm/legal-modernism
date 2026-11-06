@@ -36,18 +36,44 @@ func linkCitation(c *citations.UnlinkedCitation, t *Tables) *citations.LinkResul
 	// chk_whitelist_nonjunk_has_standard constraint. A violation panics at the
 	// derefs below rather than silently producing no_match.
 
+	// A spelling with two readings is read first as the one of the citing
+	// document's jurisdiction (issue #401).
+	first, second := readings(c, entry)
+
 	// Step 2: route by UK flag
-	result = route(c, entry, t, result)
+	result = route(c, first, t, result)
 
 	// Step 3: a spelling that can mean another reporter tries that one, but
 	// only after a miss that says this was the wrong reporter (issue #358).
-	if entry.Fallback != nil && result.Status == citations.StatusNoMatch && fallsBack(result.MatchTier) {
-		fb := route(c, entry.Fallback, t, &citations.LinkResult{CitationID: c.ID})
+	if second != nil && result.Status == citations.StatusNoMatch && fallsBack(result.MatchTier) {
+		fb := route(c, second, t, &citations.LinkResult{CitationID: c.ID})
 		if linkedToSource(fb.Status) {
 			return fb
 		}
 	}
 	return result
+}
+
+// readings returns the order in which a spelling's readings are tried: its
+// own reporter, then its fallback (or nil). When the citing document is of
+// the fallback's jurisdiction and not of the spelling's own, the two trade
+// places (issue #401). "2 Hill 93" in a New York opinion is Hill's New York
+// Reports, not Hill's three volumes of South Carolina Law Reports that bare
+// "Hill" names elsewhere, and a South Carolina reading of a New York cite
+// that happens to land on a page some S.C. case begins on is a wrong link
+// the fallback could never undo, since the fallback runs only after a miss.
+// The citing jurisdiction is known only for a CAP opinion; a treatise's is
+// "", which never reorders.
+func readings(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) (first, second *citations.WhitelistEntry) {
+	fb := entry.Fallback
+	if fb == nil {
+		return entry, nil
+	}
+	home := c.SourceJurisdiction
+	if home != "" && fb.Jurisdiction == home && entry.Jurisdiction != home {
+		return fb, entry
+	}
+	return entry, fb
 }
 
 // route sends a citation down the English Reports or the US cascade by its

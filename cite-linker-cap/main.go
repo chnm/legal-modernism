@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/lmullen/legal-modernism/go/citations"
 	"github.com/lmullen/legal-modernism/go/db"
 	"github.com/lmullen/legal-modernism/go/linker"
@@ -130,9 +130,9 @@ func main() {
 	// from psql and then running this program unchanged; the anti-join in
 	// StreamUnprocessedCitations then resumes from wherever a previous job
 	// stopped. The stub registry (legalhist.stub_cases) is read here as it is
-	// there, but it is built from the MOML linker's misses alone: a citation in
-	// an opinion to a reporter no source covers links to a stub the treatises
-	// minted, or stays no_match.
+	// there, and make db-stubs builds it from both linkers' misses (issue
+	// #346): a citation in an opinion to a reporter no source covers links to
+	// a stub the treatises or the opinions minted, or stays no_match.
 	slog.Info("processing settings", "batch_size", batchSize, "workers", workers)
 
 	tables, err := linker.Load(ctx, store)
