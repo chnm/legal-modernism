@@ -146,7 +146,7 @@ export const BAR_HEIGHT = 22;
 export const MIN_BAR_HEIGHT = 16;
 const MARGIN_TOP = 36;
 const MARGIN_BOTTOM = 8;
-const MARGIN_RIGHT = 72;
+const MARGIN_RIGHT = 110; // room for a label like "4,894 (60%)"
 
 // height is the height the chart takes: what its bars want, shrunk to the
 // `available` height down to the least the bars can take, beyond which the
@@ -160,17 +160,22 @@ export function height(summary, available) {
 }
 
 // chart draws the bars at the given size and returns Plot's figure, the SVG
-// with its legend.
+// with its legend. A bar's label is its value and, when the measure is
+// citations, its share of the citations to or from other jurisdictions; the
+// citing cases have no share, since a case can cite several jurisdictions.
 export function chart(summary, { width, height: h }) {
-  const { bars, selected, direction, measure } = summary;
+  const { bars, selected, direction, measure, otherCitations } = summary;
+  const label = measure === "cases"
+    ? (d) => fmt(d.value)
+    : (d) => `${fmt(d.value)} (${pct(d.citations, otherCitations)})`;
   const longest = bars.reduce((m, b) => Math.max(m, b.name.length), 4);
   const marginLeft = Math.min(140, 16 + longest * 7.5);
   const description = summary.subtitle.replace(/<[^>]+>/g, "");
-  let label;
+  let axisLabel;
   if (measure === "cases") {
-    label = direction === "cites" ? `${selected.name} cases citing →` : `Cases citing ${selected.name} →`;
+    axisLabel = direction === "cites" ? `${selected.name} cases citing →` : `Cases citing ${selected.name} →`;
   } else {
-    label = direction === "cites" ? `Citations from ${selected.name} →` : `Citations to ${selected.name} →`;
+    axisLabel = direction === "cites" ? `Citations from ${selected.name} →` : `Citations to ${selected.name} →`;
   }
 
   return Plot.plot({
@@ -186,7 +191,7 @@ export function chart(summary, { width, height: h }) {
     x: {
       axis: "top",
       grid: true,
-      label,
+      label: axisLabel,
       labelAnchor: "right",
       tickFormat: (d) => fmt(d),
       tickSize: 0,
@@ -212,7 +217,7 @@ export function chart(summary, { width, height: h }) {
       Plot.text(bars, {
         x: "value",
         y: "name",
-        text: (d) => fmt(d.value),
+        text: label,
         textAnchor: "start",
         dx: 6,
         fill: colors.ink,
