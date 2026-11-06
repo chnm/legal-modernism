@@ -12,7 +12,7 @@
 
 import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
 import { colors, groupColors, fonts, sizes, plotStyle, fmt, pct } from "./style.js";
-import { GROUPS, groupOf, regionOf } from "./census.js";
+import { GROUPS, groupOf } from "./census.js";
 
 // Jurisdictions whose long name takes the article.
 const ARTICLE = new Set(["United States", "United Kingdom", "District of Columbia"]);
@@ -49,12 +49,7 @@ export function summarize(edges, jurisdictions, options) {
     let bar = acc.get(other);
     if (!bar) {
       const j = bySlug.get(other) || { jurisdiction: other, name: other, name_long: other };
-      const group = groupOf(other);
-      bar = {
-        jurisdiction: other, name: j.name, name_long: j.name_long,
-        group: group.name, region: regionOf(group),
-        citations: 0, citing_cases: 0,
-      };
+      bar = { jurisdiction: other, name: j.name, name_long: j.name_long, group: groupOf(other).name, citations: 0, citing_cases: 0 };
       acc.set(other, bar);
     }
     bar.citations += e.citations;
@@ -139,7 +134,7 @@ function tooltip(d, { selected, direction, otherCitations }) {
   const citing = direction === "cites" ? selected.name : d.name;
   const cited = direction === "cites" ? d.name : selected.name;
   return [
-    d.region ? `${d.name_long} (${d.group}, ${d.region})` : `${d.name_long} (${d.group})`,
+    `${d.name_long} (${d.group})`,
     `${fmt(d.citations)} citation${d.citations === 1 ? "" : "s"} from ${fmt(d.citing_cases)} ${citing} case${d.citing_cases === 1 ? "" : "s"} to ${cited} cases`,
     `${pct(d.citations, otherCitations)} of the citations ${direction === "cites" ? "to" : "from"} other jurisdictions`,
   ].join("\n");
@@ -245,12 +240,11 @@ export function table(summary) {
   const other = direction === "cites" ? "Cited jurisdiction" : "Citing jurisdiction";
   const cases = direction === "cites" ? `${selected.name} cases citing it` : "Cases citing it";
   t.innerHTML = `<caption class="visually-hidden">${summary.title}</caption>
-    <thead><tr><th scope="col">${other}</th><th scope="col">Census division</th><th scope="col" class="num">Citations</th><th scope="col" class="num">${cases}</th><th scope="col" class="num">Share</th></tr></thead>`;
+    <thead><tr><th scope="col">${other}</th><th scope="col">Region</th><th scope="col" class="num">Citations</th><th scope="col" class="num">${cases}</th><th scope="col" class="num">Share</th></tr></thead>`;
   const body = document.createElement("tbody");
   for (const b of bars) {
     const tr = document.createElement("tr");
-    const division = b.region ? `${b.group} (${b.region})` : b.group;
-    tr.innerHTML = `<td>${b.name_long}</td><td>${division}</td><td class="num">${fmt(b.citations)}</td><td class="num">${fmt(b.citing_cases)}</td><td class="num">${pct(b.citations, summary.otherCitations)}</td>`;
+    tr.innerHTML = `<td>${b.name_long}</td><td>${b.group}</td><td class="num">${fmt(b.citations)}</td><td class="num">${fmt(b.citing_cases)}</td><td class="num">${pct(b.citations, summary.otherCitations)}</td>`;
     body.appendChild(tr);
   }
   if (home.citations > 0) {
