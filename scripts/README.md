@@ -22,7 +22,11 @@ caffeinate -i ./scripts/pipeline.sh --corpus cap
 Run it from the repository root. A MOML rebuild takes about an hour and a half: the
 detector about 55 minutes (about 50 of them scanning, on 24 CPUs of a
 normal-partition node), each of the two linker passes about 10, and the maintenance
-about 12. A CAP rebuild is one detector job, one linker pass of a few
+a few minutes (the October 2026 runs took 12, before `db/maintenance.sh` stopped
+refreshing the views over static source data and started running the refreshes
+a few at a time, and before `reporter_case_citations`, the longest refresh at
+over eight minutes, was redefined to run in parallel). A CAP rebuild is one
+detector job, one linker pass of a few
 minutes, and the same maintenance: about ten minutes in all (the first run,
 on 2026-09-26, scanned 1.56M opinions in 3m10s and linked 9.76M citations in
 3m00s). `caffeinate -i`
@@ -43,7 +47,7 @@ For the MOML treatises, the default:
 | `stubs` | `make db-stubs`: rebuild `legalhist.stub_cases` from the linker's misses | local psql | about a minute |
 | `truncate-links` | `TRUNCATE moml_citations.citation_links` | local psql | seconds |
 | `relink` | `sbatch` `cite-linker` again, so citations to reporters no source covers link to the stubs | hopper | about 10 minutes |
-| `maintenance` | `make db-maintenance`: vacuum the churned tables, refresh every materialized view | local psql | about 12 minutes |
+| `maintenance` | `make db-maintenance`: vacuum the churned tables, refresh the materialized views that read them (`make db-maintenance-all` adds the views over static source data) | local psql | a few minutes |
 
 For the CAP opinions, `--corpus cap`, the phases keep their names so that
 `--from` and `--job` read the same way:
@@ -58,7 +62,7 @@ For the CAP opinions, `--corpus cap`, the phases keep their names so that
 | `stubs` | `make db-stubs`, the same script | local psql | a few minutes |
 | `truncate-links` | `TRUNCATE opinion_citations.citation_links` | local psql | seconds |
 | `relink` | `sbatch` `cite-linker-cap` again | hopper | minutes |
-| `maintenance` | `make db-maintenance`, the same script: it vacuums the churned tables and refreshes every materialized view in the database, MOML's included | local psql | about 12 minutes |
+| `maintenance` | `make db-maintenance`, the same script: it vacuums the churned tables of both corpora and refreshes the materialized views that read them, MOML's included | local psql | a few minutes |
 
 The stub registry, `legalhist.stub_cases`, is built from the misses of both
 corpora (issue #346): `make db-stubs` judges a reporter's eligibility across
