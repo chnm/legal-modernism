@@ -104,7 +104,9 @@ func (s *server) handleVizJurisdictionsAPI(w http.ResponseWriter, r *http.Reques
 
 // vizJurisdictionEdge is one row of opinion_citations.jurisdiction_citations:
 // the citations from the cases of one jurisdiction decided in one year to the
-// cases of another (or the same) jurisdiction, and the citing cases making them.
+// cases of another (or the same) jurisdiction, and the citing cases making
+// them. A citation is one opinion citing one case, counted once however many
+// strings cite it.
 type vizJurisdictionEdge struct {
 	CitingYear         int    `json:"citing_year"`
 	CitingJurisdiction string `json:"citing_jurisdiction"`

@@ -4,8 +4,11 @@ SET ROLE = law_admin;
 -- The CAP citation graph rolled up to jurisdictions (issue #216): for each
 -- citing jurisdiction, year and cited jurisdiction, the linked citations from
 -- the opinions of cases decided in that jurisdiction and year to cases of the
--- cited jurisdiction, and the citing cases that make them. Chambers' draft
--- public visualization /viz/jurisdictions reads it.
+-- cited jurisdiction, and the citing cases that make them. A citation is one
+-- opinion citing one case: an opinion that cites a case under several strings
+-- (a parallel citation, say) counts once, which is case_case_citations'
+-- opinion_count rather than its cite_count. Chambers' draft public
+-- visualization /viz/jurisdictions reads it.
 --
 -- The citations are our own links (opinion_citations.citation_links, through
 -- case_case_citations), not CAP's citation graph. The citing jurisdiction is
@@ -27,7 +30,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS opinion_citations.jurisdiction_citations 
  SELECT c.decision_year AS citing_year,
         cj.slug AS citing_jurisdiction,
         CASE WHEN ccc.source = 'cap' THEN kj.slug ELSE 'uk' END AS cited_jurisdiction,
-        sum(ccc.cite_count)::bigint AS citations,
+        sum(ccc.opinion_count)::bigint AS citations,
         count(DISTINCT ccc.citing_case_id) AS citing_cases
    FROM opinion_citations.case_case_citations ccc
    JOIN cap.cases c ON c.id = ccc.citing_case_id
@@ -43,7 +46,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS opinion_citations.jurisdiction_citations 
 CREATE UNIQUE INDEX IF NOT EXISTS jurisdiction_citations_uq
   ON opinion_citations.jurisdiction_citations USING btree (citing_jurisdiction, cited_jurisdiction, citing_year);
 
-COMMENT ON MATERIALIZED VIEW opinion_citations.jurisdiction_citations IS 'Our CAP citation links rolled up by the citing case''s jurisdiction and decision year and the cited case''s jurisdiction (cap.jurisdictions slugs; a cited English Reports case is uk), with the citations and the distinct citing cases (issue #216). Self-cites, stubs and Code Reporter cases are left out. Read by chambers'' /viz/jurisdictions. Refreshed by make db-maintenance.';
+COMMENT ON MATERIALIZED VIEW opinion_citations.jurisdiction_citations IS 'Our CAP citation links rolled up by the citing case''s jurisdiction and decision year and the cited case''s jurisdiction (cap.jurisdictions slugs; a cited English Reports case is uk), with the citations (one per opinion and cited case, however many strings cite it) and the distinct citing cases (issue #216). Self-cites, stubs and Code Reporter cases are left out. Read by chambers'' /viz/jurisdictions. Refreshed by make db-maintenance.';
 
 -- After this migration the view is empty. Populate it with `make
 -- db-maintenance`, or alone with

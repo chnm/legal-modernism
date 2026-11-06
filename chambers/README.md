@@ -90,7 +90,7 @@ Two kinds of query serve the pages. Live queries read a page, a citation, a volu
 | `opinion_citations.cap_graph_edges` | one edge, a citing case and a cited CAP case, in our links, CAP's graph or both | the reporter page |
 | `opinion_citations.cap_graph_agreement` | the agreement by citing year and jurisdiction and cited jurisdiction and reporter (about 213K rows) | `/linking/cap`, the reporter page |
 | `opinion_citations.cap_graph_case_agreement` | the agreement of one citing case | `/linking/cap` |
-| `opinion_citations.jurisdiction_citations` | our CAP links by the citing case's jurisdiction and year and the cited case's jurisdiction (a cited English Reports case is `uk`; about 109K rows) | `/viz/jurisdictions` |
+| `opinion_citations.jurisdiction_citations` | our CAP links by the citing case's jurisdiction and year and the cited case's jurisdiction (a cited English Reports case is `uk`; a citation is one opinion citing one case, a parallel citation counted once; about 109K rows) | `/viz/jurisdictions` |
 
 A section that reads a view which does not exist yet or has not been populated (the states between deploying, applying a migration and running `make db-maintenance`) renders empty with a notice naming the view, instead of failing the page; `isUnavailable` in `server.go` recognizes the two SQLSTATEs.
 
