@@ -69,6 +69,7 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `from "/static/viz/style.js"`)
 		require.Contains(t, out, `class="viz-source"`)
 		require.Contains(t, out, `class="viz-notes"`)
+		require.Contains(t, out, `id="m-share"`)
 		require.Contains(t, out, `href="/#viz"`)
 	})
 

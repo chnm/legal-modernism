@@ -140,7 +140,8 @@ func (s *server) getVizJurisdictionEdges(ctx context.Context, slug string) ([]vi
 
 // handleVizJurisdictionAPI serves every edge of one jurisdiction, citing and
 // cited, year by year; the chart filters the years and picks the direction in
-// the browser. An unknown slug is an empty array.
+// the browser. An unknown slug is an empty array. The literal route
+// /api/viz/jurisdictions/totals takes precedence over this pattern.
 func (s *server) handleVizJurisdictionAPI(w http.ResponseWriter, r *http.Request) {
 	slug := r.PathValue("slug")
 	if !slugPattern.MatchString(slug) {
@@ -152,6 +153,66 @@ func (s *server) handleVizJurisdictionAPI(w http.ResponseWriter, r *http.Request
 	data, err := s.getVizJurisdictionEdges(ctx, slug)
 	if err != nil {
 		apiError(w, err, "error querying jurisdiction edges", capCorpus)
+		return
+	}
+	writeJSON(w, data)
+}
+
+// vizJurisdictionTotal is one jurisdiction's citations in one year, in each
+// direction, with its home citations left out: what it cites in other
+// jurisdictions and what other jurisdictions cite in it. The share measure
+// divides a bar by the other jurisdiction's total, so the browser fetches
+// these once and takes the denominator for any years and direction itself.
+type vizJurisdictionTotal struct {
+	Year         int    `json:"year"`
+	Jurisdiction string `json:"jurisdiction"`
+	CitationsOut int64  `json:"citations_out"` // from its cases to other jurisdictions
+	CitationsIn  int64  `json:"citations_in"`  // to its cases from other jurisdictions
+}
+
+const vizJurisdictionTotalsSQL = `
+WITH outgoing AS (
+    SELECT citing_year AS year, citing_jurisdiction AS slug, sum(citations) AS citations
+      FROM opinion_citations.jurisdiction_citations
+     WHERE citing_jurisdiction <> cited_jurisdiction
+     GROUP BY 1, 2
+), incoming AS (
+    SELECT citing_year AS year, cited_jurisdiction AS slug, sum(citations) AS citations
+      FROM opinion_citations.jurisdiction_citations
+     WHERE citing_jurisdiction <> cited_jurisdiction
+     GROUP BY 1, 2
+)
+SELECT COALESCE(o.year, i.year), COALESCE(o.slug, i.slug),
+       COALESCE(o.citations, 0), COALESCE(i.citations, 0)
+  FROM outgoing o
+  FULL JOIN incoming i ON i.year = o.year AND i.slug = o.slug
+ ORDER BY 1, 2`
+
+func (s *server) getVizJurisdictionTotals(ctx context.Context) ([]vizJurisdictionTotal, error) {
+	rows, err := s.db.Query(ctx, vizJurisdictionTotalsSQL)
+	if err != nil {
+		return nil, fmt.Errorf("querying jurisdiction totals: %w", err)
+	}
+	defer rows.Close()
+	out := []vizJurisdictionTotal{}
+	for rows.Next() {
+		var t vizJurisdictionTotal
+		if err := rows.Scan(&t.Year, &t.Jurisdiction, &t.CitationsOut, &t.CitationsIn); err != nil {
+			return nil, fmt.Errorf("scanning jurisdiction total: %w", err)
+		}
+		out = append(out, t)
+	}
+	return out, rows.Err()
+}
+
+// handleVizJurisdictionTotalsAPI serves every jurisdiction's citations by
+// year in each direction, the denominators of the share measure.
+func (s *server) handleVizJurisdictionTotalsAPI(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := s.ctx(r, 30*time.Second)
+	defer cancel()
+	data, err := s.getVizJurisdictionTotals(ctx)
+	if err != nil {
+		apiError(w, err, "error querying jurisdiction totals", capCorpus)
 		return
 	}
 	writeJSON(w, data)

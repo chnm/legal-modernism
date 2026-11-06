@@ -32,6 +32,7 @@
                 <span class="viz-toggle">
                     <input type="radio" name="measure" id="m-citations" value="citations" checked><label for="m-citations">citations</label>
                     <input type="radio" name="measure" id="m-cases" value="cases"><label for="m-cases">citing cases</label>
+                    <input type="radio" name="measure" id="m-share" value="share"><label for="m-share">share of their citations</label>
                 </span>
             </fieldset>
             <fieldset class="viz-control" aria-label="Years of the citing cases">
@@ -63,7 +64,10 @@
                 divisions; the federal courts, the United Kingdom and the territories have colours of their own, and Dakota Territory is placed
                 with the Dakotas. The years are those of the citing cases,
                 in both directions, and run to 1920, where the opinions end. Citations to the jurisdiction's own cases are given in the
-                subtitle and the table, not as a bar, and an opinion's citation of its own case is left out. Citations the linker could resolve
+                subtitle and the table, not as a bar, and an opinion's citation of its own case is left out. The share of their citations is a
+                bar's citations as a share of the other jurisdiction's own total in those years: the citations its cases make to all other
+                jurisdictions, or the citations its cases receive from them, so that a jurisdiction with much law does not lead merely by
+                having much law. A jurisdiction with fewer than 100 such citations in the years is not ranked by share; the table lists it. Citations the linker could resolve
                 only to a stub case, or to the New York Code Reporter, are not counted. The counts are of linked citations: a case cited
                 under a spelling or in a reporter the linker does not know yet is missing, and a few links are wrong.
             </p>
@@ -116,6 +120,7 @@
         // in which the selected jurisdiction has a citation in the current
         // direction, so that no year the slider offers is empty.
         let jurisdictions = [];
+        let totals = []; // every jurisdiction's citations by year in each direction, the share's denominators
         let edges = [];
         let minYear = 1700, maxYear = 1920;
         let pendingYears = null; // the years the URL asked for, applied once the first edges arrive
@@ -134,7 +139,7 @@
             return {
                 jurisdiction: q.get("j"),
                 direction: q.get("dir") === "cited" ? "cited" : "cites",
-                measure: q.get("count") === "cases" ? "cases" : "citations",
+                measure: ["cases", "share"].includes(q.get("count")) ? q.get("count") : "citations",
                 from: Number(q.get("from")),
                 to: Number(q.get("to")),
             };
@@ -203,7 +208,7 @@
             if (!edges.length && !jurisdictions.length) return;
             const s = state();
             writeURL(s);
-            summary = summarize(edges, jurisdictions, s);
+            summary = summarize(edges, jurisdictions, s, totals);
             el.title.textContent = summary.title;
             el.subtitle.innerHTML = summary.subtitle;
             document.title = `${summary.title} — Chambers`;
@@ -267,7 +272,7 @@
         // the first jurisdiction's edges.
         (async () => {
             try {
-                jurisdictions = await getJSON(API);
+                [jurisdictions, totals] = await Promise.all([getJSON(API), getJSON(`${API}/totals`)]);
             } catch (err) {
                 el.subtitle.textContent = "The citation graph could not be loaded.";
                 message(err.message);

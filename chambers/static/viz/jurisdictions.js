@@ -22,13 +22,28 @@ const capital = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export const yearSpan = (from, to) => (from === to ? `${from}` : `${from}–${to}`);
 
+// SHARE_THRESHOLD is the least citations a jurisdiction's own total must
+// reach for the share measure to rank it; below it a share is noise.
+export const SHARE_THRESHOLD = 100;
+
 // summarize turns the edges of the selected jurisdiction into the chart's
 // bars under the options: `jurisdiction` (a slug), `direction` ("cites" for
 // the jurisdictions its cases cite, "cited" for those whose cases cite it),
 // `from` and `to` (the citing cases' decision years, inclusive), and
-// `measure` ("citations" or "cases", the distinct citing cases). Citations
-// between cases of the selected jurisdiction are the home figure, not a bar.
-export function summarize(edges, jurisdictions, options) {
+// `measure` ("citations", "cases" for the distinct citing cases, or "share").
+// Citations between cases of the selected jurisdiction are the home figure,
+// not a bar.
+//
+// The share is a bar's citations over the other jurisdiction's own total in
+// the same direction, from `totals` (the rows of /api/viz/jurisdictions/totals):
+// in the "cited" direction, the share of the citations the other
+// jurisdiction's cases make to all other jurisdictions that go to the selected
+// one, which says who relies on it most; in the "cites" direction, the share
+// of the citations the other jurisdiction's cases receive from elsewhere that
+// come from the selected one, which says where it looms largest. A
+// jurisdiction whose total is under SHARE_THRESHOLD is not ranked: it is left
+// out of the bars and listed in the table.
+export function summarize(edges, jurisdictions, options, totals = []) {
   const { jurisdiction, direction, from, to, measure } = options;
   const bySlug = new Map(jurisdictions.map((j) => [j.jurisdiction, j]));
   const selected = bySlug.get(jurisdiction) || { jurisdiction, name: jurisdiction, name_long: jurisdiction };
@@ -56,21 +71,40 @@ export function summarize(edges, jurisdictions, options) {
     bar.citing_cases += e.citing_cases;
   }
 
-  const valueOf = measure === "cases" ? (b) => b.citing_cases : (b) => b.citations;
-  const bars = [...acc.values()].filter((b) => valueOf(b) > 0);
+  // Each bar's denominator: the other jurisdiction's own citations in the
+  // years, outgoing when it is the citer and incoming when it is cited.
+  const totalKey = direction === "cites" ? "citations_in" : "citations_out";
+  const denominator = new Map();
+  for (const t of totals) {
+    if (t.year < from || t.year > to) continue;
+    denominator.set(t.jurisdiction, (denominator.get(t.jurisdiction) || 0) + t[totalKey]);
+  }
+
+  const all = [...acc.values()].filter((b) => b.citations > 0);
+  const otherCitations = all.reduce((s, b) => s + b.citations, 0);
+  for (const b of all) {
+    b.share = otherCitations > 0 ? b.citations / otherCitations : 0;
+    b.denominator = denominator.get(b.jurisdiction) || 0;
+    b.own_share = b.denominator > 0 ? b.citations / b.denominator : 0;
+    b.ranked = b.denominator >= SHARE_THRESHOLD;
+  }
+
+  let valueOf = (b) => b.citations;
+  if (measure === "cases") valueOf = (b) => b.citing_cases;
+  if (measure === "share") valueOf = (b) => b.own_share;
+  const bars = all.filter((b) => valueOf(b) > 0 && (measure !== "share" || b.ranked));
   for (const b of bars) b.value = valueOf(b);
   bars.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
-  const otherCitations = bars.reduce((s, b) => s + b.citations, 0);
-  for (const b of bars) b.share = otherCitations > 0 ? b.citations / otherCitations : 0;
+  const unranked = measure === "share" ? all.filter((b) => !b.ranked).sort((a, b) => b.citations - a.citations) : [];
 
   const summary = {
-    selected, direction, measure, from, to, bars, home,
+    selected, direction, measure, from, to, bars, unranked, home,
     otherCitations,
     allCitations: otherCitations + home.citations,
   };
   summary.title = title(summary);
   summary.subtitle = subtitle(summary);
-  summary.measureLabel = measure === "cases" ? "Citing cases" : "Citations";
+  summary.measureLabel = { cases: "Citing cases", share: "Share" }[measure] || "Citations";
   return summary;
 }
 
@@ -79,9 +113,19 @@ function title({ selected, direction, measure, from, to, bars }) {
   const years = yearSpan(from, to);
   const who = `${n} jurisdiction${n === 1 ? "" : "s"}`;
   if (n === 0) {
+    if (measure === "share") {
+      return direction === "cites"
+        ? `No jurisdiction with ${fmt(SHARE_THRESHOLD)} citations from elsewhere is cited by ${selected.name}, ${years}`
+        : `No jurisdiction with ${fmt(SHARE_THRESHOLD)} citations to other jurisdictions cites ${selected.name}, ${years}`;
+    }
     return direction === "cites"
       ? `No citations from ${selected.name} to other jurisdictions, ${years}`
       : `No citations to ${selected.name} from other jurisdictions, ${years}`;
+  }
+  if (measure === "share") {
+    return direction === "cites"
+      ? `Where ${selected.name} looms largest, ${years}`
+      : `Who relies on ${selected.name} most, ${years}`;
   }
   if (direction === "cites") {
     return measure === "cases"
@@ -105,6 +149,13 @@ function subtitle({ selected, direction, measure, from, to, bars, home, otherCit
   const T = top.name_long;
   const n = (x) => `<span class="viz-num">${fmt(x)}</span>`;
   const p = (a, b) => `<span class="viz-num">${pct(a, b)}</span>`;
+  if (measure === "share") {
+    const least = `with at least ${fmt(SHARE_THRESHOLD)} such citations`;
+    if (direction === "cites") {
+      return `Of the citations that cases of ${the(T)} receive from other jurisdictions ${years}, ${p(top.citations, top.denominator)} come from ${the(S)}, ${n(top.citations)} of ${n(top.denominator)}: a larger share than ${the(S)} holds in any other jurisdiction ${least}.`;
+    }
+    return `Of the citations that cases decided in ${the(T)} ${years} make to other jurisdictions, ${p(top.citations, top.denominator)} go to ${the(S)}, ${n(top.citations)} of ${n(top.denominator)}: a larger share than any other jurisdiction ${least} gives it.`;
+  }
   if (measure === "cases") {
     if (direction === "cites") {
       let s = `Of the cases decided in ${the(S)} ${years}, ${n(top.citing_cases)} cite a case of ${the(T)}, more than cite the cases of any other jurisdiction.`;
@@ -133,10 +184,14 @@ function subtitle({ selected, direction, measure, from, to, bars, home, otherCit
 function tooltip(d, { selected, direction, otherCitations }) {
   const citing = direction === "cites" ? selected.name : d.name;
   const cited = direction === "cites" ? d.name : selected.name;
+  const own = direction === "cites"
+    ? `${pct(d.citations, d.denominator)} of the ${fmt(d.denominator)} citations ${d.name} cases receive from other jurisdictions`
+    : `${pct(d.citations, d.denominator)} of the ${fmt(d.denominator)} citations ${d.name} cases make to other jurisdictions`;
   return [
     `${d.name_long} (${d.group})`,
     `${fmt(d.citations)} citation${d.citations === 1 ? "" : "s"} from ${fmt(d.citing_cases)} ${citing} case${d.citing_cases === 1 ? "" : "s"} to ${cited} cases`,
     `${pct(d.citations, otherCitations)} of the citations ${direction === "cites" ? "to" : "from"} other jurisdictions`,
+    own,
   ].join("\n");
 }
 
@@ -147,6 +202,7 @@ export const MIN_BAR_HEIGHT = 16;
 const MARGIN_TOP = 36;
 const MARGIN_BOTTOM = 8;
 const MARGIN_RIGHT = 110; // room for a label like "4,894 (60%)"
+const MARGIN_RIGHT_SHARE = 180; // and for "20% (2,924 of 14,484)"
 
 // height is the height the chart takes: what its bars want, shrunk to the
 // `available` height down to the least the bars can take, beyond which the
@@ -165,14 +221,20 @@ export function height(summary, available) {
 // citing cases have no share, since a case can cite several jurisdictions.
 export function chart(summary, { width, height: h }) {
   const { bars, selected, direction, measure, otherCitations } = summary;
-  const label = measure === "cases"
-    ? (d) => fmt(d.value)
-    : (d) => `${fmt(d.value)} (${pct(d.citations, otherCitations)})`;
+  let label = (d) => `${fmt(d.value)} (${pct(d.citations, otherCitations)})`;
+  if (measure === "cases") label = (d) => fmt(d.value);
+  if (measure === "share") label = (d) => `${pct(d.citations, d.denominator)} (${fmt(d.citations)} of ${fmt(d.denominator)})`;
+  // A share's ticks keep a decimal only when the step needs one (0.5%, 1%, 1.5%).
+  const tickFormat = measure === "share" ? (d) => `${+(100 * d).toFixed(1)}%` : (d) => fmt(d);
   const longest = bars.reduce((m, b) => Math.max(m, b.name.length), 4);
   const marginLeft = Math.min(140, 16 + longest * 7.5);
   const description = summary.subtitle.replace(/<[^>]+>/g, "");
   let axisLabel;
-  if (measure === "cases") {
+  if (measure === "share") {
+    axisLabel = direction === "cites"
+      ? `Share of the citations they receive that come from ${selected.name} →`
+      : `Share of their citations that go to ${selected.name} →`;
+  } else if (measure === "cases") {
     axisLabel = direction === "cites" ? `${selected.name} cases citing →` : `Cases citing ${selected.name} →`;
   } else {
     axisLabel = direction === "cites" ? `Citations from ${selected.name} →` : `Citations to ${selected.name} →`;
@@ -182,7 +244,7 @@ export function chart(summary, { width, height: h }) {
     width,
     height: h,
     marginLeft,
-    marginRight: MARGIN_RIGHT,
+    marginRight: measure === "share" ? MARGIN_RIGHT_SHARE : MARGIN_RIGHT,
     marginTop: MARGIN_TOP,
     marginBottom: MARGIN_BOTTOM,
     style: plotStyle,
@@ -193,7 +255,7 @@ export function chart(summary, { width, height: h }) {
       grid: true,
       label: axisLabel,
       labelAnchor: "right",
-      tickFormat: (d) => fmt(d),
+      tickFormat,
       tickSize: 0,
       nice: true,
     },
@@ -239,22 +301,25 @@ export function chart(summary, { width, height: h }) {
 
 // table lays the bars out as an HTML table, the accessible form of the chart.
 export function table(summary) {
-  const { bars, selected, direction, home } = summary;
+  const { bars, unranked, selected, direction, home } = summary;
   const t = document.createElement("table");
   t.className = "viz-table";
   const other = direction === "cites" ? "Cited jurisdiction" : "Citing jurisdiction";
   const cases = direction === "cites" ? `${selected.name} cases citing it` : "Cases citing it";
+  const own = direction === "cites" ? "Of the citations it receives" : "Of its citations elsewhere";
   t.innerHTML = `<caption class="visually-hidden">${summary.title}</caption>
-    <thead><tr><th scope="col">${other}</th><th scope="col">Region</th><th scope="col" class="num">Citations</th><th scope="col" class="num">${cases}</th><th scope="col" class="num">Share</th></tr></thead>`;
+    <thead><tr><th scope="col">${other}</th><th scope="col">Region</th><th scope="col" class="num">Citations</th><th scope="col" class="num">${cases}</th><th scope="col" class="num">Share</th><th scope="col" class="num">${own}</th></tr></thead>`;
   const body = document.createElement("tbody");
-  for (const b of bars) {
+  const row = (b, note = "") => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${b.name_long}</td><td>${b.group}</td><td class="num">${fmt(b.citations)}</td><td class="num">${fmt(b.citing_cases)}</td><td class="num">${pct(b.citations, summary.otherCitations)}</td>`;
-    body.appendChild(tr);
-  }
+    tr.innerHTML = `<td>${b.name_long}${note}</td><td>${b.group}</td><td class="num">${fmt(b.citations)}</td><td class="num">${fmt(b.citing_cases)}</td><td class="num">${pct(b.citations, summary.otherCitations)}</td><td class="num">${pct(b.citations, b.denominator)} of ${fmt(b.denominator)}</td>`;
+    return tr;
+  };
+  for (const b of bars) body.appendChild(row(b));
+  for (const b of unranked) body.appendChild(row(b, ` (not ranked: under ${fmt(SHARE_THRESHOLD)} citations)`));
   if (home.citations > 0) {
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${selected.name_long} (its own cases; not charted)</td><td></td><td class="num">${fmt(home.citations)}</td><td class="num">${fmt(home.citing_cases)}</td><td class="num">—</td>`;
+    tr.innerHTML = `<td>${selected.name_long} (its own cases; not charted)</td><td></td><td class="num">${fmt(home.citations)}</td><td class="num">${fmt(home.citing_cases)}</td><td class="num">—</td><td class="num">—</td>`;
     body.appendChild(tr);
   }
   t.appendChild(body);
