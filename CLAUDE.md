@@ -134,6 +134,7 @@ Internal web app for browsing and inspecting citation data. Located in `chambers
 
 - Build: `go build ./chambers/`
 - Run: `go run ./chambers/` (default port 4567)
+- To show the user a running server from the sandbox, listen on one of ports 4313–4316 (`go run ./chambers/ --port 4313`): those four ports are exposed from the container to the same ports on the user's machine, so the server is at `http://localhost:4313` for them too. Connect it with the read-only user, `LAW_DBSTR="$LAW_CLAUDE"`, since chambers only reads.
 - Dev with live reload: `air` (configured via `chambers/.air.toml`)
 - Templates and static files are embedded via `//go:embed`
 - Routes registered on `http.NewServeMux()` in `main.go`
