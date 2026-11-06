@@ -156,8 +156,20 @@ Whenever the user asks you to work on a separate branch, use a git worktree inst
 - After creating a worktree, do all reading, editing, building, and testing from inside that directory. Install dependencies there if needed (e.g., `go mod download`, `npm install`).
 - Tell the user the worktree path when you create it.
 - Commit work in the worktree's branch. Don't merge into `main` or push unless the user asks.
-- Don't remove a worktree or delete its branch unless the user asks. When they do, use `git worktree remove <path>` followed by `git branch -d <branch>`, and run `git worktree prune` if needed.
+- Don't remove a worktree or delete its branch unless the user asks or its PR has been merged (see After a PR is merged). When they do, use `git worktree remove <path>` followed by `git branch -d <branch>`, and run `git worktree prune` if needed.
 - When the user needs to run a database command for the branch, give the command to switch to its worktree (`cd .worktrees/<branch-name>`) before the database command itself (see Claude database access).
+
+### After a PR is merged
+
+When the user says a PR has been merged, or you notice it yourself (`gh pr view <n> --json state,mergedAt` says `MERGED`, or the branch's commits are already in `origin/main`), clean up without being asked: the branch and its worktree have done their job, and a stale `main` is what makes the next branch start from the wrong place.
+
+1. `git fetch --prune origin`, then confirm the PR really is merged before removing anything.
+2. Remove the worktree: `git worktree remove .worktrees/<branch>` (a sandbox session's worktree lives at `.claude/worktrees/<name>` instead; remove it the same way). If the worktree has uncommitted changes, stop and ask rather than forcing it.
+3. Delete the local branch with `git branch -d <branch>`. Because the project merges with a merge commit, `-d` succeeds once `main` is synced; if it refuses, check that the PR shows as merged before using `-D`.
+4. Sync `main` with the remote. From the main checkout, if `main` is checked out and the tree is clean, `git pull --ff-only origin main`; if another branch is checked out there, `git fetch origin main:main` updates it without switching. If neither fast-forwards, stop and tell the user rather than merging or resetting.
+5. `git worktree prune`, then report what was removed and the commit `main` now points at.
+
+Do this for every branch of the merged PR, not just the one this session created, and leave the remote branch to GitHub's own cleanup.
 
 ## GitHub
 
