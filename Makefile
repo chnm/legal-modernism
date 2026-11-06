@@ -8,7 +8,7 @@ BIN_DIR = bin
 DARWIN_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/darwin-arm64/$(bin))
 LINUX_TARGETS = $(foreach bin,$(BINARIES),$(BIN_DIR)/linux-amd64/$(bin))
 
-.PHONY: binaries clean test vet sync-hopper db-up db-down db-status db-schema db-stubs db-maintenance chambers
+.PHONY: binaries clean test vet sync-hopper db-up db-down db-status db-schema db-stubs db-maintenance db-maintenance-all chambers
 
 binaries: $(DARWIN_TARGETS) $(LINUX_TARGETS)
 
@@ -62,11 +62,16 @@ STUB_THRESHOLD ?= 5
 db-stubs:
 	psql "$(DBMATE_URL)" -X -v ON_ERROR_STOP=1 -v threshold=$(STUB_THRESHOLD) -f db/stub_cases.sql
 
-# Post-linker maintenance: vacuum/analyze the churned tables, then refresh all
-# materialized views in dependency order (parallel within each level). Uses
-# LAW_DBSTR directly (needs write access).
+# Post-linker maintenance: vacuum/analyze the tables the pipeline writes, then
+# refresh the materialized views that read them, in dependency order, a few at
+# a time. Uses LAW_DBSTR directly (needs write access). db-maintenance-all also
+# refreshes the views over static source data (CAP, FreeLaw, the MOML page
+# text), which only a reimport of a corpus changes.
 db-maintenance:
 	./db/maintenance.sh
+
+db-maintenance-all:
+	./db/maintenance.sh --all
 
 chambers:
 	cd ./chambers && go run github.com/air-verse/air
