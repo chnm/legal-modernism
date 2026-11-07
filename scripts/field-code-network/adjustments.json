@@ -42,6 +42,10 @@
     {"code": "CT1824", "dx": 8, "dy": -6, "note": "room between its label and CT1854's"},
     {"code": "FL1839", "dy": 5, "note": "room between its label and FL1847's"},
     {"code": "RI1872", "dx": 4, "dy": -4, "note": "room between its label and RI1857's"},
-    {"code": "RI1892", "dx": 4, "dy": -6, "note": "room between its label and RI1872's, moved toward it"}
+    {"code": "RI1892", "dx": 4, "dy": -6, "note": "room between its label and RI1872's, moved toward it"},
+    {"code": "WA1855", "dx": -20, "dy": -12, "note": "its dot nearly touched CA1851's, the two labels reading as one; moved up and left"},
+    {"code": "NY1851", "dx": 14, "dy": -12, "label_dx": -20, "note": "its dot nearly touched NY1849's, the two labels reading as one; moved up and right, label to the left of the dot, clear of MN1859"},
+    {"code": "NY1849", "dx": -8, "dy": 4, "note": "down and left, from NY1851"},
+    {"code": "MN1859", "dx": 4, "dy": -2, "note": "a little up and right: its dot nearly touched NY1851's, moved toward it, without its label touching WI1856's"}
   ]
 }
