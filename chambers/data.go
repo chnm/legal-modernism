@@ -1,7 +1,9 @@
 package main
 
 import (
+	"crypto/sha256"
 	"embed"
+	"encoding/hex"
 	"log/slog"
 	"net/http"
 )
@@ -17,17 +19,27 @@ import (
 var dataFS embed.FS
 
 // serveData returns a handler that serves one embedded JSON file of data/ as
-// an API: cached for an hour, like the JSON the other APIs write.
+// an API. The file changes only with a deploy, so rather than the hour's
+// cache the query-backed APIs allow, it carries an ETag of its content and
+// asks the browser to revalidate, answering 304 when nothing changed: a
+// reload after a deploy then sees the new data, not a stale copy.
 func serveData(name string) http.HandlerFunc {
+	b, err := dataFS.ReadFile("data/" + name)
+	if err != nil {
+		panic("embedded data: " + err.Error())
+	}
+	sum := sha256.Sum256(b)
+	etag := `"` + hex.EncodeToString(sum[:8]) + `"`
 	return func(w http.ResponseWriter, r *http.Request) {
-		b, err := dataFS.ReadFile("data/" + name)
-		if err != nil {
-			slog.Error("reading embedded data", "file", name, "error", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("ETag", etag)
+		if r.Header.Get("If-None-Match") == etag {
+			w.WriteHeader(http.StatusNotModified)
 			return
 		}
-		w.Header().Set("Cache-Control", "max-age=3600")
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(b)
+		if _, err := w.Write(b); err != nil {
+			slog.Debug("writing embedded data", "file", name, "error", err)
+		}
 	}
 }

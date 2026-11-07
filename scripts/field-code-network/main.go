@@ -35,7 +35,11 @@
 //
 // It writes two JSON files for chambers to embed, one object per line: the
 // codes (field-code-codes.json) and the borrowings (field-code-borrowings.json).
-// It touches no database (the data may move there later).
+// The borrowings are every pair of codes with a section matched between them
+// that touches a code of the figure, so that a code's tooltip can list all it
+// borrowed and lent, even to codes the figure leaves out; `in_figure` marks
+// the borrowings the figure draws. It touches no database (the data may move
+// there later).
 //
 //	go run ./scripts/field-code-network/ --matches path/to/best_matches.csv \
 //	    --figure path/to/figure-05-handedited-2.svg --out chambers/data
@@ -172,13 +176,15 @@ type figurePlace struct {
 }
 
 // Borrowing is one edge: the sections of one code whose best match is in
-// another, earlier code.
+// another, earlier code. The figure draws those with InFigure; the rest are
+// listed for the codes they touch.
 type Borrowing struct {
 	Borrower         string  `json:"borrower"`
 	BorrowedFrom     string  `json:"borrowed_from"`
 	SectionsBorrowed int     `json:"sections_borrowed"`
 	ShareOfSections  float64 `json:"share_of_sections"` // of the borrower's sections, matched or not
 	MeanSimilarity   float64 `json:"mean_similarity"`   // mean Jaccard similarity of the matched sections
+	InFigure         bool    `json:"in_figure"`         // kept by the pruning, so the figure draws it
 }
 
 // match is one row of best_matches.csv that this program reads: a section of
@@ -259,7 +265,13 @@ func main() {
 			placed++
 		}
 	}
-	slog.Info("derived the network", "codes", len(codes), "positioned", placed, "borrowings", len(borrowings))
+	drawn := 0
+	for _, b := range borrowings {
+		if b.InFigure {
+			drawn++
+		}
+	}
+	slog.Info("derived the network", "codes", len(codes), "positioned", placed, "borrowings", len(borrowings), "drawn", drawn)
 	if positions != nil && placed != len(codes) {
 		slog.Warn("some codes have no position in the figure", "codes", len(codes), "positioned", placed)
 	}
@@ -315,9 +327,12 @@ func readMatches(r io.Reader) ([]match, error) {
 
 // network reduces the section matches to the codes and borrowings of the
 // figure, following network-graphs.R, and gives each code its place in the
-// figure when positions, keyed by the figure's labels, has one.
+// figure when positions, keyed by the figure's labels, has one. Beside the
+// figure's borrowings it returns every other borrowing that touches one of
+// the figure's codes, so that a code's full account can be shown.
 func network(matches []match, positions map[string]figurePlace) ([]Code, []Borrowing) {
-	borrowings := selectBorrowings(summarize(matches))
+	candidates := summarize(matches)
+	borrowings := selectBorrowings(candidates)
 	distances := distancesToFieldCodes(borrowings)
 
 	sections := map[string]int{}
@@ -333,6 +348,26 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 	for _, b := range borrowings {
 		inFigure[b.Borrower] = true
 		inFigure[b.BorrowedFrom] = true
+	}
+
+	for i := range borrowings {
+		borrowings[i].InFigure = true
+	}
+	drawn := map[[2]string]bool{}
+	for _, b := range borrowings {
+		drawn[[2]string{b.Borrower, b.BorrowedFrom}] = true
+	}
+	for _, c := range candidates {
+		if drawn[[2]string{c.borrower, c.from}] || !(inFigure[c.borrower] || inFigure[c.from]) {
+			continue
+		}
+		borrowings = append(borrowings, Borrowing{
+			Borrower:         c.borrower,
+			BorrowedFrom:     c.from,
+			SectionsBorrowed: c.sections,
+			ShareOfSections:  round(c.share, 4),
+			MeanSimilarity:   round(c.meanScore, 3),
+		})
 	}
 
 	codes := make([]Code, 0, len(inFigure))

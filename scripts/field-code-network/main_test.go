@@ -225,12 +225,19 @@ func TestNetwork(t *testing.T) {
 	assert.Nil(t, byCode["NY1829"].FigureX, "no position given for it")
 	assert.Equal(t, categoryNone, byCode["MI1847"].Category)
 
-	// The borrowings carry the new label too, sorted by borrower.
+	// The borrowings carry the new label too, sorted by borrower: the
+	// figure's, and the small one from XX1900, which touches CA1851 but is
+	// not drawn.
 	assert.Equal(t, [][2]string{
-		{"CA1851", "NY1850"}, {"MI1847", "MI1839"}, {"ND1862", "CA1851"}, {"NY1850", "NY1829"},
+		{"CA1851", "NY1850"}, {"MI1847", "MI1839"}, {"ND1862", "CA1851"}, {"NY1850", "NY1829"}, {"XX1900", "CA1851"},
 	}, pairs(borrowings))
+	for _, b := range borrowings {
+		assert.Equal(t, b.Borrower != "XX1900", b.InFigure, "%s from %s", b.Borrower, b.BorrowedFrom)
+	}
 	assert.InDelta(t, 0.7, borrowings[2].ShareOfSections, 1e-9)
 	assert.InDelta(t, 0.5, borrowings[2].MeanSimilarity, 1e-9)
+	assert.Equal(t, 2, borrowings[4].SectionsBorrowed)
+	assert.InDelta(t, 0.02, borrowings[4].ShareOfSections, 1e-9)
 }
 
 func TestYearAndState(t *testing.T) {

@@ -4,7 +4,7 @@
 // interactive network. Each node is a code or statute of civil procedure in
 // the article's figure, each arrow a borrowing: it runs from the code
 // borrowed from to the code that borrowed, as wide as the sections it carried.
-// A code is coloured by its distance, along the arrows, from one of the seven
+// A code is colored by its distance, along the arrows, from one of the seven
 // drafts of New York's Field Code, or, at the reader's choice, by the region
 // of its jurisdiction. The nodes and their labels stand where the published
 // figure placed them, with the project's small adjustments.
@@ -12,7 +12,7 @@
 // The module takes data and options and returns nodes; it reads nothing from
 // the page. `graph` joins the two arrays of /api/viz/field-code once;
 // `summarize` reduces the graph to what the chart shows under the options
-// (the selected code, the colouring) and the words for the title and
+// (the selected code, the coloring) and the words for the title and
 // subtitle; `network`
 // draws the figure and returns a controller the page calls as the summary
 // changes; `legend` returns the swatches; `table` lays the codes out for a
@@ -30,42 +30,53 @@ const ORIGINAL = "Original borrower";
 const SUBSEQUENT = "Subsequent borrower";
 const NONE = "Did not borrow";
 
-// The regions a code can be coloured by instead: the groups of census.js, the
+// The regions a code can be colored by instead: the groups of census.js, the
 // Census Bureau's regions and divisions as the project's other charts use
 // them, with New York set apart from the Mid-Atlantic in the Field code's red,
-// since the Field codes are New York's. In legend order.
+// since the Field codes are New York's, and first in the legend. The one
+// English statute keeps the United Kingdom's color but has no legend entry;
+// its tooltip names the region.
 const NEW_YORK = { key: "new-york", name: "New York", census: "Northeast" };
-export const REGIONS = [GROUPS[0], GROUPS[1], NEW_YORK, ...GROUPS.slice(2)];
+export const REGIONS = [NEW_YORK, ...GROUPS];
+const UNLISTED = new Set(["uk"]);
 const regionOf = (d) => (d.state === "NY" ? NEW_YORK : groupOf(d.jurisdiction_slug));
 
-// fillOf is a code's colour under a colouring: by its distance from a Field
+// fillOf is a code's color under a coloring: by its distance from a Field
 // code (the figure's), or by its region.
 const fillOf = (d, color) => (color === "region" ? groupColors[d.region.key] : borrowingColors[d.category]);
 
 // graph joins the codes and the borrowings into the nodes and links of the
-// network, once. A link's `source` is the code borrowed from and its `target`
-// the borrower, the way the arrow runs. Each node gets its `sources` (the
-// links to the codes it borrowed from, largest first), its `borrowers` (the
-// links from the codes that borrowed from it, earliest first), and its
-// `path`, the shortest chain of codes from it to a Field code, which the
-// subtitle recites.
+// network, once. The links are the borrowings the figure draws; a link's
+// `source` is the code borrowed from and its `target` the borrower, the way
+// the arrow runs. Each node gets its `sources` (the links to the codes it
+// borrowed from, largest first), its `borrowers` (the links from the codes
+// that borrowed from it, earliest first), its `path`, the shortest chain of
+// codes from it to a Field code, which the subtitle recites, and for its
+// tooltip the full account: `allSources` and `allBorrowers`, every borrowing
+// the data holds that touches it, drawn or not, with codes the figure leaves
+// out, largest first.
 export function graph(codes, borrowings) {
-  const nodes = codes.map((c) => ({ ...c, name: `${c.jurisdiction} ${c.year}`, sources: [], borrowers: [] }));
+  const nodes = codes.map((c) => ({ ...c, name: `${c.jurisdiction} ${c.year}`, sources: [], borrowers: [], allSources: [], allBorrowers: [] }));
   for (const n of nodes) n.region = regionOf(n);
   const byCode = new Map(nodes.map((n) => [n.code, n]));
   const links = [];
   for (const b of borrowings) {
     const source = byCode.get(b.borrowed_from);
     const target = byCode.get(b.borrower);
-    if (!source || !target) continue;
+    if (target) target.allSources.push({ code: b.borrowed_from, sections: b.sections_borrowed, share: b.share_of_sections, in_figure: b.in_figure, known: !!source });
+    if (source) source.allBorrowers.push({ code: b.borrower, sections: b.sections_borrowed, share: b.share_of_sections, in_figure: b.in_figure, known: !!target });
+    if (!b.in_figure || !source || !target) continue;
     const link = { ...b, source, target };
     links.push(link);
     target.sources.push(link);
     source.borrowers.push(link);
   }
+  const bySections = (a, b) => b.sections - a.sections || a.code.localeCompare(b.code);
   for (const n of nodes) {
     n.sources.sort((a, b) => b.sections_borrowed - a.sections_borrowed || a.source.code.localeCompare(b.source.code));
     n.borrowers.sort((a, b) => a.target.year - b.target.year || a.target.code.localeCompare(b.target.code));
+    n.allSources.sort(bySections);
+    n.allBorrowers.sort(bySections);
     n.path = pathToFieldCode(n);
   }
   return {
@@ -102,7 +113,7 @@ function pathToFieldCode(start) {
 
 // summarize reduces the graph to what the chart shows under the options:
 // `selected`, the code whose line of descent is traced, or null; and `color`,
-// "distance" (from a Field code, the figure's colouring) or "region". It
+// "distance" (from a Field code, the figure's coloring) or "region". It
 // returns the counts by category, the regions present, the lineage of the
 // selected code, and the words for the title and the subtitle.
 export function summarize(g, options = {}) {
@@ -113,7 +124,7 @@ export function summarize(g, options = {}) {
   const summary = {
     graph: g, counts, selected,
     color: options.color === "region" ? "region" : "distance",
-    regions: REGIONS.filter((r) => g.nodes.some((n) => n.region === r)),
+    regions: REGIONS.filter((r) => !UNLISTED.has(r.key) && g.nodes.some((n) => n.region === r)),
     lineage: selected ? lineage(selected) : null,
     title: "The migration of the Field Code",
   };
@@ -217,7 +228,7 @@ function describe(s) {
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-// Chart geometry and colours. The figure's panel was 1246 by 767 units, and
+// Chart geometry and colors. The figure's panel was 1246 by 767 units, and
 // the positions are fractions of it; the layout keeps those units, so a node
 // is a 9-unit dot with its 14px label on it, or beside it where the figure's
 // authors moved it. The edge grey is the muted ink of the shared palette; an
@@ -251,7 +262,7 @@ function layout(g) {
   }
 }
 
-// legend returns the swatches of the summary's colouring, the four categories
+// legend returns the swatches of the summary's coloring, the four categories
 // or the regions present, for the page to set above the chart as Plot sets
 // its legends.
 export function legend(summary) {
@@ -274,7 +285,7 @@ export function legend(summary) {
 }
 
 // network draws the figure at the given size and returns a controller:
-// `node`, the element to put on the page; `update(summary)`, which colours
+// `node`, the element to put on the page; `update(summary)`, which colors
 // the codes as the summary says and traces the selected code's lineage;
 // `resize(width, height)`; `fit()`, which frames the
 // figure; and `reveal(code)`, which pans to a code outside the frame.
@@ -363,13 +374,13 @@ export function network(g, { width, height, onSelect = () => {} }) {
     link.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y)
       .attr("x2", (d) => end(d)[0]).attr("y2", (d) => end(d)[1]);
     node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-    if (hovered) positionTip(hovered);
+    if (!tip.hidden) positionTip(hovered || summary.selected);
   }
 
   const zoom = d3.zoom().scaleExtent([0.25, 4]).on("zoom", (ev) => {
     transform = ev.transform;
     view.attr("transform", transform);
-    if (hovered) positionTip(hovered);
+    if (!tip.hidden) positionTip(hovered || summary.selected);
   });
   svg.call(zoom).on("dblclick.zoom", null);
 
@@ -419,20 +430,27 @@ export function network(g, { width, height, onSelect = () => {} }) {
       else if (ev.key === "Escape") onSelect(null);
     });
 
+  // The tooltip follows the hovered or focused code; with none, it stays on
+  // the selected code, pinned, where it can be scrolled when the lists are
+  // long.
+  function showTip(d, pinned) {
+    tip.innerHTML = tooltip(d);
+    tip.classList.toggle("viz-tooltip-pinned", pinned);
+    tip.hidden = false;
+    positionTip(d);
+  }
+
   function hover(d) {
     hovered = d;
     restyle();
-    if (d) {
-      tip.innerHTML = tooltip(d);
-      tip.hidden = false;
-      positionTip(d);
-    } else {
-      tip.hidden = true;
-    }
+    if (d) showTip(d, false);
+    else if (summary && summary.selected) showTip(summary.selected, true);
+    else tip.hidden = true;
   }
 
   function positionTip(d) {
     const [x, y] = transform.apply([d.x, d.y]);
+    tip.style.maxHeight = `${Math.max(120, H - 16)}px`;
     const tw = tip.offsetWidth;
     const th = tip.offsetHeight;
     let left = x + 14;
@@ -443,7 +461,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     tip.style.top = `${Math.max(8, top)}px`;
   }
 
-  // restyle applies the summary and the hover: the colouring, the emphasised
+  // restyle applies the summary and the hover: the coloring, the emphasised
   // codes (the lineage of the selection, else the hovered code and its
   // neighbours) with the rest faded, and the ring on the selected code.
   function restyle() {
@@ -477,23 +495,32 @@ export function network(g, { width, height, onSelect = () => {} }) {
     return `${d.name}, ${d.code}: ${d.category.toLowerCase()}; ${plural(d.sections, "section")}; borrowed from ${plural(d.sources.length, "code")}, borrowed by ${plural(d.borrowers.length, "code")}`;
   }
 
-  // tooltip is the text shown beside a hovered or focused code.
+  // share formats a borrowing's share of the borrowing code's sections.
+  const share = (s) => (s > 0 && s < 0.005 ? "<1%" : `${Math.round(100 * s)}%`);
+
+  // tipTable lays out one side of a code's account: the codes it borrowed
+  // from, or the codes that borrowed from it, with the sections and the share
+  // those are of the borrowing code's sections. A row the figure does not
+  // draw, being too small or touching a code the figure leaves out, is grey.
+  function tipTable(caption, rows) {
+    const body = rows.length
+      ? rows.map((r) => `<tr${r.in_figure ? "" : ' class="viz-tip-faint"'}><td>${esc(r.code)}</td><td class="num">${fmt(r.sections)}</td><td class="num">${share(r.share)}</td></tr>`).join("")
+      : `<tr><td class="viz-tip-none" colspan="3">none</td></tr>`;
+    return `<table><caption>${caption}</caption><thead><tr><th>Code</th><th class="num">Sections</th><th class="num">Share</th></tr></thead><tbody>${body}</tbody></table>`;
+  }
+
+  // tooltip is the text shown beside a hovered, focused or selected code:
+  // its standing, then every code it borrowed from and every code that
+  // borrowed from it.
   function tooltip(d) {
     const corpus = d.corpus_code !== d.code ? `, ${esc(d.corpus_code)} in the corpus` : "";
     const steps = d.distance > 1 ? `, ${d.distance} steps from a Field code` : "";
-    const from = d.sources.length
-      ? `Borrowed from ${d.sources.map((l) => `${esc(l.source.code)} (${fmt(l.sections_borrowed)} sections, ${pct(l.sections_borrowed, d.sections)})`).join(" and ")}`
-      : `<span class="viz-tip-muted">No source among the codes of the figure</span>`;
-    let by = `<span class="viz-tip-muted">No later code borrowed from it</span>`;
-    if (d.borrowers.length === 1) by = `Borrowed by ${esc(d.borrowers[0].target.code)}`;
-    else if (d.borrowers.length > 1) by = `Borrowed by ${fmt(d.borrowers.length)} codes, ${esc(d.borrowers[0].target.code)} to ${esc(d.borrowers[d.borrowers.length - 1].target.code)}`;
-    const hint = summary && summary.selected === d ? "Click to release it" : "Click to trace its line of descent";
+    const hint = summary && summary.selected === d ? "Click the code to release it" : "Click the code to trace its line of descent and pin this";
     return [
       `<div class="viz-tip-title">${esc(d.name)} <span class="viz-tip-muted">${esc(d.code)}${corpus}</span></div>`,
       `<div>${esc(d.category)}${steps} · ${esc(d.region.name)} · ${fmt(d.sections)} sections, ${fmt(d.sections_matched)} matched to an earlier code</div>`,
-      `<div>${from}</div>`,
-      `<div>${by}</div>`,
-      `<div class="viz-tip-muted">${hint}</div>`,
+      `<div class="viz-tip-tables">${tipTable("Borrowed from", d.allSources)}${tipTable("Borrowed by", d.allBorrowers)}</div>`,
+      `<div class="viz-tip-muted">Share: of the borrowing code's sections. Grey: not drawn in the figure. ${hint}.</div>`,
     ].join("");
   }
 
@@ -502,7 +529,9 @@ export function network(g, { width, height, onSelect = () => {} }) {
     titleEl.text(s.title);
     descEl.text(s.subtitle.replace(/<[^>]+>/g, ""));
     restyle();
-    if (hovered) tip.innerHTML = tooltip(hovered);
+    if (hovered) showTip(hovered, false);
+    else if (s.selected) showTip(s.selected, true);
+    else tip.hidden = true;
   }
 
   function resize(w, h) {

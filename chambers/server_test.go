@@ -46,11 +46,20 @@ func TestRoutes(t *testing.T) {
 	} {
 		require.Equal(t, http.StatusBadRequest, get(t, path).StatusCode, path)
 	}
-	// The embedded data of the Field Code network is served as JSON.
+	// The embedded data of the Field Code network is served as JSON, with an
+	// ETag that a conditional request matches.
 	for _, path := range []string{"/api/viz/field-code/codes", "/api/viz/field-code/borrowings"} {
 		resp := get(t, path)
 		require.Equal(t, http.StatusOK, resp.StatusCode, path)
 		require.Equal(t, "application/json", resp.Header.Get("Content-Type"), path)
+		require.NotEmpty(t, resp.Header.Get("ETag"), path)
+		req, err := http.NewRequest(http.MethodGet, srv.URL+path, nil)
+		require.NoError(t, err)
+		req.Header.Set("If-None-Match", resp.Header.Get("ETag"))
+		again, err := client.Do(req)
+		require.NoError(t, err)
+		again.Body.Close()
+		require.Equal(t, http.StatusNotModified, again.StatusCode, path)
 	}
 
 	resp := get(t, "/linking/cap/cases?id=+1343497")

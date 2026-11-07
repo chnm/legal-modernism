@@ -22,8 +22,8 @@
                 <label for="code">Trace a code</label>
                 <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
             </div>
-            <fieldset class="viz-control" aria-label="Colour the codes by">
-                <span class="viz-label">Colour by</span>
+            <fieldset class="viz-control" aria-label="Color the codes by">
+                <span class="viz-label">Color by</span>
                 <span class="viz-toggle">
                     <input type="radio" name="color" id="color-distance" value="distance" checked><label for="color-distance">distance from the Field Code</label>
                     <input type="radio" name="color" id="color-region" value="region"><label for="color-region">region</label>
@@ -49,15 +49,18 @@
                 comes from the same state as the first and not from the borrower's own; the 186 codes with a borrowing left are shown, the other 36 of the
                 corpus are not. The nodes and their labels stand where the published figure placed them, which its authors settled by hand after a
                 force-directed layout, stretched by a twelfth to give the labels room, with some forty codes moved a few pixels, or their labels
-                set on the other side of the dot, where labels overlapped on screen. A code is coloured by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851,
+                set on the other side of the dot, where labels overlapped on screen. A code is colored by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851,
                 1853, 1864 and 1873) along the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other
                 codes, and a code that did not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did
                 from its 1839 one. The three codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868,
-                SD1887). The colours can instead show each code's region, the regions the project's other charts use, drawn from the Census Bureau's
-                regions and divisions, with New York set apart in the Field codes' red: New England, New York, the Midwest, the South, the Mountain West
-                and the Pacific West, and the United Kingdom for the one English statute (GB1852). Drag a node to move it, scroll to zoom and drag the
-                background to pan; Reset view restores the frame. Choosing a code traces its
-                line of descent, the codes it drew on and the codes that drew on it, and hovering a code names its sources and borrowers. The count of
+                SD1887). The colors can instead show each code's region, the regions the project's other charts use, drawn from the Census Bureau's
+                regions and divisions, with New York set apart in the Field codes' red: New York, New England, the Midwest, the South, the Mountain West
+                and the Pacific West; the one English statute (GB1852) keeps the United Kingdom's color from the project's other charts, without an
+                entry in the legend. Drag a node to move it, scroll to zoom and drag the background to pan; Reset view restores the frame. Choosing a
+                code traces its line of descent, the codes it drew on and the codes that drew on it. Hovering a code lists every code it borrowed from
+                and every code that borrowed from it, with the sections and their share of the borrowing code's sections, down to a single matched
+                section; the rows in grey are the borrowings the figure does not draw, too small for it or with a code it leaves out, and clicking
+                the code pins the list so a long one can be scrolled. The count of
                 sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's total somewhat
                 overstates its sections, and a short statute split badly has very few.
             </p>
@@ -99,7 +102,7 @@
             return r.json();
         }
 
-        // State: the selected code and the colouring, mirrored into the query
+        // State: the selected code and the coloring, mirrored into the query
         // string (`code`, `color=region`) so a view can be shared.
         let g = null;
         let net = null;
@@ -181,7 +184,7 @@
                 ...[...g.nodes].sort((a, b) => a.jurisdiction.localeCompare(b.jurisdiction) || a.year - b.year || a.code.localeCompare(b.code)).map((n) => {
                     const o = document.createElement("option");
                     o.value = n.code;
-                    o.textContent = `${n.name} (${n.code})`;
+                    o.textContent = n.name;
                     return o;
                 }),
             );

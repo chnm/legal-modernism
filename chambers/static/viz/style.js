@@ -130,10 +130,20 @@ const CSS = `
 .viz .viz-network.grabbing, .viz .viz-network.grabbing .node { cursor: grabbing; }
 .viz .viz-network .node { cursor: pointer; outline: none; }
 .viz .viz-network .node:focus-visible circle { stroke: ${colors.accent}; stroke-width: 3px; }
-.viz .viz-tooltip { position: absolute; z-index: 2; pointer-events: none; max-width: 24rem; padding: 0.45rem 0.65rem; background: ${colors.surface}; border: 1px solid ${colors.faint}; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); font-size: ${sizes.note}px; line-height: 1.4; color: ${colors.ink}; }
+.viz .viz-tooltip { position: absolute; z-index: 2; pointer-events: none; max-width: 26rem; padding: 0.45rem 0.65rem; background: ${colors.surface}; border: 1px solid ${colors.faint}; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); font-size: ${sizes.note}px; line-height: 1.4; color: ${colors.ink}; overflow: hidden; }
 .viz .viz-tooltip[hidden] { display: none; }
+.viz .viz-tooltip.viz-tooltip-pinned { pointer-events: auto; overflow-y: auto; border-color: ${colors.ink}; }
 .viz .viz-tooltip .viz-tip-title { font-weight: 600; }
 .viz .viz-tooltip .viz-tip-muted { color: ${colors.muted}; font-weight: 400; }
+.viz .viz-tip-tables { display: flex; gap: 1rem; align-items: flex-start; margin-top: 0.35rem; }
+.viz .viz-tip-tables table { border-collapse: collapse; font-size: ${sizes.label}px; line-height: 1.35; }
+.viz .viz-tip-tables caption { caption-side: top; text-align: left; font-weight: 600; white-space: nowrap; padding: 0 0 0.1rem; }
+.viz .viz-tip-tables th, .viz .viz-tip-tables td { padding: 0 0.5rem 0 0; text-align: left; white-space: nowrap; vertical-align: baseline; }
+.viz .viz-tip-tables th:last-child, .viz .viz-tip-tables td:last-child { padding-right: 0; }
+.viz .viz-tip-tables th { color: ${colors.muted}; font-weight: 400; }
+.viz .viz-tip-tables th.num, .viz .viz-tip-tables td.num { text-align: right; font-family: ${fonts.mono}; font-variant-numeric: tabular-nums; }
+.viz .viz-tip-tables tr.viz-tip-faint td { color: ${colors.muted}; }
+.viz .viz-tip-tables td.viz-tip-none { color: ${colors.muted}; font-style: italic; }
 .viz .viz-table { font-size: ${sizes.note}px; border-collapse: collapse; margin-top: 0.5rem; }
 .viz .viz-table th, .viz .viz-table td { padding: 0.15rem 1rem 0.15rem 0; text-align: left; border-bottom: 1px solid ${colors.grid}; }
 .viz .viz-table td.num, .viz .viz-table th.num { text-align: right; font-family: ${fonts.mono}; font-variant-numeric: tabular-nums; }

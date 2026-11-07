@@ -10,8 +10,9 @@ import (
 // TestFieldCodeData checks the embedded data of the Field Code network holds
 // together: every borrowing joins two codes that exist, no code borrows from
 // a later one, the categories and distances agree, the seven drafts of the
-// Field Code are the codes at distance 0, and every code has a borrowing and
-// its place in the figure.
+// Field Code are the codes at distance 0, every code has a drawn borrowing
+// and its place in the figure, and the borrowings the figure does not draw
+// each touch one of its codes.
 func TestFieldCodeData(t *testing.T) {
 	type code struct {
 		Code            string   `json:"code"`
@@ -39,6 +40,7 @@ func TestFieldCodeData(t *testing.T) {
 		SectionsBorrowed int     `json:"sections_borrowed"`
 		ShareOfSections  float64 `json:"share_of_sections"`
 		MeanSimilarity   float64 `json:"mean_similarity"`
+		InFigure         bool    `json:"in_figure"`
 	}
 
 	var codes []code
@@ -105,22 +107,31 @@ func TestFieldCodeData(t *testing.T) {
 	require.ElementsMatch(t, []string{"NY1848", "NY1849", "NY1850", "NY1851", "NY1853", "NY1864", "NY1873"}, fieldCodes)
 
 	inNetwork := map[string]bool{}
+	drawn := 0
 	for _, e := range borrowings {
-		borrower, ok := byCode[e.Borrower]
-		require.True(t, ok, "borrower %s is not a code", e.Borrower)
-		from, ok := byCode[e.BorrowedFrom]
-		require.True(t, ok, "source %s is not a code", e.BorrowedFrom)
+		borrower, borrowerKnown := byCode[e.Borrower]
+		from, fromKnown := byCode[e.BorrowedFrom]
+		require.True(t, borrowerKnown || fromKnown, "%s from %s touches no code of the figure", e.Borrower, e.BorrowedFrom)
 		require.NotEqual(t, e.Borrower, e.BorrowedFrom)
-		require.GreaterOrEqual(t, borrower.Year, from.Year, "%s borrows from the later %s", e.Borrower, e.BorrowedFrom)
 		require.Positive(t, e.SectionsBorrowed, "%s from %s", e.Borrower, e.BorrowedFrom)
-		require.LessOrEqual(t, e.SectionsBorrowed, borrower.Sections)
-		require.InDelta(t, float64(e.SectionsBorrowed)/float64(borrower.Sections), e.ShareOfSections, 0.0001)
 		require.Greater(t, e.MeanSimilarity, 0.0)
 		require.LessOrEqual(t, e.MeanSimilarity, 1.0)
-		inNetwork[e.Borrower] = true
-		inNetwork[e.BorrowedFrom] = true
+		if borrowerKnown && fromKnown {
+			require.GreaterOrEqual(t, borrower.Year, from.Year, "%s borrows from the later %s", e.Borrower, e.BorrowedFrom)
+		}
+		if borrowerKnown {
+			require.LessOrEqual(t, e.SectionsBorrowed, borrower.Sections)
+			require.InDelta(t, float64(e.SectionsBorrowed)/float64(borrower.Sections), e.ShareOfSections, 0.0001)
+		}
+		if e.InFigure {
+			require.True(t, borrowerKnown && fromKnown, "%s from %s is drawn but a code is missing", e.Borrower, e.BorrowedFrom)
+			inNetwork[e.Borrower] = true
+			inNetwork[e.BorrowedFrom] = true
+			drawn++
+		}
 	}
 	for _, c := range codes {
-		require.True(t, inNetwork[c.Code], "%s has no borrowing", c.Code)
+		require.True(t, inNetwork[c.Code], "%s has no drawn borrowing", c.Code)
 	}
+	require.Greater(t, len(borrowings), drawn, "the data lists borrowings beyond the figure's")
 }
