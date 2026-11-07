@@ -69,10 +69,8 @@
                 sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's total somewhat
                 overstates its sections, and a short statute split badly has very few.
             </p>
-            <details class="viz-data">
-                <summary>Show the data</summary>
-                <div id="viz-table"></div>
-            </details>
+            {{/* The table of the data stays for screen readers, hidden from view. */}}
+            <div id="viz-table" class="visually-hidden"></div>
         </footer>
     </div>
 {{end}}
