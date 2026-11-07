@@ -18,10 +18,6 @@
         </header>
 
         <form class="viz-controls" id="viz-controls" onsubmit="return false" aria-label="Chart controls">
-            <div class="viz-control">
-                <label for="code">Trace a code</label>
-                <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
-            </div>
             <fieldset class="viz-control" aria-label="Color the codes by">
                 <span class="viz-label">Color by</span>
                 <span class="viz-toggle">
@@ -29,11 +25,15 @@
                     <input type="radio" name="color" id="color-region" value="region"><label for="color-region">region</label>
                 </span>
             </fieldset>
+            <div class="viz-control">
+                <label for="code">Trace a code</label>
+                <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
+            </div>
             <span class="viz-control" role="group" aria-label="Zoom">
                 <button type="button" class="viz-button" id="zoom-in" aria-label="Zoom in">+</button>
                 <button type="button" class="viz-button" id="zoom-out" aria-label="Zoom out">&minus;</button>
-                <button type="button" class="viz-button" id="view-reset">Reset view</button>
             </span>
+            <button type="button" class="viz-button" id="view-reset">Reset view</button>
         </form>
 
         <div id="viz-legend"></div>
