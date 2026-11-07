@@ -5,20 +5,23 @@
 // the article's figure, each arrow a borrowing: it runs from the code
 // borrowed from to the code that borrowed, as wide as the sections it carried.
 // A code is coloured by its distance, along the arrows, from one of the seven
-// drafts of New York's Field Code. The nodes and their labels stand where the
-// published figure placed them.
+// drafts of New York's Field Code, or, at the reader's choice, by the region
+// of its jurisdiction. The nodes and their labels stand where the published
+// figure placed them, with the project's small adjustments.
 //
 // The module takes data and options and returns nodes; it reads nothing from
 // the page. `graph` joins the two arrays of /api/viz/field-code once;
 // `summarize` reduces the graph to what the chart shows under the options
-// (the selected code) and the words for the title and subtitle; `network`
+// (the selected code, the colouring) and the words for the title and
+// subtitle; `network`
 // draws the figure and returns a controller the page calls as the summary
 // changes; `legend` returns the swatches; `table` lays the codes out for a
 // screen reader or a sceptic. This is D3 rather than Plot because Plot draws
 // no network (VISUALIZATIONS.md).
 
 import * as d3 from "https://esm.sh/d3@7.9.0?bundle-deps";
-import { colors, borrowingColors, fonts, sizes, fmt, pct } from "./style.js";
+import { colors, borrowingColors, groupColors, fonts, sizes, fmt, pct } from "./style.js";
+import { GROUPS, groupOf } from "./census.js";
 
 // The four categories, in legend order, and their names.
 export const CATEGORIES = Object.keys(borrowingColors);
@@ -26,6 +29,18 @@ const FIELD = "Field code";
 const ORIGINAL = "Original borrower";
 const SUBSEQUENT = "Subsequent borrower";
 const NONE = "Did not borrow";
+
+// The regions a code can be coloured by instead: the groups of census.js, the
+// Census Bureau's regions and divisions as the project's other charts use
+// them, with New York set apart from the Mid-Atlantic in the Field code's red,
+// since the Field codes are New York's. In legend order.
+const NEW_YORK = { key: "new-york", name: "New York", census: "Northeast" };
+export const REGIONS = [GROUPS[0], GROUPS[1], NEW_YORK, ...GROUPS.slice(2)];
+const regionOf = (d) => (d.state === "NY" ? NEW_YORK : groupOf(d.jurisdiction_slug));
+
+// fillOf is a code's colour under a colouring: by its distance from a Field
+// code (the figure's), or by its region.
+const fillOf = (d, color) => (color === "region" ? groupColors[d.region.key] : borrowingColors[d.category]);
 
 // graph joins the codes and the borrowings into the nodes and links of the
 // network, once. A link's `source` is the code borrowed from and its `target`
@@ -36,6 +51,7 @@ const NONE = "Did not borrow";
 // subtitle recites.
 export function graph(codes, borrowings) {
   const nodes = codes.map((c) => ({ ...c, name: `${c.jurisdiction} ${c.year}`, sources: [], borrowers: [] }));
+  for (const n of nodes) n.region = regionOf(n);
   const byCode = new Map(nodes.map((n) => [n.code, n]));
   const links = [];
   for (const b of borrowings) {
@@ -85,9 +101,10 @@ function pathToFieldCode(start) {
 }
 
 // summarize reduces the graph to what the chart shows under the options:
-// `selected`, the code whose line of descent is traced, or null. It returns
-// the counts by category, the lineage of the selected code, and the words for
-// the title and the subtitle.
+// `selected`, the code whose line of descent is traced, or null; and `color`,
+// "distance" (from a Field code, the figure's colouring) or "region". It
+// returns the counts by category, the regions present, the lineage of the
+// selected code, and the words for the title and the subtitle.
 export function summarize(g, options = {}) {
   const counts = { total: g.nodes.length };
   for (const c of CATEGORIES) counts[c] = 0;
@@ -95,6 +112,8 @@ export function summarize(g, options = {}) {
   const selected = options.selected ? g.byCode.get(options.selected) || null : null;
   const summary = {
     graph: g, counts, selected,
+    color: options.color === "region" ? "region" : "distance",
+    regions: REGIONS.filter((r) => g.nodes.some((n) => n.region === r)),
     lineage: selected ? lineage(selected) : null,
     title: "The migration of the Field Code",
   };
@@ -232,27 +251,32 @@ function layout(g) {
   }
 }
 
-// legend returns the swatches of the four categories, for the page to set
-// above the chart as Plot sets its legends.
-export function legend() {
+// legend returns the swatches of the summary's colouring, the four categories
+// or the regions present, for the page to set above the chart as Plot sets
+// its legends.
+export function legend(summary) {
+  const entries = summary && summary.color === "region"
+    ? summary.regions.map((r) => [r.name, groupColors[r.key]])
+    : CATEGORIES.map((c) => [c, borrowingColors[c]]);
   const div = document.createElement("div");
   div.className = "viz-legend";
   div.setAttribute("aria-label", "Legend");
-  for (const c of CATEGORIES) {
+  for (const [name, color] of entries) {
     const item = document.createElement("span");
     item.className = "viz-swatch";
     const dot = document.createElement("span");
     dot.className = "viz-swatch-dot";
-    dot.style.background = borrowingColors[c];
-    item.append(dot, c);
+    dot.style.background = color;
+    item.append(dot, name);
     div.appendChild(item);
   }
   return div;
 }
 
 // network draws the figure at the given size and returns a controller:
-// `node`, the element to put on the page; `update(summary)`, which traces the
-// selected code's lineage; `resize(width, height)`; `fit()`, which frames the
+// `node`, the element to put on the page; `update(summary)`, which colours
+// the codes as the summary says and traces the selected code's lineage;
+// `resize(width, height)`; `fit()`, which frames the
 // figure; and `reveal(code)`, which pans to a code outside the frame.
 // `onSelect(code | null)` is called when the reader clicks a node, presses
 // Enter or Space on one, presses Escape, or clicks the background. A dragged
@@ -298,7 +322,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     .attr("aria-label", ariaLabel);
   node.append("circle")
     .attr("r", RADIUS)
-    .attr("fill", (d) => borrowingColors[d.category])
+    .attr("fill", (d) => fillOf(d, "distance"))
     .attr("stroke", colors.surface)
     .attr("stroke-width", 1);
   node.append("text")
@@ -419,12 +443,13 @@ export function network(g, { width, height, onSelect = () => {} }) {
     tip.style.top = `${Math.max(8, top)}px`;
   }
 
-  // restyle applies the summary and the hover: the emphasised codes (the
-  // lineage of the selection, else the hovered code and its neighbours) with
-  // the rest faded, and the ring on the selected code.
+  // restyle applies the summary and the hover: the colouring, the emphasised
+  // codes (the lineage of the selection, else the hovered code and its
+  // neighbours) with the rest faded, and the ring on the selected code.
   function restyle() {
     const lin = summary ? summary.lineage : null;
     const sel = summary ? summary.selected : null;
+    const color = summary ? summary.color : "distance";
     let emph = null;
     let emphLinks = null;
     if (lin) {
@@ -440,6 +465,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     node.attr("opacity", (d) => (emph && !emph.has(d) ? FADE_NODE : 1))
       .attr("aria-pressed", (d) => (sel ? String(d === sel) : null));
     node.select("circle")
+      .attr("fill", (d) => fillOf(d, color))
       .attr("stroke", (d) => (d === sel ? colors.ink : colors.surface))
       .attr("stroke-width", (d) => (d === sel ? 3 : 1));
     link.attr("opacity", (d) => (emphLinks ? (emphLinks.has(d) ? 0.9 : FADE_LINK) : EDGE_OPACITY))
@@ -464,7 +490,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     const hint = summary && summary.selected === d ? "Click to release it" : "Click to trace its line of descent";
     return [
       `<div class="viz-tip-title">${esc(d.name)} <span class="viz-tip-muted">${esc(d.code)}${corpus}</span></div>`,
-      `<div>${esc(d.category)}${steps} · ${fmt(d.sections)} sections, ${fmt(d.sections_matched)} matched to an earlier code</div>`,
+      `<div>${esc(d.category)}${steps} · ${esc(d.region.name)} · ${fmt(d.sections)} sections, ${fmt(d.sections_matched)} matched to an earlier code</div>`,
       `<div>${from}</div>`,
       `<div>${by}</div>`,
       `<div class="viz-tip-muted">${hint}</div>`,
@@ -499,13 +525,13 @@ export function table(summary) {
   const t = document.createElement("table");
   t.className = "viz-table";
   t.innerHTML = `<caption class="visually-hidden">${esc(summary.title)}</caption>
-    <thead><tr><th scope="col">Code</th><th scope="col">Jurisdiction</th><th scope="col" class="num">Year</th><th scope="col">Category</th><th scope="col" class="num">Sections</th><th scope="col" class="num">Matched</th><th scope="col">Borrowed from (sections, share of its sections)</th><th scope="col">Borrowed by</th></tr></thead>`;
+    <thead><tr><th scope="col">Code</th><th scope="col">Jurisdiction</th><th scope="col">Region</th><th scope="col" class="num">Year</th><th scope="col">Category</th><th scope="col" class="num">Sections</th><th scope="col" class="num">Matched</th><th scope="col">Borrowed from (sections, share of its sections)</th><th scope="col">Borrowed by</th></tr></thead>`;
   const body = document.createElement("tbody");
   for (const d of summary.graph.nodes) {
     const from = d.sources.map((l) => `${esc(l.source.code)}: ${fmt(l.sections_borrowed)} (${pct(l.sections_borrowed, d.sections)})`).join("; ") || "—";
     const by = d.borrowers.map((l) => esc(l.target.code)).join(", ") || "—";
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${esc(d.code)}</td><td>${esc(d.jurisdiction)}</td><td class="num">${d.year}</td><td>${esc(d.category)}</td><td class="num">${fmt(d.sections)}</td><td class="num">${fmt(d.sections_matched)}</td><td>${from}</td><td>${by}</td>`;
+    tr.innerHTML = `<td>${esc(d.code)}</td><td>${esc(d.jurisdiction)}</td><td>${esc(d.region.name)}</td><td class="num">${d.year}</td><td>${esc(d.category)}</td><td class="num">${fmt(d.sections)}</td><td class="num">${fmt(d.sections_matched)}</td><td>${from}</td><td>${by}</td>`;
     body.appendChild(tr);
   }
   t.appendChild(body);

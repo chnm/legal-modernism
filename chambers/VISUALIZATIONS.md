@@ -187,6 +187,7 @@ chart to chart. Add a row whenever a visualization fixes one.
 | Original borrower (one step from a Field code) | `#377eb8` | `schemeSet1` blue | `/viz/field-code` |
 | Subsequent borrower (two or more steps) | `#4daf4a` | `schemeSet1` green | `/viz/field-code` |
 | Did not borrow (no step reaches a Field code) | `#984ea3` | `schemeSet1` purple | `/viz/field-code` |
+| New York, set apart from the Mid-Atlantic when a chart colours by region | `#e41a1c` | `schemeSet1` red, the Field code's, since the Field codes are New York's | `/viz/field-code` |
 
 Only the pink (`#ff8ab7`) of `observable10` is still free. The lighter
 colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#efb118`, `#9498a0`) are below 3:1

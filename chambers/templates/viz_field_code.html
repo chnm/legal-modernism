@@ -22,6 +22,13 @@
                 <label for="code">Trace a code</label>
                 <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
             </div>
+            <fieldset class="viz-control" aria-label="Colour the codes by">
+                <span class="viz-label">Colour by</span>
+                <span class="viz-toggle">
+                    <input type="radio" name="color" id="color-distance" value="distance" checked><label for="color-distance">distance from the Field Code</label>
+                    <input type="radio" name="color" id="color-region" value="region"><label for="color-region">region</label>
+                </span>
+            </fieldset>
             <button type="button" class="viz-button" id="view-reset">Reset view</button>
         </form>
 
@@ -46,7 +53,10 @@
                 1853, 1864 and 1873) along the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other
                 codes, and a code that did not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did
                 from its 1839 one. The three codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868,
-                SD1887). Drag a node to move it, scroll to zoom and drag the background to pan; Reset view restores the frame. Choosing a code traces its
+                SD1887). The colours can instead show each code's region, the regions the project's other charts use, drawn from the Census Bureau's
+                regions and divisions, with New York set apart in the Field codes' red: New England, New York, the Midwest, the South, the Mountain West
+                and the Pacific West, and the United Kingdom for the one English statute (GB1852). Drag a node to move it, scroll to zoom and drag the
+                background to pan; Reset view restores the frame. Choosing a code traces its
                 line of descent, the codes it drew on and the codes that drew on it, and hovering a code names its sources and borrowers. The count of
                 sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's total somewhat
                 overstates its sections, and a short statute split badly has very few.
@@ -73,6 +83,7 @@
             subtitle: document.getElementById("viz-subtitle"),
             select: document.getElementById("code"),
             viewReset: document.getElementById("view-reset"),
+            controls: document.getElementById("viz-controls"),
             legend: document.getElementById("viz-legend"),
             chart: document.getElementById("viz-chart"),
             table: document.getElementById("viz-table"),
@@ -88,18 +99,24 @@
             return r.json();
         }
 
-        // State: the selected code, mirrored into the query string (`code`) so
-        // a view can be shared.
+        // State: the selected code and the colouring, mirrored into the query
+        // string (`code`, `color=region`) so a view can be shared.
         let g = null;
         let net = null;
-        const state = { selected: null };
+        const state = { selected: null, color: "distance" };
 
         function readURL() {
-            state.selected = new URLSearchParams(location.search).get("code") || null;
+            const q = new URLSearchParams(location.search);
+            state.selected = q.get("code") || null;
+            state.color = q.get("color") === "region" ? "region" : "distance";
         }
 
         function writeURL() {
-            history.replaceState(null, "", state.selected ? `${location.pathname}?code=${encodeURIComponent(state.selected)}` : location.pathname);
+            const q = new URLSearchParams();
+            if (state.selected) q.set("code", state.selected);
+            if (state.color === "region") q.set("color", "region");
+            const qs = q.toString();
+            history.replaceState(null, "", qs ? `${location.pathname}?${qs}` : location.pathname);
         }
 
         function render() {
@@ -109,7 +126,10 @@
             el.subtitle.innerHTML = s.subtitle;
             document.title = `${s.title} — Chambers`;
             net.update(s);
+            el.legend.replaceChildren(legend(s));
+            el.table.replaceChildren(table(s));
             el.select.value = state.selected || "";
+            el.controls.elements.color.value = state.color;
             writeURL();
             sizeChart();
         }
@@ -137,6 +157,9 @@
             render();
             if (state.selected) net.reveal(state.selected);
         });
+        for (const input of el.controls.elements.color) {
+            input.addEventListener("change", () => { state.color = el.controls.elements.color.value; render(); });
+        }
         el.viewReset.addEventListener("click", () => net.fit());
 
         // Start: fetch the codes and the borrowings, lay the figure out, then
@@ -164,7 +187,6 @@
             );
             el.select.disabled = false;
 
-            el.legend.replaceChildren(legend());
             el.chart.replaceChildren();
             sizeChart();
             net = network(g, {
@@ -173,7 +195,6 @@
                 onSelect: (code) => { state.selected = code; render(); },
             });
             el.chart.replaceChildren(net.node);
-            el.table.replaceChildren(table(summarize(g)));
             render();
             if (state.selected) net.reveal(state.selected);
         })();

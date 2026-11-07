@@ -103,25 +103,39 @@ var jurisdictions = map[string]string{
 	"WV": "West Virginia", "WY": "Wyoming",
 }
 
+// capSlugs maps the two-letter prefixes of the codes to the slugs of
+// cap.jurisdictions, which chambers' census.js maps to the regions its charts
+// colour by. The Dakota codes take the slug of the state that labels them.
+var capSlugs = map[string]string{
+	"AK": "alaska", "AL": "ala", "AR": "ark", "AZ": "ariz", "CA": "cal", "CO": "colo", "CT": "conn",
+	"DC": "dc", "DE": "del", "DT": "dakota-territory", "FL": "fla", "GA": "ga", "GB": "uk", "HI": "haw",
+	"IA": "iowa", "ID": "idaho", "IL": "ill", "IN": "ind", "KS": "kan", "KY": "ky", "LA": "la",
+	"MA": "mass", "MD": "md", "ME": "me", "MI": "mich", "MN": "minn", "MO": "mo", "MS": "miss",
+	"MT": "mont", "NC": "nc", "ND": "nd", "NE": "neb", "NH": "nh", "NJ": "nj", "NM": "nm", "NV": "nev",
+	"NY": "ny", "OH": "ohio", "OK": "okla", "OR": "or", "PA": "pa", "RI": "ri", "SC": "sc", "SD": "sd",
+	"TN": "tenn", "TX": "tex", "UT": "utah", "VA": "va", "WA": "wash", "WI": "wis", "WV": "w-va", "WY": "wyo",
+}
+
 // Code is one node: a code or statute of civil procedure in the corpus.
 type Code struct {
-	Code            string   `json:"code"`             // as the figure labels it, ND1862
-	CorpusCode      string   `json:"corpus_code"`      // as the corpus names it, DT1862
-	State           string   `json:"state"`            // the label's prefix, ND
-	Jurisdiction    string   `json:"jurisdiction"`     // of the corpus code, Dakota Territory
-	Year            int      `json:"year"`             // of enactment, from the code's name
-	Sections        int      `json:"sections"`         // the sections the code was split into
-	SectionsMatched int      `json:"sections_matched"` // of them, those matched to an earlier code
-	Distance        *int     `json:"distance"`         // steps to a Field code along the borrowings; null when none
-	Category        string   `json:"category"`         // Field code, Original borrower, Subsequent borrower, Did not borrow
-	FigureX         *float64 `json:"figure_x"`         // its place in the figure, as a fraction of the plot's width; null when absent
-	FigureY         *float64 `json:"figure_y"`         // and of its height, downward
-	FigureLabelX    *float64 `json:"figure_label_x"`   // the centre of its label in the figure, the same way; off the node where the authors nudged it
-	FigureLabelY    *float64 `json:"figure_label_y"`
-	LayoutX         *float64 `json:"layout_x"` // where chambers draws it: the figure's position, adjusted (adjustments.json)
-	LayoutY         *float64 `json:"layout_y"`
-	LayoutLabelX    *float64 `json:"layout_label_x"` // and its label
-	LayoutLabelY    *float64 `json:"layout_label_y"`
+	Code             string   `json:"code"`              // as the figure labels it, ND1862
+	CorpusCode       string   `json:"corpus_code"`       // as the corpus names it, DT1862
+	State            string   `json:"state"`             // the label's prefix, ND
+	Jurisdiction     string   `json:"jurisdiction"`      // of the corpus code, Dakota Territory
+	JurisdictionSlug string   `json:"jurisdiction_slug"` // the cap.jurisdictions slug of the label's state, nd, for the region
+	Year             int      `json:"year"`              // of enactment, from the code's name
+	Sections         int      `json:"sections"`          // the sections the code was split into
+	SectionsMatched  int      `json:"sections_matched"`  // of them, those matched to an earlier code
+	Distance         *int     `json:"distance"`          // steps to a Field code along the borrowings; null when none
+	Category         string   `json:"category"`          // Field code, Original borrower, Subsequent borrower, Did not borrow
+	FigureX          *float64 `json:"figure_x"`          // its place in the figure, as a fraction of the plot's width; null when absent
+	FigureY          *float64 `json:"figure_y"`          // and of its height, downward
+	FigureLabelX     *float64 `json:"figure_label_x"`    // the centre of its label in the figure, the same way; off the node where the authors nudged it
+	FigureLabelY     *float64 `json:"figure_label_y"`
+	LayoutX          *float64 `json:"layout_x"` // where chambers draws it: the figure's position, adjusted (adjustments.json)
+	LayoutY          *float64 `json:"layout_y"`
+	LayoutLabelX     *float64 `json:"layout_label_x"` // and its label
+	LayoutLabelY     *float64 `json:"layout_label_y"`
 }
 
 // Adjustments are our changes to the figure's positions, in the units of its
@@ -328,14 +342,15 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 			label = r
 		}
 		c := Code{
-			Code:            label,
-			CorpusCode:      corpusCode,
-			State:           state(label),
-			Jurisdiction:    jurisdictions[state(corpusCode)],
-			Year:            year(corpusCode),
-			Sections:        sections[corpusCode],
-			SectionsMatched: matched[corpusCode],
-			Category:        categoryNone,
+			Code:             label,
+			CorpusCode:       corpusCode,
+			State:            state(label),
+			Jurisdiction:     jurisdictions[state(corpusCode)],
+			JurisdictionSlug: capSlugs[state(label)],
+			Year:             year(corpusCode),
+			Sections:         sections[corpusCode],
+			SectionsMatched:  matched[corpusCode],
+			Category:         categoryNone,
 		}
 		if d, ok := distances[corpusCode]; ok {
 			d := d

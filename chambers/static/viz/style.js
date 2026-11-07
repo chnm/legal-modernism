@@ -23,8 +23,11 @@ const FONTS_URL =
 // with one colour of observable10, the two Northeast groups the scheme's two
 // blues. The federal courts and the United Kingdom, outside the regions and
 // often the longest bars, take the scheme's two most vivid colours, yellow
-// and red-orange; the territories, seldom present, the grey.
+// and red-orange; the territories, seldom present, the grey. A chart that
+// sets New York apart from the Mid-Atlantic, as the Field Code network does,
+// gives it the Field code's red, since the Field codes are New York's.
 export const groupColors = {
+  "new-york": "#e41a1c", // schemeSet1 red, the Field code's (borrowingColors)
   "new-england": "#4269d0", // observable10 blue
   "mid-atlantic": "#97bbf5", // observable10 light blue
   midwest: "#3ca951", // observable10 green

@@ -197,6 +197,7 @@ func TestNetwork(t *testing.T) {
 	assert.Equal(t, "DT1862", nd.CorpusCode)
 	assert.Equal(t, "ND", nd.State)
 	assert.Equal(t, "Dakota Territory", nd.Jurisdiction)
+	assert.Equal(t, "nd", nd.JurisdictionSlug, "the region is the labelling state's")
 	assert.Equal(t, 1862, nd.Year)
 	assert.Equal(t, 100, nd.Sections)
 	assert.Equal(t, 70, nd.SectionsMatched)
@@ -212,6 +213,7 @@ func TestNetwork(t *testing.T) {
 
 	ny := byCode["NY1850"]
 	assert.Equal(t, "New York", ny.Jurisdiction)
+	assert.Equal(t, "ny", ny.JurisdictionSlug)
 	require.NotNil(t, ny.Distance)
 	assert.Equal(t, 0, *ny.Distance)
 	assert.Equal(t, categoryField, ny.Category)

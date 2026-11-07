@@ -18,6 +18,7 @@ func TestFieldCodeData(t *testing.T) {
 		CorpusCode      string   `json:"corpus_code"`
 		State           string   `json:"state"`
 		Jurisdiction    string   `json:"jurisdiction"`
+		Slug            string   `json:"jurisdiction_slug"`
 		Year            int      `json:"year"`
 		Sections        int      `json:"sections"`
 		SectionsMatched int      `json:"sections_matched"`
@@ -59,6 +60,7 @@ func TestFieldCodeData(t *testing.T) {
 		byCode[c.Code] = c
 		require.Equal(t, c.Code[:2], c.State, c.Code)
 		require.NotEmpty(t, c.Jurisdiction, c.Code)
+		require.NotEmpty(t, c.Slug, "%s has no cap.jurisdictions slug", c.Code)
 		require.Positive(t, c.Sections, c.Code)
 		require.LessOrEqual(t, c.SectionsMatched, c.Sections, c.Code)
 		if i > 0 {
@@ -90,11 +92,13 @@ func TestFieldCodeData(t *testing.T) {
 		require.NotNil(t, c.FigureLabelY, c.Code)
 		require.InDelta(t, *c.FigureX, *c.FigureLabelX, 0.06, "%s: its label is near its node", c.Code)
 		require.InDelta(t, *c.FigureY, *c.FigureLabelY, 0.06, c.Code)
-		// The layout is the figure's position, adjusted a little.
+		// The layout is the figure's position, adjusted: by a few pixels
+		// for most codes, by up to a seventh of the panel for a few moved
+		// out of a crowd.
 		require.NotNil(t, c.LayoutX, c.Code)
 		require.NotNil(t, c.LayoutLabelX, c.Code)
-		require.InDelta(t, *c.FigureX, *c.LayoutX, 0.1, "%s: the layout stays near the figure", c.Code)
-		require.InDelta(t, *c.FigureY, *c.LayoutY, 0.1, c.Code)
+		require.InDelta(t, *c.FigureX, *c.LayoutX, 0.15, "%s: the layout stays near the figure", c.Code)
+		require.InDelta(t, *c.FigureY, *c.LayoutY, 0.15, c.Code)
 		require.InDelta(t, *c.LayoutX, *c.LayoutLabelX, 0.06, "%s: its label stays near its node", c.Code)
 		require.InDelta(t, *c.LayoutY, *c.LayoutLabelY, 0.06, c.Code)
 	}

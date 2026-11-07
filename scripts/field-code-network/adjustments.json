@@ -2,12 +2,12 @@
   "expand": 1.08,
   "moves": [
     {"code": "NE1859", "dy": -8, "note": "space the Nebraska codes out: the first a little up"},
-    {"code": "NE1866", "dy": -2, "note": "space the Nebraska codes out"},
-    {"code": "NE1881", "dx": 12, "dy": 4, "note": "its label overlapped KS1879's; moved right and a little down, the label staying left of the dot"},
+    {"code": "NE1866", "dx": 6, "dy": -2, "note": "space the Nebraska codes out: a little right"},
+    {"code": "NE1881", "dx": 6, "dy": 4, "note": "its label overlapped KS1879's; moved a little right and down, the label staying left of the dot"},
     {"code": "NE1891", "dy": 6, "note": "space the Nebraska codes out: the last two a little down"},
-    {"code": "KS1868", "dx": -14, "dy": 8, "note": "its label overlapped KS1859's, which also covered its dot; moved down and left"},
+    {"code": "KS1868", "dx": -20, "dy": 3, "note": "its label overlapped KS1859's, which also covered its dot; moved left and a little down"},
     {"code": "KS1879", "dx": -6, "note": "a little left, from NE1881's label"},
-    {"code": "OK1891", "dx": -6, "note": "room between its label and KS1868's, moved toward it"},
+    {"code": "OK1891", "dx": -10, "note": "room between its label and KS1868's, moved toward it"},
     {"code": "WA1881", "dx": -10, "dy": -8, "note": "its label overlapped CA1850's; moved up and left"},
     {"code": "OR1854", "dy": -4, "note": "room between its label and CA1851's below"},
     {"code": "CA1868", "dx": -4, "label_dx": 19, "note": "its label overlapped MT1895's; label to the right of the dot, dot a little left of WA1855's label"},
@@ -46,6 +46,8 @@
     {"code": "WA1855", "dx": -20, "dy": -12, "note": "its dot nearly touched CA1851's, the two labels reading as one; moved up and left"},
     {"code": "NY1851", "dx": 14, "dy": -12, "label_dx": -20, "note": "its dot nearly touched NY1849's, the two labels reading as one; moved up and right, label to the left of the dot, clear of MN1859"},
     {"code": "NY1849", "dx": -8, "dy": 4, "note": "down and left, from NY1851"},
-    {"code": "MN1859", "dx": 4, "dy": -2, "note": "a little up and right: its dot nearly touched NY1851's, moved toward it, without its label touching WI1856's"}
+    {"code": "MN1859", "dx": 4, "dy": -2, "note": "a little up and right: its dot nearly touched NY1851's, moved toward it, without its label touching WI1856's"},
+    {"code": "CA1851", "dx": -7, "dy": 104, "label_dx": -19, "label_dy": 0, "note": "down and left, below OR1862, out of the crowd around WA1855 and OR1854; label to the left of the dot, clear of IN1878's"},
+    {"code": "OR1862", "dy": -4, "note": "a hair up, so the edge from NY1850 to CA1851 passes under its label"}
   ]
 }
