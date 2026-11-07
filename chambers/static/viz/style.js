@@ -36,6 +36,19 @@ export const groupColors = {
   territories: "#9498a0", // observable10 grey
 };
 
+// The codes of the Field Code network (field-code.js) are coloured by their
+// distance, along the borrowings, from a draft of New York's Field Code, in
+// the colours the article's figure 5 used, ColorBrewer's Set1 (d3.schemeSet1):
+// red for the Field codes, blue for the codes that borrowed from one directly,
+// green for those that borrowed through another code, purple for those that
+// took nothing from one. In legend order.
+export const borrowingColors = {
+  "Field code": "#e41a1c",
+  "Original borrower": "#377eb8",
+  "Subsequent borrower": "#4daf4a",
+  "Did not borrow": "#984ea3",
+};
+
 export const colors = {
   ink: "#212529",
   muted: "#6c757d",
@@ -99,12 +112,35 @@ const CSS = `
 .viz .viz-range .viz-range-track { position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px; border-radius: 2px; background: ${colors.grid}; }
 .viz .viz-range .viz-range-fill { position: absolute; top: calc(50% - 2px); height: 4px; border-radius: 2px; background: ${colors.ink}; }
 .viz .viz-years { font-family: ${fonts.mono}; font-size: ${sizes.body}px; min-width: 7.5em; }
+.viz .viz-slider { display: inline-flex; align-items: center; width: 16rem; height: 1.5rem; }
+.viz .viz-slider input[type=range] { width: 100%; height: 1.5rem; margin: 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
+.viz .viz-slider input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, ${colors.ink} var(--viz-fill, 0%), ${colors.grid} var(--viz-fill, 0%)); }
+.viz .viz-slider input[type=range]::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, ${colors.ink} var(--viz-fill, 0%), ${colors.grid} var(--viz-fill, 0%)); }
+.viz .viz-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%; background: ${colors.surface}; border: 2px solid ${colors.ink}; }
+.viz .viz-slider input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: ${colors.surface}; border: 2px solid ${colors.ink}; }
+.viz .viz-slider input[type=range]:focus-visible { outline: none; }
+.viz .viz-slider input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid ${colors.accent}; outline-offset: 2px; }
+.viz .viz-slider input[type=range]:focus-visible::-moz-range-thumb { outline: 2px solid ${colors.accent}; outline-offset: 2px; }
+.viz .viz-years.viz-year { min-width: 3em; }
 .viz .viz-button { font-family: inherit; font-size: ${sizes.note}px; padding: 0.2rem 0.6rem; border: 1px solid ${colors.faint}; border-radius: 4px; background: ${colors.surface}; color: ${colors.ink}; cursor: pointer; }
 .viz .viz-button:hover { border-color: ${colors.ink}; }
+.viz .viz-button[aria-pressed=true] { background: ${colors.ink}; color: ${colors.surface}; border-color: ${colors.ink}; }
 .viz .viz-chart { position: relative; }
 .viz .viz-chart svg { display: block; }
 .viz .viz-chart figure { margin: 0; }
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }
+.viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.35rem; }
+.viz .viz-swatch { display: inline-flex; align-items: center; gap: 0.4rem; }
+.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.viz .viz-network-wrap { position: absolute; inset: 0; overflow: hidden; }
+.viz .viz-network { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.viz .viz-network.grabbing, .viz .viz-network.grabbing .node { cursor: grabbing; }
+.viz .viz-network .node { cursor: pointer; outline: none; }
+.viz .viz-network .node:focus-visible circle { stroke: ${colors.accent}; stroke-width: 3px; }
+.viz .viz-tooltip { position: absolute; z-index: 2; pointer-events: none; max-width: 24rem; padding: 0.45rem 0.65rem; background: ${colors.surface}; border: 1px solid ${colors.faint}; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); font-size: ${sizes.note}px; line-height: 1.4; color: ${colors.ink}; }
+.viz .viz-tooltip[hidden] { display: none; }
+.viz .viz-tooltip .viz-tip-title { font-weight: 600; }
+.viz .viz-tooltip .viz-tip-muted { color: ${colors.muted}; font-weight: 400; }
 .viz .viz-table { font-size: ${sizes.note}px; border-collapse: collapse; margin-top: 0.5rem; }
 .viz .viz-table th, .viz .viz-table td { padding: 0.15rem 1rem 0.15rem 0; text-align: left; border-bottom: 1px solid ${colors.grid}; }
 .viz .viz-table td.num, .viz .viz-table th.num { text-align: right; font-family: ${fonts.mono}; font-variant-numeric: tabular-nums; }

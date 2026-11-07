@@ -29,12 +29,13 @@ func TestRoutes(t *testing.T) {
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/style.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/jurisdictions.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/census.js").StatusCode)
+	require.Equal(t, http.StatusOK, get(t, "/static/viz/field-code.js").StatusCode)
 	require.Equal(t, http.StatusNotFound, get(t, "/nope").StatusCode)
 	require.Equal(t, http.StatusGone, get(t, "/api/page-text?psmid=1&pageid=2").StatusCode)
 
 	// The linking pages that only render a shell, for each corpus, and the
 	// requests refused before any query.
-	for _, path := range []string{"/linking", "/linking/tiers", "/linking/cap/tiers", "/linking/whitelist", "/linking/whitelist?corpus=cap", "/viz/jurisdictions"} {
+	for _, path := range []string{"/linking", "/linking/tiers", "/linking/cap/tiers", "/linking/whitelist", "/linking/whitelist?corpus=cap", "/viz/jurisdictions", "/viz/field-code"} {
 		require.Equal(t, http.StatusOK, get(t, path).StatusCode, path)
 	}
 	for _, path := range []string{
@@ -45,6 +46,13 @@ func TestRoutes(t *testing.T) {
 	} {
 		require.Equal(t, http.StatusBadRequest, get(t, path).StatusCode, path)
 	}
+	// The embedded data of the Field Code network is served as JSON.
+	for _, path := range []string{"/api/viz/field-code/codes", "/api/viz/field-code/borrowings"} {
+		resp := get(t, path)
+		require.Equal(t, http.StatusOK, resp.StatusCode, path)
+		require.Equal(t, "application/json", resp.Header.Get("Content-Type"), path)
+	}
+
 	resp := get(t, "/linking/cap/cases?id=+1343497")
 	var err error
 	require.Equal(t, http.StatusSeeOther, resp.StatusCode)

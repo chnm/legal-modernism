@@ -54,6 +54,9 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /api/viz/jurisdictions", s.handleVizJurisdictionsAPI)
 	mux.HandleFunc("GET /api/viz/jurisdictions/totals", s.handleVizJurisdictionTotalsAPI)
 	mux.HandleFunc("GET /api/viz/jurisdictions/{slug}", s.handleVizJurisdictionAPI)
+	mux.HandleFunc("GET /viz/field-code", s.handleVizFieldCode)
+	mux.HandleFunc("GET /api/viz/field-code/codes", serveData("field-code-codes.json"))
+	mux.HandleFunc("GET /api/viz/field-code/borrowings", serveData("field-code-borrowings.json"))
 
 	// Static files.
 	staticSub, err := fs.Sub(staticFS, "static")

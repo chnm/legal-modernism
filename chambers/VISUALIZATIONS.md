@@ -58,7 +58,12 @@ import * as Plot from "https://esm.sh/@observablehq/plot@0.6?bundle-deps";
 
 Use D3 only where Plot can't do what is required (a force layout, a custom
 projection, an interaction Plot doesn't support). Plot's output is SVG, so mixing
-D3 into a Plot chart is acceptable when a chart needs a single D3 addition.
+D3 into a Plot chart is acceptable when a chart needs a single D3 addition. A
+chart that is all D3, like the Field Code network, imports it the same way:
+
+```js
+import * as d3 from "https://esm.sh/d3@7.9.0?bundle-deps";
+```
 
 ## Data
 
@@ -68,6 +73,14 @@ are `snake_case`, matching the database columns. Do the aggregation in SQL (a
 query or a materialized view), not in the browser; the browser should only
 reshape the data for Plot. The title, subtitle, source and notes are part of the
 page, not the data.
+
+Data that is not in the database yet may be served from JSON files embedded in
+chambers (`data/`, served by `serveData` at the same `/api/viz/<name>/...` URLs),
+derived by a program under `scripts/` that documents its source, so that the
+chart does not change when the data moves. The Field Code network
+(`/viz/field-code`, issue #117) is the first: two arrays, the codes and the
+borrowings, from the compendium of Funk and Mullen's "The Spine of American
+Law".
 
 ## Anatomy
 
@@ -170,7 +183,17 @@ chart to chart. Add a row whenever a visualization fixes one.
 | The federal courts of the United States | `#efb118` | `observable10` yellow | `/viz/jurisdictions` |
 | The United Kingdom | `#ff725c` | `observable10` red-orange | `/viz/jurisdictions` |
 | Territories and tribal courts | `#9498a0` | `observable10` grey | `/viz/jurisdictions` |
+| Field code (a draft of New York's Field Code) | `#e41a1c` | `schemeSet1` red, as in the article's figure 5 | `/viz/field-code` |
+| Original borrower (one step from a Field code) | `#377eb8` | `schemeSet1` blue | `/viz/field-code` |
+| Subsequent borrower (two or more steps) | `#4daf4a` | `schemeSet1` green | `/viz/field-code` |
+| Did not borrow (no step reaches a Field code) | `#984ea3` | `schemeSet1` purple | `/viz/field-code` |
 
 Only the pink (`#ff8ab7`) of `observable10` is still free. The lighter
 colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#efb118`, `#9498a0`) are below 3:1
-against white, so a mark in one always carries a direct label.
+against white, so a mark in one always carries a direct label. The four
+colours of the Field Code network are the ones the published figure used,
+kept so that the chart and the figure read as one; they colour categories
+of a code's descent, which no other chart shows, and sit near the
+`observable10` blue, green and purple of New England, the Midwest and the
+Mountain West, so a chart that shows both regions and descent will need one
+of the two recoloured. In `style.js` they are `borrowingColors`.

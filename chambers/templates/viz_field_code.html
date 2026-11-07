@@ -1,0 +1,258 @@
+{{define "styles"}}
+        /* Full screen: the network fills the window from below the controls
+           to its bottom edge (the script sets the height), and the source,
+           notes and data table follow below the fold. The SVG is positioned
+           absolutely inside the chart (viz-network-wrap) so that it never
+           grows its own container. */
+        .viz-page .viz-chart { height: 480px; min-height: 480px; }
+        .viz-page .viz-foot { padding-top: 0.75rem; }
+        .viz-page .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
+{{end}}
+
+{{define "content"}}
+    <div class="viz viz-page">
+        <header>
+            <p class="viz-draft">Draft public visualization</p>
+            <h1 class="viz-title" id="viz-title">The migration of the Field Code</h1>
+            <p class="viz-subtitle" id="viz-subtitle" aria-live="polite">Loading the network of borrowings&hellip;</p>
+        </header>
+
+        <form class="viz-controls" id="viz-controls" onsubmit="return false" aria-label="Chart controls">
+            <div class="viz-control">
+                <label for="code">Trace a code</label>
+                <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
+            </div>
+            <fieldset class="viz-control" aria-label="Codes enacted by a year">
+                <label for="year">Codes enacted by</label>
+                <span class="viz-slider"><input type="range" id="year" step="1" aria-describedby="year-out"></span>
+                <output class="viz-years viz-year" id="year-out" for="year"></output>
+                <button type="button" class="viz-button" id="play" aria-pressed="false">Play</button>
+                <button type="button" class="viz-button" id="years-reset">All years</button>
+            </fieldset>
+            <fieldset class="viz-control" aria-label="Which codes to show">
+                <span class="viz-label">Show</span>
+                <span class="viz-toggle">
+                    <input type="radio" name="show" id="show-all" value="all" checked><label for="show-all">all codes</label>
+                    <input type="radio" name="show" id="show-network" value="network"><label for="show-network">the Field Code's network only</label>
+                </span>
+            </fieldset>
+            <button type="button" class="viz-button" id="view-reset">Reset view</button>
+        </form>
+
+        <div id="viz-legend"></div>
+        <div class="viz-chart" id="viz-chart">
+            <p class="viz-message">Loading&hellip;</p>
+        </div>
+
+        <footer class="viz-foot">
+            <p class="viz-source"><strong>Source:</strong> Kellen Funk and Lincoln A. Mullen, &ldquo;The Spine of American Law: Digital Text Analysis and U.S. Legal Practice,&rdquo; <em>American Historical Review</em> 123, no. 1 (2018): 132&ndash;164, <a href="https://doi.org/10.1093/ahr/123.1.132">doi:10.1093/ahr/123.1.132</a>, figure 5, and the article's research compendium (the best matches between sections, as of February 2018).</p>
+            <p class="viz-notes"><strong>Notes:</strong>
+                Each node is a code or statute of civil procedure from the article's corpus of 222, labelled by its jurisdiction and the year of its enactment;
+                an arrow runs from the code borrowed from to the code that borrowed, and is wider the more sections it carried. A borrowing counts the
+                sections of the later code whose text most resembles a section of the earlier one: the article split every code into sections, compared
+                them by the five-word phrases they share (minhashing and locality-sensitive hashing, then the Jaccard similarity of the candidates), and
+                matched each section to at most one earlier section, preferring a code of the same state and the nearest year. The network keeps a borrowing
+                of at least 50 sections or a fifth of the borrowing code's sections, and at most the two largest for each code, dropping the second when it
+                comes from the same state as the first and not from the borrower's own; the 186 codes with a borrowing left are shown, the other 36 are not.
+                A code is coloured by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851, 1853, 1864 and 1873) along
+                the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other codes, and a code that did
+                not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did from its 1839 one. The three
+                codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868, SD1887). The layout is a force
+                simulation, not the figure's hand-finished arrangement: a node's place carries no meaning beyond its connections, and the layout is the same on every
+                visit. Drag a node to move it, scroll to zoom and drag the background to pan. Choosing a year shows the codes enacted by then, in place;
+                choosing a code traces its line of descent, the codes it drew on and the codes that drew on it, as far as the year allows, and hovering a code
+                names its sources and borrowers. The count of sections is of every chunk the automatic splitting produced, headings and tables of contents
+                among them, so a code's total somewhat overstates its sections, and a short statute split badly has very few.
+            </p>
+            <details class="viz-data">
+                <summary>Show the data</summary>
+                <div id="viz-table"></div>
+            </details>
+        </footer>
+    </div>
+{{end}}
+
+{{define "scripts"}}
+    <script type="module">
+        import { ensureStyles, reducedMotion } from "/static/viz/style.js";
+        import { graph, summarize, network, table, legend } from "/static/viz/field-code.js";
+
+        const API = "/api/viz/field-code";
+
+        ensureStyles();
+
+        const el = {
+            title: document.getElementById("viz-title"),
+            subtitle: document.getElementById("viz-subtitle"),
+            select: document.getElementById("code"),
+            year: document.getElementById("year"),
+            yearOut: document.getElementById("year-out"),
+            play: document.getElementById("play"),
+            yearsReset: document.getElementById("years-reset"),
+            viewReset: document.getElementById("view-reset"),
+            controls: document.getElementById("viz-controls"),
+            legend: document.getElementById("viz-legend"),
+            chart: document.getElementById("viz-chart"),
+            table: document.getElementById("viz-table"),
+        };
+
+        const message = (text) => {
+            el.chart.replaceChildren(Object.assign(document.createElement("p"), { className: "viz-message", textContent: text }));
+        };
+
+        async function getJSON(url) {
+            const r = await fetch(url);
+            if (!r.ok) throw new Error(`${await r.text()} (${r.status})`.trim());
+            return r.json();
+        }
+
+        // State: the controls, mirrored into the query string so a view can be
+        // shared: `code`, the code whose lineage is traced; `year`, the last
+        // year shown; `show=network` to hide the codes outside the Field
+        // Code's network. The layout is computed once; the state only shows
+        // and hides nodes in place.
+        let g = null;
+        let net = null;
+        let years = []; // the distinct years of enactment, for stepping
+        const state = { selected: null, year: null, outside: true };
+
+        function readURL() {
+            const q = new URLSearchParams(location.search);
+            const year = Number(q.get("year"));
+            state.selected = q.get("code") || null;
+            state.year = year >= g.years[0] && year <= g.years[1] ? year : g.years[1];
+            state.outside = q.get("show") !== "network";
+        }
+
+        function writeURL() {
+            const q = new URLSearchParams();
+            if (state.selected) q.set("code", state.selected);
+            if (state.year < g.years[1]) q.set("year", state.year);
+            if (!state.outside) q.set("show", "network");
+            const qs = q.toString();
+            history.replaceState(null, "", qs ? `${location.pathname}?${qs}` : location.pathname);
+        }
+
+        function syncControls() {
+            el.select.value = state.selected && g.byCode.has(state.selected) ? state.selected : "";
+            el.year.value = state.year;
+            el.yearOut.value = state.year;
+            const span = g.years[1] - g.years[0] || 1;
+            el.year.style.setProperty("--viz-fill", `${(100 * (state.year - g.years[0])) / span}%`);
+            el.controls.elements.show.value = state.outside ? "all" : "network";
+        }
+
+        function render() {
+            const s = summarize(g, state);
+            if (state.selected && !s.selected) state.selected = null; // not in the data, or hidden by the year
+            el.title.textContent = s.title;
+            el.subtitle.innerHTML = s.subtitle;
+            document.title = `${s.title} — Chambers`;
+            net.update(s);
+            el.table.replaceChildren(table(s));
+            syncControls();
+            writeURL();
+            sizeChart();
+        }
+
+        // sizeChart gives the chart the window from its top edge down, so the
+        // network has the first screen and the notes follow below the fold.
+        // The subtitle's length moves the top edge, so render calls it too.
+        function sizeChart() {
+            const top = el.chart.getBoundingClientRect().top + window.scrollY;
+            el.chart.style.height = `${Math.max(480, window.innerHeight - top - 12)}px`;
+        }
+        window.addEventListener("resize", sizeChart);
+
+        // Play steps through the years that have a code, and stops at the
+        // last, or when the reader touches a control.
+        let timer = null;
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+            el.play.textContent = "Play";
+            el.play.setAttribute("aria-pressed", "false");
+        }
+        function play() {
+            if (timer) return stop();
+            if (state.year >= g.years[1]) { state.year = years[0]; render(); }
+            el.play.textContent = "Pause";
+            el.play.setAttribute("aria-pressed", "true");
+            timer = setInterval(() => {
+                const next = years.find((y) => y > state.year);
+                if (next === undefined) return stop();
+                state.year = next;
+                render();
+                if (state.year >= g.years[1]) stop();
+            }, reducedMotion() ? 1200 : 450);
+        }
+
+        // Resize: give the network the chart's new size once the window settles.
+        let resizeTimer = null;
+        new ResizeObserver(() => {
+            if (!net) return;
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => net.resize(el.chart.clientWidth, el.chart.clientHeight), 80);
+        }).observe(el.chart);
+
+        // Controls.
+        el.select.addEventListener("change", () => {
+            stop();
+            state.selected = el.select.value || null;
+            render();
+            if (state.selected) net.reveal(state.selected);
+        });
+        el.year.addEventListener("input", () => {
+            if (timer) stop();
+            state.year = Number(el.year.value);
+            render();
+        });
+        el.yearsReset.addEventListener("click", () => { stop(); state.year = g.years[1]; render(); });
+        el.play.addEventListener("click", play);
+        for (const input of el.controls.elements.show) {
+            input.addEventListener("change", () => { state.outside = el.controls.elements.show.value !== "network"; render(); net.fit(); });
+        }
+        el.viewReset.addEventListener("click", () => net.fit());
+
+        // Start: fetch the codes and the borrowings, lay the network out once,
+        // then show the view the URL asks for.
+        (async () => {
+            let codes, borrowings;
+            try {
+                [codes, borrowings] = await Promise.all([getJSON(`${API}/codes`), getJSON(`${API}/borrowings`)]);
+            } catch (err) {
+                el.subtitle.textContent = "The network could not be loaded.";
+                message(err.message);
+                return;
+            }
+            g = graph(codes, borrowings);
+            years = [...new Set(g.nodes.map((n) => n.year))].sort((a, b) => a - b);
+            readURL();
+
+            el.select.replaceChildren(
+                Object.assign(document.createElement("option"), { value: "", textContent: "None" }),
+                ...[...g.nodes].sort((a, b) => a.jurisdiction.localeCompare(b.jurisdiction) || a.year - b.year).map((n) => {
+                    const o = document.createElement("option");
+                    o.value = n.code;
+                    o.textContent = `${n.name} (${n.code})`;
+                    return o;
+                }),
+            );
+            el.select.disabled = false;
+            el.year.min = g.years[0];
+            el.year.max = g.years[1];
+
+            el.legend.replaceChildren(legend());
+            el.chart.replaceChildren();
+            sizeChart();
+            net = network(g, {
+                width: el.chart.clientWidth || 1200,
+                height: el.chart.clientHeight || 700,
+                onSelect: (code) => { state.selected = code; render(); },
+            });
+            el.chart.replaceChildren(net.node);
+            render();
+            if (state.selected) net.reveal(state.selected);
+        })();
+    </script>
+{{end}}
