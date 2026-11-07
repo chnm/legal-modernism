@@ -132,7 +132,6 @@ const CSS = `
 .viz .viz-network .node:focus-visible circle { stroke: ${colors.accent}; stroke-width: 3px; }
 .viz .viz-tooltip { position: absolute; z-index: 2; pointer-events: none; max-width: 26rem; padding: 0.45rem 0.65rem; background: ${colors.surface}; border: 1px solid ${colors.faint}; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); font-size: ${sizes.note}px; line-height: 1.4; color: ${colors.ink}; overflow: hidden; }
 .viz .viz-tooltip[hidden] { display: none; }
-.viz .viz-tooltip.viz-tooltip-pinned { pointer-events: auto; overflow-y: auto; border-color: ${colors.ink}; }
 .viz .viz-tooltip .viz-tip-title { font-weight: 600; }
 .viz .viz-tooltip .viz-tip-muted { color: ${colors.muted}; font-weight: 400; }
 .viz .viz-tip-tables { display: flex; gap: 1rem; align-items: flex-start; margin-top: 0.35rem; }

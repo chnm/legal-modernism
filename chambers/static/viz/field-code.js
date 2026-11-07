@@ -375,7 +375,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     link.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y)
       .attr("x2", (d) => end(d)[0]).attr("y2", (d) => end(d)[1]);
     node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-    if (!tip.hidden) positionTip(hovered || summary.selected);
+    if (hovered) positionTip(hovered);
   }
 
   const zoom = d3.zoom()
@@ -384,7 +384,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     .on("zoom", (ev) => {
       transform = ev.transform;
       view.attr("transform", transform);
-      if (!tip.hidden) positionTip(hovered || summary.selected);
+      if (hovered) positionTip(hovered);
     });
   svg.call(zoom).on("dblclick.zoom", null);
 
@@ -441,12 +441,10 @@ export function network(g, { width, height, onSelect = () => {} }) {
       else if (ev.key === "Escape") onSelect(null);
     });
 
-  // The tooltip follows the hovered or focused code; with none, it stays on
-  // the selected code, pinned, where it can be scrolled when the lists are
-  // long.
-  function showTip(d, pinned) {
+  // The tooltip follows the hovered or focused code, and goes with it, so
+  // that a selection leaves the network in view.
+  function showTip(d) {
     tip.innerHTML = tooltip(d);
-    tip.classList.toggle("viz-tooltip-pinned", pinned);
     tip.hidden = false;
     positionTip(d);
   }
@@ -454,8 +452,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
   function hover(d) {
     hovered = d;
     restyle();
-    if (d) showTip(d, false);
-    else if (summary && summary.selected) showTip(summary.selected, true);
+    if (d) showTip(d);
     else tip.hidden = true;
   }
 
@@ -525,13 +522,13 @@ export function network(g, { width, height, onSelect = () => {} }) {
     return `<table><caption>${caption}</caption><thead><tr><th>Code</th><th class="num">Sections</th><th class="num">Share</th></tr></thead><tbody>${body}</tbody></table>`;
   }
 
-  // tooltip is the text shown beside a hovered, focused or selected code:
+  // tooltip is the text shown beside a hovered or focused code:
   // its standing, then every code it borrowed from and every code that
   // borrowed from it.
   function tooltip(d) {
     const corpus = d.corpus_code !== d.code ? `, ${esc(d.corpus_code)} in the corpus` : "";
     const steps = d.distance > 1 ? `, ${d.distance} steps from a Field code` : "";
-    const hint = summary && summary.selected === d ? "Click the code to release it" : "Click the code to trace its line of descent and pin this";
+    const hint = summary && summary.selected === d ? "Click the code to release it" : "Click the code to trace its line of descent";
     return [
       `<div class="viz-tip-title">${esc(d.name)} <span class="viz-tip-muted">${esc(d.code)}${corpus}</span></div>`,
       `<div>${esc(d.category)}${steps} · ${esc(d.region.name)} · ${fmt(d.sections)} sections, ${fmt(d.sections_matched)} matched to an earlier code</div>`,
@@ -545,8 +542,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     titleEl.text(s.title);
     descEl.text(s.subtitle.replace(/<[^>]+>/g, ""));
     restyle();
-    if (hovered) showTip(hovered, false);
-    else if (s.selected) showTip(s.selected, true);
+    if (hovered) showTip(hovered);
     else tip.hidden = true;
   }
 
