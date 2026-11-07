@@ -84,6 +84,7 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `class="viz-notes"`)
 		require.Contains(t, out, `id="code"`)
 		require.Contains(t, out, `id="color-region"`)
+		require.Contains(t, out, `id="zoom-in"`)
 		require.Contains(t, out, `href="/#viz"`)
 	})
 

@@ -29,7 +29,11 @@
                     <input type="radio" name="color" id="color-region" value="region"><label for="color-region">region</label>
                 </span>
             </fieldset>
-            <button type="button" class="viz-button" id="view-reset">Reset view</button>
+            <span class="viz-control" role="group" aria-label="Zoom">
+                <button type="button" class="viz-button" id="zoom-in" aria-label="Zoom in">+</button>
+                <button type="button" class="viz-button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+                <button type="button" class="viz-button" id="view-reset">Reset view</button>
+            </span>
         </form>
 
         <div id="viz-legend"></div>
@@ -56,7 +60,8 @@
                 SD1887). The colors can instead show each code's region, the regions the project's other charts use, drawn from the Census Bureau's
                 regions and divisions, with New York set apart in the Field codes' red: New York, New England, the Midwest, the South, the Mountain West
                 and the Pacific West; the one English statute (GB1852) keeps the United Kingdom's color from the project's other charts, without an
-                entry in the legend. Drag a node to move it, scroll to zoom and drag the background to pan; Reset view restores the frame. Choosing a
+                entry in the legend. Drag a node to move it, drag the background to pan, and zoom with the + and &minus; buttons (or by pinching on a touch screen; the mouse wheel
+                scrolls the page); Reset view restores the frame. Choosing a
                 code traces its line of descent, the codes it drew on and the codes that drew on it. Hovering a code lists every code it borrowed from
                 and every code that borrowed from it, with the sections and their share of the borrowing code's sections, down to a single matched
                 section; the rows in grey are the borrowings the figure does not draw, too small for it or with a code it leaves out, and clicking
@@ -87,6 +92,8 @@
             subtitle: document.getElementById("viz-subtitle"),
             select: document.getElementById("code"),
             viewReset: document.getElementById("view-reset"),
+            zoomIn: document.getElementById("zoom-in"),
+            zoomOut: document.getElementById("zoom-out"),
             controls: document.getElementById("viz-controls"),
             legend: document.getElementById("viz-legend"),
             chart: document.getElementById("viz-chart"),
@@ -165,6 +172,8 @@
             input.addEventListener("change", () => { state.color = el.controls.elements.color.value; render(); });
         }
         el.viewReset.addEventListener("click", () => net.fit());
+        el.zoomIn.addEventListener("click", () => net.zoomBy(1.4));
+        el.zoomOut.addEventListener("click", () => net.zoomBy(1 / 1.4));
 
         // Start: fetch the codes and the borrowings, lay the figure out, then
         // show the view the URL asks for.

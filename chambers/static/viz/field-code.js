@@ -20,7 +20,7 @@
 // no network (VISUALIZATIONS.md).
 
 import * as d3 from "https://esm.sh/d3@7.9.0?bundle-deps";
-import { colors, borrowingColors, groupColors, fonts, sizes, fmt, pct } from "./style.js";
+import { colors, borrowingColors, groupColors, fonts, sizes, fmt, pct, reducedMotion } from "./style.js";
 import { GROUPS, groupOf } from "./census.js";
 
 // The four categories, in legend order, and their names.
@@ -287,11 +287,14 @@ export function legend(summary) {
 // network draws the figure at the given size and returns a controller:
 // `node`, the element to put on the page; `update(summary)`, which colors
 // the codes as the summary says and traces the selected code's lineage;
-// `resize(width, height)`; `fit()`, which frames the
-// figure; and `reveal(code)`, which pans to a code outside the frame.
-// `onSelect(code | null)` is called when the reader clicks a node, presses
-// Enter or Space on one, presses Escape, or clicks the background. A dragged
-// node moves alone; nothing else animates.
+// `resize(width, height)`; `fit()`, which frames the figure; `zoomBy(k)`,
+// which zooms about the centre; and `reveal(code)`, which pans to a code
+// outside the frame. `onSelect(code | null)` is called when the reader
+// clicks a node, presses Enter or Space on one, presses Escape, or clicks the
+// background. The figure pans by dragging its background and zooms by the
+// page's buttons, or by pinching on a touch screen; the mouse wheel is left
+// to the page, so that scrolling over the figure scrolls the page. A dragged
+// node moves alone; nothing else animates but the zoom buttons' short glide.
 export function network(g, { width, height, onSelect = () => {} }) {
   const { nodes, links } = g;
   const widthScale = d3.scaleSqrt().domain([1, g.maxSections]).range([1, 2.5]);
@@ -377,12 +380,22 @@ export function network(g, { width, height, onSelect = () => {} }) {
     if (!tip.hidden) positionTip(hovered || summary.selected);
   }
 
-  const zoom = d3.zoom().scaleExtent([0.25, 4]).on("zoom", (ev) => {
-    transform = ev.transform;
-    view.attr("transform", transform);
-    if (!tip.hidden) positionTip(hovered || summary.selected);
-  });
+  const zoom = d3.zoom()
+    .scaleExtent([0.25, 4])
+    .filter((ev) => ev.type !== "wheel" && !ev.button)
+    .on("zoom", (ev) => {
+      transform = ev.transform;
+      view.attr("transform", transform);
+      if (!tip.hidden) positionTip(hovered || summary.selected);
+    });
   svg.call(zoom).on("dblclick.zoom", null);
+
+  // zoomBy zooms about the frame's centre by a factor, in a short glide
+  // unless the reader asks for reduced motion.
+  function zoomBy(k) {
+    const target = reducedMotion() ? svg : svg.transition().duration(200);
+    target.call(zoom.scaleBy, k);
+  }
 
   // fit frames the whole figure, never shrinking it below MIN_SCALE: a
   // figure that overflows the frame and can be panned beats one whose labels
@@ -545,7 +558,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
   place();
   restyle();
   resize(width, height);
-  return { node: wrapper, update, resize, fit, reveal };
+  return { node: wrapper, update, resize, fit, zoomBy, reveal };
 }
 
 // table lays the codes out as an HTML table, the accessible form of the
