@@ -113,27 +113,15 @@ const CSS = `
 .viz .viz-range .viz-range-track { position: absolute; left: 0; right: 0; top: calc(50% - 2px); height: 4px; border-radius: 2px; background: ${colors.grid}; }
 .viz .viz-range .viz-range-fill { position: absolute; top: calc(50% - 2px); height: 4px; border-radius: 2px; background: ${colors.ink}; }
 .viz .viz-years { font-family: ${fonts.mono}; font-size: ${sizes.body}px; min-width: 7.5em; }
-.viz .viz-slider { display: inline-flex; align-items: center; width: 16rem; height: 1.5rem; }
-.viz .viz-slider input[type=range] { width: 100%; height: 1.5rem; margin: 0; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
-.viz .viz-slider input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, ${colors.ink} var(--viz-fill, 0%), ${colors.grid} var(--viz-fill, 0%)); }
-.viz .viz-slider input[type=range]::-moz-range-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, ${colors.ink} var(--viz-fill, 0%), ${colors.grid} var(--viz-fill, 0%)); }
-.viz .viz-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%; background: ${colors.surface}; border: 2px solid ${colors.ink}; }
-.viz .viz-slider input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: ${colors.surface}; border: 2px solid ${colors.ink}; }
-.viz .viz-slider input[type=range]:focus-visible { outline: none; }
-.viz .viz-slider input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid ${colors.accent}; outline-offset: 2px; }
-.viz .viz-slider input[type=range]:focus-visible::-moz-range-thumb { outline: 2px solid ${colors.accent}; outline-offset: 2px; }
-.viz .viz-years.viz-year { min-width: 3em; }
 .viz .viz-button { font-family: inherit; font-size: ${sizes.note}px; padding: 0.2rem 0.6rem; border: 1px solid ${colors.faint}; border-radius: 4px; background: ${colors.surface}; color: ${colors.ink}; cursor: pointer; }
 .viz .viz-button:hover { border-color: ${colors.ink}; }
-.viz .viz-button[aria-pressed=true] { background: ${colors.ink}; color: ${colors.surface}; border-color: ${colors.ink}; }
 .viz .viz-chart { position: relative; }
 .viz .viz-chart svg { display: block; }
 .viz .viz-chart figure { margin: 0; }
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }
 .viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.35rem; }
 .viz .viz-swatch { display: inline-flex; align-items: center; gap: 0.4rem; }
-.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; box-sizing: border-box; }
-.viz .viz-swatch-dot.hollow { background: transparent !important; border: 2px solid; }
+.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
 .viz .viz-network-wrap { position: absolute; inset: 0; overflow: hidden; }
 .viz .viz-network { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .viz .viz-network.grabbing, .viz .viz-network.grabbing .node { cursor: grabbing; }

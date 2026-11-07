@@ -22,20 +22,6 @@
                 <label for="code">Trace a code</label>
                 <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
             </div>
-            <fieldset class="viz-control" aria-label="Codes enacted by a year">
-                <label for="year">Codes enacted by</label>
-                <span class="viz-slider"><input type="range" id="year" step="1" aria-describedby="year-out"></span>
-                <output class="viz-years viz-year" id="year-out" for="year"></output>
-                <button type="button" class="viz-button" id="play" aria-pressed="false">Play</button>
-                <button type="button" class="viz-button" id="years-reset">All years</button>
-            </fieldset>
-            <fieldset class="viz-control" aria-label="Which codes to show">
-                <span class="viz-label">Show</span>
-                <span class="viz-toggle">
-                    <input type="radio" name="show" id="show-all" value="all" checked><label for="show-all">all codes</label>
-                    <input type="radio" name="show" id="show-network" value="network"><label for="show-network">the Field Code's network only</label>
-                </span>
-            </fieldset>
             <button type="button" class="viz-button" id="view-reset">Reset view</button>
         </form>
 
@@ -53,18 +39,16 @@
                 them by the five-word phrases they share (minhashing and locality-sensitive hashing, then the Jaccard similarity of the candidates), and
                 matched each section to at most one earlier section, preferring a code of the same state and the nearest year. The figure keeps a borrowing
                 of at least 50 sections or a fifth of the borrowing code's sections, and at most the two largest for each code, dropping the second when it
-                comes from the same state as the first and not from the borrower's own. The 186 codes with a borrowing left are the figure's, and stand here
-                where the published figure placed them, which its authors settled by hand after a force-directed layout. The 35 codes of the corpus that
-                the figure left out, having no borrowing that large in either direction, are the hollow rings in the block at the right, by year
-                (one more code of the corpus, Massachusetts 1902, has no entry in the compendium's table of matches). A code is coloured by its distance
-                from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851, 1853, 1864 and 1873) along the arrows: an original borrower
-                took text from a draft directly, a subsequent borrower through one or more other codes, and a code that did not borrow owes nothing to one,
-                though it may have borrowed from another code, as Michigan's 1847 statute did from its 1839 one. The three codes of Dakota Territory are
-                labelled, as in the article, by the state that later took them (ND1862, ND1868, SD1887). Drag a node to move it, scroll to zoom and drag
-                the background to pan; Reset view restores the frame. Choosing a year shows the codes enacted by then, in place; choosing a code traces its
-                line of descent, the codes it drew on and the codes that drew on it, as far as the year allows, and hovering a code names its sources and
-                borrowers. The count of sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's
-                total somewhat overstates its sections, and a short statute split badly has very few.
+                comes from the same state as the first and not from the borrower's own; the 186 codes with a borrowing left are shown, the other 36 of the
+                corpus are not. The nodes and their labels stand where the published figure placed them, which its authors settled by hand after a
+                force-directed layout. A code is coloured by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851,
+                1853, 1864 and 1873) along the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other
+                codes, and a code that did not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did
+                from its 1839 one. The three codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868,
+                SD1887). Drag a node to move it, scroll to zoom and drag the background to pan; Reset view restores the frame. Choosing a code traces its
+                line of descent, the codes it drew on and the codes that drew on it, and hovering a code names its sources and borrowers. The count of
+                sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's total somewhat
+                overstates its sections, and a short statute split badly has very few.
             </p>
             <details class="viz-data">
                 <summary>Show the data</summary>
@@ -76,7 +60,7 @@
 
 {{define "scripts"}}
     <script type="module">
-        import { ensureStyles, reducedMotion } from "/static/viz/style.js";
+        import { ensureStyles } from "/static/viz/style.js";
         import { graph, summarize, network, table, legend } from "/static/viz/field-code.js";
 
         const API = "/api/viz/field-code";
@@ -87,12 +71,7 @@
             title: document.getElementById("viz-title"),
             subtitle: document.getElementById("viz-subtitle"),
             select: document.getElementById("code"),
-            year: document.getElementById("year"),
-            yearOut: document.getElementById("year-out"),
-            play: document.getElementById("play"),
-            yearsReset: document.getElementById("years-reset"),
             viewReset: document.getElementById("view-reset"),
-            controls: document.getElementById("viz-controls"),
             legend: document.getElementById("viz-legend"),
             chart: document.getElementById("viz-chart"),
             table: document.getElementById("viz-table"),
@@ -108,51 +87,28 @@
             return r.json();
         }
 
-        // State: the controls, mirrored into the query string so a view can be
-        // shared: `code`, the code whose lineage is traced; `year`, the last
-        // year shown; `show=network` to hide the codes outside the Field
-        // Code's network. The layout is fixed; the state only shows and hides
-        // nodes in place.
+        // State: the selected code, mirrored into the query string (`code`) so
+        // a view can be shared.
         let g = null;
         let net = null;
-        let years = []; // the distinct years of enactment, for stepping
-        const state = { selected: null, year: null, outside: true };
+        const state = { selected: null };
 
         function readURL() {
-            const q = new URLSearchParams(location.search);
-            const year = Number(q.get("year"));
-            state.selected = q.get("code") || null;
-            state.year = year >= g.years[0] && year <= g.years[1] ? year : g.years[1];
-            state.outside = q.get("show") !== "network";
+            state.selected = new URLSearchParams(location.search).get("code") || null;
         }
 
         function writeURL() {
-            const q = new URLSearchParams();
-            if (state.selected) q.set("code", state.selected);
-            if (state.year < g.years[1]) q.set("year", state.year);
-            if (!state.outside) q.set("show", "network");
-            const qs = q.toString();
-            history.replaceState(null, "", qs ? `${location.pathname}?${qs}` : location.pathname);
-        }
-
-        function syncControls() {
-            el.select.value = state.selected && g.byCode.has(state.selected) ? state.selected : "";
-            el.year.value = state.year;
-            el.yearOut.value = state.year;
-            const span = g.years[1] - g.years[0] || 1;
-            el.year.style.setProperty("--viz-fill", `${(100 * (state.year - g.years[0])) / span}%`);
-            el.controls.elements.show.value = state.outside ? "all" : "network";
+            history.replaceState(null, "", state.selected ? `${location.pathname}?code=${encodeURIComponent(state.selected)}` : location.pathname);
         }
 
         function render() {
             const s = summarize(g, state);
-            if (state.selected && !s.selected) state.selected = null; // not in the data, or hidden by the year
+            if (state.selected && !s.selected) state.selected = null; // not a code in the data
             el.title.textContent = s.title;
             el.subtitle.innerHTML = s.subtitle;
             document.title = `${s.title} — Chambers`;
             net.update(s);
-            el.table.replaceChildren(table(s));
-            syncControls();
+            el.select.value = state.selected || "";
             writeURL();
             sizeChart();
         }
@@ -166,29 +122,6 @@
         }
         window.addEventListener("resize", sizeChart);
 
-        // Play steps through the years that have a code, and stops at the
-        // last, or when the reader touches a control.
-        let timer = null;
-        function stop() {
-            clearInterval(timer);
-            timer = null;
-            el.play.textContent = "Play";
-            el.play.setAttribute("aria-pressed", "false");
-        }
-        function play() {
-            if (timer) return stop();
-            if (state.year >= g.years[1]) { state.year = years[0]; render(); }
-            el.play.textContent = "Pause";
-            el.play.setAttribute("aria-pressed", "true");
-            timer = setInterval(() => {
-                const next = years.find((y) => y > state.year);
-                if (next === undefined) return stop();
-                state.year = next;
-                render();
-                if (state.year >= g.years[1]) stop();
-            }, reducedMotion() ? 1200 : 450);
-        }
-
         // Resize: give the network the chart's new size once the window settles.
         let resizeTimer = null;
         new ResizeObserver(() => {
@@ -199,24 +132,13 @@
 
         // Controls.
         el.select.addEventListener("change", () => {
-            stop();
             state.selected = el.select.value || null;
             render();
             if (state.selected) net.reveal(state.selected);
         });
-        el.year.addEventListener("input", () => {
-            if (timer) stop();
-            state.year = Number(el.year.value);
-            render();
-        });
-        el.yearsReset.addEventListener("click", () => { stop(); state.year = g.years[1]; render(); });
-        el.play.addEventListener("click", play);
-        for (const input of el.controls.elements.show) {
-            input.addEventListener("change", () => { state.outside = el.controls.elements.show.value !== "network"; render(); net.fit(); });
-        }
         el.viewReset.addEventListener("click", () => net.fit());
 
-        // Start: fetch the codes and the borrowings, lay the network out, then
+        // Start: fetch the codes and the borrowings, lay the figure out, then
         // show the view the URL asks for.
         (async () => {
             let codes, borrowings;
@@ -228,7 +150,6 @@
                 return;
             }
             g = graph(codes, borrowings);
-            years = [...new Set(g.nodes.map((n) => n.year))].sort((a, b) => a - b);
             readURL();
 
             el.select.replaceChildren(
@@ -241,8 +162,6 @@
                 }),
             );
             el.select.disabled = false;
-            el.year.min = g.years[0];
-            el.year.max = g.years[1];
 
             el.legend.replaceChildren(legend());
             el.chart.replaceChildren();
@@ -253,6 +172,7 @@
                 onSelect: (code) => { state.selected = code; render(); },
             });
             el.chart.replaceChildren(net.node);
+            el.table.replaceChildren(table(summarize(g)));
             render();
             if (state.selected) net.reveal(state.selected);
         })();

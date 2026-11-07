@@ -172,7 +172,7 @@ func TestNetwork(t *testing.T) {
 		borrowed("DT1862", "CA1851", 70, 0.5), unmatched("DT1862", 30),
 		borrowed("MI1847", "MI1839", 55, 0.5), unmatched("MI1847", 45),
 		borrowed("XX1900", "CA1851", 2, 0.5), unmatched("XX1900", 98), // below both thresholds: in the corpus, not the figure
-		unmatched("PA1801", 120), // nothing matched at all
+		unmatched("PA1801", 120), // nothing matched at all: not the figure either
 	)
 	positions := map[string]figurePlace{
 		"NY1850": {x: 0.5, y: 0.5, labelX: 0.5, labelY: 0.5},
@@ -180,13 +180,13 @@ func TestNetwork(t *testing.T) {
 	}
 	codes, borrowings := network(matches, positions)
 
-	// Every code of the corpus, sorted by year, then by name; the Dakota
-	// code relabelled by its state.
+	// The figure's codes, sorted by year, then by name; the Dakota code
+	// relabelled by its state; the codes with no borrowing left out.
 	var names []string
 	for _, c := range codes {
 		names = append(names, c.Code)
 	}
-	assert.Equal(t, []string{"PA1801", "NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "ND1862", "XX1900"}, names)
+	assert.Equal(t, []string{"NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "ND1862"}, names)
 
 	byCode := map[string]Code{}
 	for _, c := range codes {
@@ -202,7 +202,6 @@ func TestNetwork(t *testing.T) {
 	require.NotNil(t, nd.Distance)
 	assert.Equal(t, 2, *nd.Distance)
 	assert.Equal(t, categorySubsequent, nd.Category)
-	assert.True(t, nd.InFigure)
 	require.NotNil(t, nd.FigureX)
 	assert.Equal(t, 0.25, *nd.FigureX)
 	assert.Equal(t, 0.75, *nd.FigureY)
@@ -220,18 +219,8 @@ func TestNetwork(t *testing.T) {
 	// A source with no path to a Field code did not borrow, and has no distance.
 	assert.Nil(t, byCode["NY1829"].Distance)
 	assert.Equal(t, categoryNone, byCode["NY1829"].Category)
-	assert.True(t, byCode["NY1829"].InFigure)
 	assert.Nil(t, byCode["NY1829"].FigureX, "no position given for it")
 	assert.Equal(t, categoryNone, byCode["MI1847"].Category)
-
-	// The codes with no borrowing left are in the corpus but not the figure.
-	for _, code := range []string{"XX1900", "PA1801"} {
-		assert.False(t, byCode[code].InFigure, code)
-		assert.Equal(t, categoryNone, byCode[code].Category, code)
-		assert.Nil(t, byCode[code].FigureX, code)
-	}
-	assert.Equal(t, 0, byCode["PA1801"].SectionsMatched)
-	assert.Equal(t, "Pennsylvania", byCode["PA1801"].Jurisdiction)
 
 	// The borrowings carry the new label too, sorted by borrower.
 	assert.Equal(t, [][2]string{

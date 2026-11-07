@@ -20,13 +20,13 @@
 // from one at all. The three codes of Dakota Territory are labelled, as in the
 // figure, by the state that later took them.
 //
-// Every code in the corpus is written, not only the ones with a borrowing
-// left after the pruning: `in_figure` says which. With --figure, the
-// hand-edited SVG of the published figure (article/figure-05-handedited-2.svg
-// in the article's repository) supplies each code's position in the figure,
-// as a fraction of its plotting area, and the position of its label, which the
-// authors nudged away from the node where labels collided, so that chambers can
-// lay the network out as the figure did.
+// Only the codes with a borrowing left after the pruning are written, the
+// figure's 186; the rest of the corpus stays out, as it does in the figure.
+// With --figure, the hand-edited SVG of the published figure
+// (article/figure-05-handedited-2.svg in the article's repository) supplies
+// each code's position in the figure, as a fraction of its plotting area, and
+// the position of its label, which the authors nudged away from the node where
+// labels collided, so that chambers can lay the network out as the figure did.
 //
 // It writes two JSON files for chambers to embed, one object per line: the
 // codes (field-code-codes.json) and the borrowings (field-code-borrowings.json).
@@ -105,7 +105,6 @@ type Code struct {
 	SectionsMatched int      `json:"sections_matched"` // of them, those matched to an earlier code
 	Distance        *int     `json:"distance"`         // steps to a Field code along the borrowings; null when none
 	Category        string   `json:"category"`         // Field code, Original borrower, Subsequent borrower, Did not borrow
-	InFigure        bool     `json:"in_figure"`        // whether a borrowing survives the pruning, so the figure shows it
 	FigureX         *float64 `json:"figure_x"`         // its place in the figure, as a fraction of the plot's width; null when absent
 	FigureY         *float64 `json:"figure_y"`         // and of its height, downward
 	FigureLabelX    *float64 `json:"figure_label_x"`   // the centre of its label in the figure, the same way; off the node where the authors nudged it
@@ -179,18 +178,15 @@ func main() {
 	}
 
 	codes, borrowings := network(matches, positions)
-	placed, shown := 0, 0
+	placed := 0
 	for _, c := range codes {
-		if c.InFigure {
-			shown++
-		}
 		if c.FigureX != nil {
 			placed++
 		}
 	}
-	slog.Info("derived the network", "codes", len(codes), "in_figure", shown, "positioned", placed, "borrowings", len(borrowings))
-	if positions != nil && placed != shown {
-		slog.Warn("some codes in the figure have no position, or some positions belong to no code", "in_figure", shown, "positioned", placed)
+	slog.Info("derived the network", "codes", len(codes), "positioned", placed, "borrowings", len(borrowings))
+	if positions != nil && placed != len(codes) {
+		slog.Warn("some codes have no position in the figure", "codes", len(codes), "positioned", placed)
 	}
 
 	if err := writeJSON(filepath.Join(outDir, "field-code-codes.json"), codes); err != nil {
@@ -243,8 +239,8 @@ func readMatches(r io.Reader) ([]match, error) {
 }
 
 // network reduces the section matches to the codes and borrowings of the
-// figure, following network-graphs.R, and gives every code of the corpus its
-// place in the figure when positions, keyed by the figure's labels, has one.
+// figure, following network-graphs.R, and gives each code its place in the
+// figure when positions, keyed by the figure's labels, has one.
 func network(matches []match, positions map[string]figurePlace) ([]Code, []Borrowing) {
 	borrowings := selectBorrowings(summarize(matches))
 	distances := distancesToFieldCodes(borrowings)
@@ -257,22 +253,15 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 			matched[m.borrower]++
 		}
 	}
-	// Every code with a section, and, should a borrowing name a code with
-	// none, that code too.
-	all := map[string]bool{}
-	for code := range sections {
-		all[code] = true
-	}
+	// The codes with a borrowing left: the figure's.
 	inFigure := map[string]bool{}
 	for _, b := range borrowings {
 		inFigure[b.Borrower] = true
 		inFigure[b.BorrowedFrom] = true
-		all[b.Borrower] = true
-		all[b.BorrowedFrom] = true
 	}
 
-	codes := make([]Code, 0, len(all))
-	for corpusCode := range all {
+	codes := make([]Code, 0, len(inFigure))
+	for corpusCode := range inFigure {
 		label := corpusCode
 		if r, ok := renames[corpusCode]; ok {
 			label = r
@@ -286,7 +275,6 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 			Sections:        sections[corpusCode],
 			SectionsMatched: matched[corpusCode],
 			Category:        categoryNone,
-			InFigure:        inFigure[corpusCode],
 		}
 		if d, ok := distances[corpusCode]; ok {
 			d := d

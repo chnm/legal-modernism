@@ -10,8 +10,8 @@ import (
 // TestFieldCodeData checks the embedded data of the Field Code network holds
 // together: every borrowing joins two codes that exist, no code borrows from
 // a later one, the categories and distances agree, the seven drafts of the
-// Field Code are the codes at distance 0, and the codes in the figure are
-// exactly those with a borrowing, each with its place in the figure.
+// Field Code are the codes at distance 0, and every code has a borrowing and
+// its place in the figure.
 func TestFieldCodeData(t *testing.T) {
 	type code struct {
 		Code            string   `json:"code"`
@@ -23,7 +23,6 @@ func TestFieldCodeData(t *testing.T) {
 		SectionsMatched int      `json:"sections_matched"`
 		Distance        *int     `json:"distance"`
 		Category        string   `json:"category"`
-		InFigure        bool     `json:"in_figure"`
 		FigureX         *float64 `json:"figure_x"`
 		FigureY         *float64 `json:"figure_y"`
 		FigureLabelX    *float64 `json:"figure_label_x"`
@@ -77,21 +76,16 @@ func TestFieldCodeData(t *testing.T) {
 		default:
 			t.Fatalf("%s: unknown category %q", c.Code, c.Category)
 		}
-		if c.InFigure {
-			require.NotNil(t, c.FigureX, "%s is in the figure but has no position", c.Code)
-			require.NotNil(t, c.FigureY, c.Code)
-			require.GreaterOrEqual(t, *c.FigureX, 0.0, c.Code)
-			require.LessOrEqual(t, *c.FigureX, 1.0, c.Code)
-			require.GreaterOrEqual(t, *c.FigureY, 0.0, c.Code)
-			require.LessOrEqual(t, *c.FigureY, 1.0, c.Code)
-			require.NotNil(t, c.FigureLabelX, c.Code)
-			require.NotNil(t, c.FigureLabelY, c.Code)
-			require.InDelta(t, *c.FigureX, *c.FigureLabelX, 0.06, "%s: its label is near its node", c.Code)
-			require.InDelta(t, *c.FigureY, *c.FigureLabelY, 0.06, c.Code)
-		} else {
-			require.Equal(t, "Did not borrow", c.Category, "%s is outside the figure", c.Code)
-			require.Nil(t, c.FigureX, c.Code)
-		}
+		require.NotNil(t, c.FigureX, "%s has no position in the figure", c.Code)
+		require.NotNil(t, c.FigureY, c.Code)
+		require.GreaterOrEqual(t, *c.FigureX, 0.0, c.Code)
+		require.LessOrEqual(t, *c.FigureX, 1.0, c.Code)
+		require.GreaterOrEqual(t, *c.FigureY, 0.0, c.Code)
+		require.LessOrEqual(t, *c.FigureY, 1.0, c.Code)
+		require.NotNil(t, c.FigureLabelX, c.Code)
+		require.NotNil(t, c.FigureLabelY, c.Code)
+		require.InDelta(t, *c.FigureX, *c.FigureLabelX, 0.06, "%s: its label is near its node", c.Code)
+		require.InDelta(t, *c.FigureY, *c.FigureLabelY, 0.06, c.Code)
 	}
 	require.ElementsMatch(t, []string{"NY1848", "NY1849", "NY1850", "NY1851", "NY1853", "NY1864", "NY1873"}, fieldCodes)
 
@@ -112,7 +106,6 @@ func TestFieldCodeData(t *testing.T) {
 		inNetwork[e.BorrowedFrom] = true
 	}
 	for _, c := range codes {
-		require.Equal(t, inNetwork[c.Code], c.InFigure, "%s: in the figure if and only if it has a borrowing", c.Code)
+		require.True(t, inNetwork[c.Code], "%s has no borrowing", c.Code)
 	}
-	require.Greater(t, len(codes), len(inNetwork), "the corpus has codes the figure left out")
 }
