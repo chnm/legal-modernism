@@ -27,6 +27,10 @@ func TestFieldCodeData(t *testing.T) {
 		FigureY         *float64 `json:"figure_y"`
 		FigureLabelX    *float64 `json:"figure_label_x"`
 		FigureLabelY    *float64 `json:"figure_label_y"`
+		LayoutX         *float64 `json:"layout_x"`
+		LayoutY         *float64 `json:"layout_y"`
+		LayoutLabelX    *float64 `json:"layout_label_x"`
+		LayoutLabelY    *float64 `json:"layout_label_y"`
 	}
 	type borrowing struct {
 		Borrower         string  `json:"borrower"`
@@ -86,6 +90,13 @@ func TestFieldCodeData(t *testing.T) {
 		require.NotNil(t, c.FigureLabelY, c.Code)
 		require.InDelta(t, *c.FigureX, *c.FigureLabelX, 0.06, "%s: its label is near its node", c.Code)
 		require.InDelta(t, *c.FigureY, *c.FigureLabelY, 0.06, c.Code)
+		// The layout is the figure's position, adjusted a little.
+		require.NotNil(t, c.LayoutX, c.Code)
+		require.NotNil(t, c.LayoutLabelX, c.Code)
+		require.InDelta(t, *c.FigureX, *c.LayoutX, 0.1, "%s: the layout stays near the figure", c.Code)
+		require.InDelta(t, *c.FigureY, *c.LayoutY, 0.1, c.Code)
+		require.InDelta(t, *c.LayoutX, *c.LayoutLabelX, 0.06, "%s: its label stays near its node", c.Code)
+		require.InDelta(t, *c.LayoutY, *c.LayoutLabelY, 0.06, c.Code)
 	}
 	require.ElementsMatch(t, []string{"NY1848", "NY1849", "NY1850", "NY1851", "NY1853", "NY1864", "NY1873"}, fieldCodes)
 

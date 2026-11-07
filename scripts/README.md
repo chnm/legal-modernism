@@ -9,8 +9,10 @@ the research compendium of Funk and Mullen, "The Spine of American Law" (AHR
 --figure figure-05-handedited-2.svg --out chambers/data` reduces the
 compendium's best section matches to the codes and borrowings of the article's
 figure 5, as its own `network-graphs.R` did, and reads each code's position
-from the hand-edited SVG of the figure in the article's repository; its doc
-comment says how.
+from the hand-edited SVG of the figure in the article's repository, adjusting
+it by `adjustments.json` beside it (a stretch of the figure, and moves of
+single codes and labels to clear overlaps, each with its reason; `--no-adjust`
+keeps the figure's positions exactly); its doc comment says how.
 
 ## pipeline.sh: the citation rebuild in one command
 

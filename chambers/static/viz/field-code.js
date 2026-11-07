@@ -209,21 +209,26 @@ const RADIUS = 9;
 const LABEL_HALF_W = 32; // half a label's width, with a little room
 const LABEL_H = 12; // half its height
 const MIN_SCALE = 0.75; // the frame never shrinks the figure below this: labels must stay legible
+const FIT_MARGIN = 0.9; // the figure fills this much of the frame, so it does not press against the edges
 const EDGE = colors.muted;
 const EDGE_OPACITY = 0.5;
 const FADE_NODE = 0.2;
 const FADE_LINK = 0.06;
 
-// layout places every node where the published figure put it, with its label
-// where the figure's authors nudged it (`lx`, `ly`, offsets from the node,
-// zero for a label centred on it). A code the data gives no position, which
-// the data should not, sits at the figure's centre.
+// layout places every node where the data's layout puts it (the published
+// figure's position with the project's small adjustments; the figure's own
+// position where the data has no layout), with its label where the figure's
+// authors nudged it (`lx`, `ly`, offsets from the node, zero for a label
+// centred on it). A code with no position at all, which the data should not
+// hold, sits at the figure's centre.
 function layout(g) {
   for (const n of g.nodes) {
-    n.x = (n.figure_x ?? 0.5) * FIGURE_W;
-    n.y = (n.figure_y ?? 0.5) * FIGURE_H;
-    n.lx = n.figure_label_x != null ? n.figure_label_x * FIGURE_W - n.x : 0;
-    n.ly = n.figure_label_y != null ? n.figure_label_y * FIGURE_H - n.y : 0;
+    n.x = (n.layout_x ?? n.figure_x ?? 0.5) * FIGURE_W;
+    n.y = (n.layout_y ?? n.figure_y ?? 0.5) * FIGURE_H;
+    const lx = n.layout_label_x ?? n.figure_label_x;
+    const ly = n.layout_label_y ?? n.figure_label_y;
+    n.lx = lx != null ? lx * FIGURE_W - n.x : 0;
+    n.ly = ly != null ? ly * FIGURE_H - n.y : 0;
   }
 }
 
@@ -355,7 +360,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
     const top = y0 - LABEL_H;
     const bottom = y1 + LABEL_H;
     const pad = 16;
-    const k = Math.max(MIN_SCALE, Math.min(1.5, (W - 2 * pad) / (right - left), (H - 2 * pad) / (bottom - top)));
+    const k = Math.max(MIN_SCALE, FIT_MARGIN * Math.min(1.5, (W - 2 * pad) / (right - left), (H - 2 * pad) / (bottom - top)));
     const t = d3.zoomIdentity.translate(W / 2 - (k * (left + right)) / 2, H / 2 - (k * (top + bottom)) / 2).scale(k);
     svg.call(zoom.transform, t);
   }

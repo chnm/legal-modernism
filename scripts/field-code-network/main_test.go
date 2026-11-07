@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 
@@ -306,4 +307,49 @@ func TestFigurePositions(t *testing.T) {
 
 	_, err = figurePositions(strings.NewReader(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><text x="1" y="1">NY1850</text></svg>`))
 	assert.Error(t, err, "a label with no circle near it")
+}
+
+func TestAdjust(t *testing.T) {
+	f := func(v float64) *float64 { return &v }
+	codes := []Code{
+		{Code: "NY1850", FigureX: f(0.5), FigureY: f(0.5), FigureLabelX: f(0.52), FigureLabelY: f(0.5)},
+		{Code: "CA1851", FigureX: f(0.25), FigureY: f(0.75), FigureLabelX: f(0.25), FigureLabelY: f(0.75)},
+		{Code: "NY1829"}, // no position
+	}
+
+	// No adjustments: the layout is the figure's.
+	require.NoError(t, adjust(codes, Adjustments{}))
+	assert.Equal(t, 0.5, *codes[0].LayoutX)
+	assert.Equal(t, 0.52, *codes[0].LayoutLabelX)
+	assert.Equal(t, 0.25, *codes[1].LayoutX)
+	assert.Equal(t, 0.75, *codes[1].LayoutY)
+	assert.Nil(t, codes[2].LayoutX)
+
+	// A stretch about the centre, and a move with its own label offset.
+	adj := Adjustments{Expand: 1.1, Moves: []Move{
+		{Code: "CA1851", DX: panelWidth / 10, DY: -panelHeight / 10, LabelDX: f(panelWidth / 20), Note: "test"},
+	}}
+	require.NoError(t, adjust(codes, adj))
+	assert.Equal(t, 0.5, *codes[0].LayoutX, "the centre does not move")
+	assert.InDelta(t, 0.52, *codes[0].LayoutLabelX, 1e-9, "a label keeps its offset")
+	assert.InDelta(t, 0.5+(0.25-0.5)*1.1+0.1, *codes[1].LayoutX, 1e-9)
+	assert.InDelta(t, 0.5+(0.75-0.5)*1.1-0.1, *codes[1].LayoutY, 1e-9)
+	assert.InDelta(t, *codes[1].LayoutX+0.05, *codes[1].LayoutLabelX, 1e-9, "the move's label offset")
+	assert.InDelta(t, *codes[1].LayoutY, *codes[1].LayoutLabelY, 1e-9, "the figure's, where the move gives none")
+
+	// A move for a code outside the figure, or twice, is refused.
+	assert.Error(t, adjust(codes, Adjustments{Moves: []Move{{Code: "XX1900"}}}))
+	assert.Error(t, adjust(codes, Adjustments{Moves: []Move{{Code: "NY1850"}, {Code: "NY1850"}}}))
+}
+
+func TestEmbeddedAdjustments(t *testing.T) {
+	var adj Adjustments
+	require.NoError(t, json.Unmarshal(defaultAdjustments, &adj))
+	seen := map[string]bool{}
+	for _, m := range adj.Moves {
+		assert.Regexp(t, `^[A-Z]{2}\d{4}$`, m.Code)
+		assert.False(t, seen[m.Code], "%s moved twice", m.Code)
+		assert.NotEmpty(t, m.Note, "%s: a move says why", m.Code)
+		seen[m.Code] = true
+	}
 }

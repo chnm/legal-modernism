@@ -27,6 +27,11 @@
 // each code's position in the figure, as a fraction of its plotting area, and
 // the position of its label, which the authors nudged away from the node where
 // labels collided, so that chambers can lay the network out as the figure did.
+// The layout chambers draws is that position with our own small adjustments,
+// listed with their reasons in adjustments.json (embedded; --adjust names
+// another file, --no-adjust applies none): a stretch of the whole figure about
+// its centre, and moves of single codes and their labels to clear collisions.
+// The figure's own positions stay in the data beside the adjusted ones.
 //
 // It writes two JSON files for chambers to embed, one object per line: the
 // codes (field-code-codes.json) and the borrowings (field-code-borrowings.json).
@@ -37,6 +42,7 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/csv"
 	"encoding/json"
 	"encoding/xml"
@@ -54,6 +60,9 @@ import (
 
 	flag "github.com/spf13/pflag"
 )
+
+//go:embed adjustments.json
+var defaultAdjustments []byte
 
 // The pruning of the network, as network-graphs.R set it.
 const (
@@ -109,7 +118,37 @@ type Code struct {
 	FigureY         *float64 `json:"figure_y"`         // and of its height, downward
 	FigureLabelX    *float64 `json:"figure_label_x"`   // the centre of its label in the figure, the same way; off the node where the authors nudged it
 	FigureLabelY    *float64 `json:"figure_label_y"`
+	LayoutX         *float64 `json:"layout_x"` // where chambers draws it: the figure's position, adjusted (adjustments.json)
+	LayoutY         *float64 `json:"layout_y"`
+	LayoutLabelX    *float64 `json:"layout_label_x"` // and its label
+	LayoutLabelY    *float64 `json:"layout_label_y"`
 }
+
+// Adjustments are our changes to the figure's positions, in the units of its
+// panel (1246 by 767): Expand stretches the whole figure about its centre, to
+// give the labels room, and each Move shifts one code by (DX, DY) and, when
+// LabelDX or LabelDY is given, puts its label at that offset from the node in
+// place of the figure's. Note says why.
+type Adjustments struct {
+	Expand float64 `json:"expand"`
+	Moves  []Move  `json:"moves"`
+}
+
+type Move struct {
+	Code    string   `json:"code"`
+	DX      float64  `json:"dx"`
+	DY      float64  `json:"dy"`
+	LabelDX *float64 `json:"label_dx,omitempty"`
+	LabelDY *float64 `json:"label_dy,omitempty"`
+	Note    string   `json:"note"`
+}
+
+// The figure's panel, in the units its positions were read in (SVG user
+// units, the clipPath rectangle), which the adjustments are given in.
+const (
+	panelWidth  = 1246.30
+	panelHeight = 766.99
+)
 
 // figurePlace is a code's node and label in the figure, as fractions of the
 // plotting area's width and height.
@@ -137,9 +176,12 @@ type match struct {
 }
 
 func main() {
-	var matchesPath, figurePath, outDir string
+	var matchesPath, figurePath, adjustPath, outDir string
+	var noAdjust bool
 	flag.StringVar(&matchesPath, "matches", "", "the compendium's best_matches.csv")
 	flag.StringVar(&figurePath, "figure", "", "the hand-edited SVG of figure 5, for the codes' positions (optional)")
+	flag.StringVar(&adjustPath, "adjust", "", "a JSON file of adjustments to the figure's positions (default: the embedded adjustments.json)")
+	flag.BoolVar(&noAdjust, "no-adjust", false, "apply no adjustments: lay the codes out exactly as the figure did")
 	flag.StringVar(&outDir, "out", "chambers/data", "directory to write the JSON files to")
 	flag.Parse()
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stderr, nil)))
@@ -178,6 +220,25 @@ func main() {
 	}
 
 	codes, borrowings := network(matches, positions)
+	if positions != nil && !noAdjust {
+		raw := defaultAdjustments
+		if adjustPath != "" {
+			if raw, err = os.ReadFile(adjustPath); err != nil {
+				slog.Error("reading adjustments", "error", err)
+				os.Exit(1)
+			}
+		}
+		var adj Adjustments
+		if err := json.Unmarshal(raw, &adj); err != nil {
+			slog.Error("parsing adjustments", "error", err)
+			os.Exit(1)
+		}
+		if err := adjust(codes, adj); err != nil {
+			slog.Error("applying adjustments", "error", err)
+			os.Exit(1)
+		}
+		slog.Info("applied adjustments", "expand", adj.Expand, "moves", len(adj.Moves))
+	}
 	placed := 0
 	for _, c := range codes {
 		if c.FigureX != nil {
@@ -314,6 +375,54 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 		return a.BorrowedFrom < b.BorrowedFrom
 	})
 	return codes, borrowings
+}
+
+// adjust sets each code's layout position from its figure position and the
+// adjustments: the figure stretched by Expand about the panel's centre, then
+// the code's move, in panel units; its label keeps the figure's offset from
+// the node unless the move gives one. A move naming a code that is not in the
+// network, or has no position, is an error, so that a typo cannot pass. With
+// no adjustments (Expand 1, no moves) the layout is the figure's.
+func adjust(codes []Code, adj Adjustments) error {
+	if adj.Expand == 0 {
+		adj.Expand = 1
+	}
+	moves := map[string]Move{}
+	for _, m := range adj.Moves {
+		if _, dup := moves[m.Code]; dup {
+			return fmt.Errorf("two moves for %s", m.Code)
+		}
+		moves[m.Code] = m
+	}
+	for i := range codes {
+		c := &codes[i]
+		if c.FigureX == nil || c.FigureY == nil {
+			continue
+		}
+		m, moved := moves[c.Code]
+		delete(moves, c.Code)
+		x := 0.5 + (*c.FigureX-0.5)*adj.Expand + m.DX/panelWidth
+		y := 0.5 + (*c.FigureY-0.5)*adj.Expand + m.DY/panelHeight
+		var ldx, ldy float64 // the label's offset from the node, as fractions
+		if c.FigureLabelX != nil && c.FigureLabelY != nil {
+			ldx = *c.FigureLabelX - *c.FigureX
+			ldy = *c.FigureLabelY - *c.FigureY
+		}
+		if moved && m.LabelDX != nil {
+			ldx = *m.LabelDX / panelWidth
+		}
+		if moved && m.LabelDY != nil {
+			ldy = *m.LabelDY / panelHeight
+		}
+		lx, ly := round(x+ldx, 4), round(y+ldy, 4)
+		x, y = round(x, 4), round(y, 4)
+		c.LayoutX, c.LayoutY = &x, &y
+		c.LayoutLabelX, c.LayoutLabelY = &lx, &ly
+	}
+	for code := range moves {
+		return fmt.Errorf("a move names %s, which is not in the figure", code)
+	}
+	return nil
 }
 
 // candidate is a borrowing before pruning: the sections of one code whose best
