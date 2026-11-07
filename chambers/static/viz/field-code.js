@@ -33,12 +33,10 @@ const NONE = "Did not borrow";
 // The regions a code can be colored by instead: the groups of census.js, the
 // Census Bureau's regions and divisions as the project's other charts use
 // them, with New York set apart from the Mid-Atlantic in the Field code's red,
-// since the Field codes are New York's, and first in the legend. The one
-// English statute keeps the United Kingdom's color but has no legend entry;
-// its tooltip names the region.
+// since the Field codes are New York's, and first in the legend; the United
+// Kingdom, with its one statute, comes last.
 const NEW_YORK = { key: "new-york", name: "New York", census: "Northeast" };
 export const REGIONS = [NEW_YORK, ...GROUPS];
-const UNLISTED = new Set(["uk"]);
 const regionOf = (d) => (d.state === "NY" ? NEW_YORK : groupOf(d.jurisdiction_slug));
 
 // fillOf is a code's color under a coloring: by its distance from a Field
@@ -52,9 +50,9 @@ const fillOf = (d, color) => (color === "region" ? groupColors[d.region.key] : b
 // borrowed from, largest first), its `borrowers` (the links from the codes
 // that borrowed from it, earliest first), its `path`, the shortest chain of
 // codes from it to a Field code, which the subtitle recites, and for its
-// tooltip the full account: `allSources` and `allBorrowers`, every borrowing
-// the data holds that touches it, drawn or not, with codes the figure leaves
-// out, largest first.
+// tooltip its account: `allSources` and `allBorrowers`, every borrowing the
+// data holds that touches it, drawn or not, with codes the figure leaves out,
+// largest first (the tooltip lists those of TIP_LEAST sections or more).
 export function graph(codes, borrowings) {
   const nodes = codes.map((c) => ({ ...c, name: `${c.jurisdiction} ${c.year}`, sources: [], borrowers: [], allSources: [], allBorrowers: [] }));
   for (const n of nodes) n.region = regionOf(n);
@@ -124,7 +122,7 @@ export function summarize(g, options = {}) {
   const summary = {
     graph: g, counts, selected,
     color: options.color === "region" ? "region" : "distance",
-    regions: REGIONS.filter((r) => !UNLISTED.has(r.key) && g.nodes.some((n) => n.region === r)),
+    regions: REGIONS.filter((r) => g.nodes.some((n) => n.region === r)),
     lineage: selected ? lineage(selected) : null,
     title: "The migration of the Field Code",
   };
@@ -511,11 +509,16 @@ export function network(g, { width, height, onSelect = () => {} }) {
   // share formats a borrowing's share of the borrowing code's sections.
   const share = (s) => (s > 0 && s < 0.005 ? "<1%" : `${Math.round(100 * s)}%`);
 
+  // TIP_LEAST is the fewest sections a borrowing needs to be listed in the
+  // tooltip: the single and handful-of-section matches are noise there.
+  const TIP_LEAST = 10;
+
   // tipTable lays out one side of a code's account: the codes it borrowed
   // from, or the codes that borrowed from it, with the sections and the share
   // those are of the borrowing code's sections. A row the figure does not
   // draw, being too small or touching a code the figure leaves out, is grey.
-  function tipTable(caption, rows) {
+  function tipTable(caption, all) {
+    const rows = all.filter((r) => r.sections >= TIP_LEAST);
     const body = rows.length
       ? rows.map((r) => `<tr${r.in_figure ? "" : ' class="viz-tip-faint"'}><td>${esc(r.code)}</td><td class="num">${fmt(r.sections)}</td><td class="num">${share(r.share)}</td></tr>`).join("")
       : `<tr><td class="viz-tip-none" colspan="3">none</td></tr>`;
@@ -533,7 +536,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
       `<div class="viz-tip-title">${esc(d.name)} <span class="viz-tip-muted">${esc(d.code)}${corpus}</span></div>`,
       `<div>${esc(d.category)}${steps} · ${esc(d.region.name)} · ${fmt(d.sections)} sections, ${fmt(d.sections_matched)} matched to an earlier code</div>`,
       `<div class="viz-tip-tables">${tipTable("Borrowed from", d.allSources)}${tipTable("Borrowed by", d.allBorrowers)}</div>`,
-      `<div class="viz-tip-muted">Share: of the borrowing code's sections. Grey: not drawn in the figure. ${hint}.</div>`,
+      `<div class="viz-tip-muted">Borrowings of ${TIP_LEAST} sections or more. Share: of the borrowing code's sections. Grey: not drawn in the figure. ${hint}.</div>`,
     ].join("");
   }
 

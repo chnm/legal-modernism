@@ -18,7 +18,8 @@
 // drafts of New York's Field Code: a Field code, an original borrower (one
 // step), a subsequent borrower (two or more), or a code that did not borrow
 // from one at all. The three codes of Dakota Territory are labelled, as in the
-// figure, by the state that later took them.
+// figure, by the state that later took them, and the English statute the
+// corpus calls GB1852 is labelled UK1852.
 //
 // Only the codes with a borrowing left after the pruning are written, the
 // figure's 186; the rest of the corpus stays out, as it does in the figure.
@@ -79,9 +80,12 @@ const (
 // network: the codes at distance 0.
 var fieldCodes = []string{"NY1848", "NY1849", "NY1850", "NY1851", "NY1853", "NY1864", "NY1873"}
 
-// renames relabel the codes of Dakota Territory by the state that later took
-// them, as the figure does.
-var renames = map[string]string{"DT1862": "ND1862", "DT1868": "ND1868", "DT1887": "SD1887"}
+// figureLabels are the figure's labels where they differ from the corpus's
+// names: the codes of Dakota Territory, by the state that later took them.
+// labels are chambers' labels, which also call the English statute UK1852.
+var figureLabels = map[string]string{"DT1862": "ND1862", "DT1868": "ND1868", "DT1887": "SD1887"}
+
+var labels = map[string]string{"DT1862": "ND1862", "DT1868": "ND1868", "DT1887": "SD1887", "GB1852": "UK1852"}
 
 // The categories the figure colours by.
 const (
@@ -96,7 +100,7 @@ var jurisdictions = map[string]string{
 	"AK": "Alaska", "AL": "Alabama", "AR": "Arkansas", "AZ": "Arizona", "BI": "British India",
 	"CA": "California", "CO": "Colorado", "CT": "Connecticut", "DC": "District of Columbia",
 	"DE": "Delaware", "DT": "Dakota Territory", "FL": "Florida", "FR": "France", "GA": "Georgia",
-	"GB": "England", "HI": "Hawaii", "IA": "Iowa", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana",
+	"GB": "United Kingdom", "HI": "Hawaii", "IA": "Iowa", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana",
 	"KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "LC": "Lower Canada", "MA": "Massachusetts",
 	"MD": "Maryland", "ME": "Maine", "MI": "Michigan", "MN": "Minnesota", "MO": "Missouri",
 	"MS": "Mississippi", "MT": "Montana", "NC": "North Carolina", "ND": "North Dakota",
@@ -117,12 +121,12 @@ var capSlugs = map[string]string{
 	"MA": "mass", "MD": "md", "ME": "me", "MI": "mich", "MN": "minn", "MO": "mo", "MS": "miss",
 	"MT": "mont", "NC": "nc", "ND": "nd", "NE": "neb", "NH": "nh", "NJ": "nj", "NM": "nm", "NV": "nev",
 	"NY": "ny", "OH": "ohio", "OK": "okla", "OR": "or", "PA": "pa", "RI": "ri", "SC": "sc", "SD": "sd",
-	"TN": "tenn", "TX": "tex", "UT": "utah", "VA": "va", "WA": "wash", "WI": "wis", "WV": "w-va", "WY": "wyo",
+	"TN": "tenn", "TX": "tex", "UK": "uk", "UT": "utah", "VA": "va", "WA": "wash", "WI": "wis", "WV": "w-va", "WY": "wyo",
 }
 
 // Code is one node: a code or statute of civil procedure in the corpus.
 type Code struct {
-	Code             string   `json:"code"`              // as the figure labels it, ND1862
+	Code             string   `json:"code"`              // as chambers labels it, ND1862, UK1852
 	CorpusCode       string   `json:"corpus_code"`       // as the corpus names it, DT1862
 	State            string   `json:"state"`             // the label's prefix, ND
 	Jurisdiction     string   `json:"jurisdiction"`      // of the corpus code, Dakota Territory
@@ -372,9 +376,12 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 
 	codes := make([]Code, 0, len(inFigure))
 	for corpusCode := range inFigure {
-		label := corpusCode
-		if r, ok := renames[corpusCode]; ok {
+		label, figureLabel := corpusCode, corpusCode
+		if r, ok := labels[corpusCode]; ok {
 			label = r
+		}
+		if r, ok := figureLabels[corpusCode]; ok {
+			figureLabel = r
 		}
 		c := Code{
 			Code:             label,
@@ -392,7 +399,7 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 			c.Distance = &d
 			c.Category = category(d)
 		}
-		if p, ok := positions[label]; ok {
+		if p, ok := positions[figureLabel]; ok {
 			x, y, lx, ly := p.x, p.y, p.labelX, p.labelY
 			c.FigureX, c.FigureY = &x, &y
 			c.FigureLabelX, c.FigureLabelY = &lx, &ly
@@ -407,10 +414,10 @@ func network(matches []match, positions map[string]figurePlace) ([]Code, []Borro
 	})
 
 	for i := range borrowings {
-		if r, ok := renames[borrowings[i].Borrower]; ok {
+		if r, ok := labels[borrowings[i].Borrower]; ok {
 			borrowings[i].Borrower = r
 		}
-		if r, ok := renames[borrowings[i].BorrowedFrom]; ok {
+		if r, ok := labels[borrowings[i].BorrowedFrom]; ok {
 			borrowings[i].BorrowedFrom = r
 		}
 	}
@@ -719,7 +726,7 @@ var codeLabel = regexp.MustCompile(`^[A-Z]{2}\d{4}$`)
 
 // figurePositions reads the hand-edited SVG of figure 5 and returns each
 // code's node and label in it, keyed by the label the figure shows (ND1862,
-// not DT1862), as fractions of the plotting area's width and height (y
+// not DT1862; GB1852), as fractions of the plotting area's width and height (y
 // downward), taken from the clipPath rectangle ggplot drew the panel in. A
 // node is the centre of its circle; the circles are matched to the labels
 // nearest them, nearest pairs first, so that a label nudged toward a

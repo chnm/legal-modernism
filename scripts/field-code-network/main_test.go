@@ -174,10 +174,12 @@ func TestNetwork(t *testing.T) {
 		borrowed("MI1847", "MI1839", 55, 0.5), unmatched("MI1847", 45),
 		borrowed("XX1900", "CA1851", 2, 0.5), unmatched("XX1900", 98), // below both thresholds: in the corpus, not the figure
 		unmatched("PA1801", 120), // nothing matched at all: not the figure either
+		borrowed("MD1855", "GB1852", 60, 0.4), unmatched("MD1855", 40), unmatched("GB1852", 10),
 	)
 	positions := map[string]figurePlace{
 		"NY1850": {x: 0.5, y: 0.5, labelX: 0.5, labelY: 0.5},
 		"ND1862": {x: 0.25, y: 0.75, labelX: 0.3, labelY: 0.75},
+		"GB1852": {x: 0.9, y: 0.6, labelX: 0.9, labelY: 0.6},
 	}
 	codes, borrowings := network(matches, positions)
 
@@ -187,7 +189,7 @@ func TestNetwork(t *testing.T) {
 	for _, c := range codes {
 		names = append(names, c.Code)
 	}
-	assert.Equal(t, []string{"NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "ND1862"}, names)
+	assert.Equal(t, []string{"NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "UK1852", "MD1855", "ND1862"}, names)
 
 	byCode := map[string]Code{}
 	for _, c := range codes {
@@ -211,6 +213,16 @@ func TestNetwork(t *testing.T) {
 	assert.Equal(t, 0.3, *nd.FigureLabelX)
 	assert.Equal(t, 0.75, *nd.FigureLabelY)
 
+	// The English statute is relabelled, its position looked up under the
+	// figure's label.
+	uk := byCode["UK1852"]
+	assert.Equal(t, "GB1852", uk.CorpusCode)
+	assert.Equal(t, "UK", uk.State)
+	assert.Equal(t, "uk", uk.JurisdictionSlug)
+	assert.Equal(t, "United Kingdom", uk.Jurisdiction)
+	require.NotNil(t, uk.FigureX)
+	assert.Equal(t, 0.9, *uk.FigureX)
+
 	ny := byCode["NY1850"]
 	assert.Equal(t, "New York", ny.Jurisdiction)
 	assert.Equal(t, "ny", ny.JurisdictionSlug)
@@ -229,15 +241,15 @@ func TestNetwork(t *testing.T) {
 	// figure's, and the small one from XX1900, which touches CA1851 but is
 	// not drawn.
 	assert.Equal(t, [][2]string{
-		{"CA1851", "NY1850"}, {"MI1847", "MI1839"}, {"ND1862", "CA1851"}, {"NY1850", "NY1829"}, {"XX1900", "CA1851"},
+		{"CA1851", "NY1850"}, {"MD1855", "UK1852"}, {"MI1847", "MI1839"}, {"ND1862", "CA1851"}, {"NY1850", "NY1829"}, {"XX1900", "CA1851"},
 	}, pairs(borrowings))
 	for _, b := range borrowings {
 		assert.Equal(t, b.Borrower != "XX1900", b.InFigure, "%s from %s", b.Borrower, b.BorrowedFrom)
 	}
-	assert.InDelta(t, 0.7, borrowings[2].ShareOfSections, 1e-9)
-	assert.InDelta(t, 0.5, borrowings[2].MeanSimilarity, 1e-9)
-	assert.Equal(t, 2, borrowings[4].SectionsBorrowed)
-	assert.InDelta(t, 0.02, borrowings[4].ShareOfSections, 1e-9)
+	assert.InDelta(t, 0.7, borrowings[3].ShareOfSections, 1e-9)
+	assert.InDelta(t, 0.5, borrowings[3].MeanSimilarity, 1e-9)
+	assert.Equal(t, 2, borrowings[5].SectionsBorrowed)
+	assert.InDelta(t, 0.02, borrowings[5].ShareOfSections, 1e-9)
 }
 
 func TestYearAndState(t *testing.T) {
