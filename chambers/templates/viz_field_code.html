@@ -1,0 +1,214 @@
+{{define "styles"}}
+        /* Full screen: the network fills the window from below the controls
+           to its bottom edge (the script sets the height), and the source,
+           notes and data table follow below the fold. The SVG is positioned
+           absolutely inside the chart (viz-network-wrap) so that it never
+           grows its own container. */
+        .viz-page .viz-chart { height: 480px; min-height: 480px; }
+        .viz-page .viz-foot { padding-top: 0.25rem; }
+        .viz-page .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
+{{end}}
+
+{{define "content"}}
+    <div class="viz viz-page">
+        <header>
+            <p class="viz-draft">Draft public visualization</p>
+            <h1 class="viz-title" id="viz-title">The migration of the Field Code</h1>
+            <p class="viz-subtitle" id="viz-subtitle" aria-live="polite">Loading the network of borrowings&hellip;</p>
+        </header>
+
+        <form class="viz-controls" id="viz-controls" onsubmit="return false" aria-label="Chart controls">
+            <fieldset class="viz-control" aria-label="Color the codes by">
+                <span class="viz-label">Color by</span>
+                <span class="viz-toggle">
+                    <input type="radio" name="color" id="color-distance" value="distance" checked><label for="color-distance">distance from the Field Code</label>
+                    <input type="radio" name="color" id="color-region" value="region"><label for="color-region">region</label>
+                </span>
+            </fieldset>
+            <div class="viz-control">
+                <label for="code">Trace a code</label>
+                <select id="code" class="viz-select" disabled><option value="">Loading&hellip;</option></select>
+            </div>
+            <span class="viz-control" role="group" aria-label="Zoom">
+                <button type="button" class="viz-button" id="zoom-in" aria-label="Zoom in">+</button>
+                <button type="button" class="viz-button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+            </span>
+            <button type="button" class="viz-button" id="view-reset">Reset view</button>
+        </form>
+
+        <div id="viz-legend"></div>
+        <div class="viz-chart" id="viz-chart">
+            <p class="viz-message">Loading&hellip;</p>
+        </div>
+
+        <footer class="viz-foot">
+            <p class="viz-source"><strong>Source:</strong> Kellen Funk and Lincoln A. Mullen, &ldquo;The Spine of American Law: Digital Text Analysis and U.S. Legal Practice,&rdquo; <em>American Historical Review</em> 123, no. 1 (2018): 132&ndash;164, <a href="https://doi.org/10.1093/ahr/123.1.132">doi:10.1093/ahr/123.1.132</a>, figure 5, and the article's research compendium.</p>
+            <p class="viz-notes"><strong>Notes:</strong>
+                Each node is a code or statute of civil procedure from the article's corpus, labelled by its jurisdiction and the year of its enactment;
+                an arrow runs from the code borrowed from to the code that borrowed, and is wider the more sections it carried. A borrowing counts the
+                sections of the later code whose text most resembles a section of the earlier one: the article split every code into sections, compared
+                them by the five-word phrases they share (minhashing and locality-sensitive hashing, then the Jaccard similarity of the candidates), and
+                matched each section to at most one earlier section, preferring a code of the same state and the nearest year. The figure keeps a borrowing
+                of at least 50 sections or a fifth of the borrowing code's sections, and at most the two largest for each code, dropping the second when it
+                comes from the same state as the first and not from the borrower's own; the 186 codes with a borrowing left are shown, the other 36 of the
+                corpus are not. The nodes and their labels stand where the published figure placed them, which its authors settled by hand after a
+                force-directed layout, stretched by a twelfth to give the labels room, with some forty codes moved a few pixels, or their labels
+                set on the other side of the dot, where labels overlapped on screen. A code is colored by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851,
+                1853, 1864 and 1873) along the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other
+                codes, and a code that did not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did
+                from its 1839 one. The three codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868,
+                SD1887). The colors can instead show each code's region, the regions the project's other charts use, drawn from the Census Bureau's
+                regions and divisions, with New York set apart in the Field codes' red: New York, New England, the Midwest, the South, the Mountain West
+                and the Pacific West, and the United Kingdom for its one statute (UK1852, which the article's corpus calls GB1852). Drag a node to move it, drag the background to pan, and zoom with the + and &minus; buttons (or by pinching on a touch screen; the mouse wheel
+                scrolls the page); Reset view restores the frame. Choosing a
+                code traces its line of descent, the codes it drew on and the codes that drew on it. Hovering a code lists the codes it borrowed from
+                and the codes that borrowed from it, every borrowing of ten sections or more, with the sections and their share of the borrowing
+                code's sections; the rows in grey are the borrowings the figure does not draw, too small for it or with a code it leaves out. The count of
+                sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's total somewhat
+                overstates its sections, and a short statute split badly has very few.
+            </p>
+            {{/* The table of the data stays for screen readers, hidden from view. */}}
+            <div id="viz-table" class="visually-hidden"></div>
+        </footer>
+    </div>
+{{end}}
+
+{{define "scripts"}}
+    <script type="module">
+        import { ensureStyles } from "/static/viz/style.js";
+        import { graph, summarize, network, table, legend } from "/static/viz/field-code.js";
+
+        const API = "/api/viz/field-code";
+        const VERSION = "{{assetVersion}}"; // of the embedded data: a new deploy is a new URL, not a stale copy
+
+        ensureStyles();
+
+        const el = {
+            title: document.getElementById("viz-title"),
+            subtitle: document.getElementById("viz-subtitle"),
+            select: document.getElementById("code"),
+            viewReset: document.getElementById("view-reset"),
+            zoomIn: document.getElementById("zoom-in"),
+            zoomOut: document.getElementById("zoom-out"),
+            controls: document.getElementById("viz-controls"),
+            legend: document.getElementById("viz-legend"),
+            chart: document.getElementById("viz-chart"),
+            table: document.getElementById("viz-table"),
+        };
+
+        const message = (text) => {
+            el.chart.replaceChildren(Object.assign(document.createElement("p"), { className: "viz-message", textContent: text }));
+        };
+
+        async function getJSON(url) {
+            const r = await fetch(url);
+            if (!r.ok) throw new Error(`${await r.text()} (${r.status})`.trim());
+            return r.json();
+        }
+
+        // State: the selected code and the coloring, mirrored into the query
+        // string (`code`, `color=region`) so a view can be shared.
+        let g = null;
+        let net = null;
+        const state = { selected: null, color: "distance" };
+
+        function readURL() {
+            const q = new URLSearchParams(location.search);
+            state.selected = q.get("code") || null;
+            state.color = q.get("color") === "region" ? "region" : "distance";
+        }
+
+        function writeURL() {
+            const q = new URLSearchParams();
+            if (state.selected) q.set("code", state.selected);
+            if (state.color === "region") q.set("color", "region");
+            const qs = q.toString();
+            history.replaceState(null, "", qs ? `${location.pathname}?${qs}` : location.pathname);
+        }
+
+        function render() {
+            const s = summarize(g, state);
+            if (state.selected && !s.selected) state.selected = null; // not a code in the data
+            el.title.textContent = s.title;
+            el.subtitle.innerHTML = s.subtitle;
+            document.title = `${s.title} — Chambers`;
+            net.update(s);
+            el.legend.replaceChildren(legend(s));
+            el.table.replaceChildren(table(s));
+            el.select.value = state.selected || "";
+            el.controls.elements.color.value = state.color;
+            writeURL();
+            sizeChart();
+        }
+
+        // sizeChart gives the chart the window from its top edge down, or as
+        // much of it as the figure fills at the chart's width, so the network
+        // has the first screen and the notes follow close below it. The
+        // subtitle's length moves the top edge, so render calls it too.
+        function sizeChart() {
+            const top = el.chart.getBoundingClientRect().top + window.scrollY;
+            const available = window.innerHeight - top - 12;
+            const wanted = net ? el.chart.clientWidth / net.aspect() + 24 : available;
+            el.chart.style.height = `${Math.max(480, Math.min(available, wanted))}px`;
+        }
+        window.addEventListener("resize", sizeChart);
+
+        // Resize: give the network the chart's new size once the window settles.
+        let resizeTimer = null;
+        new ResizeObserver(() => {
+            if (!net) return;
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => net.resize(el.chart.clientWidth, el.chart.clientHeight), 80);
+        }).observe(el.chart);
+
+        // Controls.
+        el.select.addEventListener("change", () => {
+            state.selected = el.select.value || null;
+            render();
+            if (state.selected) net.reveal(state.selected);
+        });
+        for (const input of el.controls.elements.color) {
+            input.addEventListener("change", () => { state.color = el.controls.elements.color.value; render(); });
+        }
+        el.viewReset.addEventListener("click", () => net.fit());
+        el.zoomIn.addEventListener("click", () => net.zoomBy(1.4));
+        el.zoomOut.addEventListener("click", () => net.zoomBy(1 / 1.4));
+
+        // Start: fetch the codes and the borrowings, lay the figure out, then
+        // show the view the URL asks for.
+        (async () => {
+            let codes, borrowings;
+            try {
+                [codes, borrowings] = await Promise.all([getJSON(`${API}/codes?v=${VERSION}`), getJSON(`${API}/borrowings?v=${VERSION}`)]);
+            } catch (err) {
+                el.subtitle.textContent = "The network could not be loaded.";
+                message(err.message);
+                return;
+            }
+            g = graph(codes, borrowings);
+            readURL();
+
+            el.select.replaceChildren(
+                Object.assign(document.createElement("option"), { value: "", textContent: "None" }),
+                ...[...g.nodes].sort((a, b) => a.jurisdiction.localeCompare(b.jurisdiction) || a.year - b.year || a.code.localeCompare(b.code)).map((n) => {
+                    const o = document.createElement("option");
+                    o.value = n.code;
+                    o.textContent = n.name;
+                    return o;
+                }),
+            );
+            el.select.disabled = false;
+
+            el.chart.replaceChildren();
+            sizeChart();
+            net = network(g, {
+                width: el.chart.clientWidth || 1200,
+                height: el.chart.clientHeight || 700,
+                onSelect: (code) => { state.selected = code; render(); },
+            });
+            el.chart.replaceChildren(net.node);
+            render();
+            if (state.selected) net.reveal(state.selected);
+        })();
+    </script>
+{{end}}

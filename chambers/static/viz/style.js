@@ -23,8 +23,11 @@ const FONTS_URL =
 // with one colour of observable10, the two Northeast groups the scheme's two
 // blues. The federal courts and the United Kingdom, outside the regions and
 // often the longest bars, take the scheme's two most vivid colours, yellow
-// and red-orange; the territories, seldom present, the grey.
+// and red-orange; the territories, seldom present, the grey. A chart that
+// sets New York apart from the Mid-Atlantic, as the Field Code network does,
+// gives it the Field code's red, since the Field codes are New York's.
 export const groupColors = {
+  "new-york": "#e41a1c", // schemeSet1 red, the Field code's (borrowingColors)
   "new-england": "#4269d0", // observable10 blue
   "mid-atlantic": "#97bbf5", // observable10 light blue
   midwest: "#3ca951", // observable10 green
@@ -34,6 +37,19 @@ export const groupColors = {
   federal: "#efb118", // observable10 yellow
   uk: "#ff725c", // observable10 red-orange
   territories: "#9498a0", // observable10 grey
+};
+
+// The codes of the Field Code network (field-code.js) are coloured by their
+// distance, along the borrowings, from a draft of New York's Field Code, in
+// the colours the article's figure 5 used, ColorBrewer's Set1 (d3.schemeSet1):
+// red for the Field codes, blue for the codes that borrowed from one directly,
+// green for those that borrowed through another code, purple for those that
+// took nothing from one. In legend order.
+export const borrowingColors = {
+  "Field code": "#e41a1c",
+  "Original borrower": "#377eb8",
+  "Subsequent borrower": "#4daf4a",
+  "Did not borrow": "#984ea3",
 };
 
 export const colors = {
@@ -53,6 +69,7 @@ export const sizes = {
   body: 15,
   axis: 12,
   label: 12,
+  node: 14, // a node's label in a network, centred on its dot
   note: 13,
 };
 
@@ -105,6 +122,27 @@ const CSS = `
 .viz .viz-chart svg { display: block; }
 .viz .viz-chart figure { margin: 0; }
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }
+.viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.15rem; }
+.viz .viz-swatch { display: inline-flex; align-items: center; gap: 0.4rem; }
+.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.viz .viz-network-wrap { position: absolute; inset: 0; overflow: hidden; }
+.viz .viz-network { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.viz .viz-network.grabbing, .viz .viz-network.grabbing .node { cursor: grabbing; }
+.viz .viz-network .node { cursor: pointer; outline: none; }
+.viz .viz-network .node:focus-visible circle { stroke: ${colors.accent}; stroke-width: 3px; }
+.viz .viz-tooltip { position: absolute; z-index: 2; pointer-events: none; max-width: 26rem; padding: 0.45rem 0.65rem; background: ${colors.surface}; border: 1px solid ${colors.faint}; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); font-size: ${sizes.note}px; line-height: 1.4; color: ${colors.ink}; overflow: hidden; }
+.viz .viz-tooltip[hidden] { display: none; }
+.viz .viz-tooltip .viz-tip-title { font-weight: 600; }
+.viz .viz-tooltip .viz-tip-muted { color: ${colors.muted}; font-weight: 400; }
+.viz .viz-tip-tables { display: flex; gap: 1rem; align-items: flex-start; margin-top: 0.35rem; }
+.viz .viz-tip-tables table { border-collapse: collapse; font-size: ${sizes.label}px; line-height: 1.35; }
+.viz .viz-tip-tables caption { caption-side: top; text-align: left; font-weight: 600; white-space: nowrap; padding: 0 0 0.1rem; }
+.viz .viz-tip-tables th, .viz .viz-tip-tables td { padding: 0 0.5rem 0 0; text-align: left; white-space: nowrap; vertical-align: baseline; }
+.viz .viz-tip-tables th:last-child, .viz .viz-tip-tables td:last-child { padding-right: 0; }
+.viz .viz-tip-tables th { color: ${colors.muted}; font-weight: 400; }
+.viz .viz-tip-tables th.num, .viz .viz-tip-tables td.num { text-align: right; font-family: ${fonts.mono}; font-variant-numeric: tabular-nums; }
+.viz .viz-tip-tables tr.viz-tip-faint td { color: ${colors.muted}; }
+.viz .viz-tip-tables td.viz-tip-none { color: ${colors.muted}; font-style: italic; }
 .viz .viz-table { font-size: ${sizes.note}px; border-collapse: collapse; margin-top: 0.5rem; }
 .viz .viz-table th, .viz .viz-table td { padding: 0.15rem 1rem 0.15rem 0; text-align: left; border-bottom: 1px solid ${colors.grid}; }
 .viz .viz-table td.num, .viz .viz-table th.num { text-align: right; font-family: ${fonts.mono}; font-variant-numeric: tabular-nums; }

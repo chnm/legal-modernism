@@ -14,7 +14,8 @@ import (
 // at /api/viz/<name> that serves a plain JSON array the chart module under
 // static/viz/ draws. The handlers read nothing but the API's view, so the page
 // renders without the database and the script shows the 503 when the view is
-// not populated yet.
+// not populated yet. A visualization whose data is not in the database yet
+// serves it from the embedded files of data/ instead (data.go).
 
 // vizPage is the data of a visualization page.
 type vizPage struct {
@@ -216,4 +217,16 @@ func (s *server) handleVizJurisdictionTotalsAPI(w http.ResponseWriter, r *http.R
 		return
 	}
 	writeJSON(w, data)
+}
+
+// handleVizFieldCode renders the Field Code network (issue #117): figure 5 of
+// Funk and Mullen, "The Spine of American Law" (AHR 2018), the codes of civil
+// procedure of the nineteenth-century United States connected by the sections
+// they borrowed from one another, as an interactive force layout. The page is
+// a shell; the script fetches the two arrays embedded from data/, which
+// scripts/field-code-network derives from the article's research compendium.
+func (s *server) handleVizFieldCode(w http.ResponseWriter, r *http.Request) {
+	s.render(w, r, "viz_field_code.html", http.StatusOK, vizPage{Page{
+		Title: "The migration of the Field Code", Section: "viz",
+	}})
 }
