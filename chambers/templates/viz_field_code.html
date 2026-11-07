@@ -47,22 +47,24 @@
         <footer class="viz-foot">
             <p class="viz-source"><strong>Source:</strong> Kellen Funk and Lincoln A. Mullen, &ldquo;The Spine of American Law: Digital Text Analysis and U.S. Legal Practice,&rdquo; <em>American Historical Review</em> 123, no. 1 (2018): 132&ndash;164, <a href="https://doi.org/10.1093/ahr/123.1.132">doi:10.1093/ahr/123.1.132</a>, figure 5, and the article's research compendium (the best matches between sections, as of February 2018).</p>
             <p class="viz-notes"><strong>Notes:</strong>
-                Each node is a code or statute of civil procedure from the article's corpus of 222, labelled by its jurisdiction and the year of its enactment;
+                Each node is a code or statute of civil procedure from the article's corpus, labelled by its jurisdiction and the year of its enactment;
                 an arrow runs from the code borrowed from to the code that borrowed, and is wider the more sections it carried. A borrowing counts the
                 sections of the later code whose text most resembles a section of the earlier one: the article split every code into sections, compared
                 them by the five-word phrases they share (minhashing and locality-sensitive hashing, then the Jaccard similarity of the candidates), and
-                matched each section to at most one earlier section, preferring a code of the same state and the nearest year. The network keeps a borrowing
+                matched each section to at most one earlier section, preferring a code of the same state and the nearest year. The figure keeps a borrowing
                 of at least 50 sections or a fifth of the borrowing code's sections, and at most the two largest for each code, dropping the second when it
-                comes from the same state as the first and not from the borrower's own; the 186 codes with a borrowing left are shown, the other 36 are not.
-                A code is coloured by its distance from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851, 1853, 1864 and 1873) along
-                the arrows: an original borrower took text from a draft directly, a subsequent borrower through one or more other codes, and a code that did
-                not borrow owes nothing to one, though it may have borrowed from another code, as Michigan's 1847 statute did from its 1839 one. The three
-                codes of Dakota Territory are labelled, as in the article, by the state that later took them (ND1862, ND1868, SD1887). The layout is a force
-                simulation, not the figure's hand-finished arrangement: a node's place carries no meaning beyond its connections, and the layout is the same on every
-                visit. Drag a node to move it, scroll to zoom and drag the background to pan. Choosing a year shows the codes enacted by then, in place;
-                choosing a code traces its line of descent, the codes it drew on and the codes that drew on it, as far as the year allows, and hovering a code
-                names its sources and borrowers. The count of sections is of every chunk the automatic splitting produced, headings and tables of contents
-                among them, so a code's total somewhat overstates its sections, and a short statute split badly has very few.
+                comes from the same state as the first and not from the borrower's own. The 186 codes with a borrowing left are the figure's, and stand here
+                where the published figure placed them, which its authors settled by hand after a force-directed layout. The 35 codes of the corpus that
+                the figure left out, having no borrowing that large in either direction, are the hollow rings in the block at the right, by year
+                (one more code of the corpus, Massachusetts 1902, has no entry in the compendium's table of matches). A code is coloured by its distance
+                from one of the seven drafts of New York's Field Code (1848, 1849, 1850, 1851, 1853, 1864 and 1873) along the arrows: an original borrower
+                took text from a draft directly, a subsequent borrower through one or more other codes, and a code that did not borrow owes nothing to one,
+                though it may have borrowed from another code, as Michigan's 1847 statute did from its 1839 one. The three codes of Dakota Territory are
+                labelled, as in the article, by the state that later took them (ND1862, ND1868, SD1887). Drag a node to move it, scroll to zoom and drag
+                the background to pan; Reset view restores the frame. Choosing a year shows the codes enacted by then, in place; choosing a code traces its
+                line of descent, the codes it drew on and the codes that drew on it, as far as the year allows, and hovering a code names its sources and
+                borrowers. The count of sections is of every chunk the automatic splitting produced, headings and tables of contents among them, so a code's
+                total somewhat overstates its sections, and a short statute split badly has very few.
             </p>
             <details class="viz-data">
                 <summary>Show the data</summary>
@@ -109,8 +111,8 @@
         // State: the controls, mirrored into the query string so a view can be
         // shared: `code`, the code whose lineage is traced; `year`, the last
         // year shown; `show=network` to hide the codes outside the Field
-        // Code's network. The layout is computed once; the state only shows
-        // and hides nodes in place.
+        // Code's network. The layout is fixed; the state only shows and hides
+        // nodes in place.
         let g = null;
         let net = null;
         let years = []; // the distinct years of enactment, for stepping
@@ -214,8 +216,8 @@
         }
         el.viewReset.addEventListener("click", () => net.fit());
 
-        // Start: fetch the codes and the borrowings, lay the network out once,
-        // then show the view the URL asks for.
+        // Start: fetch the codes and the borrowings, lay the network out, then
+        // show the view the URL asks for.
         (async () => {
             let codes, borrowings;
             try {
@@ -231,7 +233,7 @@
 
             el.select.replaceChildren(
                 Object.assign(document.createElement("option"), { value: "", textContent: "None" }),
-                ...[...g.nodes].sort((a, b) => a.jurisdiction.localeCompare(b.jurisdiction) || a.year - b.year).map((n) => {
+                ...[...g.nodes].sort((a, b) => a.jurisdiction.localeCompare(b.jurisdiction) || a.year - b.year || a.code.localeCompare(b.code)).map((n) => {
                     const o = document.createElement("option");
                     o.value = n.code;
                     o.textContent = `${n.name} (${n.code})`;

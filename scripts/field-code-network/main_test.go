@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -170,16 +171,22 @@ func TestNetwork(t *testing.T) {
 		borrowed("CA1851", "NY1850", 80, 0.5), unmatched("CA1851", 20),
 		borrowed("DT1862", "CA1851", 70, 0.5), unmatched("DT1862", 30),
 		borrowed("MI1847", "MI1839", 55, 0.5), unmatched("MI1847", 45),
-		borrowed("XX1900", "CA1851", 2, 0.5), unmatched("XX1900", 98), // below both thresholds: not in the network
+		borrowed("XX1900", "CA1851", 2, 0.5), unmatched("XX1900", 98), // below both thresholds: in the corpus, not the figure
+		unmatched("PA1801", 120), // nothing matched at all
 	)
-	codes, borrowings := network(matches)
+	positions := map[string]figurePlace{
+		"NY1850": {x: 0.5, y: 0.5, labelX: 0.5, labelY: 0.5},
+		"ND1862": {x: 0.25, y: 0.75, labelX: 0.3, labelY: 0.75},
+	}
+	codes, borrowings := network(matches, positions)
 
-	// Sorted by year, then by name; the Dakota code relabelled by its state.
+	// Every code of the corpus, sorted by year, then by name; the Dakota
+	// code relabelled by its state.
 	var names []string
 	for _, c := range codes {
 		names = append(names, c.Code)
 	}
-	assert.Equal(t, []string{"NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "ND1862"}, names)
+	assert.Equal(t, []string{"PA1801", "NY1829", "MI1839", "MI1847", "NY1850", "CA1851", "ND1862", "XX1900"}, names)
 
 	byCode := map[string]Code{}
 	for _, c := range codes {
@@ -195,17 +202,36 @@ func TestNetwork(t *testing.T) {
 	require.NotNil(t, nd.Distance)
 	assert.Equal(t, 2, *nd.Distance)
 	assert.Equal(t, categorySubsequent, nd.Category)
+	assert.True(t, nd.InFigure)
+	require.NotNil(t, nd.FigureX)
+	assert.Equal(t, 0.25, *nd.FigureX)
+	assert.Equal(t, 0.75, *nd.FigureY)
+	require.NotNil(t, nd.FigureLabelX)
+	assert.Equal(t, 0.3, *nd.FigureLabelX)
+	assert.Equal(t, 0.75, *nd.FigureLabelY)
 
 	ny := byCode["NY1850"]
 	assert.Equal(t, "New York", ny.Jurisdiction)
 	require.NotNil(t, ny.Distance)
 	assert.Equal(t, 0, *ny.Distance)
 	assert.Equal(t, categoryField, ny.Category)
+	assert.Equal(t, 0.5, *ny.FigureX)
 
 	// A source with no path to a Field code did not borrow, and has no distance.
 	assert.Nil(t, byCode["NY1829"].Distance)
 	assert.Equal(t, categoryNone, byCode["NY1829"].Category)
+	assert.True(t, byCode["NY1829"].InFigure)
+	assert.Nil(t, byCode["NY1829"].FigureX, "no position given for it")
 	assert.Equal(t, categoryNone, byCode["MI1847"].Category)
+
+	// The codes with no borrowing left are in the corpus but not the figure.
+	for _, code := range []string{"XX1900", "PA1801"} {
+		assert.False(t, byCode[code].InFigure, code)
+		assert.Equal(t, categoryNone, byCode[code].Category, code)
+		assert.Nil(t, byCode[code].FigureX, code)
+	}
+	assert.Equal(t, 0, byCode["PA1801"].SectionsMatched)
+	assert.Equal(t, "Pennsylvania", byCode["PA1801"].Jurisdiction)
 
 	// The borrowings carry the new label too, sorted by borrower.
 	assert.Equal(t, [][2]string{
@@ -230,4 +256,65 @@ func TestYearAndState(t *testing.T) {
 		assert.Equal(t, tt.year, year(tt.code), tt.code)
 		assert.Equal(t, tt.state, state(tt.code), tt.code)
 	}
+}
+
+func TestParseTransform(t *testing.T) {
+	tests := []struct {
+		in   string
+		x, y float64 // where (10, 20) lands
+	}{
+		{"", 10, 20},
+		{"translate(5,-2)", 15, 18},
+		{"translate(5)", 15, 20},
+		{"scale(2)", 20, 40},
+		{"matrix(1,0,0,1,3,4)", 13, 24},
+		{"matrix(2,0,0,0.5,0,0)", 20, 10},
+		{"translate(100,0) scale(2)", 120, 40}, // scaled first, then moved
+	}
+	for _, tt := range tests {
+		tr, err := parseTransform(tt.in)
+		require.NoError(t, err, tt.in)
+		x, y := tr.apply(10, 20)
+		assert.InDelta(t, tt.x, x, 1e-9, tt.in)
+		assert.InDelta(t, tt.y, y, 1e-9, tt.in)
+	}
+	_, err := parseTransform("rotate(45)")
+	assert.Error(t, err)
+}
+
+// A figure in miniature: a panel clipped to a 200 by 100 rectangle at (10,
+// 50), two codes whose labels were nudged by hand (so the text is not centred
+// on its circle), one label placed closer to the other code's circle than its
+// own, a legend circle below the panel, and an edge drawn under a matrix
+// transform, which must not break the parse.
+const testSVG = `<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180">
+  <defs><clipPath id="c"><rect x="10" y="50" width="200" height="100"/></clipPath></defs>
+  <polyline points="60,100 160,100" transform="matrix(1,0,0,1,0,0)"/>
+  <circle cx="60" cy="100" r="5"/>
+  <circle cx="160" cy="100" r="5"/>
+  <g transform="translate(12,0)">
+    <text x="35" y="105" textLength="50px">NY1850</text>
+  </g>
+  <g transform="translate(-30,0)">
+    <text x="135" y="105" textLength="50px">CA1851</text>
+  </g>
+  <text x="150" y="110" textLength="50px">not a code</text>
+  <circle cx="60" cy="170" r="5"/>
+  <text x="70" y="172">0</text>
+</svg>`
+
+func TestFigurePositions(t *testing.T) {
+	got, err := figurePositions(strings.NewReader(testSVG))
+	require.NoError(t, err)
+	// NY1850's label centre is at (72, 100): its own circle at 60 is 12 away,
+	// CA1851's at 160 is 88 away. CA1851's label centre is at (130, 100): its
+	// own circle is 30 away and NY1850's 70. Each gets its own, as fractions
+	// of the 200 by 100 panel at (10, 50), and keeps its label's own place.
+	require.Len(t, got, 2)
+	assert.Equal(t, figurePlace{x: 0.25, y: 0.5, labelX: 0.31, labelY: 0.5}, got["NY1850"])
+	assert.Equal(t, figurePlace{x: 0.75, y: 0.5, labelX: 0.6, labelY: 0.5}, got["CA1851"])
+
+	_, err = figurePositions(strings.NewReader(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><text x="1" y="1">NY1850</text></svg>`))
+	assert.Error(t, err, "a label with no circle near it")
 }

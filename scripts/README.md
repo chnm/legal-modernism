@@ -5,10 +5,12 @@ One-off R, Python, and SQL scripts for data manipulation and import, and
 live here too: `sidecorpus-import/`, and `field-code-network/`, which derives
 the data of chambers' Field Code network (`/viz/field-code`, issue #117) from
 the research compendium of Funk and Mullen, "The Spine of American Law" (AHR
-2018): `go run ./scripts/field-code-network/ --matches best_matches.csv --out
-chambers/data` reduces the compendium's best section matches to the codes and
-borrowings of the article's figure 5, as its own `network-graphs.R` did; its
-doc comment says how.
+2018): `go run ./scripts/field-code-network/ --matches best_matches.csv
+--figure figure-05-handedited-2.svg --out chambers/data` reduces the
+compendium's best section matches to the codes and borrowings of the article's
+figure 5, as its own `network-graphs.R` did, and reads each code's position
+from the hand-edited SVG of the figure in the article's repository; its doc
+comment says how.
 
 ## pipeline.sh: the citation rebuild in one command
 

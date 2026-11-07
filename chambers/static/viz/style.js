@@ -66,6 +66,7 @@ export const sizes = {
   body: 15,
   axis: 12,
   label: 12,
+  node: 14, // a node's label in a network, centred on its dot
   note: 13,
 };
 
@@ -131,7 +132,8 @@ const CSS = `
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }
 .viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.35rem; }
 .viz .viz-swatch { display: inline-flex; align-items: center; gap: 0.4rem; }
-.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; box-sizing: border-box; }
+.viz .viz-swatch-dot.hollow { background: transparent !important; border: 2px solid; }
 .viz .viz-network-wrap { position: absolute; inset: 0; overflow: hidden; }
 .viz .viz-network { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 .viz .viz-network.grabbing, .viz .viz-network.grabbing .node { cursor: grabbing; }

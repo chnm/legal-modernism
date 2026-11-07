@@ -196,4 +196,6 @@ kept so that the chart and the figure read as one; they colour categories
 of a code's descent, which no other chart shows, and sit near the
 `observable10` blue, green and purple of New England, the Midwest and the
 Mountain West, so a chart that shows both regions and descent will need one
-of the two recoloured. In `style.js` they are `borrowingColors`.
+of the two recoloured. In `style.js` they are `borrowingColors`. A code the
+figure left out is a hollow ring in the purple of "Did not borrow": a
+distinction by shape, not by a fifth colour.
