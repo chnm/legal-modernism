@@ -122,7 +122,7 @@ const CSS = `
 .viz .viz-chart svg { display: block; }
 .viz .viz-chart figure { margin: 0; }
 .viz .viz-message { color: ${colors.muted}; font-size: ${sizes.body}px; padding: 2rem 0; }
-.viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.35rem; }
+.viz .viz-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: ${sizes.label}px; margin: 0 0 0.15rem; }
 .viz .viz-swatch { display: inline-flex; align-items: center; gap: 0.4rem; }
 .viz .viz-swatch-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
 .viz .viz-network-wrap { position: absolute; inset: 0; overflow: hidden; }

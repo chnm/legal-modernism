@@ -237,7 +237,8 @@ const RADIUS = 9;
 const LABEL_HALF_W = 32; // half a label's width, with a little room
 const LABEL_H = 12; // half its height
 const MIN_SCALE = 0.75; // the frame never shrinks the figure below this: labels must stay legible
-const FIT_MARGIN = 0.9; // the figure fills this much of the frame, so it does not press against the edges
+const FIT_MARGIN = 0.95; // the figure fills this much of the frame, so it does not press against the edges
+const FIT_PAD = 8; // and keeps this many pixels from them besides
 const EDGE = colors.muted;
 const EDGE_OPACITY = 0.5;
 const FADE_NODE = 0.2;
@@ -286,8 +287,8 @@ export function legend(summary) {
 // `node`, the element to put on the page; `update(summary)`, which colors
 // the codes as the summary says and traces the selected code's lineage;
 // `resize(width, height)`; `fit()`, which frames the figure; `zoomBy(k)`,
-// which zooms about the centre; and `reveal(code)`, which pans to a code
-// outside the frame. `onSelect(code | null)` is called when the reader
+// which zooms about the centre; `reveal(code)`, which pans to a code outside
+// the frame; and `aspect()`, the figure's width over its height. `onSelect(code | null)` is called when the reader
 // clicks a node, presses Enter or Space on one, presses Escape, or clicks the
 // background. The figure pans by dragging its background and zooms by the
 // page's buttons, or by pinching on a touch screen; the mouse wheel is left
@@ -395,18 +396,26 @@ export function network(g, { width, height, onSelect = () => {} }) {
     target.call(zoom.scaleBy, k);
   }
 
+  // bounds is the box the figure's dots and labels occupy, in layout units.
+  function bounds() {
+    const [x0, x1] = d3.extent(nodes, (d) => d.x);
+    const [y0, y1] = d3.extent(nodes, (d) => d.y);
+    return { left: x0 - LABEL_HALF_W, right: x1 + LABEL_HALF_W, top: y0 - LABEL_H, bottom: y1 + LABEL_H };
+  }
+
+  // aspect is the figure's width over its height, for a page that wants to
+  // give the chart no more height than the figure fills.
+  function aspect() {
+    const b = bounds();
+    return (b.right - b.left) / (b.bottom - b.top);
+  }
+
   // fit frames the whole figure, never shrinking it below MIN_SCALE: a
   // figure that overflows the frame and can be panned beats one whose labels
   // cannot be read.
   function fit() {
-    const [x0, x1] = d3.extent(nodes, (d) => d.x);
-    const [y0, y1] = d3.extent(nodes, (d) => d.y);
-    const left = x0 - LABEL_HALF_W;
-    const right = x1 + LABEL_HALF_W;
-    const top = y0 - LABEL_H;
-    const bottom = y1 + LABEL_H;
-    const pad = 16;
-    const k = Math.max(MIN_SCALE, FIT_MARGIN * Math.min(1.5, (W - 2 * pad) / (right - left), (H - 2 * pad) / (bottom - top)));
+    const { left, right, top, bottom } = bounds();
+    const k = Math.max(MIN_SCALE, FIT_MARGIN * Math.min(1.5, (W - 2 * FIT_PAD) / (right - left), (H - 2 * FIT_PAD) / (bottom - top)));
     const t = d3.zoomIdentity.translate(W / 2 - (k * (left + right)) / 2, H / 2 - (k * (top + bottom)) / 2).scale(k);
     svg.call(zoom.transform, t);
   }
@@ -557,7 +566,7 @@ export function network(g, { width, height, onSelect = () => {} }) {
   place();
   restyle();
   resize(width, height);
-  return { node: wrapper, update, resize, fit, zoomBy, reveal };
+  return { node: wrapper, update, resize, fit, zoomBy, reveal, aspect };
 }
 
 // table lays the codes out as an HTML table, the accessible form of the

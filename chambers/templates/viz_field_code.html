@@ -5,7 +5,7 @@
            absolutely inside the chart (viz-network-wrap) so that it never
            grows its own container. */
         .viz-page .viz-chart { height: 480px; min-height: 480px; }
-        .viz-page .viz-foot { padding-top: 0.75rem; }
+        .viz-page .viz-foot { padding-top: 0.25rem; }
         .viz-page .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
 {{end}}
 
@@ -141,12 +141,15 @@
             sizeChart();
         }
 
-        // sizeChart gives the chart the window from its top edge down, so the
-        // network has the first screen and the notes follow below the fold.
-        // The subtitle's length moves the top edge, so render calls it too.
+        // sizeChart gives the chart the window from its top edge down, or as
+        // much of it as the figure fills at the chart's width, so the network
+        // has the first screen and the notes follow close below it. The
+        // subtitle's length moves the top edge, so render calls it too.
         function sizeChart() {
             const top = el.chart.getBoundingClientRect().top + window.scrollY;
-            el.chart.style.height = `${Math.max(480, window.innerHeight - top - 12)}px`;
+            const available = window.innerHeight - top - 12;
+            const wanted = net ? el.chart.clientWidth / net.aspect() + 24 : available;
+            el.chart.style.height = `${Math.max(480, Math.min(available, wanted))}px`;
         }
         window.addEventListener("resize", sizeChart);
 
