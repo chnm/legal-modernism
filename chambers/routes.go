@@ -63,7 +63,7 @@ func (s *server) routes() http.Handler {
 	if err != nil {
 		panic("embedded static files: " + err.Error())
 	}
-	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.FS(staticSub))))
+	mux.Handle("GET /static/", http.StripPrefix("/static/", withETags(http.FileServer(http.FS(staticSub)), staticSub)))
 
 	// The routes of the app before the redesign.
 	for path := range legacyRoutes {

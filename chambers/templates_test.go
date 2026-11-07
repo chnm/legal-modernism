@@ -77,6 +77,7 @@ func TestRenderPages(t *testing.T) {
 	t.Run("viz field code", func(t *testing.T) {
 		out := render(t, "viz_field_code.html", vizPage{Page{Title: "The migration of the Field Code", Section: "viz"}})
 		require.Contains(t, out, `const API = "/api/viz/field-code"`)
+		require.Contains(t, out, `const VERSION = "`+assetVersion+`"`)
 		require.Contains(t, out, `from "/static/viz/field-code.js"`)
 		require.Contains(t, out, `from "/static/viz/style.js"`)
 		require.Contains(t, out, `class="viz-source"`)

@@ -78,6 +78,7 @@
         import { graph, summarize, network, table, legend } from "/static/viz/field-code.js";
 
         const API = "/api/viz/field-code";
+        const VERSION = "{{assetVersion}}"; // of the embedded data: a new deploy is a new URL, not a stale copy
 
         ensureStyles();
 
@@ -170,7 +171,7 @@
         (async () => {
             let codes, borrowings;
             try {
-                [codes, borrowings] = await Promise.all([getJSON(`${API}/codes`), getJSON(`${API}/borrowings`)]);
+                [codes, borrowings] = await Promise.all([getJSON(`${API}/codes?v=${VERSION}`), getJSON(`${API}/borrowings?v=${VERSION}`)]);
             } catch (err) {
                 el.subtitle.textContent = "The network could not be loaded.";
                 message(err.message);

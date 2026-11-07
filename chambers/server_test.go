@@ -30,6 +30,21 @@ func TestRoutes(t *testing.T) {
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/jurisdictions.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/census.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/field-code.js").StatusCode)
+
+	// Static files carry an ETag that a conditional request matches, and ask
+	// to be revalidated.
+	static := get(t, "/static/viz/style.js")
+	require.Equal(t, http.StatusOK, static.StatusCode)
+	require.NotEmpty(t, static.Header.Get("ETag"))
+	require.Equal(t, "no-cache", static.Header.Get("Cache-Control"))
+	req, err := http.NewRequest(http.MethodGet, srv.URL+"/static/viz/style.js", nil)
+	require.NoError(t, err)
+	req.Header.Set("If-None-Match", static.Header.Get("ETag"))
+	cached, err := client.Do(req)
+	require.NoError(t, err)
+	cached.Body.Close()
+	require.Equal(t, http.StatusNotModified, cached.StatusCode)
+	require.Len(t, assetVersion, 16)
 	require.Equal(t, http.StatusNotFound, get(t, "/nope").StatusCode)
 	require.Equal(t, http.StatusGone, get(t, "/api/page-text?psmid=1&pageid=2").StatusCode)
 
@@ -63,7 +78,6 @@ func TestRoutes(t *testing.T) {
 	}
 
 	resp := get(t, "/linking/cap/cases?id=+1343497")
-	var err error
 	require.Equal(t, http.StatusSeeOther, resp.StatusCode)
 	require.Equal(t, "/linking/cap/cases/1343497", resp.Header.Get("Location"))
 
