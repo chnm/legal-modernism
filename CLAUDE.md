@@ -150,7 +150,7 @@ The rules for working with Git and GitHub are the same in all my repositories an
 
 This section holds only the facts about this repository.
 
-- **Project board:** <https://github.com/orgs/chnm/projects/21> (owner `chnm`, project number `21`). Its `Status` columns are `Triage`, `TODO`, `In progress`, `To review`, and `Done`. Add each issue you open with `gh project item-add 21 --owner chnm --url <issue url>`; adding one that is already there is harmless.
+- **Project board:** <https://github.com/orgs/chnm/projects/21> (owner `chnm`, project number `21`). Its `Status` columns are `Triage`, `TODO`, `In progress`, `To review`, and `Done`. Issues opened in this repository are added to the board automatically, in `Triage`, so there is no need to run `gh project item-add`. Don't move anything into `To review`: that column is for the project's owners to mark what they will discuss in person. An issue stays in `In progress` while its pull request is open.
 - **Reviews and merging:** a ruleset on `main` requires an approving review. Claude's pull requests are opened by `lmullen-agent`, so `lmullen` can approve them. Pull requests are squash-merged.
 - **Database commands on a branch:** when the user has to run a database command for a branch, give the command that puts them in the branch's worktree first (see Claude database access).
 
