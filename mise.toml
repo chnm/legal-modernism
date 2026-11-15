@@ -1,0 +1,13 @@
+# Tools for working on this repository, installed by `mise install`
+# (https://mise.jdx.dev). The Docker sandbox for this project installs them
+# from here too.
+#
+# psql and pg_dump are not here: mise can only build PostgreSQL from source,
+# so install the client from your system's package manager.
+[tools]
+# The Go programs. go.mod sets the minimum language version.
+go = "1.27"
+# Database migrations (`make migrate`, `make rollback`, ...).
+dbmate = "2.38.1"
+# The website in website/. Keep in step with website/Dockerfile.
+hugo-extended = "0.161.1"
