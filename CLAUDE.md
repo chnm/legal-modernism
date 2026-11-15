@@ -118,7 +118,7 @@ The CAP corpus (issue #74) runs through the same script with `--corpus cap`: `pr
 
 - **Never use `LAW_DBSTR`.** When connecting to the database, always use the `LAW_CLAUDE` environment variable, which connects with a read-only user.
 - **Read-only access only.** Only run `SELECT` queries. Never run `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `TRUNCATE`, `CREATE`, or any other command that writes to or modifies the database.
-- **Commands for the user on a branch.** When you need the user to run a database command for work on a branch (`make db-up`, `make db-schema`, `make db-stubs`, `make db-maintenance`, a `TRUNCATE`, `scripts/pipeline.sh`, …), first give the command that puts them in that branch's worktree, e.g. `cd .worktrees/<branch-name>` from the project root, and only then the database command, so it runs against the branch's migrations and code rather than whatever the main checkout has checked out.
+- **Commands for the user on a branch.** When you need the user to run a database command for work on a branch (`make db-up`, `make db-schema`, `make db-stubs`, `make db-maintenance`, a `TRUNCATE`, `scripts/pipeline.sh`, …), first give the command that puts them in that branch's worktree, e.g. `cd .claude/worktrees/<name>` from the project root, and only then the database command, so it runs against the branch's migrations and code rather than whatever the main checkout has checked out.
 
 ## Website
 
@@ -144,67 +144,15 @@ Internal web app for browsing and inspecting citation data. Located in `chambers
 
 **Public visualizations:** visualizations meant for readers outside the project (articles, talks, eventually the website) follow `chambers/VISUALIZATIONS.md`: anatomy, typography, colour, interactivity, accessibility, sizing, and how they consume JSON. Read it before building one, ask whether it is full screen or in the viewport before starting, and record every colour assigned to a category in its colour registry. They live under "Draft public visualizations" on the home page, at `/viz/<name>` with their JSON at `/api/viz/<name>`; the first is `/viz/jurisdictions` (issue #216), which reads `opinion_citations.jurisdiction_citations`, our CAP links rolled up by the citing case's jurisdiction and year and the cited case's jurisdiction, with the English Reports as `uk`; a citation is one opinion citing one case, counted once however many cite strings link it (`case_case_citations.opinion_count`). The second is `/viz/field-code` (issue #117), figure 5 of Funk and Mullen's "The Spine of American Law" (AHR 2018) as a D3 network: the codes of civil procedure connected by the sections they borrowed, laid out where the published figure put them, with the small adjustments listed in `scripts/field-code-network/adjustments.json`. Its data is not in the database but two JSON arrays in `chambers/data/`, embedded and served at `/api/viz/field-code/...`, which `scripts/field-code-network` derives from the article's research compendium and the hand-edited SVG of the figure (neither in the repository); moving them into the database is a later task.
 
-## Branches and worktrees
+## Git and GitHub
 
-Whenever the user asks you to work on a separate branch, use a git worktree instead of switching branches in the current checkout.
+The rules for working with Git and GitHub are the same in all my repositories and are not repeated here: the `lmullen-agent` identity, an issue for every change, the project board, branches and worktrees, pull requests, merging, and cleanup after a merge. In a Docker sandbox they come from the lmullen-agent kit, whose context file you must read before any Git or GitHub operation. In a Claude Code cloud session they are in `~/.claude/CLAUDE.md`. Their source is [`lmullen-agent-context.md`](https://github.com/lmullen/dotfiles/blob/main/sandboxes/kits/lmullen-agent/lmullen-agent-context.md) in `lmullen/dotfiles`; change a rule there, not here.
 
-- Never run `git switch` or `git checkout <branch>` in the main working directory. Leave it on whatever branch it's on, with any uncommitted changes untouched.
-- Create worktrees inside the project at `.worktrees/<branch-name>` (replace `/` in branch names with `-`).
-- Before creating the first worktree, make sure `.worktrees/` is listed in `.gitignore`. If it isn't, add it and tell the user.
-- For a new branch, base it on `main` unless the user says otherwise:
-  `git worktree add -b <branch> .worktrees/<branch> main`
-- For an existing branch: `git worktree add .worktrees/<branch> <branch>`
-- If a worktree for that branch already exists (check `git worktree list`), reuse it rather than creating another.
-- After creating a worktree, do all reading, editing, building, and testing from inside that directory. Install dependencies there if needed (e.g., `go mod download`, `npm install`).
-- Tell the user the worktree path when you create it.
-- Commit work in the worktree's branch. Don't merge into `main` or push unless the user asks.
-- Don't remove a worktree or delete its branch unless the user asks or its PR has been merged (see After a PR is merged). When they do, use `git worktree remove <path>` followed by `git branch -d <branch>`, and run `git worktree prune` if needed.
-- When the user needs to run a database command for the branch, give the command to switch to its worktree (`cd .worktrees/<branch-name>`) before the database command itself (see Claude database access).
+This section holds only the facts about this repository.
 
-### After a PR is merged
-
-When the user says a PR has been merged, or you notice it yourself (`gh pr view <n> --json state,mergedAt` says `MERGED`, or the branch's commits are already in `origin/main`), clean up without being asked: the branch and its worktree have done their job, and a stale `main` is what makes the next branch start from the wrong place.
-
-1. `git fetch --prune origin`, then confirm the PR really is merged before removing anything.
-2. Remove the worktree: `git worktree remove .worktrees/<branch>` (a sandbox session's worktree lives at `.claude/worktrees/<name>` instead; remove it the same way). If the worktree has uncommitted changes, stop and ask rather than forcing it.
-3. Delete the local branch with `git branch -d <branch>`. Because the project merges with a merge commit, `-d` succeeds once `main` is synced; if it refuses, check that the PR shows as merged before using `-D`.
-4. Sync `main` with the remote. From the main checkout, if `main` is checked out and the tree is clean, `git pull --ff-only origin main`; if another branch is checked out there, `git fetch origin main:main` updates it without switching. If neither fast-forwards, stop and tell the user rather than merging or resetting.
-5. `git worktree prune`, then report what was removed and the commit `main` now points at.
-
-Do this for every branch of the merged PR, not just the one this session created, and leave the remote branch to GitHub's own cleanup.
-
-## GitHub
-
-Use the `gh` CLI for GitHub operations — creating pull requests, viewing issues, checking CI status, and commenting. In the sandbox it is authenticated as the machine account `lmullen-agent` (see Attribution).
-
-- Open a PR: `gh pr create --base main --head <branch> --title "..." --body "..."`
-- Reference the issue a PR closes in the commit or PR body with `Closes #<n>` so it auto-closes on merge.
-- View an issue: `gh issue view <n>`
-- Check CI on a PR: `gh pr checks <n>`
-
-Do not hand-build GitHub API calls with `curl`; prefer `gh`.
-
-The project status board is https://github.com/orgs/chnm/projects/21/views/1.
-
-### Attribution
-
-Work that Claude does is attributed to the machine account `lmullen-agent`, not to the
-repository owner `lmullen`.
-
-- **Commits:** in the sandbox, `GIT_AUTHOR_*` and `GIT_COMMITTER_*` in
-  `/etc/sandbox-persistent.sh` make `lmullen-agent <lincoln+agent@lincolnmullen.com>` both
-  author and committer, so commit without `--author`. Do **not** set `user.name` or
-  `user.email` in the repository's git config: the sandbox mounts the host's checkout, so
-  that would relabel the user's own commits too. If `git var GIT_AUTHOR_IDENT` names
-  anyone else, stop and tell the user rather than committing.
-- **Trailer:** keep the usual `Co-Authored-By: Claude ... <noreply@anthropic.com>` trailer
-  at the end of the commit message.
-- **Comments, PR bodies, and issue text:** the sandbox's GitHub token belongs to
-  `lmullen-agent`, so `gh` posts as that account and no attribution line is needed. If
-  `gh api user --jq .login` names anyone else, stop and tell the user rather than posting.
-- **Reviews:** because Claude's PRs are opened by `lmullen-agent`, `lmullen` can approve
-  them, which the ruleset on `main` requires. Merge only when the user asks, after their
-  approval, with a merge commit (not squash); don't reach for `--admin`.
+- **Project board:** <https://github.com/orgs/chnm/projects/21> (owner `chnm`, project number `21`). Its `Status` columns are `Triage`, `TODO`, `In progress`, `To review`, and `Done`. Add each issue you open with `gh project item-add 21 --owner chnm --url <issue url>`; adding one that is already there is harmless.
+- **Reviews and merging:** a ruleset on `main` requires an approving review. Claude's pull requests are opened by `lmullen-agent`, so `lmullen` can approve them. Pull requests are squash-merged.
+- **Database commands on a branch:** when the user has to run a database command for a branch, give the command that puts them in the branch's worktree first (see Claude database access).
 
 ## CI
 
