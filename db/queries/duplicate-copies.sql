@@ -19,9 +19,11 @@
 -- This lists every candidate pair with its measurements and decision. Run on
 -- 2026-09-25 it gave 46 twin editions and 4 same-edition copies meeting the
 -- rule, which db/migrations/20260925140200_moml-remove-duplicate-copies.sql
--- removes; the kept copy of each is recorded in moml.duplicate_copies. After
--- that migration, the pairs listed here are the near-duplicates that failed the
--- page test and were left alone.
+-- removes; the kept copy of each is recorded in moml.duplicate_copies. That
+-- left eight near-duplicates that failed the page test, which were reviewed by
+-- hand (issue #334) and settled by
+-- db/migrations/20261117203658_moml-near-duplicate-copies.sql. A pair listed
+-- here now is a new candidate.
 
 WITH edition AS (
   SELECT v.bibliographicid,
