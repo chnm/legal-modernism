@@ -385,7 +385,8 @@ func TestLoadReporterAltAbbrsIntegration(t *testing.T) {
 
 // TestGetReporterWhitelistFallbackIntegration checks that a whitelist row's
 // fallback_standard arrives as a Fallback entry describing the fallback
-// reporter, not the spelling's own (issue #358).
+// reporter, not the spelling's own (issue #358), and that fallback_any_miss and
+// paged_volumes arrive on the entries they belong to (issue #331).
 func TestGetReporterWhitelistFallbackIntegration(t *testing.T) {
 	s := newTestStore(t)
 	ctx := context.Background()
@@ -395,22 +396,29 @@ func TestGetReporterWhitelistFallbackIntegration(t *testing.T) {
 		`CREATE SCHEMA legalhist`,
 		`CREATE TABLE legalhist.reporters (
 			reporter_standard text PRIMARY KEY, jurisdiction text, single_vol boolean,
-			type text, reporter_cap text, cited_by_year_from integer
+			type text, reporter_cap text, cited_by_year_from integer, paged_volumes integer
 		)`,
 		`CREATE TABLE legalhist.reporters_diffvols (reporter_standard text NOT NULL, vol integer, cap_vol integer, cap_reporter text)`,
 		`CREATE TABLE legalhist.whitelist (
 			reporter_found text PRIMARY KEY,
 			reporter_standard text REFERENCES legalhist.reporters(reporter_standard),
 			junk boolean NOT NULL,
-			fallback_standard text REFERENCES legalhist.reporters(reporter_standard)
+			fallback_standard text REFERENCES legalhist.reporters(reporter_standard),
+			fallback_any_miss boolean NOT NULL DEFAULT false
 		)`,
 		`INSERT INTO legalhist.reporters (reporter_standard, jurisdiction, reporter_cap) VALUES
-			('Den', 'uk:cr', NULL), ('Denio', 'us:ny', NULL), ('Howard', 'us:ms', NULL), ('How.', 'us:us', NULL)`,
+			('Den', 'uk:cr', NULL), ('Denio', 'us:ny', NULL), ('Howard', 'us:ms', NULL), ('How.', 'us:us', NULL),
+			('N.J.L.', 'us:nj', NULL), ('N.J. Eq.', 'us:nj', NULL)`,
+		`INSERT INTO legalhist.reporters (reporter_standard, jurisdiction, single_vol, paged_volumes) VALUES
+			('Dick', 'uk:ch', true, 2)`,
 		`INSERT INTO legalhist.reporters_diffvols VALUES ('How.', 1, 42, 'U.S.')`,
 		`INSERT INTO legalhist.whitelist (reporter_found, reporter_standard, junk, fallback_standard) VALUES
 			('Den.', 'Den', false, 'Denio'),
 			('Howard', 'Howard', false, 'How.'),
-			('Denio', 'Denio', false, NULL)`,
+			('Denio', 'Denio', false, NULL),
+			('Dick.', 'Dick', false, 'Denio')`,
+		`INSERT INTO legalhist.whitelist (reporter_found, reporter_standard, junk, fallback_standard, fallback_any_miss) VALUES
+			('N. J.', 'N.J.L.', false, 'N.J. Eq.', true)`,
 	}
 	for _, stmt := range setup {
 		_, err := s.DB.Exec(ctx, stmt)
@@ -434,6 +442,17 @@ func TestGetReporterWhitelistFallbackIntegration(t *testing.T) {
 	assert.True(t, howard.Fallback.CAPDifferent, "the fallback's diffvols are its own")
 
 	assert.Nil(t, got["Denio"].Fallback, "a row without a fallback has none")
+
+	nj := got["N. J."]
+	require.NotNil(t, nj)
+	assert.True(t, nj.FallbackAnyMiss)
+	assert.False(t, den.FallbackAnyMiss, "fallback_any_miss defaults to false")
+
+	dick := got["Dick."]
+	require.NotNil(t, dick)
+	assert.Equal(t, 2, dick.PagedVolumes)
+	assert.Equal(t, 0, dick.Fallback.PagedVolumes, "the fallback's paged_volumes are its own")
+	assert.Equal(t, 0, den.PagedVolumes, "a NULL paged_volumes loads as 0")
 }
 
 func TestLoadCAPCitationsIntegration(t *testing.T) {
