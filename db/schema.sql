@@ -1,7 +1,7 @@
 \restrict dbmate
 
 -- Dumped from database version 17.11 (Debian 17.11-1.pgdg13+2)
--- Dumped by pg_dump version 18.6 (Homebrew)
+-- Dumped by pg_dump version 18.7 (Homebrew)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1248,8 +1248,9 @@ CREATE TABLE moml.duplicate_copies (
     kind text NOT NULL,
     removed_linked integer NOT NULL,
     kept_linked integer NOT NULL,
+    note text,
     CONSTRAINT duplicate_copies_check CHECK ((removed_psmid <> kept_psmid)),
-    CONSTRAINT duplicate_copies_kind_check CHECK ((kind = ANY (ARRAY['twin_edition'::text, 'same_edition'::text])))
+    CONSTRAINT duplicate_copies_kind_check CHECK ((kind = ANY (ARRAY['twin_edition'::text, 'same_edition'::text, 'miscatalogued'::text])))
 );
 
 
@@ -1264,14 +1265,21 @@ COMMENT ON TABLE moml.duplicate_copies IS 'Volumes removed because MOML held a s
 -- Name: COLUMN duplicate_copies.kind; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON COLUMN moml.duplicate_copies.kind IS 'twin_edition: the edition was catalogued twice and the whole removed edition is gone; same_edition: a second scan of one volume within an edition';
+COMMENT ON COLUMN moml.duplicate_copies.kind IS 'twin_edition: the edition was catalogued twice and the whole removed edition is gone; same_edition: a second scan of one volume within an edition; miscatalogued: a volume catalogued under the wrong edition, a copy of a volume of the edition it belongs to';
 
 
 --
 -- Name: COLUMN duplicate_copies.removed_linked; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON COLUMN moml.duplicate_copies.removed_linked IS 'Linked citations in the removed copy on 2026-09-25 (for a twin edition, counted over the whole edition)';
+COMMENT ON COLUMN moml.duplicate_copies.removed_linked IS 'Linked citations in the removed copy when it was removed (for a twin edition, counted over the whole edition): 2026-09-25 for the rule''s decisions, 2026-11-17 for the reviewed ones';
+
+
+--
+-- Name: COLUMN duplicate_copies.note; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.duplicate_copies.note IS 'Why a copy was removed by hand rather than by the duplicate rule (issue #334); NULL for the rule''s own decisions';
 
 
 --
@@ -1736,7 +1744,9 @@ CREATE TABLE moml_archive.removed_citations_unlinked (
     reporter_abbr text NOT NULL,
     page integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    year integer
+    year integer,
+    case_name text,
+    case_name_source text
 );
 
 
@@ -1790,7 +1800,9 @@ CREATE TABLE moml_archive.removed_editions (
     faid text,
     colid text,
     dvi_collection_id text,
-    release_date text
+    release_date text,
+    work_id integer,
+    derivative boolean
 );
 
 
@@ -2302,25 +2314,33 @@ CREATE MATERIALIZED VIEW moml_citations.reporter_case_citations AS
             cl.cap_case_id,
             cl.er_case_id,
             cl.code_reporter_id,
-            cl.stub_cite
-           FROM ((((moml_citations.citation_links cl
+            cl.stub_cite,
+            count(*) AS cites
+           FROM (((moml_citations.citation_links cl
              JOIN moml_citations.citations_unlinked cu ON ((cu.id = cl.citation_id)))
              JOIN legalhist.whitelist wl ON (((wl.reporter_found = cu.reporter_abbr) AND (wl.reporter_standard IS NOT NULL))))
              JOIN moml.volumes v ON ((v.psmid = cu.moml_treatise)))
-             JOIN moml.treatises t ON ((t.bibliographicid = v.bibliographicid)))
           WHERE (cl.status ~~ 'linked%'::text)
+          GROUP BY wl.reporter_standard, v.bibliographicid,
+                CASE
+                    WHEN (cl.cap_case_id IS NOT NULL) THEN 'cap'::text
+                    WHEN (cl.er_case_id IS NOT NULL) THEN 'er'::text
+                    WHEN (cl.code_reporter_id IS NOT NULL) THEN 'code'::text
+                    ELSE 'stub'::text
+                END, cl.cap_case_id, cl.er_case_id, cl.code_reporter_id, cl.stub_cite
         )
- SELECT reporter_standard,
-    source,
-    ((source || ':'::text) || COALESCE((cap_case_id)::text, er_case_id, (code_reporter_id)::text, stub_cite)) AS case_key,
-    cap_case_id,
-    er_case_id,
-    code_reporter_id,
-    stub_cite,
-    count(DISTINCT bibliographicid) AS editions,
-    count(*) AS cites
-   FROM links
-  GROUP BY reporter_standard, source, cap_case_id, er_case_id, code_reporter_id, stub_cite
+ SELECT l.reporter_standard,
+    l.source,
+    ((l.source || ':'::text) || COALESCE((l.cap_case_id)::text, l.er_case_id, (l.code_reporter_id)::text, l.stub_cite)) AS case_key,
+    l.cap_case_id,
+    l.er_case_id,
+    l.code_reporter_id,
+    l.stub_cite,
+    count(*) AS editions,
+    (sum(l.cites))::bigint AS cites
+   FROM (links l
+     JOIN moml.treatises t ON ((t.bibliographicid = l.bibliographicid)))
+  GROUP BY l.reporter_standard, l.source, l.cap_case_id, l.er_case_id, l.code_reporter_id, l.stub_cite
   WITH NO DATA;
 
 
@@ -4644,4 +4664,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261023180000'),
     ('20261023200000'),
     ('20261023210000'),
-    ('20261106193524');
+    ('20261106193524'),
+    ('20261106201422'),
+    ('20261117203658');
