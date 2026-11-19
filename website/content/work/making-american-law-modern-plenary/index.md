@@ -1,4 +1,8 @@
 ---
+title: "Making American Law Modern: Digital Computation and the Search for U.S. Legal Modernity"
+layout: transcript
+transcript: static/funk_transcript.txt
+outputs: [html, captions]
 video: https://streaming-eu.mpg.de/de/institute/mpier/dighum/02 - Funk, Kellen.mp4
 videotype: "video/mp4"
 date: 2021-03-01
