@@ -1,0 +1,14 @@
+{
+  "psmid": "19005764100", "pageid": "02430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T04:00:00Z",
+  "note": "cross-checked with the 1845 edition's record (19005840400/02660)",
+  "citations": [
+    {"seq": 1, "raw": "Mints v. Bethil, Cro. Eliz. 749", "case_name": "Mints v. Bethil",
+     "reporter_abbr": "Cro. Eliz.", "page": 749,
+     "status": "linked_english_reports", "er_case_id": "16531353", "confidence": "high"},
+    {"seq": 2, "raw": "Church v. Brownwick, 1 Sid. 234", "case_name": "Church v. Brownwick",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 334,
+     "status": "linked_english_reports", "er_case_id": "17140120", "pincite": true, "confidence": "high",
+     "note": "printed 234 read as 334, as cited on pages 354-357; case begins at 1 Sid 333"}
+  ]
+}
