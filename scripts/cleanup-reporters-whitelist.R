@@ -1,6 +1,6 @@
 library(tidyverse)
 
-raw <- read_csv("temp/whitelist.csv", na = "NULL")
+raw <- read_csv("tmp/whitelist.csv", na = "NULL")
 
 raw |>
   mutate(
@@ -10,4 +10,4 @@ raw |>
     junk = if_else(is.na(junk), FALSE, junk)
   ) |>
   distinct(reporter_found, .keep_all = TRUE) |>
-  write_csv("temp/reporter-whitelist.csv", na = "")
+  write_csv("tmp/reporter-whitelist.csv", na = "")

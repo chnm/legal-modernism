@@ -2,7 +2,7 @@ library(tidyverse)
 library(lubridate)
 
 raw <- read_csv(
-  "temp/english_reports_cites.csv",
+  "tmp/english_reports_cites.csv",
   na = "NULL",
   col_types = cols(
     er_filename = col_character(),
@@ -43,4 +43,4 @@ raw |>
   ) |>
   select(-er_title) |>
   filter(!is.na(er_date)) |>
-  write_csv("temp/english-reports-cleaned.csv", na = "")
+  write_csv("tmp/english-reports-cleaned.csv", na = "")

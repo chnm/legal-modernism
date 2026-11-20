@@ -132,7 +132,7 @@ cites_with_school <- textbooks_used |>
   left_join(textbook_citations, by = c("psmid" = "moml_treatise"),
             multiple = "all", relationship = "many-to-many") 
 
-write_csv(cites_with_school, "../temp/textbook-cites-with-school.csv")
+write_csv(cites_with_school, "../tmp/textbook-cites-with-school.csv")
 ```
 
 We can aggregate that in various ways.
@@ -141,19 +141,19 @@ We can aggregate that in various ways.
 cites_with_school |> 
   count(bibliographicid, title, edition, topic, case, name_abbreviation, decision_year, frontend_url) |> 
   arrange(desc(n)) |> 
-  write_csv("../temp/textbook-most-cited-per-treatise.csv")
+  write_csv("../tmp/textbook-most-cited-per-treatise.csv")
 
 cites_with_school |> 
   count(topic, case, name_abbreviation, decision_year, frontend_url) |> 
   arrange(topic, desc(n)) |> 
-  write_csv("../temp/textbook-most-cited-by-topic.csv")
+  write_csv("../tmp/textbook-most-cited-by-topic.csv")
 
 cites_with_school |> 
   count(topic, case, name_abbreviation, decision_year, frontend_url) |> 
   arrange(topic, desc(n)) |> 
   pivot_wider(names_from = topic, values_from = n, values_fill = 0) |> 
   arrange(decision_year) |> 
-  write_csv("../temp/textbook-matrix-by-topic.csv")
+  write_csv("../tmp/textbook-matrix-by-topic.csv")
 
 ```
 
@@ -210,7 +210,7 @@ case_metadata <- tbl(db, Id(schema = "cap", table = "cases")) |>
 cases_in_clusters |> 
   left_join(case_metadata, by = c("case" = "id")) |> 
   filter(school1 == "Michigan", school2 == "Columbia") |> 
-  write_csv("../temp/textbooks-cases-in-clusters-Michigan-Columbia.csv")
+  write_csv("../tmp/textbooks-cases-in-clusters-Michigan-Columbia.csv")
 ```
 
 

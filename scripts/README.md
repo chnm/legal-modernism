@@ -12,7 +12,10 @@ figure 5, as its own `network-graphs.R` did, and reads each code's position
 from the hand-edited SVG of the figure in the article's repository, adjusting
 it by `adjustments.json` beside it (a stretch of the figure, and moves of
 single codes and labels to clear overlaps, each with its reason; `--no-adjust`
-keeps the figure's positions exactly); its doc comment says how.
+keeps the figure's positions exactly); its doc comment says how. Both inputs are
+in the compendium under `published/spine/compendium_zay132/`: `best_matches.csv`
+in `best-section-matches.csv.zip`, and the SVG at `article/` in
+`field-code-analysis.zip`.
 
 `hathitrust-import/` loads volumes downloaded from HathiTrust into the `moml`
 tables as if they were Gale's (issue #402), as `sidecorpus-import/` did for the
@@ -23,7 +26,7 @@ printings of Stephen on Pleading that HathiTrust holds. HathiTrust refuses
 scripted downloads of page text, so each volume is downloaded by hand: open
 `https://hdl.handle.net/2027/<htid>`, log in through a member library, and
 choose Download, format "Text (.zip)", range "Whole item". Put the zips in
-`temp/hathitrust/` under the names HathiTrust gives them, then
+`tmp/hathitrust/` under the names HathiTrust gives them, then
 
 ```
 go run ./scripts/hathitrust-import/ --check   # read the zips, write nothing
