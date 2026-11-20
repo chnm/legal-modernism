@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "03140",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:16:37Z",
+  "note": "printed p. 403; Gale 19005816500/03060",
+  "citations": [
+    {"seq": 1, "raw": "Shum v. Farrington, 1 Bos. and Pul. 640", "case_name": "Shum v. Farrington",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 640,
+     "status": "linked_english_reports", "er_case_id": "17970365", "confidence": "high"},
+    {"seq": 2, "raw": "Burton v. Webb, 8 T. R. 459", "case_name": "Barton v. Webb",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 459,
+     "status": "linked_english_reports", "er_case_id": "18000054", "confidence": "high",
+     "note": "printed Burton for Barton"},
+    {"seq": 3, "raw": "Mints v. Bethil, Cro. Eliz. 749", "case_name": "Mints v. Bethil",
+     "reporter_abbr": "Cro. Eliz.", "page": 749,
+     "status": "linked_english_reports", "er_case_id": "16531353", "confidence": "high"},
+    {"seq": 4, "raw": "1 Saund. 117. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note; 117 falls in Cutler v. Southern (1 Wms Saund 116 record, next case at 120)"},
+    {"seq": 5, "raw": "2 Saund. 410. u. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (u. for n.); 410 falls in Lord Arlington v. Merricke, 2 Wms Saund 403 (ER's next record of the same case at 411)"},
+    {"seq": 6, "raw": "Church v. Brownwick, 1 Sid. 334", "case_name": "Church v. Brownwick",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 334,
+     "status": "linked_english_reports", "er_case_id": "17140120", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Sid 333"}
+  ]
+}

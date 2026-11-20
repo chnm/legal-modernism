@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "03180",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:17:40Z",
+  "note": "printed p. 409; Gale 19005816500/03100",
+  "citations": [
+    {"seq": 1, "raw": "Lord Arlington v. Merricke, 2 Saund. 410. and note (3), ibid.", "case_name": "Lord Arlington v. Merricke",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Wms Saund 403; ER's next record of it begins at 411"},
+    {"seq": 2, "raw": "2 Saund. Ibid.", "case_name": "Lord Arlington v. Merricke",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "Ibid. expanded to 2 Saund. 410 (Lord Arlington v. Merricke) from note (f)"},
+    {"seq": 3, "raw": "Oglethorpe v. Hyde, Cro. Eliz. 233", "case_name": "Oglethorpe v. Hyde",
+     "reporter_abbr": "Cro. Eliz.", "page": 233,
+     "status": "linked_english_reports", "er_case_id": "16531413", "confidence": "high"}
+  ]
+}

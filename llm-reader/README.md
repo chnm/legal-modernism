@@ -60,7 +60,7 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   cite: `high` when legible, `low` when garbled. Write `reporter_abbr` as `Y.B.`
   and the regnal year as `volume`, with the reign in `note` (`10 Edw. III`).
   A year book cited only by an editor's page (`Mayn. 109`) leaves `volume`
-  empty. A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not
+  empty; one that prints its regnal year too (`18 E. 2. 614`) keeps it. A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not
   recorded. Records of pleas (Placitorum Abbreviatio) are not reports.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
@@ -181,7 +181,8 @@ the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
-so they can be recovered. The exception is a second page carrying its own note
+so they can be recovered. A note on the same page (`2 Saund. 410, and note (3)`) is one record. The
+exception is a second page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page
 number is cut off and printed on no page you have, supply it from the case
 found by name and say so. A cite repeated on a page, or the same case cited in two footnotes, is

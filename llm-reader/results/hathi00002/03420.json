@@ -1,0 +1,26 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "03420",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:15:44Z",
+  "note": "printed pp. 443-444; cross-checked with 19005816500/03340",
+  "citations": [
+    {"seq": 1, "raw": "Veale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 323 (second record at 326)"},
+    {"seq": 2, "raw": "3 Ed. III. 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
+     "status": "no_match", "confidence": "high", "note": "year book, 3 Edw. III; no source"},
+    {"seq": 3, "raw": "Took v. Glascock, 1 Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 250 (second record at 260)"},
+    {"seq": 4, "raw": "Veale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 323"},
+    {"seq": 5, "raw": "Weeks v. Peach, 1 Salk. 179", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high"}
+  ]
+}

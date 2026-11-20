@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "03470",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:17:16Z",
+  "note": "printed pp. 451-452; cross-checked with 19005816500/03390",
+  "citations": [
+    {"seq": 1, "raw": "Richards v. Hodges, 2 Saund. 84", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "high",
+     "note": "Richards v. Hodges's records begin at 2 Wms Saund 80 and 83; its note runs onto 84, where Hesketh v. Lee begins, but the name decides"},
+    {"seq": 2, "raw": "Dudlow v. Watchorn, 16 East, 39", "case_name": "Dudlow v. Watchorn",
+     "volume": 16, "reporter_abbr": "East", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "18120308", "confidence": "high"},
+    {"seq": 3, "raw": "Tolputt v. Wells, 1 M. and S. 395", "case_name": "Tolputt v. Wells",
+     "volume": 1, "reporter_abbr": "M. and S.", "page": 395,
+     "status": "linked_english_reports", "er_case_id": "18130309", "confidence": "high"},
+    {"seq": 4, "raw": "Fisher v. Pimbley, 11 East, 188", "case_name": "Fisher v. Pimbley",
+     "volume": 11, "reporter_abbr": "East", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18090223", "confidence": "high"},
+    {"seq": 5, "raw": "Winstone v. Linn, 1 Barn. and Cres. 460", "case_name": "Winstone v. Linn",
+     "volume": 1, "reporter_abbr": "Barn. and Cres.", "page": 460,
+     "status": "linked_english_reports", "er_case_id": "18230288", "confidence": "high"},
+    {"seq": 6, "raw": "2 Saund. 84. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note to Richards v. Hodges (cited at 2 Saund. 84 in note (l) above), whose record begins at 2 Wms Saund 83"},
+    {"seq": 7, "raw": "Hickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports are not in the English Reports source; no Hickman v. Walker by name 1730-65 (only Attorney General v. Hickman, Kel W 34, unrelated); no stub"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "03360",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:14:41Z",
+  "note": "printed pp. 435-437; cross-checked with 19005816500/03280",
+  "citations": [
+    {"seq": 1, "raw": "Dyster v. Battye, 3 Barn. and Ald. 448", "case_name": "Dyster v. Battye",
+     "volume": 3, "reporter_abbr": "Barn. and Ald.", "page": 448,
+     "status": "linked_english_reports", "er_case_id": "18200036", "confidence": "high"},
+    {"seq": 2, "raw": "2 Saund. 209. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note falls in Foxwist v. Tremaine, 2 Wms Saund 207 (next record at 212)"},
+    {"seq": 3, "raw": "Bowyer v. Cook, 5 Mod. 145", "case_name": "Bowyer v. Cook",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 145,
+     "status": "linked_english_reports", "er_case_id": "17940334", "confidence": "high"},
+    {"seq": 4, "raw": "Powers v. Cook, Lord Ray. 53", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high",
+     "note": "volume 1 supplied; page '53.' displaced to the line above in the OCR; Powers v. Cook is at 1 Ld Raym 63 (the records at 53 are Rook v. Clealand and Walter v. Rumbal)"}
+  ]
+}
