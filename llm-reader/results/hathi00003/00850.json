@@ -1,0 +1,56 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "00850",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:43:45Z",
+  "note": "printed p. 71-72; counter pleas to oyer and the American editor's note on imparlance; Reg. Plac., Booth, Com. Dig., 3 Bl. Com. and Steph. on Plead. are treatises",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Jeffrey v. White, Doug. 475",
+      "case_name": "Jeffrey v. White",
+      "volume": 2,
+      "reporter_abbr": "Doug.",
+      "page": 476,
+      "status": "linked_english_reports",
+      "er_case_id": "17800101",
+      "confidence": "high",
+      "note": "no volume printed; Jeffery v. White is at 2 Doug 476 in ER, a page from the printed 475 (Douglas was paged differently in different editions); volume 2 supplied"
+    },
+    {
+      "seq": 2,
+      "raw": "Snell v. Snell, 4 Barn. & Cres. 741",
+      "case_name": "Snell v. Snell",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 741,
+      "status": "linked_english_reports",
+      "er_case_id": "18250796",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "1 Saund. 9 b. n. (1)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Jevens v. Harridge, the record beginning at 1 Wms Saund 8"
+    },
+    {
+      "seq": 4,
+      "raw": "Ibid.",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Ibid. repeats 1 Saund. 9 b. n. (1), Jevens v. Harridge"
+    }
+  ]
+}

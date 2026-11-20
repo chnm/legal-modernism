@@ -61,7 +61,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   and the regnal year as `volume`, with the reign in `note` (`10 Edw. III`).
   A year book cited only by an editor's page (`Mayn. 109`) leaves `volume`
   empty; one that prints its regnal year too (`18 E. 2. 614`) keeps it. A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not
-  recorded. Records of pleas (Placitorum Abbreviatio) are not reports.
+  recorded; one cited by plea number (`8 Edw. 3, pl. 20`) is, with `page`
+  left out and the plea in `note`. Records of pleas (Placitorum Abbreviatio) are not reports.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
   Coke's Entries, Wentworth) are not.

@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "00410",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:41:56Z",
+  "note": "p. 5; other footnotes cite Tidd, Reeves, Blackstone, Bracton, Gilbert (not cases). Same footnote as Gale 19005785400/00290",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "8 Rep. 48, 49",
+      "volume": 8,
+      "reporter_abbr": "Rep.",
+      "page": 48,
+      "status": "linked_english_reports",
+      "er_case_id": "15720206",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; folio 48 falls in Jehu Webb's Case (8 Co Rep 45-50), on writs in consimili casu, fitting the passage on new original writs; dropped: 49"
+    }
+  ]
+}

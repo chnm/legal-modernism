@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "00820",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:42:55Z",
+  "note": "printed p. 66-68; profert and oyer; Com. Dig. also cited",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Simpson v. Garside, Lutw. 1644",
+      "case_name": "Simpson v. Garside",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1644,
+      "status": "linked_stub",
+      "stub_cite": "2 Lutw. 1644",
+      "confidence": "medium",
+      "note": "no volume printed; Lutwyche's second volume holds page 1644, so supplied 2. Lutwyche is not in the English Reports; the stub is exactly the printed page"
+    },
+    {
+      "seq": 2,
+      "raw": "Jevons v. Harridge, 1 Sid. 38",
+      "case_name": "Jevons v. Harridge",
+      "volume": 1,
+      "reporter_abbr": "Sid.",
+      "page": 308,
+      "status": "linked_english_reports",
+      "er_case_id": "17140321",
+      "confidence": "high",
+      "note": "printed 38 in this clean HathiTrust text too, so a misprint of the 1841 edition rather than OCR; the case is at 1 Sid 308 (1 Sid 38 is Best & Jolly); the 1831 edition prints 308"
+    }
+  ]
+}
