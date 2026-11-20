@@ -265,6 +265,9 @@ type WorkDetail struct {
 
 func (d WorkDetail) URL() string { return workURL(d.WorkID) }
 
+// CasesURL is the matrix of the work's editions and the cases they cite.
+func (d WorkDetail) CasesURL() string { return workCasesURL(d.WorkID) }
+
 // workChartRow is one edition on the work page's chart.
 type workChartRow struct {
 	Year  int    `json:"year"`

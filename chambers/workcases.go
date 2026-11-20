@@ -13,19 +13,15 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-// Stephen on Pleading, edition by edition (issue #437, part of #353): a page
-// of its own with a matrix of the treatise's editions as the columns,
-// earliest first, the cases their linked citations reach as the rows, and a
-// mark where an edition cites a case. It shows which cases last through the
-// editions and which enter as the case law changes the treatise. The columns
-// can be all the editions or only the US or the UK ones. It reads
-// edition_case_citations, so a citation the linker did not resolve is not in
-// it.
-
-// stephenWorkID is Henry John Stephen's A treatise on the principles of
-// pleading in civil actions in moml.works. Nothing below is particular to the
-// work: the matrix is laid out for whatever editions this id has.
-const stephenWorkID = 1107
+// The cases of a work, edition by edition (issue #437): a matrix with the
+// work's treatise editions as its columns, earliest first, the cases their
+// linked citations reach as its rows, and a mark where an edition cites a
+// case. It shows which cases last through the editions and which enter as the
+// case law changes the treatise. The columns can be all the editions or only
+// the US or the UK ones. It reads edition_case_citations, so a citation the
+// linker did not resolve is not in it. It was built to read Stephen on
+// Pleading (work 1107, issue #353) and every case is on one page, which is a
+// very long page for the works that cite tens of thousands.
 
 // MatrixEdition is one column of the matrix: an edition, and how the cases it
 // cites stand among the other editions shown.
@@ -325,8 +321,8 @@ func plural(n int, noun string) string {
 	return num(n) + " " + noun + "s"
 }
 
-// StephenPage is the page: the work, the editions shown, and the matrix.
-type StephenPage struct {
+// WorkCasesPage is the page: the work, the editions shown, and the matrix.
+type WorkCasesPage struct {
 	Page
 	WorkID   int
 	Title    string
@@ -342,11 +338,11 @@ type StephenPage struct {
 	Linked   int // of them, linked to a case
 }
 
-func (d StephenPage) WorkURL() string { return workURL(d.WorkID) }
+func (d WorkCasesPage) WorkURL() string { return workURL(d.WorkID) }
 
 // Link is the page with the given order and editions, leaving the defaults
 // out of the query string.
-func (d StephenPage) Link(sort, jur string) string {
+func (d WorkCasesPage) Link(sort, jur string) string {
 	v := url.Values{}
 	if sort = normalizeMatrixSort(sort); sort != "editions" {
 		v.Set("sort", sort)
@@ -355,26 +351,30 @@ func (d StephenPage) Link(sort, jur string) string {
 		v.Set("jur", jur)
 	}
 	if len(v) == 0 {
-		return stephenURL
+		return workCasesURL(d.WorkID)
 	}
-	return stephenURL + "?" + v.Encode()
+	return workCasesURL(d.WorkID) + "?" + v.Encode()
 }
+
+// BothSides reports whether the work has US and UK editions, so that there is
+// something to narrow the columns to.
+func (d WorkCasesPage) BothSides() bool { return d.US > 0 && d.UK > 0 }
 
 // Shown says which editions the columns are: "All 18 editions (6 UK, 12 US)",
 // or "The 12 US editions, of 18".
-func (d StephenPage) Shown() string {
+func (d WorkCasesPage) Shown() string {
 	if d.Jur != "" {
 		return fmt.Sprintf("The %s, of %d", plural(len(d.Editions), matrixJurisdictions[d.Jur]+" edition"), d.US+d.UK)
 	}
-	return fmt.Sprintf("All %d editions (%d UK, %d US)", len(d.Editions), d.UK, d.US)
+	return fmt.Sprintf("All %s (%d UK, %d US)", plural(len(d.Editions), "edition"), d.UK, d.US)
 }
 
 // Columns is the width of the table: the five columns that describe the case
 // and one for each edition.
-func (d StephenPage) Columns() int { return 5 + len(d.Editions) }
+func (d WorkCasesPage) Columns() int { return 5 + len(d.Editions) }
 
 // Years is the span of the years of the editions shown.
-func (d StephenPage) Years() string {
+func (d WorkCasesPage) Years() string {
 	var first, last *int
 	for _, e := range d.Editions {
 		if e.Year == nil {
@@ -391,12 +391,16 @@ func (d StephenPage) Years() string {
 }
 
 // LinkedPct is the share of the editions' citations that linked to a case.
-func (d StephenPage) LinkedPct() string { return pct(d.Linked, d.Cites) }
+func (d WorkCasesPage) LinkedPct() string { return pct(d.Linked, d.Cites) }
 
-func (s *server) handleStephen(w http.ResponseWriter, r *http.Request) {
-	d := StephenPage{
-		Page:   Page{Title: "Stephen on Pleading", Section: "works"},
-		WorkID: stephenWorkID,
+func (s *server) handleWorkCases(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		s.notFound(w, r, "There is no work with that id.")
+		return
+	}
+	d := WorkCasesPage{
+		WorkID: id,
 		Jur:    normalizeMatrixJurisdiction(r.URL.Query().Get("jur")),
 		Sort:   normalizeMatrixSort(r.URL.Query().Get("sort")),
 	}
@@ -404,25 +408,34 @@ func (s *server) handleStephen(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := s.ctx(r, 60*time.Second)
 	defer cancel()
 
-	err := s.db.QueryRow(ctx, `SELECT title, author FROM moml.works WHERE work_id = $1`, d.WorkID).Scan(&d.Title, &d.Author)
+	err = s.db.QueryRow(ctx, `SELECT title, author FROM moml.works WHERE work_id = $1`, id).Scan(&d.Title, &d.Author)
 	if isNoRows(err) {
-		s.notFound(w, r, "The work this page shows, Stephen on Pleading, is not in moml.works under the id it had.")
+		s.notFound(w, r, "There is no work with that id.")
 		return
 	}
 	if err != nil {
-		s.serverError(w, r, err, "loading the work", "work_id", d.WorkID)
+		s.serverError(w, r, err, "loading the work", "work_id", id)
 		return
+	}
+	d.Page = Page{
+		Title:   "Cases across the editions of " + d.Title,
+		Section: "works",
+		Crumbs: []Crumb{
+			{Label: "Treatises", URL: "/works"},
+			{Label: truncate(d.Title, 60), URL: workURL(id)},
+			{Label: "Cases across the editions"},
+		},
 	}
 
 	// The editions come from the catalogue; their citation counts, which give
 	// the linked share, from edition_citation_counts, and are optional.
-	editions, err := s.getWorkEditions(ctx, d.WorkID, true)
+	editions, err := s.getWorkEditions(ctx, id, true)
 	if isUnavailable(err) {
 		d.Page.unavailable("moml_citations.edition_citation_counts")
-		editions, err = s.getWorkEditions(ctx, d.WorkID, false)
+		editions, err = s.getWorkEditions(ctx, id, false)
 	}
 	if err != nil {
-		s.serverError(w, r, err, "listing the editions", "work_id", d.WorkID)
+		s.serverError(w, r, err, "listing the work's editions", "work_id", id)
 		return
 	}
 	d.Editions, d.US, d.UK, d.Outside = matrixColumns(editions, d.Jur)
@@ -439,10 +452,10 @@ func (s *server) handleStephen(w http.ResponseWriter, r *http.Request) {
 			err = s.getMatrixTotals(ctx, ids, d.Editions)
 		}
 		if err := optional(err, &d.Page, "moml_citations.edition_case_citations"); err != nil {
-			s.serverError(w, r, err, "laying out the cases", "work_id", d.WorkID)
+			s.serverError(w, r, err, "laying out the work's cases", "work_id", id)
 			return
 		}
 		d.Rows = matrixRows(cases, d.Editions, d.Sort)
 	}
-	s.render(w, r, "stephen.html", http.StatusOK, d)
+	s.render(w, r, "work_cases.html", http.StatusOK, d)
 }

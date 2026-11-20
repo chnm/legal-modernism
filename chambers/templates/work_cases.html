@@ -54,9 +54,9 @@
 {{end}}
 
 {{define "content"}}
-    <h1 class="h4 mt-2">Stephen on Pleading: the cases cited, edition by edition</h1>
+    <h1 class="h4 mt-2">Cases across the editions of <a href="{{.WorkURL}}">{{.Title}}</a></h1>
     <div class="detail-grid small mb-2">
-        <span class="label">Work</span><span><a href="{{.WorkURL}}">{{.Title}}</a>{{if .Author}}, {{derefStr .Author}}{{end}}</span>
+        {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
         <span class="label">Editions shown</span><span>{{.Shown}}{{if .Editions}}, {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside the treatise view, never shown{{end}}</span>
         <span class="label">Cases cited</span><span>{{num (len .Rows)}}</span>
         {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} detected in these editions</span>{{end}}
@@ -69,19 +69,23 @@
         Click a year for the edition, a case for its record, and a filled cell for the citations behind it.
     </p>
     <p class="small key mb-3">
-        {{if ne .Jur "us"}}<span><span class="sw uk"></span>A UK edition cites the case</span>{{end}}
-        {{if ne .Jur "uk"}}<span><span class="sw us"></span>A US edition cites the case</span>{{end}}
-        <span><span class="sw {{if eq .Jur "uk"}}uk{{else}}us{{end}}">3</span>More than once</span>
-        <span>{{if ne .Jur "us"}}<span class="sw uk-tint"></span>{{end}}{{if ne .Jur "uk"}}<span class="sw us-tint"></span>{{end}}Does not cite it</span>
+        {{$uk := and .UK (ne .Jur "us")}}{{$us := and .US (ne .Jur "uk")}}
+        {{if $uk}}<span><span class="sw uk"></span>A UK edition cites the case</span>{{end}}
+        {{if $us}}<span><span class="sw us"></span>A US edition cites the case</span>{{end}}
+        <span><span class="sw {{if $us}}us{{else}}uk{{end}}">3</span>More than once</span>
+        <span>{{if $uk}}<span class="sw uk-tint"></span>{{end}}{{if $us}}<span class="sw us-tint"></span>{{end}}Does not cite it</span>
         <span><span class="sw blank"></span>Published before the case was decided</span>
     </p>
 
     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        {{/* The editions to show, when the work has some on each side; and always when narrowed, to get back. */}}
+        {{if or .BothSides .Jur}}
         <div class="btn-group btn-group-sm" role="group" aria-label="Editions shown">
             <a href="{{.Link .Sort ""}}" class="btn {{if eq .Jur ""}}btn-primary{{else}}btn-outline-secondary{{end}}">All editions</a>
             <a href="{{.Link .Sort "us"}}" class="btn {{if eq .Jur "us"}}btn-primary{{else}}btn-outline-secondary{{end}}">US editions</a>
             <a href="{{.Link .Sort "uk"}}" class="btn {{if eq .Jur "uk"}}btn-primary{{else}}btn-outline-secondary{{end}}">UK editions</a>
         </div>
+        {{end}}
         <div class="btn-group btn-group-sm" role="group" aria-label="Order of the cases">
             <a href="{{.Link "editions" .Jur}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
             <a href="{{.Link "entered" .Jur}}" class="btn {{if eq .Sort "entered"}}btn-primary{{else}}btn-outline-secondary{{end}}">First cited</a>

@@ -211,23 +211,25 @@ func TestPlural(t *testing.T) {
 	require.Equal(t, "1,480 cases", plural(1480, "case"))
 }
 
-func TestStephenPage(t *testing.T) {
-	d := StephenPage{WorkID: 1107, Editions: matrixTestEditions(), US: 1, UK: 2, Cites: 300, Linked: 99}
+func TestWorkCasesPage(t *testing.T) {
+	d := WorkCasesPage{WorkID: 1107, Editions: matrixTestEditions(), US: 1, UK: 2, Cites: 300, Linked: 99}
 	require.Equal(t, "/works/1107", d.WorkURL())
 	require.Equal(t, 8, d.Columns())
 	require.Equal(t, "1824–1831", d.Years())
 	require.Equal(t, "33%", d.LinkedPct())
-	require.Equal(t, "—", StephenPage{}.Years())
+	require.Equal(t, "—", WorkCasesPage{}.Years())
 	require.Equal(t, "All 3 editions (2 UK, 1 US)", d.Shown())
+	require.True(t, d.BothSides())
+	require.False(t, WorkCasesPage{US: 4}.BothSides())
 
-	us := StephenPage{Jur: "us", Editions: matrixTestEditions()[1:2], US: 1, UK: 2}
+	us := WorkCasesPage{Jur: "us", Editions: matrixTestEditions()[1:2], US: 1, UK: 2}
 	require.Equal(t, "The 1 US edition, of 3", us.Shown())
 
 	// The links keep one setting while changing the other, and leave the
 	// defaults out.
-	require.Equal(t, "/stephen-on-pleading", d.Link("editions", ""))
-	require.Equal(t, "/stephen-on-pleading?sort=entered", d.Link("entered", ""))
-	require.Equal(t, "/stephen-on-pleading?jur=uk", d.Link("editions", "uk"))
-	require.Equal(t, "/stephen-on-pleading?jur=us&sort=left", d.Link("left", "us"))
-	require.Equal(t, "/stephen-on-pleading", d.Link("nonsense", "fr"))
+	require.Equal(t, "/works/1107/cases", d.Link("editions", ""))
+	require.Equal(t, "/works/1107/cases?sort=entered", d.Link("entered", ""))
+	require.Equal(t, "/works/1107/cases?jur=uk", d.Link("editions", "uk"))
+	require.Equal(t, "/works/1107/cases?jur=us&sort=left", d.Link("left", "us"))
+	require.Equal(t, "/works/1107/cases", d.Link("nonsense", "fr"))
 }
