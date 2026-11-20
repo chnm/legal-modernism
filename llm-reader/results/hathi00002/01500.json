@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01500",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:47:43Z",
+  "note": "printed pp. 165-167; certainty of the issue, the ancient jury. Bracton, an Appendix note and a cross-reference skipped. Agrees with the Gale copy's record for the same footnote",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Cook, 2 Barn. and Cres. 871", "case_name": "The King v. Cook",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high",
+     "note": "the English Reports' The king against Cooke"}
+  ]
+}

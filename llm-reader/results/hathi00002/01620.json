@@ -1,0 +1,34 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01620",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:45:39Z",
+  "note": "printed pp. 183-184; expediency of demurring. 1 Sel. Pract. 497 is a practice treatise, skipped. Agrees with the Gale copy's record (19005816500/01540)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Lord Cromwell's Case, 4 Rep. 142",
+      "case_name": "Lord Cromwell's Case",
+      "volume": 4,
+      "reporter_abbr": "Rep.",
+      "page": 14,
+      "status": "linked_english_reports",
+      "er_case_id": "15780080",
+      "pincite": true,
+      "confidence": "high",
+      "note": "OCR '142' for 14 a (the Gale copy reads '14 a'); begins at 4 Co Rep 12"
+    },
+    {
+      "seq": 2,
+      "raw": "Cameron v. Reynolds, Cowp. 407",
+      "case_name": "Cameron v. Reynolds",
+      "reporter_abbr": "Cowp.",
+      "page": 407,
+      "status": "linked_english_reports",
+      "er_case_id": "17760026",
+      "pincite": true,
+      "confidence": "high",
+      "note": "begins at Cowp 403 (stored as '1 Cowp 403')"
+    }
+  ]
+}

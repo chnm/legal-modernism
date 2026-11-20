@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01580",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:44:42Z",
+  "note": "printed pp. 177-178; effect of pleading over without demurrer. Agrees with the Gale copy's record (19005816500/01500)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Marsh v. Bulteel, 5 Barn. and Ald. 507",
+      "case_name": "Marsh v. Bulteel",
+      "volume": 5,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 507,
+      "status": "linked_english_reports",
+      "er_case_id": "18220069",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Humphreys v. Bethily, 2 Vent. 222",
+      "case_name": "Humphreys v. Bethily",
+      "volume": 2,
+      "reporter_abbr": "Vent.",
+      "page": 222,
+      "status": "linked_english_reports",
+      "er_case_id": "17260504",
+      "confidence": "high"
+    }
+  ]
+}

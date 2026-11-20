@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01790",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:49:06Z",
+  "note": "printed pp. 206-208; declaration and plea with a special traverse. 2 Chitty is a treatise, skipped. Agrees with the Gale copy's record (19005816500/01710)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Brudnell v. Roberts, 2 Wills. 143",
+      "case_name": "Brudnell v. Roberts",
+      "volume": 2,
+      "reporter_abbr": "Wils.",
+      "page": 143,
+      "status": "linked_english_reports",
+      "er_case_id": "17990076",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Palmer v. Ekins, Lord Ray. 1550",
+      "case_name": "Palmer v. Ekins",
+      "volume": 2,
+      "reporter_abbr": "Ld. Raym.",
+      "page": 1550,
+      "status": "linked_english_reports",
+      "er_case_id": "17901324",
+      "confidence": "high",
+      "note": "no volume printed; supplied 2 (Palmer v. Ekins, 2 Ld Raym 1550)"
+    }
+  ]
+}

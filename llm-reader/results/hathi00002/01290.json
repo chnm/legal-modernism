@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01290",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:44:53Z",
+  "note": "printed pp. 134-136; trial by witnesses, by inspection, wager of law. Vin. Ab., Bac. Ab. and Bl. Com. are not reports, skipped. Agrees with the Gale copy's record (19005816500/01210)",
+  "citations": [
+    {"seq": 1, "raw": "Abbot of Strata Mercella's Case, 9. Rep. 30 b", "case_name": "Abbot of Strata Mercella's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "high",
+     "note": "case begins at 9 Co Rep 24"},
+    {"seq": 2, "raw": "Grace Faux v. Barnes, Lord Raym. 174", "case_name": "Grace Faux v. Barnes",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 174,
+     "status": "linked_english_reports", "er_case_id": "17920965", "confidence": "high",
+     "note": "volume 1 supplied from the case name"},
+    {"seq": 3, "raw": "29 Ass. 37", "volume": 29, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "high",
+     "note": "Liber Assisarum, 29 Edw. III, pl. 37, cited through Vin. Ab.; no source for the year books. The '19. (E. 2.)' after it is Viner's reference, not a cite"}
+  ]
+}

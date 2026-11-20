@@ -1,0 +1,34 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:46:20Z",
+  "note": "printed pp. 190-191; effect of the general issue, formedon and quare impedit. Arch. and Bac. Ab. are treatises, skipped. Agrees with the Gale copy's record (19005816500/01590)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Dowland v. Slade, 5 East, 289",
+      "case_name": "Dowland v. Slade",
+      "volume": 5,
+      "reporter_abbr": "East",
+      "page": 289,
+      "status": "linked_english_reports",
+      "er_case_id": "18040256",
+      "pincite": true,
+      "confidence": "high",
+      "note": "begins at 5 East 272"
+    },
+    {
+      "seq": 2,
+      "raw": "Colt. v. Bishop of Coventry, Hob. 162",
+      "case_name": "Colt v. Bishop of Coventry",
+      "reporter_abbr": "Hob.",
+      "page": 162,
+      "status": "linked_english_reports",
+      "er_case_id": "17921247",
+      "pincite": true,
+      "confidence": "high",
+      "note": "begins at Hob 140"
+    }
+  ]
+}

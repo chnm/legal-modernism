@@ -1,0 +1,40 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01530",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:43:36Z",
+  "note": "printed pp. 170-171; Rule I, demur or plead. Reg. Plac. and Tidd are treatises, skipped. Agrees with the Gale copy's record (19005816500/01450)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "21 Hen. 6. 12",
+      "volume": 21,
+      "reporter_abbr": "Y.B.",
+      "page": 12,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Year Book 21 Hen. VI; year books have no source"
+    },
+    {
+      "seq": 2,
+      "raw": "5 Hen. S. 23 a, 14 a. b.",
+      "volume": 5,
+      "reporter_abbr": "Y.B.",
+      "page": 23,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "Year Book 5 Hen. VIII (OCR 'S.' for 8; later editions print '5 Hen. VIII, 23 a'); dropped: 14 a. b.; year books have no source"
+    },
+    {
+      "seq": 3,
+      "raw": "Merceron v. Dowson, 5 Barn. & Cres. 479",
+      "case_name": "Merceron v. Dowson",
+      "volume": 5,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 479,
+      "status": "linked_english_reports",
+      "er_case_id": "18260400",
+      "confidence": "high"
+    }
+  ]
+}

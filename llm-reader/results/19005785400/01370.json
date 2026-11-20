@@ -144,10 +144,10 @@
       "reporter_abbr": "Stark.",
       "page": 36,
       "status": "linked_english_reports",
-      "er_case_id": "18160079",
+      "er_case_id": "18170370",
       "pincite": true,
-      "confidence": "low",
-      "note": "S. C. = Harmer v. Rowe at nisi prius. ER has no Harmer v. Rowe in 2 Stark; Harmer v. Wright (1816) begins at 2 Stark 35 and is short, and Ingledew v. Douglas begins at 36. Taken to be the nisi prius report of the same action under another defendant's name"
+      "confidence": "medium",
+      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions."
     },
     {
       "seq": 13,
