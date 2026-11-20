@@ -5,7 +5,9 @@ The coordinating session gives each reader subagent this prompt, with
 round is five readers of 30 pages each; after a round the coordinator runs
 `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db`, commits
 `llm-reader/results`, and pushes. To resume after a restart, take the next
-pages from `bin/llm-reader todo --jurisdiction US --limit 150`.
+pages from `bin/llm-reader todo --jurisdiction US --limit 150`. Questions for
+the owners go in `llm-reader/DECISIONS.md` with the interim rule, not to the
+user mid-run; at the end each is posted as its own GitHub issue.
 
 ---
 
