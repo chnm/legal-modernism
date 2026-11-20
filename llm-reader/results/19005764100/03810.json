@@ -1,0 +1,96 @@
+{
+  "psmid": "19005764100",
+  "pageid": "03810",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:01:26Z",
+  "note": "Second appendix, note 2 on replevin continued; Ham. N. P., Rol. Abr., Fitzherbert N. B., Com. Dig., Gilb. Rep. (Hunt's edition of Gilbert on Replevin), Morg. Vad. Mec. and Chit. Pl. skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "e. 146, a.",
+      "reporter_abbr": "Yelv.",
+      "page": 146,
+      "status": "linked_english_reports",
+      "er_case_id": "17922163",
+      "confidence": "low",
+      "note": "OCR garbled; the 1841 and 1845 editions print Yelv. 146, a. here; no name printed; two cases begin at Yel 146 (Cope v. Temple and Wilshire v. -), not told apart; picked Cope v. Temple, as the other editions' readers did"
+    },
+    {
+      "seq": 2,
+      "raw": "Six cLarpentcrs' case, 8 Rep. 146",
+      "case_name": "The Six Carpenters' Case",
+      "volume": 8,
+      "reporter_abbr": "Rep.",
+      "page": 146,
+      "status": "linked_english_reports",
+      "er_case_id": "15720452",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Yelv. 146 a.",
+      "reporter_abbr": "Yelv.",
+      "page": 146,
+      "status": "linked_english_reports",
+      "er_case_id": "17922163",
+      "confidence": "low",
+      "note": "same cite as seq 1; two cases begin at Yel 146, not told apart; picked Cope v. Temple"
+    },
+    {
+      "seq": 4,
+      "raw": "2 Lutw. 1956",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1956,
+      "status": "linked_stub",
+      "stub_cite": "2 Lutw. 1956",
+      "confidence": "medium",
+      "note": "no name printed; a stub begins at 2 Lutw. 1956"
+    },
+    {
+      "seq": 5,
+      "raw": "1 New .Hamp. Rep. 38",
+      "volume": 1,
+      "reporter_abbr": "N.H.",
+      "page": 38,
+      "status": "linked_cap",
+      "cap_case_id": 6752673,
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; falls in Brown v. Smith, 1 N.H. 36-39, on impounding animals"
+    },
+    {
+      "seq": 6,
+      "raw": "Schoale & Lefroy, ubi supra",
+      "volume": 1,
+      "reporter_abbr": "Sch. & Lef.",
+      "page": 320,
+      "status": "linked_stub",
+      "stub_cite": "1 Sch. & Lef. 320",
+      "confidence": "low",
+      "note": "ubi supra resolved to 1 Sch. & Lef. 320 (with 324), cited on the previous page for the Irish replevin practice"
+    },
+    {
+      "seq": 7,
+      "raw": "15 Mass. 359",
+      "volume": 15,
+      "reporter_abbr": "Mass.",
+      "page": 359,
+      "status": "linked_cap",
+      "cap_case_id": 2055234,
+      "confidence": "medium",
+      "note": "no name printed; Badger v. Phinney, cited 15 Mass. 359, replevin without a tortious taking"
+    },
+    {
+      "seq": 8,
+      "raw": "11 Id. 147",
+      "volume": 11,
+      "reporter_abbr": "Mass.",
+      "page": 147,
+      "status": "linked_cap",
+      "cap_case_id": 2053466,
+      "confidence": "medium",
+      "note": "Id. is Mass.; no name printed; Jackson v. Mayo, cited 11 Mass. 147"
+    }
+  ]
+}

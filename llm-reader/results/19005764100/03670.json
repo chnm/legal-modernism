@@ -1,0 +1,44 @@
+{
+  "psmid": "19005764100",
+  "pageid": "03670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:12:10Z",
+  "note": "Appendix notes 63-64; footnote (l) is a cross-reference",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "I'layter's case, 5 Rep. 34 1.",
+      "case_name": "Playter's Case",
+      "volume": 5,
+      "reporter_abbr": "Rep.",
+      "page": 34,
+      "status": "linked_english_reports",
+      "er_case_id": "15720292",
+      "confidence": "high",
+      "note": "OCR 'I'layter's' read as Playter's; folio letter printed as '1' (34 b); case begins at 5 Co Rep 34"
+    },
+    {
+      "seq": 2,
+      "raw": "Ward v. IIarris, 2 Bos. & Pul. 265",
+      "case_name": "Ward v. Harris",
+      "volume": 2,
+      "reporter_abbr": "Bos. & Pul.",
+      "page": 265,
+      "status": "linked_english_reports",
+      "er_case_id": "18000241",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Popa v. Tillman, 7 Taunt. G12",
+      "case_name": "Pope v. Tillman",
+      "volume": 7,
+      "reporter_abbr": "Taunt.",
+      "page": 642,
+      "status": "linked_english_reports",
+      "er_case_id": "18170560",
+      "confidence": "high",
+      "note": "OCR 'Popa' and 'G12' read as Pope v. Tillman, 7 Taunt 642"
+    }
+  ]
+}

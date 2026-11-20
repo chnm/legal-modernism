@@ -1,0 +1,21 @@
+{
+  "psmid": "19005764100",
+  "pageid": "03830",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:01:26Z",
+  "note": "Second appendix, notes 2-3; Com. Dig. skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Mackinley v. ilAMcregor, 3 Wharton, 869",
+      "case_name": "Mackinley v. M'Gregor",
+      "volume": 3,
+      "reporter_abbr": "Wharton",
+      "page": 369,
+      "status": "linked_cap",
+      "cap_case_id": 1833448,
+      "confidence": "high",
+      "note": "OCR 869 read as 369; CAP cites it 3 Whart. 369 (first_page 368)"
+    }
+  ]
+}

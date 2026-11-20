@@ -1,0 +1,12 @@
+{
+  "psmid": "19005764100",
+  "pageid": "04070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:06:51Z",
+  "note": "End of editor's Note 14 and start of Note 15 (extracts from H. D. Evans's Essay on Pleading)",
+  "citations": [
+    {"seq": 1, "raw": "8 Barn. C(res. 285", "volume": 8, "reporter_abbr": "Barn. & Cres.", "page": 285,
+     "status": "linked_english_reports", "er_case_id": "18280155", "confidence": "medium",
+     "note": "no name printed; OCR 'Barn. C(res.' read as Barn. & Cres.; Pratt v. Swaine (statute of limitations in trover) begins at 8 B & C 285"}
+  ]
+}

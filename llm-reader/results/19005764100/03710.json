@@ -1,0 +1,79 @@
+{
+  "psmid": "19005764100",
+  "pageid": "03710",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:16:30Z",
+  "note": "Appendix notes 69-71; Reeves, Britton, Bracton, the Lombard laws, 1 Chitty and 1 Arch. are not reports",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "6 Taunt. 587",
+      "volume": 6,
+      "reporter_abbr": "Taunt.",
+      "page": 587,
+      "status": "linked_english_reports",
+      "er_case_id": "18160522",
+      "confidence": "medium",
+      "note": "in the text; no name printed; Godson v. Good, the case cited in the text on a plea beginning and ending in abatement"
+    },
+    {
+      "seq": 2,
+      "raw": "Pitt v. Knight, 1 Lev. 2 r2",
+      "case_name": "Pitt v. Knight",
+      "volume": 1,
+      "reporter_abbr": "Lev.",
+      "page": 222,
+      "status": "linked_english_reports",
+      "er_case_id": "17930826",
+      "confidence": "high",
+      "note": "OCR '2 r2' read as 222, as printed in the other editions; ER: Pit against Knight"
+    },
+    {
+      "seq": 3,
+      "raw": "Barnes v. Gladman, 2 Lcv. 19",
+      "case_name": "Barnes v. Gladman",
+      "volume": 2,
+      "reporter_abbr": "Lev.",
+      "page": 19,
+      "status": "linked_english_reports",
+      "er_case_id": "17930111",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Curwen v. Fletcher, Str, 520",
+      "case_name": "Curwen v. Fletcher",
+      "volume": 1,
+      "reporter_abbr": "Str.",
+      "page": 520,
+      "status": "linked_english_reports",
+      "er_case_id": "17950962",
+      "confidence": "high",
+      "note": "volume 1 supplied"
+    },
+    {
+      "seq": 5,
+      "raw": "2 Saund. 209 c. n. (1)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 209,
+      "status": "linked_english_reports",
+      "er_case_id": "18450086",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "footnote (h), OCR '(k)'; no name printed; note falls in Foxwist v. Tremaine, 2 Wms Saund 207"
+    },
+    {
+      "seq": 6,
+      "raw": "2 Saund. 2(19, c. n. (1)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 209,
+      "status": "linked_english_reports",
+      "er_case_id": "18450086",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "footnote (i); OCR '2(19' read as 209; note falls in Foxwist v. Tremaine, 2 Wms Saund 207"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "psmid": "19005764100",
+  "pageid": "04010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:01:26Z",
+  "note": "Second appendix, notes 9 (end), 10 and 11 (Sir Francis Leake's case, from Williams's notes to Saunders); the case in Dyer and the case in Yelverton are referred to without cites",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "I Saund. 103. n. 1",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 103,
+      "status": "linked_english_reports",
+      "er_case_id": "18450110",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "I read as 1; note (1) to Hayman v. Gerrard, which begins at 1 Wms Saund 99; ER splits it, and 103 falls in the record at 102"
+    },
+    {
+      "seq": 2,
+      "raw": "Barrett v. Fletcher, ubi supra",
+      "case_name": "Barrett v. Fletcher",
+      "reporter_abbr": "Yelv.",
+      "page": 153,
+      "status": "linked_english_reports",
+      "er_case_id": "17920229",
+      "pincite": true,
+      "confidence": "high",
+      "note": "ubi supra expanded to Yelv. 153, the first report cited on the previous page; case begins at Yel 152"
+    },
+    {
+      "seq": 3,
+      "raw": "1 Saund. 103. n. 1",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 103,
+      "status": "linked_english_reports",
+      "er_case_id": "18450110",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "note (1) to Hayman v. Gerrard, 1 Wms Saund 99 (record at 102)"
+    },
+    {
+      "seq": 4,
+      "raw": "2 Saund. 207. n. 24",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting, 2 Saund. 200, which the English Reports title 'Same v Bateman' at 2 Wms Saund 200 and 205; 207 falls in the record at 205 (the README's choice)"
+    },
+    {
+      "seq": 5,
+      "raw": "qardiner v. Croasdale, 2 Burr. 904",
+      "case_name": "Gardiner v. Croasdale",
+      "volume": 2,
+      "reporter_abbr": "Burr.",
+      "page": 904,
+      "status": "linked_english_reports",
+      "er_case_id": "17600685",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "2 Saund. 206. a, note 22",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 206,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205"
+    }
+  ]
+}
