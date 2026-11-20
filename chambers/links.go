@@ -11,6 +11,9 @@ import (
 
 func workURL(id int) string { return "/works/" + strconv.Itoa(id) }
 
+// workCasesURL is the matrix of a work's editions and the cases they cite.
+func workCasesURL(id int) string { return workURL(id) + "/cases" }
+
 func editionURL(bibliographicid string) string {
 	return "/editions/" + url.PathEscape(bibliographicid)
 }

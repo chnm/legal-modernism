@@ -18,7 +18,7 @@ func TestParseTemplates(t *testing.T) {
 	tmpls := parseTemplates()
 
 	for _, page := range []string{
-		"home.html", "error.html", "works.html", "work.html", "edition.html", "edition_cases.html",
+		"home.html", "error.html", "works.html", "work.html", "work_cases.html", "edition.html", "edition_cases.html",
 		"page.html", "cases.html", "case.html", "reporters.html", "reporter.html",
 		"citations.html", "citation.html", "linking.html", "linking_tiers.html", "linking_whitelist.html",
 		"cap_graph_case.html", "cap_graph_reporter.html", "viz_jurisdictions.html", "viz_field_code.html",
@@ -86,6 +86,55 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `id="color-region"`)
 		require.Contains(t, out, `id="zoom-in"`)
 		require.Contains(t, out, `href="/#viz"`)
+	})
+
+	t.Run("work cases matrix", func(t *testing.T) {
+		eds := matrixTestEditions()
+		eds[0].HasCounts, eds[0].Cites, eds[0].Linked = true, 994, 243
+		name := "Hesketh v Lee"
+		cases := []matrixCase{
+			{CaseRef: CaseRef{Source: "er", ID: "100", Name: &name, Year: ptr(1670), Cite: ptr("85 E.R. 756")},
+				Editions: 2, Cites: 4, First: 1, Last: 3, Positions: []int{1, 3}, Counts: []int{3, 1}},
+			{CaseRef: CaseRef{Source: "cap", ID: "7", Year: ptr(1828)},
+				Editions: 1, Cites: 1, First: 2, Last: 2, Positions: []int{2}, Counts: []int{1}},
+		}
+		d := WorkCasesPage{
+			Page:   Page{Title: "Cases across the editions of A treatise on pleading", Section: "works"},
+			WorkID: 1107, Title: "A treatise on pleading", Author: ptr("Stephen, Henry John"),
+			Editions: eds, Outside: 1, US: 1, UK: 2, Total: 2, Cites: 994, Linked: 243, Sort: "entered",
+			Rows: matrixRows(cases, eds, "entered"),
+		}
+		out := render(t, "work_cases.html", d)
+
+		// The heading, the totals and the orders.
+		require.Contains(t, out, `Cases across the editions of <a href="/works/1107">A treatise on pleading</a>`)
+		require.Contains(t, out, "3 in the treatise view (2 UK, 1 US), 1824–1831; 1 outside it, not shown")
+		require.Contains(t, out, "24% of the 994 detected in these editions")
+		require.Contains(t, out, `<a href="/works/1107/cases?sort=entered" class="btn btn-primary">First cited</a>`)
+		require.Contains(t, out, `<a href="/works/1107/cases?sort=editions" class="btn btn-outline-secondary">Most editions</a>`)
+
+		// A column for each edition, coloured by jurisdiction and linked to it.
+		require.Contains(t, out, `<col class="uk"><col class="us"><col class="uk">`)
+		require.Contains(t, out, `<a href="/editions/ed1">1824</a>`)
+		require.Contains(t, out, `<a href="/editions/ed3">n.d.</a>`)
+		require.Contains(t, out, `Philadelphia<br><span class="st">2nd American ed.</span>`)
+		require.Contains(t, out, `<td class="m">24%</td><td class="m">&mdash;</td>`)
+
+		// A row for each case under its group, linked to the case, with a cell
+		// for each edition: cited, not cited, and older than the case.
+		require.Contains(t, out, `<tr class="group"><th colspan="8" scope="colgroup"><span>First cited in 1824, London: 3 cases</span></th></tr>`)
+		require.Contains(t, out, `<a href="/cases/er/100" title="Hesketh v Lee">Hesketh v Lee</a>`)
+		require.Contains(t, out, `<td class="x uk"><a href="/citations?case=er%3A100&amp;edition=ed1" title="3 citations">3</a></td><td></td>`+
+			`<td class="x uk"><a href="/citations?case=er%3A100&amp;edition=ed3" title="1 citation"></a></td></tr>`)
+		require.Contains(t, out, `<td class="b"></td><td class="x us"><a href="/citations?case=cap%3A7&amp;edition=ed2" title="1 citation"></a></td><td></td></tr>`)
+
+		// A work with nothing linked, and one with no treatise edition.
+		d.Rows = nil
+		require.Contains(t, render(t, "work_cases.html", d), "No linked citations in this work's treatise editions.")
+		d.Editions = nil
+		out = render(t, "work_cases.html", d)
+		require.Contains(t, out, "This work has no editions in the treatise view.")
+		require.NotContains(t, out, `<table class="matrix">`)
 	})
 
 	t.Run("linking dashboard, treatises", func(t *testing.T) {

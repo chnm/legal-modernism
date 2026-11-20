@@ -29,7 +29,8 @@ Deployment: `Dockerfile` builds the binary into a distroless image; `.github/wor
 |---|---|
 | `/` | The five sections. Reads nothing from the database. |
 | `/works` | Works with an edition in the treatise view: title, author, editions, years, US/UK, citations, linked share, cases. `q` searches title and author; `jur` is `us`, `uk` or `both`; `sort` is `cites`, `cases`, `editions`, `earliest` or `title`. |
-| `/works/{id}` | A work: its editions (those outside the treatise view muted, derivatives flagged), a chart of citations per edition, and the cases cited most across its editions, with how many editions cite each. |
+| `/works/{id}` | A work: its editions (those outside the treatise view muted, derivatives flagged), a chart of citations per edition, and the cases cited most across its editions, with how many editions cite each and a link to the matrix of every case. |
+| `/works/{id}/cases` | The cases a work cites, edition by edition (issue #437): a matrix with the work's treatise editions as its columns, earliest first and coloured US or UK, and the cases their linked citations reach as its rows. A filled cell is an edition that cites the case, with the number of citations when more than one, linked to them; a shaded cell an edition that does not; a blank one an edition published before the case was decided. Above the cases, each edition's cases, the cases it is the first to cite, and the share of its citations that linked, since an empty cell may be a citation the linker did not resolve. `sort` is `editions` (the cases cited by the most editions first), `entered` (grouped by the first edition to cite the case), `left` (by the last) or `year` (the year decided). A page holds as many cases as keep the table near 90,000 cells: all 3,219 of Stephen on Pleading, 756 of Blackstone's. |
 | `/editions/{bibliographicid}` | An edition: the catalogue record, its subjects and LoC headings, links to Gale, its citation totals, the reporters it cites and their US/UK share, the cases it cites most, and every page on which a citation was found, volume by volume, with the page's type and section. |
 | `/editions/{bibliographicid}/cases` | Every case the edition cites, paginated; `sort` is `cites`, `year` or `name`. |
 | `/pages/{psmid}/{pageid}` | A page: the text as the detector read it, with every citation it found marked and the case name read before each marked beside it, and the citations in the order they appear with their names and links; `?text=original` shows the scan's OCR text unmarked. Previous and next page, and previous and next page with citations. |
@@ -77,7 +78,7 @@ Two kinds of query serve the pages. Live queries read a page, a citation, a volu
 |---|---|---|
 | `moml_citations.edition_citation_counts` | one treatise edition: the treatise view materialized, with its work, counts and cases | every list and per-case join |
 | `moml_citations.work_citation_counts` | one work with a treatise edition | `/works`, `/works/{id}` |
-| `moml_citations.edition_case_citations` | one edition and one case it cites (issue #213) | top cases, citing editions |
+| `moml_citations.edition_case_citations` | one edition and one case it cites (issue #213) | top cases, citing editions, the matrix of a work's cases |
 | `moml_citations.case_edition_counts` | one case, with its name, year and cite copied in, ranked by citing editions | `/cases`, case summaries |
 | `moml_citations.reporter_case_citations` | one reporter and one case reached through it | reporter pages |
 | `moml_citations.edition_reporter_citations` | one edition and one reporter it cites | edition and reporter pages |
