@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "01500",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:53:11Z",
+  "note": "printed p. 162: end of the author's text and notes (b), (c) (Co. Litt., Heath's Maxims, Com. Dig., statutes: not recorded); the American editor's note continued",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Fits v. Freestone, 1 Mod. 310",
+      "case_name": "Fits v. Freestone",
+      "volume": 1,
+      "reporter_abbr": "Mod.",
+      "page": 210,
+      "status": "linked_english_reports",
+      "er_case_id": "17961002",
+      "confidence": "high",
+      "note": "printed 310 (in this copy too) corrected to 210: Fits v. Freestone is 1 Mod 210"
+    },
+    {
+      "seq": 2,
+      "raw": "Abbot. v. Chapman, 2 Lev, 81",
+      "case_name": "Abbot v. Chapman",
+      "volume": 2,
+      "reporter_abbr": "Lev.",
+      "page": 81,
+      "status": "linked_english_reports",
+      "er_case_id": "17930001",
+      "confidence": "high"
+    }
+  ]
+}

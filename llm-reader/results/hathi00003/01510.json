@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "01510",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:53:23Z",
+  "note": "printed pp. 162-163: end of the American editor's note [20]",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Bird v. Randall, 3 Burr. 1353",
+      "case_name": "Bird v. Randall",
+      "volume": 3,
+      "reporter_abbr": "Burr.",
+      "page": 1353,
+      "status": "linked_english_reports",
+      "er_case_id": "17620069",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 3 Burr 1345"
+    }
+  ]
+}

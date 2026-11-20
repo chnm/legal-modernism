@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "01270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:53:37Z",
+  "note": "printed p. 132-133; certainty of the issue, the ancient jury. Agrees with the Gale copy's record (19005785400/01160)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "The King v. Cook, 2 Barn. & Cres. 871",
+      "case_name": "The King v. Cook",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 871,
+      "status": "linked_english_reports",
+      "er_case_id": "18240180",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "01110",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:51:06Z",
+  "note": "printed p. 107-108; judgment for the defendant and judgment by default; Booth and Com. Dig. skipped. Agrees with the Gale copy's record (19005785400/00990)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Saund. 45, п. (4.)",
+      "case_name": "William v. Gwyn",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 45,
+      "status": "linked_english_reports",
+      "er_case_id": "18450305",
+      "confidence": "medium",
+      "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), which has a record beginning at 2 Wms Saund 45"
+    }
+  ]
+}
