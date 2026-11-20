@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00002", "pageid": "04460",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T23:44:22Z",
+  "note": "Appendix pp. xcii-xciii, notes (84)-(86); cross-checked with 19005816500/04370. Bracton and Vin. Ab. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Constable's Case, 5 Rep. 108 a", "case_name": "Constable's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 108,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true,
+     "confidence": "high", "note": "Sir Henry Constable's Case begins at 5 Co Rep 106 (next case, Foxley's, at 109)"},
+    {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
+     "reporter_abbr": "Lutw.", "page": 665,
+     "status": "no_match", "confidence": "medium",
+     "note": "Lutwyche is only in the stubs; the stubs have 1 Lutw. 660, 662, 670 and 680 but nothing at 665, so this is a pin cite into a stub or an unregistered case; not in the English Reports by name"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00002", "pageid": "04370",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T23:39:52Z",
+  "note": "Appendix pp. lxxvii-lxxviii, notes (66)-(67); cross-checked with 19005816500/04280. Bracton and Co. Litt. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Rex v. Cooke, 2 Barn. and Cres. 871", "case_name": "Rex v. Cooke",
+     "volume": 2, "reporter_abbr": "Barn. and Cres.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high"},
+    {"seq": 2, "raw": "Halsey v. Carpenter, Cro. Jac. 360", "case_name": "Halsey v. Carpenter",
+     "reporter_abbr": "Cro. Jac.", "page": 360,
+     "status": "linked_english_reports", "er_case_id": "17910448", "pincite": true,
+     "confidence": "high",
+     "note": "case begins at Cro Jac 359 (three short cases begin there); Barret v. Winchcomb begins at 360 but the printed name decides"}
+  ]
+}
