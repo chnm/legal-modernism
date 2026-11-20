@@ -42,21 +42,6 @@
 				{{ .Content }}
 			</div>
 			{{ end}}
-			{{ if .Params.Video }}
-			{{ $img := .Resources.GetMatch "thumbnail.png"}}
-			{{ $alt := .Params.Alt | default (printf "Video preview for %s" .Title) }}
-			<div class="col-sm-4">
-				<div class="embed-responsive video-border embed-responsive-16by9">
-					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.RelPermalink }}" aria-label="{{ $alt }}">
-						<source src="{{ .Params.Video }}" type="{{ .Params.VideoType }}">
-						Your browser does not support the video tag.
-					</video>
-				</div>
-			</div>
-			<div class="col-sm-8">
-				{{ .Content }}
-			</div>
-			{{ end }}
 
 
 		</div>

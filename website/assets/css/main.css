@@ -80,13 +80,8 @@ header p {
   margin-bottom: 1rem;
 }
 
-.publication-item .img-thumbnail,
-.publication-item .video-border {
+.publication-item .img-thumbnail {
   max-width: 100%;
-  border-color: var(--lm-purple-muted);
-}
-
-.video-border {
   border-color: var(--lm-purple-muted);
 }
 
