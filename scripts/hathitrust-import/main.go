@@ -85,7 +85,7 @@ func main() {
 	initLogger()
 
 	manifestPath := flag.String("manifest", "scripts/hathitrust-import/stephen-on-pleading.json", "path to the manifest of volumes")
-	dir := flag.String("dir", "temp/hathitrust", "directory holding the zips downloaded from HathiTrust")
+	dir := flag.String("dir", "tmp/hathitrust", "directory holding the zips downloaded from HathiTrust")
 	check := flag.Bool("check", false, "read the manifest and the downloads and report on them without connecting to the database")
 	flag.Parse()
 

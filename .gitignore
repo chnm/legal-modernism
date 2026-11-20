@@ -99,7 +99,6 @@ website/resources/_gen/*
 cap-import/case_metadata/*
 cap-import/metadata_unzipped/*
 
-temp/*
 
 *_cache
 .claude/settings.local.json

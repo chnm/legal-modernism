@@ -22,7 +22,7 @@ split_cites <- raw_cites |>
   filter(cite != "")
 
 
-write_csv(split_cites, "temp/split-parallel-cites.csv")
+write_csv(split_cites, "tmp/split-parallel-cites.csv")
 
 
 dbDisconnect(db)
