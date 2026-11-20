@@ -58,8 +58,10 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
   Coke's Entries, Wentworth) are not.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
-  Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst.), statutes
-  (`4 Ann. c. 16`), cross-references (`supra, p. 32`). Skip them.
+  Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, and the
+  practice books Richardson's K. B. and Manning's Exchequer), statutes
+  (`4 Ann. c. 16`), rules of court even when printed in a report
+  (`6 Bing. 802`), cross-references (`supra, p. 32`). Skip them.
 - Tables of cases and indexes list case names with the treatise's own page
   numbers, not citations: record the page with `"citations": []` and a note,
   even when an entry carries a report to tell Anonymous cases apart

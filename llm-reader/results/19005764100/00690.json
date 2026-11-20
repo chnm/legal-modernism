@@ -1,0 +1,10 @@
+{
+  "psmid": "19005764100", "pageid": "00690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:41:24Z",
+  "citations": [
+    {"seq": 1, "raw": "Wattson v. Abbott, 4 Tyr. 04", "case_name": "Watson v. Abbott",
+     "volume": 4, "reporter_abbr": "Tyr.", "page": 64,
+     "status": "linked_english_reports", "er_case_id": "18330289", "confidence": "medium",
+     "note": "OCR 04 for 64 (the 1845 edition prints 64); Tyrwhitt has no source; same case reported as Watson v. Abbot, 2 Cr & M 150 (1833)"}
+  ]
+}

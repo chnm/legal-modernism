@@ -1,0 +1,150 @@
+{
+  "psmid": "19005764100",
+  "pageid": "01070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:48:30Z",
+  "note": "Com. Dig., Bac. Ab. and 1 Arch. are not cases, not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Nowlan v. Ged- des, I East, 631",
+      "case_name": "Nowlan v. Geddes",
+      "volume": 1,
+      "reporter_abbr": "East",
+      "page": 634,
+      "status": "linked_english_reports",
+      "er_case_id": "18010328",
+      "confidence": "high",
+      "note": "OCR 'I' for 1 and '631' for 634: Nowlan v. Geddes begins at 1 East 634, as other editions print it"
+    },
+    {
+      "seq": 2,
+      "raw": "Gundry v. 1'eltham, 1 T. R. 334",
+      "case_name": "Gundry v. Feltham",
+      "volume": 1,
+      "reporter_abbr": "T. R.",
+      "page": 334,
+      "status": "linked_english_reports",
+      "er_case_id": "17860152",
+      "confidence": "high",
+      "note": "OCR '1'eltham' for Feltham"
+    },
+    {
+      "seq": 3,
+      "raw": "1 Sauhd. 337 b. n. (3)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 337,
+      "status": "linked_english_reports",
+      "er_case_id": "18450103",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; note (3) to Hancocke v. Prowd, which begins at 1 Wms Saund 328; ER splits it, and the record from 336 holds 337 b"
+    },
+    {
+      "seq": 4,
+      "raw": "5 Rep. 29 a.",
+      "volume": 5,
+      "reporter_abbr": "Rep.",
+      "page": 29,
+      "status": "linked_english_reports",
+      "er_case_id": "15720287",
+      "confidence": "medium",
+      "note": "no name printed here; Piggot's Case, cited by name at the same cite in note (o); Prince's Case also begins at 5 Co Rep 29"
+    },
+    {
+      "seq": 5,
+      "raw": "1 Saund. 285; n. (.)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 285,
+      "status": "linked_english_reports",
+      "er_case_id": "18450073",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "note number illegible (other editions print n. (5)); note to Duppa v. Mayo, which begins at 1 Wms Saund 282; no name printed"
+    },
+    {
+      "seq": 6,
+      "raw": "Foster v. Jackson, Hob. 58",
+      "case_name": "Foster v. Jackson",
+      "reporter_abbr": "Hob.",
+      "page": 58,
+      "status": "linked_english_reports",
+      "er_case_id": "17922015",
+      "pincite": true,
+      "confidence": "high",
+      "note": "begins at Hob 52 and runs to 61; another edition prints Hob. 56"
+    },
+    {
+      "seq": 7,
+      "raw": "Anon; 2 Wils. 150",
+      "case_name": "Anonymous",
+      "volume": 2,
+      "reporter_abbr": "Wils.",
+      "page": 150,
+      "status": "linked_english_reports",
+      "er_case_id": "17630041",
+      "confidence": "high",
+      "note": "the Anonymous case of 1763 at 2 Wils KB 150, not Repington v. Governors of Tamworth School at the same page"
+    },
+    {
+      "seq": 8,
+      "raw": "Le Bret v. Papillon, 4 East, 502",
+      "case_name": "Le Bret v. Papillon",
+      "volume": 4,
+      "reporter_abbr": "East",
+      "page": 502,
+      "status": "linked_english_reports",
+      "er_case_id": "18040108",
+      "confidence": "high"
+    },
+    {
+      "seq": 9,
+      "raw": "Anon. 2 Wils. 150",
+      "case_name": "Anonymous",
+      "volume": 2,
+      "reporter_abbr": "Wils.",
+      "page": 150,
+      "status": "linked_english_reports",
+      "er_case_id": "17630041",
+      "confidence": "high",
+      "note": "same Anonymous case as seq 7"
+    },
+    {
+      "seq": 10,
+      "raw": "Thomas v. ecathorn, 2 Ban,. & Cres. 477",
+      "case_name": "Thomas v. Heathorn",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 477,
+      "status": "linked_english_reports",
+      "er_case_id": "18240206",
+      "confidence": "high",
+      "note": "OCR 'ecathorn' for Heathorn, 'Ban,.' for Barn."
+    },
+    {
+      "seq": 11,
+      "raw": "Piggot's Case, 5 Rep. 29 a.",
+      "case_name": "Piggot's Case",
+      "volume": 5,
+      "reporter_abbr": "Rep.",
+      "page": 29,
+      "status": "linked_english_reports",
+      "er_case_id": "15720287",
+      "confidence": "high"
+    },
+    {
+      "seq": 12,
+      "raw": "Bates v. Cort, 2 Earn, & Cres. 474",
+      "case_name": "Bates v. Cort",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 474,
+      "status": "linked_english_reports",
+      "er_case_id": "18240015",
+      "confidence": "high",
+      "note": "OCR 'Earn,' for Barn."
+    }
+  ]
+}

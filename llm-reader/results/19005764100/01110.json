@@ -1,0 +1,80 @@
+{
+  "psmid": "19005764100",
+  "pageid": "01110",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:48:41Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Jackson v. Pesked, 1 Ml. & S. 234",
+      "case_name": "Jackson v. Pesked",
+      "volume": 1,
+      "reporter_abbr": "M. & S.",
+      "page": 234,
+      "status": "linked_english_reports",
+      "er_case_id": "18130139",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "1 Saund. 28, n. (1)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 228,
+      "status": "linked_english_reports",
+      "er_case_id": "18450243",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "OCR dropped a digit: the quotation is Serjeant Williams's note on aider by verdict, 1 Saund. 228 n. (1), Stennel v. Hogg (ER record from 1 Wms Saund 226); no name printed"
+    },
+    {
+      "seq": 3,
+      "raw": "Jackso v. Pesked, 1 A. & S. 234",
+      "case_name": "Jackson v. Pesked",
+      "volume": 1,
+      "reporter_abbr": "M. & S.",
+      "page": 234,
+      "status": "linked_english_reports",
+      "er_case_id": "18130139",
+      "confidence": "high",
+      "note": "OCR 'A. & S.' for M. & S."
+    },
+    {
+      "seq": 4,
+      "raw": "Nerot v. Wallacc, 3 T. R. 25",
+      "case_name": "Nerot v. Wallace",
+      "volume": 3,
+      "reporter_abbr": "T. R.",
+      "page": 25,
+      "status": "linked_english_reports",
+      "er_case_id": "17892362",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 3 TR 17; the next begins at 27"
+    },
+    {
+      "seq": 5,
+      "raw": "Weston v. Mason, 3 Brlr. 1M725",
+      "case_name": "Weston v. Mason",
+      "volume": 3,
+      "reporter_abbr": "Burr.",
+      "page": 1725,
+      "status": "linked_english_reports",
+      "er_case_id": "17650065",
+      "confidence": "high",
+      "note": "OCR 'Brlr. 1M725' for Burr. 1725; ER names it 'Weston versus Chapman', Murrell Weston v Mason"
+    },
+    {
+      "seq": 6,
+      "raw": "Jackson v. Peaked, 1 M; & S. 334",
+      "case_name": "Jackson v. Pesked",
+      "volume": 1,
+      "reporter_abbr": "M. & S.",
+      "page": 234,
+      "status": "linked_english_reports",
+      "er_case_id": "18130139",
+      "confidence": "high",
+      "note": "OCR '334' for 234 and 'Peaked' for Pesked: the same case is cited at 1 M. & S. 234 twice above"
+    }
+  ]
+}

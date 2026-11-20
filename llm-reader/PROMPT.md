@@ -37,6 +37,9 @@ of 10 between them). For each page, in order:
 Run shell commands one at a time: the worktree guard refuses compound
 commands, loops and scripts in `/tmp`. Write each record with the Write tool.
 
+Read every page in full, indexes and tables included: do not skim a page or
+search it for patterns in place of reading it.
+
 Skip a page that already has a results file. When done, run
 `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and fix any problem in
 your files. Report back briefly: pages written, citations by status, the

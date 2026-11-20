@@ -19,6 +19,7 @@ most are OCR noise. But some are real:
   `3 Taunt. 91. 232` (Swinnerton v. Marquis of Stafford),
   `3 Wils. 419. 541` (Tyssen v. Clarke), `2 Vent. 198. 222`.
 - Two year-book folios cited as separate authorities: `7 Edw. 2, 213, 226`.
+- `Dyer, 66 b, 171 b`: two different cases; readers have recorded both.
 - `1 Sch. & Lef. 320. 324`, where 324 is probably Shannon v. Shannon, the
   replevin case the passage needs, and 320 only the stub's first page.
 

@@ -1,0 +1,34 @@
+{
+  "psmid": "19005764100",
+  "pageid": "01150",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:48:41Z",
+  "note": "Bac. Ab. is an abridgment, Rastall and Winch's Entries books of precedents; not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Colt v. Bishop of Coventry, Hob. 162",
+      "case_name": "Colt v. Bishop of Coventry",
+      "reporter_abbr": "Hob.",
+      "page": 162,
+      "status": "linked_english_reports",
+      "er_case_id": "17921247",
+      "pincite": true,
+      "confidence": "high",
+      "note": "the Commendam case begins at Hob 140; the next case begins at Hob 165"
+    },
+    {
+      "seq": 2,
+      "raw": "Read v. Brookman, 3 T, R. 158",
+      "case_name": "Read v. Brookman",
+      "volume": 3,
+      "reporter_abbr": "T. R.",
+      "page": 158,
+      "status": "linked_english_reports",
+      "er_case_id": "17892447",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 3 TR 151; the records at 153 and 154 (dated 1817) are notes set into it, and the next case of 1789 begins at 162"
+    }
+  ]
+}
