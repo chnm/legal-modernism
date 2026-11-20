@@ -1,0 +1,17 @@
+{
+  "psmid": "19005781000",
+  "pageid": "01350",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:58:11Z",
+  "note": "Bac. Ab. and Com. Dig. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Anon. 3 8alk. 353", "case_name": "Anonymous",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
+     "note": "OCR '8alk.' for Salk.; the Anonymous beginning at 3 Salk 353 (on traverse, under Pleas), as linked for other editions; Bullen v. Benson also begins there"},
+    {"seq": 2, "raw": "Dike v. Ricks, Cro. Car. 336", "case_name": "Dike v. Ricks",
+     "reporter_abbr": "Cro. Car.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true, "confidence": "high",
+     "note": "Dike v. Ricks begins at Cro Car 335"}
+  ]
+}

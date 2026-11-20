@@ -1,0 +1,10 @@
+{
+  "psmid": "19005781000", "pageid": "00860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:55:40Z",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 45, n. (41)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "OCR (41) for (4), as the 1854 edition prints; no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), whose second ER record begins at 2 Wms Saund 45; the case begins at 42. Booth and Comyns's Digest skipped"}
+  ]
+}

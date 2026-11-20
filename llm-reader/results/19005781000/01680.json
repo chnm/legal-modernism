@@ -1,0 +1,27 @@
+{
+  "psmid": "19005781000", "pageid": "01680",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:59:50Z",
+  "note": "footnotes badly garbled in OCR; numbers checked against the 1854 edition; Bac. Ab., Gilb. C. P. and the supra cross-reference are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "lI:ynlhut v. Gerrard, 1 Saund. 102", "case_name": "Hayman v. Gerrard",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true,
+     "confidence": "high", "note": "OCR garbled the name; ER splits Hayman v. Gerrard at 1 Wms Saund 99 and 102; the cite is the record at 102, a pincite since the case begins at 99"},
+    {"seq": 2, "raw": "Cornwallis v. Scry, Burr. . 72", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007",
+     "confidence": "high", "note": "OCR garbled name and page; 2 Burr. 772 as printed on page 233 and in the other editions"},
+    {"seq": 3, "raw": "Svare v. Minus, Cowp. 5 ;..", "case_name": "Sayre v. Minns",
+     "reporter_abbr": "Cowp.", "page": 575,
+     "status": "linked_english_reports", "er_case_id": "17770027",
+     "confidence": "high", "note": "OCR garbled; Cowp. 575 as printed on page 233 and in the other editions"},
+    {"seq": 4, "raw": "Digby v. Fitziharbert, lHob. 1(;", "case_name": "Digby v. Fitzharbert",
+     "reporter_abbr": "Hob.", "page": 104,
+     "status": "linked_english_reports", "er_case_id": "17920663", "pincite": true,
+     "confidence": "high", "note": "OCR '1(;' read as 104, as in the 1854 edition; case begins at Hob 101"},
+    {"seq": 5, "raw": "Wilsn v.. 2r nip, 2 1 . & S. .519", "case_name": "Wilson v. Kemp",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 549,
+     "status": "linked_english_reports", "er_case_id": "18140395",
+     "confidence": "medium", "note": "OCR badly garbled; read as Wilson v. Kemp, 2 M. & S. 549, as printed in the 1854 edition"}
+  ]
+}

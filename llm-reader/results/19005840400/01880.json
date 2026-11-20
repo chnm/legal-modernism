@@ -34,9 +34,11 @@
       "reporter_abbr": "Saund.",
       "page": 319,
       "status": "linked_english_reports",
-      "er_case_id": "18450121",
+      "er_case_id": "18450012",
       "confidence": "medium",
-      "note": "Saunders's note (6) to Hoskins v. Robins, which begins at 2 Wms Saund 319"
+      "note": "Williams's note (6) at 2 Saund. 319 is read as the note to Bennet v. Holbech (2 Wms Saund 317, 5,609 words, running onto 319), the leading case on repleader: Williams numbers each case's notes from (1), and a sixth note on Hoskins v. Robins's first page (319) is unlikely. Aligned by the coordinator across editions.",
+      "case_name": "Bennet v. Holbech",
+      "pincite": true
     },
     {
       "seq": 4,

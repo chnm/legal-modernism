@@ -1,0 +1,18 @@
+{
+  "psmid": "19005781000", "pageid": "01020",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:00:15Z",
+  "note": "Bracton is a treatise, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Collet v. Lord Keith. 2 East, 260", "case_name": "Collett v. Lord Keith",
+     "volume": 2, "reporter_abbr": "East", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "18020175", "confidence": "high"},
+    {"seq": 2, "raw": "J'Anson v. Stewart, 1 T. R. 748", "case_name": "J'Anson v. Stewart",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 748,
+     "status": "linked_english_reports", "er_case_id": "17870116", "confidence": "high",
+     "note": "ER spells it J'Anson against Stuart"},
+    {"seq": 3, "raw": "Holmes v. Catesbv, I Taunt. 643", "case_name": "Holmes v. Catesby",
+     "volume": 1, "reporter_abbr": "Taunt.", "page": 543,
+     "status": "linked_english_reports", "er_case_id": "18090216", "confidence": "high",
+     "note": "OCR I for 1, 643 for 543: Holmes v. Catesby begins at 1 Taunt 543 (nothing at 643 in ER)"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "psmid": "19005781000",
+  "pageid": "01230",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:56:08Z",
+  "note": "end of the American editor's note [20]; 1 Chitty is a treatise, not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Bird v. Randall, 3 Burr. 1353", "case_name": "Bird v. Randall",
+     "volume": 3, "reporter_abbr": "Burr.", "page": 1353,
+     "status": "linked_english_reports", "er_case_id": "17620069", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 Burr 1345"}
+  ]
+}

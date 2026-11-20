@@ -1,0 +1,11 @@
+{
+  "psmid": "19005781000",
+  "pageid": "00280",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:54:27Z",
+  "citations": [
+    {"seq": 1, "raw": "22 Ass. 41", "volume": 22, "reporter_abbr": "Y.B.", "page": 41,
+     "status": "no_match", "confidence": "high",
+     "note": "22 Edw. III, Liber Assisarum (year book), pl. 41; year books have no source here"}
+  ]
+}
