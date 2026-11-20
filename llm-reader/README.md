@@ -13,9 +13,12 @@ cases up itself, so the result can be compared with `moml_citations.citation_lin
 - `moml_citations.llm_pages` and `moml_citations.llm_links` hold the records
   once loaded (`db/migrations/20261120020229_llm-links.sql`).
 
+Set `LAW_DBSTR` on the command line each time (`LAW_DBSTR="$LAW_CLAUDE"
+bin/llm-reader ...`): an `export` does not carry over between Claude's shell
+calls. Read-only access is enough for everything but `load`.
+
 ```sh
 go build -o bin/llm-reader ./llm-reader/          # from the repository root
-export LAW_DBSTR="$LAW_CLAUDE"                    # read-only is enough except for load
 bin/llm-reader todo --limit 25 --jurisdiction US      # next pages to read
 bin/llm-reader page <psmid> <pageid>                  # a page's OCR text
 bin/llm-reader validate --db                          # check every record and its targets
@@ -43,10 +46,14 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   at that page if there is one). A string of cites is one record each.
 - A case cited by name with no reporter (`as in Slade's case`) is not
   recorded unless a reporter cite accompanies it somewhere on the page.
+- Year books (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
+  of cases with no source here: always record them, as `no_match`.
+- Reports that are also books of entries (`Lutw.`) are reports: record them.
+  Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
+  Coke's Entries, Wentworth) are not.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst.), statutes
-  (`4 Ann. c. 16`), year books may be recorded as `no_match`, cross-references
-  (`supra, p. 32`). Skip them.
+  (`4 Ann. c. 16`), cross-references (`supra, p. 32`). Skip them.
 - Tables of cases and indexes list case names with the treatise's own page
   numbers, not citations: record the page with `"citations": []` and a note.
   So too title pages, advertisements, blank pages.
@@ -72,7 +79,13 @@ Query with `psql "$LAW_CLAUDE"`, read-only. The case name is the check: link
 only when the case found is plausibly the one named (spelling, abbreviation
 and order of parties vary; `Rex v.` = `The King against`, `Doe d. A v. B`,
 `ex parte`). When the page gives no name, a hit at the exact first page is
-enough at `medium` confidence.
+enough at `medium` confidence. When a cite prints no volume (`Ld. Ray. 883`), find the
+volume from the case name and say in `note` that you supplied it. When a pin
+cite falls on a page where one case ends and another begins, the printed name
+decides which. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
+it annotates, which may begin a page or two before the note. A second page
+printed with a cite (`2 Ld. Raym. 882, 883`) is its own record: a pin cite to
+the same case if it falls inside it, otherwise whatever case is there.
 
 **Identify the reporter.** `legalhist.whitelist` maps printed spellings
 (`reporter_found`) to a `reporter_standard`, and `legalhist.reporters` gives
@@ -88,7 +101,10 @@ dropped), `Dick 500` (reporters paged as one run have no volume). Bosanquet
 and Puller's New Reports are mostly stored under `Bos & Pul` too, so that
 `1 Bos & Pul 64` may be the 1797 volume or the 1804 New Reports: tell them
 apart by `er_year` and the name. Look across reporters by name when a cite
-misses: the same case is often reported in several.
+misses: the same case is often reported in several. Some reporters carry a
+court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
+`Barn KB`; when an exact cite misses, match the volume and the start of the
+reporter's name (`er_parallel_cite ~ '^3 Wils'`) to see how it is stored.
 
 ```sql
 -- exact cite, then the reporter-volume to find the case a pin cite falls in
@@ -151,7 +167,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - `seq` numbers the citations 1, 2, 3 in the order printed.
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
-  printed) are your reading of it.
+  printed) are your reading of it. A volume you supplied goes in `volume`, and
+  `note` says so.
 - `status` is `linked_cap`, `linked_english_reports`, `linked_code_reporter`,
   `linked_stub` or `no_match`, with exactly the matching one of
   `cap_case_id` (number), `er_case_id` (string), `code_reporter_id` (number),

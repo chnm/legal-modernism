@@ -1,0 +1,11 @@
+{
+  "psmid": "19005816500",
+  "pageid": "00370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:08:15Z",
+  "note": "otherwise treatises only (F.N.B., Doct. Pl., 2 Inst., Dalton's Sheriff, Selwyn)",
+  "citations": [
+    {"seq": 1, "raw": "Moor v. Watts,-Ld. Ray. 617", "case_name": "Moor v. Watts", "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 617,
+     "status": "linked_english_reports", "er_case_id": "17921610", "pincite": true, "confidence": "high", "note": "no volume printed; vol. 1 implied. ER 1 Ld Raym 613, Moore vers Watts, the next case begins at 618; also reported Holt KB 626 and 2 Salk 581"}
+  ]
+}

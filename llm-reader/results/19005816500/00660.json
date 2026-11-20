@@ -1,0 +1,8 @@
+{"psmid": "19005816500", "pageid": "00660", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:10:00Z",
+ "note": "3 Reeves (History of English Law) and Tidd are treatises, skipped",
+ "citations": [
+  {"seq": 1, "raw": "Brown v. Babbington, Ld. Ray. 882", "case_name": "Brown v. Babbington", "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 882,
+   "status": "linked_english_reports", "er_case_id": "17900246", "pincite": true, "confidence": "high", "note": "no volume printed; the case is 2 Ld Raym 880, cited at 882"},
+  {"seq": 2, "raw": "883", "case_name": "Brown v. Babbington", "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 883,
+   "status": "linked_english_reports", "er_case_id": "17900246", "pincite": true, "confidence": "medium", "note": "second page of the same cite, 882, 883; Burdett v Wheatly also begins at 2 Ld Raym 883, but the cite continues Brown v Babbington onto its last page"}
+ ]}

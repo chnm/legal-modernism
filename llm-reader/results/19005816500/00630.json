@@ -1,0 +1,6 @@
+{"psmid": "19005816500", "pageid": "00630", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:08:15Z",
+ "note": "Vin. Abr., Br. Bille, Tidd, Sellon and Hale's tracts are treatises, skipped",
+ "citations": [
+  {"seq": 1, "raw": "Brown v. Babbington, Ld. Ray. 882", "case_name": "Brown v. Babbington", "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 882,
+   "status": "linked_english_reports", "er_case_id": "17900246", "pincite": true, "confidence": "high", "note": "no volume printed; the case is 2 Ld Raym 880 (Brown vers Babbington), cited at 882"}
+ ]}
