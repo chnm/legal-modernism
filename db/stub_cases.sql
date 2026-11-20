@@ -179,10 +179,14 @@ FROM inserted;
 --    at them are stale until the next full linker rebuild. A stub with
 --    metadata is kept regardless -- its foreign key would reject the delete,
 --    and it is kept on purpose (see the header) -- and counted separately.
+--    So is a stub that a link Claude made by reading a page points at
+--    (moml_citations.llm_links, issue #439), whose foreign key would also
+--    reject the delete.
 WITH pruned AS (
     DELETE FROM legalhist.stub_cases s
     WHERE NOT EXISTS (SELECT 1 FROM stub_candidates c WHERE c.cite = s.cite)
       AND NOT EXISTS (SELECT 1 FROM legalhist.stub_case_metadata m WHERE m.cite = s.cite)
+      AND NOT EXISTS (SELECT 1 FROM moml_citations.llm_links l WHERE l.stub_cite = s.cite)
     RETURNING 1
 )
 SELECT count(*) AS pruned,
