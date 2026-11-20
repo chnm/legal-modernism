@@ -1,0 +1,80 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "00840",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:37:43Z",
+  "note": "printed p. 72; oyer of the original writ; 2 Chitty and Com. Dig. are treatises, skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 318., n. (3)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 318,
+      "status": "linked_english_reports",
+      "er_case_id": "18450197",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note (3) at 318, on oyer; by the choice already made (README) it is Redman v. Edolph, 1 Wms Saund 317. Agrees with the Gale copy's record"
+    },
+    {
+      "seq": 2,
+      "raw": "Bragg v. Digby, Salk. 658",
+      "case_name": "Bragg v. Digby",
+      "volume": 2,
+      "reporter_abbr": "Salk.",
+      "page": 658,
+      "status": "linked_english_reports",
+      "er_case_id": "17950606",
+      "confidence": "high",
+      "note": "no volume printed, supplied from the case: Bragg versus Digby, 2 Salk 658"
+    },
+    {
+      "seq": 3,
+      "raw": "Walford v. Savil, Lutw. 8",
+      "case_name": "Walford v. Savil",
+      "volume": 1,
+      "reporter_abbr": "Lutw.",
+      "page": 8,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "a precedent of oyer of the writ in Lutwyche; Lutwyche is in the stubs only and there is no stub at 1 Lutw. 8 (stubs at 7 and 9), so no exact first page; not in ER by name. Volume 1 supplied. As in the Gale copy's record"
+    },
+    {
+      "seq": 4,
+      "raw": "Simpson v. Garside, Lutw. 1642",
+      "case_name": "Simpson v. Garside",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1642,
+      "status": "linked_stub",
+      "stub_cite": "2 Lutw. 1644",
+      "confidence": "medium",
+      "note": "every edition prints 1642 in this footnote, but Simpson v. Garside is cited Lutw. 1644 elsewhere in this edition (printed p. 92) and the stub is 2 Lutw. 1644; 1642 taken as the book's slip for 1644. Volume 2 supplied. As in the Gale copy's record"
+    },
+    {
+      "seq": 5,
+      "raw": "Boats v. Edwards, Doug. 227",
+      "case_name": "Boats v. Edwards",
+      "volume": 1,
+      "reporter_abbr": "Doug.",
+      "page": 227,
+      "status": "linked_english_reports",
+      "er_case_id": "17790117",
+      "confidence": "high",
+      "note": "no volume printed, supplied from the case: Boats against Edwards, 1 Doug 227 (1779)"
+    },
+    {
+      "seq": 6,
+      "raw": "1 Saund. 318., n. (3)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 318,
+      "status": "linked_english_reports",
+      "er_case_id": "18450197",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "repeat of seq 1; Redman v. Edolph, 1 Wms Saund 317"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01050",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:37:11Z",
+  "note": "printed pp. 102-103; counter-pleas to oyer, voucher and view. Reg. Plac. is a treatise and Bro. Ent. a book of entries, skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 9 b., n. (1)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note on oyer at 9 b falls in Jevens v. Harridge and wife, 1 Wms Saund 8. Agrees with the Gale copy's record (19005816500/00970), where the volume was lost"
+    },
+    {
+      "seq": 2,
+      "raw": "Ibid.",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Ibid. expanded to 1 Saund. 9 b, n. (1); Jevens v. Harridge and wife, 1 Wms Saund 8"
+    }
+  ]
+}
