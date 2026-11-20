@@ -1,0 +1,19 @@
+{
+  "psmid": "19005816500",
+  "pageid": "04180",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:40:13Z",
+  "note": "Plac. Ab. (records, not reports) skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "10 Hen. 6, 7",
+      "volume": 10,
+      "reporter_abbr": "Hen. 6",
+      "page": 7,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "year book, 10 Hen. 6, fol. 7: no source"
+    }
+  ]
+}

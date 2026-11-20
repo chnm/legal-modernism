@@ -1,0 +1,28 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03970",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:41:12Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Ed. 2. 8",
+      "volume": 1,
+      "reporter_abbr": "Edw. 2 (Year Book)",
+      "page": 8,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "Year Book 1 Edw. 2, fo. 8; no source for the year books"
+    },
+    {
+      "seq": 2,
+      "raw": "10 Ed. 3. 23",
+      "volume": 10,
+      "reporter_abbr": "Edw. 3 (Year Book)",
+      "page": 23,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "Year Book 10 Edw. 3, fo. 23; no source for the year books"
+    }
+  ]
+}
