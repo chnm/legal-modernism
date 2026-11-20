@@ -1,0 +1,10 @@
+{
+  "psmid": "19005781000", "pageid": "04070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:31:14Z",
+  "note": "Second appendix, end of note 14 and start of note 15 (extracts from H. D. Evans's Essay on Pleading, a treatise)",
+  "citations": [
+    {"seq": 1, "raw": "8 Barn. g Crel. 285", "volume": 8, "reporter_abbr": "Barn. & Cres.", "page": 285,
+     "status": "linked_english_reports", "er_case_id": "18280155", "confidence": "medium",
+     "note": "OCR 'g Crel.' for '& Cres.'; no name printed; Pratt v. Swaine begins at 8 B & C 285 (a special plea of the statute of limitations in trover)"}
+  ]
+}

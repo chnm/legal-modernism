@@ -72,8 +72,9 @@ func main() {
 		err = cmdPage(ctx, fs.Arg(0), fs.Arg(1))
 	case "validate":
 		withDB := fs.Bool("db", false, "also check that every target exists in the database")
+		psmid := fs.String("psmid", "", "check targets only for this volume's records (all records are still parsed)")
 		fs.Parse(args)
-		err = cmdValidate(ctx, *results, *withDB)
+		err = cmdValidate(ctx, *results, *withDB, *psmid)
 	case "serve":
 		port := fs.Int("port", 4314, "port to listen on")
 		title := fs.String("title", "Reading Stephen on Pleading", "page heading")
@@ -172,10 +173,19 @@ func cmdPage(ctx context.Context, psmid, pageid string) error {
 	return nil
 }
 
-func cmdValidate(ctx context.Context, results string, withDB bool) error {
+func cmdValidate(ctx context.Context, results string, withDB bool, psmid string) error {
 	recs, err := readAll(results)
 	if err != nil {
 		return err
+	}
+	if psmid != "" {
+		var mine []*PageRecord
+		for _, r := range recs {
+			if r.Psmid == psmid {
+				mine = append(mine, r)
+			}
+		}
+		recs = mine
 	}
 	links := 0
 	for _, r := range recs {

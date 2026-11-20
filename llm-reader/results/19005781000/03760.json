@@ -1,0 +1,15 @@
+{
+  "psmid": "19005781000", "pageid": "03760",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:22:19Z",
+  "note": "Appendix notes 77-79; Bracton and Vin. Ab. are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "Constable's case, 6 Rep. 108 a", "case_name": "Constable's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 108,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true,
+     "confidence": "high", "note": "volume 6 corrected to 5, as the 1854 edition prints; Sir Henry Constable's Case begins at 5 Co Rep 106 (the other Constable's Case is 8 Co Rep 173)"},
+    {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 665,
+     "status": "no_match", "confidence": "medium",
+     "note": "volume supplied; Lutwyche is only in the stubs, which have 1 Lutw. 660, 662 and 670 but nothing at 665, so a pin cite into a stub or an unregistered case; no Ladd v. Garrod in the English Reports by name; consistent with the 1854 record"}
+  ]
+}

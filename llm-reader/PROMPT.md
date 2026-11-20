@@ -48,6 +48,7 @@ Read every page in full, indexes and tables included: do not skim a page or
 search it for patterns in place of reading it.
 
 Skip a page that already has a results file. When done, run
-`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and fix any problem in
-your files. Report back briefly: pages written, citations by status, the
+`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db --psmid <PSMID>` (once
+per volume you read; checking every volume takes minutes) and fix any problem
+in your files. Report back briefly: pages written, citations by status, the
 no_match and why, and anything in the README that was unclear or wrong.

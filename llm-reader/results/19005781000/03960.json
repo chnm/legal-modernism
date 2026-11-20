@@ -1,0 +1,11 @@
+{
+  "psmid": "19005781000", "pageid": "03960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:26:39Z",
+  "note": "Second appendix, end of note 6 (Chitty's tract on amendment of variances) and start of note 7 on arrest of judgment; the cross-reference to Stephen's own appendix is not a citation",
+  "citations": [
+    {"seq": 1, "raw": "Jelf v. Oriel, 4 Car. 4B P. 22", "case_name": "Jelf v. Oriel",
+     "volume": 4, "reporter_abbr": "Car. & P.", "page": 22,
+     "status": "linked_english_reports", "er_case_id": "18290674", "confidence": "high",
+     "note": "Car. 4B P. is OCR for Car. & P."}
+  ]
+}

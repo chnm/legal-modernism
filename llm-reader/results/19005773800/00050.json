@@ -1,0 +1,19 @@
+{
+  "psmid": "19005773800", "pageid": "00050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:23:03Z",
+  "note": "Heard's preface to the 1867 edition; footnotes to quotations from Grier, J. and Lord Abinger",
+  "citations": [
+    {"seq": 1, "raw": "McFaul v. Ramsey, 20 Howard, 525", "case_name": "McFaul v. Ramsey",
+     "volume": 20, "reporter_abbr": "Howard", "page": 525,
+     "status": "linked_cap", "cap_case_id": 5679946, "pincite": true,
+     "confidence": "high", "note": "case runs 523-527; Grier, J., 1857, as the text says"},
+    {"seq": 2, "raw": "Farni v. Tcson, I Black, 315", "case_name": "Farni v. Tesson",
+     "volume": 1, "reporter_abbr": "Black", "page": 315,
+     "status": "linked_cap", "cap_case_id": 1410131, "pincite": true,
+     "confidence": "high", "note": "OCR 'Tcson' for Tesson, 'I' for 1; case runs 309-315; Grier, J., 1861, as the text says"},
+    {"seq": 3, "raw": "Fraser v. Weclh, 8 M. & W. 634", "case_name": "Fraser v. Welch",
+     "volume": 8, "reporter_abbr": "M. & W.", "page": 634,
+     "status": "linked_english_reports", "er_case_id": "18410780", "pincite": true,
+     "confidence": "high", "note": "OCR 'Weclh' for Welch; case begins at 8 M & W 629 (next case at 638)"}
+  ]
+}

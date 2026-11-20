@@ -1,0 +1,14 @@
+{
+  "psmid": "19005781000", "pageid": "03390",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:25:45Z",
+  "note": "Appendix notes (35)-(37); Reeves, Hale, Coke's Institutes, Bracton, Heath's Maxims, Blackstone and Finch are not cases. The OCR has lost the page's first line (the sentence from p. xlvi, 'Thus the doctrine and practice of pleadings in estoppel and of ...', ends in the other editions with a cite of 17 Ed. II. 534 here); it is recorded as seq 1 from the other editions",
+  "citations": [
+    {"seq": 1, "raw": "17 Ed. II. 534", "volume": 17, "reporter_abbr": "Y.B.", "page": 534,
+     "status": "no_match", "confidence": "medium",
+     "note": "Year book, 17 Edw. II (Maynard's continuous paging); no source. Not in this page's OCR, which drops the first line; raw and numbers taken from the other editions, which print it at this point"},
+    {"seq": 2, "raw": "7 Ed. II.'218", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
+     "status": "no_match", "confidence": "medium", "note": "Year book, 7 Edw. II; OCR 218 read as 213, as the other editions print it; no source"},
+    {"seq": 3, "raw": "ibid. 226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
+     "status": "no_match", "confidence": "high", "note": "ibid. = Year book, 7 Edw. II, p. 226; no source"}
+  ]
+}
