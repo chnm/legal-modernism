@@ -1,0 +1,24 @@
+{
+  "psmid": "19005785400",
+  "pageid": "04500",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:43:00Z",
+  "note": "End of editor's Note 14 (trover for a dog taken by a gamekeeper) and start of Note 15 (extracts from H. D. Evans's Essay on Pleading)",
+  "citations": [
+    {"seq": 1, "raw": "1 Wils. 315", "volume": 1, "reporter_abbr": "Wils.", "page": 315,
+     "status": "linked_english_reports", "er_case_id": "17990554", "confidence": "medium",
+     "note": "no name printed; three cases begin at 1 Wils KB 315; Wingfield v. Stratford, the gamekeeper's seizure of a dog, fits the passage"},
+    {"seq": 2, "raw": "Cro. El. 539", "reporter_abbr": "Cro. El.", "page": 539,
+     "status": "linked_english_reports", "er_case_id": "16530866", "confidence": "low",
+     "note": "no name printed; Greningham v. Ewer and Archbishop of Canterbury v. Kemp both begin at Cro Eliz 539; picked the first"},
+    {"seq": 3, "raw": "1 B. & P. 80", "volume": 1, "reporter_abbr": "B. & P.", "page": 80,
+     "status": "linked_english_reports", "er_case_id": "17970518", "pincite": true, "confidence": "medium",
+     "note": "no name printed; in the 1797 volume 80 falls in Jones v. Kitchin (1 Bos & Pul 77), a game case; Farrer v. Granard at 1 Bos & Pul 80 is the 1804 New Reports"},
+    {"seq": 4, "raw": "1 East, 217", "volume": 1, "reporter_abbr": "East", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "18000045", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page falls in Taylor v. Eastwood (1 East 212), on a gamekeeper's deputation"},
+    {"seq": 5, "raw": "8 Barn. 4. Cres. 285", "volume": 8, "reporter_abbr": "Barn. & Cres.", "page": 285,
+     "status": "linked_english_reports", "er_case_id": "18280155", "confidence": "medium",
+     "note": "no name printed; '4.' read as '&'; Pratt v. Swaine begins at 8 B & C 285"}
+  ]
+}

@@ -51,7 +51,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   of cases with no source here: always record them, as `no_match`, leaving
   out `page` when the folio cannot be read. Write `reporter_abbr` as `Y.B.`
   and the regnal year as `volume`, with the reign in `note` (`10 Edw. III`).
-  A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not
+  A year book cited only by an editor's page (`Mayn. 109`) leaves `volume`
+  empty. A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not
   recorded. Records of pleas (Placitorum Abbreviatio) are not reports.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
@@ -121,7 +122,8 @@ case ends and another begins, the printed name decides which. `S. C.` (same
 case) points to the case just named: find that case in the reporter given.
 Some reporters were paged differently in different editions (Douglas,
 Strange): a named case found a page or two from the printed page is linked,
-with a note. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
+with a note. A note to a case (`1 Saund. 318, n. (3)`), or any editor's note (`the
+editor of Yelverton, p. 195 b`), belongs to the case
 it annotates, which may begin a page or two before the note. On a page where
 one case ends and another begins, a note goes to the case running onto the
 page, unless its subject plainly belongs to the one beginning there. Choices
@@ -130,7 +132,11 @@ is Stennel v. Hogg. When several cases begin at a cited page and nothing
 tells them apart, the pick is always `low`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
-noise. A cite repeated on a page is recorded each time it is printed. When
+noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
+so they can be recovered. The exception is a second page carrying its own note
+(`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page
+number is cut off and printed on no page you have, supply it from the case
+found by name and say so. A cite repeated on a page is recorded each time it is printed. When
 the English Reports split one case into several records, link the record the
 cited page falls in.
 
@@ -149,7 +155,9 @@ books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
 the stubs only. A bare `Ibid.` with no page repeats the previous cite.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
-report at `medium` and say so in `note`: the link is to the case. This
+report at `medium` and say so in `note`: the link is to the case. The same
+goes when the reporter is in a source but the cited pages are missing
+(Plowden 1–130, Benloe 44–88). This
 covers J. B. Moore (found in Taunton), Tyrwhitt (in Crompton and Meeson, or
 Crompton and Jervis), Marshall (Taunton) and Willes (often in Barnes's
 Notes, Comyns or Kenyon). Benloe has no records for pages 44–88. A case known only as cited in
@@ -167,7 +175,7 @@ misses: the same case is often reported in several. Some reporters carry a
 court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, Yelverton
 `Yel`, Hardres `Hard`, Barnewall and Alderson `B & A`, and some carry a
 volume the printed cite never shows (`2 Cowp`, `3 Dy`, `1 Plowden`); Rep.
-temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`, Holt's Nisi Prius plain `Holt` (King's
+temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`, Leonard `3 Leo 205`, Holt's Nisi Prius plain `Holt` (King's
 Bench is `Holt KB`). Plowden's first 130 pages
 are missing. Keilwey and Benloe
 are stored as groups of cases by term: link the group whose pages contain
@@ -210,6 +218,12 @@ SELECT c.id, c.name_abbreviation, c.decision_year, ci.cite
 A citation that falls in a later record of a case the English Reports split
 in two is a `pincite` when the case itself begins earlier, even if the page is
 that record's first.
+
+CAP's `first_page` sometimes disagrees with the printed cite, notably in
+early Johnson's and Massachusetts Reports (Hopkins v. Hopkins is cited
+`10 Johns. 369` but has `first_page` 375): when a pin-cite lookup by
+`first_page`/`last_page` misses, look in `cap.citations` for cites near the
+page, and by name.
 
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.

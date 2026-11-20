@@ -1,0 +1,18 @@
+{
+  "psmid": "19005785400",
+  "pageid": "04390",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:03:48Z",
+  "note": "American editor's Note 7 on arrest of judgment, after Gould on Pleading",
+  "citations": [
+    {"seq": 1, "raw": "2 Vent. 151", "volume": 2, "reporter_abbr": "Vent.", "page": 151,
+     "status": "linked_english_reports", "er_case_id": "17260266", "confidence": "medium",
+     "note": "no name printed; Bland v. Haselrig begins at 2 Vent 151"},
+    {"seq": 2, "raw": "Cro. Eliz. 133", "reporter_abbr": "Cro. Eliz.", "page": 133,
+     "status": "linked_english_reports", "er_case_id": "16530712", "confidence": "low",
+     "note": "no name printed; three cases begin at Cro Eliz 133 (Finymore v. Sanky, Arundel v. Short, Musket v. Cole) and nothing tells them apart; picked the first"},
+    {"seq": 3, "raw": "Andr. 156", "reporter_abbr": "Andr.", "page": 156,
+     "status": "linked_english_reports", "er_case_id": "17910885", "confidence": "medium",
+     "note": "no name printed; Shepherd v. Hooker begins at Andr 156"}
+  ]
+}

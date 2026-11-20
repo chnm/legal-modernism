@@ -1,0 +1,10 @@
+{
+  "psmid": "19005785400", "pageid": "04090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:03:36Z",
+  "note": "Appendix notes 67-68; Reeves, Chitty and Com. Dig. are treatises, not cases",
+  "citations": [
+    {"seq": 1, "raw": "Powers v. Cook, 1 Ld. Raym. 63", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high"}
+  ]
+}

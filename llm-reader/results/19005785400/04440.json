@@ -1,0 +1,20 @@
+{
+  "psmid": "19005785400",
+  "pageid": "04440",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:22:00Z",
+  "note": "Editor's Notes 10 (end) and 11 (Sir Francis Leake's case, from Williams's notes to Saunders)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 207. n. 24", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "low",
+     "note": "Williams's note (24), in the run of notes with note (22) at 206 a; linked the ER record 2 Wms Saund 205 ('Same v. Bateman', a later record of the case beginning at 200) that the notes run in, rather than Foxwist v. Tremaine, which begins at 207"},
+    {"seq": 2, "raw": "Gardiner v. Croas- dale, 2 Burr. 904", "case_name": "Gardiner v. Croasdale", "volume": 2, "reporter_abbr": "Burr.", "page": 904,
+     "status": "linked_english_reports", "er_case_id": "17600685", "confidence": "high"},
+    {"seq": 3, "raw": "2 Saund. 206. a, note 22", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "Williams's note (22); 206 falls in the ER record 2 Wms Saund 205, a later record of the case beginning at 200 ('The Same v. Bateman')"},
+    {"seq": 4, "raw": "2 Saund. 207, n. 24", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "low",
+     "note": "as seq 1: note (24) taken to run on from note (22) in the case at 2 Wms Saund 200/205, not Foxwist v. Tremaine at 207"}
+  ]
+}
