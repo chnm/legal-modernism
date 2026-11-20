@@ -58,7 +58,7 @@ printing as a Gale volume already read, whose records are the cross-check
 | Official copy | Year | Gale copy already read |
 |---|---|---|
 | hathi00002 | 1831 | 19005816500 (from about printed p. 40 its pageids run 80 behind this copy's, and 90 behind in the Appendix) |
-| hathi00003 | 1841 | 19005785400 |
+| hathi00003 | 1841 | 19005785400 (at the start of the text its pageids run 120 behind this copy's; check as you go) |
 | hathi00004 | 1851 | 19005764100 |
 | hathi00005 | 1854 | 19005784900 |
 | hathi00006 | 1857 | 19005781000 (the 1859 printing of the same 8th American edition) |
