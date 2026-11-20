@@ -1,0 +1,13 @@
+{"psmid": "hathi00002", "pageid": "02660", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:02:12Z",
+ "note": "printed page 332-334; Co. Litt., Bac. Ab., Com. Dig., Reeves, Bracton, a statute, Littleton and a cross-reference skipped; cross-checked with Gale 19005816500/02580",
+ "citations": [
+  {"seq": 1, "raw": "43 Ed. III. 1", "volume": 43, "reporter_abbr": "Y.B.", "page": 1,
+   "status": "no_match", "confidence": "high", "note": "year book, 43 Edw. III; year books have no source"},
+  {"seq": 2, "raw": "Craft v. Boite, 1 Saund. 246 b", "case_name": "Craft v. Boite", "volume": 1, "reporter_abbr": "Saund.", "page": 246,
+   "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high",
+   "note": "ER splits Craft v Boite into records at 1 Wms Saund 241 and 246; linked the record the cited page falls in, a pin cite since the case begins at 241"},
+  {"seq": 3, "raw": "8 Ed. III. 8. pl. 20", "volume": 8, "reporter_abbr": "Y.B.", "page": 8,
+   "status": "no_match", "confidence": "high", "note": "year book, 8 Edw. III, pl. 20, cited through Com. Dig.; year books have no source"},
+  {"seq": 4, "raw": "45 Ed. III. 15", "volume": 45, "reporter_abbr": "Y.B.", "page": 15,
+   "status": "no_match", "confidence": "high", "note": "year book, 45 Edw. III; year books have no source"}
+ ]}

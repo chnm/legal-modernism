@@ -1,0 +1,8 @@
+{"psmid": "hathi00002", "pageid": "02600", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:02:12Z",
+ "note": "printed page 324-325; Com. Dig., Sel. Pract., Chitty on Pleading and a cross-reference skipped; cross-checked with Gale 19005816500/02520",
+ "citations": [
+  {"seq": 1, "raw": "Rama Chitty v. Hume, 13 East, 255", "case_name": "Rama Chitty v. Hume", "volume": 13, "reporter_abbr": "East", "page": 255,
+   "status": "linked_english_reports", "er_case_id": "18110125", "confidence": "high"},
+  {"seq": 2, "raw": "Shaw v. Lord Alvanley, 2 Bing. 325", "case_name": "Shaw v. Lord Alvanley", "volume": 2, "reporter_abbr": "Bing.", "page": 325,
+   "status": "linked_english_reports", "er_case_id": "18240864", "confidence": "high"}
+ ]}

@@ -57,7 +57,7 @@ printing as a Gale volume already read, whose records are the cross-check
 
 | Official copy | Year | Gale copy already read |
 |---|---|---|
-| hathi00002 | 1831 | 19005816500 |
+| hathi00002 | 1831 | 19005816500 (from about printed p. 40 on, its pageids run 80 behind this copy's) |
 | hathi00003 | 1841 | 19005785400 |
 | hathi00004 | 1851 | 19005764100 |
 | hathi00005 | 1854 | 19005784900 |

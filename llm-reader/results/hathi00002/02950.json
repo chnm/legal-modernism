@@ -1,0 +1,7 @@
+{"psmid": "hathi00002", "pageid": "02950", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:09:57Z",
+ "note": "printed pages 375-376; B. N. P. (Buller's Nisi Prius) and 2 Chitty are treatises; statute 11 Geo. 2 c. 19 skipped; cross-checked with Gale 19005816500/02870",
+ "citations": [
+  {"seq": 1, "raw": "2 Saund. 284. c. n. (3)", "case_name": "Poole v. Longuevill", "volume": 2, "reporter_abbr": "Saund.", "page": 284,
+   "status": "linked_english_reports", "er_case_id": "18450187", "pincite": true, "confidence": "medium",
+   "note": "no name printed; page 284 c falls in Poole v. Longuevill, ER records at 2 Wms Saund 282 and 288"}
+ ]}

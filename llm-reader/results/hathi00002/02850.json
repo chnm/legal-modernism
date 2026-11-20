@@ -1,0 +1,6 @@
+{"psmid": "hathi00002", "pageid": "02850", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:07:05Z",
+ "note": "printed pages 361-362; Co. Litt. and Doct. Pl. are treatises, the other notes cross-references; cross-checked with Gale 19005816500/02770",
+ "citations": [
+  {"seq": 1, "raw": "Scavage v. Hawkins, Cro. Car. 571", "case_name": "Scavage v. Hawkins", "reporter_abbr": "Cro. Car.", "page": 571,
+   "status": "linked_english_reports", "er_case_id": "17922101", "confidence": "high"}
+ ]}

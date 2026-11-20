@@ -1,0 +1,7 @@
+{"psmid": "hathi00002", "pageid": "02810", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:05:29Z",
+ "note": "printed pages 355-356; 2 Chitty is a treatise, the other notes cross-references; cross-checked with Gale 19005816500/02730",
+ "citations": [
+  {"seq": 1, "raw": "2 Saund. 47 a. n. (1)", "case_name": "Wilbraham v. Snow", "volume": 2, "reporter_abbr": "Saund.", "page": 47,
+   "status": "linked_english_reports", "er_case_id": "18450304", "confidence": "medium",
+   "note": "no name printed; two ER records begin at 2 Wms Saund 47, Wilbraham v. Snow (18,693 words) and Fowell v. Forrest; the note on the special property of a carrier or finder is Williams's note to Wilbraham v. Snow"}
+ ]}

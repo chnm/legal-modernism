@@ -1,0 +1,8 @@
+{"psmid": "hathi00002", "pageid": "02780", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:04:41Z",
+ "note": "printed pages 350-352; note (s) is the author's explanation with a cross-reference; cross-checked with Gale 19005816500/02700",
+ "citations": [
+  {"seq": 1, "raw": "Chamberlain v. Greenfield, 3 Wils. 292", "case_name": "Chamberlain v. Greenfield", "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+   "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "high"},
+  {"seq": 2, "raw": "Crispin v. Williamson, 8 Taunt. 107", "case_name": "Crispin v. Williamson", "volume": 8, "reporter_abbr": "Taunt.", "page": 107,
+   "status": "linked_english_reports", "er_case_id": "18170806", "confidence": "high"}
+ ]}
