@@ -1,0 +1,27 @@
+{
+  "psmid": "19005764100", "pageid": "01920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:56:40Z",
+  "note": "cross-reference supra and Chitty's Pleading skipped",
+  "citations": [
+    {"seq": 1, "raw": "Show v. Lord Alvanley, 2 Bing. 325", "case_name": "Shaw v. Lord Alvanley",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18240864", "confidence": "high",
+     "note": "Show for Shaw"},
+    {"seq": 2, "raw": "Serle v. Bradshaw, 4 Tyr. 69", "case_name": "Serle v. Bradshaw",
+     "volume": 4, "reporter_abbr": "Tyr.", "page": 69,
+     "status": "linked_english_reports", "er_case_id": "18330243", "confidence": "medium",
+     "note": "Tyrwhitt's Exchequer Reports have no source here; the same case (1833) is in ER as 2 Cr & M 148, linked by name"},
+    {"seq": 3, "raw": "Le Conte v. Pendleton, 1 Johns. Cas. 104", "case_name": "Le Conte v. Pendleton",
+     "volume": 1, "reporter_abbr": "Johns. Cas.", "page": 104,
+     "status": "linked_cap", "cap_case_id": 1888835, "confidence": "high",
+     "note": "CAP's first_page is 120 but its cite is 1 Johns. Cas. 104"},
+    {"seq": 4, "raw": "S. C. Coleman, 72", "case_name": "Le Conte v. Pendleton",
+     "volume": 1, "reporter_abbr": "Cole. Cas.", "page": 72,
+     "status": "linked_cap", "cap_case_id": 6754516, "confidence": "high",
+     "note": "S. C. = Le Conte v. Pendleton; Coleman's Cases, volume 1 supplied"},
+    {"seq": 5, "raw": "Carnes v. Duncan, Coleman, 75", "case_name": "Carnes v. Duncan",
+     "volume": 1, "reporter_abbr": "Cole. Cas.", "page": 35,
+     "status": "linked_cap", "cap_case_id": 6753939, "confidence": "medium",
+     "note": "the editions print Coleman 75, but Carnes v. Duncan is at 1 Cole. Cas. 35 (page 75 is the end of Pendleton v. Le Conte), so 75 is taken as the editor's misprint for 35; volume 1 supplied"}
+  ]
+}

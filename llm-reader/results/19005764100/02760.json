@@ -1,0 +1,20 @@
+{
+  "psmid": "19005764100", "pageid": "02760",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:56:24Z",
+  "note": "the statute 31 Hen. 8 c. 13 skipped; cross-checked with the 1845 edition's records (19005840400/03000, 03010)",
+  "citations": [
+    {"seq": 1, "raw": "Dyer, 253. b.", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume supplied; Cecil's Case is the only case beginning at 3 Dy 253 (253 b could also be the end of Vernon v. Gatacre, 3 Dy 252); subject (fence after felling wood) not verified; as in the 1845 reading"},
+    {"seq": 2, "raw": "Mole v. Wallis, 1 Lev. 81", "case_name": "Mole v. Wallis",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930733", "confidence": "high"},
+    {"seq": 3, "raw": "Fulmertson v. Stewart, Plowd. 102", "case_name": "Fulmerston v. Steward",
+     "reporter_abbr": "Plowd.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "medium",
+     "note": "Plowden's first 130 pages are missing from the ER; linked to the same case in 1 Dy 102 (Fulmerston against Stuard), cited S. C."},
+    {"seq": 4, "raw": "Dyer, 102, b. S. C.", "volume": 1, "reporter_abbr": "Dyer", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "high",
+     "note": "S. C. of Fulmerston v. Steward; volume supplied (1 Dy 102)"}
+  ]
+}

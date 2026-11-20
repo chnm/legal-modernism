@@ -1,0 +1,127 @@
+{
+  "psmid": "19005764100",
+  "pageid": "01750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T11:53:00Z",
+  "note": "Comyns's Digest and the references to the Second Appendix skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Gorman v. Sweeting, 2 Saund. 295",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 205,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "printed 295, read as 205. Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner."
+    },
+    {
+      "seq": 2,
+      "raw": "Sir Francis Leko's case, Dy. 365",
+      "case_name": "Sir Francis Leke's Case",
+      "reporter_abbr": "Dy.",
+      "page": 365,
+      "status": "linked_english_reports",
+      "er_case_id": "17941455",
+      "confidence": "high",
+      "note": "OCR 'Leko's'; ER 3 Dy 365"
+    },
+    {
+      "seq": 3,
+      "raw": "2 Saund. 207, n. (21)",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "the other editions print n. (24); notes 21-24 at 2 Saund. 200-207 belong to Goram v. Sweeting, whose ER record at 2 Wms Saund 205 (titled 'Same versus Bateman') holds the cited page, not Foxwist v. Tremaine, which begins at 207. Identified by the project owner."
+    },
+    {
+      "seq": 4,
+      "raw": "Wood v. Budden, Ilob. 119",
+      "case_name": "Wood v. Budden",
+      "reporter_abbr": "Hob.",
+      "page": 119,
+      "status": "linked_english_reports",
+      "er_case_id": "17922884",
+      "confidence": "high",
+      "note": "OCR 'Ilob.'"
+    },
+    {
+      "seq": 5,
+      "raw": "Tatem v. Perient, Yelv. 195",
+      "case_name": "Tatem v. Perient",
+      "reporter_abbr": "Yelv.",
+      "page": 195,
+      "status": "linked_english_reports",
+      "er_case_id": "17922443",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Car- vick v. Blagrave, 1 Brid. & B11g. 5:31",
+      "case_name": "Carvick v. Blagrave",
+      "volume": 1,
+      "reporter_abbr": "Brod. & Bing.",
+      "page": 531,
+      "status": "linked_english_reports",
+      "er_case_id": "18190281",
+      "confidence": "high",
+      "note": "OCR garbled the reporter and page"
+    },
+    {
+      "seq": 7,
+      "raw": "Palmer v. Ekins, 2 Str. 818",
+      "case_name": "Palmer v. Ekins",
+      "volume": 2,
+      "reporter_abbr": "Str.",
+      "page": 818,
+      "status": "linked_english_reports",
+      "er_case_id": "17952725",
+      "pincite": true,
+      "confidence": "high",
+      "note": "Palmer v. Ekins begins at 2 Str 817"
+    },
+    {
+      "seq": 8,
+      "raw": "Ld. Ray. 1550",
+      "case_name": "Palmer v. Ekins",
+      "volume": 2,
+      "reporter_abbr": "Ld. Ray.",
+      "page": 1550,
+      "status": "linked_english_reports",
+      "er_case_id": "17901324",
+      "confidence": "high",
+      "note": "the same case's other report; volume 2 supplied"
+    },
+    {
+      "seq": 9,
+      "raw": "Sir Francis Leke's case, Dyer, 365",
+      "case_name": "Sir Francis Leke's Case",
+      "reporter_abbr": "Dyer",
+      "page": 365,
+      "status": "linked_english_reports",
+      "er_case_id": "17941455",
+      "confidence": "high"
+    },
+    {
+      "seq": 10,
+      "raw": "2 Saund. a. n. (22)",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 206,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "page dropped by OCR; 206 a supplied as the 1841 edition prints it ('2 Saund. 206. a. n. (22)'). Goram v. Sweeting begins at 2 Saund. 200; the ER record at 2 Wms Saund 205 (titled 'Same versus Bateman') holds the cited page. Identified by the project owner."
+    }
+  ]
+}

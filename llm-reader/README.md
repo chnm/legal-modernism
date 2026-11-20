@@ -44,6 +44,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   `4 Taunt. 572`, `Herlakenden's Case, 4 Rep. 62 a`, `1 Saund. 28, n. (3)`
   (Saunders's notes are cited as a case report: record it, and link the case
   at that page if there is one). A string of cites is one record each.
+- An unnamed case cited only inside another report (`Cited ibid.`) is not
+  recorded: it has neither a name nor a cite of its own.
 - A case cited by name with no reporter (`as in Slade's case`) is not
   recorded unless a reporter cite accompanies it somewhere on the page.
 - Year books (cited directly or through an abridgment, `Vin. Ab. ... cites
@@ -60,7 +62,9 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, and the
   practice books Richardson's K. B. and Manning's Exchequer), statutes
-  (`4 Ann. c. 16`), rules of court even when printed in a report
+  (`4 Ann. c. 16`), an abridgment entry that names no year-book folio
+  (`Fitz. Abr. tit. Eject. firm. 2`), a reporter's preface (`Co. Pref. to
+  10 Rep.`), rules of court even when printed in a report
   (`6 Bing. 802`), cross-references (`supra, p. 32`). Skip them.
 - Tables of cases and indexes list case names with the treatise's own page
   numbers, not citations: record the page with `"citations": []` and a note,

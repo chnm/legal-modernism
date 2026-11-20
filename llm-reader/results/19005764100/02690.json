@@ -1,0 +1,19 @@
+{
+  "psmid": "19005764100", "pageid": "02690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:56:24Z",
+  "note": "Chitty, Wentworth, the Appendix and cross-references skipped; cross-checked with the 1845 edition's records (19005840400/02930, 02940)",
+  "citations": [
+    {"seq": 1, "raw": "Took v. Glaseock, 1 Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "Took v. Glascock begins at 1 Wms Saund 250"},
+    {"seq": 2, "raw": "Vcale v. Warner, I Saund. 12.5", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "printed '12.5' read as 325, as cited on the previous page; Veale v. Warner begins at 1 Wms Saund 323"},
+    {"seq": 3, "raw": "Weeks v. Peach, I Salk. 17!)", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high",
+     "note": "'17!)' read as 179; Weeks v. Peach is at 1 Salk 179"}
+  ]
+}

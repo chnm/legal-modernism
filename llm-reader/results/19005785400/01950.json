@@ -26,7 +26,7 @@
       "er_case_id": "18450230",
       "confidence": "medium",
       "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner.",
-      "pincite": false
+      "pincite": true
     },
     {
       "seq": 3,
@@ -46,9 +46,11 @@
       "reporter_abbr": "Saund.",
       "page": 207,
       "status": "linked_english_reports",
-      "er_case_id": "18450086",
+      "er_case_id": "18450230",
       "confidence": "medium",
-      "note": "Saunders's note to Foxwist v. Tremaine, which begins at 2 Wms Saund 207"
+      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Notes 21-24 on pp. 206-207 are Goram's, not Foxwist v. Tremaine's, which begins at 207. Identified by the project owner.",
+      "pincite": true,
+      "case_name": "Goram v. Sweeting"
     },
     {
       "seq": 5,

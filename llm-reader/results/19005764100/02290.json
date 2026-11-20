@@ -1,0 +1,28 @@
+{
+  "psmid": "19005764100", "pageid": "02290",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:12:00Z",
+  "note": "Com. Dig. is not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Flower v. Ross, 5 Taunt. 336", "case_name": "Plomer v. Ross",
+     "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high",
+     "note": "printed 'Flower' (a misreading of Plomer) and 336 for 386 (the 1845 edition prints 386); ER 'Plomer and another v Ross' at 5 Taunt 386"},
+    {"seq": 2, "raw": "Sayre v. Miens, Cowp. 578", "case_name": "Sayre v. Minns",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 578,
+     "status": "linked_english_reports", "er_case_id": "17770027", "pincite": true, "confidence": "high",
+     "note": "OCR Miens for Minns; volume supplied; case begins at 2 Cowp 575"},
+    {"seq": 3, "raw": "Earl of Stirling v. Clayton, I Cromnp. & Mee. 241", "case_name": "Earl of Stirling v. Clayton",
+     "volume": 1, "reporter_abbr": "Cromp. & Mee.", "page": 241,
+     "status": "linked_english_reports", "er_case_id": "18320096", "confidence": "high"},
+    {"seq": 4, "raw": "Lowe v. Eldred, 1 Cromp. & Mee. 239", "case_name": "Lowe v. Eldred",
+     "volume": 1, "reporter_abbr": "Cromp. & Mee.", "page": 239,
+     "status": "linked_english_reports", "er_case_id": "18320204", "confidence": "high"},
+    {"seq": 5, "raw": "Lilly v. Hewitt, 11 Price, 494", "case_name": "Lilley v. Hewitt",
+     "volume": 11, "reporter_abbr": "Price", "page": 494,
+     "status": "linked_english_reports", "er_case_id": "18220607", "confidence": "high"},
+    {"seq": 6, "raw": "Saunders v. Wakefield, 4 Barn. & Aid. 595", "case_name": "Saunders v. Wakefield",
+     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 595,
+     "status": "linked_english_reports", "er_case_id": "18210441", "confidence": "high",
+     "note": "OCR 'Aid.' for Ald."}
+  ]
+}

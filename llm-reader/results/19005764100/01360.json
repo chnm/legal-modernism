@@ -1,0 +1,24 @@
+{
+  "psmid": "19005764100", "pageid": "01360",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:59:00Z",
+  "note": "Com. Dig. is not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Hughes v. Phillips, Yelv. 39", "case_name": "Hughes v. Phillips",
+     "reporter_abbr": "Yelv.", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "17921174", "pincite": true, "confidence": "high",
+     "note": "case begins at Yel 38, as the 1845 edition prints it; Goodwyn and Heyford begin at 39, but the printed name decides"},
+    {"seq": 2, "raw": "36 Hen. 6, 15", "volume": 36, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 36 Hen. VI, fol. 15; no source"},
+    {"seq": 3, "raw": "Lambert v. Cook, Ld. Raym. 238", "case_name": "Lambert v. Cook",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 238,
+     "status": "linked_english_reports", "er_case_id": "17921363", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; case begins at 1 Ld Raym 237"},
+    {"seq": 4, "raw": "Helier v. Whytier, Cro. Eliz. 650", "case_name": "Helier v. Whytier",
+     "reporter_abbr": "Cro. Eliz.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "high"},
+    {"seq": 5, "raw": "Helier v. Whytier, Cro. Eliz. 650", "case_name": "Helier v. Whytier",
+     "reporter_abbr": "Cro. Eliz.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "high"}
+  ]
+}

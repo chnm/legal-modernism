@@ -1,0 +1,22 @@
+{
+  "psmid": "19005764100", "pageid": "01690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:48:40Z",
+  "note": "Tidd skipped",
+  "citations": [
+    {"seq": 1, "raw": "Griffith v. Crockford, 3 Bred. & Bing. 1", "case_name": "Griffith v. Crockford",
+     "volume": 3, "reporter_abbr": "Brod. & Bing.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "18210439", "confidence": "high",
+     "note": "OCR 'Bred.' for Brod."},
+    {"seq": 2, "raw": "2 Saund. 319, n. (6)", "volume": 2, "reporter_abbr": "Saund.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18450121", "confidence": "medium",
+     "note": "Saunders's note (6) to Hoskins v. Robins, which begins at 2 Wms Saund 319"},
+    {"seq": 3, "raw": "Whitehend v. Buckland, Stile, 402", "case_name": "Whitehead v. Buckland",
+     "reporter_abbr": "Stile", "page": 402,
+     "status": "linked_english_reports", "er_case_id": "16580760", "pincite": true, "confidence": "high",
+     "note": "OCR 'Whitehend'; Whitehead and Buckland begins at Sty 401"},
+    {"seq": 4, "raw": "Campbell v. St. John, 1 Sulk. 218", "case_name": "Campbell v. St. John",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 219,
+     "status": "linked_english_reports", "er_case_id": "17950720", "confidence": "high",
+     "note": "OCR 'Sulk.' for Salk.; printed 218, but Campbell v. St John is at 1 Salk 219 (as printed in the 1845 edition); cases at 218 are Benbridge v. Day, Carter v. Davies, Combe v. Talbot"}
+  ]
+}
