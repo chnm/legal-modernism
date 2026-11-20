@@ -69,33 +69,55 @@ func TestMatrixEdition(t *testing.T) {
 	require.Equal(t, "A treatise on pleading\n2nd American ed., with large additions / by Francis J. Troubat.\nDerivative edition", eds[1].Tooltip())
 }
 
-func TestMatrixPageSize(t *testing.T) {
-	tests := []struct {
-		editions int
-		want     int
-	}{
-		{0, matrixMaxRows},
-		{1, matrixMaxRows},
-		{18, 5000}, // Stephen on Pleading: every case on one page
-		{30, 3000}, // the budget, 90,000 cells
-		{119, 756}, // Blackstone
-		{400, 500}, // never fewer than the minimum
-	}
-	for _, tt := range tests {
-		require.Equal(t, tt.want, matrixPageSize(tt.editions), "%d editions", tt.editions)
-	}
-}
-
 func TestMatrixSorts(t *testing.T) {
 	require.Equal(t, "editions", normalizeMatrixSort(""))
 	require.Equal(t, "editions", normalizeMatrixSort("cites; DROP TABLE"))
-	for sort := range matrixSorts {
+	for sort, order := range matrixSorts {
 		require.Equal(t, sort, normalizeMatrixSort(sort))
-		order := matrixOrder(sort, "p")
-		require.NotContains(t, order, "A.", "%s: the alias is filled in", sort)
-		require.Contains(t, order, "p.cap_case_id, p.er_case_id, p.code_reporter_id, p.stub_cite", "%s: ends on the case's key", sort)
+		require.Contains(t, order, matrixCaseKey, "%s: ends on the case's key", sort)
 	}
-	require.Contains(t, matrixOrder("year", "a"), caseYearExpr)
+	require.Contains(t, matrixSorts["year"], caseYearExpr)
+}
+
+func TestMatrixColumns(t *testing.T) {
+	uk, us := "UK", "US"
+	editions := []WorkEdition{
+		{BiblioID: "london1", Jurisdiction: &uk, Year: ptr(1824)},
+		{BiblioID: "pamphlet", Year: ptr(1826)}, // outside the treatise view
+		{BiblioID: "phila2", Jurisdiction: &us, Year: ptr(1831)},
+		{BiblioID: "london3", Jurisdiction: &uk, Year: ptr(1835)},
+		{BiblioID: "phila4", Jurisdiction: &us, Year: ptr(1841)},
+		{BiblioID: "phila5", Jurisdiction: &us, Year: ptr(1845)},
+	}
+	tests := []struct {
+		jur  string
+		want []string
+	}{
+		{"", []string{"london1", "phila2", "london3", "phila4", "phila5"}},
+		{"us", []string{"phila2", "phila4", "phila5"}},
+		{"uk", []string{"london1", "london3"}},
+		{"fr", []string{"london1", "phila2", "london3", "phila4", "phila5"}}, // unknown: every edition
+	}
+	for _, tt := range tests {
+		t.Run("jur="+tt.jur, func(t *testing.T) {
+			cols, nUS, nUK, outside := matrixColumns(editions, tt.jur)
+			var got []string
+			for _, c := range cols {
+				got = append(got, c.BiblioID)
+			}
+			require.Equal(t, tt.want, got, "in the order given, which is by year")
+			// The counts are of the work, not of the filter.
+			require.Equal(t, 3, nUS)
+			require.Equal(t, 2, nUK)
+			require.Equal(t, 1, outside)
+		})
+	}
+
+	require.Equal(t, "", normalizeMatrixJurisdiction(""))
+	require.Equal(t, "us", normalizeMatrixJurisdiction("us"))
+	require.Equal(t, "uk", normalizeMatrixJurisdiction("uk"))
+	require.Equal(t, "", normalizeMatrixJurisdiction("US"))
+	require.Equal(t, "", normalizeMatrixJurisdiction("both"))
 }
 
 func TestMatrixRows(t *testing.T) {
@@ -189,12 +211,23 @@ func TestPlural(t *testing.T) {
 	require.Equal(t, "1,480 cases", plural(1480, "case"))
 }
 
-func TestWorkCasesPage(t *testing.T) {
-	d := WorkCasesPage{WorkID: 1107, Editions: matrixTestEditions(), Cites: 300, Linked: 99}
-	require.Equal(t, "/works/1107/cases", d.URL())
+func TestStephenPage(t *testing.T) {
+	d := StephenPage{WorkID: 1107, Editions: matrixTestEditions(), US: 1, UK: 2, Cites: 300, Linked: 99}
 	require.Equal(t, "/works/1107", d.WorkURL())
 	require.Equal(t, 8, d.Columns())
 	require.Equal(t, "1824–1831", d.Years())
 	require.Equal(t, "33%", d.LinkedPct())
-	require.Equal(t, "—", WorkCasesPage{}.Years())
+	require.Equal(t, "—", StephenPage{}.Years())
+	require.Equal(t, "All 3 editions (2 UK, 1 US)", d.Shown())
+
+	us := StephenPage{Jur: "us", Editions: matrixTestEditions()[1:2], US: 1, UK: 2}
+	require.Equal(t, "The 1 US edition, of 3", us.Shown())
+
+	// The links keep one setting while changing the other, and leave the
+	// defaults out.
+	require.Equal(t, "/stephen-on-pleading", d.Link("editions", ""))
+	require.Equal(t, "/stephen-on-pleading?sort=entered", d.Link("entered", ""))
+	require.Equal(t, "/stephen-on-pleading?jur=uk", d.Link("editions", "uk"))
+	require.Equal(t, "/stephen-on-pleading?jur=us&sort=left", d.Link("left", "us"))
+	require.Equal(t, "/stephen-on-pleading", d.Link("nonsense", "fr"))
 }

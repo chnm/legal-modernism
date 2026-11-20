@@ -67,8 +67,6 @@
     <p class="small text-secondary">
         Across the work's editions in the treatise view: how many of them cite each case, and how many
         citations they make to it. A case cited by many editions of one work is cited by one work.
-        {{if gt .TopCases.TotalEditions 1}}<a href="{{.CasesURL}}">Every case, edition by edition</a>
-        shows which cases last through the editions and which enter along the way.{{end}}
     </p>
     {{template "top_cases" .TopCases}}
 {{end}}

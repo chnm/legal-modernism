@@ -46,7 +46,6 @@ func TestRoutes(t *testing.T) {
 	require.Equal(t, http.StatusNotModified, cached.StatusCode)
 	require.Len(t, assetVersion, 16)
 	require.Equal(t, http.StatusNotFound, get(t, "/nope").StatusCode)
-	require.Equal(t, http.StatusNotFound, get(t, "/works/abc/cases").StatusCode)
 	require.Equal(t, http.StatusGone, get(t, "/api/page-text?psmid=1&pageid=2").StatusCode)
 
 	// The linking pages that only render a shell, for each corpus, and the

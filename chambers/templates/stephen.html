@@ -54,34 +54,39 @@
 {{end}}
 
 {{define "content"}}
-    <h1 class="h4 mt-2">Cases across the editions of <a href="{{.WorkURL}}">{{.Title}}</a></h1>
+    <h1 class="h4 mt-2">Stephen on Pleading: the cases cited, edition by edition</h1>
     <div class="detail-grid small mb-2">
-        {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
-        <span class="label">Editions</span><span>{{len .Editions}} in the treatise view{{if .Editions}} ({{.UK}} UK, {{.US}} US), {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside it, not shown{{end}}</span>
-        <span class="label">Cases cited</span><span>{{num .Total}}</span>
+        <span class="label">Work</span><span><a href="{{.WorkURL}}">{{.Title}}</a>{{if .Author}}, {{derefStr .Author}}{{end}}</span>
+        <span class="label">Editions shown</span><span>{{.Shown}}{{if .Editions}}, {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside the treatise view, never shown{{end}}</span>
+        <span class="label">Cases cited</span><span>{{num (len .Rows)}}</span>
         {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} detected in these editions</span>{{end}}
     </div>
     <p class="small text-secondary mb-2" style="max-width: 62rem;">
-        A column is an edition, earliest first; a row is a case that at least one edition's citations were linked to.
+        A column is an edition, earliest first; a row is a case that at least one of the editions shown cites.
         Only linked citations are here, and the share that linked differs from edition to edition, so a cell left
         empty may be a citation the linker did not resolve rather than a case the edition dropped.
+        Every count, and the first and last edition to cite a case, is among the editions shown.
         Click a year for the edition, a case for its record, and a filled cell for the citations behind it.
     </p>
     <p class="small key mb-3">
-        <span><span class="sw uk"></span>A UK edition cites the case</span>
-        <span><span class="sw us"></span>A US edition cites it</span>
-        <span><span class="sw us">3</span>More than once</span>
-        <span><span class="sw uk-tint"></span><span class="sw us-tint"></span>Does not cite it</span>
+        {{if ne .Jur "us"}}<span><span class="sw uk"></span>A UK edition cites the case</span>{{end}}
+        {{if ne .Jur "uk"}}<span><span class="sw us"></span>A US edition cites the case</span>{{end}}
+        <span><span class="sw {{if eq .Jur "uk"}}uk{{else}}us{{end}}">3</span>More than once</span>
+        <span>{{if ne .Jur "us"}}<span class="sw uk-tint"></span>{{end}}{{if ne .Jur "uk"}}<span class="sw us-tint"></span>{{end}}Does not cite it</span>
         <span><span class="sw blank"></span>Published before the case was decided</span>
     </p>
 
-    {{if .Editions}}
     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Editions shown">
+            <a href="{{.Link .Sort ""}}" class="btn {{if eq .Jur ""}}btn-primary{{else}}btn-outline-secondary{{end}}">All editions</a>
+            <a href="{{.Link .Sort "us"}}" class="btn {{if eq .Jur "us"}}btn-primary{{else}}btn-outline-secondary{{end}}">US editions</a>
+            <a href="{{.Link .Sort "uk"}}" class="btn {{if eq .Jur "uk"}}btn-primary{{else}}btn-outline-secondary{{end}}">UK editions</a>
+        </div>
         <div class="btn-group btn-group-sm" role="group" aria-label="Order of the cases">
-            <a href="{{.URL}}?sort=editions" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
-            <a href="{{.URL}}?sort=entered" class="btn {{if eq .Sort "entered"}}btn-primary{{else}}btn-outline-secondary{{end}}">First cited</a>
-            <a href="{{.URL}}?sort=left" class="btn {{if eq .Sort "left"}}btn-primary{{else}}btn-outline-secondary{{end}}">Last cited</a>
-            <a href="{{.URL}}?sort=year" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Oldest case</a>
+            <a href="{{.Link "editions" .Jur}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
+            <a href="{{.Link "entered" .Jur}}" class="btn {{if eq .Sort "entered"}}btn-primary{{else}}btn-outline-secondary{{end}}">First cited</a>
+            <a href="{{.Link "left" .Jur}}" class="btn {{if eq .Sort "left"}}btn-primary{{else}}btn-outline-secondary{{end}}">Last cited</a>
+            <a href="{{.Link "year" .Jur}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Oldest case</a>
         </div>
         <span class="small text-secondary">
             {{if eq .Sort "editions"}}The cases cited by the most editions first.
@@ -90,8 +95,8 @@
             {{else}}By the year the case was decided.{{end}}
         </span>
     </div>
-    {{template "pagination" .Nav}}
 
+    {{if .Editions}}
     <table class="matrix">
         <colgroup>
             <col span="5">
@@ -136,11 +141,10 @@
 <td><span class="badge {{.BadgeClass}}">{{.SourceLabel}}</span></td>
 <td class="num">{{.Editions}}</td>
 {{range .Cells}}{{if .Count}}<td class="x {{.Class}}"><a href="{{.URL}}" title="{{.Title}}">{{if gt .Count 1}}{{.Count}}{{end}}</a></td>{{else if .Before}}<td class="b"></td>{{else}}<td></td>{{end}}{{end}}</tr>
-{{else}}<tr><td colspan="{{.Columns}}" class="text-secondary fst-italic">No linked citations in this work's treatise editions.</td></tr>
+{{else}}<tr><td colspan="{{.Columns}}" class="text-secondary fst-italic">No linked citations in these editions.</td></tr>
 {{end}}        </tbody>
     </table>
-    {{template "pagination" .Nav}}
     {{else}}
-    <p class="small text-secondary fst-italic">This work has no editions in the treatise view.</p>
+    <p class="small text-secondary fst-italic">There are no such editions in the treatise view.</p>
     {{end}}
 {{end}}
