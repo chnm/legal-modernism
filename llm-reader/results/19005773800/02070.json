@@ -1,0 +1,12 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:49:52Z",
+  "citations": [
+    {"seq": 1, "raw": "Poole v. Tunbridge, 2 M. & W. 223", "case_name": "Poole v. Tunbridge", "volume": 2, "reporter_abbr": "M. & W.", "page": 223,
+     "status": "linked_english_reports", "er_case_id": "18370199", "confidence": "high", "note": "ER 'Poole v Tumbridge'"},
+    {"seq": 2, "raw": "Dobio v. Lurkan, 10 Exch. 776", "case_name": "Dobie v. Larkan", "volume": 10, "reporter_abbr": "Exch.", "page": 776,
+     "status": "linked_english_reports", "er_case_id": "18550266", "confidence": "high", "note": "OCR 'Dobio v. Lurkan' for Dobie v. Larkan"}
+  ]
+}

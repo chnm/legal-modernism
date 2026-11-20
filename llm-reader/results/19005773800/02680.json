@@ -1,0 +1,23 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02680",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:49:49Z",
+  "note": "statute 3 & 4 W. 4, c. 42 skipped",
+  "citations": [
+    {"seq": 1, "raw": "Bucllcy v. Rico Thomas, Plowd. 128 a", "case_name": "Buckley v. Rice Thomas", "volume": 1, "reporter_abbr": "Plowd.", "page": 128,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium", "note": "volume 1 supplied; the case begins at 1 Plowd. 118 and ER's Plowden lacks pages 1-130; the same case is reported in Dyer as 'Sir Richard Bulkeley against Thomas', 2 Dy 113, linked to the case as in other editions' readings"},
+    {"seq": 2, "raw": "Rowe v. Roach, I BM. & S. 304", "case_name": "Rowe v. Roach", "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
+     "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high", "note": "OCR 'I BM.' for 1 M.; murrell_title is Rowe v Roach"},
+    {"seq": 3, "raw": "Nodcn v. Jolnson, 20 L. J. Q. B. (N. S.) 75", "case_name": "Noden v. Johnson", "volume": 20, "reporter_abbr": "L. J. Q. B. (N. S.)", "page": 75,
+     "status": "linked_english_reports", "er_case_id": "18500945", "confidence": "medium", "note": "the Law Journal has no source; the same case, Noden against Johnson and Shores, is in the English Reports at 16 QB 218 (1850), linked by name"},
+    {"seq": 4, "raw": "Knight v. Fitri, 15 C. B. 566", "case_name": "Knight v. Fitch", "volume": 15, "reporter_abbr": "C. B.", "page": 566,
+     "status": "linked_english_reports", "er_case_id": "18550117", "confidence": "high", "note": "OCR Fitri for Fitch"},
+    {"seq": 5, "raw": "Whitwell v. Bennett, 3 Bos. & Pul. 559", "case_name": "Whitwell v. Bennett", "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 559,
+     "status": "linked_english_reports", "er_case_id": "18030749", "confidence": "high"},
+    {"seq": 6, "raw": "Bowditch v. Mawley, I Camp. 195", "case_name": "Bowditch v. Mawley", "volume": 1, "reporter_abbr": "Camp.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "18080090", "confidence": "high"},
+    {"seq": 7, "raw": "Hutchinson v. Piper, 4 Taunt. 810", "case_name": "Hutchinson v. Piper", "volume": 4, "reporter_abbr": "Taunt.", "page": 810,
+     "status": "linked_english_reports", "er_case_id": "18130278", "confidence": "high"}
+  ]
+}

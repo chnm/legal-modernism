@@ -1,18 +1,46 @@
 {
-  "psmid": "19005840400", "pageid": "02570",
-  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:31:00Z",
+  "psmid": "19005840400",
+  "pageid": "02570",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:31:00Z",
   "note": "Co. Litt., Com. Dig. and Doct. Pl. skipped; cross-checked with the 1841 edition's record (19005785400/02580)",
   "citations": [
-    {"seq": 1, "raw": "Deybel's case, 4 Barn, & Aid. 243", "case_name": "Deybel's Case",
-     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
-     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high"},
-    {"seq": 2, "raw": "The King v. Lyme Regis, Doug. 159", "case_name": "Rex v. Mayor of Lyme Regis",
-     "volume": 1, "reporter_abbr": "Doug.", "page": 159,
-     "status": "linked_english_reports", "er_case_id": "17790084", "pincite": true, "confidence": "medium",
-     "note": "volume supplied; ER has several Lyme Regis records in 1 Doug (79, 135, 149, 177); page 159 falls in the one beginning at 149"},
-    {"seq": 3, "raw": "The King v. Lyme Regis, Doug. 148", "case_name": "Rex v. Mayor of Lyme Regis",
-     "volume": 1, "reporter_abbr": "Doug.", "page": 148,
-     "status": "linked_english_reports", "er_case_id": "17790077", "pincite": true, "confidence": "medium",
-     "note": "volume supplied; page 148 falls in the Lyme Regis record beginning at 1 Doug 135, one page before the next at 149 (Douglas was paged differently in different editions)"}
+    {
+      "seq": 1,
+      "raw": "Deybel's case, 4 Barn, & Aid. 243",
+      "case_name": "Deybel's Case",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 243,
+      "status": "linked_english_reports",
+      "er_case_id": "18210136",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "The King v. Lyme Regis, Doug. 159",
+      "case_name": "Rex v. Mayor of Lyme Regis",
+      "volume": 1,
+      "reporter_abbr": "Doug.",
+      "page": 159,
+      "status": "linked_english_reports",
+      "er_case_id": "17790084",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "volume supplied; ER has several Lyme Regis records in 1 Doug (79, 135, 149, 177); page 159 falls in the one beginning at 149"
+    },
+    {
+      "seq": 3,
+      "raw": "The King v. Lyme Regis, Doug. 148",
+      "case_name": "Rex v. Mayor of Lyme Regis",
+      "volume": 1,
+      "reporter_abbr": "Doug.",
+      "page": 148,
+      "status": "linked_english_reports",
+      "er_case_id": "17790084",
+      "pincite": false,
+      "confidence": "medium",
+      "note": "The King v. Lyme Regis, Doug. 148: the English Reports record at 1 Doug 135 is 1,102 words and cannot reach p. 148; the case's record at 1 Doug 149 is taken, Douglas being paged differently in different editions. Aligned by the coordinator across editions."
+    }
   ]
 }

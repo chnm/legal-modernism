@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:58:32Z",
+  "note": "cross-reference to the index skipped",
+  "citations": [
+    {"seq": 1, "raw": "Wimbledon v. Holdrip, I Lev. 303", "case_name": "Wimbleton v. Holdrip", "volume": 1, "reporter_abbr": "Lev.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "17931330", "confidence": "high"},
+    {"seq": 2, "raw": "Lord Lisle's case, cited 9 Rep. 25 a", "case_name": "Lord Lisle's Case", "volume": 9, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "medium", "note": "a case known only as cited in another report: 9 Co Rep 25 a falls in The Case of the Abbot of Strata Mercella, which begins at 9 Co Rep 24 and prints it"},
+    {"seq": 3, "raw": "Kepp r. Wiggett, 6 C. B. 280", "case_name": "Kepp v. Wiggett", "volume": 6, "reporter_abbr": "C. B.", "page": 280,
+     "status": "linked_english_reports", "er_case_id": "18480591", "confidence": "high"},
+    {"seq": 4, "raw": "Roakes r. Manser, I C. B. 531", "case_name": "Roakes v. Manser", "volume": 1, "reporter_abbr": "C. B.", "page": 531,
+     "status": "linked_english_reports", "er_case_id": "18450742", "confidence": "high"}
+  ]
+}

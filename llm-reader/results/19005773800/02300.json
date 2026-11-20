@@ -1,0 +1,23 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02300",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:58:45Z",
+  "note": "Doctrina Placitandi skipped",
+  "citations": [
+    {"seq": 1, "raw": "Osborne v. Rogers, 1 Saund. 267", "case_name": "Osborne v. Rogers", "volume": 1, "reporter_abbr": "Saund.", "page": 267,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "high",
+     "note": "Osborne v. Rogers begins at 1 Wms Saund 264; ER splits it, and the record at 267 holds the cited page"},
+    {"seq": 2, "raw": "Allsager v. Currie, 11 M. & W. 14", "case_name": "Alsager v. Currie", "volume": 11, "reporter_abbr": "M. & W.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "18430172", "confidence": "high"},
+    {"seq": 3, "raw": "Morewood v. Wood, 4 T. R. 157", "case_name": "Morewood v. Wood", "volume": 4, "reporter_abbr": "T. R.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17911272", "confidence": "high"},
+    {"seq": 4, "raw": "Priddle and Napper's case, 11 Rep. 10 b", "case_name": "Priddle and Napper's Case", "volume": 11, "reporter_abbr": "Rep.", "page": 10,
+     "status": "linked_english_reports", "er_case_id": "15720297", "pincite": true, "confidence": "high", "note": "Priddle and Napper's Case begins at 11 Co Rep 8 (7998 words)"},
+    {"seq": 5, "raw": "Bradburne v. Kennerdalc, Carth. 164", "case_name": "Bradburne v. Kennerdale", "reporter_abbr": "Carth.", "page": 164,
+     "status": "linked_english_reports", "er_case_id": "17410041", "confidence": "high", "note": "OCR 'Kennerdalc'"},
+    {"seq": 6, "raw": "1 Saund. 268, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 268,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note on traverse in Osborne v. Rogers, whose ER records begin at 1 Wms Saund 264 and 267; 268 falls in the record at 267"}
+  ]
+}

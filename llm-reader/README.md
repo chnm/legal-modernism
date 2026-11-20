@@ -49,7 +49,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
 - An unnamed case cited only inside another report (`Cited ibid.`) is not
   recorded: it has neither a name nor a cite of its own.
 - A case cited by name with no reporter (`as in Slade's case`) is not
-  recorded unless a reporter cite accompanies it somewhere on the page.
+  recorded; where its report is cited elsewhere on the page, that cite is the
+  one record.
 - Year books (cited directly or through an abridgment, `Vin. Ab. ... cites
   15 Hen. 7. 10`), e.g. (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
   of cases with no source here: always record them, as `no_match`, leaving
@@ -63,7 +64,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Coke's Entries, Wentworth) are not.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, Smith's Leading
-  Cases (a collection, not a report), and the practice books Richardson's K. B. and Manning's Exchequer), statutes
+  Cases (a collection, not a report), Chitty on Pleading (`1 Chitty, 498,
+  1st edit.`, not Chitty's K.B. Reports), and the practice books Richardson's K. B. and Manning's Exchequer), statutes
   (`4 Ann. c. 16`), an abridgment entry that names no year-book folio
   (`Fitz. Abr. tit. Eject. firm. 2`), a reporter's preface (`Co. Pref. to
   10 Rep.`), rules of court even when printed in a report
@@ -78,7 +80,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   previous cite: resolve them to the volume and reporter they stand for and
   record them, noting the expansion in `note`.
 - When a citation is cut off at the bottom of the page and continues on the
-  next, record it on the page where the reporter and page number are printed;
+  next, record it on the page where its page number is printed (even if the
+  name and reporter end the page before);
   run `bin/llm-reader page` on the neighbouring page if you need to see it.
 
 ### Reading the OCR: the name leads, the numbers are suspect
@@ -168,7 +171,8 @@ from the name and the passage.) `english_reports.cases.word_count`
 helps: a case whose record is a hundred words cannot reach a page several
 pages on, and a long record starting a page earlier usually holds the notes
 printed on the next. Choices already made: 2 Saund. 291 n. (the videlicet)
-is Dakin's Case; 12 Mod. 508 is Pell v. Garlick. Ignore a second
+is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; King v. Lyme Regis, Doug. 148, is
+the record at 1 Doug 149. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),

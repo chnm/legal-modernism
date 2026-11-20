@@ -1,0 +1,25 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:55:26Z",
+  "note": "Reg. Plac., Chitty on Pleading (1 Chitty 498, 1st edit.) and the Appendix are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "M'Pherson v. Daniels, 10 Barn. & Cress. 263", "case_name": "M'Pherson v. Daniels",
+     "volume": 10, "reporter_abbr": "B. & C.", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high"},
+    {"seq": 2, "raw": "IIatton v. Mlorse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high"},
+    {"seq": 3, "raw": "Hallet v. Byrt, 5 Mod. 252", "case_name": "Hallet v. Byrt",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 252,
+     "status": "linked_english_reports", "er_case_id": "17940773", "pincite": true, "confidence": "high",
+     "note": "ER splits the case at 5 Mod 248 and 251; 252 falls in the 251 record"},
+    {"seq": 4, "raw": "Holler v. Bush, I Salk. 394", "case_name": "Holler v. Bush",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "high"},
+    {"seq": 5, "raw": "Year Book 40 Edy. III. 23", "volume": 40, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fol. 23; no source"}
+  ]
+}

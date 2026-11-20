@@ -1,0 +1,13 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01890",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:54:46Z",
+  "note": "cross-references are not recorded; 'Earl of Manchester v. Vale, 1 Sand.' runs onto the next page, where its page (27) is printed, and is recorded there",
+  "citations": [
+    {"seq": 1, "raw": "Hawe v. Planner, I Saund. 13", "case_name": "Hawe v. Planner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "18450106", "pincite": true, "confidence": "high",
+     "note": "ER splits the case at 1 Wms Saund 10 and 13; a pincite since the case begins at 10"}
+  ]
+}

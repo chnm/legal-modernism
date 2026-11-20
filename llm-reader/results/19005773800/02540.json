@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02540",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:54:25Z",
+  "note": "Co. Litt., Bac. Abr., Com. Dig. and Reeves's History skipped; year book cites recorded",
+  "citations": [
+    {"seq": 1, "raw": "43 Ed. III. 1", "volume": 43, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "high", "note": "year book, 43 Edw. III fo. 1; no source"},
+    {"seq": 2, "raw": "Craft v. Boite, 1 Saund. 246, b", "case_name": "Craft v. Boite", "volume": 1, "reporter_abbr": "Saund.", "page": 246,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high", "note": "ER splits Craft versus Boite into 1 Wms Saund 241 and 246; 246 b falls in the second record"},
+    {"seq": 3, "raw": "8 El. III., 8 PI. 20", "volume": 8, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "year book, 8 Edw. III fo. 8 pl. 20 (OCR El. for Ed.); no source"},
+    {"seq": 4, "raw": "45 Ed. III. 15", "volume": 45, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "high", "note": "year book, 45 Edw. III fo. 15; no source"}
+  ]
+}

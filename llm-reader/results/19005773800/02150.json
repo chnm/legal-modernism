@@ -1,0 +1,15 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02150",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:52:38Z",
+  "note": "Heath's Maxims, Bracton and Ryley's Placita Parliamentaria skipped",
+  "citations": [
+    {"seq": 1, "raw": "Weltale v. Glover, 10 Mod. 166", "case_name": "Weltale v. Glover", "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high"},
+    {"seq": 2, "raw": "Weltale v. Glover, 10 Mod. 166", "case_name": "Weltale v. Glover", "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high"},
+    {"seq": 3, "raw": "Hartwell v. Hcmmenway, 7 Pick. 117", "case_name": "Hartwell v. Hemmenway", "volume": 7, "reporter_abbr": "Pick.", "page": 117,
+     "status": "linked_cap", "cap_case_id": 2056627, "confidence": "high", "note": "OCR 'Hcmmenway'; CAP cite 7 Pick. 117 (first_page 122 is CAP's paging)"}
+  ]
+}

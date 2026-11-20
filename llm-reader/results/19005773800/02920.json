@@ -1,0 +1,15 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02920",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:58:46Z",
+  "note": "Com. Dig. and the statute of frauds skipped; printed page number repeats 336 (the page is 337)",
+  "citations": [
+    {"seq": 1, "raw": "Flower v. Ross, 5 Taunt. 386", "case_name": "Plomer v. Ross", "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high", "note": "ER 'Plomer and another v Ross' at 5 Taunt 386; the treatise prints Flower"},
+    {"seq": 2, "raw": "per Lord Mansfield, Sayre v. Minnis, C£owp. 578", "case_name": "Sayre v. Minns", "volume": 2, "reporter_abbr": "Cowp.", "page": 578,
+     "status": "linked_english_reports", "er_case_id": "17770027", "pincite": true, "confidence": "high", "note": "volume supplied; case begins at 2 Cowp 575"},
+    {"seq": 3, "raw": "Earl of Stirling v. Clayton, I Cromp. & Mee. 241", "case_name": "Earl of Stirling v. Clayton", "volume": 1, "reporter_abbr": "Cromp. & Mee.", "page": 241,
+     "status": "linked_english_reports", "er_case_id": "18320096", "confidence": "high"}
+  ]
+}

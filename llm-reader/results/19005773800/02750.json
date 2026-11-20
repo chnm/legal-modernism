@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:52:08Z",
+  "note": "statutes, Vin. Ab., Co. Litt., Chitty and cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "1 Snund. 276 a, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium", "note": "no name printed; page falls in Duppa v. Mayo, ER record beginning at 1 Wms Saund 275"},
+    {"seq": 2, "raw": "Portcr v. Gray, Cro. Eliz. 245", "case_name": "Porter v. Gray", "reporter_abbr": "Cro. Eliz.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "16531539", "confidence": "high"},
+    {"seq": 3, "raw": "1 Saund. 234, n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium", "note": "no name printed; Serjeant Williams's note falls in Thursby v. Plant, 1 Wms Saund 230"},
+    {"seq": 4, "raw": "Latlibury v. Arnold, 1 Bing. 217", "case_name": "Lathbury v. Arnold", "volume": 1, "reporter_abbr": "Bing.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "18230498", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01860",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:52:35Z",
+  "note": "Doct. Pl. and Co. Litt. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Gilbert v. Parker, 2 Salk. 629", "case_name": "Gilbert v. Parker",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 629,
+     "status": "linked_english_reports", "er_case_id": "17951791", "confidence": "high"},
+    {"seq": 2, "raw": "6 Mod. 158, S. C.", "case_name": "Gilbert v. Parker",
+     "volume": 6, "reporter_abbr": "Mod.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17940732", "confidence": "high",
+     "note": "S. C. of Gilbert v. Parker"},
+    {"seq": 3, "raw": "Robinson v. Corbett, Lutw. 662", "case_name": "Robinson v. Corbett",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 662,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 662", "confidence": "medium",
+     "note": "volume 1 supplied from the stub paging; Lutwyche is in the stubs only; as in the 1859 edition"},
+    {"seq": 4, "raw": "Taylor r. Necdhanm, 2 Taunt. 278", "case_name": "Taylor v. Needham",
+     "volume": 2, "reporter_abbr": "Taunt.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18100119", "confidence": "high"},
+    {"seq": 5, "raw": "Smith v. Scott, 6 C. B. N. S. 771", "case_name": "Smith v. Scott",
+     "volume": 6, "reporter_abbr": "C. B. N. S.", "page": 771,
+     "status": "linked_english_reports", "er_case_id": "18590737", "confidence": "high"},
+    {"seq": 6, "raw": "Ceircnrose v. Lorimer, 3 Macqueen's House of Lords Cases, P2S", "case_name": "Cairncross v. Lorimer",
+     "volume": 3, "reporter_abbr": "Macq.", "page": 827,
+     "status": "linked_stub", "stub_cite": "3 Macq. 827", "confidence": "low",
+     "note": "page OCR'd 'P2S', unreadable; Cairncross v. Lorimer (H.L. 1860) begins at 3 Macq. 827, a stub; the quoted dictum is at 829, so the printed page may be a pin cite (which would be no_match); not in the English Reports by name; this footnote is new in the 1867 edition"}
+  ]
+}

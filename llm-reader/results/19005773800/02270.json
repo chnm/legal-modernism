@@ -1,0 +1,11 @@
+{
+  "psmid": "19005773800",
+  "pageid": "02270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:57:35Z",
+  "note": "Doctrina Placitandi skipped",
+  "citations": [
+    {"seq": 1, "raw": "Lane v. Alexander, Yelv. 122", "case_name": "Lane v. Alexander", "reporter_abbr": "Yelv.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17921377", "confidence": "high", "note": "ER Yel 122"}
+  ]
+}
