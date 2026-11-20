@@ -1,0 +1,10 @@
+{
+  "psmid": "19005840400", "pageid": "02450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T04:00:00Z",
+  "note": "Buller's Nisi Prius and cross-references are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Cudlip v. Rundle, Carth. 202", "case_name": "Cudlip v. Rundle",
+     "reporter_abbr": "Carth.", "page": 202,
+     "status": "linked_english_reports", "er_case_id": "17410095", "confidence": "high"}
+  ]
+}

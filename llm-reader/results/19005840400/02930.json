@@ -1,0 +1,33 @@
+{
+  "psmid": "19005840400",
+  "pageid": "02930",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:23:17Z",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 210, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "note (1) falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 2, "raw": "Hal- lowes v. Lucy, 3 Lev. 120", "case_name": "Hallowes v. Lucy",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 120,
+     "status": "linked_english_reports", "er_case_id": "17970120", "confidence": "high"},
+    {"seq": 3, "raw": "Le Bret v. Papillon, 4 East, 502", "case_name": "Le Bret v. Papillon",
+     "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "high"},
+    {"seq": 4, "raw": "Ibid.", "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "medium",
+     "note": "Ibid. repeats Le Bret v. Papillon, 4 East 502 from the previous note"},
+    {"seq": 5, "raw": "Evans v. Prosser, 3 T. R. 186", "case_name": "Evans v. Prosser",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "17892450", "confidence": "high"},
+    {"seq": 6, "raw": "Vcale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "Veale v. Warner begins at 1 Wms Saund 323"},
+    {"seq": 7, "raw": "3 Ed. 3. 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
+     "status": "no_match", "confidence": "medium", "note": "year book, 3 Edw. III; no source"},
+    {"seq": 8, "raw": "Took v. Glascock, I Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "Took v. Glascock begins at 1 Wms Saund 250"}
+  ]
+}

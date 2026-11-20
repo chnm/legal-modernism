@@ -1,0 +1,29 @@
+{
+  "psmid": "19005840400", "pageid": "01740",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:28:00Z",
+  "note": "Com. Dig., Bac. Ab., cross-references and the rule of Hil. 4 W. 4 skipped; OCR of the American editor's note [21] is badly garbled",
+  "citations": [
+    {"seq": 1, "raw": "Hudson v. Jones, 1 Salk. 91", "case_name": "Hudson v. Jones",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "17952104", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Salk 90"},
+    {"seq": 2, "raw": "Nicholson v. Simpson, Fort, 5r6", "case_name": "Nicholson v. Simpson",
+     "reporter_abbr": "Fort.", "page": 356,
+     "status": "linked_english_reports", "er_case_id": "17480129", "confidence": "high",
+     "note": "OCR '5r6' read as 356; the case is at Fort 356"},
+    {"seq": 3, "raw": "Wdicox v. ServalrofSkipwith, 2 M ,oi 4", "case_name": "Wilcox v. Servant of Skipwith",
+     "volume": 2, "reporter_abbr": "Mod.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "17931312", "confidence": "high",
+     "note": "garbled OCR read as Wilcox v. Servant of Skipwith, 2 Mod. 4, as printed in the other editions"},
+    {"seq": 4, "raw": "10 EId. , i,2", "volume": 10, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 10 Edw. IV fol. 12 (garbled OCR read from the other editions and note [21]); no source"},
+    {"seq": 5, "raw": "The King v. Tle Bishop of Chester, 2 Salk. 561", "case_name": "The King v. The Bishop of Chester",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 561,
+     "status": "linked_english_reports", "er_case_id": "17951535", "pincite": true, "confidence": "high",
+     "note": "Rex v. Bishop of Chester, Pierce and Cook begins at 2 Salk 560"},
+    {"seq": 6, "raw": "10. Fd 4. 12", "volume": 10, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. IV fol. 12, in the American editor's note [21]; no source"}
+  ]
+}

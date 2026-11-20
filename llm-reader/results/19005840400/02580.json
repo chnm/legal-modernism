@@ -1,0 +1,23 @@
+{
+  "psmid": "19005840400", "pageid": "02580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:31:30Z",
+  "note": "Blackstone's Commentaries skipped; cross-checked with the 1841 edition's record (19005785400/02590)",
+  "citations": [
+    {"seq": 1, "raw": "Boyce v. Whitaker, Doug. 97", "case_name": "Boyce v. Whitaker",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume supplied; ER 1 Doug 94 (Douglas paged differently between editions)"},
+    {"seq": 2, "raw": "Partridge v. Strange, Plow. 84", "case_name": "Partridge v. Strange",
+     "reporter_abbr": "Plow.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "ER's Plowden lacks pages 1-130; the same case is reported as 1 Dy 74, linked to the case"},
+    {"seq": 3, "raw": "Platt v. Hill, Ld. Ray. 331", "case_name": "Platt v. Hill",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "17921830", "confidence": "high",
+     "note": "volume supplied; printed 331 read as 381 (ER 1 Ld Raym 381 Platt vers Hill)"},
+    {"seq": 4, "raw": "Boyce v. Whitaker, Doug. 97", "case_name": "Boyce v. Whitaker",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume supplied; ER 1 Doug 94 (Douglas paged differently between editions)"}
+  ]
+}

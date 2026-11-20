@@ -1,0 +1,19 @@
+{
+  "psmid": "19005840400", "pageid": "02270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:36:00Z",
+  "note": "Appendix reference is not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Dale v. Phillipeon, 2 Letw. 1374", "case_name": "Dale v. Phillipson", "volume": 2, "reporter_abbr": "Lutw.", "page": 1374,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1374", "confidence": "high", "note": "OCR Letw. for Lutw.; Lutwyche is only in the stubs"},
+    {"seq": 2, "raw": "Bertie v. Pickering, 4 Burr. 2455", "case_name": "Bertie v. Pickering", "volume": 4, "reporter_abbr": "Burr.", "page": 2455,
+     "status": "linked_english_reports", "er_case_id": "17690004", "confidence": "high"},
+    {"seq": 3, "raw": "Wiatt v. Eoaington, Lord Ray, 1410", "case_name": "Wiatt v. Essington", "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1410,
+     "status": "linked_english_reports", "er_case_id": "17902179", "confidence": "high", "note": "volume 2 supplied; OCR Eoaington for Essington; ER Wiatt vers Essington"},
+    {"seq": 4, "raw": "Pope v. Tillman, 7 Taunt. 642", "case_name": "Pope v. Tillman", "volume": 7, "reporter_abbr": "Taunt.", "page": 642,
+     "status": "linked_english_reports", "er_case_id": "18170560", "confidence": "high"},
+    {"seq": 5, "raw": "Lawley v. Gattacre, Cro. Jac. 498", "case_name": "Lawley v. Gattacre", "reporter_abbr": "Cro. Jac.", "page": 498,
+     "status": "linked_english_reports", "er_case_id": "17910610", "confidence": "high"},
+    {"seq": 6, "raw": "Knight v. Symms, Carth. 204", "case_name": "Knight v. Symms", "reporter_abbr": "Carth.", "page": 204,
+     "status": "linked_english_reports", "er_case_id": "17410207", "confidence": "high"}
+  ]
+}

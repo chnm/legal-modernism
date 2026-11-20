@@ -1,0 +1,20 @@
+{
+  "psmid": "19005840400",
+  "pageid": "03070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:23:17Z",
+  "citations": [
+    {"seq": 1, "raw": "Dundass v. Lord Weymouth, Cowp. 665", "case_name": "Dundass v. Lord Weymouth",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 665,
+     "status": "linked_english_reports", "er_case_id": "17770005", "confidence": "high",
+     "note": "ER volume 2 Cowp supplied"},
+    {"seq": 2, "raw": "Price v. Fletcher, ibid. 727", "case_name": "Price v. Fletcher",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 727,
+     "status": "linked_english_reports", "er_case_id": "17780042", "confidence": "high",
+     "note": "ibid. = Cowp."},
+    {"seq": 3, "raw": "Phillips v. Fielding, 2 H. Bl. 131", "case_name": "Phillips v. Fielding",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 131,
+     "status": "linked_english_reports", "er_case_id": "17923206", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 123"}
+  ]
+}

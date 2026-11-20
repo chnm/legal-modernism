@@ -1,0 +1,11 @@
+{
+  "psmid": "19005840400", "pageid": "02310",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:41:00Z",
+  "note": "Com. Dig., Bracton, Blackstone, Chitty, statutes and the Appendix are not recorded; (g) Ibid. refers back to the whole note",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 401; Pearle v. Bridges", "case_name": "Pearle v. Bridges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 401,
+     "status": "linked_english_reports", "er_case_id": "18450176", "confidence": "high",
+     "note": "name printed after the cite"}
+  ]
+}

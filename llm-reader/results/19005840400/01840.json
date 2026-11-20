@@ -1,0 +1,14 @@
+{
+  "psmid": "19005840400", "pageid": "01840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:32:00Z",
+  "note": "Heath's Maxims, Bracton, Ryley's Placita Parliamentaria and cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "Weltale v. Glover, 10 Mod. 160", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high",
+     "note": "printed 160 read as 166 (Weltale v. Glover is at 10 Mod 166, printed so in note (n))"},
+    {"seq": 2, "raw": "Weltale v. Glover, 10 Mod. 166", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high"}
+  ]
+}

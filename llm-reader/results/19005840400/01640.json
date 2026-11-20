@@ -1,0 +1,26 @@
+{
+  "psmid": "19005840400", "pageid": "01640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:25:10Z",
+  "note": "Reg. Plac. and Chitty on Pleading (1 Chitty, 498, first edit.) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Earl of Manchester v. Vale, 1 Saund. 27", "case_name": "Earl of Manchester v. Vale",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 27,
+     "status": "linked_english_reports", "er_case_id": "18450256", "pincite": true, "confidence": "high",
+     "note": "ER splits the case at 1 Wms Saund 23 and 27; a pincite since the case begins at 23"},
+    {"seq": 2, "raw": "McPherson v. Daniels, 10 Barn. & Cress. 263", "case_name": "M'Pherson v. Daniels",
+     "volume": 10, "reporter_abbr": "Barn. & Cress.", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high"},
+    {"seq": 3, "raw": "Hatton v. Morse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high"},
+    {"seq": 4, "raw": "Hallctt v. Byrt, 5 Mod, 252", "case_name": "Hallett v. Byrt",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 252,
+     "status": "linked_english_reports", "er_case_id": "17940773", "pincite": true, "confidence": "high",
+     "note": "ER has Hallet v. Byrt at 5 Mod 248 and 251; 252 falls in the 251 record"},
+    {"seq": 5, "raw": "Holler v. Bush, 1 Salk. 394", "case_name": "Holler v. Bush",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "high"},
+    {"seq": 6, "raw": "Year Book, 40 Edw. 3, 23", "volume": 40, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high", "note": "year book, 40 Edw. III, fol. 23; no source"}
+  ]
+}

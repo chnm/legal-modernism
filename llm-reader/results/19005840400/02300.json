@@ -1,0 +1,27 @@
+{
+  "psmid": "19005840400", "pageid": "02300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:40:00Z",
+  "note": "statutes are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Rice Thomas, Plowd. 128 a", "case_name": "Buckley v. Rice Thomas",
+     "volume": 1, "reporter_abbr": "Plowd.", "page": 128,
+     "status": "no_match", "confidence": "high",
+     "note": "volume 1 supplied; Buckley v. Rice Thomas begins at 1 Plowd. 118, and Plowden's first 130 pages are missing from the English Reports; no other report of the case found by name"},
+    {"seq": 2, "raw": "Rowe v. Roach, 1 M. & S. 304", "case_name": "Rowe v. Roach",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
+     "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high",
+     "note": "er_name is 'Same against Hoar the Younger'; murrell_title is Rowe v Roach"},
+    {"seq": 3, "raw": "Whitwell v. Bennett, 3 Bos. & Pul. 559", "case_name": "Whitwell v. Bennett",
+     "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 559,
+     "status": "linked_english_reports", "er_case_id": "18030749", "confidence": "high"},
+    {"seq": 4, "raw": "Bowditch v. Maw- ley, 1 Camp; 195", "case_name": "Bowditch v. Mawley",
+     "volume": 1, "reporter_abbr": "Camp.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "18080090", "confidence": "high"},
+    {"seq": 5, "raw": "Hutchinson v. Piper, 4 Taunt. 810", "case_name": "Hutchinson v. Piper",
+     "volume": 4, "reporter_abbr": "Taunt.", "page": 810,
+     "status": "linked_english_reports", "er_case_id": "18130278", "confidence": "high"},
+    {"seq": 6, "raw": "Walters v. Mace, 2 Barn. & Aid. 756", "case_name": "Walters v. Mace",
+     "volume": 2, "reporter_abbr": "Barn. & Ald.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18190514", "confidence": "high"}
+  ]
+}

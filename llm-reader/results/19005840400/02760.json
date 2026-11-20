@@ -1,0 +1,14 @@
+{
+  "psmid": "19005840400", "pageid": "02760",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:45:00Z",
+  "note": "cross-checked with the 1841 edition's record (19005785400/02770)",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 276, d. e. n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note at 276 d, e; falls in Duppa v. Mayo (begins 1 Wms Saund 275)"},
+    {"seq": 2, "raw": "Case v. Barber, Raym. 450", "case_name": "Case v. Barber",
+     "reporter_abbr": "T. Raym.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "18030119", "confidence": "high",
+     "note": "Sir T. Raymond"}
+  ]
+}
