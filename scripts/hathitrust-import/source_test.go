@@ -44,12 +44,13 @@ func TestPageID(t *testing.T) {
 
 func TestPagesFromFS(t *testing.T) {
 	fsys := fstest.MapFS{
-		"item/00000002.txt":         {Data: []byte("second\x00 page")},
-		"item/00000001.txt":         {Data: []byte("\xEF\xBB\xBFfirst page")},
-		"item/00000010.txt":         {Data: []byte("bad \xff byte")},
-		"item/00000003.txt":         {Data: nil},
-		"item/meta.json":            {Data: []byte("{}")},
-		"__MACOSX/item/._00001.txt": {Data: []byte("junk")},
+		"item/00000002.txt":                     {Data: []byte("second\x00 page")},
+		"item/00000001.txt":                     {Data: []byte("\xEF\xBB\xBFfirst page")},
+		"item/00000010.txt":                     {Data: []byte("bad \xff byte")},
+		"item/00000003.txt":                     {Data: nil},
+		"item/meta.json":                        {Data: []byte("{}")},
+		"item/00000000-hathitrust-colophon.txt": {Data: []byte("notice")},
+		"__MACOSX/item/._00001.txt":             {Data: []byte("junk")},
 	}
 	pages, err := pagesFromFS(fsys)
 	require.NoError(t, err)
@@ -73,8 +74,8 @@ func TestFindSource(t *testing.T) {
 	touch := func(name string) {
 		require.NoError(t, os.WriteFile(filepath.Join(dir, name), nil, 0o644))
 	}
-	touch("mdp.35112104595550-1763650000.zip")
-	touch("uc2.ark+=13960=t0pr7q84f.zip")
+	touch("mdp-35112104595550-1795204509.zip")
+	touch("uc2-ark--13960-t0pr7q84f-1795204993.zip")
 	touch("33433008600300.zip")
 	touch("nyp.33433008600292.pdf")
 	require.NoError(t, os.Mkdir(filepath.Join(dir, "uc1.b4280003"), 0o755))
@@ -83,8 +84,8 @@ func TestFindSource(t *testing.T) {
 		htid string
 		want string
 	}{
-		{"mdp.35112104595550", "mdp.35112104595550-1763650000.zip"},
-		{"uc2.ark:/13960/t0pr7q84f", "uc2.ark+=13960=t0pr7q84f.zip"},
+		{"mdp.35112104595550", "mdp-35112104595550-1795204509.zip"},
+		{"uc2.ark:/13960/t0pr7q84f", "uc2-ark--13960-t0pr7q84f-1795204993.zip"},
 		{"nyp.33433008600300", "33433008600300.zip"},
 		{"uc1.b4280003", "uc1.b4280003"},
 	}
@@ -102,7 +103,7 @@ func TestFindSource(t *testing.T) {
 	_, err = findSource(filepath.Join(dir, "absent"), "mdp.35112104595550")
 	assert.ErrorIs(t, err, errNoSource)
 
-	touch("mdp.35112104595550 (1).zip")
+	touch("mdp-35112104595550-1795204509 (1).zip")
 	_, err = findSource(dir, "mdp.35112104595550")
 	assert.ErrorContains(t, err, "2 downloads match")
 }

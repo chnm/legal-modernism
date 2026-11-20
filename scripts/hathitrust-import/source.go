@@ -33,8 +33,8 @@ func (p Page) PageID() string {
 
 // squash reduces a name to its lowercase letters and digits, so that an item
 // id can be found in a file name whatever was done to its punctuation:
-// HathiTrust writes uc2.ark:/13960/t0pr7q84f as uc2.ark+=13960=t0pr7q84f in
-// file names, and a browser may change it again.
+// HathiTrust names the download of uc2.ark:/13960/t0pr7q84f
+// uc2-ark--13960-t0pr7q84f-1795204993.zip, the last number a timestamp.
 func squash(s string) string {
 	var b strings.Builder
 	for _, r := range strings.ToLower(s) {
@@ -131,10 +131,12 @@ func pagesFromFS(fsys fs.FS) ([]Page, error) {
 		if err != nil {
 			return err
 		}
-		// Skip directories, anything that is not text, and the files macOS
-		// adds to an archive.
+		// Skip directories, anything that is not text, the files macOS adds
+		// to an archive, and the notice HathiTrust puts in every download
+		// (00000000-hathitrust-colophon.txt), which is not a page.
 		if d.IsDir() || !strings.EqualFold(path.Ext(name), ".txt") ||
-			strings.HasPrefix(path.Base(name), ".") || strings.Contains(name, "__MACOSX") {
+			strings.HasPrefix(path.Base(name), ".") || strings.Contains(name, "__MACOSX") ||
+			strings.Contains(strings.ToLower(path.Base(name)), "colophon") {
 			return nil
 		}
 		seq, err := seqFromName(name)

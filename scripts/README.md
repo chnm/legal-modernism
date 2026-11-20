@@ -23,7 +23,7 @@ printings of Stephen on Pleading that HathiTrust holds. HathiTrust refuses
 scripted downloads of page text, so each volume is downloaded by hand: open
 `https://hdl.handle.net/2027/<htid>`, log in through a member library, and
 choose Download, format "Text (.zip)", range "Whole item". Put the zips in
-`tmp/hathitrust/` under the names HathiTrust gives them, then
+`temp/hathitrust/` under the names HathiTrust gives them, then
 
 ```
 go run ./scripts/hathitrust-import/ --check   # read the zips, write nothing
