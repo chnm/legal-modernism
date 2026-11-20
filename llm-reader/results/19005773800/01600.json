@@ -1,0 +1,12 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01600",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:42:05Z",
+  "note": "editor's note [20] continued, quoting the second edition on the general issues",
+  "citations": [
+    {"seq": 1, "raw": "Dodd v. Kyffin, 7 T. R. 254", "case_name": "Dodd v. Kyffin", "volume": 7, "reporter_abbr": "T. R.", "page": 354,
+     "status": "linked_english_reports", "er_case_id": "17970501", "confidence": "high",
+     "note": "254 corrected to 354: Dodd v. Kyffin is at 7 TR 354; Myers v. Edge is at 254"}
+  ]
+}

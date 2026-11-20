@@ -1,0 +1,10 @@
+{
+  "psmid": "19005773800", "pageid": "01140",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:33:25Z",
+  "citations": [
+    {"seq": 1, "raw": "2 S:and. 44, n. (4)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 44,
+     "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true, "confidence": "medium",
+     "note": "OCR S:and. for Saund.; Saunders's note (4) on damages in mixed actions; 44 falls in William v. Gwyn, beginning at 2 Wms Saund 42 (a second record begins at 45), as other editions' readers linked it. Booth (Real Actions) is a treatise, skipped"}
+  ]
+}

@@ -62,8 +62,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
   Coke's Entries, Wentworth) are not.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
-  Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, and the
-  practice books Richardson's K. B. and Manning's Exchequer), statutes
+  Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, Smith's Leading
+  Cases (a collection, not a report), and the practice books Richardson's K. B. and Manning's Exchequer), statutes
   (`4 Ann. c. 16`), an abridgment entry that names no year-book folio
   (`Fitz. Abr. tit. Eject. firm. 2`), a reporter's preface (`Co. Pref. to
   10 Rep.`), rules of court even when printed in a report
@@ -190,9 +190,15 @@ The edition's year is a ceiling: no case it cites is later.
 Some English reporters have no source here, so their cites are `no_match`
 unless the same case is cited through another reporter: Willes's Reports
 (`Willes`), Marshall's Common Pleas Reports (`Marsh.`, 1813–16; the
-whitelist's Kentucky reading is wrong in an English context), and the year
+whitelist's Kentucky reading is wrong in an English context; likewise its
+`Dowl.`, read as Dow's Parliamentary Cases, is usually Dowling's Practice
+Cases, which are in the stubs as `3 Dowl. 70`), and the year
 books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
-the stubs only. A bare `Ibid.` with no page repeats the previous cite.
+the stubs only, and so, at most, are the practice and later reporters common
+in the 1867 and later editions' notes: Dowling (`Dowl.`, `Dowl. N.S.`),
+Dowling and Lowndes, Perry and Davison, Gale and Davison, Scott N.R.,
+Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
+in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
 report at `medium` and say so in `note`: the link is to the case. The same
@@ -275,8 +281,9 @@ by their cite (`cite` is `<volume> <reporter_standard> <page>`, e.g.
 `11 W.R. 813`). Link a stub only when it is exactly the case's first page; a
 pin cite into a stub reporter is `no_match`.
 
-Prefer, in order (and an English Reports report of the same case over an
-exact stub in another reporter, as for Tyrwhitt): CAP or the English Reports (whichever is the reporter's
+Prefer, in order (and an English Reports report of the same case, found by
+name, over an exact stub in another reporter: Tyrwhitt, the Law Journal
+(`L. J.`), the Jurist (`Jur.`), Perry and Davison and the like): CAP or the English Reports (whichever is the reporter's
 source), the code reporter, a stub. If nothing fits, `no_match`, saying in
 `note` what you tried.
 

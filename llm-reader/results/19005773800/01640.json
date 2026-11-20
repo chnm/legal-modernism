@@ -1,0 +1,29 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01640",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:43:08Z",
+  "citations": [
+    {"seq": 1, "raw": "Jones v. Kitchen, 1 Bos. & Pull. 76", "case_name": "Jones v. Kitchen", "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17970518", "confidence": "high",
+     "note": "printed 76; ER's Jones v. Kitchin begins at 1 Bos & Pul 77, a page on (Smith v. O'Kelly at 75)"},
+    {"seq": 2, "raw": "Selby v. Bardone, 3 Barn. & Aid. 2", "case_name": "Selby v. Bardons", "volume": 3, "reporter_abbr": "Barn. & Adol.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",
+     "note": "printed 'Barn. & Ald.' but the case (1832) is in Barnewall and Adolphus, 3 B & Ad 2"},
+    {"seq": 3, "raw": "9 Bing. 756, S. C.", "case_name": "Bardons v. Selby", "volume": 9, "reporter_abbr": "Bing.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18330017", "confidence": "high", "note": "same case in error"},
+    {"seq": 4, "raw": "Crogate's Case, 8 Rep. 67, a.", "case_name": "Crogate's Case", "volume": 8, "reporter_abbr": "Rep.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "15720123", "pincite": true, "confidence": "high", "note": "case begins at 8 Co Rep 66"},
+    {"seq": 5, "raw": "2 Saund. 295, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "18450303", "pincite": true, "confidence": "medium",
+     "note": "note to White v. Stubbs, which begins at 2 Wms Saund 294"},
+    {"seq": 6, "raw": "1 Saund. 244, c. n. (7)", "volume": 1, "reporter_abbr": "Saund.", "page": 244,
+     "status": "linked_english_reports", "er_case_id": "18450049", "pincite": true, "confidence": "medium",
+     "note": "note to Craft v. Boite, which begins at 1 Wms Saund 241"},
+    {"seq": 7, "raw": "Selby v. Bardols, 3 Barn. & Ald. 2", "case_name": "Selby v. Bardons", "volume": 3, "reporter_abbr": "Barn. & Adol.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",
+     "note": "repeat; printed 'Barn. & Ald.', the case is 3 B & Ad 2"},
+    {"seq": 8, "raw": "9 Bing. 756, S. C. in error", "case_name": "Bardons v. Selby", "volume": 9, "reporter_abbr": "Bing.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18330017", "confidence": "high"}
+  ]
+}

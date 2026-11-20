@@ -1,0 +1,166 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01060",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:41:48Z",
+  "note": "judgment non obstante veredicto and repleader; Rast. Ent. (precedents) and 2 Rol. Ab. (abridgment) are not reports",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Lewis v. Clements, 3 Barn. & Aid. 702",
+      "case_name": "Lewis v. Clements",
+      "volume": 3,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 702,
+      "status": "linked_english_reports",
+      "er_case_id": "18200463",
+      "confidence": "high",
+      "note": "name and '3 Barn.' printed at the foot of the previous page (01050), '& Aid. 702' here; OCR 'Aid.' for Ald."
+    },
+    {
+      "seq": 2,
+      "raw": "Rickards v. Bennett, 1 Barn. & Cress. 223",
+      "case_name": "Rickards v. Bennett",
+      "volume": 1,
+      "reporter_abbr": "Barn. & Cress.",
+      "page": 223,
+      "status": "linked_english_reports",
+      "er_case_id": "18230339",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Drayton v. Dale, 2 Barn. & Cress. 293",
+      "case_name": "Drayton v. Dale",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cress.",
+      "page": 293,
+      "status": "linked_english_reports",
+      "er_case_id": "18230741",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Earl of Lonsdale v. Nelson, 2 Barn. & Cress. 302",
+      "case_name": "Earl of Lonsdale v. Nelson",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cress.",
+      "page": 302,
+      "status": "linked_english_reports",
+      "er_case_id": "18230745",
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Lambert v. Taylor, 4 Barn. & Cress. 138",
+      "case_name": "Lambert v. Taylor",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Cress.",
+      "page": 138,
+      "status": "linked_english_reports",
+      "er_case_id": "18250152",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Gwynne v. Burnell, 6 Ding. N. C. 453",
+      "case_name": "Gwynne v. Burnell",
+      "volume": 6,
+      "reporter_abbr": "Bing. N. C.",
+      "page": 453,
+      "status": "linked_english_reports",
+      "er_case_id": "18400832",
+      "confidence": "high",
+      "note": "OCR 'Ding.' for Bing."
+    },
+    {
+      "seq": 7,
+      "raw": "Negelen v. Mitchell, 7 M. & W. 612",
+      "case_name": "Negelen v. Mitchell",
+      "volume": 7,
+      "reporter_abbr": "M. & W.",
+      "page": 612,
+      "status": "linked_english_reports",
+      "er_case_id": "18410376",
+      "confidence": "high"
+    },
+    {
+      "seq": 8,
+      "raw": "Atkinson v. Davies, 11 M. & W. 236",
+      "case_name": "Atkinson v. Davies",
+      "volume": 11,
+      "reporter_abbr": "M. & W.",
+      "page": 236,
+      "status": "linked_english_reports",
+      "er_case_id": "18430403",
+      "confidence": "high"
+    },
+    {
+      "seq": 9,
+      "raw": "Duwn v. Hatcher, 10 A. & E. 121",
+      "case_name": "Down v. Hatcher",
+      "volume": 10,
+      "reporter_abbr": "A. & E.",
+      "page": 121,
+      "status": "linked_english_reports",
+      "er_case_id": "18390663",
+      "confidence": "high",
+      "note": "OCR 'Duwn' for Down; ER 'Down against Hatcher and Charlotte, his Wife'"
+    },
+    {
+      "seq": 10,
+      "raw": "Couling v. Coxc, 6 C. B. 703",
+      "case_name": "Couling v. Coxe",
+      "volume": 6,
+      "reporter_abbr": "C. B.",
+      "page": 703,
+      "status": "linked_english_reports",
+      "er_case_id": "18481014",
+      "confidence": "high"
+    },
+    {
+      "seq": 11,
+      "raw": "Jones v. Bodiner, Cartl. 370",
+      "case_name": "Jones v. Bodinner",
+      "reporter_abbr": "Carth.",
+      "page": 370,
+      "status": "linked_english_reports",
+      "er_case_id": "17410191",
+      "confidence": "high",
+      "note": "OCR 'Cartl.' for Carth.; ER title 'John versus Bodinner'"
+    },
+    {
+      "seq": 12,
+      "raw": "Wilkes v. Broadbent, 1 Wils. b3",
+      "case_name": "Wilkes v. Broadbent",
+      "volume": 1,
+      "reporter_abbr": "Wils.",
+      "page": 63,
+      "status": "linked_english_reports",
+      "er_case_id": "17990545",
+      "confidence": "high",
+      "note": "OCR 'b3' for 63"
+    },
+    {
+      "seq": 13,
+      "raw": "Wilkes v. Broadbeut, I Wils. 63",
+      "case_name": "Wilkes v. Broadbent",
+      "volume": 1,
+      "reporter_abbr": "Wils.",
+      "page": 63,
+      "status": "linked_english_reports",
+      "er_case_id": "17990545",
+      "confidence": "high"
+    },
+    {
+      "seq": 14,
+      "raw": "Dighton v. Bartholomew, Cro. Eliz. 778",
+      "case_name": "Dighton v. Bartholomew",
+      "reporter_abbr": "Cro. Eliz.",
+      "page": 778,
+      "status": "linked_english_reports",
+      "er_case_id": "16530606",
+      "confidence": "high"
+    }
+  ]
+}

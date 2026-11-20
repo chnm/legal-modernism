@@ -1,0 +1,12 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01620",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:42:34Z",
+  "note": "editor's note [20] continued, quoting the second edition on the general issues",
+  "citations": [
+    {"seq": 1, "raw": "Bird * Randall, 3 Burr. 1353", "case_name": "Bird v. Randall", "volume": 3, "reporter_abbr": "Burr.", "page": 1353,
+     "status": "linked_english_reports", "er_case_id": "17620069", "pincite": true, "confidence": "high",
+     "note": "Lord Mansfield's explanation; case begins at 3 Burr 1345"}
+  ]
+}

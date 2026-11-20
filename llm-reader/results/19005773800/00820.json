@@ -1,0 +1,28 @@
+{
+  "psmid": "19005773800", "pageid": "00820",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:39:41Z",
+  "note": "Setting forth the deed on oyer; plea in bar to debt on bond. Com. Dig. and Chitty are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "2 Snund. 410, n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "OCR 'Snund.'; no name printed; Saunders's note (2) at 410 falls in Lord Arlington v. Merricke, 2 Wms Saund 403"},
+    {"seq": 2, "raw": "I Saun(d. 9, b, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note at 9 b to Jevens v. Harridge, ER record at 1 Wms Saund 8"},
+    {"seq": 3, "raw": "Stibbs v. Clough, I Stra. 227", "case_name": "Stibbs v. Clough",
+     "volume": 1, "reporter_abbr": "Stra.", "page": 227,
+     "status": "linked_english_reports", "er_case_id": "17953272", "confidence": "high"},
+    {"seq": 4, "raw": "Ball v. Squnrry, Fort. 3.4", "case_name": "Ball v. Squarry",
+     "reporter_abbr": "Fort.", "page": 354,
+     "status": "linked_english_reports", "er_case_id": "17480024", "confidence": "high",
+     "note": "OCR 'Squnrry', '3.4'; Ball v. Squarry begins at Fort 354, as other editions print"},
+    {"seq": 5, "raw": "Colton v. Goollridge, 2 Black. 1108", "case_name": "Colton v. Goodridge",
+     "volume": 2, "reporter_abbr": "Black.", "page": 1108,
+     "status": "linked_english_reports", "er_case_id": "17460102", "confidence": "high",
+     "note": "William Blackstone's Reports, 2 Black W 1108"},
+    {"seq": 6, "raw": "Jevcns v. HarridgIt I Snund. 1, 1.", "case_name": "Jevens v. Harridge",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "garbled; other editions print 1 Saund. 9 b; the same Jevens v. Harridge record begins at 1 Wms Saund 8"}
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "psmid": "19005773800",
+  "pageid": "00940",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:36:15Z",
+  "note": "the issue and the burden of proof; 'Stephen Pl. 5th ed. 92' is the treatise itself",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Clark v. Hougham, 2 Barn. & Cres. 149",
+      "case_name": "Clark v. Hougham",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 149,
+      "status": "linked_english_reports",
+      "er_case_id": "18230046",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Uther v. Rich, 10 A. & E. 78-",
+      "case_name": "Uther v. Rich",
+      "volume": 10,
+      "reporter_abbr": "A. & E.",
+      "page": 784,
+      "status": "linked_english_reports",
+      "er_case_id": "18390859",
+      "confidence": "high",
+      "note": "last digit lost in OCR ('78-'); Uther against Rich is at 10 Ad & E 784"
+    },
+    {
+      "seq": 3,
+      "raw": "Green v. Crane, 11 Mod. 37",
+      "case_name": "Green v. Crane",
+      "volume": 11,
+      "reporter_abbr": "Mod.",
+      "page": 37,
+      "status": "linked_english_reports",
+      "er_case_id": "17961079",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Evans v. Ogilvie, 2 Y. & J. 79",
+      "case_name": "Evans v. Ogilvie",
+      "volume": 2,
+      "reporter_abbr": "Y. & J.",
+      "page": 79,
+      "status": "linked_english_reports",
+      "er_case_id": "18280339",
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Consena v. Paddon, 5 Tyrw. 535",
+      "case_name": "Cousens v. Paddon",
+      "volume": 5,
+      "reporter_abbr": "Tyrw.",
+      "page": 535,
+      "status": "linked_english_reports",
+      "er_case_id": "18350048",
+      "confidence": "medium",
+      "note": "OCR 'Consena' for Cousens; Tyrwhitt has no source; the same case is printed alongside as 2 C. M. & R. 547 (ER 'Cousins v Paddon', 2 CrM & R 547), linked as the README directs (a stub 5 Tyrw. 535 also exists)"
+    },
+    {
+      "seq": 6,
+      "raw": "2 C. M. & R. 547",
+      "case_name": "Cousens v. Paddon",
+      "volume": 2,
+      "reporter_abbr": "C. M. & R.",
+      "page": 547,
+      "status": "linked_english_reports",
+      "er_case_id": "18350048",
+      "confidence": "high",
+      "note": "ER 'Cousins v Paddon'"
+    },
+    {
+      "seq": 7,
+      "raw": "Routledge v. Abbott, 8 A. & E. 592",
+      "case_name": "Routledge v. Abbott",
+      "volume": 8,
+      "reporter_abbr": "A. & E.",
+      "page": 592,
+      "status": "linked_english_reports",
+      "er_case_id": "18380727",
+      "confidence": "high"
+    },
+    {
+      "seq": 8,
+      "raw": "Amor v. Cuthbert, I Dowi. N. S. 160",
+      "case_name": "Amor v. Cuthbert",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 160,
+      "status": "linked_english_reports",
+      "er_case_id": "18410671",
+      "confidence": "medium",
+      "note": "Dowling's Practice Cases (N.S.) have no source; the same case (C.P. 1841) is in ER as Amor v Cuthbert, 3 Man & G 1, linked in preference to the exact stub 1 Dowl. N.S. 160"
+    },
+    {
+      "seq": 9,
+      "raw": "Williams r. Great Western Railway Co., 8 M. & W. 856",
+      "case_name": "Williams v. Great Western Railway Co.",
+      "volume": 8,
+      "reporter_abbr": "M. & W.",
+      "page": 856,
+      "status": "linked_english_reports",
+      "er_case_id": "18410925",
+      "confidence": "high"
+    },
+    {
+      "seq": 10,
+      "raw": "I Dowi. N. S. 16",
+      "case_name": "Williams v. Great Western Railway Co.",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 16,
+      "status": "linked_english_reports",
+      "er_case_id": "18410925",
+      "confidence": "medium",
+      "note": "second report of Williams v. Great Western Railway Co.; Dowling N.S. has no source, linked to the ER report at 8 M & W 856 in preference to the exact stub 1 Dowl. N.S. 16"
+    },
+    {
+      "seq": 11,
+      "raw": "Delisser v. Towne, 1 Q. B. 33",
+      "case_name": "Delisser v. Towne",
+      "volume": 1,
+      "reporter_abbr": "Q. B.",
+      "page": 333,
+      "status": "linked_english_reports",
+      "er_case_id": "18410021",
+      "confidence": "high",
+      "note": "OCR dropped a digit, '33' for 333 (Delisser against Towne, 1 QB 333)"
+    },
+    {
+      "seq": 12,
+      "raw": "Traherne v. Gardner, 8 E. &B. 161",
+      "case_name": "Traherne v. Gardner",
+      "volume": 8,
+      "reporter_abbr": "E. & B.",
+      "page": 161,
+      "status": "linked_english_reports",
+      "er_case_id": "18570740",
+      "confidence": "high"
+    }
+  ]
+}

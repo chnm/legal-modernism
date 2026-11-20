@@ -1,0 +1,10 @@
+{
+  "psmid": "19005773800", "pageid": "01270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:36:14Z",
+  "citations": [
+    {"seq": 1, "raw": "Selby v. pardons, 3 B. & Adol. 16", "case_name": "Selby v. Bardons",
+     "volume": 3, "reporter_abbr": "B. & Adol.", "page": 16,
+     "status": "linked_english_reports", "er_case_id": "18320131", "pincite": true, "confidence": "high",
+     "note": "OCR pardons for Bardons; Lord Tenterden's judgment at 16 in Selby v. Bardons, which begins at 3 B & Ad 2"}
+  ]
+}

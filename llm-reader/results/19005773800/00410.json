@@ -1,0 +1,25 @@
+{
+  "psmid": "19005773800", "pageid": "00410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:37:09Z",
+  "note": "p. 18; treatises skipped (F. N. B., Doct. Pl., 2 Inst., Dalton's Sheriff, Selwyn)",
+  "citations": [
+    {"seq": 1, "raw": "Baber v. Harris, 1 P. & D. 300", "case_name": "Baber v. Harris",
+     "volume": 1, "reporter_abbr": "P. & D.", "page": 300,
+     "status": "linked_english_reports", "er_case_id": "18390389", "confidence": "medium",
+     "note": "Perry and Davison has no source and no stub at this cite; linked to the same case's report in the English Reports, Baber against Harris, 9 Ad & E 532 (1839), cited next"},
+    {"seq": 2, "raw": "9 A. & E. 532", "case_name": "Baber v. Harris",
+     "volume": 9, "reporter_abbr": "A. & E.", "page": 532,
+     "status": "linked_english_reports", "er_case_id": "18390389", "confidence": "high"},
+    {"seq": 3, "raw": "Bur- roughcs v. Bayne, 5 H. & N. 296", "case_name": "Burroughes v. Bayne",
+     "volume": 5, "reporter_abbr": "H. & N.", "page": 296,
+     "status": "linked_english_reports", "er_case_id": "18600449", "confidence": "high"},
+    {"seq": 4, "raw": "Pillot v. Wilkinson, 2 H. & C. 82", "case_name": "Pillot v. Wilkinson",
+     "volume": 2, "reporter_abbr": "H. & C.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "18630532", "pincite": true,
+     "confidence": "high", "note": "the case begins at 2 H & C 72 (next record, Dell v King, at 84); Martin B.'s judgment at 82"},
+    {"seq": 5, "raw": "Moor v. Watts, Ld. Bay. 617", "case_name": "Moor v. Watts",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 617,
+     "status": "linked_english_reports", "er_case_id": "17921610", "pincite": true,
+     "confidence": "high", "note": "OCR 'Ld. Bay.' read as Ld. Raym.; volume 1 supplied from the case name; Moore vers Watts begins at 1 Ld Raym 613 (next record at 618)"}
+  ]
+}

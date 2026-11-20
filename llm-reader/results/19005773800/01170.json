@@ -1,0 +1,10 @@
+{
+  "psmid": "19005773800", "pageid": "01170",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:34:14Z",
+  "citations": [
+    {"seq": 1, "raw": "Lyttlcton v. Cross, 3 Barn. & Cress. 17", "case_name": "Lyttleton v. Cross",
+     "volume": 3, "reporter_abbr": "Barn. & Cress.", "page": 317,
+     "status": "linked_english_reports", "er_case_id": "18240102", "confidence": "high",
+     "note": "OCR dropped the 3 of 317; other editions print 3 Barn. & Cress. 317. Arch. Pract., Impey C. P., Manning's Exch. and the statute skipped"}
+  ]
+}

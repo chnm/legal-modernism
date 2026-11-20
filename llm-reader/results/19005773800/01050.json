@@ -1,0 +1,68 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01050",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:41:32Z",
+  "note": "statutes of jeofails and judgment non obstante veredicto; 2 Reeves, 3 Bl. Com., Terms de la Ley and Gilb. C. P. are treatises; 'Lewis v. Clements, 3 Barn.' runs onto the next page, where its reporter and page are printed, and is recorded there",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Lacy v. Reynclds, Cro. Eliz. 214",
+      "case_name": "Lacy v. Reynolds",
+      "reporter_abbr": "Cro. Eliz.",
+      "page": 214,
+      "status": "linked_english_reports",
+      "er_case_id": "16531172",
+      "confidence": "high",
+      "note": "OCR 'Reynclds'"
+    },
+    {
+      "seq": 2,
+      "raw": "Staple v. Heydon, 6 Mod. 10",
+      "case_name": "Staple v. Heydon",
+      "volume": 6,
+      "reporter_abbr": "Mod.",
+      "page": 10,
+      "status": "linked_english_reports",
+      "er_case_id": "17941534",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 6 Mod 1 (5965 words, runs to 11)"
+    },
+    {
+      "seq": 3,
+      "raw": "The King e. Phillips, Stra. 394",
+      "case_name": "The King v. Phillips",
+      "volume": 1,
+      "reporter_abbr": "Stra.",
+      "page": 394,
+      "status": "linked_english_reports",
+      "er_case_id": "17951520",
+      "confidence": "high",
+      "note": "volume 1 supplied"
+    },
+    {
+      "seq": 4,
+      "raw": "Pitts v. Polehampton, 1 Ld. Bayrm. 390",
+      "case_name": "Pitts v. Polehampton",
+      "volume": 1,
+      "reporter_abbr": "Ld. Raym.",
+      "page": 390,
+      "status": "linked_english_reports",
+      "er_case_id": "17921826",
+      "confidence": "high",
+      "note": "OCR 'Bayrm.' for Raym."
+    },
+    {
+      "seq": 5,
+      "raw": "Clears v. Stevens, 8 Taunt. 413",
+      "case_name": "Clears v. Stevens",
+      "volume": 8,
+      "reporter_abbr": "Taunt.",
+      "page": 413,
+      "status": "linked_english_reports",
+      "er_case_id": "18180481",
+      "confidence": "high"
+    }
+  ]
+}

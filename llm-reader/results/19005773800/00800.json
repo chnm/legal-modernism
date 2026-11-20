@@ -1,0 +1,21 @@
+{
+  "psmid": "19005773800", "pageid": "00800",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:38:54Z",
+  "note": "Oyer. Com. Dig., Tidd and Selwyn are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "Simpsone.. Garside, Lutw. 1644", "case_name": "Simpson v. Garside",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1644,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1644", "confidence": "medium",
+     "note": "no volume printed; Lutwyche is paged as one run and the stubs split it, so supplied 2; Lutwyche has no ER source"},
+    {"seq": 2, "raw": "Jevons v. Ilarridge, 1 Sid. 38", "case_name": "Jevons v. Harridge",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 308,
+     "status": "linked_english_reports", "er_case_id": "17140321", "confidence": "high",
+     "note": "printed 38 read as 308 (dropped digit); Jevons v. Harridge begins at 1 Sid 308"},
+    {"seq": 3, "raw": "Page v. Divine, 2 T. R. 40", "case_name": "Page v. Divine",
+     "volume": 2, "reporter_abbr": "T. R.", "page": 40,
+     "status": "linked_english_reports", "er_case_id": "17870154", "confidence": "high"},
+    {"seq": 4, "raw": "1 Saund. 9, b, n. (e)", "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note at 9 b to Jevens v. Harridge, ER record at 1 Wms Saund 8, the case on oyer cited just above"}
+  ]
+}

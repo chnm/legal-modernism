@@ -1,0 +1,18 @@
+{
+  "psmid": "19005773800", "pageid": "00400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:36:26Z",
+  "note": "p. 17; end of Heard's note quoting Smith's Leading Cases (a treatise, not recorded); Reeves skipped",
+  "citations": [
+    {"seq": 1, "raw": "Clivcrs v. Sanvage, 5 E. & B. 697", "case_name": "Chivers v. Savage",
+     "volume": 5, "reporter_abbr": "E. & B.", "page": 697,
+     "status": "linked_english_reports", "er_case_id": "18550823", "confidence": "high",
+     "note": "OCR 'Clivcrs v. Sanvage' read as Chivers v. Savage; ER 5 El & Bl 697, Chivers and wife v. Savage (1855)"},
+    {"seq": 2, "raw": "Bnackhouse v. Bonormi, 9 House of Lords Cases, 503", "case_name": "Backhouse v. Bonomi",
+     "volume": 9, "reporter_abbr": "H. L. C.", "page": 503,
+     "status": "linked_english_reports", "er_case_id": "18610764", "confidence": "high",
+     "note": "OCR 'Bnackhouse v. Bonormi' read as Backhouse v. Bonomi; ER 9 HLC 503 (1861)"},
+    {"seq": 3, "raw": "22 Ass. 41", "volume": 22, "reporter_abbr": "Y.B.", "page": 41,
+     "status": "no_match", "confidence": "high",
+     "note": "22 Edw. III, Liber Assisarum (year book), pl. 41; year books have no source here; as in the 1859 reading"}
+  ]
+}

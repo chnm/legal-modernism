@@ -1,0 +1,11 @@
+{
+  "psmid": "19005773800", "pageid": "00520",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:39:22Z",
+  "note": "p. 29; form of count in dower; register, F. N. B., Chitty, Booth and Rastell's Entries skipped",
+  "citations": [
+    {"seq": 1, "raw": "Garrard v. Tuck, 8 C. U. 231", "case_name": "Garrard v. Tuck",
+     "volume": 8, "reporter_abbr": "C. B.", "page": 231,
+     "status": "linked_english_reports", "er_case_id": "18490786", "confidence": "high",
+     "note": "OCR 'C. U.' read as C. B.; ER 8 CB 231, Garrard, widow, demandant, v. Tuck, tenant (1849), a dower case fitting the count in dower"}
+  ]
+}

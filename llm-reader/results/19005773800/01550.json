@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800",
+  "pageid": "01550",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:40:08Z",
+  "citations": [
+    {"seq": 1, "raw": "10 Wendell, 112", "volume": 10, "reporter_abbr": "Wend.", "page": 112,
+     "status": "linked_cap", "cap_case_id": 2013005, "pincite": true, "confidence": "medium",
+     "note": "no name printed; Root v. Chandler runs 10 Wend. 110-113, an assault and battery case on what may be given in evidence under the general issue, which fits the note on matter of justification"},
+    {"seq": 2, "raw": "11 Johns. 132", "volume": 11, "reporter_abbr": "Johns.", "page": 132,
+     "status": "linked_cap", "cap_case_id": 2137636, "confidence": "medium",
+     "note": "no name printed; Demick v. Chapman begins at 11 Johns. 132 and holds that a justification is not admissible under the general issue in trespass, which fits the note"},
+    {"seq": 3, "raw": "7 Cowen, 35", "volume": 7, "reporter_abbr": "Cow.", "page": 35,
+     "status": "linked_cap", "cap_case_id": 2034907, "confidence": "medium",
+     "note": "no name printed; Van Buskirk v. Irving is cited 7 Cow. 35 in cap.citations (CAP first_page 34)"}
+  ]
+}

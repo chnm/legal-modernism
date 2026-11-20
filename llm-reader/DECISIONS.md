@@ -65,7 +65,9 @@ same case through another reporter where they can.
 (2 Wms Saund 200 and 205, "Same v Bateman" for Goram v. Sweeting;
 1 M & S 304, "Same against Hoar the Younger" for Rowe v. Roach;
 "Weston versus Chapman" for Weston v. Mason; "Same against Ireland" for
-Lord Huntingtower v. Gardiner; "In Michaelmas Term" at 1 TR 510).
+Lord Huntingtower v. Gardiner; "In Michaelmas Term" at 1 TR 510). Some are
+filed under the wrong page: Mellor v. Leather's `er_parallel_cite` is
+`1 El & Bl 518`, but its `er_cite` (118 E.R. 569) puts it at 619, as printed.
 
 ### 5. Whitelist readings that are wrong in an English treatise
 
@@ -75,9 +77,18 @@ Lord Huntingtower v. Gardiner; "In Michaelmas Term" at 1 TR 510).
 - `Marsh.` is read as A. K. Marshall (Kentucky); in an English context it is
   Marshall's Common Pleas Reports.
 - `Went.` (Wentworth's precedents, not reports) is linked to stubs.
+- `Dowl.` is read as Dow's Parliamentary Cases; in a treatise of the 1830s–60s
+  it is Dowling's Practice Cases, which the stubs hold as `3 Dowl. 70`.
 
 ### 6. CAP first pages that disagree with the printed cite
 
 In early Johnson's and Massachusetts Reports, `cap.cases.first_page` can
 differ from the cite in `cap.citations` (Hopkins v. Hopkins, cited
 `10 Johns. 369`, first_page 375).
+
+### 8. Pages missing from MOML scans
+
+The 1859 edition's scan (19005781000) has no page for printed pp. cxxv and
+cxxxvi of the second appendix, though the text runs on across them; other
+scans have "FOLLOWING PAGE(S) MUTILATED" targets (1831 p. 00460, 1841
+p. 01080). Readers record what is there; the missing text is not read.

@@ -1,0 +1,54 @@
+{
+  "psmid": "19005773800",
+  "pageid": "00870",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:34:35Z",
+  "note": "amendment; 2 Reeves, 3 Inst., 4 Inst., Arch. Prac., Tidd are treatises; 'Note to Robinson v. Raley, 1 Smith's Leading Cases, 248' cites Smith's own note in a collection of leading cases, not a report, so not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Rush v. Seymour, 10 Mod. 88",
+      "case_name": "Rush v. Seymour",
+      "volume": 10,
+      "reporter_abbr": "Mod.",
+      "page": 88,
+      "status": "linked_english_reports",
+      "er_case_id": "17953003",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Anon. 6 Alod. 130",
+      "case_name": "Anonymous",
+      "volume": 6,
+      "reporter_abbr": "Mod.",
+      "page": 130,
+      "status": "linked_english_reports",
+      "er_case_id": "17940131",
+      "confidence": "high",
+      "note": "OCR 'Alod.' for 'Mod.'; two records begin at 6 Mod 130 (Anonymous and Parkins v. Woollaston); the printed name decides"
+    },
+    {
+      "seq": 3,
+      "raw": "Butler v. Bulkeley, 1 Bing. 233",
+      "case_name": "Butler v. Bulkeley",
+      "volume": 1,
+      "reporter_abbr": "Bing.",
+      "page": 233,
+      "status": "linked_english_reports",
+      "er_case_id": "18230516",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Rush v., Seymour, 10 Mod. 88",
+      "case_name": "Rush v. Seymour",
+      "volume": 10,
+      "reporter_abbr": "Mod.",
+      "page": 88,
+      "status": "linked_english_reports",
+      "er_case_id": "17953003",
+      "confidence": "high"
+    }
+  ]
+}

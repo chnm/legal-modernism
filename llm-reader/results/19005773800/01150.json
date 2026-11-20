@@ -1,0 +1,14 @@
+{
+  "psmid": "19005773800", "pageid": "01150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:33:42Z",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 45, n. (4)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (4) in William v. Gwyn (real action, default of appearance), which begins at 2 Wms Saund 42; ER's second record begins at 45. Booth and Com. Dig. skipped"},
+    {"seq": 2, "raw": "Dwight v. Holbrook, I Allen, 560", "case_name": "Dwight v. Holbrook",
+     "volume": 1, "reporter_abbr": "Allen", "page": 560,
+     "status": "linked_cap", "cap_case_id": 2095156, "confidence": "high",
+     "note": "OCR I for 1"}
+  ]
+}
