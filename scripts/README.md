@@ -135,9 +135,19 @@ On the workstation:
 - `git`, `make`, `go`, `rsync`, `ssh`, `psql`, and `dbmate` on the `PATH`.
   The preflight names any that are missing.
 - `LAW_DBSTR` set to the write-access connection string.
-- An ssh config entry named `hopper` that authenticates without a prompt (a
-  key in an agent). The script runs ssh with `BatchMode=yes`, so a password
-  prompt is a failure, not a pause. `make sync-hopper` uses the same alias.
+- An ssh config entry named `hopper`, which `make sync-hopper` uses too.
+  Hopper asks for a password and a Duo push, so the preflight signs in once:
+  it opens an ssh master connection (`ControlMaster`, socket
+  `~/.ssh/pipeline-%C`), asking on the terminal for the password and the
+  push, and every later ssh and the rsync of `make sync-hopper` reuse it with
+  `BatchMode=yes`, so nothing else prompts (issue #448). The master stays up
+  for an hour after its last use (`ControlPersist=1h`), so runs chained one
+  after another sign in once. If it dies, for example when the laptop
+  sleeps, the script asks to sign in again, with a bell and a notification,
+  before the next phase that reaches hopper or while it waits on a job; the
+  job keeps running on hopper meanwhile. Without a terminal (`nohup`, cron)
+  it cannot ask, so open the master first:
+  `ssh -fN -o ControlMaster=yes -o ControlPersist=1h -o ControlPath='~/.ssh/pipeline-%C' hopper`.
 - No pending migrations: `make db-up`, which also dumps `db/schema.sql`, and
   commit `db/schema.sql`. The preflight refuses to start otherwise.
 
@@ -238,7 +248,8 @@ terminal to ask on under `nohup` or cron, so those runs need `--yes`.
 ### How it waits on hopper
 
 After `sbatch --parsable` returns the job id, the script polls
-`squeue -h -j ID -o %T` once a minute over a fresh ssh connection each time,
+`squeue -h -j ID -o %T` once a minute over a short ssh connection each time,
+multiplexed over the master connection the preflight opened,
 logging every change of state and a heartbeat every ten minutes. It does not
 hold one ssh session open with `sbatch --wait`: a held session dies when the
 laptop sleeps or the network blips, and the run with it. A transient ssh
@@ -296,7 +307,8 @@ Refusals in preflight, and what to do:
 | missing local tools | Install them; `dbmate` and `psql` come from Homebrew. |
 | cannot connect to the database | Check `LAW_DBSTR`, the VPN, and the database host. |
 | migrations are pending | `make db-up`, then commit the `db/schema.sql` it dumps. |
-| cannot ssh to hopper | Check the `hopper` ssh alias and that a key is loaded. |
+| cannot sign in to hopper | The password was wrong or the Duo push was not approved in time; run it again. With no terminal, open the master by hand (see Prerequisites). |
+| cannot ssh to hopper | Check the `hopper` ssh alias. |
 | `LAW_DBSTR` is not exported in the login shell on hopper | Export it from `~/.bash_profile` on hopper. |
 | a pipeline job is already queued or running | Wait for it, cancel it, or attach to it with `--from PHASE --job ID`. The check covers the jobs of both corpora, because a CAP job and a MOML job together exceed the database's connections. |
 
