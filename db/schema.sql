@@ -939,8 +939,16 @@ CREATE TABLE legalhist.reporters (
     single_vol boolean,
     type text,
     reporter_cap text,
-    cited_by_year_from integer
+    cited_by_year_from integer,
+    paged_volumes integer
 );
+
+
+--
+-- Name: COLUMN reporters.paged_volumes; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON COLUMN legalhist.reporters.paged_volumes IS 'Volumes 1 through paged_volumes are paginated as one run, so a cite to any of them is keyed by page alone ("2 Dick. 500" is "Dick 500"); NULL when the volumes are paged separately (issue #331).';
 
 
 --
@@ -1230,10 +1238,19 @@ CREATE TABLE legalhist.whitelist (
     reporter_standard text,
     junk boolean NOT NULL,
     fallback_standard text,
+    fallback_any_miss boolean DEFAULT false NOT NULL,
     CONSTRAINT chk_whitelist_fallback CHECK (((fallback_standard IS NULL) OR ((reporter_standard IS NOT NULL) AND (fallback_standard <> reporter_standard)))),
+    CONSTRAINT chk_whitelist_fallback_any_miss CHECK (((NOT fallback_any_miss) OR (fallback_standard IS NOT NULL))),
     CONSTRAINT chk_whitelist_junk_no_standard CHECK ((NOT (junk AND (reporter_standard IS NOT NULL)))),
     CONSTRAINT chk_whitelist_nonjunk_has_standard CHECK ((junk OR (reporter_standard IS NOT NULL)))
 );
+
+
+--
+-- Name: COLUMN whitelist.fallback_any_miss; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON COLUMN legalhist.whitelist.fallback_any_miss IS 'Try fallback_standard after any miss of the spelling''s own reading, a page miss included, not only after a volume or anachronism miss (issue #331).';
 
 
 --
@@ -1388,6 +1405,76 @@ COMMENT ON COLUMN moml.editions.work_id IS 'The work this edition belongs to.';
 --
 
 COMMENT ON COLUMN moml.editions.derivative IS 'True when the edition is an abridgment, analysis, question book, supplement, adaptation or translation of its work rather than an edition of it.';
+
+
+--
+-- Name: hathitrust_volumes; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.hathitrust_volumes (
+    psmid text NOT NULL,
+    htid text NOT NULL,
+    ht_record text NOT NULL,
+    oclc text,
+    rights text NOT NULL,
+    digitized_by text,
+    moml_psmid text,
+    relation text,
+    note text,
+    imported_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT hathitrust_volumes_check CHECK ((psmid <> moml_psmid)),
+    CONSTRAINT hathitrust_volumes_check1 CHECK (((moml_psmid IS NULL) = (relation IS NULL))),
+    CONSTRAINT hathitrust_volumes_relation_check CHECK ((relation = ANY (ARRAY['same_printing'::text, 'same_edition'::text])))
+);
+
+
+--
+-- Name: TABLE hathitrust_volumes; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON TABLE moml.hathitrust_volumes IS 'Provenance of the volumes in moml.volumes that were taken from HathiTrust rather than Gale (issue #402), and the MOML volume each one duplicates, if any';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.htid; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.htid IS 'HathiTrust item id; the item is at https://hdl.handle.net/2027/<htid>, and page sequence n is the volume''s pageid n * 10';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.ht_record; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.ht_record IS 'HathiTrust catalog record number, https://catalog.hathitrust.org/Record/<ht_record>';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.rights; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.rights IS 'HathiTrust rights code when the volume was imported (pd: public domain)';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.digitized_by; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.digitized_by IS 'Who scanned the item (google, ia, cornell-ms), which governs how the scans may be reused';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.moml_psmid; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.moml_psmid IS 'The Gale volume of the same book, NULL when MOML has none';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.relation; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.relation IS 'same_printing: the same edition, imprint and year as moml_psmid; same_edition: the same edition in another printing';
 
 
 --
@@ -3179,6 +3266,22 @@ ALTER TABLE ONLY moml.editions
 
 
 --
+-- Name: hathitrust_volumes hathitrust_volumes_htid_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_htid_key UNIQUE (htid);
+
+
+--
+-- Name: hathitrust_volumes hathitrust_volumes_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_pkey PRIMARY KEY (psmid);
+
+
+--
 -- Name: page_ocrtext moml_page_ocrtext_pk; Type: CONSTRAINT; Schema: moml; Owner: -
 --
 
@@ -3637,6 +3740,13 @@ CREATE INDEX edition_subjects_subject_idx ON moml.edition_subjects USING btree (
 --
 
 CREATE INDEX editions_work_id_idx ON moml.editions USING btree (work_id);
+
+
+--
+-- Name: hathitrust_volumes_moml_psmid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX hathitrust_volumes_moml_psmid_idx ON moml.hathitrust_volumes USING btree (moml_psmid);
 
 
 --
@@ -4408,6 +4518,22 @@ ALTER TABLE ONLY moml.editions
 
 
 --
+-- Name: hathitrust_volumes hathitrust_volumes_moml_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_moml_psmid_fkey FOREIGN KEY (moml_psmid) REFERENCES moml.volumes(psmid);
+
+
+--
+-- Name: hathitrust_volumes hathitrust_volumes_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.volumes(psmid);
+
+
+--
 -- Name: page_content page_content_pageid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
@@ -4666,4 +4792,6 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261023210000'),
     ('20261106193524'),
     ('20261106201422'),
-    ('20261117203658');
+    ('20261117203658'),
+    ('20261118164617'),
+    ('20261120163920');
