@@ -44,8 +44,11 @@ func linkCitation(c *citations.UnlinkedCitation, t *Tables) *citations.LinkResul
 	result = route(c, first, t, result)
 
 	// Step 3: a spelling that can mean another reporter tries that one, but
-	// only after a miss that says this was the wrong reporter (issue #358).
-	if second != nil && result.Status == citations.StatusNoMatch && fallsBack(result.MatchTier) {
+	// only after a miss that says this was the wrong reporter (issue #358), or
+	// after any miss for a spelling whose two readings share their volume
+	// numbers (issue #331).
+	if second != nil && result.Status == citations.StatusNoMatch &&
+		(entry.FallbackAnyMiss || fallsBack(result.MatchTier)) {
 		fb := route(c, second, t, &citations.LinkResult{CitationID: c.ID})
 		if linkedToSource(fb.Status) {
 			return fb
@@ -431,8 +434,9 @@ func linkEnglishReports(
 // volumeForms returns the citation forms to probe, most-faithful first. For a
 // single-volume reporter "Toth 123" and "1 Toth 123" are the same citation --
 // such reports were often cited with a redundant volume 1 even though there is
-// only one volume to cite -- so both are tried. Everything else yields just the
-// citation as detected.
+// only one volume to cite -- so both are tried. A volume within a reporter's
+// run of continuously paginated volumes (PagedVolumes) is tried without its
+// volume too. Everything else yields just the citation as detected.
 //
 // The variant is a copy of the citation with the volume flipped rather than a
 // rewritten string, so buildStandardCite and buildCAPCite handle it with their
@@ -440,6 +444,15 @@ func linkEnglishReports(
 // for volume 1, which buildCAPCite skips when the volume is nil.
 func volumeForms(c *citations.UnlinkedCitation, entry *citations.WhitelistEntry) []*citations.UnlinkedCitation {
 	forms := []*citations.UnlinkedCitation{c}
+	// A volume of a reporter paginated straight through, past the first, is
+	// keyed by its page alone: "2 Dick. 500" is "Dick 500" (issue #331).
+	// Volume 1 and the volume-less form are left to the single-volume rule
+	// below, when the reporter has it.
+	if c.Volume != nil && *c.Volume > 1 && *c.Volume <= entry.PagedVolumes {
+		variant := *c
+		variant.Volume = nil
+		return append(forms, &variant)
+	}
 	if !entry.SingleVol {
 		return forms
 	}

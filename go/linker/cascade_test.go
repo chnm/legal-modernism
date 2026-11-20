@@ -57,6 +57,20 @@ func TestLinkCitation(t *testing.T) {
 	hillDiffvols := map[string]map[int]*citations.DiffVolEntry{"Hill": {
 		1: {CAPVol: 19, CAPReporter: "S.C.L."}, 2: {CAPVol: 20, CAPReporter: "S.C.L."}, 3: {CAPVol: 21, CAPReporter: "S.C.L."},
 	}}
+	// Issue #331: "N. J." is the Law Reports, then the Equity Reports, after
+	// any miss; "Dick." is Dickens's two volumes, paged straight through, then
+	// Dickinson's New Jersey Equity Reports.
+	njlStd := "N.J.L."
+	njEqStd := "N.J. Eq."
+	nj := &citations.WhitelistEntry{ReporterStandard: &njlStd, Jurisdiction: "us:nj", FallbackAnyMiss: true,
+		Fallback: &citations.WhitelistEntry{ReporterStandard: &njEqStd, Jurisdiction: "us:nj"}}
+	dickStd := "Dick"
+	dickEqStd := "Dick. Eq."
+	dick := &citations.WhitelistEntry{ReporterStandard: &dickStd, UK: true, SingleVol: true, PagedVolumes: 2, Jurisdiction: "uk:ch",
+		Fallback: &citations.WhitelistEntry{ReporterStandard: &dickEqStd, ReporterCAP: &njEqCAP, CAPDifferent: true, Jurisdiction: "us:nj"}}
+	dickDiffvols := map[string]map[int]*citations.DiffVolEntry{"Dick. Eq.": {
+		2: {CAPVol: 47, CAPReporter: "N.J. Eq."}, 3: {CAPVol: 48, CAPReporter: "N.J. Eq."},
+	}}
 
 	tests := []struct {
 		name         string
@@ -847,6 +861,65 @@ func TestLinkCitation(t *testing.T) {
 			wantLinked: ptr("4 Denio 20"),
 		},
 		{
+			// Issue #331. The Law and Equity Reports share their volume
+			// numbers, so an Equity cite under bare "N. J." misses the Law
+			// Reports only at the page, and the spelling falls back anyway.
+			name:       "a page miss falls back when the spelling allows any miss",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(20), ReporterAbbr: "N. J.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"N. J.": nj},
+			capCites:   map[string]int64{"20 N.J.L. 101": 111, "20 N.J. Eq. 100": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(222)),
+			wantLinked: ptr("20 N.J. Eq. 100"),
+		},
+		{
+			name:       "the first reading still wins when both readings hit",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(20), ReporterAbbr: "N. J.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"N. J.": nj},
+			capCites:   map[string]int64{"20 N.J.L. 100": 111, "20 N.J. Eq. 100": 222},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("20 N.J.L. 100"),
+		},
+		{
+			name:       "a page miss in both readings keeps the first reading's tier",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(20), ReporterAbbr: "N. J.", Page: 100},
+			whitelist:  map[string]*citations.WhitelistEntry{"N. J.": nj},
+			capCites:   map[string]int64{"20 N.J.L. 101": 111, "20 N.J. Eq. 102": 222},
+			wantStatus: citations.StatusNoMatch,
+			wantTier:   citations.TierUSPageAbsent,
+		},
+		{
+			// Dickens's second volume continues the first's pages, and the
+			// English Reports key it by page alone.
+			name:       "a paged-through volume is probed by its page",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(2), ReporterAbbr: "Dick.", Page: 500},
+			whitelist:  map[string]*citations.WhitelistEntry{"Dick.": dick},
+			diffvols:   dickDiffvols,
+			erCites:    map[string]citations.ERCase{"Dick 500": {ID: "er-1", Cases: 1}},
+			capCites:   map[string]int64{"47 N.J. Eq. 500": 111},
+			wantStatus: citations.StatusLinkedEnglishReports,
+			wantTier:   citations.TierERDirect,
+			wantERID:   ptr("er-1"),
+			wantLinked: ptr("Dick 500"),
+		},
+		{
+			// Dickens has no third volume, so "3 Dick." is uk_volume_absent and
+			// is read as Dickinson's third volume, 48 N.J. Eq.
+			name:       "a volume past the paged run falls back",
+			cite:       citations.UnlinkedCitation{ID: uuid.New(), Volume: ptr(3), ReporterAbbr: "Dick.", Page: 50},
+			whitelist:  map[string]*citations.WhitelistEntry{"Dick.": dick},
+			diffvols:   dickDiffvols,
+			erCites:    map[string]citations.ERCase{"Dick 50": {ID: "er-1", Cases: 1}},
+			capCites:   map[string]int64{"48 N.J. Eq. 50": 111},
+			wantStatus: citations.StatusLinkedCAP,
+			wantTier:   citations.TierCAPDirect,
+			wantCAPID:  ptr(int64(111)),
+			wantLinked: ptr("48 N.J. Eq. 50"),
+		},
+		{
 			// Issue #401. A New York opinion's "2 Hill 93" is Hill's New York
 			// Reports, though S.C. Hill has a volume 2 and a case on page 93.
 			name:       "the citing state's reading is tried first",
@@ -1353,6 +1426,7 @@ func TestVolumeForms(t *testing.T) {
 	std := "Toth"
 	single := &citations.WhitelistEntry{ReporterStandard: &std, SingleVol: true}
 	multi := &citations.WhitelistEntry{ReporterStandard: &std}
+	paged := &citations.WhitelistEntry{ReporterStandard: &std, SingleVol: true, PagedVolumes: 2}
 
 	tests := []struct {
 		name    string
@@ -1366,6 +1440,10 @@ func TestVolumeForms(t *testing.T) {
 		{"single-vol volume 2 has no variant", ptr(2), single, 1, nil},
 		{"multi-vol nil volume has no variant", nil, multi, 1, nil},
 		{"multi-vol volume 1 has no variant", ptr(1), multi, 1, nil},
+		{"paged nil volume gains a 1", nil, paged, 2, ptr(1)},
+		{"paged volume 1 loses it", ptr(1), paged, 2, nil},
+		{"paged volume 2 loses it", ptr(2), paged, 2, nil},
+		{"volume past the paged run has no variant", ptr(3), paged, 1, nil},
 	}
 
 	for _, tt := range tests {

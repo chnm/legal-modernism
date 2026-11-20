@@ -42,7 +42,10 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 		COALESCE(f.single_vol, false) AS fallback_single_vol,
 		COALESCE(f.cited_by_year_from, 0) AS fallback_cited_by_year_from,
 		COALESCE(r.jurisdiction, '') AS jurisdiction,
-		COALESCE(f.jurisdiction, '') AS fallback_jurisdiction
+		COALESCE(f.jurisdiction, '') AS fallback_jurisdiction,
+		COALESCE(r.paged_volumes, 0) AS paged_volumes,
+		COALESCE(f.paged_volumes, 0) AS fallback_paged_volumes,
+		w.fallback_any_miss
 	FROM legalhist.whitelist w
 	LEFT JOIN legalhist.reporters r ON r.reporter_standard = w.reporter_standard
 	LEFT JOIN legalhist.reporters f ON f.reporter_standard = w.fallback_standard
@@ -59,7 +62,7 @@ func (s *LinkerDBStore) GetReporterWhitelist(ctx context.Context) (map[string]*W
 		var e, fb WhitelistEntry
 		err := rows.Scan(&found, &e.ReporterStandard, &e.ReporterCAP, &e.Junk, &e.UK, &e.CAPDifferent, &e.SingleVol, &e.Statute, &e.CitedByYearFrom,
 			&fb.ReporterStandard, &fb.ReporterCAP, &fb.UK, &fb.CAPDifferent, &fb.SingleVol, &fb.CitedByYearFrom,
-			&e.Jurisdiction, &fb.Jurisdiction)
+			&e.Jurisdiction, &fb.Jurisdiction, &e.PagedVolumes, &fb.PagedVolumes, &e.FallbackAnyMiss)
 		if err != nil {
 			return nil, fmt.Errorf("scanning reporter whitelist row: %w", err)
 		}

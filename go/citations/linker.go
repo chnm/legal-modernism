@@ -30,6 +30,13 @@ type WhitelistEntry struct {
 	// lets one reporter row hold a volume-cited series and its year-cited
 	// continuation (issue #314).
 	CitedByYearFrom int
+	// PagedVolumes is the number of volumes the reporter paginates as one run
+	// (legalhist.reporters.paged_volumes), or 0. Dickens's Chancery Reports
+	// are two volumes numbered straight through, which the English Reports
+	// key by page alone ("Dick 500"), so "2 Dick. 500" is probed as "Dick 500"
+	// too; a volume past the run is a real volume number and is not (issue
+	// #331).
+	PagedVolumes int
 	// Jurisdiction is the reporter's legalhist.reporters.jurisdiction
 	// ("us:sc", "uk:kb"), or "" when it has none. The linker compares it with
 	// a citation's SourceJurisdiction to choose which of a spelling's two
@@ -46,6 +53,13 @@ type WhitelistEntry struct {
 	// (issue #401). Its fields describe the fallback reporter; it never has a
 	// Fallback of its own.
 	Fallback *WhitelistEntry
+	// FallbackAnyMiss reports that the spelling's fallback is tried after any
+	// miss of its own reading, a page miss included, rather than only after
+	// one that says the reporter was wrong (legalhist.whitelist
+	// .fallback_any_miss). Bare "N. J." in a treatise is the Law or the Equity
+	// Reports, whose volume numbers run side by side, so an Equity cite finds
+	// the Law Reports' volume and misses only at the page (issue #331).
+	FallbackAnyMiss bool
 }
 
 // DiffVolEntry maps an original volume number to the corresponding CAP volume
