@@ -1,0 +1,46 @@
+{
+  "psmid": "19005840400",
+  "pageid": "04040",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:32:20Z",
+  "note": "statutes and cross-references skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 74, n. (2)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 74,
+      "status": "linked_english_reports",
+      "er_case_id": "18450174",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note (2) to Peacock v. Bell and Kendal, which begins at 1 Wms Saund 73; no name printed"
+    },
+    {
+      "seq": 2,
+      "raw": "Santler v. Heard, 2 Black. Iep. 1033",
+      "case_name": "Santler v. Heard",
+      "volume": 2,
+      "reporter_abbr": "Black. Rep.",
+      "page": 1033,
+      "status": "linked_english_reports",
+      "er_case_id": "17460458",
+      "pincite": true,
+      "confidence": "high",
+      "note": "W. Blackstone's Reports; case begins at 2 Black W 1031; OCR 'Iep.' for Rep."
+    },
+    {
+      "seq": 3,
+      "raw": "2 Saund. 171 c",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 171,
+      "status": "linked_english_reports",
+      "er_case_id": "18450101",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note at 171 c falls in Hambleton v. Veere, which begins at 2 Wms Saund 169 (next case, Yard v. Ford, at 172); no name printed"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "psmid": "19005840400",
+  "pageid": "04030",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:32:20Z",
+  "note": "Co. Litt. by Harg. and Gilb. Hist. C. P. skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Bulwer'a case, 7 Rep. 3 a.",
+      "case_name": "Bulwer's Case",
+      "volume": 7,
+      "reporter_abbr": "Rep.",
+      "page": 3,
+      "status": "linked_english_reports",
+      "er_case_id": "15720058",
+      "pincite": true,
+      "confidence": "high",
+      "note": "Bulwer's Case begins at 7 Co Rep 1"
+    },
+    {
+      "seq": 2,
+      "raw": "1 Saund. 74, n. (2)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 74,
+      "status": "linked_english_reports",
+      "er_case_id": "18450174",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note (2) to Peacock v. Bell and Kendal, which begins at 1 Wms Saund 73; no name printed"
+    }
+  ]
+}

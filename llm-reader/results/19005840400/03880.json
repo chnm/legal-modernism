@@ -1,0 +1,11 @@
+{
+  "psmid": "19005840400",
+  "pageid": "03880",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:32:01Z",
+  "note": "Appendix notes (47)-(48); Placitorum Abbreviatio entries are not cases",
+  "citations": [
+    {"seq": 1, "raw": "10t Hen. 6. 7", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high", "note": "Year book, 10 Hen. VI; '10t' read as 10; no source"}
+  ]
+}
