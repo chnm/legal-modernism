@@ -1,0 +1,22 @@
+{
+  "psmid": "19005785400",
+  "pageid": "03170",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:37:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Haworth v. Spraggs, 8 T. R. 515", "case_name": "Haworth v. Spraggs", "volume": 8, "reporter_abbr": "T. R.", "page": 515,
+     "status": "linked_english_reports", "er_case_id": "18000138", "confidence": "high"},
+    {"seq": 2, "raw": "Willes. 40", "reporter_abbr": "Willes", "page": 40,
+     "status": "no_match", "confidence": "medium",
+     "note": "Willes's Reports have no source and no case name is printed"},
+    {"seq": 3, "raw": "8 T. RL 633", "volume": 8, "reporter_abbr": "T. R.", "page": 633,
+     "status": "linked_english_reports", "er_case_id": "18000222", "pincite": true, "confidence": "medium",
+     "note": "no name printed; 633 falls in Wilkes v. Williams, which begins at 8 TR 631 (defence with &c.)"},
+    {"seq": 4, "raw": "2 Saund. 209 . n. (1.)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "note (1) at 209 falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 5, "raw": "3 Lev. 240", "volume": 3, "reporter_abbr": "Lev.", "page": 240,
+     "status": "linked_english_reports", "er_case_id": "17970121", "confidence": "low",
+     "note": "no name printed; two cases begin at 3 Lev 240 (Hampson v. Bill, Beayne v. Beal); Hampson v. Bill picked, as on page 03150"}
+  ]
+}

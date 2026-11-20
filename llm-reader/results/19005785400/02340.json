@@ -1,0 +1,27 @@
+{
+  "psmid": "19005785400", "pageid": "02340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:54:24Z",
+  "citations": [
+    {"seq": 1, "raw": "Scilly v. Dally, 2 Salk. 562", "case_name": "Scilly v. Dally",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 562,
+     "status": "linked_english_reports", "er_case_id": "17953046", "confidence": "high"},
+    {"seq": 2, "raw": "Carth. 444, 8. C.", "case_name": "Scilly v. Dally",
+     "reporter_abbr": "Carth.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17410309", "confidence": "high",
+     "note": "S. C. (OCR '8. C.'): same case as Scilly v. Dally; ER 'Silly versus Dally'"},
+    {"seq": 3, "raw": "Searl v. Bunnion. 2 Mod. 70", "case_name": "Searl v. Bunnion",
+     "volume": 2, "reporter_abbr": "Mod.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high"},
+    {"seq": 4, "raw": "Johns v. Whitly, 3 Wils. 72", "case_name": "Johns v. Whitley",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 72,
+     "status": "linked_english_reports", "er_case_id": "17990240", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 Wils KB 65"},
+    {"seq": 5, "raw": "Hendy v. Ste- phenson, 10 East, 60", "case_name": "Hendy v. Stephenson",
+     "volume": 10, "reporter_abbr": "East", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "18080259", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 East 55"},
+    {"seq": 6, "raw": "1 Saund. 116 d, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18450054", "confidence": "medium",
+     "note": "no name printed; note to Cutler v. Southern, which begins at 1 Wms Saund 116"}
+  ]
+}

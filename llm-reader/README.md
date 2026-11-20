@@ -122,7 +122,12 @@ case) points to the case just named: find that case in the reporter given.
 Some reporters were paged differently in different editions (Douglas,
 Strange): a named case found a page or two from the printed page is linked,
 with a note. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
-it annotates, which may begin a page or two before the note. Ignore a second
+it annotates, which may begin a page or two before the note. On a page where
+one case ends and another begins, a note goes to the case running onto the
+page, unless its subject plainly belongs to the one beginning there. Choices
+already made: 1 Saund. 318 n. (3) is Redman v. Edolph; 1 Saund. 228 n. (1)
+is Stennel v. Hogg. When several cases begin at a cited page and nothing
+tells them apart, the pick is always `low`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. A cite repeated on a page is recorded each time it is printed. When
@@ -144,7 +149,12 @@ books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
 the stubs only. A bare `Ibid.` with no page repeats the previous cite.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
-report at `medium` and say so in `note`: the link is to the case.
+report at `medium` and say so in `note`: the link is to the case. This
+covers J. B. Moore (found in Taunton), Tyrwhitt (in Crompton and Meeson, or
+Crompton and Jervis), Marshall (Taunton) and Willes (often in Barnes's
+Notes, Comyns or Kenyon). Benloe has no records for pages 44–88. A case known only as cited in
+another report (`Johnson v. Picket, cited Grimwood v. Barritt, 6 T. R. 463`)
+is one record, linked to the report that prints it.
 
 **English Reports** (`english_reports.cases`). `er_parallel_cite` is the
 nominate cite without punctuation: `10 Mod 88`, `2 B & C 871`, `4 Taunt 572`,

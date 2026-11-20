@@ -1,0 +1,17 @@
+{
+  "psmid": "19005785400",
+  "pageid": "02020",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:58:00Z",
+  "note": "Doctor Placitandi, Viner, Co. Litt. and Comyns's Digest skipped",
+  "citations": [
+    {"seq": 1, "raw": "Essington v. Bourcher, Hob. 245", "case_name": "Essington v. Bourcher", "reporter_abbr": "Hob.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17920780", "pincite": true, "confidence": "high", "note": "ER Essington versus Bourcher begins at Hob 244"},
+    {"seq": 2, "raw": "Cuppledick v. Terwhit, Hob. 250", "case_name": "Cuppledick v. Terwhit", "reporter_abbr": "Hob.", "page": 250,
+     "status": "linked_english_reports", "er_case_id": "17920607", "pincite": true, "confidence": "high", "note": "ER Cuppledick versus Sir Philip Terwhit begins at Hob 249"},
+    {"seq": 3, "raw": "Morrow v. Belcher, 4 Barn. & Cres. 704", "case_name": "Marrow v. Belcher", "volume": 4, "reporter_abbr": "Barn. & Cres.", "page": 704,
+     "status": "linked_english_reports", "er_case_id": "18250789", "confidence": "high"},
+    {"seq": 4, "raw": "Bleke v. Grove, 1 Sid. 176", "case_name": "Bleke v. Grove", "volume": 1, "reporter_abbr": "Sid.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "17140060", "pincite": true, "confidence": "high", "note": "ER Bleeke versus Grove begins at 1 Sid 175"}
+  ]
+}

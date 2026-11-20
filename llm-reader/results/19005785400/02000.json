@@ -1,0 +1,10 @@
+{
+  "psmid": "19005785400",
+  "pageid": "02000",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:55:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Humphreys v. Churchman, Rep. temp. Hard. 289", "case_name": "Humphreys v. Churchman", "reporter_abbr": "Rep. temp. Hard.", "page": 289,
+     "status": "linked_english_reports", "er_case_id": "18150208", "confidence": "high"}
+  ]
+}
