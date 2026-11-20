@@ -1,0 +1,193 @@
+[00:00:00] Well, wonderful. Thank you again so much for that generous introduction. I think that the introduction establishes that I am a historian of 19th century civil legal practices in the United States.
+[00:00:13] But what the introduction does not tell you is I am decidedly not a programmer or a data technician.
+[00:00:20] So like many of you, I've had in part to pick up, but I wanted to make sure to begin by recognizing Lincoln's vital contributions to what I'm presenting and make sure that all credit and especially all blame is equally shared by my collaborator.
+[00:00:37] I'd be happy to speak in the question and answer time about the ways that digital collaboration may be changing our practices as legal historians.
+[00:00:46] But my remarks this morning aim to draw on our experiences in digital legal history to reflect on some of the possibilities and complications that arise for the field, the field of legal history when digital and computational methods are brought to bear on it.
+[00:01:05] Our projects title making American law modern. Really, I hope to explain that by the end of the presentation for now I think it's helpful to step back to our first project together already mentioned in the generous introduction.
+[00:01:23] In 2018 we published an article in the American historical review titled the spine of American law digital text analysis and US legal practice.
+[00:01:32] This effort was part of a broader study I've been engaged in for several years writing the history of American procedural law and the central place of procedure in codification movements in the United States.
+[00:01:45] What you see here is one of the key outputs of our computational study, a text family tree, showing at least two things one the central influence of the New York code or codes of civil procedure.
+[00:02:00] One, the influence on most of the rest of the procedural law of the United States, but then to the mediation of that influence through other regional centers of textual transmission, for instance, in the far west California, the Midwest, Indiana and Ohio, while
+[00:02:17] the southern states lacked a regional center and all borrowed directly from New York which pose some questions that we try to tackle as historians of the article.
+[00:02:27] As we're presenting on our method in this piece we wrote at the time that text analysis, like all historical work can begin with either a corpus looking for a question or a question, looking for a corpus.
+[00:02:42] And at the time that most digital history work, whether concerned with law or not, was of that first kind, a corpus in search of a question.
+[00:02:51] Scholars approach large corpora like Google Books or digitized repositories of newspapers or the works of author libraries of French literature during the 18th century, and then puzzled about the questions that could be asked of these corpora.
+[00:03:07] In the work pictured here, we traveled in the opposite direction we had a discipline specific question. What was the influence of one particular statute on another.
+[00:03:19] And we built a corpus to answer this question, compiling all major published and in some cases unpublished procedural legislation that we could gather across the English speaking world of the 19th century.
+[00:03:32] That approach meant that some prominent techniques in the field of digital text analysis were unsuitable for our project and some questions were unanswerable by our chosen techniques.
+[00:03:44] So for instance, the question, what is a procedure code in the United States, what does it cover, what does it do and how does it differ from its European counterparts.
+[00:03:54] These are all important historical questions but not ones that could really be answered by the text we had compiled, in part because we had assumed the answer to what is a procedure code when we had put the corpus together.
+[00:04:10] Likewise, although there are interesting questions of topic modeling in procedure codes in the United States, such as the question of whether the law of evidence and proof taking was or was not considered procedural law particular times.
+[00:04:25] Here, sophisticated topic modeling would have rendered an interesting results on our corpus in part because again, we had assumed a topic model when building the corpus.
+[00:04:35] But also in part because it's relatively easy to see at a high level what a procedure code includes by merely browsing the table of contents.
+[00:04:44] This is the code kind of comes with its own technology to help you spot the topic models within it, at least at the level of that question.
+[00:04:55] The method our corpus was good for because we had designed it for this purpose was investigating text reuse among the procedure codes and discerning the familiar lines work that could not have been accomplished with conventional methods of close reading without a lifetime of effort if it could be accomplished at all through conventional methods.
+[00:05:19] Now, observing that designing a corpus around a question tended to be the road less traveled in digital history.
+[00:05:27] We did not mean to imply that it was the superior way of doing digital history. Our point was not our point was that not all methods fit all corporate equally.
+[00:05:39] And that starting with questions instead of with corporate might especially require domain expertise which might make that approach more suitable for technical subjects like legal history or perhaps religious history or the history of science.
+[00:05:55] I want to reiterate at the outset that we do not think it illegitimate to begin with a corpus and see what questions can be asked of it because that is exactly what we are doing in our second project.
+[00:06:07] So in our current project we are examining a data set of all English language legal treatises published from the late 18th to the early 20th century, adding up all the volumes and additions brings the total corpus to around 25,000 volumes.
+[00:06:24] Unlike our procedure codes this data set is proprietary while most of the treatises are digitally available in some form in Google books.
+[00:06:33] The Gale group has meticulously created its own scan of treatises in law libraries for law library use within, you know, the top law libraries of American law schools, including my current library the Columbia Law Library.
+[00:06:50] The data set consists of OCR text of every page of every treatise, as well as hand corrected metadata for all the material that would appear in a library catalog so author names and titles date in place of publication and category of law in the judgment of the cataloging librarians so procedure contracts property criminal law and so forth.
+[00:07:18] Now most of us are familiar with the trade offs of working with OCR text by which I mean machine transcribed text. On the one hand machine transcription allows us to work quickly and cheaply with much larger data sets than if we hired researchers to rekey the text by hand.
+[00:07:36] Of course the trade off is an accuracy of transcription which can be rife in these treatises. Like the great civilian text the more important English treatises quickly accreted glosses, footnotes, marginalia, an ever diminishing size of type that makes machine recognition somewhat unreliable volume to volume.
+[00:07:59] So the first question to ask of this corpus is what questions even can be asked of corpus like this a large but somewhat unreliable set of data.
+[00:08:14] Fortunately, a new corpus emerged for our project before we even had to get far with that initial question. Harvard Law School completed its monumental case law access project scanning thousands of volumes of data.
+[00:08:28] It was published in the thousands of volumes of published case reports across the entire history of the United States. Harvard's data is available under a pretty generous license and you can visit whenever you like at the very elegant URL case.law.
+[00:08:44] Like the treatises database Harvard's data consists of scanned pages with OCR text and hand corrected metadata.
+[00:08:52] But here the hand corrections are not just at the level of each and every volume, but also of each and every case, which is why we're so fortunate the data appeared at the outset of our project, because we're able to benefit from merging the corporate.
+[00:09:10] Let me say a word of about how this works since this is a gathering of legal historians I think we're all well aware that in the Anglo American common law tradition.
+[00:09:20] While there are statutes and codes cases are the main vehicle through which the law is articulated and lengthy at least by civilian standards lengthy reasoned and factually detailed opinions by the judges.
+[00:09:35] In the early common law case precedents were a matter of a living oral tradition, but over time enterprising publishers printed and sold transcriptions of the judges decisions, which is the genesis of our case reporting system.
+[00:09:50] And over still more time private case reporting was taken up by public printers and secretaries of state and judges began to cite to the printed editions of their remarks as authority for deciding new cases.
+[00:10:04] And specifically for our project through this whole history the way cases were cited has remained remarkably stable and consistent from the 18th century to today and looks in all instances pretty much as it does on the screen right now you have party names citation to the published report
+[00:10:25] Now, we can generally ignore the party names and the date. These don't always appear on the same line as the reporter citation.
+[00:10:35] And when we're dealing with OCR text italics and parentheses can give machine transcription a hard time.
+[00:10:42] What's valuable about this consistent system though is that whether or not the party names or dates are given whether they're they're legible.
+[00:10:50] The reporter citation is always there and always in this form the volume number, the name of the reporter which over time will become an abbreviation of the jurisdictions name like New York here and the page number on which the case report begins.
+[00:11:09] The other advantage is that printers were especially careful in handling citations. They were careful to make the type clear spaced out and legible because printers understood that the citation was a key resource within the case report or the legal treatise.
+[00:11:26] And so even machine OCR is highly accurate when transcribing the citations.
+[00:11:33] So the discursive structure of the law at this time and the material circumstances of law publishing render a citation system that is almost uniquely detectable at scale by machines.
+[00:11:46] That is our project along two dimensions. First, just as enumerated regulations are the building blocks of codes cases are the building blocks of treatises.
+[00:11:57] They supply the content that treatise writers explicate infer from argue against the cases are the things the treatise writers are attempting to organize and by being able to see the building blocks at a distance.
+[00:12:13] We have something to work with that cuts through the noisiness of our transcriptions.
+[00:12:18] Second, the citation within a treatise can now be linked to a lot of pristine information outside the treatise, thanks to the case laws metadata.
+[00:12:28] Within the treatise itself judicial authors are rarely mentioned dates are rarely mentioned and the text of the opinion is rarely quoted.
+[00:12:38] While it is a treatise writer's goal to create linkages between the cases, we are no longer stuck with the relations the writer has identified, but rather we can now read around them and seek to explicate maybe hidden logics of influence and legal development.
+[00:12:56] Now, we could stop right here because already there are a number of questions that arise for our corpus for which we can seek definite answers from the data.
+[00:13:05] Jurist was cited the most at different times and in different places, which jurisdiction provided more rules and the law of contracts or corporations and who were its biggest rivals early on.
+[00:13:18] What cases involving women and children actually contributed the rules about standards of care by the reasonable man in English tort law.
+[00:13:28] These are all questions we can ask and hopefully will ask of our data going forward.
+[00:13:34] But the big question that I think would be of most interest to the most scholars is whether we can ask of a corpus of treatises. Just what is a treatise and what is it for?
+[00:13:46] Remember, this was not a question we asked our corpus of procedure codes because it was a question we had already answered in our principle of selection using other historical methods.
+[00:13:58] But here where the principle of selection is that every object calling itself a legal treatise is added to the data set. Can we through distant and computational reading discern what these objects do in shaping the law?
+[00:14:13] Of course, we have some non-computational approaches to this question. Joel Prentice Bishop, a prolific author of American treatises, defined the legal treatise as an orderly statement of those principles in which law consists, kind of interestingly, whether drawn from the reports of law cases from natural reason or from any other source.
+[00:14:34] That may work well as an inclusive definition of treatises, but definitely not as an exclusive one, right? Because couldn't we say exactly the same thing about cases themselves or codes?
+[00:14:51] Surely treatises are meant to be something other than a case or something more than the definition that that Bishop gave us.
+[00:15:01] American legal historians have tended to err on the other side, if I can put it that way, offering definitions and descriptions of treatises that are unduly restrictive and don't fit all of the data.
+[00:15:13] It seems the trouble with the Anglo-American legal treatise is that as soon as you offer a general characteristic, you can find plenty of sterling examples of that characteristic.
+[00:15:24] But look hard enough and you can find just as many sterling counter examples. As I detail in this chart, this is basically the debate among American legal historians, what is a treatise, and you can find plenty of examples of detailed digests of just trying to give you the run of the cases that are out there, versus others that are more synthetic works that are trying to guide you to the principle cases and rules.
+[00:15:47] Treatises that are aimed at an audience of law students and have a pedagogical value, treatises that are aimed at, you know, maybe one judge who's a master of a legal domain and trying to instruct that judge on how jurisprudence should work.
+[00:16:04] For a while, historians tended to read treatises as stepping stones to a code. First the treatise organizes the case law, then a code can come along and simplify, concretize the rules in a systematic statute.
+[00:16:21] But we see treatises running just the other way. Herbert Wexler, for instance, the author of the American model penal code, thought you needed to start with a code of concrete provisions so that you could write the treatise, explicating its provisions and developing a jurisprudence of criminal law.
+[00:16:43] There are treatises that simplify, try to give you general rules, treatises that complexify, trying to run down all the exceptions in a body of law, treatises that are deferential to judicial authority understand that the treatise of itself has no lawmaking power,
+[00:17:00] and then there are treatises that seem to lack that understanding and tell you what the law is or must be, and if judges or legislators disagree, so much worse for the judges or legislators.
+[00:17:12] Now here too, we have a number of questions computational techniques would let us get a handle on number of questions we could put to the corpus. Using emerging tools from stylometry or sentiment scoring, we can try to group treatises as closer to one poll or another for each item on this list, perhaps enumerate the treatises hewing closer to one poll or another over time,
+[00:17:36] maybe even adjudicate who's right, which polls overall do more treatises gravitate towards.
+[00:17:43] Still, again, the larger question remains not what distinguishes from some treatises from others, but what do these works have in common that their authors and readers all thought they could give to them the common name of a treatise?
+[00:17:57] What can the corpus as a corpus tell us about itself?
+[00:18:04] In the remaining time, I'd like to suggest three preliminary tentative answers raised by our computational research methods.
+[00:18:12] The first two, I think, show why digital and computational methods are particularly well suited to questions like these.
+[00:18:21] But the third answer I will suggest raises complications, complications that I continue to puzzle about, we continue to puzzle about, and that I'd like to invite you to puzzle about as we proceed with this conference on digital legal history.
+[00:18:37] All right, so first answer to what is a treatise, what do treatises do? I think we can confidently argue that whatever the poles of difference might be, treatises set out to organize authorities or more specifically to organize cases.
+[00:18:53] That is, to use a very anachronistic term, but one with all sorts of contemporary resonance, treatises are first and foremost, a data management tool, a means of keeping the data of decisional law from spiraling beyond manageability.
+[00:19:11] And to be sure, the complaint of many American lawyers since the days of the early republic was that case law was always on the verge of becoming unmanageable.
+[00:19:22] Part of the problem stems from the fact that the United States consists of so many jurisdictions with its own court system and series of published decisional law that each and every other jurisdiction felt free to rely upon at any given time.
+[00:19:38] So this network graph pictured here simplifies quite a bit by drawing edges only to jurisdictions with a high threshold of citations.
+[00:19:48] Yet you can see here that the lines still run everywhere. We can compare this to the relatively simpler network graph of legislative borrowings between American states and their procedure codes.
+[00:20:00] You know, what's interesting if we kind of toggle back and forth is that the major hubs tend to be the same, New York, California in the west, Indiana in the Midwest.
+[00:20:11] But although those trends hold steady with the case law, it's clear the decisional law was far more polymorphic.
+[00:20:19] As I said, lawyers in all periods recognize this. They dreaded newspaper advertisements like this one from 1846 in New York.
+[00:20:28] New law reports coming in from all across the nation and from England.
+[00:20:33] That same year the prominent lawyer David Hoffman remarks that the increase of this portion of our legal literature within the last 30 years has no parallel in the juridical history of any other country.
+[00:20:45] More than 450 volumes of American law reports now load our shelves.
+[00:20:51] The court contemporary that same year estimated that a minimally adequate law library should contain 800 to 1000 volumes. A good lot library this be a personal library of a lawyer should contain upwards of 5000 volumes.
+[00:21:07] It's true on all of these disparate sources for their arguments one lawyer despondently wrote, who can guess what he may have to meet in a lawsuit, as no lawyer can afford to buy or read all the books in the world.
+[00:21:22] It appears that the lawyers were right to worry for even New York far and away the most influential jurisdiction refuse to confine itself to its own case law.
+[00:21:32] As our tool developed here and one link I'll share in the comments later shows by mid century New York courts were citing the decisional law of every other state in the union at the time and in thousands of instances to develop their views of the law.
+[00:21:48] No wonder the lawyers worried who could guess, but that a recent decision out of far flung Texas might be dredged up by one's opponent and persuade the judge in one's case.
+[00:22:01] It was here that treatises could reassure the practitioner that he had not missed anything or convince the judge that there was nothing out there to miss.
+[00:22:09] As the American Blackstone James Kent of New York wrote treatises help to solve the evils resulting from an indigestible heap of laws and legal authorities, which destroy the certainty of the law and promote litigation delay and subtlety.
+[00:22:27] Subtlety I think being Kent's way of referring to that move finding a relevant case from some far flung jurisdiction to spring on your opponent surprisingly in the midst of a trial.
+[00:22:41] This a related task of the treatises a second answered what all treatises have in common.
+[00:22:47] Is there a not just to organize the data of the case law but to do so in ways that mark and respect boundaries to form genres in the law categories of legal domains that would make up what American lawyers would in time define as thinking like a lawyer.
+[00:23:05] This is a very simple model we expect to enlarge upon with more sophisticated tools but it serves as an apt illustration, rising from my interests in the history of American legal procedure.
+[00:23:17] As you see, unlike on the continent procedure was not a legal term of art in the Anglo American practice until the mid 19th century.
+[00:23:26] Clearly the Louisiana code of procedure in the early 19th century occasion some commentary in the early treatise market but not much.
+[00:23:34] But then came in the volumes calling themselves codes of civil procedure starting in New York in 1848. And from there the treatises rapidly respond to account for the cases applying and interpreting the codes.
+[00:23:48] All while the former way of describing legal practice as rules about pleading gradually declines. By the turn of the century procedure is definitely a thing in American law.
+[00:24:01] But what all goes into this thing.
+[00:24:05] Potentially fascinating answer at least for a historian of procedure seems to be that everything goes into the category of procedural law, at least at first, we can see here that treatises on pleading consistently remain twice as long as the average treatise through the 19th century,
+[00:24:23] which makes some sense in the Anglo American tradition since so much of what we now think of as substantive law, the law of property of torts of contract was at first articulated in the English system of ritz and the techniques of pleading those ritz treatises either concerned themselves with the ritz system which was most of the law
+[00:24:45] or took up the very small amount of rights based legal reasoning that lay beyond the ritz.
+[00:24:51] And whereas legal domain first comes on the scene, it appears that it quickly rises to cover the same topics and amount of law as pleading formerly had.
+[00:25:01] But then over the course of the century procedure narrows becomes less than the sum of the law as substantive categories like tort, no longer bound to the English ritz system arises their own self contained domains of jurisprudence.
+[00:25:16] And I think the bumps in the 20th century, we're seeing the the case method of legal instruction arise. And so we get longer books of procedural law, because we're we're packing all of the appellate decisions on procedural law into books for teaching purposes.
+[00:25:34] Again, this is a simple model sketched from a preliminary foray into the metadata of our treatise database. We understand we have much further to go to vividly and convincingly illustrate the ways treatise literature shapes the modern domains of legal action and legal reasoning.
+[00:25:51] But it's nice to see even preliminary results helping to form the beginning of an answer to what it is treatises are for.
+[00:25:59] I said at the outset, these two qualities of treatises, the way they organize authorities and mark the boundaries of legal categories, show how well suited digital techniques are for tackling these problems.
+[00:26:12] Perhaps you are already imagining the fit between certain tools and the questions we are asking, right, we're seeking, we are investigating networks of associations between jurists and jurisdictions.
+[00:26:26] What we're attempting to do is conceive of relations between words, rules and the books that print them and plot them out in relative distances from one another, trying to reflect their actual historical relations.
+[00:26:40] But it's not just that digital tools are very good at visualizing these sorts of relations.
+[00:26:46] It also seems to us the case that what we're trying to abstract and visualize is maybe not that abstract to begin with.
+[00:26:54] In our work on procedure codes, we called this a historically justified pattern.
+[00:27:01] Here you see the first procedure code of the state of Nevada. And what do we recognize in this? The pages are already printed up somewhere else. They're torn out of California's procedure code, in fact.
+[00:27:14] The sections are renumbered, and particular handwritten sections are substituted here and there.
+[00:27:21] So to search for text reuse in the procedure codes, we made every section its own text, its own document, and then use the section as our basic unit for assessing and measuring, borrowing and influence.
+[00:27:36] Breaking up codes into sections was not just a handy technique, though it very much was that, it was in some sense replicating the very labor that the codifiers themselves had undertaken in the time.
+[00:27:51] What we're attempting to do in the treatise project is find and follow similar historically justified patterns.
+[00:27:58] We make the case citations and their organization the bedrock of our analysis, not just because case citations are a handy way at computing the data, make no mistake they certainly are, but also because the treatises themselves make case citations and their organization the bedrock of their analyses.
+[00:28:19] But it's on this point of replication where the possible dangers, definitely the complexities of this method arise, because it seems to me there's at least one more thing the treatises have as a common aim.
+[00:28:33] That is, as I call it here, displacing the oracles of the law.
+[00:28:38] Here the visualizations will fall away somewhat as I'm not sure it's possible to visualize this from within the data. But what do I mean by it by displacing the oracles?
+[00:28:48] We can start with what many scholars would take to be the beginning of the Golden Age of the Anglo-American treatise tradition, Blackstone's commentaries on the law of England,
+[00:28:59] which as I was reminded recently were first delivered orally. That is, they were something of an aracular utterance themselves before being captured by entrepreneurial publishers.
+[00:29:12] So in what is perhaps the central passage of the first volume, Blackstone sets out to tell us what English law is, where it comes from, and why judges play so much more a pronounced role in the English system than legislators.
+[00:29:26] And his explanation is that the judges are the depositories of the law, the living oracles. They must decide in all cases of doubt and are bound by an oath to decide according to the law.
+[00:29:37] How do they know the law? The knowledge of that law is derived from experience and study, from the nighttime labors of many years in essence, and from being long personally accustomed to the judicial decisions of their predecessors.
+[00:29:53] What we have here is both a quasi-religious and definitely a technological claim of authority.
+[00:30:00] There may be a bit of mysticism to this process so that it's not completely reducible to technology, but technology plays a major role. Judges have a kind of access to decisional law that others do not.
+[00:30:15] Through their craft disciplines and their learning, they keep alive within themselves, sort of the technology of their own minds, the received traditions of the law.
+[00:30:25] A law that like the commentaries themselves are primarily oral and not textual in their origins.
+[00:30:31] The links between religious authority and technologies of the book would be a major theme in an essay by Samuel Taylor Coleridge a half century later.
+[00:30:40] Coleridge writes, in times of old, books were as religious oracles. As literature advanced, they next became venerable preceptors, but as their numbers increased, they sank still lower until at present they seemed degraded into culprits to hold up their hands at the bar of every self-elected yet not the less pre-emptory judge.
+[00:31:03] Coleridge's complaint sounds remarkably familiar, right? A reminiscent of the lawyers' laments over the ever-expanding published case reports.
+[00:31:13] Indeed, it seems the case reports are intended to do exactly what Coleridge charges here to break the oracular authority of the judges by taking their special access to decisional law and publicizing it to every willing purchaser.
+[00:31:29] The third thing treatises do then is come along and reorganize the decisional law but with their own methods and their own authority, not those of the judges.
+[00:31:40] Professor Stephen Wolf has suggested or will suggest in forthcoming work, I think, that what actually unites all treatises in the end is their hubris, the ways they subtly contest judicial authority,
+[00:31:55] even when at the level of the text they express deference to that authority.
+[00:32:00] Now how you assess that computationally poses some real difficulties, almost like measuring or proving an absence.
+[00:32:09] And here's a case that has prompted some of my thinking about this.
+[00:32:15] In 1842, the Massachusetts Supreme Court adopts what became known as the fellow servant rule. An employee injured by a fellow employee in the course of employment cannot recover against the company but must seek his recovery, if at all, from the negligent fellow servants.
+[00:32:34] The court is understood as a very important and influential rule in the rise of the industrializing state, the rise of railroad corporations, which cause a lot of injuries to employees, of course.
+[00:32:50] For sake of time, I won't show you the network graph but every jurisdiction in the United States comes to adopt this rule citing the Massachusetts Court and claiming the wisdom of its chief judge Lemuel Shaw.
+[00:33:02] In this case, a few years later, the Georgia Supreme Court decides the rule, while it will apply to Georgia industry generally cannot apply in cases where slaves are fellow employees, because recovery from a fellow slave is not just impractical but illegal and possibility.
+[00:33:21] A decade later, North Carolina has to consider the same question. I won't read the parts of the opinion I've called out to you here but over and again the court talks about how it has read every decision available to it and cannot find one that contradicts the Massachusetts rule except an irrelevant case in Ohio.
+[00:33:40] The court emphasizes that no southern jurisdiction has applied a different rule to slaves.
+[00:33:47] So what's going on here.
+[00:33:49] We might posit that that what we have here is a failure of technology. Perhaps the case reports from Georgia have not made their way to North Carolina, even though they're near neighbors.
+[00:34:01] And maybe the court does not have access to the knowledge that its peers have decided the same case differently.
+[00:34:08] And that's kind of a question we can assess computationally. At first it looks like the hypothesis might be confirmed, although North Carolina cites many foreign jurisdictions.
+[00:34:20] It never cites a single case from Georgia in the decade preceding this opinion. Maybe the court really doesn't have the reports of Georgia cases on its shelves.
+[00:34:31] Even though we could turn this graph around and look at the Georgia reports and see they go everywhere at this time. They're in Arkansas. They're in New York. They're as far away as California. Maybe they haven't been imported into North Carolina.
+[00:34:44] But turning to our other corpus, we find a treatise that has reported on the case. And not just any treatise, the second edition of Kent's Commentaries on American Law.
+[00:34:55] The principal treatise that every court used at this time, including the courts of North Carolina, who cited this exact volume frequently in the years leading up to our case at hand.
+[00:35:08] It becomes highly unlikely the court did not consult this commentary on the point before it in deciding this case. Yet it seems to skip over commentary a treatise has offered that highlights the case.
+[00:35:22] And then I'm sorry if the type is so small, but this illustrates how small the glosses get on treatise literature, right?
+[00:35:29] Defines the rule in terms of recognition of the slaves humanity. That's why the Georgia Supreme Court has decided the case the way it has.
+[00:35:39] So we might conclude then that this was not a failure of technology, but a contest of authority, a willful ignorance of a northern edited treatise to instruct a southern court on how to decide the law.
+[00:35:58] Now computational techniques were useful in investigating this case, but only up to a point. How does one detect and interpret a case that should be cited, but isn't?
+[00:36:10] And to raise maybe a broader question, what does this case, which attempts to situate the old order of slavery within the new order of industrial relations, tell us about modernism in modern American law, right?
+[00:36:24] Our database is titled The Making of Modern Law, not our title, but Yale groups.
+[00:36:29] We might ask, what is the modernity in these treatises that are what modernism are they making?
+[00:36:38] In the end, there may be clever ways for measuring this contest of authority and even visualizing it graphically.
+[00:36:44] The dilemma we face though, is that currently our technologies for measuring this relocation of legal authority are the very technologies that performed this relocation in the first place.
+[00:36:56] I think here of a recent passage written by the digital legal historian, literary historian, sorry, Maurice Lee.
+[00:37:03] Modernity happens, Lee says, not only to cultures moving through history, but also to individual readers who come of age by entering information rich contexts.
+[00:37:13] Such contexts entail, they bury in disenchantment calculation positivism instrumentality, as well as a sense that life is short and the possibilities for reading long.
+[00:37:25] Lee recognizes in this chapter he's written that same as the historian Robert Darden like to remind us that every age is an information age.
+[00:37:36] The anxiety of being overwhelmed by information and the yearning for technologies to handle it is perhaps always there.
+[00:37:44] We can recognize that just as we can recognize that there's nothing particularly modern about a legal treatise or legal code, both of which existed in the ancient and medieval worlds as many of you know well.
+[00:37:57] But says Lee, there is a distinctive modern style in the turn to information technologies that is geared towards disenchantment and distant reading for the sake of speed because our time horizons for handling information are shortened in a disenchanted world.
+[00:38:16] We might also turn here to Walter Benjamin's modernist essay the work of art in the age of mechanical reproduction or some additions have it the age of technological reproducibility.
+[00:38:28] The mechanical reproducibility of a work of art in an industrial age Benjamin argued made public and massively available what had been private and usually confined to religious sacred spaces.
+[00:38:42] Then you mean referred to this as the aura of an original work of art and he argued that mass reproduction of an original work of art not only lacked the aura of the original, but in some sense it destroyed the aura of the original by profaning it.
+[00:38:59] So we might end by asking what is the work of law in the age of not just mechanical reproduction, but mechanical reproduction of the mechanical reproductions of an earlier age right that is, what does it mean to distantly read a set of technologies that were themselves distant readings of the data whose authority they were seeking to displace.
+[00:39:25] One of the challenges to us in this project and I think to us as digital legal historians is what Andrew Piper a digital literary scholar terms, the implication of a digital scholar in his or her work.
+[00:39:39] As historians of the book have long been aware methods of organizing knowledge can imperceptibly shift into the actual production and constraints on knowledge.
+[00:39:50] So the question I'd like to raise for us at the beginning of this conference is whether our digital tools are adequate to the task that confronts us.
+[00:39:59] And that task I think is to keep our replication of legal technologies which gives us so much grip on the work that we're doing to keep the replication of our legal technologies from overtaking our aim to critically examine those technologies.
+[00:40:18] That means while we strive to become expert at new methods we continue to draw on our conventional approaches to legal history and the close and imaginative reading of sources to keep ourselves balanced in our computational endeavors and how to find that balance
+[00:40:36] and the measure of our conventional tools we have to draw on I think is still very much an open question and one I hope we get to explore this week.
+[00:40:46] Thank you very much for your time and attention. I look forward to carrying on the conversation more.

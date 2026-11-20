@@ -1,0 +1,8 @@
+WEBVTT
+{{ $lines := partial "transcript-lines.html" . }}
+{{- range $i, $l := $lines }}
+{{/* Each cue runs until the next one starts; the last runs to the end of the video. */}}
+{{- $end := "99:59:59" }}{{ if lt (add $i 1) (len $lines) }}{{ $end = (index $lines (add $i 1)).time }}{{ end }}
+{{ $l.time }}.000 --> {{ $end }}.000
+{{ replace (replace $l.text "&" "&amp;") "<" "&lt;" }}
+{{ end }}

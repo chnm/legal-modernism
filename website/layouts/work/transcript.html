@@ -1,0 +1,41 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<p><a href="{{ "/" | relURL }}#publications">&larr; Back to publications, visualizations, &amp; talks</a></p>
+<h2>{{ .Title }}</h2>
+{{ .Content }}
+
+<div class="row">
+	<div class="col-lg-6 mb-4">
+		<div class="sticky-lg-top pt-lg-3">
+			<video id="talk-video" class="video-border" width="100%" controls preload="metadata" aria-label="{{ .Params.Alt }}">
+				<source src="{{ .Params.Video }}" type="{{ .Params.VideoType }}">
+				{{ with .OutputFormats.Get "captions" }}<track kind="captions" src="{{ .RelPermalink }}" srclang="en" label="English">{{ end }}
+				Your browser does not support the video tag.
+			</video>
+		</div>
+	</div>
+	<section class="col-lg-6 transcript" aria-labelledby="transcript-heading">
+		<h3 id="transcript-heading">Transcript</h3>
+		<p>Select a timestamp to play the video from that point. <a href="{{ path.Base .Params.Transcript | relURL }}">Download the transcript as plain text.</a></p>
+		{{ range partial "transcript-lines.html" . }}
+		<p>
+			<button type="button" class="btn btn-link p-0 align-baseline timestamp" data-time="{{ .time }}" aria-label="Play video from {{ .time }}">{{ .time }}</button>
+			{{ .text }}
+		</p>
+		{{ end }}
+	</section>
+</div>
+
+<script>
+	document.querySelectorAll(".timestamp").forEach((button) => {
+		button.addEventListener("click", () => {
+			const video = document.getElementById("talk-video");
+			const [h, m, s] = button.dataset.time.split(":").map(Number);
+			video.currentTime = h * 3600 + m * 60 + s;
+			video.scrollIntoView({ block: "nearest" });
+			video.play();
+		});
+	});
+</script>
+{{ end }}
