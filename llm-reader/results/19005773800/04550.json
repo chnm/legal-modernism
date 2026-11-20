@@ -1,0 +1,19 @@
+{
+  "psmid": "19005773800",
+  "pageid": "04550",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T14:04:33Z",
+  "note": "Appendix notes 47-48; Plac. Ab. cites (o), (q) are records of pleas, not reports",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "10 lenl. VI., VII.",
+      "volume": 10,
+      "reporter_abbr": "Y.B.",
+      "page": 7,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "Year book, 10 Hen. VI, fol. 7 (printed in roman numerals, OCR 'lenl.' for Hen.); other editions print 10 Hen. 6. 7; year books have no source here"
+    }
+  ]
+}

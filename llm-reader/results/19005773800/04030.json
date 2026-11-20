@@ -1,0 +1,11 @@
+{
+  "psmid": "19005773800", "pageid": "04030",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:05:01Z",
+  "note": "Appendix, notes 5-7; Tidd, Gilbert, Reeves, Glanville, Muratori, Heineccius are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Beehcer's case, 3 Rep. 58 b", "case_name": "Beecher's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",
+     "note": "OCR Beehcer's; misprint 3 for 8: Beecher's Case is 8 Co Rep 58, folio b, case begins at 58; consistent with the other editions"}
+  ]
+}

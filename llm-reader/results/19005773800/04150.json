@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800",
+  "pageid": "04150",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T14:03:38Z",
+  "note": "appendix notes (16)-(17); Heineccius, rules of court and Co. Litt. are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Doe d. Gillett v. Roe, 4 Tyr. 649", "case_name": "Doe d. Gillett v. Roe",
+     "volume": 4, "reporter_abbr": "Tyr.", "page": 649,
+     "status": "linked_english_reports", "er_case_id": "18340081", "confidence": "medium",
+     "note": "Tyrwhitt has no source; the same case (1834) is reported at 1 Cr. M. & R. 19"},
+    {"seq": 2, "raw": "I Edw. II 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "Year book, 1 Edw. II; no source"},
+    {"seq": 3, "raw": "10 Edw. Im. 23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high", "note": "Year book, 10 Edw. III (OCR 'Im.'); no source"}
+  ]
+}

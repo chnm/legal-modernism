@@ -1,0 +1,15 @@
+{
+  "psmid": "19005773800",
+  "pageid": "04410",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T14:07:04Z",
+  "note": "appendix note (41); Co. Litt. and Com. Dig. are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Leyficld's Case, 10 Rcp. 90 a", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 90,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true,
+     "confidence": "high", "note": "Doctor Leyfield's Case begins at 10 Co Rep 88"},
+    {"seq": 2, "raw": "1 Ed. II. 14", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high", "note": "Year book, 1 Edw. II; no source"}
+  ]
+}

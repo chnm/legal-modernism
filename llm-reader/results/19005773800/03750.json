@@ -1,0 +1,20 @@
+{
+  "psmid": "19005773800", "pageid": "03750",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:09:31Z",
+  "note": "Broom's Maxims skipped",
+  "citations": [
+    {"seq": 1, "raw": "Gurly v. Gurly, 8 Cl. & Fin. 764", "case_name": "Gurly v. Gurly", "volume": 8, "reporter_abbr": "Cl. & Fin.", "page": 764,
+     "status": "linked_english_reports", "er_case_id": "18420421", "pincite": true, "confidence": "high",
+     "note": "case begins at 8 Cl & Fin 743"},
+    {"seq": 2, "raw": "Minis v. The United States, 15 Peters, 445", "case_name": "Minis v. United States", "volume": 15, "reporter_abbr": "Pet.", "page": 445,
+     "status": "linked_cap", "cap_case_id": 3331608, "pincite": true, "confidence": "high",
+     "note": "case runs 15 Pet. 423-448"},
+    {"seq": 3, "raw": "Spieres v. Parker, 1 T. R. 141", "case_name": "Spieres v. Parker", "volume": 1, "reporter_abbr": "T. R.", "page": 141,
+     "status": "linked_english_reports", "er_case_id": "17860052", "confidence": "high"},
+    {"seq": 4, "raw": "The King v. Jukes, 8 T. R. 542", "case_name": "The King v. Jukes", "volume": 8, "reporter_abbr": "T. R.", "page": 542,
+     "status": "linked_english_reports", "er_case_id": "18000160", "confidence": "high"},
+    {"seq": 5, "raw": "l:he King v. Jarvis, 1 East, 643, note", "case_name": "The King v. Jarvis", "volume": 1, "reporter_abbr": "East", "page": 643,
+     "status": "linked_english_reports", "er_case_id": "17560056", "confidence": "medium",
+     "note": "R. v. Jarvis (1756) is printed in a note to R. v. Stone (1 East 639, ER 18010335, which holds page 643); linked to the case's own report, Rex v. Maurice Jarvis, 1 Burr 148 (1756), found by name"}
+  ]
+}

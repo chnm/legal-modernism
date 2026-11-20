@@ -1,0 +1,28 @@
+{
+  "psmid": "19005773800", "pageid": "03300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:07:54Z",
+  "note": "the supra cross-reference and 'cases there cited' are not recorded; cross-checked with the 1859 edition (19005781000/02610)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 97", "volume": 2, "reporter_abbr": "Saund.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "18450129", "confidence": "medium",
+     "note": "no name printed; Jaques v. Cesar begins at 2 Wms Saund 97"},
+    {"seq": 2, "raw": "Barker v. Lade, 4 Mod. 150, 151", "case_name": "Barker v. Lade",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 150,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149; dropped: 151"},
+    {"seq": 3, "raw": "Barker v. Lade, 4 Mod. 151", "case_name": "Barker v. Lade",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 151,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "footnote (h); case begins at 4 Mod 149"},
+    {"seq": 4, "raw": "Moore v. Earl of Ply'mouth, 3 Balr. & Aid. 66", "case_name": "Moore v. Earl of Plymouth",
+     "volume": 3, "reporter_abbr": "Barn. & Ald.", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "18190651", "confidence": "high"},
+    {"seq": 5, "raw": "I Saund. 274, note (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 274,
+     "status": "linked_english_reports", "er_case_id": "18450258", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note; 274 falls in The King v. Sutton (begins 1 Wms Saund 269; ER record at 273)"},
+    {"seq": 6, "raw": "Smith r. Scott, 6 C. B. (N. S.) ?77", "case_name": "Smith v. Scott",
+     "volume": 6, "reporter_abbr": "C. B. (N. S.)", "page": 771,
+     "status": "linked_english_reports", "er_case_id": "18590737", "confidence": "high",
+     "note": "OCR ?77 read 771, where Smith v. Scott begins and as this edition prints it elsewhere"}
+  ]
+}

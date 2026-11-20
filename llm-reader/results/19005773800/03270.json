@@ -1,0 +1,31 @@
+{
+  "psmid": "19005773800", "pageid": "03270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:06:01Z",
+  "note": "Doct. Pl., Bac. Ab., Com. Dig. and the supra cross-reference are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "5 Ihen. VII. 11, 12", "volume": 5, "reporter_abbr": "Y.B.", "page": 11,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 5 Hen. VII, fol. 11; OCR Ihen. for Hen.; year books have no source; dropped: 12"},
+    {"seq": 2, "raw": "Courtney v. Phcips, Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; OCR Phcips for Phelps; case begins at 1 Sid 300"},
+    {"seq": 3, "raw": "Herring v. Blacklow, Cro. Eliz. 30", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high"},
+    {"seq": 4, "raw": "10 lcen. 6, 7, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 7, pl. 21; OCR lcen. for Hen.; year books have no source"},
+    {"seq": 5, "raw": "Mlrtin v. Smith, 6 East, 577", "case_name": "Martin v. Smith",
+     "volume": 6, "reporter_abbr": "East", "page": 557,
+     "status": "linked_english_reports", "er_case_id": "18050219", "pincite": true, "confidence": "high",
+     "note": "OCR 577 for 557, as every other edition prints it (577 falls in Salvin v. James); case begins at 6 East 555"},
+    {"seq": 6, "raw": "Griffith v. Eyles, 1 Bos. & Pul. 413", "case_name": "Griffith v. Eyles",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "17990708", "confidence": "high"},
+    {"seq": 7, "raw": "Cook v. Cox, 3 AM. & S. 114", "case_name": "Cook v. Cox",
+     "volume": 3, "reporter_abbr": "M. & S.", "page": 114,
+     "status": "linked_english_reports", "er_case_id": "18140511", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 M & S 110"}
+  ]
+}

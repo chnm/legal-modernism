@@ -1,0 +1,34 @@
+{
+  "psmid": "19005773800",
+  "pageid": "04720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T14:07:00Z",
+  "note": "Appendix notes 59-60; a statute (21 Eliz. c. 6) and Co. Litt. by Harg. are not cases",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Bulwcr's Case, 7 HRep. S a",
+      "case_name": "Bulwer's Case",
+      "volume": 7,
+      "reporter_abbr": "Rep.",
+      "page": 3,
+      "status": "linked_english_reports",
+      "er_case_id": "15720058",
+      "pincite": true,
+      "confidence": "high",
+      "note": "OCR 'S' for 3 (the other editions print 7 Rep. 3 a); case begins at 7 Co Rep 1"
+    },
+    {
+      "seq": 2,
+      "raw": "I Saund. 74, n (2)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 74,
+      "status": "linked_english_reports",
+      "er_case_id": "18450174",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; Saunders's note (2) to Peacock v. Bell and Kendal (begins 1 Wms Saund 69; ER's second record at 73, which holds page 74), on local and transitory matters; as in the other editions"
+    }
+  ]
+}

@@ -200,7 +200,8 @@ Cases, which are in the stubs as `3 Dowl. 70`), and the year
 books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
 the stubs only, and so, at most, are the practice and later reporters common
 in the 1867 and later editions' notes: Dowling (`Dowl.`, `Dowl. N.S.`),
-Dowling and Lowndes, Perry and Davison, Gale and Davison, Scott N.R.,
+Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
+Perry and Davison, Gale and Davison, Scott N.R.,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
 in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite.
 When the cited reporter has no source but the same case is reported in one
@@ -212,7 +213,9 @@ covers J. B. Moore (found in Taunton), Tyrwhitt (in Crompton and Meeson, or
 Crompton and Jervis), Marshall (Taunton) and Willes (often in Barnes's
 Notes, Comyns or Kenyon). Benloe has no records for pages 44–88. A case known only as cited in
 another report (`Johnson v. Picket, cited Grimwood v. Barritt, 6 T. R. 463`)
-is one record, linked to the report that prints it.
+is one record, linked to the report that prints it; but a case cited in a
+note of another report that also has a report of its own is linked to its
+own report.
 
 **English Reports** (`english_reports.cases`). `er_parallel_cite` is the
 nominate cite without punctuation: `10 Mod 88`, `2 B & C 871`, `4 Taunt 572`,

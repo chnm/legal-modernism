@@ -1,0 +1,13 @@
+{
+  "psmid": "19005773800", "pageid": "03630",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:06:20Z",
+  "note": "Com. Dig., Bac. Ab., Co. Litt., Blackstone, Booth, Coke's and Rastall's Entries, Chitty and cross-references skipped; cross-checked with the 1859 edition's record (19005781000/02890)",
+  "citations": [
+    {"seq": 1, "raw": "Yclr. 210", "case_name": "Tampian v. Newsam", "reporter_abbr": "Yelv.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "17922437", "confidence": "medium",
+     "note": "OCR Yclr. for Yelv.; no name printed; Tampiam v. Newsam is the only case beginning at Yel 210, and another edition names Tampian v. Newsam, Yelv. 210"},
+    {"seq": 2, "raw": "3 Lcv. 24J,", "case_name": "Hampson v. Bill", "volume": 3, "reporter_abbr": "Lev.", "page": 240,
+     "status": "linked_english_reports", "er_case_id": "17970121", "confidence": "medium",
+     "note": "OCR '24J,' read as 240, as every other edition prints; no name printed; two cases begin at 3 Lev 240 (Hampson v. Bill, Beayne v. Beal), and the 1827 and 1831 editions name Hampson v. Bill"}
+  ]
+}

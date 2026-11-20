@@ -89,6 +89,7 @@ differ from the cite in `cap.citations` (Hopkins v. Hopkins, cited
 ### 8. Pages missing from MOML scans
 
 The 1859 edition's scan (19005781000) has no page for printed pp. cxxv and
-cxxxvi of the second appendix, though the text runs on across them; other
+cxxxvi of the second appendix, and the 1867 scan (19005773800) none for
+p. 388 (between pageids 03280 and 03290), though the text runs on across them; other
 scans have "FOLLOWING PAGE(S) MUTILATED" targets (1831 p. 00460, 1841
 p. 01080). Readers record what is there; the missing text is not read.

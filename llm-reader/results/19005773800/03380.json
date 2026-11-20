@@ -1,0 +1,26 @@
+{
+  "psmid": "19005773800", "pageid": "03380",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:10:43Z",
+  "note": "Bac. Ab., Com. Dig., Chitty on Pleading, Selw. N. P. and the supra cross-references are not recorded; cross-checked with the 1859 edition's records",
+  "citations": [
+    {"seq": 1, "raw": "2 Snund. 210, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "OCR Snund. for Saund.; note (1) falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 2, "raw": "2 Saund. 210, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "note (1) falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 3, "raw": "11al. lowes v. Lucy, 3 Lev. 120", "case_name": "Hallowes v. Lucy",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 120,
+     "status": "linked_english_reports", "er_case_id": "17970120", "confidence": "high"},
+    {"seq": 4, "raw": "Le Bret v. I'apilloii, 4 East, 502", "case_name": "Le Bret v. Papillon",
+     "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "high"},
+    {"seq": 5, "raw": "Ibid.", "case_name": "Le Bret v. Papillon",
+     "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "medium",
+     "note": "Ibid. read as repeating Le Bret v. Papillon, 4 East 502 from the previous note (as in the other editions' readings), though it could repeat the 2 Chitty cite printed after it"},
+    {"seq": 6, "raw": "Evans v. l'rosser, 3 T. It. 186", "case_name": "Evans v. Prosser",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "17892450", "confidence": "high"}
+  ]
+}

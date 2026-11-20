@@ -1,0 +1,17 @@
+{
+  "psmid": "19005773800", "pageid": "03470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T14:14:41Z",
+  "note": "the supra cross-references are not recorded; cross-checked with other editions' records",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 117, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note falls in Cutler v. Southern, which begins at 1 Wms Saund 113, ER record at 116"},
+    {"seq": 2, "raw": "Cutler v. Southern, I Saund. 116", "case_name": "Cutler v. Southern",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "high",
+     "note": "Cutler v. Southern begins at 1 Wms Saund 113; the ER splits it, and 116 begins the second record"},
+    {"seq": 3, "raw": "Dyer, 253 b", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume supplied; Cecil's Case is the only case beginning at 3 Dy 253 (253 b could also be the end of Vernon v. Gatacre, 3 Dy 252); subject (fence after felling wood) not verified; as in the other editions' readings"}
+  ]
+}
