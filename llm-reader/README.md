@@ -2,7 +2,9 @@
 
 Claude reads MOML pages one at a time and links the cases they cite, by its
 own judgement (issue #439). It starts with the editions of Stephen on Pleading
-(work 1107): the twelve U.S. editions, then the six UK ones. Nothing here uses
+(work 1107): the twelve U.S. editions, then the seven UK ones, each read in
+its official copy (`moml.treatises`: a HathiTrust scan where there is one,
+since PR #443). Gale copies read before that change keep their records. Nothing here uses
 the regex detector or linker: a reader sees a page's OCR text and looks the
 cases up itself, so the result can be compared with `moml_citations.citation_links`.
 
