@@ -257,7 +257,8 @@ by their cite (`cite` is `<volume> <reporter_standard> <page>`, e.g.
 `11 W.R. 813`). Link a stub only when it is exactly the case's first page; a
 pin cite into a stub reporter is `no_match`.
 
-Prefer, in order: CAP or the English Reports (whichever is the reporter's
+Prefer, in order (and an English Reports report of the same case over an
+exact stub in another reporter, as for Tyrwhitt): CAP or the English Reports (whichever is the reporter's
 source), the code reporter, a stub. If nothing fits, `no_match`, saying in
 `note` what you tried.
 

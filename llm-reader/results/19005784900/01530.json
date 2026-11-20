@@ -1,0 +1,11 @@
+{
+  "psmid": "19005784900", "pageid": "01530",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:19:00Z",
+  "note": "Reeves's History, Doctor and Student, Chitty on Pleading, Rastell and the appendix reference are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Taylor v. Eastwood, I East, 212", "case_name": "Taylor v. Eastwood",
+     "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "high",
+     "note": "OCR I for 1"}
+  ]
+}

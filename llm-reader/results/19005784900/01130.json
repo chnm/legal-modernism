@@ -1,0 +1,17 @@
+{
+  "psmid": "19005784900",
+  "pageid": "01130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:19:00Z",
+  "note": "1 Sel. Pract. (Sellon's Practice) and 2 Tidd are treatises, not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Lord Cromwell's Case, 4 Rep. 14 a.", "case_name": "Lord Cromwell's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "15780080", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Co Rep 12; Cutler v. Dixon and Buckley v. Wood also begin at 4 Co Rep 14, but the printed name decides"},
+    {"seq": 2, "raw": "Camerod v. Reynolds, Cowp. 407", "case_name": "Cameron v. Reynolds",
+     "volume": 1, "reporter_abbr": "Cowp.", "page": 407,
+     "status": "linked_english_reports", "er_case_id": "17760026", "pincite": true, "confidence": "high",
+     "note": "OCR 'Camerod' for Cameron; volume 1 supplied; case begins at 1 Cowp 403 and ends on 407, where Sayer v. Pocock begins; the printed name decides"}
+  ]
+}

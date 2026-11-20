@@ -1,0 +1,16 @@
+{
+  "psmid": "19005784900",
+  "pageid": "00720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:12:10Z",
+  "citations": [
+    {"seq": 1, "raw": "Price v. Brown, Str. 690", "case_name": "Price v. Brown",
+     "volume": 2, "reporter_abbr": "Str.", "page": 691,
+     "status": "linked_english_reports", "er_case_id": "17952853", "confidence": "high",
+     "note": "printed 690; Price v. Brown begins at 2 Str 691; volume supplied"},
+    {"seq": 2, "raw": "1 Wies. 116, S. C.",
+     "volume": 1, "reporter_abbr": "Wils.", "page": 116,
+     "status": "no_match", "confidence": "low",
+     "note": "OCR Wies. for Wils.; S. C. of Price v. Brown (2 Str 691 in ER). No report of Price v. Brown in 1 Wils KB: page 116 falls in Alcorn v. Westbrook (1 Wils KB 115, 17990005), a bond-payment case that may cite Price v. Brown, not linked for consistency with the earlier readings"}
+  ]
+}

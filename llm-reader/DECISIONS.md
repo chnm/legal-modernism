@@ -40,6 +40,15 @@ companion suit ("Same v Bateman"). Every edition's cite now links the record
 holding its page; its notes 21-24 (pp. 206-207) link the record at 205. The
 mis-titling belongs with item 4.
 
+### 7. Price v. Brown at "1 Wils. 116, S. C."
+
+Every edition prints "Price v. Brown, Str. 690; 1 Wils. 116, S. C." The
+English Reports have Price v. Brown only at 2 Str 691; 1 Wils KB 116 falls in
+Alcorn v. Westbrook (115), a bond-payment case on the footnote's exact point,
+whose report may print Price v. Brown as cited. Interim rule: the Wilson cite
+is `no_match` in every edition. Decision wanted: leave it, or link it to
+Alcorn v. Westbrook as a case reported only as cited in another (`low`).
+
 ## Findings for issues
 
 ### 3. Gaps in the English Reports and stubs

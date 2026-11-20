@@ -35,7 +35,9 @@ of 10 between them). For each page, in order:
    case citations still gets a record, with `"citations": []` and a short note.
 
 Run shell commands one at a time: the worktree guard refuses compound
-commands, loops and scripts in `/tmp`. Write each record with the Write tool.
+commands, loops and scripts in `/tmp`, and any command naming the worktree's
+absolute path (its `github` looks like git), so use relative paths
+(`bin/llm-reader`, `llm-reader/results/...`). Write each record with the Write tool.
 
 Read every page in full, indexes and tables included: do not skim a page or
 search it for patterns in place of reading it.

@@ -1,0 +1,17 @@
+{
+  "psmid": "19005784900",
+  "pageid": "01270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:33:00Z",
+  "note": "Bac. Ab. and the rule of Hil. Term 4 Will. 4 are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Bennet v. Filkins, 1 Saund. 21", "case_name": "Bennet v. Filkins",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 21,
+     "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 20"},
+    {"seq": 2, "raw": "Walters v. Hodges, Lut. 1625", "case_name": "Walters v. Hodges",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1625,
+     "status": "no_match", "confidence": "medium",
+     "note": "Lutwyche is in the stubs only; no stub at 2 Lutw. 1625 (nearest 1606, 1630), as found for other editions. Volume 2 supplied from the stub paging"}
+  ]
+}
