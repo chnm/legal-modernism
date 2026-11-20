@@ -4,9 +4,17 @@
   "model": "claude-opus-5-5",
   "read_at": "2026-11-20T02:08:15Z",
   "citations": [
-    {"seq": 1, "raw": "8 Rep. 48", "volume": 8, "reporter_abbr": "Rep.", "page": 48,
-     "status": "linked_english_reports", "er_case_id": "15720206", "pincite": true, "confidence": "medium", "note": "Coke's Reports, no case name printed; 8 Co Rep 48 falls in Jehu Webb's Case (begins at 45, next case at 51), which treats original writs and the Register, the subject of the note"},
-    {"seq": 2, "raw": "49", "volume": 8, "reporter_abbr": "Rep.", "page": 49,
-     "status": "linked_english_reports", "er_case_id": "15720206", "pincite": true, "confidence": "medium", "note": "second page of the same cite, 8 Rep. 48, 49; also within Jehu Webb's Case"}
+    {
+      "seq": 1,
+      "raw": "8 Rep. 48",
+      "volume": 8,
+      "reporter_abbr": "Rep.",
+      "page": 48,
+      "status": "linked_english_reports",
+      "er_case_id": "15720206",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Coke's Reports, no case name printed; 8 Co Rep 48 falls in Jehu Webb's Case (begins at 45, next case at 51), which treats original writs and the Register, the subject of the note"
+    }
   ]
 }

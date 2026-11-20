@@ -83,9 +83,9 @@ enough at `medium` confidence. When a cite prints no volume (`Ld. Ray. 883`), fi
 volume from the case name and say in `note` that you supplied it. When a pin
 cite falls on a page where one case ends and another begins, the printed name
 decides which. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
-it annotates, which may begin a page or two before the note. A second page
-printed with a cite (`2 Ld. Raym. 882, 883`) is its own record: a pin cite to
-the same case if it falls inside it, otherwise whatever case is there.
+it annotates, which may begin a page or two before the note. Ignore a second page
+printed with a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`): record the
+citation once, at its first page.
 
 **Identify the reporter.** `legalhist.whitelist` maps printed spellings
 (`reporter_found`) to a `reporter_standard`, and `legalhist.reporters` gives
