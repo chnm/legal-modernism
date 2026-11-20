@@ -9,12 +9,13 @@
       "raw": "11 East, 268",
       "volume": 11,
       "reporter_abbr": "East",
-      "page": 268,
+      "page": 263,
       "status": "linked_english_reports",
-      "er_case_id": "18090243",
-      "pincite": true,
+      "er_case_id": "18090247",
+      "pincite": false,
       "confidence": "medium",
-      "note": "no name printed; 268 falls in De Tastet v Baring (11 East 265), on the costs of issues found against a defendant under the statute of Anne, which fits the text"
+      "note": "OCR 268; every other edition prints 11 East 263, where Vivian v. Blake begins and fits the passage on costs. Corrected by the coordinator.",
+      "case_name": "Vivian v. Blake"
     },
     {
       "seq": 2,

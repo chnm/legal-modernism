@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00002", "pageid": "03960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T23:25:43Z",
+  "note": "Appendix p. viii, notes (4)-(6); cross-checked with 19005816500/03870",
+  "citations": [
+    {"seq": 1, "raw": "Brown v. Babbington, Lord Ray. 883", "case_name": "Brown v. Babbington",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 883,
+     "status": "linked_english_reports", "er_case_id": "17900246", "pincite": true, "confidence": "high",
+     "note": "volume 2 supplied from the case name; case begins at 2 Ld Raym 880 (Burdett v. Wheatly begins at 883, a 123-word record, but the printed name decides)"},
+    {"seq": 2, "raw": "10 E. 3. 19. pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fo. 19, pl. 21; no source for the year books"},
+    {"seq": 3, "raw": "Beecher's case, 8 Rep. 58. b", "case_name": "Beecher's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",
+     "note": "8 Co Rep 58, folio b"}
+  ]
+}

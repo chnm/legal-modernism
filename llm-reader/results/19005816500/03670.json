@@ -11,9 +11,10 @@
       "volume": 1,
       "reporter_abbr": "Marsh.",
       "page": 341,
-      "status": "no_match",
-      "confidence": "high",
-      "note": "Marshall's Common Pleas Reports (1813-16), not in english_reports.cases nor in the stubs (the whitelist's Marsh. is A.K. Marshall of Kentucky, wrong here); the same case is reported in ER as Topping v Fuge, 5 Taunt 330 and 5 Taunt 771, but the cite is to Marshall"
+      "status": "linked_english_reports",
+      "confidence": "low",
+      "note": "Marshall's Common Pleas Reports have no source; linked to the same case in Taunton, 5 Taunt 330, as in the other editions. Coordinator's alignment.",
+      "er_case_id": "18140242"
     }
   ]
 }
