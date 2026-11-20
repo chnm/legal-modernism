@@ -106,6 +106,11 @@ LEFT JOIN legalhist.stub_case_metadata sm ON sm.cite = A.stub_cite
 `, "A.", alias+".")
 }
 
+// caseYearExpr is the year a case was decided, over the tables of
+// caseMetaJoins: the expression caseMetaColumns selects, for a query that also
+// sorts by it.
+const caseYearExpr = `COALESCE(cc.decision_year, er.murrell_year, er.er_year, code.decision_year, sm.year_decided)`
+
 // caseMetaColumns selects, in this order, the source, id, name, year and
 // citation of the case on a row joined by caseMetaJoins. Scan them with
 // scanCaseRef.
@@ -117,7 +122,7 @@ CASE WHEN A.cap_case_id IS NOT NULL THEN 'cap'
      WHEN A.stub_cite IS NOT NULL THEN 'stub' END,
 COALESCE(A.cap_case_id::text, A.er_case_id, A.code_reporter_id::text, A.stub_cite),
 COALESCE(cc.name_abbreviation, er.murrell_title, er.er_name, code.name, sm.party_names),
-COALESCE(cc.decision_year, er.murrell_year, er.er_year, code.decision_year, sm.year_decided),
+`+caseYearExpr+`,
 COALESCE(capcite.cite, er.er_cite, code.official_citation, A.stub_cite)
 `, "A.", alias+".")
 }

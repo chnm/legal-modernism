@@ -1,0 +1,160 @@
+{{define "styles"}}
+        /* The matrix is wider than the page, so the page scrolls sideways and the
+           headings and the case names stick to its edges. */
+        .matrix { --us: #ba02e8; --us-tint: #f8ebfd; --uk: #0f766e; --uk-tint: #e2f3f1;
+                  border-collapse: separate; border-spacing: 0; width: max-content; font-size: 0.8rem; }
+        .matrix th, .matrix td { padding: 1px 6px; border-bottom: 1px solid #ececec; white-space: nowrap; }
+        .matrix th { font-weight: 400; text-align: left; }
+        .matrix col.us { background: var(--us-tint); }
+        .matrix col.uk { background: var(--uk-tint); }
+        .matrix thead { position: sticky; top: 0; z-index: 3; }
+        .matrix thead th { background: #fff; vertical-align: bottom; font-weight: 600; border-bottom: 2px solid #adb5bd; }
+        .matrix .case { position: sticky; left: 0; z-index: 1; background: #fff; max-width: 19rem; overflow: hidden; text-overflow: ellipsis;
+                        border-right: 1px solid #dee2e6; }
+        .matrix .cite { max-width: 11rem; overflow: hidden; text-overflow: ellipsis; color: #6c757d; }
+        .matrix .badge { font-size: 0.65rem; font-weight: 500; }
+
+        /* An edition's heading: where and which, read upwards, then its side and year. */
+        .matrix th.ed { width: 2.4rem; min-width: 2.4rem; padding: 4px 1px; text-align: center; font-size: 0.75rem; }
+        .matrix th.ed.us { background: var(--us-tint); border-bottom-color: var(--us); }
+        .matrix th.ed.uk { background: var(--uk-tint); border-bottom-color: var(--uk); }
+        .matrix th.ed .lbl { display: block; margin: 0 auto 4px; writing-mode: vertical-rl; transform: rotate(180deg);
+                             max-height: 10rem; overflow: hidden; text-overflow: ellipsis; line-height: 1.2;
+                             font-weight: 400; text-align: left; }
+        .matrix th.ed .st { color: #6c757d; }
+        .matrix th.ed .jur { display: block; font-size: 0.65rem; letter-spacing: 0.04em; }
+        .matrix th.ed.us .jur { color: var(--us); }
+        .matrix th.ed.uk .jur { color: var(--uk); }
+        .matrix th.ed a { display: block; font-variant-numeric: tabular-nums; }
+
+        /* The cells: filled where the edition cites the case, blank where it is older than the case. */
+        .matrix td.m, .matrix td.x, .matrix td.b { padding: 1px; text-align: center; }
+        .matrix td.b { background: #fff; }
+        .matrix td.x a { display: block; height: 1.15rem; line-height: 1.15rem; border-radius: 2px; color: #fff;
+                         font-size: 0.68rem; font-weight: 600; text-decoration: none; font-variant-numeric: tabular-nums; }
+        .matrix td.x.us a { background: var(--us); }
+        .matrix td.x.uk a { background: var(--uk); }
+        .matrix td.x a:hover, .matrix td.x a:focus-visible { outline: 2px solid #212529; outline-offset: -1px; }
+        .matrix tbody.cases tr:hover > * { box-shadow: inset 0 0 0 99px rgba(0, 0, 0, 0.06); }
+
+        .matrix tbody.totals th, .matrix tbody.totals td { color: #495057; font-size: 0.72rem; font-variant-numeric: tabular-nums; }
+        .matrix tbody.totals tr:last-child > * { border-bottom: 2px solid #adb5bd; }
+        .matrix tr.group th { background: #f1f3f5; font-weight: 600; padding: 0.3rem 6px; border-bottom-color: #dee2e6; }
+        .matrix tr.group th span { position: sticky; left: 6px; }
+
+        .key { display: flex; flex-wrap: wrap; gap: 0.2rem 1.25rem; align-items: center; }
+        .key .sw { display: inline-block; width: 1.5rem; height: 1rem; border-radius: 2px; vertical-align: -0.15rem;
+                   margin-right: 0.3rem; border: 1px solid #ced4da; color: #fff; font-size: 0.68rem; font-weight: 600;
+                   line-height: 1rem; text-align: center; }
+        .key .us { background: #ba02e8; border-color: #ba02e8; }
+        .key .uk { background: #0f766e; border-color: #0f766e; }
+        .key .us-tint { background: #f8ebfd; }
+        .key .uk-tint { background: #e2f3f1; }
+        .key .blank { background: #fff; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">Cases across the editions of <a href="{{.WorkURL}}">{{.Title}}</a></h1>
+    <div class="detail-grid small mb-2">
+        {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
+        <span class="label">Editions shown</span><span>{{.Shown}}{{if .Editions}}, {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside the treatise view, never shown{{end}}</span>
+        <span class="label">Cases cited</span><span>{{num .Total}}{{if .Paged}}, {{num .Nav.PageSize}} to a page in the order chosen{{end}}</span>
+        {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} detected in these editions</span>{{end}}
+    </div>
+    <p class="small text-secondary mb-2" style="max-width: 62rem;">
+        A column is an edition, earliest first; a row is a case that at least one of the editions shown cites.
+        Only linked citations are here, and the share that linked differs from edition to edition, so a cell left
+        empty may be a citation the linker did not resolve rather than a case the edition dropped.
+        Every count, and the first and last edition to cite a case, is among the editions shown.
+        Click a year for the edition, a case for its record, and a filled cell for the citations behind it.
+    </p>
+    <p class="small key mb-3">
+        {{$uk := and .UK (ne .Jur "us")}}{{$us := and .US (ne .Jur "uk")}}
+        {{if $uk}}<span><span class="sw uk"></span>A UK edition cites the case</span>{{end}}
+        {{if $us}}<span><span class="sw us"></span>A US edition cites the case</span>{{end}}
+        <span><span class="sw {{if $us}}us{{else}}uk{{end}}">3</span>More than once</span>
+        <span>{{if $uk}}<span class="sw uk-tint"></span>{{end}}{{if $us}}<span class="sw us-tint"></span>{{end}}Does not cite it</span>
+        <span><span class="sw blank"></span>Published before the case was decided</span>
+    </p>
+
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        {{/* The editions to show, when the work has some on each side; and always when narrowed, to get back. */}}
+        {{if or .BothSides .Jur}}
+        <div class="btn-group btn-group-sm" role="group" aria-label="Editions shown">
+            <a href="{{.Link .Sort ""}}" class="btn {{if eq .Jur ""}}btn-primary{{else}}btn-outline-secondary{{end}}">All editions</a>
+            <a href="{{.Link .Sort "us"}}" class="btn {{if eq .Jur "us"}}btn-primary{{else}}btn-outline-secondary{{end}}">US editions</a>
+            <a href="{{.Link .Sort "uk"}}" class="btn {{if eq .Jur "uk"}}btn-primary{{else}}btn-outline-secondary{{end}}">UK editions</a>
+        </div>
+        {{end}}
+        <div class="btn-group btn-group-sm" role="group" aria-label="Order of the cases">
+            <a href="{{.Link "editions" .Jur}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
+            <a href="{{.Link "span" .Jur}}" class="btn {{if eq .Sort "span"}}btn-primary{{else}}btn-outline-secondary{{end}}">Longest span</a>
+            <a href="{{.Link "entered" .Jur}}" class="btn {{if eq .Sort "entered"}}btn-primary{{else}}btn-outline-secondary{{end}}">First cited</a>
+            <a href="{{.Link "left" .Jur}}" class="btn {{if eq .Sort "left"}}btn-primary{{else}}btn-outline-secondary{{end}}">Last cited</a>
+            <a href="{{.Link "year" .Jur}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Oldest case</a>
+        </div>
+        <span class="small text-secondary">
+            {{if eq .Sort "editions"}}The cases cited by the most editions first.
+            {{else if eq .Sort "span"}}By the years between the first and the last edition to cite the case.
+            {{else if eq .Sort "entered"}}By the first edition to cite the case: what each edition added.
+            {{else if eq .Sort "left"}}By the last edition to cite the case: what was not carried forward.
+            {{else}}By the year the case was decided.{{end}}
+        </span>
+    </div>
+
+    {{if .Editions}}
+    {{template "pagination" .Nav}}
+    <table class="matrix">
+        <colgroup>
+            <col span="6">
+            {{range .Editions}}<col class="{{.Class}}">{{end}}
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col" class="case">Case</th>
+                <th scope="col" class="num">Decided</th>
+                <th scope="col">Cite</th>
+                <th scope="col">Source</th>
+                <th scope="col" class="num" title="Editions that cite the case">Eds.</th>
+                <th scope="col" class="num" title="Years between the first and the last edition to cite the case">Span</th>
+                {{range .Editions}}
+                <th scope="col" class="ed {{.Class}}" title="{{.Tooltip}}">
+                    <span class="lbl">{{.PlaceLabel}}{{if .Statement}}<br><span class="st">{{.Statement}}</span>{{end}}</span>
+                    <span class="jur">{{.JurisdictionLabel}}</span>
+                    <a href="{{.URL}}">{{.YearLabel}}</a>
+                </th>
+                {{end}}
+            </tr>
+        </thead>
+        <tbody class="totals">
+            <tr>
+                <th scope="row" class="case">Cases cited</th><td colspan="5"></td>
+                {{range .Editions}}<td class="m">{{num .Cited}}</td>{{end}}
+            </tr>
+            <tr>
+                <th scope="row" class="case" title="Cases that no earlier edition cites">First cited in this edition</th><td colspan="5"></td>
+                {{range .Editions}}<td class="m">{{num .Entered}}</td>{{end}}
+            </tr>
+            <tr>
+                <th scope="row" class="case" title="The share of the citations detected in the edition that linked to a case">Citations linked</th><td colspan="5"></td>
+                {{range .Editions}}<td class="m">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>{{end}}
+            </tr>
+        </tbody>
+        {{/* The rows are written without indentation: a work can have thousands. */}}
+        <tbody class="cases">
+{{range .Rows}}{{if .Group}}<tr class="group"><th colspan="{{$.Columns}}" scope="colgroup"><span>{{.Group}}</span></th></tr>
+{{end}}<tr><th scope="row" class="case"><a href="{{.URL}}" title="{{.Display}}">{{.Display}}</a></th>
+<td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+<td class="cite">{{ptrOr .Cite "&mdash;"}}</td>
+<td><span class="badge {{.BadgeClass}}">{{.SourceLabel}}</span></td>
+<td class="num">{{.Editions}}</td>
+<td class="num">{{if .Span}}{{deref .Span}}{{else}}&mdash;{{end}}</td>
+{{range .Cells}}{{if .Count}}<td class="x {{.Class}}"><a href="{{.URL}}" title="{{.Title}}">{{if gt .Count 1}}{{.Count}}{{end}}</a></td>{{else if .Before}}<td class="b"></td>{{else}}<td></td>{{end}}{{end}}</tr>
+{{else}}<tr><td colspan="{{.Columns}}" class="text-secondary fst-italic">No linked citations in these editions.</td></tr>
+{{end}}        </tbody>
+    </table>
+    {{template "pagination" .Nav}}
+    {{else}}
+    <p class="small text-secondary fst-italic">There are no such editions in the treatise view.</p>
+    {{end}}
+{{end}}

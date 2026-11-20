@@ -125,6 +125,7 @@ type WorkEdition struct {
 	Author           *string
 	EditionStatement *string
 	Imprint          *string
+	Place            *string
 	Year             *int
 	Volumes          int
 	Pages            *int
@@ -158,7 +159,8 @@ func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts boo
 		join = "LEFT JOIN moml_citations.edition_citation_counts ec ON ec.bibliographicid = e.bibliographicid"
 	}
 	query := `
-	SELECT e.bibliographicid, v.title, e.author, v.edition_statement, v.imprint, v.year, v.volumes, v.pages,
+	SELECT e.bibliographicid, v.title, e.author, v.edition_statement, v.imprint, e.publication_place,
+	       v.year, v.volumes, v.pages,
 	       (SELECT t.jurisdiction FROM moml.treatises t WHERE t.bibliographicid = e.bibliographicid),
 	       e.derivative, ` + counts + `
 	FROM moml.editions e
@@ -175,8 +177,8 @@ func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts boo
 	items, err := collect(ctx, s.db, query, []any{workID}, func(rows pgx.Rows) (WorkEdition, error) {
 		var e WorkEdition
 		var cites, linked, cases *int
-		err := rows.Scan(&e.BiblioID, &e.Title, &e.Author, &e.EditionStatement, &e.Imprint, &e.Year, &e.Volumes, &e.Pages,
-			&e.Jurisdiction, &e.Derivative, &cites, &linked, &cases)
+		err := rows.Scan(&e.BiblioID, &e.Title, &e.Author, &e.EditionStatement, &e.Imprint, &e.Place,
+			&e.Year, &e.Volumes, &e.Pages, &e.Jurisdiction, &e.Derivative, &cites, &linked, &cases)
 		if cites != nil {
 			e.Cites, e.HasCounts = *cites, true
 		}
@@ -262,6 +264,9 @@ type WorkDetail struct {
 }
 
 func (d WorkDetail) URL() string { return workURL(d.WorkID) }
+
+// CasesURL is the matrix of the work's editions and the cases they cite.
+func (d WorkDetail) CasesURL() string { return workCasesURL(d.WorkID) }
 
 // workChartRow is one edition on the work page's chart.
 type workChartRow struct {

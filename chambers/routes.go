@@ -15,6 +15,7 @@ func (s *server) routes() http.Handler {
 	// Treatises: works, editions, pages.
 	mux.HandleFunc("GET /works", s.handleWorks)
 	mux.HandleFunc("GET /works/{id}", s.handleWork)
+	mux.HandleFunc("GET /works/{id}/cases", s.handleWorkCases)
 	mux.HandleFunc("GET /editions/{id}", s.handleEdition)
 	mux.HandleFunc("GET /editions/{id}/cases", s.handleEditionCases)
 	mux.HandleFunc("GET /pages/{psmid}/{pageid}", s.handlePage)
