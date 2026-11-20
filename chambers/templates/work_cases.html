@@ -9,7 +9,7 @@
         .matrix col.uk { background: var(--uk-tint); }
         .matrix thead { position: sticky; top: 0; z-index: 3; }
         .matrix thead th { background: #fff; vertical-align: bottom; font-weight: 600; border-bottom: 2px solid #adb5bd; }
-        .matrix .case { position: sticky; left: 0; z-index: 1; background: #fff; max-width: 21rem; overflow: hidden; text-overflow: ellipsis;
+        .matrix .case { position: sticky; left: 0; z-index: 1; background: #fff; max-width: 19rem; overflow: hidden; text-overflow: ellipsis;
                         border-right: 1px solid #dee2e6; }
         .matrix .cite { max-width: 11rem; overflow: hidden; text-overflow: ellipsis; color: #6c757d; }
         .matrix .badge { font-size: 0.65rem; font-weight: 500; }
@@ -58,7 +58,7 @@
     <div class="detail-grid small mb-2">
         {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
         <span class="label">Editions shown</span><span>{{.Shown}}{{if .Editions}}, {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside the treatise view, never shown{{end}}</span>
-        <span class="label">Cases cited</span><span>{{num (len .Rows)}}</span>
+        <span class="label">Cases cited</span><span>{{num .Total}}{{if .Paged}}, {{num .Nav.PageSize}} to a page in the order chosen{{end}}</span>
         {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} detected in these editions</span>{{end}}
     </div>
     <p class="small text-secondary mb-2" style="max-width: 62rem;">
@@ -88,12 +88,14 @@
         {{end}}
         <div class="btn-group btn-group-sm" role="group" aria-label="Order of the cases">
             <a href="{{.Link "editions" .Jur}}" class="btn {{if eq .Sort "editions"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most editions</a>
+            <a href="{{.Link "span" .Jur}}" class="btn {{if eq .Sort "span"}}btn-primary{{else}}btn-outline-secondary{{end}}">Longest span</a>
             <a href="{{.Link "entered" .Jur}}" class="btn {{if eq .Sort "entered"}}btn-primary{{else}}btn-outline-secondary{{end}}">First cited</a>
             <a href="{{.Link "left" .Jur}}" class="btn {{if eq .Sort "left"}}btn-primary{{else}}btn-outline-secondary{{end}}">Last cited</a>
             <a href="{{.Link "year" .Jur}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Oldest case</a>
         </div>
         <span class="small text-secondary">
             {{if eq .Sort "editions"}}The cases cited by the most editions first.
+            {{else if eq .Sort "span"}}By the years between the first and the last edition to cite the case.
             {{else if eq .Sort "entered"}}By the first edition to cite the case: what each edition added.
             {{else if eq .Sort "left"}}By the last edition to cite the case: what was not carried forward.
             {{else}}By the year the case was decided.{{end}}
@@ -101,9 +103,10 @@
     </div>
 
     {{if .Editions}}
+    {{template "pagination" .Nav}}
     <table class="matrix">
         <colgroup>
-            <col span="5">
+            <col span="6">
             {{range .Editions}}<col class="{{.Class}}">{{end}}
         </colgroup>
         <thead>
@@ -113,6 +116,7 @@
                 <th scope="col">Cite</th>
                 <th scope="col">Source</th>
                 <th scope="col" class="num" title="Editions that cite the case">Eds.</th>
+                <th scope="col" class="num" title="Years between the first and the last edition to cite the case">Span</th>
                 {{range .Editions}}
                 <th scope="col" class="ed {{.Class}}" title="{{.Tooltip}}">
                     <span class="lbl">{{.PlaceLabel}}{{if .Statement}}<br><span class="st">{{.Statement}}</span>{{end}}</span>
@@ -124,15 +128,15 @@
         </thead>
         <tbody class="totals">
             <tr>
-                <th scope="row" class="case">Cases cited</th><td colspan="4"></td>
+                <th scope="row" class="case">Cases cited</th><td colspan="5"></td>
                 {{range .Editions}}<td class="m">{{num .Cited}}</td>{{end}}
             </tr>
             <tr>
-                <th scope="row" class="case" title="Cases that no earlier edition cites">First cited in this edition</th><td colspan="4"></td>
+                <th scope="row" class="case" title="Cases that no earlier edition cites">First cited in this edition</th><td colspan="5"></td>
                 {{range .Editions}}<td class="m">{{num .Entered}}</td>{{end}}
             </tr>
             <tr>
-                <th scope="row" class="case" title="The share of the citations detected in the edition that linked to a case">Citations linked</th><td colspan="4"></td>
+                <th scope="row" class="case" title="The share of the citations detected in the edition that linked to a case">Citations linked</th><td colspan="5"></td>
                 {{range .Editions}}<td class="m">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>{{end}}
             </tr>
         </tbody>
@@ -144,10 +148,12 @@
 <td class="cite">{{ptrOr .Cite "&mdash;"}}</td>
 <td><span class="badge {{.BadgeClass}}">{{.SourceLabel}}</span></td>
 <td class="num">{{.Editions}}</td>
+<td class="num">{{if .Span}}{{deref .Span}}{{else}}&mdash;{{end}}</td>
 {{range .Cells}}{{if .Count}}<td class="x {{.Class}}"><a href="{{.URL}}" title="{{.Title}}">{{if gt .Count 1}}{{.Count}}{{end}}</a></td>{{else if .Before}}<td class="b"></td>{{else}}<td></td>{{end}}{{end}}</tr>
 {{else}}<tr><td colspan="{{.Columns}}" class="text-secondary fst-italic">No linked citations in these editions.</td></tr>
 {{end}}        </tbody>
     </table>
+    {{template "pagination" .Nav}}
     {{else}}
     <p class="small text-secondary fst-italic">There are no such editions in the treatise view.</p>
     {{end}}

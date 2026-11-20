@@ -59,6 +59,7 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `href="/works"`)
 		require.Contains(t, out, `href="/linking/whitelist"`)
 		require.Contains(t, out, `href="/linking/cap"`)
+		require.Contains(t, out, `<a href="/works/1107/cases">Stephen on Pleading</a>`)
 		require.Contains(t, out, `href="/viz/jurisdictions"`)
 		require.Contains(t, out, `href="/viz/field-code"`)
 	})
@@ -94,7 +95,7 @@ func TestRenderPages(t *testing.T) {
 		name := "Hesketh v Lee"
 		cases := []matrixCase{
 			{CaseRef: CaseRef{Source: "er", ID: "100", Name: &name, Year: ptr(1670), Cite: ptr("85 E.R. 756")},
-				Editions: 2, Cites: 4, First: 1, Last: 3, Positions: []int{1, 3}, Counts: []int{3, 1}},
+				Editions: 2, Cites: 4, Span: ptr(7), First: 1, Last: 3, Positions: []int{1, 3}, Counts: []int{3, 1}},
 			{CaseRef: CaseRef{Source: "cap", ID: "7", Year: ptr(1828)},
 				Editions: 1, Cites: 1, First: 2, Last: 2, Positions: []int{2}, Counts: []int{1}},
 		}
@@ -102,7 +103,7 @@ func TestRenderPages(t *testing.T) {
 			Page:   Page{Title: "Cases across the editions of A treatise on pleading", Section: "works"},
 			WorkID: 1107, Title: "A treatise on pleading", Author: ptr("Stephen, Henry John"),
 			Editions: eds, Outside: 1, US: 1, UK: 2, Cites: 994, Linked: 243, Sort: "entered",
-			Rows: matrixRows(cases, eds, "entered"),
+			Rows: matrixRows(cases, eds, "entered"), Total: 2,
 		}
 		out := render(t, "work_cases.html", d)
 
@@ -119,6 +120,7 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `<a href="/works/1107/cases?jur=uk&amp;sort=entered" class="btn btn-outline-secondary">UK editions</a>`)
 		require.Contains(t, out, `<a href="/works/1107/cases?sort=entered" class="btn btn-primary">First cited</a>`)
 		require.Contains(t, out, `<a href="/works/1107/cases" class="btn btn-outline-secondary">Most editions</a>`)
+		require.Contains(t, out, `<a href="/works/1107/cases?sort=span" class="btn btn-outline-secondary">Longest span</a>`)
 
 		// A column for each edition, coloured by jurisdiction and linked to it.
 		require.Contains(t, out, `<col class="uk"><col class="us"><col class="uk">`)
@@ -129,8 +131,13 @@ func TestRenderPages(t *testing.T) {
 
 		// A row for each case under its group, linked to the case, with a cell
 		// for each edition: cited, not cited, and older than the case.
-		require.Contains(t, out, `<tr class="group"><th colspan="8" scope="colgroup"><span>First cited in 1824, London: 3 cases</span></th></tr>`)
+		require.Contains(t, out, `<tr class="group"><th colspan="9" scope="colgroup"><span>First cited in 1824, London: 3 cases</span></th></tr>`)
 		require.Contains(t, out, `<a href="/cases/er/100" title="Hesketh v Lee">Hesketh v Lee</a>`)
+		// The editions that cite the case and the years they span, a dash
+		// where no citing edition is dated.
+		require.Contains(t, out, "<td class=\"num\">2</td>\n<td class=\"num\">7</td>")
+		require.Contains(t, out, "<td class=\"num\">1</td>\n<td class=\"num\">&mdash;</td>")
+		require.NotContains(t, out, "to a page", "one page holds every case")
 		require.Contains(t, out, `<td class="x uk"><a href="/citations?case=er%3A100&amp;edition=ed1" title="3 citations">3</a></td><td></td>`+
 			`<td class="x uk"><a href="/citations?case=er%3A100&amp;edition=ed3" title="1 citation"></a></td></tr>`)
 		require.Contains(t, out, `<td class="b"></td><td class="x us"><a href="/citations?case=cap%3A7&amp;edition=ed2" title="1 citation"></a></td><td></td></tr>`)
@@ -148,6 +155,16 @@ func TestRenderPages(t *testing.T) {
 		require.NotContains(t, out, `<col class="uk">`)
 		require.NotContains(t, out, "A UK edition cites the case")
 		require.Contains(t, out, "A US edition cites the case")
+
+		// A work with more cases than a page holds says so and pages.
+		paged := d
+		paged.Total = 21083
+		paged.Nav = Pagination{Page: 2, PageSize: 2100, Shown: 2, Total: 21083, HasPrev: true, HasNext: true,
+			PrevURL: "/works/1107/cases?page=1", NextURL: "/works/1107/cases?page=3"}
+		out = render(t, "work_cases.html", paged)
+		require.Contains(t, out, "21,083, 2,100 to a page in the order chosen")
+		require.Contains(t, out, `href="/works/1107/cases?page=3"`)
+		require.Contains(t, out, "2,101&ndash;2,102 of 21,083")
 
 		// A work whose editions are all on one side has nothing to narrow to.
 		one := d

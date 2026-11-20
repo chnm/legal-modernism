@@ -20,8 +20,8 @@ import (
 // case law changes the treatise. The columns can be all the editions or only
 // the US or the UK ones. It reads edition_case_citations, so a citation the
 // linker did not resolve is not in it. It was built to read Stephen on
-// Pleading (work 1107, issue #353) and every case is on one page, which is a
-// very long page for the works that cite tens of thousands.
+// Pleading (work 1107, issue #353), whose cases all fit on one page; the
+// works that cite tens of thousands are paged.
 
 // MatrixEdition is one column of the matrix: an edition, and how the cases it
 // cites stand among the other editions shown.
@@ -128,6 +128,7 @@ type matrixCase struct {
 	CaseRef
 	Editions  int
 	Cites     int
+	Span      *int // years between the first and last citing edition; nil when none is dated
 	First     int
 	Last      int
 	Positions []int
@@ -156,6 +157,7 @@ type MatrixRow struct {
 	CaseRef
 	Editions int
 	Cites    int
+	Span     *int
 	Cells    []MatrixCell
 	Group    string
 }
@@ -166,6 +168,7 @@ const matrixCaseKey = "a.cap_case_id, a.er_case_id, a.code_reporter_id, a.stub_c
 
 var matrixSorts = map[string]string{
 	"editions": "a.editions DESC, a.first_pos, a.cites DESC, " + matrixCaseKey,
+	"span":     "a.span DESC NULLS LAST, a.editions DESC, a.first_pos, " + matrixCaseKey,
 	"entered":  "a.first_pos, a.editions DESC, a.last_pos DESC, a.cites DESC, " + matrixCaseKey,
 	"left":     "a.last_pos, a.first_pos, a.editions DESC, a.cites DESC, " + matrixCaseKey,
 	"year":     caseYearExpr + " NULLS LAST, a.first_pos, a.editions DESC, " + matrixCaseKey,
@@ -178,24 +181,60 @@ func normalizeMatrixSort(sort string) string {
 	return "editions"
 }
 
-// matrixEditionsSQL numbers the edition ids of $1 in column order, so the
-// position of an edition's row of edition_case_citations is its column.
+// A page holds at most matrixMaxRows cases, and fewer for a work with many
+// editions, so that the table has at most matrixMaxCells cells for the
+// editions. The two were set by loading the heaviest works in a browser: the
+// slowest page has to load in well under fifteen seconds (issue #437).
+const (
+	matrixMaxRows  = 5000
+	matrixMaxCells = 250000
+)
+
+func matrixPageSize(editions int) int {
+	if editions < 1 {
+		return matrixMaxRows
+	}
+	return max(min(matrixMaxRows, matrixMaxCells/editions), 1)
+}
+
+// matrixEditionsSQL numbers the edition ids of $1, with their years in $2, in
+// column order, so the position of an edition's row of edition_case_citations
+// is its column.
 const matrixEditionsSQL = `e AS (
-	  SELECT id, pos::int AS pos FROM unnest($1::text[]) WITH ORDINALITY AS u(id, pos)
+	  SELECT id, year, pos::int AS pos
+	  FROM unnest($1::text[], $2::int[]) WITH ORDINALITY AS u(id, year, pos)
 	)`
 
-// getMatrixCases returns every case the editions cite, in the given order,
-// with the columns that cite it: first_pos and last_pos are the first and
-// last edition to do so. The predicate on the ids is the prefix of the unique
-// index of edition_case_citations.
-func (s *server) getMatrixCases(ctx context.Context, biblioIDs []string, sort string) ([]matrixCase, error) {
+// matrixArgs is the ids and years of the columns, the first two parameters of
+// the queries.
+func matrixArgs(editions []MatrixEdition) (ids []string, years []*int32) {
+	ids = make([]string, len(editions))
+	years = make([]*int32, len(editions))
+	for i, e := range editions {
+		ids[i] = e.BiblioID
+		if e.Year != nil {
+			y := int32(*e.Year)
+			years[i] = &y
+		}
+	}
+	return ids, years
+}
+
+// getMatrixCases returns a page of the cases the editions cite, in the given
+// order, with the columns that cite each: first_pos and last_pos are the first
+// and last edition to do so, and span the years between the earliest and the
+// latest. The predicate on the ids is the prefix of the unique index of
+// edition_case_citations.
+func (s *server) getMatrixCases(ctx context.Context, editions []MatrixEdition, sort string, limit, offset int) ([]matrixCase, error) {
 	sort = normalizeMatrixSort(sort)
-	slog.Debug("querying case matrix", "editions", len(biblioIDs), "sort", sort)
+	slog.Debug("querying case matrix", "editions", len(editions), "sort", sort, "limit", limit, "offset", offset)
+	ids, years := matrixArgs(editions)
 	query := `
 	WITH ` + matrixEditionsSQL + `, a AS (
 	  SELECT c.cap_case_id, c.er_case_id, c.code_reporter_id, c.stub_cite,
 	         count(*) AS editions, sum(c.cite_count)::bigint AS cites,
 	         min(e.pos) AS first_pos, max(e.pos) AS last_pos,
+	         max(e.year) - min(e.year) AS span,
 	         array_agg(e.pos ORDER BY e.pos) AS positions,
 	         array_agg(c.cite_count ORDER BY e.pos) AS counts
 	  FROM moml_citations.edition_case_citations c
@@ -203,14 +242,15 @@ func (s *server) getMatrixCases(ctx context.Context, biblioIDs []string, sort st
 	  WHERE c.bibliographicid = ANY($1::text[])
 	  GROUP BY 1, 2, 3, 4
 	)
-	SELECT a.editions, a.cites, a.first_pos, a.last_pos, a.positions, a.counts, ` + caseMetaColumns("a") + `
+	SELECT a.editions, a.cites, a.first_pos, a.last_pos, a.span, a.positions, a.counts, ` + caseMetaColumns("a") + `
 	FROM a ` + caseMetaJoins("a") + `
-	ORDER BY ` + matrixSorts[sort]
-	items, err := collect(ctx, s.db, query, []any{biblioIDs}, func(rows pgx.Rows) (matrixCase, error) {
+	ORDER BY ` + matrixSorts[sort] + `
+	LIMIT $3 OFFSET $4`
+	items, err := collect(ctx, s.db, query, []any{ids, years, limit, offset}, func(rows pgx.Rows) (matrixCase, error) {
 		var m matrixCase
 		var source, id, name, cite *string
 		var year *int
-		err := rows.Scan(&m.Editions, &m.Cites, &m.First, &m.Last, &m.Positions, &m.Counts, &source, &id, &name, &year, &cite)
+		err := rows.Scan(&m.Editions, &m.Cites, &m.First, &m.Last, &m.Span, &m.Positions, &m.Counts, &source, &id, &name, &year, &cite)
 		if ref := caseRefFrom(source, id, name, year, cite); ref != nil {
 			m.CaseRef = *ref
 		}
@@ -223,8 +263,10 @@ func (s *server) getMatrixCases(ctx context.Context, biblioIDs []string, sort st
 }
 
 // getMatrixTotals fills in, for each edition, the cases it cites and how many
-// of them it is the first or the last of the editions to cite.
-func (s *server) getMatrixTotals(ctx context.Context, biblioIDs []string, editions []MatrixEdition) error {
+// of them it is the first or the last of the editions to cite, and returns
+// the number of cases any of them cites.
+func (s *server) getMatrixTotals(ctx context.Context, editions []MatrixEdition) (int, error) {
+	ids, years := matrixArgs(editions)
 	rows, err := s.db.Query(ctx, `
 		WITH `+matrixEditionsSQL+`, a AS (
 		  SELECT min(e.pos) AS first_pos, max(e.pos) AS last_pos, array_agg(e.pos) AS positions
@@ -235,26 +277,28 @@ func (s *server) getMatrixTotals(ctx context.Context, biblioIDs []string, editio
 		)
 		SELECT p.pos, count(*), count(*) FILTER (WHERE p.pos = a.first_pos), count(*) FILTER (WHERE p.pos = a.last_pos)
 		FROM a CROSS JOIN LATERAL unnest(a.positions) AS p(pos)
-		GROUP BY p.pos`, biblioIDs)
+		GROUP BY p.pos`, ids, years)
 	if err != nil {
-		return fmt.Errorf("case matrix totals: %w", err)
+		return 0, fmt.Errorf("case matrix totals: %w", err)
 	}
 	defer rows.Close()
+	total := 0
 	for rows.Next() {
 		var pos, cited, entered, left int
 		if err := rows.Scan(&pos, &cited, &entered, &left); err != nil {
-			return fmt.Errorf("case matrix totals: scanning: %w", err)
+			return 0, fmt.Errorf("case matrix totals: scanning: %w", err)
 		}
 		if pos < 1 || pos > len(editions) {
 			continue
 		}
 		e := &editions[pos-1]
 		e.Cited, e.Entered, e.Left = cited, entered, left
+		total += entered
 	}
 	if err := rows.Err(); err != nil {
-		return fmt.Errorf("case matrix totals: %w", err)
+		return 0, fmt.Errorf("case matrix totals: %w", err)
 	}
-	return nil
+	return total, nil
 }
 
 // matrixRows lays the cases out against the editions: a cell for every
@@ -264,7 +308,7 @@ func (s *server) getMatrixTotals(ctx context.Context, biblioIDs []string, editio
 func matrixRows(cases []matrixCase, editions []MatrixEdition, sort string) []MatrixRow {
 	rows := make([]MatrixRow, 0, len(cases))
 	for i, c := range cases {
-		row := MatrixRow{CaseRef: c.CaseRef, Editions: c.Editions, Cites: c.Cites, Cells: make([]MatrixCell, len(editions))}
+		row := MatrixRow{CaseRef: c.CaseRef, Editions: c.Editions, Cites: c.Cites, Span: c.Span, Cells: make([]MatrixCell, len(editions))}
 		for j, e := range editions {
 			row.Cells[j].Class = e.Class()
 			row.Cells[j].Before = c.Year != nil && e.Year != nil && *e.Year < *c.Year
@@ -332,8 +376,10 @@ type WorkCasesPage struct {
 	Editions []MatrixEdition // the columns
 	US       int             // treatise editions on each side, whatever is shown
 	UK       int
-	Outside  int // editions outside the treatise view, which have no column
-	Rows     []MatrixRow
+	Outside  int         // editions outside the treatise view, which have no column
+	Rows     []MatrixRow // the cases on this page
+	Total    int         // cases any of the editions shown cites
+	Nav      Pagination
 	Cites    int // citations detected in the editions shown, when the counts are there
 	Linked   int // of them, linked to a case
 }
@@ -369,9 +415,12 @@ func (d WorkCasesPage) Shown() string {
 	return fmt.Sprintf("All %s (%d UK, %d US)", plural(len(d.Editions), "edition"), d.UK, d.US)
 }
 
-// Columns is the width of the table: the five columns that describe the case
+// Columns is the width of the table: the six columns that describe the case
 // and one for each edition.
-func (d WorkCasesPage) Columns() int { return 5 + len(d.Editions) }
+func (d WorkCasesPage) Columns() int { return 6 + len(d.Editions) }
+
+// Paged reports whether the work cites more cases than a page holds.
+func (d WorkCasesPage) Paged() bool { return d.Nav.HasPrev || d.Nav.HasNext }
 
 // Years is the span of the years of the editions shown.
 func (d WorkCasesPage) Years() string {
@@ -404,6 +453,7 @@ func (s *server) handleWorkCases(w http.ResponseWriter, r *http.Request) {
 		Jur:    normalizeMatrixJurisdiction(r.URL.Query().Get("jur")),
 		Sort:   normalizeMatrixSort(r.URL.Query().Get("sort")),
 	}
+	page := parsePage(r.URL.Query().Get("page"))
 
 	ctx, cancel := s.ctx(r, 60*time.Second)
 	defer cancel()
@@ -439,17 +489,16 @@ func (s *server) handleWorkCases(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	d.Editions, d.US, d.UK, d.Outside = matrixColumns(editions, d.Jur)
-	ids := make([]string, len(d.Editions))
-	for i, e := range d.Editions {
-		ids[i] = e.BiblioID
+	for _, e := range d.Editions {
 		d.Cites += e.Cites
 		d.Linked += e.Linked
 	}
 
-	if len(ids) > 0 {
-		cases, err := s.getMatrixCases(ctx, ids, d.Sort)
+	size := matrixPageSize(len(d.Editions))
+	if len(d.Editions) > 0 {
+		cases, err := s.getMatrixCases(ctx, d.Editions, d.Sort, size, (page-1)*size)
 		if err == nil {
-			err = s.getMatrixTotals(ctx, ids, d.Editions)
+			d.Total, err = s.getMatrixTotals(ctx, d.Editions)
 		}
 		if err := optional(err, &d.Page, "moml_citations.edition_case_citations"); err != nil {
 			s.serverError(w, r, err, "laying out the work's cases", "work_id", id)
@@ -457,5 +506,6 @@ func (s *server) handleWorkCases(w http.ResponseWriter, r *http.Request) {
 		}
 		d.Rows = matrixRows(cases, d.Editions, d.Sort)
 	}
+	d.Nav = paginate(r, page, size, len(d.Rows), d.Total)
 	s.render(w, r, "work_cases.html", http.StatusOK, d)
 }

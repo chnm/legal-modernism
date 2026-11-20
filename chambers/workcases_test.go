@@ -79,6 +79,33 @@ func TestMatrixSorts(t *testing.T) {
 	require.Contains(t, matrixSorts["year"], caseYearExpr)
 }
 
+func TestMatrixPageSize(t *testing.T) {
+	tests := []struct {
+		editions int
+		want     int
+	}{
+		{0, matrixMaxRows},
+		{1, matrixMaxRows},
+		{18, 5000},  // Stephen on Pleading, whose 3,219 cases are one page
+		{50, 5000},  // the two limits meet at fifty editions
+		{100, 2500}, // then the cells bind
+		{119, 2100}, // Blackstone
+		{1000000, 1},
+	}
+	for _, tt := range tests {
+		require.Equal(t, tt.want, matrixPageSize(tt.editions), "%d editions", tt.editions)
+	}
+}
+
+func TestMatrixArgs(t *testing.T) {
+	ids, years := matrixArgs(matrixTestEditions())
+	require.Equal(t, []string{"ed1", "ed2", "ed3"}, ids)
+	require.Len(t, years, 3)
+	require.Equal(t, int32(1824), *years[0])
+	require.Equal(t, int32(1831), *years[1])
+	require.Nil(t, years[2], "an undated edition has no year to span")
+}
+
 func TestMatrixColumns(t *testing.T) {
 	uk, us := "UK", "US"
 	editions := []WorkEdition{
@@ -125,7 +152,7 @@ func TestMatrixRows(t *testing.T) {
 	name := "Hesketh v Lee"
 	cases := []matrixCase{
 		// Decided before every edition, cited by the first and third.
-		{CaseRef: CaseRef{Source: "er", ID: "100", Name: &name, Year: ptr(1670)}, Editions: 2, Cites: 4,
+		{CaseRef: CaseRef{Source: "er", ID: "100", Name: &name, Year: ptr(1670)}, Editions: 2, Cites: 4, Span: ptr(7),
 			First: 1, Last: 3, Positions: []int{1, 3}, Counts: []int{3, 1}},
 		// Decided in 1828, between the first two editions; cited by the second.
 		{CaseRef: CaseRef{Source: "cap", ID: "7", Year: ptr(1828)}, Editions: 1, Cites: 1,
@@ -138,6 +165,8 @@ func TestMatrixRows(t *testing.T) {
 
 	rows := matrixRows(cases, eds, "editions")
 	require.Len(t, rows, 3)
+	require.Equal(t, 7, *rows[0].Span)
+	require.Nil(t, rows[1].Span)
 	for _, r := range rows {
 		require.Len(t, r.Cells, len(eds))
 		require.Empty(t, r.Group, "the order by editions has no groups")
@@ -214,7 +243,9 @@ func TestPlural(t *testing.T) {
 func TestWorkCasesPage(t *testing.T) {
 	d := WorkCasesPage{WorkID: 1107, Editions: matrixTestEditions(), US: 1, UK: 2, Cites: 300, Linked: 99}
 	require.Equal(t, "/works/1107", d.WorkURL())
-	require.Equal(t, 8, d.Columns())
+	require.Equal(t, 9, d.Columns())
+	require.False(t, d.Paged())
+	require.True(t, WorkCasesPage{Nav: Pagination{HasNext: true}}.Paged())
 	require.Equal(t, "1824–1831", d.Years())
 	require.Equal(t, "33%", d.LinkedPct())
 	require.Equal(t, "—", WorkCasesPage{}.Years())
@@ -229,6 +260,7 @@ func TestWorkCasesPage(t *testing.T) {
 	// defaults out.
 	require.Equal(t, "/works/1107/cases", d.Link("editions", ""))
 	require.Equal(t, "/works/1107/cases?sort=entered", d.Link("entered", ""))
+	require.Equal(t, "/works/1107/cases?sort=span", d.Link("span", ""))
 	require.Equal(t, "/works/1107/cases?jur=uk", d.Link("editions", "uk"))
 	require.Equal(t, "/works/1107/cases?jur=us&sort=left", d.Link("left", "us"))
 	require.Equal(t, "/works/1107/cases", d.Link("nonsense", "fr"))
