@@ -1,0 +1,15 @@
+{
+  "psmid": "19005840400", "pageid": "01280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:13:27Z",
+  "note": "1 Sel. Pract. 497 and 2 Tidd, 1343 are practice treatises and are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Lord Cromwell's Case, 4 Rep. 14 a", "case_name": "Lord Cromwell's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "15780080", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Co Rep 12; the quoted advice is at its close, 14 a"},
+    {"seq": 2, "raw": "Camerod v. Reynolds, Cowp. 407", "case_name": "Cameron v. Reynolds",
+     "reporter_abbr": "Cowp.", "page": 407,
+     "status": "linked_english_reports", "er_case_id": "17760026", "pincite": true, "confidence": "medium",
+     "note": "OCR 'Camerod' for Cameron. Cameron v. Reynolds begins at 1 Cowp 403 (stored with volume 1); Sayer v. Pocock begins at 407, but the printed name decides"}
+  ]
+}

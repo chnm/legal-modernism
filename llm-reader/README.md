@@ -61,7 +61,9 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst.), statutes
   (`4 Ann. c. 16`), cross-references (`supra, p. 32`). Skip them.
 - Tables of cases and indexes list case names with the treatise's own page
-  numbers, not citations: record the page with `"citations": []` and a note.
+  numbers, not citations: record the page with `"citations": []` and a note,
+  even when an entry carries a report to tell Anonymous cases apart
+  (`Anonymous, (2 Salk. 519)`).
   So too title pages, advertisements, blank pages.
 - Footnote markers (`(q)`, `(r)`) and running heads are not citations.
 - `Ib.`, `Id.`, `ubi supra`, `S. C.` (same case) and a bare `Ibid. 233` refer back to the
@@ -100,8 +102,20 @@ citation as evidence to be weighed, not a key to be looked up:
 - **Other editions help.** The same footnote usually appears in other
   editions of the treatise, often legible where this one is not: search
   `moml.page_ocrtext` for the other volumes of the work (`moml.volumes`
-  joined to `moml.editions` on `work_id`). That is page text, not the
-  pipeline's results, so it is fair to use.
+  joined to `moml.editions` on `work_id`; searching all of MOML times out):
+
+  ```sql
+  SELECT v.year, o.psmid, o.pageid FROM moml.page_ocrtext o
+    JOIN moml.volumes v USING (psmid) JOIN moml.editions e USING (bibliographicid)
+   WHERE e.work_id = 1107 AND o.ocrtext ILIKE '%Dumsday%' ORDER BY v.year;
+  ```
+
+  That is page text, not the
+  pipeline's results, so it is fair to use. So are the records other readers
+  have written for the same footnote in another edition
+  (`llm-reader/results/`): use them as a cross-check and keep the editions
+  consistent, but still read the page and check what is doubtful, since an
+  earlier reader can be wrong.
 
 Record `raw` exactly as printed, OCR errors and all.
 
@@ -136,7 +150,8 @@ noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
 so they can be recovered. The exception is a second page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page
 number is cut off and printed on no page you have, supply it from the case
-found by name and say so. A cite repeated on a page is recorded each time it is printed. When
+found by name and say so. A cite repeated on a page, or the same case cited in two footnotes, is
+recorded each time it is printed. When
 the English Reports split one case into several records, link the record the
 cited page falls in.
 

@@ -1,0 +1,11 @@
+{
+  "psmid": "19005840400",
+  "pageid": "00290",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:13:08Z",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 48, 49", "volume": 8, "reporter_abbr": "Rep.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "15720206", "pincite": true,
+     "confidence": "medium", "note": "no name printed; 8 Co. Rep. 48 falls in Jehu Webb's Case (8 Co Rep 45-50), which discusses writs in consimili casu under Westminster 2, the point of the footnote; dropped: 49"}
+  ]
+}

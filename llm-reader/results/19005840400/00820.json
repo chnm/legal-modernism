@@ -1,0 +1,41 @@
+{
+  "psmid": "19005840400",
+  "pageid": "00820",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:13:13Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Clark v. Hioughnm, 2 Barn & Cres. 149",
+      "case_name": "Clark v. Hougham",
+      "volume": 2,
+      "reporter_abbr": "Barn & Cres.",
+      "page": 149,
+      "status": "linked_english_reports",
+      "er_case_id": "18230046",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Green v. Crane, 11 Mod. 37",
+      "case_name": "Green v. Crane",
+      "volume": 11,
+      "reporter_abbr": "Mod.",
+      "page": 37,
+      "status": "linked_english_reports",
+      "er_case_id": "17961079",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Evans v. Ogilvie, 2 Y. & J. 79",
+      "case_name": "Evans v. Ogilvie",
+      "volume": 2,
+      "reporter_abbr": "Y. & J.",
+      "page": 79,
+      "status": "linked_english_reports",
+      "er_case_id": "18280339",
+      "confidence": "high"
+    }
+  ]
+}

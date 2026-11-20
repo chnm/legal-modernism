@@ -1,0 +1,11 @@
+{
+  "psmid": "19005840400", "pageid": "01320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:13:27Z",
+  "note": "1 Arch. 441 and Bac. Ab. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. I1i2", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
+     "note": "OCR 'I1i2' for 162, as cited on p. 155; the Commendam case begins at Hob 140"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "psmid": "19005840400",
+  "pageid": "00370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:13:08Z",
+  "citations": [
+    {"seq": 1, "raw": "22 Ass. 41", "volume": 22, "reporter_abbr": "Y.B.", "page": 41,
+     "status": "no_match", "confidence": "high",
+     "note": "22 Edw. III, Liber Assisarum (year book), pl. 41; year books have no source here. The text says the reign of Edw. I, but 22 Ass. is 22 Edw. III"}
+  ]
+}

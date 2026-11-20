@@ -1,0 +1,17 @@
+{
+  "psmid": "19005840400", "pageid": "01490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T03:13:27Z",
+  "note": "3 Reeves' Hist. and Bac. Ab. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Courtney v. Phelps, 1 Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Sid 300; Haw v Planner also begins at 301, the printed name decides"},
+    {"seq": 2, "raw": "Herring v. Blacklow, Cro. Eliz. 30", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high"},
+    {"seq": 3, "raw": "10 Hen. 8, 7, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 7, pl. 21; OCR '8' for 6, as the 1841 edition prints 10 Hen. 6; no source"}
+  ]
+}

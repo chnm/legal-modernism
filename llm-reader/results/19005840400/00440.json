@@ -1,0 +1,20 @@
+{
+  "psmid": "19005840400",
+  "pageid": "00440",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:15:30Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Ramebottom v. Buckhurst, 2 M. & S. 565",
+      "case_name": "Ramsbottom v. Buckhurst",
+      "volume": 2,
+      "reporter_abbr": "M. & S.",
+      "page": 565,
+      "status": "linked_english_reports",
+      "er_case_id": "18140412",
+      "confidence": "high",
+      "note": "OCR 'Ramebottom' read as Ramsbottom"
+    }
+  ]
+}

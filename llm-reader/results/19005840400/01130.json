@@ -1,0 +1,18 @@
+{
+  "psmid": "19005840400",
+  "pageid": "01130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:20:57Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Year-Book, 1 Ed. 2, 14",
+      "volume": 1,
+      "reporter_abbr": "Y.B.",
+      "page": 14,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "1 Edw. II; year books have no source here. The text's 'the Year-Books, viz. in the 1st year of Ed. 2' names no folio and is not recorded separately"
+    }
+  ]
+}
