@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "02090",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:57:53Z",
+  "note": "printed pp. 249-251. Doct. Pl., 1 Chitty, 501, 1st edit. (Chitty on Pleading), 3 Reeves (History of the English Law) and Doct. and Stud. are treatises, skipped. Agrees with the Gale copy's record (19005816500/02010)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Leyfield's Case, 10 Rep. 89 b",
+      "case_name": "Leyfield's Case",
+      "volume": 10,
+      "reporter_abbr": "Rep.",
+      "page": 89,
+      "status": "linked_english_reports",
+      "er_case_id": "15720100",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 10 Co Rep 88"
+    }
+  ]
+}

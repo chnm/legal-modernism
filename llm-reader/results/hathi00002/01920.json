@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "01920",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:54:40Z",
+  "note": "printed pp. 225-226. Bac. Ab., Com. Dig. are treatises and 'Suprà, p. 222' a cross-reference, skipped. Agrees with the Gale copy's record (19005816500/01840)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Anon. 3 Salk. 353",
+      "case_name": "Anonymous",
+      "volume": 3,
+      "reporter_abbr": "Salk.",
+      "page": 353,
+      "status": "linked_english_reports",
+      "er_case_id": "17950130",
+      "confidence": "high",
+      "note": "two ER cases begin at 3 Salk 353; the Anonymous one, not Bullen v. Benson"
+    },
+    {
+      "seq": 2,
+      "raw": "Dike v. Ricks, Cro. Car. 336",
+      "case_name": "Dike v. Ricks",
+      "reporter_abbr": "Cro. Car.",
+      "page": 336,
+      "status": "linked_english_reports",
+      "er_case_id": "17920666",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at Cro Car 335"
+    }
+  ]
+}

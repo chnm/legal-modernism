@@ -1,0 +1,21 @@
+{"psmid": "hathi00002", "pageid": "02270", "model": "claude-opus-5-5", "read_at": "2026-11-20T22:57:31Z",
+ "note": "printed page 275-276; cross-checked with Gale 19005816500/02190",
+ "citations": [
+  {"seq": 1, "raw": "1 Saund. 103. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+   "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+   "note": "Saunders's note (1), to Hayman v Gerrard (ER 1 Wms Saund 99 and 102); linked to the part at 102"},
+  {"seq": 2, "raw": "White- head v. Buckland, Stile, 401", "case_name": "Whitehead v. Buckland", "reporter_abbr": "Stile", "page": 401,
+   "status": "linked_english_reports", "er_case_id": "16580760", "confidence": "high"},
+  {"seq": 3, "raw": "Cornwallis v. Savery, 2 Burr. 772", "case_name": "Cornwallis v. Savery", "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+   "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high"},
+  {"seq": 4, "raw": "Vere v. Smith, 2 Lev. 5", "case_name": "Vere v. Smith", "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+   "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+  {"seq": 5, "raw": "Vent. 121. S. C.", "case_name": "Vere v. Smith", "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+   "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high", "note": "S. C. of Vere v. Smith; no volume printed, ER 1 Vent 121"},
+  {"seq": 6, "raw": "Sayre v. Minns, Cowp. 575", "case_name": "Sayre v. Minns", "reporter_abbr": "Cowp.", "page": 575,
+   "status": "linked_english_reports", "er_case_id": "17770027", "confidence": "high", "note": "ER stores it as 2 Cowp 575"},
+  {"seq": 7, "raw": "Henderson v. Withy, 2 T. R. 576", "case_name": "Henderson v. Withy", "volume": 2, "reporter_abbr": "T. R.", "page": 576,
+   "status": "linked_english_reports", "er_case_id": "17880178", "confidence": "high"},
+  {"seq": 8, "raw": "Gainsford v. Griffith, 1 Saund. 54", "case_name": "Gainsford v. Griffith", "volume": 1, "reporter_abbr": "Saund.", "page": 54,
+   "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high", "note": "case begins at 1 Wms Saund 51"}
+ ]}

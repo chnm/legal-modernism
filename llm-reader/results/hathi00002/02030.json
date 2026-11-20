@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "02030",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:57:13Z",
+  "note": "printed pp. 241-242; colour in pleading. Reg. Plac. 304 is a treatise and 'Suprà, p. 76' a cross-reference, skipped. Agrees with the Gale copy's record (19005816500/01950)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Gifford v. Perkins, 1 Sid. 450",
+      "case_name": "Gifford v. Perkins",
+      "volume": 1,
+      "reporter_abbr": "Sid.",
+      "page": 450,
+      "status": "linked_english_reports",
+      "er_case_id": "17140237",
+      "confidence": "high"
+    }
+  ]
+}

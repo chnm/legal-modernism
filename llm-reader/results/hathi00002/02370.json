@@ -1,0 +1,9 @@
+{"psmid": "hathi00002", "pageid": "02370", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:00:07Z",
+ "note": "printed page 290-292; note (h) continues on the next page; cross-checked with Gale 19005816500/02290",
+ "citations": [
+  {"seq": 1, "raw": "Wood v. Budden, Hob. 119", "case_name": "Wood v. Budden", "reporter_abbr": "Hob.", "page": 119,
+   "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"},
+  {"seq": 2, "raw": "Osborne v. Rogers, 1 Saund. 267", "case_name": "Osborne v. Rogers", "volume": 1, "reporter_abbr": "Saund.", "page": 267,
+   "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "high",
+   "note": "ER has Osborne v Rogers at 1 Wms Saund 264 and 267; linked to the record beginning at 267, a pin cite since the case begins at 264"}
+ ]}

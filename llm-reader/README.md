@@ -79,7 +79,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   (`Anonymous, (2 Salk. 519)`).
   So too title pages, advertisements, blank pages.
 - Footnote markers (`(q)`, `(r)`) and running heads are not citations.
-- `Ib.`, `Id.`, `ubi supra`, `S. C.` (same case) and a bare `Ibid. 233` refer back to the
+- `Ib.`, `Id.`, `ubi supra`, a case name followed by `sup.` or `supra`
+  (`Martin v. Kesterton, sup.`), `S. C.` (same case) and a bare `Ibid. 233` refer back to the
   previous cite: resolve them to the volume and reporter they stand for and
   record them, noting the expansion in `note`.
 - When a citation is cut off at the bottom of the page and continues on the
