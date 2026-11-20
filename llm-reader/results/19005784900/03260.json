@@ -1,0 +1,26 @@
+{
+  "psmid": "19005784900", "pageid": "03260",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:38:41Z",
+  "note": "Appendix notes (20)-(22); Bac. Ab., Chitty, Com. Dig., Booth, Reg. Plac., Bracton, Britton, Hengham and a statute are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Lightfood v. Lenet, Cro. Jac. 421", "case_name": "Lightfood v. Lenet",
+     "reporter_abbr": "Cro. Jac.", "page": 421,
+     "status": "linked_english_reports", "er_case_id": "17910627", "confidence": "high",
+     "note": "Atwood's Case also begins at Cro Jac 421; the name decides"},
+    {"seq": 2, "raw": "Onslow v. Smith, 2 Bos. & Pul. 384", "case_name": "Onslow v. Smith",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 384,
+     "status": "linked_english_reports", "er_case_id": "18010195", "confidence": "high"},
+    {"seq": 3, "raw": "Bowyer v. Book, 5 Mod. 146", "case_name": "Bowyer v. Cook",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17940334", "pincite": true,
+     "confidence": "high", "note": "OCR 'Book' for Cook; case begins at 5 Mod 145"},
+    {"seq": 4, "raw": "Carth. 363", "case_name": "Bowyer v. Cook",
+     "reporter_abbr": "Carth.", "page": 363,
+     "status": "linked_english_reports", "er_case_id": "17410040", "confidence": "high",
+     "note": "same case, reported as Bowers v. Cook"},
+    {"seq": 5, "raw": "1 Salk. 297, S. C.", "case_name": "Bowyer v. Cook",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "17951706", "confidence": "medium",
+     "note": "S. C. of Bowyer v. Cook; three cases begin at 1 Salk 297, and 'Fooler versus Cooke' is the one whose name fits; consistent with the 1851 edition"}
+  ]
+}

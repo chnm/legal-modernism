@@ -1,0 +1,15 @@
+{
+  "psmid": "19005784900", "pageid": "03250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:38:41Z",
+  "note": "Appendix notes (16)-(20); rules of court, Co. Litt., Bracton, Corvinus and the Digest are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Doe d. Gillett v. Roe, 4 Tyr. 649", "case_name": "Doe d. Gillett v. Roe",
+     "volume": 4, "reporter_abbr": "Tyr.", "page": 649,
+     "status": "linked_english_reports", "er_case_id": "18340081", "confidence": "medium",
+     "note": "Tyrwhitt has no source; the same case (1834) is reported at 1 Cr. M. & R. 19"},
+    {"seq": 2, "raw": "1 Edw. 2, 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "Year book, 1 Edw. II; no source"},
+    {"seq": 3, "raw": "10 Edw. 3,23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high", "note": "Year book, 10 Edw. III; no source"}
+  ]
+}

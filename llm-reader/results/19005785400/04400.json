@@ -46,10 +46,11 @@
       "reporter_abbr": "Mass.",
       "page": 304,
       "status": "linked_cap",
-      "cap_case_id": 2000806,
+      "cap_case_id": 2000748,
       "pincite": true,
       "confidence": "low",
-      "note": "no name printed; page falls in Greenwood v. Curtis (6 Mass. 294-311); no case begins at 304"
+      "note": "No name printed. cap.citations puts Bacon v. Callender at 6 Mass. 303, so p. 304 falls in it; Greenwood v. Curtis begins at 6 Mass. 358 (CAP's first/last pages are offset in this volume). Aligned by the coordinator with the other editions.",
+      "case_name": "Bacon v. Callender"
     },
     {
       "seq": 5,

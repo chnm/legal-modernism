@@ -1,0 +1,13 @@
+{
+  "psmid": "19005784900", "pageid": "04050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:46:08Z",
+  "note": "Second appendix, note 14 continued, quoting Metcalf's notes to Yelverton on pleas in trover; Tidd's Practice and Chitty are treatises",
+  "citations": [
+    {"seq": 1, "raw": "Markham & Pitt's case, 3 Leon. 205", "case_name": "Markham and Pitt's Case", "volume": 3, "reporter_abbr": "Leon.", "page": 205,
+     "status": "linked_english_reports", "er_case_id": "16860135", "confidence": "high",
+     "note": "ER stores Leonard as '3 Leo 205'"},
+    {"seq": 2, "raw": "Yelv. 174. a. 174. b.", "reporter_abbr": "Yelv.", "page": 174,
+     "status": "linked_english_reports", "er_case_id": "17921868", "pincite": true, "confidence": "low",
+     "note": "Metcalf's note in Yelverton at 174 a-b, recorded once; page falls in Priestley v. White (Yel 173); dropped: 174 b"}
+  ]
+}

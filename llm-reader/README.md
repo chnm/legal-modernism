@@ -44,6 +44,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   `4 Taunt. 572`, `Herlakenden's Case, 4 Rep. 62 a`, `1 Saund. 28, n. (3)`
   (Saunders's notes are cited as a case report: record it, and link the case
   at that page if there is one). A string of cites is one record each.
+- An unreported manuscript case (`Carter v. Tams, D. Ct. Philad. 1836, MS.`)
+  is not recorded: it has no report to link.
 - An unnamed case cited only inside another report (`Cited ibid.`) is not
   recorded: it has neither a name nor a cite of its own.
 - A case cited by name with no reporter (`as in Slade's case`) is not
@@ -122,6 +124,10 @@ citation as evidence to be weighed, not a key to be looked up:
   (`llm-reader/results/`): use them as a cross-check and keep the editions
   consistent, but still read the page and check what is doubtful, since an
   earlier reader can be wrong.
+
+When this page's OCR has lost a line that every other edition prints, record
+the cite from the other editions at `medium`, with `raw` as they print it and
+a note saying so.
 
 Record `raw` exactly as printed, OCR errors and all.
 

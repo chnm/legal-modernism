@@ -1,0 +1,11 @@
+{
+  "psmid": "19005784900", "pageid": "03520",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:37:58Z",
+  "note": "Appendix notes 45-47; 3 Reeves 432 is Reeves's History of the English Law; Plac. Ab. 44 and 134 are Placitorum Abbreviatio, records of pleas, not reports.",
+  "citations": [
+    {"seq": 1, "raw": "Brudnell v. Roberh, 2 Wils. 143", "case_name": "Brudnell v. Roberts",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "high",
+     "note": "OCR 'Roberh' read as Roberts"}
+  ]
+}
