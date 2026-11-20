@@ -56,7 +56,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
 - Year books (cited directly or through an abridgment, `Vin. Ab. ... cites
   15 Hen. 7. 10`), e.g. (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
   of cases with no source here: always record them, as `no_match`, leaving
-  out `page` when the folio cannot be read. Write `reporter_abbr` as `Y.B.`
+  out `page` when the folio cannot be read. Its `confidence` is how surely you read the
+  cite: `high` when legible, `low` when garbled. Write `reporter_abbr` as `Y.B.`
   and the regnal year as `volume`, with the reign in `note` (`10 Edw. III`).
   A year book cited only by an editor's page (`Mayn. 109`) leaves `volume`
   empty. A year book named with no folio (`the Year-books, viz. 1 Ed. 2`) is not

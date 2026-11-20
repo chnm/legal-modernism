@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "00380",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:29:45Z",
+  "note": "printed p. 10; otherwise treatises only (Arch., Chitty on Pleading, Glanvil, Co. Litt., Booth)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Tyssen v. Clarke, 3 Wils. 558",
+      "case_name": "Tyssen v. Clarke",
+      "volume": 3,
+      "reporter_abbr": "Wils.",
+      "page": 558,
+      "status": "linked_english_reports",
+      "er_case_id": "17990335",
+      "confidence": "high",
+      "note": "ER 3 Wils KB 558, Proceedings in a Writ of Right Patent between Tyssen and Clarke; agrees with the Gale copy's record"
+    }
+  ]
+}

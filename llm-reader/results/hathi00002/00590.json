@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00002",
+  "pageid": "00590",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T22:32:35Z",
+  "note": "printed p. 40; otherwise treatises only (Chitty on Pleading, Booth) and cross-references",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Tyssen v. Clarke, 3 Wils. 561",
+      "case_name": "Tyssen v. Clarke",
+      "volume": 3,
+      "reporter_abbr": "Wils.",
+      "page": 561,
+      "status": "linked_english_reports",
+      "er_case_id": "17990335",
+      "pincite": true,
+      "confidence": "high",
+      "note": "the proceedings in the writ of right begin at 3 Wils KB 558 (the count is printed there); an earlier report of the same suit is at 3 Wils KB 541. Agrees with the Gale copy's record"
+    },
+    {
+      "seq": 2,
+      "raw": "2 Ed. 3. 1",
+      "volume": 2,
+      "reporter_abbr": "Y.B.",
+      "page": 1,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 2 Edw. III, fol. 1, cited as an ancient precedent of a count in formedon; no source"
+    }
+  ]
+}
