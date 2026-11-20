@@ -1,0 +1,77 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "Comyns's Digest, Bacon's Abridgment and the rule of Hil. 4 W. 4 skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Hudson v. Jones, 1 Salk. 91",
+      "case_name": "Hudson v. Jones",
+      "volume": 1,
+      "reporter_abbr": "Salk.",
+      "page": 91,
+      "status": "linked_english_reports",
+      "er_case_id": "17952104",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 1 Salk 90"
+    },
+    {
+      "seq": 2,
+      "raw": "Nicholson v. Simpson, Fort. 55G",
+      "case_name": "Nicholson v. Simpson",
+      "reporter_abbr": "Fort.",
+      "page": 356,
+      "status": "linked_english_reports",
+      "er_case_id": "17480129",
+      "confidence": "high",
+      "note": "OCR '55G' read as 356; the case is at Fort 356"
+    },
+    {
+      "seq": 3,
+      "raw": "Wilcox v. Servant of Skipwith, 2 Mod. 4",
+      "case_name": "Wilcox v. Servant of Skipwith",
+      "volume": 2,
+      "reporter_abbr": "Mod.",
+      "page": 4,
+      "status": "linked_english_reports",
+      "er_case_id": "17931312",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "10 Ed. 4, 12",
+      "volume": 10,
+      "reporter_abbr": "Y.B.",
+      "page": 12,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 10 Edw. IV fo. 12; no source"
+    },
+    {
+      "seq": 5,
+      "raw": "The King v. The Bishop of Chester, 2 Salk. 561",
+      "case_name": "The King v. The Bishop of Chester",
+      "volume": 2,
+      "reporter_abbr": "Salk.",
+      "page": 561,
+      "status": "linked_english_reports",
+      "er_case_id": "17951535",
+      "pincite": true,
+      "confidence": "high",
+      "note": "Rex v. Bishop of Chester, Pierce and Cook begins at 2 Salk 560"
+    },
+    {
+      "seq": 6,
+      "raw": "10 Ed. 4. 12",
+      "volume": 10,
+      "reporter_abbr": "Y.B.",
+      "page": 12,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 10 Edw. IV fo. 12, in the American editor's note [21]; no source"
+    }
+  ]
+}

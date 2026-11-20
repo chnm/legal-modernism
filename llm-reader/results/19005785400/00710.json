@@ -1,0 +1,92 @@
+{
+  "psmid": "19005785400",
+  "pageid": "00710",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "oyer; Tidd, Sel., Com. Dig., Archbold, Chitty and a rule of court also cited",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Page v. Divine, 2 T. R. 40",
+      "case_name": "Page v. Divine",
+      "volume": 2,
+      "reporter_abbr": "T. R.",
+      "page": 40,
+      "status": "linked_english_reports",
+      "er_case_id": "17870154",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "1 Saund. 9 b. n. (c)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Jevens v. Harridge, the record beginning at 1 Wms Saund 8 (the next case begins at 10)"
+    },
+    {
+      "seq": 3,
+      "raw": "Ward v. Griffith, Ld. Ray, 83",
+      "case_name": "Ward v. Griffith",
+      "volume": 1,
+      "reporter_abbr": "Ld. Raym.",
+      "page": 83,
+      "status": "linked_english_reports",
+      "er_case_id": "17922748",
+      "confidence": "high",
+      "note": "no volume printed; supplied 1 from the case name (1 Ld Raym 83)"
+    },
+    {
+      "seq": 4,
+      "raw": "the King v. Amery, 1 T. IR 149",
+      "case_name": "The King v. Amery",
+      "volume": 1,
+      "reporter_abbr": "T. R.",
+      "page": 149,
+      "status": "linked_english_reports",
+      "er_case_id": "17860059",
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "The King v. Amery, 1 T. R. 150",
+      "case_name": "The King v. Amery",
+      "volume": 1,
+      "reporter_abbr": "T. R.",
+      "page": 150,
+      "status": "linked_english_reports",
+      "er_case_id": "17860059",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 1 TR 149"
+    },
+    {
+      "seq": 6,
+      "raw": "1 Saund. 9 d. n. (g)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Jevens v. Harridge, the record beginning at 1 Wms Saund 8"
+    },
+    {
+      "seq": 7,
+      "raw": "1 Saund. 9 a. n. (d)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Jevens v. Harridge, the record beginning at 1 Wms Saund 8"
+    }
+  ]
+}

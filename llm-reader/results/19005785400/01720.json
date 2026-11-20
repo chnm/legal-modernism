@@ -1,0 +1,20 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "Reeves, Doctor and Student, Chitty and Rastell skipped as not cases",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Taylor v. Eastwood, 1 East, 212",
+      "case_name": "Taylor v. Eastwood",
+      "volume": 1,
+      "reporter_abbr": "East",
+      "page": 212,
+      "status": "linked_english_reports",
+      "er_case_id": "18000045",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01250",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:29Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Anon. 2 Salk. 519",
+      "case_name": "Anonymous",
+      "volume": 2,
+      "reporter_abbr": "Salk.",
+      "page": 519,
+      "status": "linked_english_reports",
+      "er_case_id": "17950161",
+      "confidence": "low",
+      "note": "three Anonymous cases begin at 2 Salk 519 (17950160, 17950161, 17950162) and cannot be told apart without their text; chose the one the 1831 edition's reading of this same footnote chose"
+    },
+    {
+      "seq": 2,
+      "raw": "Fowle v. Welsh, 1 Barn. & Cres. 29",
+      "case_name": "Fowle v. Welsh",
+      "volume": 1,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 29,
+      "status": "linked_english_reports",
+      "er_case_id": "18220541",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Fletcher v. Pogson, 3 Barn. & Cres. 192",
+      "case_name": "Fletcher v. Pogson",
+      "volume": 3,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 192,
+      "status": "linked_english_reports",
+      "er_case_id": "18240053",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Ward v. Sackrider, 3 Caines' Rep. 263",
+      "case_name": "Ward v. Sackrider",
+      "volume": 3,
+      "reporter_abbr": "Caines' Rep.",
+      "page": 263,
+      "status": "linked_cap",
+      "cap_case_id": 12142414,
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Tubbs v. Caswell et al, 8 Wendell, 129",
+      "case_name": "Tubbs v. Caswell",
+      "volume": 8,
+      "reporter_abbr": "Wendell",
+      "page": 129,
+      "status": "linked_cap",
+      "cap_case_id": 2147358,
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Spring v. The Bank of Mount Pleasant, 10 Peters, 257",
+      "case_name": "Spring v. The Bank of Mount Pleasant",
+      "volume": 10,
+      "reporter_abbr": "Peters",
+      "page": 257,
+      "status": "linked_cap",
+      "cap_case_id": 5616173,
+      "confidence": "high",
+      "note": "the case is Sprigg v. Bank of Mount Pleasant; 'Spring' is a misprint or OCR error"
+    }
+  ]
+}

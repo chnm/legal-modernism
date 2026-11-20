@@ -1,13 +1,33 @@
 {
-  "psmid": "19005816500", "pageid": "01530",
-  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:23:00Z",
+  "psmid": "19005816500",
+  "pageid": "01530",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:23:00Z",
   "note": "3 Bl. Comm. 394 is a treatise and is not recorded",
   "citations": [
-    {"seq": 1, "raw": "Jackson v. Pesked, 1 M. & S. 234", "case_name": "Jackson v. Pesked",
-     "volume": 1, "reporter_abbr": "M. & S.", "page": 234,
-     "status": "linked_english_reports", "er_case_id": "18130139", "confidence": "high"},
-    {"seq": 2, "raw": "1 Saund. 228. c. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
-     "status": "linked_english_reports", "er_case_id": "18450236", "pincite": true, "confidence": "medium",
-     "note": "Saunders's note at 228 c, to Skinner v. Gunton, which begins at 228"}
+    {
+      "seq": 1,
+      "raw": "Jackson v. Pesked, 1 M. & S. 234",
+      "case_name": "Jackson v. Pesked",
+      "volume": 1,
+      "reporter_abbr": "M. & S.",
+      "page": 234,
+      "status": "linked_english_reports",
+      "er_case_id": "18130139",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "1 Saund. 228. c. n. (1)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 228,
+      "status": "linked_english_reports",
+      "er_case_id": "18450243",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Williams's note (1) at 1 Saund. 228, on aider by verdict, is the note to Stennel v. Hogg (1 Wms Saund 226), not Skinner v. Gunton, which also begins at 228. Corrected by the coordinator to agree with the 1841 reading.",
+      "case_name": "Stennel v. Hogg"
+    }
   ]
 }

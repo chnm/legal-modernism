@@ -1,0 +1,110 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01950",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "Comyns's Digest skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Lane v. Alexander, Yelv. 122",
+      "case_name": "Lane v. Alexander",
+      "reporter_abbr": "Yelv.",
+      "page": 122,
+      "status": "linked_english_reports",
+      "er_case_id": "17921377",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Gorman v. Sweeting, 2 Saund. 295",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 205,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "confidence": "medium",
+      "note": "other editions of Stephen print 'Goram v. Sweeting, 2 Saund. 205'; 295 is a misprint. ER's record at 2 Wms Saund 205 is titled 'Same versus Bateman' with no Murrell title, apparently mis-titled; nothing named Sweeting is in ER's Saunders"
+    },
+    {
+      "seq": 3,
+      "raw": "Sir Francis Leke's case, Dy. 865",
+      "case_name": "Sir Francis Leke's Case",
+      "reporter_abbr": "Dy.",
+      "page": 365,
+      "status": "linked_english_reports",
+      "er_case_id": "17941455",
+      "confidence": "high",
+      "note": "OCR '865' read as 365; the case is at 3 Dy 365"
+    },
+    {
+      "seq": 4,
+      "raw": "2 Saund. 207. n. (24)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450086",
+      "confidence": "medium",
+      "note": "Saunders's note to Foxwist v. Tremaine, which begins at 2 Wms Saund 207"
+    },
+    {
+      "seq": 5,
+      "raw": "Wood v. Budden, Hob. 119",
+      "case_name": "Wood v. Budden",
+      "reporter_abbr": "Hob.",
+      "page": 119,
+      "status": "linked_english_reports",
+      "er_case_id": "17922884",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Tatem v. Petient, Yelv. 195",
+      "case_name": "Tatem v. Perient",
+      "reporter_abbr": "Yelv.",
+      "page": 195,
+      "status": "linked_english_reports",
+      "er_case_id": "17922443",
+      "confidence": "high"
+    },
+    {
+      "seq": 7,
+      "raw": "Carvick v. Blagrave, 1 Brod. & Bing. 551",
+      "case_name": "Carvick v. Blagrave",
+      "volume": 1,
+      "reporter_abbr": "Brod. & Bing.",
+      "page": 531,
+      "status": "linked_english_reports",
+      "er_case_id": "18190281",
+      "confidence": "high",
+      "note": "551 read as 531, where the case begins and where it is cited on printed p. 243"
+    },
+    {
+      "seq": 8,
+      "raw": "Palmer v. Elins, 2 Str. 818",
+      "case_name": "Palmer v. Ekins",
+      "volume": 2,
+      "reporter_abbr": "Str.",
+      "page": 818,
+      "status": "linked_english_reports",
+      "er_case_id": "17952725",
+      "pincite": true,
+      "confidence": "high",
+      "note": "Palmer v. Ekins begins at 2 Str 817"
+    },
+    {
+      "seq": 9,
+      "raw": "d1. Ray. 1550",
+      "case_name": "Palmer v. Ekins",
+      "volume": 2,
+      "reporter_abbr": "Ld. Ray.",
+      "page": 1550,
+      "status": "linked_english_reports",
+      "er_case_id": "17901324",
+      "confidence": "high",
+      "note": "the same case's other report; volume 2 supplied"
+    }
+  ]
+}

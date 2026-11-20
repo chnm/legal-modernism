@@ -1,0 +1,84 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01820",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "Wentworth, Chitty and Viner skipped; seq 2-7 are in the American editor's note [22], unnamed cites taken from Chitty",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Batt v. Bradley, Cro. Jac. 141",
+      "case_name": "Batt v. Bradley",
+      "reporter_abbr": "Cro. Jac.",
+      "page": 141,
+      "status": "linked_english_reports",
+      "er_case_id": "17910084",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "1 Esp. Rep. 452",
+      "volume": 1,
+      "reporter_abbr": "Esp.",
+      "page": 452,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "ER has 1 Esp 449 (Bulman v Birkett, 196 words, 170 E.R. 416) and 1 Esp 456 (170 E.R. 418) but nothing at 170 E.R. 417, where 1 Esp 452 would fall; the case seems missing from the source"
+    },
+    {
+      "seq": 3,
+      "raw": "3 B. & Cres. 235",
+      "volume": 3,
+      "reporter_abbr": "B. & Cres.",
+      "page": 235,
+      "status": "linked_english_reports",
+      "er_case_id": "18240100",
+      "confidence": "medium",
+      "note": "no name printed; Lord Bagot v. Williams begins at 3 B & C 235"
+    },
+    {
+      "seq": 4,
+      "raw": "6 T. R. 607",
+      "volume": 6,
+      "reporter_abbr": "T. R.",
+      "page": 607,
+      "status": "linked_english_reports",
+      "er_case_id": "17962362",
+      "confidence": "medium",
+      "note": "no name printed; Seddon v. Tutop begins at 6 TR 607, the leading case on a judgment recovered for a different cause"
+    },
+    {
+      "seq": 5,
+      "raw": "3 Wils. 304",
+      "volume": 3,
+      "reporter_abbr": "Wils.",
+      "page": 304,
+      "status": "linked_english_reports",
+      "er_case_id": "17990252",
+      "confidence": "medium",
+      "note": "no name printed; Kitchen v. Campbell begins at 3 Wils KB 304"
+    },
+    {
+      "seq": 6,
+      "raw": "7 B. & Cres. 809",
+      "volume": 7,
+      "reporter_abbr": "B. & Cres.",
+      "page": 809,
+      "status": "linked_english_reports",
+      "er_case_id": "18280029",
+      "confidence": "medium",
+      "note": "no name printed; Calvert v. Gordon begins at 7 B & C 809"
+    },
+    {
+      "seq": 7,
+      "raw": "1 M. & R. 497",
+      "volume": 1,
+      "reporter_abbr": "M. & R.",
+      "page": 497,
+      "status": "linked_stub",
+      "stub_cite": "1 M. & Ry. 497",
+      "confidence": "medium",
+      "note": "Manning & Ryland's K.B. reports (1827-30), not in ER; probably the parallel report of Calvert v. Gordon (7 B. & C. 809) printed just before it, but linked to the stub at the printed cite"
+    }
+  ]
+}

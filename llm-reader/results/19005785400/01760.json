@@ -1,0 +1,21 @@
+{
+  "psmid": "19005785400",
+  "pageid": "01760",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "Comyns's Digest, Co. Litt., Wentworth and Chitty skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Saund. 103. a. n. (1.)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 103,
+      "status": "linked_english_reports",
+      "er_case_id": "18450117",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note on protestation in Holdipp v. Otway, which begins at 2 Wms Saund 102"
+    }
+  ]
+}

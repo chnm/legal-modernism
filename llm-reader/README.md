@@ -157,7 +157,8 @@ misses: the same case is often reported in several. Some reporters carry a
 court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, Yelverton
 `Yel`, Hardres `Hard`, Barnewall and Alderson `B & A`, and some carry a
 volume the printed cite never shows (`2 Cowp`, `3 Dy`, `1 Plowden`); Rep.
-temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`. Plowden's first 130 pages
+temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`, Holt's Nisi Prius plain `Holt` (King's
+Bench is `Holt KB`). Plowden's first 130 pages
 are missing. Keilwey and Benloe
 are stored as groups of cases by term: link the group whose pages contain
 the cite, at `medium`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
@@ -183,11 +184,22 @@ SELECT c.id, c.name_abbreviation, c.decision_year, c.first_page, c.last_page
   FROM cap.citations ci JOIN cap.cases c ON c.id = ci."case"
  WHERE ci.cite = '5 Johns. 123';
 -- a pin cite: the case in that volume whose pages contain it
+-- (cap.cases.volume is a barcode; the volume number is in cap.volumes)
 SELECT c.id, c.name_abbreviation, c.decision_year, c.first_page, c.last_page
-  FROM cap.cases c JOIN cap.reporters r ON r.id = c.reporter
- WHERE r.short_name = 'Johns.' AND c.volume = '5'
-   AND c.first_page <= 130 AND coalesce(c.last_page, c.first_page) >= 130;
+  FROM cap.cases c
+  JOIN cap.volumes v ON v.barcode = c.volume
+  JOIN cap.reporters r ON r.id = c.reporter
+ WHERE r.short_name = 'Wend.' AND v.volume_number = 10
+   AND c.first_page <= 112 AND coalesce(c.last_page, c.first_page) >= 112;
+-- by name, across a reporter
+SELECT c.id, c.name_abbreviation, c.decision_year, ci.cite
+  FROM cap.cases c JOIN cap.citations ci ON ci."case" = c.id
+ WHERE c.name_abbreviation ILIKE '%sackrider%' AND c.decision_year <= 1841;
 ```
+
+A citation that falls in a later record of a case the English Reports split
+in two is a `pincite` when the case itself begins earlier, even if the page is
+that record's first.
 
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.

@@ -1,0 +1,68 @@
+{
+  "psmid": "19005785400",
+  "pageid": "00740",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:41Z",
+  "note": "editor's note on imparlance, continued; Booth, Com. Dig., Chitty and Lib. Plac. (precedents) are not cases",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Saund. 2, n. (2)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 2,
+      "status": "linked_english_reports",
+      "er_case_id": "18450157",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Mellor v. Walker, 2 Wms Saund 1"
+    },
+    {
+      "seq": 2,
+      "raw": "2 Saund. 45. b.",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 45,
+      "status": "linked_english_reports",
+      "er_case_id": "18450305",
+      "confidence": "medium",
+      "note": "folio 45 b; William v. Gwyn, the second ER record beginning at 2 Wms Saund 45, on the view"
+    },
+    {
+      "seq": 3,
+      "raw": "2 Saund. 2, n. (2.)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 2,
+      "status": "linked_english_reports",
+      "er_case_id": "18450157",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Mellor v. Walker, 2 Wms Saund 1"
+    },
+    {
+      "seq": 4,
+      "raw": "2 Saund. 2, n. (2.)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 2,
+      "status": "linked_english_reports",
+      "er_case_id": "18450157",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Mellor v. Walker, 2 Wms Saund 1"
+    },
+    {
+      "seq": 5,
+      "raw": "2 Saund. 2, n. (2.)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 2,
+      "status": "linked_english_reports",
+      "er_case_id": "18450157",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note to Mellor v. Walker, 2 Wms Saund 1"
+    }
+  ]
+}

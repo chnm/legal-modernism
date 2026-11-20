@@ -1,0 +1,20 @@
+{
+  "psmid": "19005785400",
+  "pageid": "00810",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:26Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Vatson v. Abbott, 4 Tyr. 14",
+      "case_name": "Watson v. Abbott",
+      "volume": 4,
+      "reporter_abbr": "Tyr.",
+      "page": 14,
+      "status": "linked_english_reports",
+      "er_case_id": "18330289",
+      "confidence": "medium",
+      "note": "OCR 'Vatson'; Tyrwhitt is not a source here, linked to the same case as reported in 2 Cr & M 150 (1833), on trial before the sheriff"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "psmid": "19005785400",
+  "pageid": "00840",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:26Z",
+  "note": "variance. Com. Dig., Vin. Ab., B. N. P., Doct. Pl., Arch. and Phillips on Evidence are treatises, skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Latham v. Rutley, 2 Barn. & Cres. 20",
+      "case_name": "Latham v. Rutley",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 20,
+      "status": "linked_english_reports",
+      "er_case_id": "18230564",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Woodward v. Booth, 7 Barn. & Cres. 301",
+      "case_name": "Woodward v. Booth",
+      "volume": 7,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 301,
+      "status": "linked_english_reports",
+      "er_case_id": "18270234",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Guthing v. Lynn, 2 Barn. & Adol. 232",
+      "case_name": "Guthing v. Lynn",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Adol.",
+      "page": 232,
+      "status": "linked_english_reports",
+      "er_case_id": "18310558",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Lamey v. Bishop, 4 Barn. & A\\ul. 479",
+      "case_name": "Lamey v. Bishop",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Adol.",
+      "page": 479,
+      "status": "linked_english_reports",
+      "er_case_id": "18330151",
+      "confidence": "high",
+      "note": "OCR 'A\\ul.' read as Adol."
+    },
+    {
+      "seq": 5,
+      "raw": "Adams v. Bateson, 6 Bing. 110",
+      "case_name": "Adams v. Bateson",
+      "volume": 5,
+      "reporter_abbr": "Bing.",
+      "page": 110,
+      "status": "linked_english_reports",
+      "er_case_id": "18290564",
+      "confidence": "high",
+      "note": "printed volume 6; Adams v. Bateson is at 5 Bing 110 (1829)"
+    },
+    {
+      "seq": 6,
+      "raw": "Wood v. Adam, 6 Bing. 481",
+      "case_name": "Wood v. Adam",
+      "volume": 6,
+      "reporter_abbr": "Bing.",
+      "page": 481,
+      "status": "linked_english_reports",
+      "er_case_id": "18300543",
+      "confidence": "high"
+    },
+    {
+      "seq": 7,
+      "raw": "Ireland v. Johnson, 1 Bing. New Rcp. 162",
+      "case_name": "Ireland v. Johnson",
+      "volume": 1,
+      "reporter_abbr": "Bing. N. C.",
+      "page": 162,
+      "status": "linked_english_reports",
+      "er_case_id": "18340847",
+      "confidence": "high",
+      "note": "ER has Ireland v Johnson at 1 Bing NC 163, a page after the printed 162"
+    },
+    {
+      "seq": 8,
+      "raw": "Price v. Brown, Str. 690",
+      "case_name": "Price v. Brown",
+      "volume": 2,
+      "reporter_abbr": "Str.",
+      "page": 690,
+      "status": "linked_english_reports",
+      "er_case_id": "17952853",
+      "confidence": "high",
+      "note": "no volume printed; supplied 2. ER has Price vers Brown at 2 Str 691; Strange's paging varies between editions"
+    },
+    {
+      "seq": 9,
+      "raw": "1 Wils. 116; S. C.",
+      "case_name": "Price v. Brown",
+      "volume": 1,
+      "reporter_abbr": "Wils.",
+      "page": 116,
+      "status": "no_match",
+      "confidence": "low",
+      "note": "given as S. C. of Price v. Brown, but no report of Price v. Brown in 1 Wils KB: page 116 falls in Alcorn v. Westbrook (1 Wils KB 115), a different case, so not linked"
+    },
+    {
+      "seq": 10,
+      "raw": "Coare v. Giblet, 4 East, 85",
+      "case_name": "Coare v. Giblett",
+      "volume": 4,
+      "reporter_abbr": "East",
+      "page": 85,
+      "status": "linked_english_reports",
+      "er_case_id": "18030626",
+      "confidence": "high"
+    },
+    {
+      "seq": 11,
+      "raw": "Price v. Brown, Str. 690",
+      "case_name": "Price v. Brown",
+      "volume": 2,
+      "reporter_abbr": "Str.",
+      "page": 690,
+      "status": "linked_english_reports",
+      "er_case_id": "17952853",
+      "confidence": "high",
+      "note": "footnote (i), repeat of seq 8; 2 Str 691 in ER"
+    },
+    {
+      "seq": 12,
+      "raw": "1 Wils. 116, S. C.",
+      "case_name": "Price v. Brown",
+      "volume": 1,
+      "reporter_abbr": "Wils.",
+      "page": 116,
+      "status": "no_match",
+      "confidence": "low",
+      "note": "repeat of seq 9: page 116 falls in Alcorn v. Westbrook (1 Wils KB 115), not a report of Price v. Brown"
+    }
+  ]
+}

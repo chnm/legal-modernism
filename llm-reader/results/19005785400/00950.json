@@ -1,0 +1,78 @@
+{
+  "psmid": "19005785400",
+  "pageid": "00950",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:44:26Z",
+  "note": "trial by record, certificate and witnesses. Co. Litt., Brooke's Abridgment (Br. Trials), Tidd, Bl. Com., Chitty, Co. Ent., Bac. Ab. and Viner skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "11 Hen. 4, 78",
+      "volume": 11,
+      "reporter_abbr": "Y.B.",
+      "page": 78,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "year book, 11 Hen. IV, cited through Bac. Ab.; no source"
+    },
+    {
+      "seq": 2,
+      "raw": "Jones's Case, Comb. 473",
+      "case_name": "Jones's Case",
+      "reporter_abbr": "Comb.",
+      "page": 473,
+      "status": "linked_english_reports",
+      "er_case_id": "17240308",
+      "confidence": "high",
+      "note": "ER has three records at Comb 473; the printed name matches 'Jones & Ux' versus-'"
+    },
+    {
+      "seq": 3,
+      "raw": "Machell v Garrett, 3 Salk. 64",
+      "case_name": "Machell v. Garrett",
+      "volume": 3,
+      "reporter_abbr": "Salk.",
+      "page": 64,
+      "status": "linked_english_reports",
+      "er_case_id": "17952477",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "12 Mod. 276, S. C.",
+      "case_name": "Machell v. Garrett",
+      "volume": 12,
+      "reporter_abbr": "Mod.",
+      "page": 276,
+      "status": "linked_english_reports",
+      "er_case_id": "17961378",
+      "confidence": "high",
+      "note": "S. C. of Machell v. Garrett; ER has it as Michell and his Wife against Garrett, one of three records at 12 Mod 276"
+    },
+    {
+      "seq": 5,
+      "raw": "Abbot of Strata Mercella's Case, 9 Rep. 30, b.",
+      "case_name": "Abbot of Strata Mercella's Case",
+      "volume": 9,
+      "reporter_abbr": "Rep.",
+      "page": 30,
+      "status": "linked_english_reports",
+      "er_case_id": "15720404",
+      "pincite": true,
+      "confidence": "high",
+      "note": "the case begins at 9 Co Rep 24"
+    },
+    {
+      "seq": 6,
+      "raw": "Grace Faux v. Barnes, Lord Raym. 174",
+      "case_name": "Faux v. Barnes",
+      "volume": 1,
+      "reporter_abbr": "Ld. Raym.",
+      "page": 174,
+      "status": "linked_english_reports",
+      "er_case_id": "17920965",
+      "confidence": "high",
+      "note": "no volume printed; supplied 1"
+    }
+  ]
+}
