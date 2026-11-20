@@ -38,7 +38,7 @@ type PageView struct {
 	WorkID       int
 	WorkTitle    string
 	Sections     []string
-	Gale         GaleLinks
+	Links        SourceLinks
 	Text         string
 	Original     bool // the raw OCR text is shown, without corrections or highlights
 	Prev         string
@@ -153,7 +153,7 @@ func (s *server) getPageHeader(ctx context.Context, psmid, pageid string) (*Page
 	}
 	v.SourcePage = derefStr(sourcePage)
 	v.Type = derefStr(pageType)
-	v.Gale = galeLinks(productLink, pageid)
+	v.Links = sourceLinks(productLink, pageid)
 	return v, nil
 }
 

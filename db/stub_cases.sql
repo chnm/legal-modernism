@@ -113,15 +113,22 @@ HAVING bool_and(
 
 -- 2. Every qualifying cite string in those reporters. n_citations is what the
 --    threshold applies to and what the summary reports; it is not stored.
---    The threshold counts the citations of both corpora (issue #346).
+--    The threshold counts the citations of both corpora (issue #346). An
+--    edition the database holds in several copies (moml.editions.copy_of,
+--    issue #402) is counted once, by its official copy: a string that one
+--    book cites is not a recurring string because the book was scanned twice.
 CREATE TEMP TABLE stub_candidates ON COMMIT DROP AS
 WITH misses AS (
     SELECT cu.reporter_abbr, cu.volume, cu.page, cu.year
     FROM moml_citations.citation_links cl
     JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-    WHERE cl.status = 'linked_stub'
-       OR (cl.status = 'no_match'
-           AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent'))
+    WHERE (cl.status = 'linked_stub'
+           OR (cl.status = 'no_match'
+               AND cl.match_tier IN ('us_reporter_absent', 'uk_reporter_absent')))
+      AND cu.moml_treatise NOT IN (SELECT v.psmid
+                                   FROM moml.volumes v
+                                   JOIN moml.editions e ON e.bibliographicid = v.bibliographicid
+                                   WHERE e.copy_of IS NOT NULL)
     UNION ALL
     SELECT cu.reporter_abbr, cu.volume, cu.page, cu.year
     FROM opinion_citations.citation_links cl

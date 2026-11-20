@@ -479,8 +479,8 @@ func (s *server) getCaseDecades(ctx context.Context, source, id string) ([]decad
 	return items, nil
 }
 
-// getCitedAs groups the citations linked to a case by their raw spelling and
-// tier, most frequent first, and counts how many came from pages other than
+// getCitedAs groups the citations linked to a case, in the official copies of
+// editions, by their raw spelling and tier, most frequent first, and counts how many came from pages other than
 // body pages. Bound by the partial index on the case column; the most-cited
 // case (44K links) takes under a second.
 func (s *server) getCitedAs(ctx context.Context, source, id string, limit int) ([]CitedAs, int, int, error) {
@@ -494,7 +494,7 @@ func (s *server) getCitedAs(ctx context.Context, source, id string, limit int) (
 		JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
 		LEFT JOIN legalhist.whitelist wl ON wl.reporter_found = cu.reporter_abbr
 		LEFT JOIN moml.page mp ON mp.psmid = cu.moml_treatise AND mp.pageid = cu.moml_page
-		WHERE cl.`+col+` = `+placeholder+`
+		WHERE cl.`+col+` = `+placeholder+` AND `+officialCopiesSQL+`
 		GROUP BY 1, 2, 3, 4
 		ORDER BY count(*) DESC, 1
 		LIMIT $2`, []any{id, limit},
@@ -524,7 +524,7 @@ func (s *server) getNamedAs(ctx context.Context, d *CaseDetail, limit int) error
 		       `+caseNameAgreementSQL("cu.case_name", "$3::text")+`, count(*)
 		FROM moml_citations.citation_links cl
 		JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-		WHERE cl.`+col+` = `+placeholder+`
+		WHERE cl.`+col+` = `+placeholder+` AND `+officialCopiesSQL+`
 		GROUP BY 1, 2, 3
 		ORDER BY (min(cu.case_name) IS NULL) DESC, count(*) DESC, 1
 		LIMIT $2`, []any{d.ID, limit + 1, compared},
@@ -557,7 +557,8 @@ func (s *server) getNamedAs(ctx context.Context, d *CaseDetail, limit int) error
 		SELECT count(*), count(*) FILTER (WHERE `+caseNameAgreementSQL("cu.case_name", "$2::text")+`)
 		FROM moml_citations.citation_links cl
 		JOIN moml_citations.citations_unlinked cu ON cu.id = cl.citation_id
-		WHERE cl.`+col+` = `+placeholder+` AND cu.case_name IS NOT NULL`, d.ID, compared).Scan(&d.NamedTotal, &d.NamedAgree)
+		WHERE cl.`+col+` = `+placeholder+` AND cu.case_name IS NOT NULL AND `+officialCopiesSQL+`
+		`, d.ID, compared).Scan(&d.NamedTotal, &d.NamedAgree)
 	if err != nil {
 		return fmt.Errorf("named totals: %w", err)
 	}

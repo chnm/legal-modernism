@@ -20,6 +20,12 @@
 // for each page. A page's pageid is its HathiTrust sequence number times ten,
 // zero-padded to five digits, MOML's convention, so sequence 1 is 00010.
 //
+// A volume whose manifest entry names the MOML volume of the same edition
+// (moml_psmid) is another copy of that edition. After an import the program
+// calls moml.prefer_hathitrust_copies(), which makes the earliest HathiTrust
+// copy of each such edition the official one and points the others at it
+// (moml.editions.copy_of).
+//
 // A volume already in moml.volumes is skipped, and a volume whose download is
 // missing is reported and passed over, so the program can be run again as
 // downloads arrive. Each volume is one transaction.
@@ -147,6 +153,17 @@ func main() {
 		imported++
 	}
 
+	// A volume that is another copy of an edition the database already has
+	// changes which copy is official; see moml.prefer_hathitrust_copies.
+	if imported > 0 {
+		changed, err := preferHathiTrustCopies(ctx, pool)
+		if err != nil {
+			slog.Error("failed to choose the official copies", "error", err)
+			os.Exit(1)
+		}
+		slog.Info("chose the official copy of each edition", "editions_changed", changed)
+	}
+
 	slog.Info("done importing HathiTrust volumes", "imported", imported,
 		"already_present", present, "missing_download", missing, "check_only", *check)
 	if missing > 0 {
@@ -226,6 +243,20 @@ func volumeExists(ctx context.Context, pool *pgxpool.Pool, psmid string) (bool, 
 		return false, fmt.Errorf("querying moml.volumes: %w", err)
 	}
 	return exists, nil
+}
+
+// preferHathiTrustCopies makes the earliest HathiTrust copy of each edition
+// its official copy (moml.editions.copy_of), by the database's own rule, and
+// returns how many editions changed.
+func preferHathiTrustCopies(ctx context.Context, pool *pgxpool.Pool) (int, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Minute)
+	defer cancel()
+	var changed int
+	err := pool.QueryRow(ctx, `SELECT moml.prefer_hathitrust_copies();`).Scan(&changed)
+	if err != nil {
+		return 0, fmt.Errorf("calling moml.prefer_hathitrust_copies: %w", err)
+	}
+	return changed, nil
 }
 
 // importVolume writes one volume and everything that hangs from it in a

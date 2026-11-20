@@ -1,5 +1,6 @@
 {{define "styles"}}
         #work-chart { min-height: 1px; }
+        tr.copy-row > td { border-top: 0; padding-top: 0; }
 {{end}}
 
 {{define "content"}}
@@ -8,7 +9,7 @@
         {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
         <span class="label">Work id</span><span><code>{{.WorkID}}</code></span>
         {{with .Counts}}
-        <span class="label">Editions in the treatise view</span><span>{{.Editions}}{{if ne .Editions .AllEditions}} of {{.AllEditions}} in MOML{{end}}{{if .Derivative}}, {{.Derivative}} derivative{{end}}</span>
+        <span class="label">Editions in the treatise view</span><span>{{.Editions}}{{if ne .Editions .AllEditions}} of {{.AllEditions}} in the database{{end}}{{if .Derivative}}, {{.Derivative}} derivative{{end}}</span>
         <span class="label">Years</span><span>{{.Years}}</span>
         <span class="label">Jurisdictions</span><span>{{.Jurisdictions}}</span>
         <span class="label">Citations</span><span>{{num .Cites}}, {{.LinkedPct}} linked to a case</span>
@@ -20,7 +21,9 @@
     <p class="small text-secondary">
         Earliest first. An edition outside the treatise view (a pamphlet, a document, a biography) is shown in
         gray and left out of every count; a derivative edition (an abridgment, a question book, a translation)
-        is flagged.
+        is flagged. An edition the database holds in more than one copy (a second scan, or another printing)
+        is listed and counted once, by its official copy, with the other copies beneath it; a HathiTrust copy,
+        being public, is preferred to MOML's.
     </p>
     <table class="table table-sm table-hover align-middle">
         <thead>
@@ -42,7 +45,7 @@
             <tr{{if not .InTreatises}} class="muted-row"{{end}}>
                 <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
                 <td class="small">{{if .InTreatises}}<span class="badge jur">{{.JurisdictionLabel}}</span>{{else}}<span class="text-secondary" title="Outside the treatise view">&mdash;</span>{{end}}</td>
-                <td class="title-col"><a href="{{.URL}}">{{.Title}}</a>{{if .Derivative}} <span class="badge text-bg-light" title="Derived from the work: an abridgment, analysis, question book, supplement or translation">derivative</span>{{end}}</td>
+                <td class="title-col"><a href="{{.URL}}">{{.Title}}</a>{{if .Derivative}} <span class="badge text-bg-light" title="Derived from the work: an abridgment, analysis, question book, supplement or translation">derivative</span>{{end}}{{if ne .Source "MOML"}} <span class="badge text-bg-light" title="Where this copy was scanned">{{.Source}}</span>{{end}}</td>
                 <td class="small">{{ptrOr .EditionStatement "&mdash;"}}</td>
                 <td class="small text-secondary">{{ptrOr .Imprint "&mdash;"}}</td>
                 <td class="num">{{.Volumes}}</td>
@@ -51,8 +54,22 @@
                 <td class="num">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>
                 <td class="num">{{if .HasCounts}}{{num .Cases}}{{else}}&mdash;{{end}}</td>
             </tr>
+            {{range .Copies}}
+            <tr class="copy-row small text-secondary">
+                <td class="num">{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</td>
+                <td></td>
+                <td class="title-col">&#8627; <a href="{{.URL}}">Another copy, from {{.Source}}</a> <span class="badge text-bg-light" title="Left out of every count; the edition is counted by its official copy">not counted</span></td>
+                <td>{{ptrOr .EditionStatement "&mdash;"}}</td>
+                <td>{{ptrOr .Imprint "&mdash;"}}</td>
+                <td></td>
+                <td class="num">{{if .Pages}}{{num .Pages}}{{else}}&mdash;{{end}}</td>
+                <td class="num">{{if .HasCounts}}{{num .Cites}}{{else}}&mdash;{{end}}</td>
+                <td class="num">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>
+                <td></td>
+            </tr>
+            {{end}}
         {{else}}
-            <tr><td colspan="10" class="text-secondary">This work has no editions in MOML.</td></tr>
+            <tr><td colspan="10" class="text-secondary">This work has no editions in the database.</td></tr>
         {{end}}
         </tbody>
     </table>

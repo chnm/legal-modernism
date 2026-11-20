@@ -30,6 +30,11 @@ go run ./scripts/hathitrust-import/ --check   # read the zips, write nothing
 go run ./scripts/hathitrust-import/           # import, with LAW_DBSTR set
 ```
 
+A volume whose manifest entry names a MOML volume (`moml_psmid`) is another
+copy of that volume's edition; after an import the program calls
+`moml.prefer_hathitrust_copies()`, which makes the earliest HathiTrust copy the
+edition's official one (`moml.editions.copy_of`).
+
 It skips a volume already imported and passes over one whose zip is missing
 (exiting 2), so it can be run again as downloads arrive. The new pages have no
 citations until the next full detector run (`./scripts/pipeline.sh`), since the

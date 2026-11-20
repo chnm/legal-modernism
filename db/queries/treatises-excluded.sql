@@ -44,6 +44,10 @@ excluded AS (
   JOIN moml.edition_subjects j
     ON j.bibliographicid = e.bibliographicid AND j.subject IN ('US', 'UK')
   WHERE NOT EXISTS (SELECT 1 FROM moml.treatises t WHERE t.bibliographicid = e.bibliographicid)
+    -- A copy that is not official is not excluded: its edition is in the
+    -- view through the official copy (issue #402).
+    AND NOT EXISTS (SELECT 1 FROM moml.editions c
+                    WHERE c.bibliographicid = e.bibliographicid AND c.copy_of IS NOT NULL)
 )
 SELECT x.reason, x.jurisdiction, x.bibliographicid, x.pages,
        coalesce(c.n, 0) AS citations, x.title

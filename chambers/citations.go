@@ -454,7 +454,7 @@ type CitationDetail struct {
 	Treatise    *string // the treatise view's jurisdiction, nil when outside it
 	SourcePage  *string
 	PageType    *string
-	Gale        GaleLinks
+	Links       SourceLinks
 	OCRText     *string
 	Highlighted template.HTML
 }
@@ -564,7 +564,7 @@ func (s *server) getCitationDetail(ctx context.Context, id uuid.UUID) (*Citation
 	c.Case = caseRefFrom(source, caseID, name, year, cite)
 	c.Name = detectedNameFrom(caseName, nameSource, agrees)
 	c.StubPruned = c.Case != nil && c.Case.Source == "stub" && c.StubCite == nil
-	c.Gale = galeLinks(productLink, c.PageID)
+	c.Links = sourceLinks(productLink, c.PageID)
 	if c.OCRText != nil {
 		c.Highlighted, c.NameFound = highlightCitation(*c.OCRText, c.Raw, c.Name)
 	}

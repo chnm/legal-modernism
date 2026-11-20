@@ -74,6 +74,9 @@ func (e MatrixEdition) Tooltip() string {
 	if e.Derivative {
 		lines = append(lines, "Derivative edition")
 	}
+	if len(e.Copies) > 0 {
+		lines = append(lines, "Shown from the "+e.Source+" copy; other copies: "+copiesLabel(e.Copies))
+	}
 	return strings.Join(lines, "\n")
 }
 
