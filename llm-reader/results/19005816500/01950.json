@@ -1,0 +1,9 @@
+{
+  "psmid": "19005816500", "pageid": "01950",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:22:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Gifford v. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high"}
+  ]
+}

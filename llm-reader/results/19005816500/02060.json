@@ -1,0 +1,6 @@
+{"psmid": "19005816500", "pageid": "02060", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:29:00Z",
+ "note": "3 Went. (precedents) and 2 Chitty skipped",
+ "citations": [
+  {"seq": 1, "raw": "Yofiig V. Rudd, Carth. 347", "case_name": "Young v. Rudd", "reporter_abbr": "Carth.", "page": 347,
+   "status": "linked_english_reports", "er_case_id": "17410434", "confidence": "high", "note": "OCR 'Yofiig' for Young"}
+ ]}

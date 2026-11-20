@@ -1,0 +1,23 @@
+{
+  "psmid": "19005816500",
+  "pageid": "01190",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:25:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Tjssen v. Clarke, 3 Wils. 419. 541", "case_name": "Tyssen v. Clarke",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 419,
+     "status": "linked_english_reports", "er_case_id": "17990509", "confidence": "high",
+     "note": "OCR Tjssen for Tyssen; second page 541 ignored (ER has a further report of the case at 3 Wils KB 541, 17990518)"},
+    {"seq": 2, "raw": "Hardman v. Clegg, 1 Holt, N. P. R. 657", "case_name": "Hardman v. Clegg",
+     "volume": 1, "reporter_abbr": "Holt N. P.", "page": 657,
+     "status": "linked_english_reports", "er_case_id": "18170070", "confidence": "high",
+     "note": "stored in ER as Holt 657"},
+    {"seq": 3, "raw": "2 Saund. 45 e.", "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "confidence": "medium",
+     "note": "Saunders's note in William v. Gwyn, whose second ER record begins at 2 Wms Saund 45"},
+    {"seq": 4, "raw": "Gallon v. Harvey, 1 Bos. and Pul. 195", "case_name": "Galton v. Harvey",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "17980027", "pincite": true, "confidence": "high",
+     "note": "OCR Gallon for Galton; case begins at 1 Bos & Pul 192 (1798)"}
+  ]
+}

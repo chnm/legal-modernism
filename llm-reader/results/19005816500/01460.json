@@ -1,0 +1,10 @@
+{
+  "psmid": "19005816500", "pageid": "01460",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:23:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 164", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 164,
+     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
+     "note": "Colt & Glover v. Bishop of Coventry & Lichfield begins at Hob 140; no case begins between 140 and 165"}
+  ]
+}

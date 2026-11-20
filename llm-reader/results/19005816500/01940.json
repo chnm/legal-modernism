@@ -1,0 +1,21 @@
+{
+  "psmid": "19005816500", "pageid": "01940",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:22:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Hatlon v. Morse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high",
+     "note": "OCR 'Hatlon' for 'Hatton'"},
+    {"seq": 2, "raw": "Hallet v. Byrt, 5 Mod. 252", "case_name": "Hallet v. Byrt",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 252,
+     "status": "linked_english_reports", "er_case_id": "17940773", "pincite": true,
+     "confidence": "high", "note": "ER has Hallet against Byrt at 5 Mod 248 and 251; 252 falls in the one beginning at 251"},
+    {"seq": 3, "raw": "Holler v. Bush, 1 Salk. 394", "case_name": "Holler v. Bush",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "high"},
+    {"seq": 4, "raw": "year- ;I _Jˆ_ In 1T T/TT on .n 1J UT no lWUV 0I0. IOYU XJ- 40. 6 .Q U. .Il 4as",
+     "reporter_abbr": "Year Book",
+     "status": "no_match", "confidence": "low",
+     "note": "footnote (l) cites one or more Year Books of Edward III; the OCR is unreadable"}
+  ]
+}

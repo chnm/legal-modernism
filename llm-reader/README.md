@@ -47,7 +47,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
 - A case cited by name with no reporter (`as in Slade's case`) is not
   recorded unless a reporter cite accompanies it somewhere on the page.
 - Year books (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
-  of cases with no source here: always record them, as `no_match`.
+  of cases with no source here: always record them, as `no_match`, leaving
+  out `page` when the folio cannot be read.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
   Coke's Entries, Wentworth) are not.
@@ -65,27 +66,62 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   next, record it on the page where the reporter and page number are printed;
   run `bin/llm-reader page` on the neighbouring page if you need to see it.
 
-### Reading the OCR
+### Reading the OCR: the name leads, the numbers are suspect
 
-Expect errors: `I` or `l` for 1, `S` for 5, `O` for 0, broken words, stray
-punctuation, hyphenation across lines. Correct obvious errors, record `raw`
-exactly as printed, and say what you corrected in `note`. When a cite cannot
-be read with reasonable confidence, record it as `no_match` with a low
-confidence and a note.
+This is OCR of old print, and the numbers are where it fails most: volumes and
+pages are misread (`I`, `l` for 1; `S` for 5 or 8; `O` for 0; `3` for 8;
+dropped or doubled digits), and a stray number after a cite is as likely to be
+noise as a second page. The case names survive much better. So read every
+citation as evidence to be weighed, not a key to be looked up:
+
+- **Start from the case name when one is printed.** Find the case by name
+  (`er_name ILIKE '%dumsday%'`, `name_abbreviation ILIKE '%seymour%'`), then
+  check that the reporter, volume and page are a plausible reading of what is
+  printed. A case of that name in that reporter, near that volume and page,
+  is the link even when the printed numbers are off: say what you corrected
+  in `note`.
+- **Use everything on the page:** the sentence the footnote supports, the
+  other cites in the string, an `S. C.` or `Ib.` pointing back, the same case
+  cited elsewhere on the page or a neighbouring one, the reporter's period,
+  and the edition's year (no case it cites is later).
+- **When no name is printed**, the numbers are all you have: a case beginning
+  at the exact page is a link at `medium` confidence; a page inside a case
+  whose subject fits the text is a pin cite at `medium` or `low`.
+- **A name and numbers that point to different cases**: trust the name and
+  look for it nearby (another volume, a transposed digit, the same case in
+  another reporter). Record `no_match` only when you cannot find the named
+  case at all, and say in `note` what you tried and what candidates you saw.
+
+- **Other editions help.** The same footnote usually appears in other
+  editions of the treatise, often legible where this one is not: search
+  `moml.page_ocrtext` for the other volumes of the work (`moml.volumes`
+  joined to `moml.editions` on `work_id`). That is page text, not the
+  pipeline's results, so it is fair to use.
+
+Record `raw` exactly as printed, OCR errors and all.
 
 ### Looking the case up
 
-Query with `psql "$LAW_CLAUDE"`, read-only. The case name is the check: link
-only when the case found is plausibly the one named (spelling, abbreviation
-and order of parties vary; `Rex v.` = `The King against`, `Doe d. A v. B`,
-`ex parte`). When the page gives no name, a hit at the exact first page is
-enough at `medium` confidence. When a cite prints no volume (`Ld. Ray. 883`), find the
-volume from the case name and say in `note` that you supplied it. When a pin
-cite falls on a page where one case ends and another begins, the printed name
-decides which. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
-it annotates, which may begin a page or two before the note. Ignore a second page
-printed with a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`): record the
-citation once, at its first page.
+Query with `psql "$LAW_CLAUDE"`, read-only (the role cannot create
+temporary tables; use a CTE). In the English Reports, check `murrell_title`
+as well as `er_name`, which is sometimes wrong. A page with a folio letter
+(`228 a`) is page 228. Several `Anonymous` cases at one page are told apart
+by subject; when they cannot be, pick one at `low` and say so. Names vary in spelling,
+abbreviation and order of parties (`Rex v.` = `The King against`,
+`Doe d. A v. B`, `ex parte`, `Cook`/`Cooke`, `Garret`/`Garrett`). When a cite
+prints no volume (`Ld. Ray. 883`), find the volume from the case name and say
+in `note` that you supplied it. When a pin cite falls on a page where one
+case ends and another begins, the printed name decides which. `S. C.` (same
+case) points to the case just named: find that case in the reporter given.
+Some reporters were paged differently in different editions (Douglas,
+Strange): a named case found a page or two from the printed page is linked,
+with a note. A note to a case (`1 Saund. 318, n. (3)`) belongs to the case
+it annotates, which may begin a page or two before the note. Ignore a second
+number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
+record the citation once, at its first page; such numbers are often OCR
+noise. A cite repeated on a page is recorded each time it is printed. When
+the English Reports split one case into several records, link the record the
+cited page falls in.
 
 **Identify the reporter.** `legalhist.whitelist` maps printed spellings
 (`reporter_found`) to a `reporter_standard`, and `legalhist.reporters` gives
@@ -102,7 +138,8 @@ and Puller's New Reports are mostly stored under `Bos & Pul` too, so that
 `1 Bos & Pul 64` may be the 1797 volume or the 1804 New Reports: tell them
 apart by `er_year` and the name. Look across reporters by name when a cite
 misses: the same case is often reported in several. Some reporters carry a
-court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
+court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, Yelverton
+`Yel`, Hardres `Hard`, Barnewall and Alderson `B & A`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
 `Barn KB`; when an exact cite misses, match the volume and the start of the
 reporter's name (`er_parallel_cite ~ '^3 Wils'`) to see how it is stored.
 
@@ -134,7 +171,9 @@ SELECT c.id, c.name_abbreviation, c.decision_year, c.first_page, c.last_page
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.
 
-**Stubs** (`legalhist.stub_cases`): reporters no source covers, known only
+**Stubs** (`legalhist.stub_cases`): Lutwyche, for one, is only here, split
+into `1 Lutw.` and `2 Lutw.` though the book is paged as one run.
+Stubs are cases in reporters no source covers, known only
 by their cite (`cite` is `<volume> <reporter_standard> <page>`, e.g.
 `11 W.R. 813`). Link a stub only when it is exactly the case's first page; a
 pin cite into a stub reporter is `no_match`.

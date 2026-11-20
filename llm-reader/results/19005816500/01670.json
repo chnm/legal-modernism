@@ -1,0 +1,10 @@
+{
+  "psmid": "19005816500", "pageid": "01670",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T02:23:00Z",
+  "note": "Chitty, Co. Litt., Heath's Maxims and Com. Dig. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Wildman v. Norton, 1 Vent. 249", "case_name": "Wildman v. Norton",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 249,
+     "status": "linked_english_reports", "er_case_id": "17260899", "confidence": "high"}
+  ]
+}

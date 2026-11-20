@@ -1,0 +1,7 @@
+{"psmid": "19005816500", "pageid": "02290", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:52:00Z",
+ "citations": [
+  {"seq": 1, "raw": "Wood v. Budden, Hob. 119", "case_name": "Wood v. Budden", "reporter_abbr": "Hob.", "page": 119,
+   "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"},
+  {"seq": 2, "raw": "Osborne v. Rogers, 1 Saund. 267", "case_name": "Osborne v. Rogers", "volume": 1, "reporter_abbr": "Saund.", "page": 267,
+   "status": "linked_english_reports", "er_case_id": "18450168", "confidence": "high", "note": "ER has Osborne v Rogers at 1 Wms Saund 264 and 267; linked to the part beginning at 267"}
+ ]}

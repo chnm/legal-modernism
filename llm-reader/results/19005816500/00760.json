@@ -1,16 +1,80 @@
-{"psmid": "19005816500", "pageid": "00760", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:10:00Z",
- "note": "2 Chitty and Com. Dig. are treatises; the Lutwyche cites are precedents of oyer of the writ in Lutwyche's Entries and Reports",
- "citations": [
-  {"seq": 1, "raw": "1 Saund. 318., n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
-   "status": "linked_english_reports", "er_case_id": "18450197", "pincite": true, "confidence": "medium", "note": "Saunders's note (3) at 318; ER has Redman v Edolph at 1 Wms Saund 317 (1788 words, running onto 318) and Bury v Bishop beginning at 318 (521 words). The note on oyer is taken to belong to Redman v Edolph, a case on oyer; Bury v Bishop is the alternative"},
-  {"seq": 2, "raw": "Bragg v. Digby, Salk. 658", "case_name": "Bragg v. Digby", "volume": 2, "reporter_abbr": "Salk.", "page": 658,
-   "status": "linked_english_reports", "er_case_id": "17950606", "confidence": "high", "note": "no volume printed; Bragg versus Digby is 2 Salk 658"},
-  {"seq": 3, "raw": "Walford v. Savil, Lutw. 8", "case_name": "Walford v. Savil", "volume": 1, "reporter_abbr": "Lutw.", "page": 8,
-   "status": "no_match", "confidence": "low", "note": "Lutwyche is not in the English Reports; no stub at 1 Lutw. 8; not in ER by name"},
-  {"seq": 4, "raw": "Simpson v. Garside, Lutw. 1642", "case_name": "Simpson v. Garside", "volume": 2, "reporter_abbr": "Lutw.", "page": 1642,
-   "status": "no_match", "confidence": "low", "note": "Lutwyche is not in the English Reports; the nearest stub is 2 Lutw. 1644, not this page; not in ER by name"},
-  {"seq": 5, "raw": "Bats v. Edwards, Doug. 227", "case_name": "Bates v. Edwards", "volume": 1, "reporter_abbr": "Doug.", "page": 227,
-   "status": "linked_english_reports", "er_case_id": "17790117", "confidence": "high", "note": "no volume printed; ER has Boats against Edwards at 1 Doug 227 (1779)"},
-  {"seq": 6, "raw": "1 Saund. 318., n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
-   "status": "linked_english_reports", "er_case_id": "18450197", "pincite": true, "confidence": "medium", "note": "repeat of seq 1; taken as Redman v Edolph, 1 Wms Saund 317"}
- ]}
+{
+  "psmid": "19005816500",
+  "pageid": "00760",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:10:00Z",
+  "note": "2 Chitty and Com. Dig. are treatises; the Lutwyche cites are precedents of oyer of the writ in Lutwyche's Entries and Reports",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 318., n. (3)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 318,
+      "status": "linked_english_reports",
+      "er_case_id": "18450197",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Saunders's note (3) at 318; ER has Redman v Edolph at 1 Wms Saund 317 (1788 words, running onto 318) and Bury v Bishop beginning at 318 (521 words). The note on oyer is taken to belong to Redman v Edolph, a case on oyer; Bury v Bishop is the alternative"
+    },
+    {
+      "seq": 2,
+      "raw": "Bragg v. Digby, Salk. 658",
+      "case_name": "Bragg v. Digby",
+      "volume": 2,
+      "reporter_abbr": "Salk.",
+      "page": 658,
+      "status": "linked_english_reports",
+      "er_case_id": "17950606",
+      "confidence": "high",
+      "note": "no volume printed; Bragg versus Digby is 2 Salk 658"
+    },
+    {
+      "seq": 3,
+      "raw": "Walford v. Savil, Lutw. 8",
+      "case_name": "Walford v. Savil",
+      "volume": 1,
+      "reporter_abbr": "Lutw.",
+      "page": 8,
+      "status": "no_match",
+      "confidence": "low",
+      "note": "Lutwyche is not in the English Reports; no stub at 1 Lutw. 8; not in ER by name"
+    },
+    {
+      "seq": 4,
+      "raw": "Simpson v. Garside, Lutw. 1642",
+      "case_name": "Simpson v. Garside",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1642,
+      "status": "linked_stub",
+      "confidence": "medium",
+      "note": "Simpson v. Garside is cited as Lutw. 1644 on another page of this edition (linked to stub 2 Lutw. 1644); 1642 read as an OCR or printer's error for 1644. Volume 2 supplied.",
+      "stub_cite": "2 Lutw. 1644"
+    },
+    {
+      "seq": 5,
+      "raw": "Bats v. Edwards, Doug. 227",
+      "case_name": "Bates v. Edwards",
+      "volume": 1,
+      "reporter_abbr": "Doug.",
+      "page": 227,
+      "status": "linked_english_reports",
+      "er_case_id": "17790117",
+      "confidence": "high",
+      "note": "no volume printed; ER has Boats against Edwards at 1 Doug 227 (1779)"
+    },
+    {
+      "seq": 6,
+      "raw": "1 Saund. 318., n. (3)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 318,
+      "status": "linked_english_reports",
+      "er_case_id": "18450197",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "repeat of seq 1; taken as Redman v Edolph, 1 Wms Saund 317"
+    }
+  ]
+}

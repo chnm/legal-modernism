@@ -1,0 +1,8 @@
+{"psmid": "19005816500", "pageid": "00970", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:25:00Z",
+ "note": "counter-pleas to oyer, voucher and view. Reg. Plac. and Bro. Ent. are books of precedents and entries, skipped",
+ "citations": [
+  {"seq": 1, "raw": "Saund. 9 b., n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+   "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium", "note": "no volume printed; supplied 1, the note on oyer at 1 Saund. 9 b cited on earlier pages; falls in Jevens v. Harridge and wife, 1 Wms Saund 8"},
+  {"seq": 2, "raw": "Ibid.", "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+   "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium", "note": "Ibid. expanded to 1 Saund. 9 b, n. (1); Jevens v. Harridge and wife, 1 Wms Saund 8"}
+ ]}

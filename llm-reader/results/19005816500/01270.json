@@ -1,0 +1,12 @@
+{
+  "psmid": "19005816500",
+  "pageid": "01270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Lyttleton v. Cross, 3 Barn. and Cres. 317", "case_name": "Lyttleton v. Cross",
+     "volume": 3, "reporter_abbr": "Barn. & Cres.", "page": 317,
+     "status": "linked_english_reports", "er_case_id": "18240102", "confidence": "high"}
+  ],
+  "note": "Styles's Pract. Reg., Arch. Pract., Impey and Manning's Exchequer Practice are treatises, not recorded"
+}

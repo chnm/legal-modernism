@@ -1,0 +1,10 @@
+{"psmid": "19005816500", "pageid": "00880", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:22:00Z",
+ "note": "pleas puis darrein continuance; demand of view. Chitty, Arch., Com. Dig., Vin. Ab., Booth and Reeves are treatises, skipped",
+ "citations": [
+  {"seq": 1, "raw": "Lyttleton v. Cross, 3 Barn. and Cress. 317", "case_name": "Lyttleton v. Cross", "volume": 3, "reporter_abbr": "Barn. & Cress.", "page": 317,
+   "status": "linked_english_reports", "er_case_id": "18240102", "confidence": "high"},
+  {"seq": 2, "raw": "2 Saund. 44,45. d.n. (4)", "volume": 2, "reporter_abbr": "Saund.", "page": 44,
+   "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true, "confidence": "medium", "note": "Saunders's note (4); 44 falls in William v. Gwyn, a dower case beginning at 2 Wms Saund 42 (a second report of it begins at 45); the second page 45 is ignored"},
+  {"seq": 3, "raw": "2 Saund. 44. n. (4)", "volume": 2, "reporter_abbr": "Saund.", "page": 44,
+   "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true, "confidence": "medium", "note": "repeat of seq 2; William v. Gwyn, 2 Wms Saund 42, on whether view lies in dower"}
+ ]}
