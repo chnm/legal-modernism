@@ -18,7 +18,9 @@
 -- names an author with a work of three or more editions, but which is not in
 -- that work; and a volume set whose volumes Gale catalogued as two editions in
 -- different works. A pair the review decided to keep apart appears here too;
--- the migration's comment names those decisions. Read-only; run with LAW_CLAUDE.
+-- the migration's comment names those decisions, and
+-- 20261120004937_join-doubtful-works.sql (issue #336) the ones a second review
+-- reversed. Read-only; run with LAW_CLAUDE.
 
 WITH keys AS (
   SELECT e.bibliographicid, e.work_id, e.author,
