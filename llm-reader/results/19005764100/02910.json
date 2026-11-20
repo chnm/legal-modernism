@@ -1,24 +1,79 @@
 {
-  "psmid": "19005764100", "pageid": "02910",
-  "model": "claude-opus-5-5", "read_at": "2026-11-20T11:53:46Z",
+  "psmid": "19005764100",
+  "pageid": "02910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T11:53:46Z",
   "note": "Com. Dig., Co. Litt., Chitty, Booth, Bac. Ab. and cross-references skipped",
   "citations": [
-    {"seq": 1, "raw": "Haworth v. Spraggs, 8 T. R. 515", "case_name": "Haworth v. Spraggs", "volume": 8, "reporter_abbr": "T. R.", "page": 515,
-     "status": "linked_english_reports", "er_case_id": "18000138", "confidence": "high"},
-    {"seq": 2, "raw": "1 'aund. 234, n. (4)", "volume": 1, "reporter_abbr": "Saund.", "page": 234,
-     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
-     "note": "OCR 'aund. for Saund.; no name printed; Serjeant Williams's note at 234 falls in Thursby v. Plant, 1 Wms Saund 230"},
-    {"seq": 3, "raw": "Evans v. Stevens, 4 T. R. 227", "case_name": "Evans v. Stevens", "volume": 4, "reporter_abbr": "T. R.", "page": 227,
-     "status": "linked_english_reports", "er_case_id": "17911347", "pincite": true, "confidence": "high",
-     "note": "case begins at 4 TR 224"},
-    {"seq": 4, "raw": "Willes. 40", "reporter_abbr": "Willes", "page": 40,
-     "status": "no_match", "confidence": "medium",
-     "note": "Willes's Reports have no source and no case name is printed"},
-    {"seq": 5, "raw": "8 T. R. 633", "volume": 8, "reporter_abbr": "T. R.", "page": 633,
-     "status": "linked_english_reports", "er_case_id": "18000222", "pincite": true, "confidence": "medium",
-     "note": "no name printed; 633 falls in Wilkes v. Williams, which begins at 8 TR 631 (defence with &c.)"},
-    {"seq": 6, "raw": "2 Saund. 209 c. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
-     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
-     "note": "note (1) at 209 c falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"}
+    {
+      "seq": 1,
+      "raw": "Haworth v. Spraggs, 8 T. R. 515",
+      "case_name": "Haworth v. Spraggs",
+      "volume": 8,
+      "reporter_abbr": "T. R.",
+      "page": 515,
+      "status": "linked_english_reports",
+      "er_case_id": "18000138",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "1 'aund. 234, n. (4)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 284,
+      "status": "linked_english_reports",
+      "er_case_id": "18450073",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Every edition prints 1 Saund. 284, n. (4) here (beside Evans v. Stevens, 4 T. R. 227); this OCR reads 234. 284 falls in Duppa v. Mayo (ER record beginning at 1 Wms Saund 282). Corrected by the coordinator.",
+      "case_name": "Duppa v. Mayo"
+    },
+    {
+      "seq": 3,
+      "raw": "Evans v. Stevens, 4 T. R. 227",
+      "case_name": "Evans v. Stevens",
+      "volume": 4,
+      "reporter_abbr": "T. R.",
+      "page": 227,
+      "status": "linked_english_reports",
+      "er_case_id": "17911347",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 4 TR 224"
+    },
+    {
+      "seq": 4,
+      "raw": "Willes. 40",
+      "reporter_abbr": "Willes",
+      "page": 40,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "Willes's Reports have no source and no case name is printed"
+    },
+    {
+      "seq": 5,
+      "raw": "8 T. R. 633",
+      "volume": 8,
+      "reporter_abbr": "T. R.",
+      "page": 633,
+      "status": "linked_english_reports",
+      "er_case_id": "18000222",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; 633 falls in Wilkes v. Williams, which begins at 8 TR 631 (defence with &c.)"
+    },
+    {
+      "seq": 6,
+      "raw": "2 Saund. 209 c. n. (1)",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 209,
+      "status": "linked_english_reports",
+      "er_case_id": "18450086",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "note (1) at 209 c falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"
+    }
   ]
 }

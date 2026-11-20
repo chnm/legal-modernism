@@ -1,0 +1,29 @@
+{
+  "psmid": "19005781000", "pageid": "02950",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:07:48Z",
+  "note": "Com. Dig., Chitty and Co. Litt. skipped; cross-checked with the 1854 edition's record",
+  "citations": [
+    {"seq": 1, "raw": "Bellamy's ease, 6 Rep. 38 a", "case_name": "Bellamy's Case", "volume": 6, "reporter_abbr": "Rep.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "15720037", "confidence": "high"},
+    {"seq": 2, "raw": "Holland v. Shelley Hob. 303", "case_name": "Holland v. Shelley", "reporter_abbr": "Hob.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "17921133", "pincite": true, "confidence": "high",
+     "note": "case begins at Hob 302"},
+    {"seq": 3, "raw": "Banfill v. i;'h, S T. 7. 671", "case_name": "Banfill v. Leigh", "volume": 8, "reporter_abbr": "T. R.", "page": 571,
+     "status": "linked_english_reports", "er_case_id": "18000156", "confidence": "high",
+     "note": "OCR garbled: 'i;'h' for Leigh, 'S T. 7.' for 8 T. R., 671 for 571; read from the other editions"},
+    {"seq": 4, "raw": "1 Saund. 9 a, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note to Jevens v. Harridge; ER record from 1 Wms Saund 8 holds page 9"},
+    {"seq": 5, "raw": "Read v. Brookman, 3 1. R. 156", "case_name": "Read v. Brookman", "volume": 3, "reporter_abbr": "T. R.", "page": 156,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "OCR '1. R.' for T. R.; case begins at 3 TR 151"},
+    {"seq": 6, "raw": "Reed v. Brookman, 3 T. B.156", "case_name": "Read v. Brookman", "volume": 3, "reporter_abbr": "T. R.", "page": 156,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "OCR 'T. B.' for T. R.; case begins at 3 TR 151"},
+    {"seq": 7, "raw": "Carver v. Pinkney, 3 Lev. 82", "case_name": "Carver v. Pinkney", "volume": 3, "reporter_abbr": "Lev.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "17970048", "confidence": "high"},
+    {"seq": 8, "raw": "Leyfield'a case, 10 Rep. 92 b", "case_name": "Leyfield's Case", "volume": 10, "reporter_abbr": "Rep.", "page": 92,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "Doctor Leyfield's Case begins at 10 Co Rep 88"}
+  ]
+}

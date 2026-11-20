@@ -1,0 +1,20 @@
+{
+  "psmid": "19005781000", "pageid": "02770",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:13:10Z",
+  "note": "Bac. Ab. and statutes skipped; cross-checked with the 1854 edition's record (19005784900/02770)",
+  "citations": [
+    {"seq": 1, "raw": "Vere v. Smith, 2 Lev. 5", "case_name": "Vere v. Smith",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+    {"seq": 2, "raw": "1 , r,t. 121, S. C.", "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high",
+     "note": "garbled reporter read as Vent. (other editions print 1 Vent. 121); S. C. of Vere v. Smith"},
+    {"seq": 3, "raw": "Owen v. Revnolds, Fort. 341", "case_name": "Owen v. Reynolds",
+     "reporter_abbr": "Fort.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "17480137", "confidence": "high"},
+    {"seq": 4, "raw": "Wood v. HLawkshead, Yelr. 13", "case_name": "Wood v. Hawkshead",
+     "reporter_abbr": "Yelv.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "17922886", "confidence": "medium",
+     "note": "Yelr. is OCR for Yelv.; Wood versus Haukshead begins at Yel 14 in the ER; printed 13 (Crispe v. Viroll there); linked by name"}
+  ]
+}

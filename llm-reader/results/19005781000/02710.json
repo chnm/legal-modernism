@@ -1,0 +1,31 @@
+{
+  "psmid": "19005781000", "pageid": "02710",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:10:11Z",
+  "note": "Com. Dig. and the Appendix skipped; 'Webb v. Mar-' is cut off at the foot and recorded on the next page (02720); cross-checked with the 1854 edition's record (19005784900/02710)",
+  "citations": [
+    {"seq": 1, "raw": "Nowlan v. Geddes, 1 East, 634", "case_name": "Nowlan v. Geddes",
+     "volume": 1, "reporter_abbr": "East", "page": 634,
+     "status": "linked_english_reports", "er_case_id": "18010328", "confidence": "high"},
+    {"seq": 2, "raw": "Walli v. Savil, 1 Lutw. 41", "case_name": "Wallis v. Savil",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 41,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 41", "confidence": "high",
+     "note": "Walli is OCR for Wallis; Lutwyche is only in the stubs"},
+    {"seq": 3, "raw": "2 Saund. 209, d, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "note (1) at 209 d falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 4, "raw": "36 lien. 6, 18", "volume": 36, "reporter_abbr": "Y.B.", "page": 18,
+     "status": "no_match", "confidence": "medium", "note": "year book, 36 Hen. VI fo. 18 (lien. is OCR for Hen.), per Littleton J.; no source"},
+    {"seq": 5, "raw": "Medina v. Stoughton, 1 Ld. Iay. 593", "case_name": "Medina v. Stoughton",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 593,
+     "status": "linked_english_reports", "er_case_id": "17921544", "confidence": "high"},
+    {"seq": 6, "raw": "Medina v. Stoughton, 1 Ld. Ray. 593", "case_name": "Medina v. Stoughton",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 593,
+     "status": "linked_english_reports", "er_case_id": "17921544", "confidence": "high"},
+    {"seq": 7, "raw": "Godson v. Good, 6 Taunt 587", "case_name": "Godson v. Good",
+     "volume": 6, "reporter_abbr": "Taunt.", "page": 587,
+     "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "high"},
+    {"seq": 8, "raw": "1 Saund. 28, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "Saunders's note (2) to Birks v. Trippet, which begins at 1 Wms Saund 28 (the 1854 edition prints 29)"}
+  ]
+}

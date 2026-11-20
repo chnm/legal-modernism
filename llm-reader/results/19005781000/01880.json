@@ -1,0 +1,13 @@
+{
+  "psmid": "19005781000",
+  "pageid": "01880",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:10:54Z",
+  "note": "rules of court (Hil. T. 2 and 4 Will. 4), cross-references and the Second Appendix note skipped",
+  "citations": [
+    {"seq": 1, "raw": "Phillips v. Howgate, 5 Barn. & Aid. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high",
+     "note": "OCR 'Aid.' for Ald."}
+  ]
+}

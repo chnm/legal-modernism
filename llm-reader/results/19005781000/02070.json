@@ -1,0 +1,23 @@
+{
+  "psmid": "19005781000",
+  "pageid": "02070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:08:04Z",
+  "note": "cross-reference skipped",
+  "citations": [
+    {"seq": 1, "raw": "Layton v. Grindall, 2 8alk. 643", "case_name": "Layton v. Grindall",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 643,
+     "status": "linked_english_reports", "er_case_id": "17952363", "confidence": "high",
+     "note": "OCR '8alk.' for Salk."},
+    {"seq": 2, "raw": "2 Saund. 74, b, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; two ER records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby record; picked Taylor v. Wells, as for the other cites of this note"},
+    {"seq": 3, "raw": "Chamberlain v. Greenfield, 3 Wils. 292", "case_name": "Chamberlain v. Greenfield",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+     "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "high"},
+    {"seq": 4, "raw": "Crispin v. Williamson, 8 Tautrt. 107", "case_name": "Crispin v. Williamson",
+     "volume": 8, "reporter_abbr": "Taunt.", "page": 107,
+     "status": "linked_english_reports", "er_case_id": "18170806", "confidence": "high",
+     "note": "OCR 'Tautrt.'"}
+  ]
+}

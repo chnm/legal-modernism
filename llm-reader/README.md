@@ -156,11 +156,15 @@ one case ends and another begins, a note goes to the case running onto the
 page, unless its subject plainly belongs to the one beginning there.
 Williams numbers each case's notes from (1), so a high-numbered note on the
 page where a new case begins belongs to the case running onto it. Choices
-already made: 2 Saund. 319 n. (6) is Bennet v. Holbech; 1 Saund. 318 n. (3)
+already made: 2 Saund. 319 n. (6) is Bennet v. Holbech (whose record begins at
+317), even though the record that begins at 319 is Hoskins v. Robins; 1 Saund. 318 n. (3)
 is Redman v. Edolph; 1 Saund. 228 n. (1)
 is Stennel v. Hogg; Goram v. Sweeting (2 Saund. 200–207, notes 21–24) is the
 English Reports records at 2 Wms Saund 200 and 205, titled "Same v Bateman". When several cases begin at a cited page and nothing
-tells them apart, the pick is always `low`. `english_reports.cases.word_count`
+tells them apart, the pick is always `low`; but a name printed in another
+edition's text for the same footnote does tell them apart, at `medium`.
+(`english_reports.cases` holds no case text, so a subject can only be judged
+from the name and the passage.) `english_reports.cases.word_count`
 helps: a case whose record is a hundred words cannot reach a page several
 pages on, and a long record starting a page earlier usually holds the notes
 printed on the next. Choices already made: 2 Saund. 291 n. (the videlicet)

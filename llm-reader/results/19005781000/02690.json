@@ -1,0 +1,18 @@
+{
+  "psmid": "19005781000", "pageid": "02690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:09:15Z",
+  "note": "Chitty, Wentworth, the Appendix and cross-references skipped; cross-checked with the 1854 edition's record (19005784900/02690)",
+  "citations": [
+    {"seq": 1, "raw": "Took v. Glascock, 1 Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "Took v. Glascock begins at 1 Wms Saund 250"},
+    {"seq": 2, "raw": "Venle v. Warner, 1 Sannd. 325", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "Venle, Sannd. are OCR for Veale, Saund.; Veale v. Warner begins at 1 Wms Saund 323"},
+    {"seq": 3, "raw": "Weeks v. Peach, 1 Salk. 179", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high"}
+  ]
+}

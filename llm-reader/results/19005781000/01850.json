@@ -1,0 +1,23 @@
+{
+  "psmid": "19005781000",
+  "pageid": "01850",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:10:16Z",
+  "note": "supra cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "Rohinson v. Ravley, 1 Burr. .16", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 316,
+     "status": "linked_english_reports", "er_case_id": "17570030", "confidence": "high",
+     "note": "OCR '.16' read as 316 as the other editions print it; ER Robinson versus Raley; another case (Rex v Hankey) also begins at 1 Burr 316"},
+    {"seq": 2, "raw": "O'lrincu v. Saxon, 2 Barn. & Crcs. 90RS", "case_name": "O'Brien v. Saxon",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 908,
+     "status": "linked_english_reports", "er_case_id": "18240124", "confidence": "high",
+     "note": "OCR '90RS' read as 908, where the case begins (the 1851 edition prints 908, the 1854 909)"},
+    {"seq": 3, "raw": "Plhillips v. Ilowgnie, 5 Barn. & Ald. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"},
+    {"seq": 4, "raw": "Sellb v. Bardons, 3 Barn. & Ad. 2", "case_name": "Selby v. Bardons",
+     "volume": 3, "reporter_abbr": "Barn. & Ad.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high"}
+  ]
+}

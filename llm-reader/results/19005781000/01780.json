@@ -1,0 +1,25 @@
+{
+  "psmid": "19005781000",
+  "pageid": "01780",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T13:08:25Z",
+  "note": "footnotes heavily garbled by OCR, read with the other editions",
+  "citations": [
+    {"seq": 1, "raw": "ll1ii l lhrys. v. Bethily, 2 V(nt. I l9, 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "OCR garbled; 'I l9' read as 198 as the other editions print it; recorded once at its first page; dropped: 222 (ER has a second record at 2 Vent 222, id 17260504)"},
+    {"seq": 2, "raw": "l1:rt v. I.lnineld, 7 'Mod. 14S", "case_name": "Hart v. Longfield",
+     "volume": 7, "reporter_abbr": "Mod.", "page": 148,
+     "status": "linked_english_reports", "er_case_id": "17961127", "confidence": "high",
+     "note": "OCR garbled name; '14S' for 148"},
+    {"seq": 3, "raw": "Curuwallli v. .ncry, 2 Burr. 773", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 773,
+     "status": "linked_english_reports", "er_case_id": "17590007", "pincite": true, "confidence": "high",
+     "note": "OCR garbled name; case begins at 2 Burr 772"},
+    {"seq": 4, "raw": "Mlanser's caes, 2 Rep. 4", "case_name": "Manser's Case",
+     "volume": 2, "reporter_abbr": "Rep.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "medium",
+     "note": "ER splits the case (Painter v Manser) into 2 Co Rep 1 and 2 Co Rep 3; page 4 falls in the second record (Goddard v Denton also begins at 2 Co Rep 4, but the printed name decides)"}
+  ]
+}

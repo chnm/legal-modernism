@@ -1,0 +1,31 @@
+{
+  "psmid": "19005781000", "pageid": "02740",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T13:11:45Z",
+  "note": "Co. Litt., Com. Dig., Bac. Ab., Vin. Ab., Arch. and the Appendix skipped; cross-checked with the 1854 edition's record (19005784900/02740)",
+  "citations": [
+    {"seq": 1, "raw": "Richards v. Hodges, 2 Saund. 84", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "high",
+     "note": "Richards v. Hodges begins at 2 Wms Saund 80; 84 falls in the ER record at 83"},
+    {"seq": 2, "raw": "Dudlow v. Watchom, 16 Last, 39", "case_name": "Dudlow v. Watchorn",
+     "volume": 16, "reporter_abbr": "East", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "18120308", "confidence": "high",
+     "note": "Watchom, Last are OCR for Watchorn, East"},
+    {"seq": 3, "raw": "Tolpntt v. Wells, 1 M. & S. 395", "case_name": "Tolputt v. Wells",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 395,
+     "status": "linked_english_reports", "er_case_id": "18130309", "confidence": "high"},
+    {"seq": 4, "raw": "Fisher v. Pimbley, 11 East, 188", "case_name": "Fisher v. Pimbley",
+     "volume": 11, "reporter_abbr": "East", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18090223", "confidence": "high"},
+    {"seq": 5, "raw": "Winstone v. Linn, 1 Barn. & Cress. 460", "case_name": "Winstone v. Linn",
+     "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 460,
+     "status": "linked_english_reports", "er_case_id": "18230288", "confidence": "high"},
+    {"seq": 6, "raw": "2 Sund. 84, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "medium",
+     "note": "Sund. is OCR for Saund.; note (1) at 84 falls in Richards v. Hodges, which begins at 2 Wms Saund 80 (record at 83)"},
+    {"seq": 7, "raw": "Hickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "medium",
+     "note": "Willes's Reports have no source; no Hickman v. Walker in the English Reports by name (searched er_name Hickman), as in the other editions' readings"}
+  ]
+}
