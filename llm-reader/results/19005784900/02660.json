@@ -1,0 +1,29 @@
+{
+  "psmid": "19005784900", "pageid": "02660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:30:59Z",
+  "note": "Liber Intrat., Arch., Rastall's, Coke's and Lilly's Entries, Wentworth and Lib. Plac. skipped; cross-checked with the 1851 edition's record (19005764100/02660)",
+  "citations": [
+    {"seq": 1, "raw": "Sabine v. Johnstone, 1. Bos. & Pul. 60", "case_name": "Sabine v. Johnstone",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "17970500", "confidence": "high"},
+    {"seq": 2, "raw": "Bisse v. Harcourt, 3 Mod. 281", "case_name": "Bisse v. Harcourt",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 281,
+     "status": "linked_english_reports", "er_case_id": "17930156", "confidence": "high"},
+    {"seq": 3, "raw": "1 Salk. 177", "volume": 1, "reporter_abbr": "Salk.", "page": 177,
+     "status": "linked_english_reports", "er_case_id": "17950554", "confidence": "high",
+     "note": "parallel cite of Bisse v. Harcourt"},
+    {"seq": 4, "raw": "1 Show. 155", "volume": 1, "reporter_abbr": "Show.", "page": 155,
+     "status": "linked_english_reports", "er_case_id": "17940303", "confidence": "high",
+     "note": "parallel cite of Bisse v. Harcourt"},
+    {"seq": 5, "raw": "Carth. 137, S. C.", "reporter_abbr": "Carth.", "page": 137,
+     "status": "linked_english_reports", "er_case_id": "17410031", "confidence": "high",
+     "note": "S. C. of Bisse v. Harcourt"},
+    {"seq": 6, "raw": "2 Saund. 211, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 211,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "note (3) falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 7, "raw": "Medina v. Stoughton, Ld. Ray. 594", "case_name": "Medina v. Stoughton",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 594,
+     "status": "linked_english_reports", "er_case_id": "17921544", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; Medina v. Stoughton begins at 1 Ld Raym 593 (594 is also where Levinz v. Randolph begins, but the printed name decides)"}
+  ]
+}

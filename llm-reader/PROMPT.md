@@ -39,6 +39,11 @@ commands, loops and scripts in `/tmp`, and any command naming the worktree's
 absolute path (its `github` looks like git), so use relative paths
 (`bin/llm-reader`, `llm-reader/results/...`). Write each record with the Write tool.
 
+Other readers write into the same results directory at the same time. Never
+edit a file outside your own page range, and never run `sed`, a glob or a
+loop over the results directory; fix your own files one at a time. Take
+`read_at` from the clock when you write the record, rather than estimating it.
+
 Read every page in full, indexes and tables included: do not skim a page or
 search it for patterns in place of reading it.
 

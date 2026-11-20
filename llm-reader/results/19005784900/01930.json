@@ -1,0 +1,15 @@
+{
+  "psmid": "19005784900",
+  "pageid": "01930",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T12:56:00Z",
+  "note": "Sellon's Practice, the rules of Hil. T. 4 Will. 4 and the New York Revised Statutes skipped",
+  "citations": [
+    {"seq": 1, "raw": "4 Wendell, 211", "volume": 4, "reporter_abbr": "Wend.", "page": 211,
+     "status": "linked_cap", "cap_case_id": 2005478, "confidence": "high",
+     "note": "no name printed; two cases begin at 4 Wend. 211: Ames v. West, on leave for double replications under 2 R.S. 356 s. 27, fits the text (Bradstreet v. Clarke is on voucher)"},
+    {"seq": 2, "raw": "12 Wendell, 219", "volume": 12, "reporter_abbr": "Wend.", "page": 249,
+     "status": "linked_cap", "cap_case_id": 11269477, "confidence": "medium",
+     "note": "no name printed; printed 219, read as 249 as the 1841, 1845 and 1851 editions print it: Frisbie v. Riley begins at 12 Wend. 249 and concerns several replications to one plea, as the text says; Wemple v. Johnson at 12 Wend. 219 is a one-line ruling on a joinder"}
+  ]
+}

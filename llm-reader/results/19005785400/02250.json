@@ -73,9 +73,11 @@
       "reporter_abbr": "Saund.",
       "page": 291,
       "status": "linked_english_reports",
-      "er_case_id": "18450092",
-      "confidence": "low",
-      "note": "aSund. read as Saund.; no name printed; ER has Dakin's Case at 2 Wms Saund 290 and Gay v. Adams at 291; linked Gay v. Adams as the record holding page 291, but the note may annotate Dakin's Case"
+      "er_case_id": "18450055",
+      "confidence": "medium",
+      "note": "Williams's note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290, 4,489 words, running onto 291), not Gay v. Adams, whose 585-word record also begins at 291. Aligned by the coordinator across editions.",
+      "case_name": "Dakin's Case",
+      "pincite": true
     },
     {
       "seq": 7,
