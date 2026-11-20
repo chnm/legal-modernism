@@ -81,20 +81,39 @@ func capGraphReporterURL(id int64, side string) string {
 	return "/linking/cap/reporters/" + strconv.FormatInt(id, 10) + "?side=" + url.QueryEscape(side)
 }
 
-// GaleLinks are the URLs of a MOML volume or page on Gale, routed through the
-// two institutions whose proxies the project uses.
-type GaleLinks struct {
-	GMU      string
-	Columbia string
+// SourceLinks are the URLs of a volume or page where it was scanned: on Gale
+// for a MOML volume, routed through the two institutions whose proxies the
+// project uses, or on HathiTrust, which is open to anyone.
+type SourceLinks struct {
+	GMU        string
+	Columbia   string
+	HathiTrust string
 }
 
-// galeLinks builds the Gale links for a volume (pageid empty) or one of its
-// pages. Both are empty when the volume has no product link.
-func galeLinks(productLink *string, pageid string) GaleLinks {
-	return GaleLinks{
+// hathiHandle begins the product link of a volume taken from HathiTrust.
+const hathiHandle = "https://hdl.handle.net/2027/"
+
+// sourceLinks builds the links for a volume (pageid empty) or one of its
+// pages from the volume's product link. All are empty when it has none.
+func sourceLinks(productLink *string, pageid string) SourceLinks {
+	if productLink != nil && strings.HasPrefix(*productLink, hathiHandle) {
+		return SourceLinks{HathiTrust: hathiPageLink(*productLink, pageid)}
+	}
+	return SourceLinks{
 		GMU:      momlPageLink(momlVolumeLink(productLink, "https://link.gale.com", "u=viva_gmu&"), pageid),
 		Columbia: momlPageLink(momlVolumeLink(productLink, "https://link.gale.com", "u=columbiau&"), pageid),
 	}
+}
+
+// hathiPageLink points a HathiTrust handle at one page. A HathiTrust volume's
+// pageid is the page's sequence number times ten ("00450" is sequence 45),
+// which the handle takes as urlappend=;seq=45.
+func hathiPageLink(handle, pageID string) string {
+	seq, err := strconv.Atoi(pageID)
+	if err != nil || seq < 10 {
+		return handle
+	}
+	return handle + "?urlappend=%3Bseq=" + strconv.Itoa(seq/10)
 }
 
 // momlVolumeLink rewrites a stored Gale productlink to the given host and

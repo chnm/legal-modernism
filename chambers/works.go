@@ -116,11 +116,14 @@ func (s *server) getWorks(ctx context.Context, q, jur, sort string, limit, offse
 	return items, total, nil
 }
 
-// WorkEdition is one edition of a work on the work page. Jurisdiction is nil
-// for an edition outside the treatise view; such editions are listed, muted,
-// because a reader following a work wants to see what exists.
+// WorkEdition is one edition of a work on the work page, by its official
+// copy, with its other copies. Jurisdiction is nil for an edition outside the
+// treatise view; such editions are listed, muted, because a reader following
+// a work wants to see what exists.
 type WorkEdition struct {
 	BiblioID         string
+	Source           string        // where the official copy was scanned
+	Copies           []EditionCopy // the edition's other copies
 	Title            string
 	Author           *string
 	EditionStatement *string
@@ -147,9 +150,10 @@ func (e WorkEdition) JurisdictionLabel() string {
 	return *e.Jurisdiction
 }
 
-// getWorkEditions lists every edition of a work, earliest first, with the
-// treatise view's verdict on each (a per-id lookup of moml.treatises, which is
-// fast) and, when withCounts, the counts from edition_citation_counts.
+// getWorkEditions lists every edition of a work by its official copy, earliest
+// first, with the treatise view's verdict on each (a per-id lookup of
+// moml.treatises, which is fast), its other copies, and, when withCounts, the
+// counts from edition_citation_counts.
 func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts bool) ([]WorkEdition, error) {
 	slog.Debug("querying work editions", "work_id", workID, "with_counts", withCounts)
 	counts := "NULL::bigint, NULL::bigint, NULL::bigint"
@@ -162,7 +166,9 @@ func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts boo
 	SELECT e.bibliographicid, v.title, e.author, v.edition_statement, v.imprint, e.publication_place,
 	       v.year, v.volumes, v.pages,
 	       (SELECT t.jurisdiction FROM moml.treatises t WHERE t.bibliographicid = e.bibliographicid),
-	       e.derivative, ` + counts + `
+	       e.derivative,
+	       (SELECT c.source FROM moml.edition_copies c WHERE c.bibliographicid = e.bibliographicid),
+	       ` + counts + `
 	FROM moml.editions e
 	JOIN LATERAL (
 	  SELECT min(vv.year) AS year, count(*) AS volumes, sum(vv.total_pages)::bigint AS pages,
@@ -172,13 +178,13 @@ func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts boo
 	  FROM moml.volumes vv WHERE vv.bibliographicid = e.bibliographicid
 	) v ON true
 	` + join + `
-	WHERE e.work_id = $1
+	WHERE e.work_id = $1 AND e.copy_of IS NULL
 	ORDER BY v.year NULLS LAST, e.bibliographicid`
 	items, err := collect(ctx, s.db, query, []any{workID}, func(rows pgx.Rows) (WorkEdition, error) {
 		var e WorkEdition
 		var cites, linked, cases *int
 		err := rows.Scan(&e.BiblioID, &e.Title, &e.Author, &e.EditionStatement, &e.Imprint, &e.Place,
-			&e.Year, &e.Volumes, &e.Pages, &e.Jurisdiction, &e.Derivative, &cites, &linked, &cases)
+			&e.Year, &e.Volumes, &e.Pages, &e.Jurisdiction, &e.Derivative, &e.Source, &cites, &linked, &cases)
 		if cites != nil {
 			e.Cites, e.HasCounts = *cites, true
 		}
@@ -192,6 +198,20 @@ func (s *server) getWorkEditions(ctx context.Context, workID int, withCounts boo
 	})
 	if err != nil {
 		return nil, fmt.Errorf("work editions: %w", err)
+	}
+
+	copies, err := s.getCopies(ctx, copiesOfWork, workID)
+	if err != nil {
+		return nil, fmt.Errorf("work editions: %w", err)
+	}
+	index := make(map[string]int, len(items))
+	for i, e := range items {
+		index[e.BiblioID] = i
+	}
+	for _, c := range copies {
+		if i, ok := index[c.Edition]; ok {
+			items[i].Copies = append(items[i].Copies, c)
+		}
 	}
 	return items, nil
 }

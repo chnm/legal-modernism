@@ -1,8 +1,8 @@
 # scripts/
 
 One-off R, Python, and SQL scripts for data manipulation and import, and
-`pipeline.sh`, which is not one-off and is documented here. Two Go programs
-live here too: `sidecorpus-import/`, and `field-code-network/`, which derives
+`pipeline.sh`, which is not one-off and is documented here. Three Go programs
+live here too: `sidecorpus-import/`, `hathitrust-import/` (below), and `field-code-network/`, which derives
 the data of chambers' Field Code network (`/viz/field-code`, issue #117) from
 the research compendium of Funk and Mullen, "The Spine of American Law" (AHR
 2018): `go run ./scripts/field-code-network/ --matches best_matches.csv
@@ -13,6 +13,32 @@ from the hand-edited SVG of the figure in the article's repository, adjusting
 it by `adjustments.json` beside it (a stretch of the figure, and moves of
 single codes and labels to clear overlaps, each with its reason; `--no-adjust`
 keeps the figure's positions exactly); its doc comment says how.
+
+`hathitrust-import/` loads volumes downloaded from HathiTrust into the `moml`
+tables as if they were Gale's (issue #402), as `sidecorpus-import/` did for the
+eight side-corpus textbooks, with a fuller catalogue record and a row of
+`moml.hathitrust_volumes` saying where each came from and which MOML volume is
+the same book. Its manifest `stephen-on-pleading.json` lists the thirteen
+printings of Stephen on Pleading that HathiTrust holds. HathiTrust refuses
+scripted downloads of page text, so each volume is downloaded by hand: open
+`https://hdl.handle.net/2027/<htid>`, log in through a member library, and
+choose Download, format "Text (.zip)", range "Whole item". Put the zips in
+`temp/hathitrust/` under the names HathiTrust gives them, then
+
+```
+go run ./scripts/hathitrust-import/ --check   # read the zips, write nothing
+go run ./scripts/hathitrust-import/           # import, with LAW_DBSTR set
+```
+
+A volume whose manifest entry names a MOML volume (`moml_psmid`) is another
+copy of that volume's edition; after an import the program calls
+`moml.prefer_hathitrust_copies()`, which makes the earliest HathiTrust copy the
+edition's official one (`moml.editions.copy_of`).
+
+It skips a volume already imported and passes over one whose zip is missing
+(exiting 2), so it can be run again as downloads arrive. The new pages have no
+citations until the next full detector run (`./scripts/pipeline.sh`), since the
+detector only runs over every page after a truncate.
 
 ## pipeline.sh: the citation rebuild in one command
 

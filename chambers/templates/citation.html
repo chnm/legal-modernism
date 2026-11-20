@@ -49,7 +49,7 @@
                 {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
                 {{if .WorkTitle}}<span class="label">Work</span><span><a href="{{.WorkURL}}">{{derefStr .WorkTitle}}</a></span>{{end}}
                 <span class="label">Treatise view</span><span>{{if .Treatise}}<span class="badge jur">{{derefStr .Treatise}}</span>{{else}}<span class="text-secondary">not in the treatise view</span>{{end}}</span>
-                <span class="label">Page</span><span><a href="{{.PageURL}}">{{if .SourcePage}}p. {{derefStr .SourcePage}}{{else}}image {{.PageID}}{{end}}</a>{{if .PageType}} <span class="text-secondary">{{derefStr .PageType}}</span>{{end}} &middot; <code>{{.PSMID}}</code> / <code>{{.PageID}}</code>{{if .Gale.GMU}} &middot; on Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a>{{end}}</span>
+                <span class="label">Page</span><span><a href="{{.PageURL}}">{{if .SourcePage}}p. {{derefStr .SourcePage}}{{else}}image {{.PageID}}{{end}}</a>{{if .PageType}} <span class="text-secondary">{{derefStr .PageType}}</span>{{end}} &middot; <code>{{.PSMID}}</code> / <code>{{.PageID}}</code>{{if .Links.GMU}} &middot; on Gale: <a href="{{.Links.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Links.Columbia}}" target="_blank" rel="noopener">Columbia</a>{{end}}{{if .Links.HathiTrust}} &middot; <a href="{{.Links.HathiTrust}}" target="_blank" rel="noopener">on HathiTrust</a>{{end}}</span>
             </div>
         </div>
     </div>

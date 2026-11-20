@@ -156,6 +156,89 @@ COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
 
 
 --
+-- Name: check_edition_copy(); Type: FUNCTION; Schema: moml; Owner: -
+--
+
+CREATE FUNCTION moml.check_edition_copy() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  official moml.editions%ROWTYPE;
+  cur moml.editions%ROWTYPE;
+BEGIN
+  SELECT * INTO cur FROM moml.editions WHERE bibliographicid = NEW.bibliographicid;
+  IF NOT FOUND THEN
+    RETURN NULL;
+  END IF;
+
+  IF cur.copy_of IS NOT NULL THEN
+    SELECT * INTO official FROM moml.editions WHERE bibliographicid = cur.copy_of;
+    IF official.copy_of IS NOT NULL THEN
+      RAISE EXCEPTION 'edition % is a copy of %, which is itself a copy of %',
+        cur.bibliographicid, cur.copy_of, official.copy_of;
+    END IF;
+    IF official.work_id <> cur.work_id THEN
+      RAISE EXCEPTION 'edition % (work %) is a copy of % (work %); copies share a work',
+        cur.bibliographicid, cur.work_id, cur.copy_of, official.work_id;
+    END IF;
+    IF EXISTS (SELECT 1 FROM moml.editions WHERE copy_of = cur.bibliographicid) THEN
+      RAISE EXCEPTION 'edition % is a copy of % and has copies of its own',
+        cur.bibliographicid, cur.copy_of;
+    END IF;
+  ELSIF EXISTS (SELECT 1 FROM moml.editions
+                WHERE copy_of = cur.bibliographicid AND work_id <> cur.work_id) THEN
+    RAISE EXCEPTION 'edition % is in work %, and a copy of it is in another work',
+      cur.bibliographicid, cur.work_id;
+  END IF;
+  RETURN NULL;
+END $$;
+
+
+--
+-- Name: prefer_hathitrust_copies(); Type: FUNCTION; Schema: moml; Owner: -
+--
+
+CREATE FUNCTION moml.prefer_hathitrust_copies() RETURNS integer
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+  n integer;
+BEGIN
+  WITH member AS (
+    -- (the Gale edition that names the group, a copy in it, the copy's rank)
+    SELECT mv.bibliographicid AS grp, hv.bibliographicid AS copy,
+           row_number() OVER (PARTITION BY mv.bibliographicid
+                              ORDER BY hv.year NULLS LAST, hv.psmid) AS rank
+    FROM moml.hathitrust_volumes h
+    JOIN moml.volumes hv ON hv.psmid = h.psmid
+    JOIN moml.volumes mv ON mv.psmid = h.moml_psmid
+    WHERE (SELECT count(*) FROM moml.volumes x WHERE x.bibliographicid = mv.bibliographicid) = 1
+  ), official AS (
+    SELECT grp, copy AS official FROM member WHERE rank = 1
+  ), want AS (
+    SELECT m.copy AS bibliographicid, NULLIF(o.official, m.copy) AS copy_of
+    FROM member m JOIN official o USING (grp)
+    UNION ALL
+    SELECT o.grp, o.official FROM official o
+  )
+  UPDATE moml.editions e
+     SET copy_of = w.copy_of
+    FROM want w
+   WHERE w.bibliographicid = e.bibliographicid
+     AND e.copy_of IS DISTINCT FROM w.copy_of;
+  GET DIAGNOSTICS n = ROW_COUNT;
+  RETURN n;
+END $$;
+
+
+--
+-- Name: FUNCTION prefer_hathitrust_copies(); Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON FUNCTION moml.prefer_hathitrust_copies() IS 'Makes the earliest HathiTrust copy of an edition its official copy and points the Gale edition and the other HathiTrust copies at it (editions.copy_of), from moml.hathitrust_volumes (issue #402). Safe to repeat.';
+
+
+--
 -- Name: chnm_authorize(text, text, text, text, boolean); Type: PROCEDURE; Schema: sys_admin; Owner: -
 --
 
@@ -939,8 +1022,16 @@ CREATE TABLE legalhist.reporters (
     single_vol boolean,
     type text,
     reporter_cap text,
-    cited_by_year_from integer
+    cited_by_year_from integer,
+    paged_volumes integer
 );
+
+
+--
+-- Name: COLUMN reporters.paged_volumes; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON COLUMN legalhist.reporters.paged_volumes IS 'Volumes 1 through paged_volumes are paginated as one run, so a cite to any of them is keyed by page alone ("2 Dick. 500" is "Dick 500"); NULL when the volumes are paged separately (issue #331).';
 
 
 --
@@ -1230,10 +1321,19 @@ CREATE TABLE legalhist.whitelist (
     reporter_standard text,
     junk boolean NOT NULL,
     fallback_standard text,
+    fallback_any_miss boolean DEFAULT false NOT NULL,
     CONSTRAINT chk_whitelist_fallback CHECK (((fallback_standard IS NULL) OR ((reporter_standard IS NOT NULL) AND (fallback_standard <> reporter_standard)))),
+    CONSTRAINT chk_whitelist_fallback_any_miss CHECK (((NOT fallback_any_miss) OR (fallback_standard IS NOT NULL))),
     CONSTRAINT chk_whitelist_junk_no_standard CHECK ((NOT (junk AND (reporter_standard IS NOT NULL)))),
     CONSTRAINT chk_whitelist_nonjunk_has_standard CHECK ((junk OR (reporter_standard IS NOT NULL)))
 );
+
+
+--
+-- Name: COLUMN whitelist.fallback_any_miss; Type: COMMENT; Schema: legalhist; Owner: -
+--
+
+COMMENT ON COLUMN legalhist.whitelist.fallback_any_miss IS 'Try fallback_standard after any miss of the spelling''s own reading, a page miss included, not only after a volume or anachronism miss (issue #331).';
 
 
 --
@@ -1283,47 +1383,6 @@ COMMENT ON COLUMN moml.duplicate_copies.note IS 'Why a copy was removed by hand 
 
 
 --
--- Name: edition_loc_subjects; Type: TABLE; Schema: moml; Owner: -
---
-
-CREATE TABLE moml.edition_loc_subjects (
-    bibliographicid text NOT NULL,
-    "position" integer NOT NULL,
-    type text NOT NULL,
-    subfield text NOT NULL,
-    locsubject text,
-    CONSTRAINT edition_loc_subjects_position_check CHECK (("position" > 0))
-);
-
-
---
--- Name: TABLE edition_loc_subjects; Type: COMMENT; Schema: moml; Owner: -
---
-
-COMMENT ON TABLE moml.edition_loc_subjects IS 'Library of Congress subject headings of an edition, one row per MARC subfield in catalogue order; subfield ''a'' begins a heading. Rows may repeat.';
-
-
---
--- Name: edition_subjects; Type: TABLE; Schema: moml; Owner: -
---
-
-CREATE TABLE moml.edition_subjects (
-    bibliographicid text NOT NULL,
-    "position" integer NOT NULL,
-    subject text NOT NULL,
-    source text,
-    CONSTRAINT edition_subjects_position_check CHECK (("position" > 0))
-);
-
-
---
--- Name: TABLE edition_subjects; Type: COMMENT; Schema: moml; Owner: -
---
-
-COMMENT ON TABLE moml.edition_subjects IS 'Gale subject terms of an edition, in catalogue order (sub-topic, topic, jurisdiction).';
-
-
---
 -- Name: editions; Type: TABLE; Schema: moml; Owner: -
 --
 
@@ -1351,6 +1410,8 @@ CREATE TABLE moml.editions (
     release_date text,
     work_id integer NOT NULL,
     derivative boolean DEFAULT false NOT NULL,
+    copy_of text,
+    CONSTRAINT editions_copy_of_check CHECK ((copy_of <> bibliographicid)),
     CONSTRAINT editions_total_volumes_check CHECK ((total_volumes >= 0))
 );
 
@@ -1391,37 +1452,80 @@ COMMENT ON COLUMN moml.editions.derivative IS 'True when the edition is an abrid
 
 
 --
--- Name: page; Type: TABLE; Schema: moml; Owner: -
+-- Name: COLUMN editions.copy_of; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.page (
-    pageid character varying(510) NOT NULL,
-    psmid character varying(510) NOT NULL,
-    type character varying(510),
-    firstpage character varying(510),
-    assetid character varying(510),
-    ocrlanguage character varying(510),
-    sourcepage character varying(510),
-    ocr character varying(510),
-    imagelink_pageindicator character varying(510),
-    imagelink_width character varying(510),
-    imagelink_height character varying(510),
-    imagelink_type character varying(510),
-    imagelink_colorimage character varying(510),
-    imagelink character varying(510)
+COMMENT ON COLUMN moml.editions.copy_of IS 'NULL when this row is the official copy of its edition, the one shown and counted; otherwise the bibliographicid of the official copy, of which this row is another scan or another printing (issue #402). The official copy is never itself a copy, and is in the same work.';
+
+
+--
+-- Name: hathitrust_volumes; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.hathitrust_volumes (
+    psmid text NOT NULL,
+    htid text NOT NULL,
+    ht_record text NOT NULL,
+    oclc text,
+    rights text NOT NULL,
+    digitized_by text,
+    moml_psmid text,
+    relation text,
+    note text,
+    imported_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT hathitrust_volumes_check CHECK ((psmid <> moml_psmid)),
+    CONSTRAINT hathitrust_volumes_check1 CHECK (((moml_psmid IS NULL) = (relation IS NULL))),
+    CONSTRAINT hathitrust_volumes_relation_check CHECK ((relation = ANY (ARRAY['same_printing'::text, 'same_edition'::text])))
 );
 
 
 --
--- Name: page_content; Type: TABLE; Schema: moml; Owner: -
+-- Name: TABLE hathitrust_volumes; Type: COMMENT; Schema: moml; Owner: -
 --
 
-CREATE TABLE moml.page_content (
-    pageid character varying(510),
-    psmid character varying(510),
-    sectionheader_type character varying(510),
-    sectionheader character varying(510)
-);
+COMMENT ON TABLE moml.hathitrust_volumes IS 'Provenance of the volumes in moml.volumes that were taken from HathiTrust rather than Gale (issue #402), and the MOML volume each one duplicates, if any';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.htid; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.htid IS 'HathiTrust item id; the item is at https://hdl.handle.net/2027/<htid>, and page sequence n is the volume''s pageid n * 10';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.ht_record; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.ht_record IS 'HathiTrust catalog record number, https://catalog.hathitrust.org/Record/<ht_record>';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.rights; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.rights IS 'HathiTrust rights code when the volume was imported (pd: public domain)';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.digitized_by; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.digitized_by IS 'Who scanned the item (google, ia, cornell-ms), which governs how the scans may be reused';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.moml_psmid; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.moml_psmid IS 'The Gale volume of the same book, NULL when MOML has none';
+
+
+--
+-- Name: COLUMN hathitrust_volumes.relation; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON COLUMN moml.hathitrust_volumes.relation IS 'same_printing: the same edition, imprint and year as moml_psmid; same_edition: the same edition in another printing';
 
 
 --
@@ -1490,6 +1594,110 @@ COMMENT ON COLUMN moml.volumes.gale_id IS 'Gale''s document id (book_info.id); N
 
 
 --
+-- Name: edition_copies; Type: VIEW; Schema: moml; Owner: -
+--
+
+CREATE VIEW moml.edition_copies AS
+ SELECT bibliographicid,
+    COALESCE(copy_of, bibliographicid) AS edition,
+    (copy_of IS NULL) AS official,
+        CASE
+            WHEN (EXISTS ( SELECT 1
+               FROM (moml.volumes v
+                 JOIN moml.hathitrust_volumes h ON ((h.psmid = v.psmid)))
+              WHERE (v.bibliographicid = e.bibliographicid))) THEN 'HathiTrust'::text
+            WHEN (EXISTS ( SELECT 1
+               FROM moml.volumes v
+              WHERE ((v.bibliographicid = e.bibliographicid) AND (v.gale_id IS NOT NULL)))) THEN 'MOML'::text
+            ELSE 'side corpus'::text
+        END AS source,
+    work_id
+   FROM moml.editions e;
+
+
+--
+-- Name: VIEW edition_copies; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON VIEW moml.edition_copies IS 'Every row of moml.editions as a copy of an edition (issue #402): edition is the official copy''s bibliographicid (its own when official), and source is where the scan came from, MOML (Gale), HathiTrust or the side corpus. An edition''s copies are the rows sharing its edition.';
+
+
+--
+-- Name: edition_loc_subjects; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.edition_loc_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    type text NOT NULL,
+    subfield text NOT NULL,
+    locsubject text,
+    CONSTRAINT edition_loc_subjects_position_check CHECK (("position" > 0))
+);
+
+
+--
+-- Name: TABLE edition_loc_subjects; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON TABLE moml.edition_loc_subjects IS 'Library of Congress subject headings of an edition, one row per MARC subfield in catalogue order; subfield ''a'' begins a heading. Rows may repeat.';
+
+
+--
+-- Name: edition_subjects; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.edition_subjects (
+    bibliographicid text NOT NULL,
+    "position" integer NOT NULL,
+    subject text NOT NULL,
+    source text,
+    CONSTRAINT edition_subjects_position_check CHECK (("position" > 0))
+);
+
+
+--
+-- Name: TABLE edition_subjects; Type: COMMENT; Schema: moml; Owner: -
+--
+
+COMMENT ON TABLE moml.edition_subjects IS 'Gale subject terms of an edition, in catalogue order (sub-topic, topic, jurisdiction).';
+
+
+--
+-- Name: page; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.page (
+    pageid character varying(510) NOT NULL,
+    psmid character varying(510) NOT NULL,
+    type character varying(510),
+    firstpage character varying(510),
+    assetid character varying(510),
+    ocrlanguage character varying(510),
+    sourcepage character varying(510),
+    ocr character varying(510),
+    imagelink_pageindicator character varying(510),
+    imagelink_width character varying(510),
+    imagelink_height character varying(510),
+    imagelink_type character varying(510),
+    imagelink_colorimage character varying(510),
+    imagelink character varying(510)
+);
+
+
+--
+-- Name: page_content; Type: TABLE; Schema: moml; Owner: -
+--
+
+CREATE TABLE moml.page_content (
+    pageid character varying(510),
+    psmid character varying(510),
+    sectionheader_type character varying(510),
+    sectionheader character varying(510)
+);
+
+
+--
 -- Name: treatises; Type: VIEW; Schema: moml; Owner: -
 --
 
@@ -1514,6 +1722,8 @@ CREATE VIEW moml.treatises AS
    FROM (edition e
      JOIN moml.edition_subjects j ON (((j.bibliographicid = e.bibliographicid) AND (j.subject = ANY (ARRAY['US'::text, 'UK'::text])))))
   WHERE ((NOT (EXISTS ( SELECT 1
+           FROM moml.editions c
+          WHERE ((c.bibliographicid = e.bibliographicid) AND (c.copy_of IS NOT NULL))))) AND (NOT (EXISTS ( SELECT 1
            FROM moml.edition_subjects s
           WHERE ((s.bibliographicid = e.bibliographicid) AND (s.subject = ANY (ARRAY['Biography'::text, 'Collected Essays'::text, 'Trials'::text])))))) AND (NOT (e.title ~* '\Wremarks of\W'::text)) AND (NOT (e.title ~* '\y(address|oration|eulogy|sermon|memorial|in memoriam|obituary)\y'::text)) AND ((e.title ~* '\ytreatise\y'::text) OR ((COALESCE(e.pages, (50)::bigint) >= 50) AND (NOT (e.title ~* ((((('^(the )?((first|second|third|fourth|fifth|final|annual|special|preliminary|majority|minority|supplementary) )*reports? (of|from|to) (the )?(\w+ ){0,6}(committee|commission|commissioners|board|council|delegates|attorney|secretary|comptroller|superintendent)'::text || '|^(the )?(hearings?|message|debates?|journal of the|proceedings of the (senate|house|convention|legislature))\y'::text) || '|^(the )?(argument|closing argument|opening argument|brief|reply brief)s? (of|for|on behalf of|in|by|against|submitted)\y'::text) || '|^in the (supreme )?court\y'::text) || '|(^|: )(the )?speech(es)? (of|delivered|in the|on)\y'::text) || '|(^|: )(a |an |the )?(second |third |open |plain )?letters? (to|addressed to)\y'::text))) AND (NOT (EXISTS ( SELECT 1
            FROM moml.edition_loc_subjects l
@@ -1525,7 +1735,7 @@ CREATE VIEW moml.treatises AS
 -- Name: VIEW treatises; Type: COMMENT; Schema: moml; Owner: -
 --
 
-COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, with their jurisdiction (US or UK); excludes pamphlets under 50 pages, public documents and arguments in a case, biographies, speeches, collected essays, trials and commemorative pieces, unless the title calls the work a treatise. Join moml.volumes on bibliographicid for the volumes.';
+COMMENT ON VIEW moml.treatises IS 'Editions that count as legal treatises, one row for each by its official copy (editions.copy_of IS NULL), with their jurisdiction (US or UK); excludes pamphlets under 50 pages, public documents and arguments in a case, biographies, speeches, collected essays, trials and commemorative pieces, unless the title calls the work a treatise. Join moml.volumes on bibliographicid for the volumes.';
 
 
 --
@@ -2366,6 +2576,7 @@ CREATE MATERIALIZED VIEW moml_citations.work_citation_counts AS
          SELECT editions.work_id,
             count(*) AS n
            FROM moml.editions
+          WHERE (editions.copy_of IS NULL)
           GROUP BY editions.work_id
         )
  SELECT ecc.work_id,
@@ -2390,7 +2601,7 @@ CREATE MATERIALIZED VIEW moml_citations.work_citation_counts AS
 -- Name: MATERIALIZED VIEW work_citation_counts; Type: COMMENT; Schema: moml_citations; Owner: -
 --
 
-COMMENT ON MATERIALIZED VIEW moml_citations.work_citation_counts IS 'One row per work with at least one treatise edition: its treatise editions, all its editions, the span of years, jurisdictions, citation totals and distinct cases cited (issue #305). Refreshed by make db-maintenance.';
+COMMENT ON MATERIALIZED VIEW moml_citations.work_citation_counts IS 'One row per work with at least one treatise edition: its treatise editions, all its editions (each counted once, by its official copy), the span of years, jurisdictions, citation totals and distinct cases cited (issue #305). Refreshed by make db-maintenance.';
 
 
 --
@@ -3179,6 +3390,22 @@ ALTER TABLE ONLY moml.editions
 
 
 --
+-- Name: hathitrust_volumes hathitrust_volumes_htid_key; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_htid_key UNIQUE (htid);
+
+
+--
+-- Name: hathitrust_volumes hathitrust_volumes_pkey; Type: CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_pkey PRIMARY KEY (psmid);
+
+
+--
 -- Name: page_ocrtext moml_page_ocrtext_pk; Type: CONSTRAINT; Schema: moml; Owner: -
 --
 
@@ -3633,10 +3860,24 @@ CREATE INDEX edition_subjects_subject_idx ON moml.edition_subjects USING btree (
 
 
 --
+-- Name: editions_copy_of_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX editions_copy_of_idx ON moml.editions USING btree (copy_of) WHERE (copy_of IS NOT NULL);
+
+
+--
 -- Name: editions_work_id_idx; Type: INDEX; Schema: moml; Owner: -
 --
 
 CREATE INDEX editions_work_id_idx ON moml.editions USING btree (work_id);
+
+
+--
+-- Name: hathitrust_volumes_moml_psmid_idx; Type: INDEX; Schema: moml; Owner: -
+--
+
+CREATE INDEX hathitrust_volumes_moml_psmid_idx ON moml.hathitrust_volumes USING btree (moml_psmid);
 
 
 --
@@ -4200,6 +4441,13 @@ CREATE INDEX reporters_alt_diffvols_abbreviations_reporter_title_idx ON to_delet
 
 
 --
+-- Name: editions editions_copy_check; Type: TRIGGER; Schema: moml; Owner: -
+--
+
+CREATE CONSTRAINT TRIGGER editions_copy_check AFTER INSERT OR UPDATE ON moml.editions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION moml.check_edition_copy();
+
+
+--
 -- Name: cases cap_cases_court_fk; Type: FK CONSTRAINT; Schema: cap; Owner: -
 --
 
@@ -4400,11 +4648,35 @@ ALTER TABLE ONLY moml.edition_subjects
 
 
 --
+-- Name: editions editions_copy_of_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.editions
+    ADD CONSTRAINT editions_copy_of_fkey FOREIGN KEY (copy_of) REFERENCES moml.editions(bibliographicid);
+
+
+--
 -- Name: editions editions_work_id_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
 --
 
 ALTER TABLE ONLY moml.editions
     ADD CONSTRAINT editions_work_id_fkey FOREIGN KEY (work_id) REFERENCES moml.works(work_id);
+
+
+--
+-- Name: hathitrust_volumes hathitrust_volumes_moml_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_moml_psmid_fkey FOREIGN KEY (moml_psmid) REFERENCES moml.volumes(psmid);
+
+
+--
+-- Name: hathitrust_volumes hathitrust_volumes_psmid_fkey; Type: FK CONSTRAINT; Schema: moml; Owner: -
+--
+
+ALTER TABLE ONLY moml.hathitrust_volumes
+    ADD CONSTRAINT hathitrust_volumes_psmid_fkey FOREIGN KEY (psmid) REFERENCES moml.volumes(psmid);
 
 
 --
@@ -4666,4 +4938,7 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261023210000'),
     ('20261106193524'),
     ('20261106201422'),
-    ('20261117203658');
+    ('20261117203658'),
+    ('20261118164617'),
+    ('20261120163920'),
+    ('20261120214024');
