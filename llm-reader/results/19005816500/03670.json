@@ -1,0 +1,19 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Topping v. Fuge, 1 Marsh. 341",
+      "case_name": "Topping v. Fuge",
+      "volume": 1,
+      "reporter_abbr": "Marsh.",
+      "page": 341,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Marshall's Common Pleas Reports (1813-16), not in english_reports.cases nor in the stubs (the whitelist's Marsh. is A.K. Marshall of Kentucky, wrong here); the same case is reported in ER as Topping v Fuge, 5 Taunt 330 and 5 Taunt 771, but the cite is to Marshall"
+    }
+  ]
+}

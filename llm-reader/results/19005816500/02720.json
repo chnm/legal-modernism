@@ -1,0 +1,53 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:57:00Z",
+  "note": "Com. Dig. and Bracton are treatises",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Whitwell v. Bennett, 3 Bos. and Pull. 559",
+      "case_name": "Whitwell v. Bennett",
+      "volume": 3,
+      "reporter_abbr": "Bos. & Pul.",
+      "page": 559,
+      "status": "linked_english_reports",
+      "er_case_id": "18030749",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Bow- ditch v. Mawley, I Camp. 195",
+      "case_name": "Bowditch v. Mawley",
+      "volume": 1,
+      "reporter_abbr": "Camp.",
+      "page": 195,
+      "status": "linked_english_reports",
+      "er_case_id": "18080090",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Hutchinson v. Piper, 4 Taunt. 810",
+      "case_name": "Hutchinson v. Piper",
+      "volume": 4,
+      "reporter_abbr": "Taunt.",
+      "page": 810,
+      "status": "linked_english_reports",
+      "er_case_id": "18130278",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Walters v. Mace, 2 Barn. and Aid. 756",
+      "case_name": "Walters v. Mace",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 756,
+      "status": "linked_english_reports",
+      "er_case_id": "18190514",
+      "confidence": "high"
+    }
+  ]
+}

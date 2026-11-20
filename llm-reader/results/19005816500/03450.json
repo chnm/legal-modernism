@@ -1,0 +1,32 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03450",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:37:00Z",
+  "citations": [
+    {"seq": 1, "raw": "10 Hen. 6. 16", "volume": 10, "reporter_abbr": "Hen. 6", "page": 16,
+     "status": "no_match", "confidence": "medium", "note": "year book, no source"},
+    {"seq": 2, "raw": "22 Hen. 6.37", "volume": 22, "reporter_abbr": "Hen. 6", "page": 37,
+     "status": "no_match", "confidence": "medium", "note": "year book, no source"},
+    {"seq": 3, "raw": "22 Edw. 4. 29", "volume": 22, "reporter_abbr": "Edw. 4", "page": 29,
+     "status": "no_match", "confidence": "medium", "note": "year book, no source"},
+    {"seq": 4, "raw": "Saunders's Case, 12 Mod. 513", "case_name": "Saunders's Case",
+     "volume": 12, "reporter_abbr": "Mod.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "17961557", "confidence": "high"},
+    {"seq": 5, "raw": "Lynnet v. Wood, Cro. Car. 157", "case_name": "Lynnet v. Wood",
+     "reporter_abbr": "Cro. Car.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17921474", "confidence": "high",
+     "note": "ER: Lynner against Wood"},
+    {"seq": 6, "raw": "Jaques's Case, Sty. 355", "case_name": "Jaques's Case",
+     "reporter_abbr": "Sty.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "16580367", "confidence": "high",
+     "note": "ER name 'Iaques'"},
+    {"seq": 7, "raw": "Giffordv. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high"},
+    {"seq": 8, "raw": "1 Vent. 77. S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. = Gifford v. Perkins"}
+  ]
+}

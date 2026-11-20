@@ -1,0 +1,75 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02880",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:38:00Z",
+  "note": "Co. Litt., Com. Dig. and Selw. N. P. are treatises",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 298. n. (1.)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 298,
+      "status": "linked_english_reports",
+      "er_case_id": "18450100",
+      "confidence": "medium",
+      "note": "note to Greene v. Jones; ER records at 1 Wms Saund 295 and 298, page 298 begins the second"
+    },
+    {
+      "seq": 2,
+      "raw": "Lamb v. Mills, 4 Mod. 377",
+      "case_name": "Lamb v. Mills",
+      "volume": 4,
+      "reporter_abbr": "Mod.",
+      "page": 377,
+      "status": "linked_english_reports",
+      "er_case_id": "17930653",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Matthews v. Cary, 3 Mod. 137",
+      "case_name": "Matthews v. Cary",
+      "volume": 3,
+      "reporter_abbr": "Mod.",
+      "page": 137,
+      "status": "linked_english_reports",
+      "er_case_id": "17930712",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Carth. 73. S. C.",
+      "case_name": "Matthews v. Cary",
+      "reporter_abbr": "Carth.",
+      "page": 73,
+      "status": "linked_english_reports",
+      "er_case_id": "17410236",
+      "confidence": "high",
+      "note": "S. C. is Matthews v. Cary"
+    },
+    {
+      "seq": 5,
+      "raw": "Collet v. Lord Keith, 2 East, 260",
+      "case_name": "Collet v. Lord Keith",
+      "volume": 2,
+      "reporter_abbr": "East",
+      "page": 260,
+      "status": "linked_english_reports",
+      "er_case_id": "18020175",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Lamb v. Mills, 4 Mod. 377",
+      "case_name": "Lamb v. Mills",
+      "volume": 4,
+      "reporter_abbr": "Mod.",
+      "page": 377,
+      "status": "linked_english_reports",
+      "er_case_id": "17930653",
+      "confidence": "high"
+    }
+  ]
+}

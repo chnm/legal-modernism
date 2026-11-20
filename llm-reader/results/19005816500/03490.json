@@ -1,0 +1,27 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03490",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:37:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Dundass v. Lord Weymouth, Cowp. 665", "case_name": "Dundass v. Lord Weymouth",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 665,
+     "status": "linked_english_reports", "er_case_id": "17770005", "confidence": "high",
+     "note": "volume 2 supplied"},
+    {"seq": 2, "raw": "Price v. Fletcher, Ibid. 727", "case_name": "Price v. Fletcher",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 727,
+     "status": "linked_english_reports", "er_case_id": "17780042", "confidence": "high",
+     "note": "Ibid. = Cowp.; volume 2 supplied"},
+    {"seq": 3, "raw": "Phillips v. Fielding, 2 H. BI. 131", "case_name": "Phillips v. Fielding",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 131,
+     "status": "linked_english_reports", "er_case_id": "17923206", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 123"},
+    {"seq": 4, "raw": "Yates v. Carlisle, 1 Black. 270", "case_name": "Yates v. Carlisle",
+     "volume": 1, "reporter_abbr": "Black.", "page": 270,
+     "status": "linked_english_reports", "er_case_id": "17460717", "confidence": "high"},
+    {"seq": 5, "raw": "Price v. Fletcher, Cowp. 727", "case_name": "Price v. Fletcher",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 727,
+     "status": "linked_english_reports", "er_case_id": "17780042", "confidence": "high",
+     "note": "volume 2 supplied"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03760",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Wils. 367",
+      "volume": 2,
+      "reporter_abbr": "Wils.",
+      "page": 367,
+      "status": "linked_english_reports",
+      "er_case_id": "17990138",
+      "confidence": "high",
+      "note": "no name printed; Eichorn v Le Maitre (2 Wils KB 367) begins at the page and is the leading case on judgment after an issue on a plea in abatement for misnomer, which fits the text"
+    },
+    {
+      "seq": 2,
+      "raw": "Ibid.",
+      "volume": 2,
+      "reporter_abbr": "Wils.",
+      "page": 367,
+      "status": "linked_english_reports",
+      "er_case_id": "17990138",
+      "confidence": "high",
+      "note": "Ibid. expanded to 2 Wils. 367, Eichorn v Le Maitre"
+    }
+  ]
+}

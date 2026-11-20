@@ -1,0 +1,15 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02990",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:38:00Z",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Knollys, Ld. Ray. 13", "case_name": "The King v. Knollys",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "17921920", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; case begins at 1 Ld Raym 11"},
+    {"seq": 2, "raw": "Mayor of Guildford v. Clarke, 2 Vent. 247", "case_name": "Mayor of Guildford v. Clarke",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "17260570", "confidence": "high"}
+  ]
+}

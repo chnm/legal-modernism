@@ -1,0 +1,79 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02760",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T03:11:00Z",
+  "note": "2 Bl. Com. and 2 Chitty are treatises",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund, 346. n. (2)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 346,
+      "status": "linked_english_reports",
+      "er_case_id": "18450192",
+      "confidence": "medium",
+      "note": "note to Potter v. North, which begins at 1 Wms Saund 346"
+    },
+    {
+      "seq": 2,
+      "raw": "Hoskins v. Robins, 2 Saund. 320",
+      "case_name": "Hoskins v. Robins",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 320,
+      "status": "linked_english_reports",
+      "er_case_id": "18450121",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 2 Wms Saund 319"
+    },
+    {
+      "seq": 3,
+      "raw": "Potter v. North, 1 Saund. 353",
+      "case_name": "Potter v. North",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 353,
+      "status": "linked_english_reports",
+      "er_case_id": "18450193",
+      "pincite": true,
+      "confidence": "high",
+      "note": "ER records at 1 Wms Saund 346 and 350; page 353 falls in the second"
+    },
+    {
+      "seq": 4,
+      "raw": "Saunders v. His- sey, Carth. 9",
+      "case_name": "Saunders v. Hussey",
+      "reporter_abbr": "Carth.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "17410299",
+      "confidence": "high",
+      "note": "OCR His- sey for Hussey"
+    },
+    {
+      "seq": 5,
+      "raw": "2 Lutw. 1231",
+      "case_name": "Saunders v. Hussey",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1231,
+      "status": "linked_stub",
+      "stub_cite": "2 Lutw. 1231",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Ld. Ray. 333. S. C.",
+      "case_name": "Saunders v. Hussey",
+      "volume": 1,
+      "reporter_abbr": "Ld. Ray.",
+      "page": 333,
+      "status": "no_match",
+      "confidence": "low",
+      "note": "volume 1 supplied; no Saunders/Sanders v. Hussey in Lord Raymond in the ER; 1 Ld Raym 331 Silly v. Dally is the nearest record but the name does not fit"
+    }
+  ]
+}

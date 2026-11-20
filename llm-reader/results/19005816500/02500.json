@@ -1,0 +1,11 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02500",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {"seq": 1, "raw": "Jenkins v. Edwards, 5 T. R. 97", "case_name": "Jenkins v. Edwards",
+     "volume": 5, "reporter_abbr": "T. R.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17931357", "confidence": "high"}
+  ]
+}

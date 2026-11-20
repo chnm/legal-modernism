@@ -46,7 +46,8 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   at that page if there is one). A string of cites is one record each.
 - A case cited by name with no reporter (`as in Slade's case`) is not
   recorded unless a reporter cite accompanies it somewhere on the page.
-- Year books (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
+- Year books (cited directly or through an abridgment, `Vin. Ab. ... cites
+  15 Hen. 7. 10`), e.g. (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`) are reports
   of cases with no source here: always record them, as `no_match`, leaving
   out `page` when the folio cannot be read.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
@@ -59,7 +60,7 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   numbers, not citations: record the page with `"citations": []` and a note.
   So too title pages, advertisements, blank pages.
 - Footnote markers (`(q)`, `(r)`) and running heads are not citations.
-- `Ib.`, `Id.`, `S. C.` (same case) and a bare `Ibid. 233` refer back to the
+- `Ib.`, `Id.`, `ubi supra`, `S. C.` (same case) and a bare `Ibid. 233` refer back to the
   previous cite: resolve them to the volume and reporter they stand for and
   record them, noting the expansion in `note`.
 - When a citation is cut off at the bottom of the page and continues on the
@@ -104,8 +105,10 @@ Record `raw` exactly as printed, OCR errors and all.
 
 Query with `psql "$LAW_CLAUDE"`, read-only (the role cannot create
 temporary tables; use a CTE). In the English Reports, check `murrell_title`
-as well as `er_name`, which is sometimes wrong. A page with a folio letter
-(`228 a`) is page 228. Several `Anonymous` cases at one page are told apart
+as well as `er_name`, which is sometimes wrong; a record can even carry the
+wrong case's title, so the printed name and the subject of the passage decide.
+`english_reports.cases.id` is text: quote it (`id IN ('17953003')`). A page with a folio letter
+(`228 a`) is page 228, and a pin cite only if 228 is not the case's first page. Several `Anonymous` cases at one page are told apart
 by subject; when they cannot be, pick one at `low` and say so. Names vary in spelling,
 abbreviation and order of parties (`Rex v.` = `The King against`,
 `Doe d. A v. B`, `ex parte`, `Cook`/`Cooke`, `Garret`/`Garrett`). When a cite
@@ -130,6 +133,16 @@ not authority: a reporter must fit the period. `N. R.` in a book of 1831 is
 Bosanquet and Puller's New Reports (1804–07), not the New Reports of 1862–65.
 The edition's year is a ceiling: no case it cites is later.
 
+Some English reporters have no source here, so their cites are `no_match`
+unless the same case is cited through another reporter: Willes's Reports
+(`Willes`), Marshall's Common Pleas Reports (`Marsh.`, 1813–16; the
+whitelist's Kentucky reading is wrong in an English context), and the year
+books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
+the stubs only. A bare `Ibid.` with no page repeats the previous cite.
+When the cited reporter has no source but the same case is reported in one
+that does (Willes's case found in Barnes or Strange by name), link that
+report at `medium` and say so in `note`: the link is to the case.
+
 **English Reports** (`english_reports.cases`). `er_parallel_cite` is the
 nominate cite without punctuation: `10 Mod 88`, `2 B & C 871`, `4 Taunt 572`,
 `3 Bos & Pul 453`, `2 TR 1`, `1 Ld Raym 716`, `1 Salk 180`, `4 Co Rep 62` (folio letters `a`/`b` are
@@ -139,7 +152,12 @@ and Puller's New Reports are mostly stored under `Bos & Pul` too, so that
 apart by `er_year` and the name. Look across reporters by name when a cite
 misses: the same case is often reported in several. Some reporters carry a
 court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, Yelverton
-`Yel`, Hardres `Hard`, Barnewall and Alderson `B & A`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
+`Yel`, Hardres `Hard`, Barnewall and Alderson `B & A`, and some carry a
+volume the printed cite never shows (`2 Cowp`, `3 Dy`, `1 Plowden`); Rep.
+temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`. Plowden's first 130 pages
+are missing. Keilwey and Benloe
+are stored as groups of cases by term: link the group whose pages contain
+the cite, at `medium`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
 `Barn KB`; when an exact cite misses, match the volume and the start of the
 reporter's name (`er_parallel_cite ~ '^3 Wils'`) to see how it is stored.
 

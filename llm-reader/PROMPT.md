@@ -25,11 +25,15 @@ Your pages: psmid `<PSMID>`, pageids `<FIRST>` through `<LAST>` (each multiple
 of 10 between them). For each page, in order:
 
 1. `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader page <PSMID> <pageid>`
-2. Find every case citation, look each one up, and decide the link by your
-   judgement, checking the case name.
+2. Find every case citation and decide its link by your judgement, starting
+   from the case name: the OCR'd volume and page numbers are often wrong,
+   the names much less so (see "Reading the OCR" in the README).
 3. Write `llm-reader/results/<PSMID>/<pageid>.json` with the Write tool
-   (model `claude-opus-5-5`, `read_at` the current UTC time). A page with no
+   (model `claude-opus-5-5`, `read_at` the current UTC time, from `date -u +%Y-%m-%dT%H:%M:%SZ`). A page with no
    case citations still gets a record, with `"citations": []` and a short note.
+
+Run shell commands one at a time: the worktree guard refuses compound
+commands, loops and scripts in `/tmp`. Write each record with the Write tool.
 
 Skip a page that already has a results file. When done, run
 `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and fix any problem in

@@ -1,0 +1,30 @@
+{
+  "psmid": "19005816500",
+  "pageid": "02350",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {"seq": 1, "raw": "B!ˆlc v. G. -r--, 1 Si-. 17R.", "case_name": "Bleke v. Grove",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 175,
+     "status": "linked_english_reports", "er_case_id": "17140060",
+     "confidence": "medium", "note": "footnote (d) badly garbled; read as Bleke v. Grove, 1 Sid. 175, the cite printed legibly in footnote (f)"},
+    {"seq": 2, "raw": "Bleke v. Grove, 1 Sid. 175", "case_name": "Bleke v. Grove",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 175,
+     "status": "linked_english_reports", "er_case_id": "17140060", "confidence": "high",
+     "note": "ER Bleeke versus Grove"},
+    {"seq": 3, "raw": "1 Hen. 7. 16", "volume": 1, "reporter_abbr": "Hen. 7", "page": 16,
+     "status": "no_match", "confidence": "high", "note": "Year Book; year books have no source"},
+    {"seq": 4, "raw": "Countess of North- umberland's Case, 5 Rep. 98 a", "case_name": "Countess of Northumberland's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 98,
+     "status": "linked_english_reports", "er_case_id": "15720421", "pincite": true,
+     "confidence": "high", "note": "case begins at 5 Co Rep 97"},
+    {"seq": 5, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b", "case_name": "Executors of Grenelefe's Case",
+     "reporter_abbr": "Dyer", "page": 42,
+     "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
+     "note": "stored in ER as 1 Dy 42, Executors of Grenelife against W-; volume supplied"},
+    {"seq": 6, "raw": "Calfe v. Nevil, Poph. 186", "case_name": "Calfe v. Nevil",
+     "reporter_abbr": "Poph.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "16820094", "pincite": true,
+     "confidence": "high", "note": "case begins at Pop 185"}
+  ]
+}

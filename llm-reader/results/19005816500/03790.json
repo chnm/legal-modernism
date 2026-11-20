@@ -1,0 +1,31 @@
+{
+  "psmid": "19005816500",
+  "pageid": "03790",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T02:30:00Z",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "11 East, 268",
+      "volume": 11,
+      "reporter_abbr": "East",
+      "page": 268,
+      "status": "linked_english_reports",
+      "er_case_id": "18090243",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; 268 falls in De Tastet v Baring (11 East 265), on the costs of issues found against a defendant under the statute of Anne, which fits the text"
+    },
+    {
+      "seq": 2,
+      "raw": "2 Burr. 753",
+      "volume": 2,
+      "reporter_abbr": "Burr.",
+      "page": 753,
+      "status": "linked_english_reports",
+      "er_case_id": "17590006",
+      "confidence": "medium",
+      "note": "no name printed; Cooke v Sayer begins at 2 Burr 753, on several pleas and costs, which fits the text"
+    }
+  ]
+}
