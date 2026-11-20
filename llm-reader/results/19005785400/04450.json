@@ -5,11 +5,31 @@
   "read_at": "2026-11-20T03:23:00Z",
   "note": "End of editor's Note 11; Note 12 quotes Gould on title in the declaration",
   "citations": [
-    {"seq": 1, "raw": "2 Saund. 206, note 21", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
-     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Williams's note (21); 206 falls in the ER record 2 Wms Saund 205, a later record of the case beginning at 200 ('The Same v. Bateman')"},
-    {"seq": 2, "raw": "Ib. 207, note 24", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
-     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "low",
-     "note": "Ib. = 2 Saund.; note (24) taken to run on from notes (21)-(22) in the case at 2 Wms Saund 200/205, not Foxwist v. Tremaine, which begins at 207"}
+    {
+      "seq": 1,
+      "raw": "2 Saund. 206, note 21",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 206,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner.",
+      "case_name": "Goram v. Sweeting"
+    },
+    {
+      "seq": 2,
+      "raw": "Ib. 207, note 24",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner.",
+      "case_name": "Goram v. Sweeting"
+    }
   ]
 }

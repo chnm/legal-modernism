@@ -144,7 +144,8 @@ it annotates, which may begin a page or two before the note. On a page where
 one case ends and another begins, a note goes to the case running onto the
 page, unless its subject plainly belongs to the one beginning there. Choices
 already made: 1 Saund. 318 n. (3) is Redman v. Edolph; 1 Saund. 228 n. (1)
-is Stennel v. Hogg. When several cases begin at a cited page and nothing
+is Stennel v. Hogg; Goram v. Sweeting (2 Saund. 200–207, notes 21–24) is the
+English Reports records at 2 Wms Saund 200 and 205, titled "Same v Bateman". When several cases begin at a cited page and nothing
 tells them apart, the pick is always `low`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
