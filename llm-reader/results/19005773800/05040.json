@@ -1,0 +1,18 @@
+{
+  "psmid": "19005773800",
+  "pageid": "05040",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T14:21:47Z",
+  "note": "Appendix note 4 continued (several counts); Gould, Chitty on Pleading, Bl. Com., Lawes on Pleading are treatises; Saunders's notes recorded as in the other editions",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 286, n. 9", "volume": 1, "reporter_abbr": "Saund.", "page": 286,
+     "status": "linked_english_reports", "er_case_id": "18450073", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (9) at 286 falls in Duppa v. Mayo, which begins at 1 Wms Saund 282"},
+    {"seq": 2, "raw": "2 Id. 171, d. n. 1", "volume": 2, "reporter_abbr": "Saund.", "page": 171,
+     "status": "linked_english_reports", "er_case_id": "18450101", "pincite": true, "confidence": "medium",
+     "note": "Id. is Saund.; no name printed; note (1) at 171 d falls in Hambleton v. Veere, which begins at 2 Wms Saund 169 (Yard v. Ford begins at 172)"},
+    {"seq": 3, "raw": "380, n. 14", "volume": 2, "reporter_abbr": "Saund.", "page": 380,
+     "status": "linked_english_reports", "er_case_id": "18450180", "pincite": true, "confidence": "low",
+     "note": "2 Saund. 380 n. (14), volume from the preceding Id.; a note numbered (14) belongs to the case running onto 380, Pinkney v. Inhabitants of East Hundred (record at 2 Wms Saund 379), not Purefoy v. Rogers, which begins at 380"}
+  ]
+}
