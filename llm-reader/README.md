@@ -359,6 +359,10 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   names, are `high` whenever legible.
 - Where the English Reports hold two records of one case at one cite
   (Hartford v. Jones, 2 Salk. 654), link the one with a `word_count`.
+- A series cited as numbered straight through ("17 Martin" for 5 Mart.
+  (n.s.)) takes the series' own volume in `volume`, with the printed one in
+  `note`. A page supplied for a cite printed without one is `high` when the
+  name is unique in that volume, `medium` otherwise.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
