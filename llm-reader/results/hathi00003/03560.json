@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "03560",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:30:55Z",
+  "note": "Appendix pp. xii-xiii, notes (5)-(8); Glanville, Muratori, Heineccius, Lindenbrog and Reeves are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Beecher's case, 3 Rep. 58 b", "case_name": "Beecher's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",
+     "note": "printed 3 Rep. (misprint or OCR for 8); Beecher's Case is 8 Co Rep 58 (on appearance by attorney); 3 Co Rep 58 is Lincoln College's Case; agrees with Gale 19005785400/03450"}
+  ]
+}

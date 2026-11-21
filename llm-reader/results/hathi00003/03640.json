@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "03640",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:31:43Z",
+  "note": "Appendix pp. xxii-xxiv, notes (12)-(14); Tidd, Arch. Prac., Booth, Com. Dig., Reeves, Bla. Com., Luders are not cases",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund 212, n. (4.)", "case_name": "Foxwist v. Tremaine",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18450085", "pincite": true,
+     "confidence": "medium", "note": "no name printed; note to Foxwist v. Tremaine (appearance of an infant), which begins at 2 Wms Saund 207; ER splits it and 212 is the second record; agrees with Gale 19005785400/03530"},
+    {"seq": 2, "raw": "2 Saund. 43, n. (1.)", "case_name": "William v. Gwyn",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true,
+     "confidence": "medium", "note": "no name printed; note to William v. Gwyn, a real action (judgment against a tenant who fails to appear), which begins at 2 Wms Saund 42"}
+  ]
+}
