@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00009", "pageid": "02380",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:43:15Z",
+  "note": "Stephen, chapter II (p. 214): express colour confined to pleas; it must maintain the nature of the action and be colourable only. 1 Chitty (Chitty on Pleading; 601 here, 501 in other editions), Reeves, Bac. Ab. and Com. Dig. are not recorded. Notes match hathi00002 and hathi00006",
+  "citations": [
+    {"seq": 1, "raw": "Taylor v. Eastwood, 1 East., 212", "case_name": "Taylor v. Eastwood",
+     "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "high"},
+    {"seq": 2, "raw": "Anon., Keilw., 103 b", "case_name": "Anonymous",
+     "reporter_abbr": "Keilw.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "16880202", "pincite": true, "confidence": "medium",
+     "note": "ER stores Keilwey by groups of cases: Keil 102 'Caus Incerti Temporis' runs to the next entry and holds the anonymous case at 103 b, as in the 1831 record"}
+  ]
+}

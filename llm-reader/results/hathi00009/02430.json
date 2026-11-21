@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00009", "pageid": "02430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:44:58Z",
+  "note": "Stephen, chapter II (p. 219): the effect and form of a protestation. Com. Dig. and the cross-reference supra, p. 162 (note (h), OCR'd as (l.)) are not recorded; the OCR splits note (g) around it. Notes match hathi00006/01630",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 103 a., n. I", "volume": 2, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450117", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (1) on protestation (I is OCR for 1), to Holdipp v. Otway, which begins at 2 Wms Saund 102; no name printed"},
+    {"seq": 2, "raw": "2 Saund., ubi supra", "volume": 2, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450117", "pincite": true, "confidence": "medium",
+     "note": "'ubi supra' expanded to 2 Saund. 103 a n. (1), Holdipp v. Otway"},
+    {"seq": 3, "raw": "Saund., ubi supra", "volume": 2, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450117", "pincite": true, "confidence": "medium",
+     "note": "'ubi supra' expanded to 2 Saund. 103 a n. (1), Holdipp v. Otway"}
+  ]
+}

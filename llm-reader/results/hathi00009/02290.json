@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00009", "pageid": "02290",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:41:13Z",
+  "note": "Stephen, chapter II (p. 205): estoppel and the traverse of deeds; pleadings in confession and avoidance begin. Com. Dig. and Co. Litt. are not recorded. Notes match hathi00006/01490-01500, though the 1857 text of note (b) carries the editor's additions (Eden's, Helyar's, Hynde's cases)",
+  "citations": [
+    {"seq": 1, "raw": "Bonner v. Wilkinson, 5 Barn. & Ald., 682", "case_name": "Bonner v. Wilkinson",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 682,
+     "status": "linked_english_reports", "er_case_id": "18220294", "confidence": "high"},
+    {"seq": 2, "raw": "Baker v. Dewey, 1 Barn. & Cres., 704", "case_name": "Baker v. Dewey",
+     "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 704,
+     "status": "linked_english_reports", "er_case_id": "18230020", "confidence": "high"},
+    {"seq": 3, "raw": "39 Ed. III, 3", "volume": 39, "reporter_abbr": "Y.B.", "page": 3,
+     "status": "no_match", "confidence": "high", "note": "year book, 39 Edw. III, fol. 3; no source"},
+    {"seq": 4, "raw": "Taylor v. Needham, 2 Taunt., 278", "case_name": "Taylor v. Needham",
+     "volume": 2, "reporter_abbr": "Taunt.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18100119", "confidence": "high"},
+    {"seq": 5, "raw": "Taylor v. Needham, 2 Taunt., 278", "case_name": "Taylor v. Needham",
+     "volume": 2, "reporter_abbr": "Taunt.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18100119", "confidence": "high"},
+    {"seq": 6, "raw": "Robinson v. Corbett, Lutw., 662", "case_name": "Robinson v. Corbett",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 662,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 662", "confidence": "medium",
+     "note": "volume 1 supplied from the stub paging; Lutwyche is in the stubs only"},
+    {"seq": 7, "raw": "2 Hen. IV, 20", "volume": 2, "reporter_abbr": "Y.B.", "page": 20,
+     "status": "no_match", "confidence": "high", "note": "year book, 2 Hen. IV, fol. 20; no source"},
+    {"seq": 8, "raw": "Taylor v. Needham, 2 Taunt., 281", "case_name": "Taylor v. Needham",
+     "volume": 2, "reporter_abbr": "Taunt.", "page": 281,
+     "status": "linked_english_reports", "er_case_id": "18100119", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Taunt 278"}
+  ]
+}
