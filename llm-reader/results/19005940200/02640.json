@@ -1,0 +1,23 @@
+{
+  "psmid": "19005940200", "pageid": "02640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:50:43Z",
+  "note": "printed p. 237; sole seisin necessarily implied; a party to a deed must plead non est factum. Doct. Pl. 261 is a treatise, skipped. Agrees with hathi00002/02000",
+  "citations": [
+    {"seq": 1, "raw": "Gilbert v. Parker, 2 Salk. 629", "case_name": "Gilbert v. Parker",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 629,
+     "status": "linked_english_reports", "er_case_id": "17951791", "confidence": "high",
+     "note": "three cases begin at 2 Salk 629; the name decides"},
+    {"seq": 2, "raw": "si Mod. 158. S. C.", "case_name": "Gilbert v. Parker",
+     "volume": 6, "reporter_abbr": "Mod.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17940732", "confidence": "high",
+     "note": "OCR 'si' read 6, as on the previous page; S. C. of Gilbert v. Parker"},
+    {"seq": 3, "raw": "Robinson v. Corlett, Lutw. 662", "case_name": "Robinson v. Corlett",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 662,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 662", "confidence": "high",
+     "note": "Lutwyche is only in the stubs; paged as one run, so 'Lutw. 662' is exactly the stub 1 Lutw. 662. The 1831 edition prints 'Corbett'"},
+    {"seq": 4, "raw": "Taylor v. Needliham, ' Taunllt. 278", "case_name": "Taylor v. Needham",
+     "volume": 2, "reporter_abbr": "Taunt.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18100119", "confidence": "high",
+     "note": "volume garbled in the OCR; 2 Taunt 278, as the 1831 edition prints"}
+  ]
+}

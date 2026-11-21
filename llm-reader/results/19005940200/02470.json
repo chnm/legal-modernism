@@ -1,0 +1,18 @@
+{
+  "psmid": "19005940200", "pageid": "02470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:45:51Z",
+  "note": "printed p. 220; why the absque hoc: to avoid argumentativeness. In footnote (f), 3 Reeves' Hist. and Bac. Ab. are treatises, skipped; (g) is a cross-reference to the Appendix, Note (50). Agrees with hathi00002/01890 and hathi00001/02240",
+  "citations": [
+    {"seq": 1, "raw": "Courtncy v. Phelps, I Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Sid 300"},
+    {"seq": 2, "raw": "HerAng v. Blacklow, Cro. Elizo. o e.", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high",
+     "note": "page garbled in the OCR; the name decides, Cro Eliz 30, as the 1824 and 1831 editions print"},
+    {"seq": 3, "raw": "Hen. 6, 7. pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "medium",
+     "note": "Year Book, 10 Hen. VI, f. 7, pl. 21; no source. The regnal year is lost in this scan's OCR ('o e.'); 10 is read from the 1824 and 1831 editions"}
+  ]
+}

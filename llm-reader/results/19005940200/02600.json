@@ -1,0 +1,28 @@
+{
+  "psmid": "19005940200", "pageid": "02600",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:49:23Z",
+  "note": "printed p. 233; no traverse upon matter of law; the virtute cujus not traversable. Doct. Pl. is a treatise, skipped. Footnote (e) is OCR'd '(c)'. Agrees with hathi00002/01970",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 23. n. (5)", "volume": 1, "reporter_abbr": "Saund.", "page": 23,
+     "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (5) to Bennet v. Filkins (begins 1 Wms Saund 20), a case on traverse; Earl of Manchester v. Vale also begins at 23, but a note numbered (5) belongs to the case running onto the page; no name printed"},
+    {"seq": 2, "raw": "Kenicot v. Bogan, Yelv. 200", "case_name": "Kenicot v. Bogan",
+     "reporter_abbr": "Yelv.", "page": 200,
+     "status": "linked_english_reports", "er_case_id": "17921307", "pincite": true, "confidence": "high",
+     "note": "case begins at Yel 198"},
+    {"seq": 3, "raw": "Priddle and Napper's Case, 11 Rep. 1o b", "case_name": "Priddle and Napper's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 10,
+     "status": "linked_english_reports", "er_case_id": "15720297", "pincite": true, "confidence": "high",
+     "note": "OCR '1o b' read 10 b, as the 1831 edition prints; case begins at 11 Co Rep 8"},
+    {"seq": 4, "raw": "Richardson v. Mayor of Orford, 2 1. Bl. 182", "case_name": "Richardson v. Mayor of Orford",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 182,
+     "status": "linked_english_reports", "er_case_id": "17931512", "confidence": "high"},
+    {"seq": 5, "raw": "Richardson v. Mayor ofOrford, 2 H. Bl. 182", "case_name": "Richardson v. Mayor of Orford",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 182,
+     "status": "linked_english_reports", "er_case_id": "17931512", "confidence": "high"},
+    {"seq": 6, "raw": "Priddle and Nappcr's Case, 11 Rep. 3o b", "case_name": "Priddle and Napper's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 10,
+     "status": "linked_english_reports", "er_case_id": "15720297", "pincite": true, "confidence": "high",
+     "note": "OCR '3o b' read 10 b, as in footnote (e) and the 1831 edition; case begins at 11 Co Rep 8"}
+  ]
+}

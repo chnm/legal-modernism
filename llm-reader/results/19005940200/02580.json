@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "02580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:48:45Z",
+  "note": "printed p. 231; demurrer for a faulty inducement; a traverse denies in manner and form. Com. Dig. is an abridgment and 'Supra, p. 117' a cross-reference, skipped. Agrees with hathi00002/01950 for Foden v. Haines",
+  "citations": [
+    {"seq": 1, "raw": "Soden v. laines, Comb. 245", "case_name": "Foden v. Haines",
+     "reporter_abbr": "Comb.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17240198", "confidence": "high",
+     "note": "OCR 'Soden v. laines'; ER 'Foden and Haines' at Comb 245 (Rex & Regina v. King also begins there)"},
+    {"seq": 2, "raw": "IHoar v. Mill, 4 M. and S. 470", "case_name": "Hoar v. Mill",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 470,
+     "status": "linked_english_reports", "er_case_id": "18160242", "confidence": "high"}
+  ]
+}

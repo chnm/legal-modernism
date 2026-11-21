@@ -1,0 +1,23 @@
+{
+  "psmid": "19005940200", "pageid": "02620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:50:01Z",
+  "note": "printed p. 235; no traverse upon matter not alleged (the marriage bond case). Doct. Pl. 358 is a treatise, skipped. Agrees with hathi00002/01980",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 312 d. n. (4)", "volume": 1, "reporter_abbr": "Saund.", "page": 312,
+     "status": "linked_english_reports", "er_case_id": "18450069", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (4) at 312 d, in Rex v. Kilderby, whose record begins at 1 Wms Saund 311 (an earlier record of the case at 308); no name printed"},
+    {"seq": 2, "raw": "Crosse v. Hunt, Carth. 99", "case_name": "Crosse v. Hunt",
+     "reporter_abbr": "Carth.", "page": 99,
+     "status": "linked_english_reports", "er_case_id": "17410094", "confidence": "high"},
+    {"seq": 3, "raw": "Powers v. Cook, 1 Lord Ray. 63", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high"},
+    {"seq": 4, "raw": "1 Salk. 298. S. C.", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "17952846", "confidence": "high",
+     "note": "S. C. of Powers v. Cook; ER 'Powers versus Coot'"},
+    {"seq": 5, "raw": "Crosse v. Hunt, Carth. 99", "case_name": "Crosse v. Hunt",
+     "reporter_abbr": "Carth.", "page": 99,
+     "status": "linked_english_reports", "er_case_id": "17410094", "confidence": "high"}
+  ]
+}

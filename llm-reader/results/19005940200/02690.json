@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "02690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:52:03Z",
+  "note": "printed p. 242; colour illustrated by the release and duress example; a plea bad for want of colour begins",
+  "citations": [
+    {"seq": 1, "raw": "Gifford v. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high",
+     "note": "two cases begin at 1 Sid 450 (Love v. Windham too); the name decides"}
+  ]
+}

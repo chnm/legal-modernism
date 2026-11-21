@@ -1,0 +1,22 @@
+{
+  "psmid": "19005940200", "pageid": "02500",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:46:41Z",
+  "note": "printed p. 223; the modern disfavour of the special traverse without new matter. Rast. Ent. (Rastall's Entries) is a book of precedents and Bac. Ab. an abridgment, skipped. Agrees with hathi00002/01900-01910 and hathi00001/02270",
+  "citations": [
+    {"seq": 1, "raw": "Horne v. Lewin, 1 Lord Ray. 641", "case_name": "Horne v. Lewin",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 641,
+     "status": "linked_english_reports", "er_case_id": "17921158", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Ld Raym 639"},
+    {"seq": 2, "raw": "Robinson v. Raylcy, 1 Burr. 3o0", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 320,
+     "status": "linked_english_reports", "er_case_id": "17570030", "pincite": true, "confidence": "high",
+     "note": "OCR '3o0' read 320, as the 1824 and 1831 editions print; ER Robinson v. Raley begins at 1 Burr 316"},
+    {"seq": 3, "raw": "i Saund. los a b. n. (.,)", "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+     "note": "garbled; read 1 Saund. 103 a, b, n. (3) from the 1824 and 1831 editions; Saunders's note in Hayman v. Gerrard, whose record begins at 1 Wms Saund 102; no name printed"},
+    {"seq": 4, "raw": "Smith v. Dovers, 2 Doug. 4.0", "case_name": "Smith v. Dovers",
+     "volume": 2, "reporter_abbr": "Doug.", "page": 430,
+     "status": "linked_english_reports", "er_case_id": "17800068", "pincite": true, "confidence": "high",
+     "note": "OCR '4.0' read 430, as the 1824 and 1831 editions print; case begins at 2 Doug 428"}
+  ]
+}
