@@ -96,3 +96,67 @@ cxxxvi of the second appendix, and the 1867 scan (19005773800) none for
 p. 388 (between pageids 03280 and 03290), though the text runs on across them; other
 scans have "FOLLOWING PAGE(S) MUTILATED" targets (1831 p. 00460, 1841
 p. 01080). Readers record what is there; the missing text is not read.
+
+## Coordinator's to-do (not for the owners)
+
+Kept here so it survives a restart or a compacted conversation.
+
+### Running the reading
+
+- One reader at a time, 30 pages per round (the owner's instruction,
+  2026-11-20); the prompt is `llm-reader/PROMPT.md`, with the table of
+  HathiTrust copies, their Gale copies and pageid offsets.
+- Next pages: `bin/llm-reader todo --jurisdiction US --limit 30`. After each
+  round: `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db --psmid <psmid>`,
+  commit `llm-reader/`, push, and fold readers' questions into the README.
+- Progress page: `bin/llm-reader serve --port 4314 --jurisdiction US --title
+  "Reading Stephen on Pleading: U.S. editions (official copies)"` (shows
+  pages per hour over ten minutes, time in New York).
+- When a usage limit is near, stop the readers, validate, commit and push;
+  a restarted session resumes from the first page without a record.
+
+### Consistency pass, at the end of the U.S. editions
+
+The Gale records read early (1831, 1841, 1845, and parts of 1851–1867)
+predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
+
+1. **Year books:** `reporter_abbr` `Y.B.`, regnal year as `volume`, reign in
+   `note`, `page` empty when cited by plea number only; confidence `high`
+   when legible. Early records use `Ed. 3.`, `Hen. 6`, `Ass.` and low/medium.
+2. **Pin cites on split English Reports records:** a cite in a later record
+   of a case that begins earlier is `pincite: true`, even at that record's
+   first page. Early records often lack it: Peacock v. Bell (1 Saund. 73),
+   Hayman v. Gerrard (1 Saund. 102), Cutler v. Southern (1 Saund. 116),
+   Craft v. Boite (1 Saund. 246), Osborne v. Rogers (1 Saund. 267), Greene v.
+   Jones (1 Saund. 298), William v. Gwyn (2 Saund. 45), Manser's Case
+   (2 Rep. 3), Collins v. Blantern, Bridgwater v. Bythway (3 Lev. 113, check
+   whether one case or two). Conversely a folio-lettered first page
+   (Dyer 171 b) is not a pin cite.
+3. **`no_match` read before the same-case rule:** compare each Gale
+   `no_match` with other editions' records of the same footnote and link
+   the same case through another report where they did: Willes (Eaton v.
+   Southby, Greenhow v. Ilsley, Moravia v. Sloper, Titley v. Foxall),
+   J. B. Moore (Bray v. Freeman, Corporation of Arundel v. Bowman, via
+   Taunton), Marshall (Jackson v. Wickes, via Taunton), Plowden pp. 1–130
+   via Dyer (Partridge v. Strange, Buckley v. Rice Thomas, Fulmerston v.
+   Steward), Benloe pp. 44–88 (Thorn v. Rolfe via 2 Dy 185), Dy. 264 a
+   (Horneby v. Clifton, low), Tyrwhitt and Dowling cites. Already done:
+   Topping v. Fuge (1831), Dal. 67 (all editions).
+4. **Unnamed cites** are `medium`, not `high` (e.g. 4 Wend. 211, 12 Wend. 249
+   in the early records).
+5. **`raw`:** collapse line breaks inside a citation to single spaces
+   (HathiTrust records).
+6. **`page` holds the corrected reading** where a named case is found at
+   other numbers than printed (e.g. Jones v. Kitchin, 1 Bos. & Pul. 77, is
+   at 76 in some records).
+7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
+   as a back-reference; earlier records left it out.
+8. After the pass: validate everything, commit, and post each Decisions and
+   Findings unit above as its own GitHub issue, linked from #439. Then start
+   the UK editions (7 official copies, 4,219 pages; restart the progress page
+   with `--jurisdiction UK` or none).
+
+Already aligned across editions (recorded in the README's "choices already
+made"): 1 Saund. 228 n. (1), 1 Saund. 318 n. (3), 2 Saund. 291 n., 2 Saund.
+319 n. (6), 2 Saund. 62 b n. (5), 1 Saund. 284 n. (4), 12 Mod. 508, Salk. 544,
+Goram v. Sweeting, Harmer v. Rowe, King v. Lyme Regis, 6 Mass. 304, 2 Bay 204.
