@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765000",
+  "pageid": "00890",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:49:39Z",
+  "note": "p. 30, Andrews's chapter I (end of section 11; section 12, the real party in interest). The scan interleaves the two footnote columns. Sutherland on Damages, Hughes's Technical Law, Waterman on Trespass, Dicey on Parties, 1 Smith's L. C., 1 Eng. Rul. Cas. (collections) and the appendix note in 1 Cranch are not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Ashby v. White, Ld. Rnym. 098", "case_name": "Ashby v. White",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 938,
+     "status": "linked_english_reports", "er_case_id": "17900055", "confidence": "high",
+     "note": "volume supplied; page printed 098, corrected to 938 (as cited on p. 27)"},
+    {"seq": 2, "raw": "Harrop v. Hirst, L R. 4 Ex. 43", "case_name": "Harrop v. Hirst",
+     "volume": 4, "reporter_abbr": "L. R. Ex.", "page": 43,
+     "status": "linked_stub", "stub_cite": "4 L.R. Exch. 43", "confidence": "high"},
+    {"seq": 3, "raw": "Druley v Ackens, 102 Ill. 201", "case_name": "Druley v. Adam",
+     "volume": 102, "reporter_abbr": "Ill.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 2810465, "pincite": true, "confidence": "medium",
+     "note": "name garbled 'Ackens'; Druley v. Adam, 102 Ill. 177-207 (1882), the only Druley case in the volume"}
+  ]
+}

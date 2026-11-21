@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765000",
+  "pageid": "02010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:46:40Z",
+  "note": "Stephen's text on pleas in suspension and parol demurrer (§ 70); Andrews's notes. 1 Went. 40 (Wentworth's precedents) and Chitty's Pl. not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Faulkland v. Hanson, 12 3Mo. App. 400", "case_name": "Faulkland v. Hanson",
+     "volume": 12, "reporter_abbr": "Mo. App.", "page": 400,
+     "status": "no_match", "confidence": "high",
+     "note": "cite legible (the 1901 edition prints 12 Mo. App. 400 too), but 12 Mo. App. 400 falls inside Williams v. Penn (393-401) in CAP; no Faulkland/Falkland/Faulkner v. Hanson in Mo. App. or elsewhere in CAP up to 1894"},
+    {"seq": 2, "raw": "Le Brett v. Papil- Ion, 4 East. 502", "case_name": "Le Brett v. Papillon",
+     "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "high"},
+    {"seq": 3, "raw": "Hutchinson v. Brook, 11 lass. 110", "case_name": "Hutchinson v. Brock",
+     "volume": 11, "reporter_abbr": "Mass.", "page": 119,
+     "status": "linked_cap", "cap_case_id": 2053391, "confidence": "high",
+     "note": "printed 110 (and Brook); CAP's cite is 11 Mass. 119 (its first_page field says 115)"}
+  ]
+}

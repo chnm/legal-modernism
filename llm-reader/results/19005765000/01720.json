@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:45:47Z",
+  "note": "p. 109, Stephen's form of a count on a writ of right (§ 64), with Andrews's note continuing the discussion of code pleading (Pomeroy).",
+  "citations": [
+    {"seq": 1, "raw": "Hill v. Barrett, 14 B. Mon, 83", "case_name": "Hill v. Barrett",
+     "volume": 14, "reporter_abbr": "B. Mon.", "page": 83,
+     "status": "linked_cap", "cap_case_id": 2337612, "confidence": "high",
+     "note": "CAP cites it as 53 Ky. 83, Hill ex rel. Wintersmith v. Barrett (1853)"}
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01680",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:44:44Z",
+  "note": "p. 105, Stephen's text on pleadings (§ 61) with Andrews's notes on appearance and the object of pleading. Stephen's notes (z) and (a) cite Sellon, Archbold, Impey and Tidd only; Van Fleet's Collateral Attack is a treatise.",
+  "citations": [
+    {"seq": 1, "raw": "Cooper v. Reynolds, 10 Wall. 308", "case_name": "Cooper v. Reynolds",
+     "volume": 10, "reporter_abbr": "Wall.", "page": 308,
+     "status": "linked_cap", "cap_case_id": 3436983, "confidence": "high"},
+    {"seq": 2, "raw": "Dennison v. Hyde, 6 Conn 508", "case_name": "Dennison v. Hyde",
+     "volume": 6, "reporter_abbr": "Conn.", "page": 508,
+     "status": "linked_cap", "cap_case_id": 6755569, "confidence": "high",
+     "note": "CAP spells it Denison v. Hyde"},
+    {"seq": 3, "raw": "Walter v. Beckman, 122U. S. 320", "case_name": "Walter v. Bickham",
+     "volume": 122, "reporter_abbr": "U. S.", "page": 320,
+     "status": "linked_cap", "cap_case_id": 3521133, "confidence": "high",
+     "note": "printed Beckman; CAP names it Walter v. Bickham"},
+    {"seq": 4, "raw": "Legnard v. Crane Co., 54 III. App. 149", "case_name": "Legnard v. Crane Co.",
+     "volume": 54, "reporter_abbr": "Ill. App.", "page": 149,
+     "status": "linked_cap", "cap_case_id": 5102878, "confidence": "high"},
+    {"seq": 5, "raw": "Swift &.Company v. Raleigh, 54 IlI. App. 44", "case_name": "Swift & Company v. Raleigh",
+     "volume": 54, "reporter_abbr": "Ill. App.", "page": 44,
+     "status": "linked_cap", "cap_case_id": 5103610, "confidence": "high"}
+  ]
+}

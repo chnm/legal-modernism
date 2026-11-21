@@ -1,0 +1,16 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:44:27Z",
+  "note": "p. 104, Stephen's text on appearance (§ 60) with Andrews's numbered notes. Stephen's notes (s)-(y) cite Impey, Tidd and the Appendix only. The scan interleaves the columns of Andrews's notes 1 and 2.",
+  "citations": [
+    {"seq": 1, "raw": "Ramsbottom v. Buckhurst, 2 M. & S. 565", "case_name": "Ramsbottom v. Buckhurst",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 565,
+     "status": "linked_english_reports", "er_case_id": "18140412", "confidence": "high",
+     "note": "the cite is split across interleaved footnote lines (\"2 M. in and consent ... & S. 565\")"},
+    {"seq": 2, "raw": "Hecht v. Feldman, 54 Ill, App. 144", "case_name": "Hecht v. Feldman",
+     "volume": 54, "reporter_abbr": "Ill. App.", "page": 144,
+     "status": "linked_cap", "cap_case_id": 5100859, "confidence": "high"}
+  ]
+}

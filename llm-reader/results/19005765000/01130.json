@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:49:47Z",
+  "note": "p. 54, Andrews's chapter on election of remedies (§§ 31-32), continuing the quotation from Terry v. Munger (cited on p. 53, not cited again here). Footnote 1 is an editorial remark; Cooley on Torts is not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Alderman v. Enuor, 45 Il1. 128", "case_name": "Alderson v. Ennor",
+     "volume": 45, "reporter_abbr": "Ill.", "page": 128,
+     "status": "linked_cap", "cap_case_id": 425042, "confidence": "high",
+     "note": "name garbled 'Alderman v. Enuor'; Alderson v. Ennor, 45 Ill. 128 (1867)"}
+  ]
+}

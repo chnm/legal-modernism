@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:45:07Z",
+  "note": "Stephen's forms of demurrer to the declaration; Andrews's notes, their columns interleaved in the OCR.",
+  "citations": [
+    {"seq": 1, "raw": "MlcFaul v. Ramsey, 20 How. 'i3", "case_name": "McFaul v. Ramsey",
+     "volume": 20, "reporter_abbr": "How.", "page": 523,
+     "status": "linked_cap", "cap_case_id": 5679946, "confidence": "high",
+     "note": "page garbled in OCR ('i3'), read as 523 from the case found by name"},
+    {"seq": 2, "raw": "Birdseye v. Smith, 33 Barb. 219", "case_name": "Birdseye v. Smith",
+     "volume": 32, "reporter_abbr": "Barb.", "page": 219,
+     "status": "linked_cap", "cap_case_id": 5048486, "pincite": true, "confidence": "high",
+     "note": "printed 33 Barb.; the case is 32 Barb. 217-222"},
+    {"seq": 3, "raw": "Susquehanna & W. V. R Co. v. Blatchford, 78 U. S. 172", "case_name": "Susquehanna & W. V. R. Co. v. Blatchford",
+     "volume": 78, "reporter_abbr": "U. S.", "page": 172,
+     "status": "linked_cap", "cap_case_id": 3414217, "confidence": "high",
+     "note": "11 Wall. 172, CAP name Coal Co. v. Blatchford"}
+  ]
+}
