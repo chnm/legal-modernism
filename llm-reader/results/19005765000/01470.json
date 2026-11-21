@@ -10,7 +10,7 @@
      "status": "linked_cap", "cap_case_id": 4374602, "confidence": "high"},
     {"seq": 2, "raw": "Jordan v. Wyatt, 4 Gratt. 151,47 Am. Dec. 720", "case_name": "Jordan v. Wyatt",
      "volume": 47, "reporter_abbr": "Am. Dec.", "page": 720,
-     "status": "linked_cap", "cap_case_id": 4374602, "confidence": "high",
+     "status": "linked_cap", "cap_case_id": 4374602, "confidence": "medium",
      "note": "parallel report in American Decisions; linked to the Grattan report"},
     {"seq": 3, "raw": "Carleton v. Cate, 566 N. H. 130", "case_name": "Carleton v. Cate",
      "volume": 56, "reporter_abbr": "N. H.", "page": 130,

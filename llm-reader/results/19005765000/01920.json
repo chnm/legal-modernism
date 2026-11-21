@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01920",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:23:14Z",
+  "note": "p. 129, Stephen's text on bills in the exchequer and the King's Bench extension (§ 65); notes (n)-(o) cite Hale and Manning's Exchequer Practice. Andrews's note 1 cites Cooley's Blackstone and one case.",
+  "citations": [
+    {"seq": 1, "raw": "Greer v. Young, 120 Il.- ... 184", "case_name": "Greer v. Young",
+     "volume": 120, "reporter_abbr": "Ill.", "page": 184,
+     "status": "linked_cap", "cap_case_id": 5384582, "confidence": "high",
+     "note": "the page number is split from the cite across interleaved note lines"}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01050",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:24:05Z",
+  "note": "p. 46, Andrews's chapter I (§ 19, Gray v. Wilson and Wright v. M'Lemore). Footnotes 1-3, the two columns interleaved in the scan, recorded in footnote order.",
+  "citations": [
+    {"seq": 1, "raw": "Beigs, 804", "case_name": "Gray v. Wilson",
+     "volume": 1, "reporter_abbr": "Meigs", "page": 394,
+     "status": "linked_cap", "cap_case_id": 8542648, "confidence": "high",
+     "note": "footnote 1 to Gray v. Wilson named in the text; printed 'Beigs, 804', read Meigs 394 (cited so on p. 45)"},
+    {"seq": 2, "raw": "10 Yerg. 235", "case_name": "Wright v. M'Lemore",
+     "volume": 10, "reporter_abbr": "Yerg.", "page": 235,
+     "status": "linked_cap", "cap_case_id": 8541895, "confidence": "high",
+     "note": "footnote 2 to Wright v. M'Lemore named in the text"},
+    {"seq": 3, "raw": "C. & N. W. I. Co. v. Niclols, 57 I11; 467", "case_name": "C. & N. W. Ry. Co. v. Nichols",
+     "volume": 57, "reporter_abbr": "Ill.", "page": 467,
+     "status": "linked_cap", "cap_case_id": 5241019, "pincite": true, "confidence": "high",
+     "note": "case at 57 Ill. 464-467"},
+    {"seq": 4, "raw": "Wright v. McLemore, 10 Yerg. 235", "case_name": "Wright v. McLemore",
+     "volume": 10, "reporter_abbr": "Yerg.", "page": 235,
+     "status": "linked_cap", "cap_case_id": 8541895, "confidence": "high"},
+    {"seq": 5, "raw": "Austin v. Hall, 18 Johns. 286", "case_name": "Austin v. Hall",
+     "volume": 13, "reporter_abbr": "Johns.", "page": 286,
+     "status": "linked_cap", "cap_case_id": 374496, "confidence": "high",
+     "note": "volume printed 18, corrected to 13"},
+    {"seq": 6, "raw": "Hall v. Gray, 54 Me. 230", "case_name": "Hall v. Gray",
+     "volume": 54, "reporter_abbr": "Me.", "page": 230,
+     "status": "linked_cap", "cap_case_id": 8844219, "confidence": "high"}
+  ]
+}

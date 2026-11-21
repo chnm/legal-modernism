@@ -334,6 +334,15 @@ American cases in the later editions (Andrews, 1894, and after):
   cite on an N.Y.S. record), link the record of the cited reporter.
 - `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
   reporter.
+- CAP files some series under other names: Hun is "N.Y. Sup. Ct." (2 Hun =
+  9 N.Y. Sup. Ct.); the circuit-court reporters (Story, Paine, Washington
+  C.C.) are in F. Cas., with cites such as `1 Paine, 422`. A case cited
+  only in L.R.A. links its official report at `medium`.
+- When the printed name and CAP's differ (Jacobson v. Miller is CAP's
+  Gunzberg v. Miller), search by volume and page; the name still decides
+  between cases there.
+- Smith's Leading Cases is not recorded, even when cited under a case name
+  ("Cutter v. Powell, 2 Smith's L. C.").
 - When several cases begin at one CAP cite (19 How. 393), the name decides.
 - CAP's `first_page` can disagree with the printed cite in any reporter
   (Gardner v. Clark, 21 N.Y. 399, `first_page` 428), not only early Johnson's

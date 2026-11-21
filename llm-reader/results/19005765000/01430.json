@@ -38,7 +38,7 @@
      "status": "linked_cap", "cap_case_id": 6047017, "confidence": "high"},
     {"seq": 11, "raw": "Greene v. Lewis, 85 Ala. 221, 7 Am. St. R 42", "case_name": "Greene v. Lewis",
      "volume": 7, "reporter_abbr": "Am. St. R.", "page": 42,
-     "status": "linked_cap", "cap_case_id": 6047017, "confidence": "high",
+     "status": "linked_cap", "cap_case_id": 6047017, "confidence": "medium",
      "note": "parallel report in the American State Reports, which CAP does not hold; linked to the case's Alabama report"},
     {"seq": 12, "raw": "Dame v. Dame, 43 N. H. 37", "case_name": "Dame v. Dame",
      "volume": 43, "reporter_abbr": "N. H.", "page": 37,

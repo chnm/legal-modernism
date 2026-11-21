@@ -1,0 +1,33 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:22:57Z",
+  "note": "p. 128, Stephen's text on the proceeding by bill founded on the defendant's privilege (§ 65); his notes (i)-(m) cite Hale, Tidd and Sellon only. Andrews's note 1 (attorneys are officers of the court) is split into two interleaved columns; recorded in reading order.",
+  "citations": [
+    {"seq": 1, "raw": "Ex parto Garland, 71 U. . ... 860", "case_name": "Ex parte Garland",
+     "volume": 71, "reporter_abbr": "U. S.", "page": 360,
+     "status": "linked_cap", "cap_case_id": 6139904, "pincite": true, "confidence": "high",
+     "note": "page OCR'd 860 and split across interleaved lines, read 360; the case runs 71 U.S. 333-399"},
+    {"seq": 2, "raw": "Re Austin, 5 Rawle, 191", "case_name": "In re Austin",
+     "volume": 5, "reporter_abbr": "Rawle", "page": 191,
+     "status": "linked_cap", "cap_case_id": 1824600, "confidence": "high",
+     "note": "CAP: Case of Austin"},
+    {"seq": 3, "raw": "28 Am. Dec. 657", "case_name": "In re Austin",
+     "volume": 28, "reporter_abbr": "Am. Dec.", "page": 657,
+     "status": "linked_cap", "cap_case_id": 1824600, "confidence": "medium",
+     "note": "American Decisions reprint linked to 5 Rawle 191"},
+    {"seq": 4, "raw": "Hamilton v. Wright, 87 ... N, 7. 502", "case_name": "Hamilton v. Wright",
+     "volume": 37, "reporter_abbr": "N. Y.", "page": 502,
+     "status": "linked_cap", "cap_case_id": 2043966, "confidence": "high",
+     "note": "OCR'd '87' and 'N, 7.' across interleaved lines; CAP's cite is 37 N.Y. 502"},
+    {"seq": 5, "raw": "Merritt v. Lambert. 10 ... Paige,. 852", "case_name": "Merritt v. Lambert",
+     "volume": 10, "reporter_abbr": "Paige", "page": 352,
+     "status": "linked_cap", "cap_case_id": 482509, "confidence": "high",
+     "note": "page OCR'd 852, read 352"},
+    {"seq": 6, "raw": "Walmesby v. Booth, ... Barn. Ch. 478", "case_name": "Walmesley v. Booth",
+     "volume": 2, "reporter_abbr": "Barn. Ch.", "page": 478,
+     "status": "linked_english_reports", "er_case_id": "17390048", "pincite": true, "confidence": "high",
+     "note": "Barnardiston's Chancery Reports, stored as Barn C 475 (a 3,000-word record, reaching 478); the volume the OCR shows as '2' is doubtful; the next record begins at 483"}
+  ]
+}
