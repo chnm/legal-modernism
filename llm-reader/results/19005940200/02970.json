@@ -1,0 +1,26 @@
+{
+  "psmid": "19005940200", "pageid": "02970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:00:21Z",
+  "note": "printed p. 270; the anomalous award case (replication must state a breach). The second mention of Meredith v. Alleyn prints no cite here (the 1831 edition adds 'Salk. 138'), so it is not recorded. Agrees with hathi00002/02230 otherwise",
+  "citations": [
+    {"seq": 1, "raw": "l Sand. 103. n.()", "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (1), number lost in the OCR; Hayman v. Gerrard, which ER splits at 1 Wms Saund 99 and 102; linked to the record at 102, which holds 103"},
+    {"seq": 2, "raw": "Meredith v. Alleyn, I Salk. 13i", "case_name": "Meredith v. Alleyn",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 138,
+     "status": "linked_english_reports", "er_case_id": "17952559", "confidence": "high",
+     "note": "OCR '13i' for 138"},
+    {"seq": 3, "raw": "Carth. 116. .C.", "case_name": "Meredith v. Alleyn",
+     "reporter_abbr": "Carth.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "17410238", "pincite": true, "confidence": "high",
+     "note": "S. C. of Meredith v. Alleyn; ER Meredith v. Allen begins at Carth 115 (Murgatroid v. Law begins at 116; the name decides)"},
+    {"seq": 4, "raw": "Nicholson v. Simpson, Str. 299", "case_name": "Nicholson v. Simpson",
+     "volume": 1, "reporter_abbr": "Str.", "page": 299,
+     "status": "linked_english_reports", "er_case_id": "17952662", "pincite": true, "confidence": "high",
+     "note": "volume supplied; ER Nicholson v. Simpson begins at 1 Str 297 (Rex v. Nicholson begins at 299; the printed name decides)"},
+    {"seq": 5, "raw": "Gayle v. Betts, 1 Mod. 227", "case_name": "Gayle v. Betts",
+     "volume": 1, "reporter_abbr": "Mod.", "page": 227,
+     "status": "linked_english_reports", "er_case_id": "17961040", "confidence": "high",
+     "note": "two cases begin at 1 Mod 227; the name decides"}
+  ]
+}

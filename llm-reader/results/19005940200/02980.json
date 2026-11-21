@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "02980",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:00:37Z",
+  "note": "printed p. 271; end of the award anomaly; Rule II, upon a traverse issue must be tendered; conclusion to the country. 'Supra' pages are cross-references, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Meredith v. Alleyn, Salk. 1s8", "case_name": "Meredith v. Alleyn",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 138,
+     "status": "linked_english_reports", "er_case_id": "17952559", "confidence": "high",
+     "note": "volume supplied and OCR '1s8' read as 138, as cited on the previous page; per Holt, C. J."}
+  ]
+}

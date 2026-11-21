@@ -1,0 +1,16 @@
+{
+  "psmid": "19005940200", "pageid": "02800",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:55:32Z",
+  "note": "printed p. 253; every pleading must answer the whole; discontinuance. Com. Dig. is a treatise, skipped. Footnote (n) ends the page at 'Her-'; its Herlakenden's Case is recorded on the next page, where its cite is printed. Agrees with hathi00002/02110",
+  "citations": [
+    {"seq": 1, "raw": "I Saund. 28. n. ()", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "Saunders's note (3), number lost in the OCR (printed in full in footnote (n)); Birks v. Trippet begins at 1 Wms Saund 28"},
+    {"seq": 2, "raw": "Herla- kenden's Case, 4 Rep. 62 a", "case_name": "Herlakenden's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 62,
+     "status": "linked_english_reports", "er_case_id": "15980017", "confidence": "high"},
+    {"seq": 3, "raw": "1 Saund. 28. n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "Saunders's note (3); Birks v. Trippet begins at 1 Wms Saund 28"}
+  ]
+}

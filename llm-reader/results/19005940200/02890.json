@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "02890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:58:06Z",
+  "note": "printed p. 262; end of the replication in estoppel; new assignment introduced. 2 Chitty, 416. 590, 1st edit. (Chitty on Pleading) is a treatise, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Took v. Glascock, I Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 250 (ER continues it at 260)"}
+  ]
+}
