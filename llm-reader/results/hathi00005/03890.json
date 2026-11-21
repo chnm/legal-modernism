@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "03890",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:32:20Z",
+  "note": "Second appendix pp. cxiii-cxiv, note 2 concluded and note 3 begins; Com. Dig. is not a case. Same printed page as hathi00004/03890.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Mackinley v. McGregor, 3 Wharton, 369",
+      "case_name": "Mackinley v. M'Gregor",
+      "volume": 3,
+      "reporter_abbr": "Whart.",
+      "page": 369,
+      "status": "linked_cap",
+      "cap_case_id": 1833448,
+      "confidence": "high",
+      "note": "cited 3 Whart. 369 in CAP (first_page 368)"
+    }
+  ]
+}
