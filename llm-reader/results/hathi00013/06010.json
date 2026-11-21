@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:59:07Z",
+  "note": "Appendix p. 547, notes (45)-(47). No case names printed; same footnotes as 1894 (19005765000/05540), read against the 1824 and 1831 editions there.",
+  "citations": [
+    {"seq": 1, "raw": "Hob. 232", "reporter_abbr": "Hob.", "page": 232,
+     "status": "linked_english_reports", "er_case_id": "17921070", "confidence": "medium",
+     "note": "Heard v. Baskervile, Hob 232 (Hobart on special demurrer under 27 Eliz. c. 5), named in the 1831 edition; no name printed here"},
+    {"seq": 2, "raw": "3 T. R. 158", "volume": 3, "reporter_abbr": "T. R.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "medium",
+     "note": "Ashurst J.'s dictum that there is no general issue in quare impedit; 3 TR 158 falls inside Read v. Brookman (3 TR 151, 1789, 4,900 words, on pleading a lost deed), the only case spanning that page (next record begins at 162); no name printed. The 1894 record has this at low because its OCR was garbled; legible here"},
+    {"seq": 3, "raw": "2 Wils. 145", "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "medium",
+     "note": "printed 145 here and in 1894, but the 1824 and 1831 editions print 143, where Brudnell v. Roberts (seisin in fee of the lessor and descent of the reversion) begins; 2 Wils KB 145 is Chapman v. Pickersgill, unrelated; no name printed"}
+  ]
+}

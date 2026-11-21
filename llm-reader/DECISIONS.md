@@ -210,7 +210,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    into 101; 03650 Cornwallis v. Savery is 2 Burr. 773, a pin cite; 03440
    add the bare "Id." (Dana v. Bryant); 03580 "1 Lev. 83" (Pullin v.
    Nicholas) is doubtful: the 1824 text prints 1 Lev. 32 (Serjeant v.
-   Fairfax, `low`). Remove `case_name` where no name is printed
+   Fairfax, `low`). Buckley v. Rice Thomas at Plow. 118 is not a pin cite
+   (hathi00013/04620–04910 set one); 123 and 128 a are. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

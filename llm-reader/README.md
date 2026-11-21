@@ -196,7 +196,8 @@ Termino Sancti Mich", with the case's name in `murrell_title`), not the
 empty 17921247. "Anon., 2 Salk. 519" (three Anonymous cases begin there)
 is 17950161, at `low`. Buckley v. Rice Thomas (Plowd. 118–128, in Plowden's
 missing pages) is Dyer's report, "Bulkeley v Thomas", 2 Dy 113 (17941482),
-linked at `medium`, a pin cite past 113. Record each of
+linked at `medium`: Plow. 118, the report's first page, is not a pin
+cite; a later Plowden page (123, 128 a) is. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`),
 except where the printed name alone picks the case, which is `high`
 (Stephen v. Arthur, Salk. 544).
