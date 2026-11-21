@@ -1,0 +1,56 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "01270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:53:34Z",
+  "note": "printed p. 162 (second page so numbered): special pleas, and the continuation of the American editor's note [20] on the general issues",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Anon. 5 Mod. 18",
+      "case_name": "Anonymous",
+      "volume": 5,
+      "reporter_abbr": "Mod.",
+      "page": 18,
+      "status": "linked_english_reports",
+      "er_case_id": "17940081",
+      "confidence": "low",
+      "note": "two Anonymous cases begin at 5 Mod 18 (17940079, 17940081) and cannot be told apart without their text; chose the one the other editions' readings chose"
+    },
+    {
+      "seq": 2,
+      "raw": "Paramore v. Johnson, 1 Ld. Ray.\n566",
+      "case_name": "Paramore v. Johnson",
+      "volume": 1,
+      "reporter_abbr": "Ld. Ray.",
+      "page": 566,
+      "status": "linked_english_reports",
+      "er_case_id": "17921736",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "12 Mod. 376. S. C.",
+      "case_name": "Paramore v. Johnson",
+      "volume": 12,
+      "reporter_abbr": "Mod.",
+      "page": 376,
+      "status": "linked_english_reports",
+      "er_case_id": "17961443",
+      "confidence": "high",
+      "note": "S. C. = Paramore v. Johnson; ER 'Paramour against Johnson' at 12 Mod 376"
+    },
+    {
+      "seq": 4,
+      "raw": "Dodd v. Kyffin,\n7 T. R. 254",
+      "case_name": "Dodd v. Kyffin",
+      "volume": 7,
+      "reporter_abbr": "T. R.",
+      "page": 354,
+      "status": "linked_english_reports",
+      "er_case_id": "17970501",
+      "confidence": "high",
+      "note": "page 254 corrected to 354: Dodd v. Kyffin is 7 TR 354; 7 TR 254 is Myers v. Edge"
+    }
+  ]
+}

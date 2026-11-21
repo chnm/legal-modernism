@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "01070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:48:48Z",
+  "note": "certainty of the issue and the ancient jury (printed pp. 133-134); other footnotes cite the Appendix, Bracton and a supra page",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "The King v. Cook, 2 Barn. & Cres. 871",
+      "case_name": "The King v. Cook",
+      "volume": 2,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 871,
+      "status": "linked_english_reports",
+      "er_case_id": "18240180",
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "01180",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:51:50Z",
+  "note": "election to demur or plead (printed pp. 150-152); 3 Bl. Com. is a treatise, not recorded; note (k), a quotation, continues overleaf",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Saund. 228; c. n. (1)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 228,
+      "status": "linked_english_reports",
+      "er_case_id": "18450243",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "1 Saund. 228 c n. (1) is Serjeant Williams's note to Stennel v. Hogg (ER record from 1 Wms Saund 226); no name printed"
+    }
+  ]
+}

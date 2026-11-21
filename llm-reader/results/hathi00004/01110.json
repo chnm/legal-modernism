@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "01110",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:49:33Z",
+  "note": "nature of a demurrer, general and special (printed pp. 139-141); Co. Litt., Reg. Plac. and Bac. Ab. are treatises and 27 Eliz. c. 5 and 4 Ann. c. 16 statutes, not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Colt v. Bishop of Coventry, Hob. 164",
+      "case_name": "Colt v. Bishop of Coventry",
+      "reporter_abbr": "Hob.",
+      "page": 164,
+      "status": "linked_english_reports",
+      "er_case_id": "17921247",
+      "pincite": true,
+      "confidence": "high",
+      "note": "the Commendam case begins at Hob 140; the next case begins at Hob 165"
+    }
+  ]
+}
