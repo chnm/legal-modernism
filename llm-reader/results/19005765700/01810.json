@@ -1,0 +1,45 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01810",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:29:21Z",
+  "note": "printed p. 155 (*188-189); general issue and special pleas; 1843 copy 19005904300/02230 read for the garbled footnote (c)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Neal r. Mack:nizic, TI yrw. . W7.",
+      "case_name": "Neal v. Mackenzie",
+      "volume": 4,
+      "reporter_abbr": "Tyrw.",
+      "page": 670,
+      "status": "linked_english_reports",
+      "er_case_id": "18350178",
+      "confidence": "medium",
+      "note": "OCR garbled; 1843 copy prints 'Neal v. Mackenzie, 4 Tyrw. 670'. Tyrwhitt has no source: linked the same case in Crompton, Meeson and Roscoe, Neale v Mackenzie, 2 CrM & R 84 (1835)"
+    },
+    {
+      "seq": 2,
+      "raw": "W7. ells v. Ody, 5 Tyrw. 725",
+      "case_name": "Wells v. Ody",
+      "volume": 5,
+      "reporter_abbr": "Tyrw.",
+      "page": 725,
+      "status": "linked_english_reports",
+      "er_case_id": "18350337",
+      "confidence": "low",
+      "note": "Tyrwhitt has no source: linked the same case in Crompton, Meeson and Roscoe. ER holds two 1835 records, 2 CrM & R 128 (18350337) and 2 CrM & R 184 (18350336); picked the earlier and fuller one, nothing tells them apart"
+    },
+    {
+      "seq": 3,
+      "raw": "Ilaine v. Darey, 4 Ad. & Ill. 892",
+      "case_name": "Haine v. Davey",
+      "volume": 4,
+      "reporter_abbr": "Ad. & Ell.",
+      "page": 892,
+      "status": "linked_english_reports",
+      "er_case_id": "18360649",
+      "confidence": "high",
+      "note": "OCR 'Ilaine v. Darey ... Ill.' read as Haine v. Davey, 4 Ad. & Ell. 892"
+    }
+  ]
+}

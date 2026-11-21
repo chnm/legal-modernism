@@ -186,7 +186,10 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    unnamed); earlier records mix them (Denison v. Richardson, Holding v.
    Haling, Hickman v. Walker). "1 Saund. 374, n. 1" (1831, 1871) is 274,
    The King v. Sutton, as the English editions print it; hathi00002 links
-   Toomes v. Etherington. Remove `case_name` where no name is printed
+   Toomes v. Etherington. Smith v. Goldsworthy, 1 Dowl. N.S. 288
+   (19005765700/00610–00900) kept an exact stub although the English
+   Reports have the case (2 QB 717, 4 QB 430): pick the record by year and
+   link it, per the same-case rule. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

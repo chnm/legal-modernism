@@ -1,0 +1,33 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01060",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:34:00Z",
+  "note": "printed p. 80 (*101-102); special verdict, special case. The bracketed note printed (x) is the text's (xx), a later editor's. Littleton, a statute and 2 Inst. skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Sanders v. Vanzeller, 4 Q. B. 260, 272",
+      "case_name": "Sanders v. Vanzeller",
+      "volume": 4,
+      "reporter_abbr": "Q. B.",
+      "page": 260,
+      "status": "linked_english_reports",
+      "er_case_id": "18430316",
+      "confidence": "high",
+      "note": "dropped: 272 (the page of Denman's dictum, inside the case)"
+    },
+    {
+      "seq": 2,
+      "raw": "Mayor of Devizes v. Clark, 8 Adol. & El. 606",
+      "case_name": "Mayor of Devizes v. Clark",
+      "volume": 3,
+      "reporter_abbr": "Adol. & El.",
+      "page": 506,
+      "status": "linked_english_reports",
+      "er_case_id": "18350772",
+      "confidence": "high",
+      "note": "printed 8 ... 606; the case is at 3 Ad & E 506"
+    }
+  ]
+}

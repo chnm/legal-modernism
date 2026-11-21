@@ -1,0 +1,139 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00840",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:29:23Z",
+  "note": "printed p. 58 (*73-74); oyer; footnote (b) reads (h) in the OCR; Com. Dig., Tidd, Sel. are treatises. Checked against the 1843 fifth edition (19005904300/01080)",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Simpson v. Garside, Lutw. 1644",
+      "case_name": "Simpson v. Garside",
+      "volume": 2,
+      "reporter_abbr": "Lutw.",
+      "page": 1644,
+      "status": "linked_stub",
+      "stub_cite": "2 Lutw. 1644",
+      "confidence": "medium",
+      "note": "Lutwyche is in the stubs only; volume 2 supplied (the book is paged as one run); no ER report found by name"
+    },
+    {
+      "seq": 2,
+      "raw": "Jevons v. Harridge, 1 Sid. 38",
+      "case_name": "Jevons v. Harridge",
+      "volume": 1,
+      "reporter_abbr": "Sid.",
+      "page": 308,
+      "status": "linked_english_reports",
+      "er_case_id": "17140321",
+      "confidence": "high",
+      "note": "printed 38; the case (Jevons versus Harridge, Administrator Lenevere) is at 1 Sid 308; 1 Sid 38 is Best & Jolly"
+    },
+    {
+      "seq": 3,
+      "raw": "Archbishop of Canterbury v. Tubb, 3 Bing. N. C. 789",
+      "case_name": "Archbishop of Canterbury v. Tubb",
+      "volume": 3,
+      "reporter_abbr": "Bing. N. C.",
+      "page": 789,
+      "status": "linked_english_reports",
+      "er_case_id": "18370730",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Page t. Divine, 2 T. R. 40",
+      "case_name": "Page v. Divine",
+      "volume": 2,
+      "reporter_abbr": "T. R.",
+      "page": 40,
+      "status": "linked_english_reports",
+      "er_case_id": "17870154",
+      "confidence": "high",
+      "note": "two cases begin at 2 TR 40; the name picks Page against Divine"
+    },
+    {
+      "seq": 5,
+      "raw": "Archbishop of Canterbury v. Tnbb, 3 Bing. N. C. 789",
+      "case_name": "Archbishop of Canterbury v. Tubb",
+      "volume": 3,
+      "reporter_abbr": "Bing. N. C.",
+      "page": 789,
+      "status": "linked_english_reports",
+      "er_case_id": "18370730",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Daly c. Mallon, 4 Bing. N. C. 235",
+      "case_name": "Daly v. Mahon",
+      "volume": 4,
+      "reporter_abbr": "Bing. N. C.",
+      "page": 235,
+      "status": "linked_english_reports",
+      "er_case_id": "18380375",
+      "confidence": "high",
+      "note": "printed Mallon; ER: Daly, Executor of Smith, v Mahon, 4 Bing NC 235"
+    },
+    {
+      "seq": 7,
+      "raw": "Smith v. Goldsworthy, 1 Dowl. N. S. 288",
+      "case_name": "Smith v. Goldsworthy",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 288,
+      "status": "linked_stub",
+      "stub_cite": "1 Dowl. N.S. 288",
+      "confidence": "high",
+      "note": "exact stub. ER holds Smith against Goldsworthy at 2 QB 717 (1842) and 4 QB 430 (1843), but nothing shows which proceeding, if either, is the one in Dowling, so the stub is kept"
+    },
+    {
+      "seq": 8,
+      "raw": "1 Saund. 0 b. n. (e)",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "OCR 0 read as 9 (the 1843 edition prints 1 Saund. 9 b. n.); the note belongs to Jevens v. Harridge, whose ER record at 1 Wms Saund 8 runs past 9 (the case begins at 1 Wms Saund 1, so a pin cite)"
+    },
+    {
+      "seq": 9,
+      "raw": "Goodricke v. Turley, 1 Tyr. & Gr. 149",
+      "case_name": "Goodricke v. Turley",
+      "volume": 1,
+      "reporter_abbr": "Tyr. & Gr.",
+      "page": 149,
+      "status": "linked_english_reports",
+      "er_case_id": "18350104",
+      "confidence": "medium",
+      "note": "Tyrwhitt and Granger has no source; linked to the same case's report, 2 CrM & R 694"
+    },
+    {
+      "seq": 10,
+      "raw": "2 C., M. & R. 094",
+      "case_name": "Goodricke v. Turley",
+      "volume": 2,
+      "reporter_abbr": "C., M. & R.",
+      "page": 694,
+      "status": "linked_english_reports",
+      "er_case_id": "18350104",
+      "confidence": "high",
+      "note": "OCR 094 read as 694"
+    },
+    {
+      "seq": 11,
+      "raw": "4 Dowl. 481, S. C.",
+      "case_name": "Goodricke v. Turley",
+      "volume": 4,
+      "reporter_abbr": "Dowl.",
+      "page": 481,
+      "status": "linked_english_reports",
+      "er_case_id": "18350104",
+      "confidence": "medium",
+      "note": "S. C. of Goodricke v. Turley; Dowling has no source, linked to the same case's report, 2 CrM & R 694"
+    }
+  ]
+}

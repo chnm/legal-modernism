@@ -1,0 +1,27 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01850",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:33:08Z",
+  "note": "printed p. 159 (*193-194); special traverse introduced, declaration in covenant; 1843 copy 19005904300/02270 read for n. (w)",
+  "citations": [
+    {"seq": 1, "raw": "Parker v. Riley, 3 M. & WV. 230", "case_name": "Parker v. Riley",
+     "volume": 3, "reporter_abbr": "M. & W.", "page": 230,
+     "status": "linked_english_reports", "er_case_id": "18380196", "confidence": "high"},
+    {"seq": 2, "raw": "6 Dowl. 3,o, S. C.", "case_name": "Parker v. Riley",
+     "volume": 6, "reporter_abbr": "Dowl.", "page": 375,
+     "status": "linked_english_reports", "er_case_id": "18380196", "pincite": false,
+     "confidence": "medium", "note": "page garbled; 1843 copy prints 6 Dowl. 375; Dowling's Practice Cases, same case linked to its English Reports report, 3 M & W 230"},
+    {"seq": 3, "raw": "Curtis v. Marquis of Headfort, 6 Dowl. 496", "case_name": "Curtis v. Marquis of Headfort",
+     "volume": 6, "reporter_abbr": "Dowl.", "page": 496,
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases, no source; no stub at 6 Dowl. 496 (nearest 6 Dowl. 493); no English Reports report found by name (Curtis, Headfort, 1836-40)"},
+    {"seq": 4, "raw": "Fursdon r. Weeks, 3 Lev y -", "case_name": "Fursdon v. Weeks",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 65,
+     "status": "linked_english_reports", "er_case_id": "17970098", "confidence": "high",
+     "note": "page garbled; 1843 copy prints 3 Lev. 65; two records begin at 3 Lev 65, the name picks Fursdon against Weeks (the earlier report of the suit is at 3 Lev 61)"},
+    {"seq": 5, "raw": "Hooker v. Nye, 1 C., M. & R. 258", "case_name": "Hooker v. Nye",
+     "volume": 1, "reporter_abbr": "C. M. & R.", "page": 258,
+     "status": "linked_english_reports", "er_case_id": "18340148", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "psmid": "19005765700", "pageid": "01650",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T15:34:42Z",
+  "note": "1 Arch. Pl. and Bac. Ab. not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry,.Hob. 162", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "choice already made: Colt v. Bishop of Coventry (Hob. 140-164) is 17920644, the record with text"},
+    {"seq": 2, "raw": "Williams v. Bryant, 5 M. & W. 447", "case_name": "Williams v. Bryant",
+     "volume": 5, "reporter_abbr": "M. & W.", "page": 447,
+     "status": "linked_english_reports", "er_case_id": "18390350", "confidence": "high"},
+    {"seq": 3, "raw": "7 Dowl. ,\"02, S. C.", "case_name": "Williams v. Bryant",
+     "volume": 7, "reporter_abbr": "Dowl.", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18390350", "pincite": false, "confidence": "medium",
+     "note": "page garbled; the 1843 edition (19005904300/02080) prints 7 Dowl. 502; Dowling has no source, linked to the same case at 5 M & W 447"},
+    {"seq": 4, "raw": "Warre u. Calvert, 7 A. & E. 143", "case_name": "Warre v. Calvert",
+     "volume": 7, "reporter_abbr": "A. & E.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "18370797", "confidence": "high"},
+    {"seq": 5, "raw": "2 N. & P. 120, S. C.", "case_name": "Warre v. Calvert",
+     "volume": 2, "reporter_abbr": "N. & P.", "page": 126,
+     "status": "linked_english_reports", "er_case_id": "18370797", "pincite": false, "confidence": "medium",
+     "note": "page printed 120, the 1843 edition prints 126; Nevile and Perry has no source, linked to the same case at 7 Ad & E 143"},
+    {"seq": 6, "raw": "North v. Wakefield, 13 Q. B. 536", "case_name": "North v. Wakefield",
+     "volume": 13, "reporter_abbr": "Q. B.", "page": 536,
+     "status": "linked_english_reports", "er_case_id": "18490465", "confidence": "high"},
+    {"seq": 7, "raw": "Dresser v. Stansfield, 14 M. & W. 822", "case_name": "Dresser v. Stansfield",
+     "volume": 14, "reporter_abbr": "M. & W.", "page": 822,
+     "status": "linked_english_reports", "er_case_id": "18451324", "confidence": "high"}
+  ]
+}

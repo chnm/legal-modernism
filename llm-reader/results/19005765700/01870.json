@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01870",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:33:33Z",
+  "note": "printed p. 161 (*195-197); plea with special traverse (absque hoc); footnote (a) printed as '(o)'",
+  "citations": [
+    {"seq": 1, "raw": "Brudnell v. Roberts, 2 Wils. 148", "case_name": "Brudnell v. Roberts",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "high",
+     "note": "printed 148; Brudnell v Roberts begins at 2 Wils KB 143"},
+    {"seq": 2, "raw": "Palmer o. Ekins, Ld. Raym. 1650", "case_name": "Palmer v. Ekins",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1550,
+     "status": "linked_english_reports", "er_case_id": "17901324", "confidence": "high",
+     "note": "volume supplied (2) and page corrected from 1650 to 1550: Palmer v Ekins, 2 Ld Raym 1550"},
+    {"seq": 3, "raw": "Brudnell v. Roberto, 2 Wi. 148", "case_name": "Brudnell v. Roberts",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "high",
+     "note": "printed 148; Brudnell v Roberts begins at 2 Wils KB 143"}
+  ]
+}

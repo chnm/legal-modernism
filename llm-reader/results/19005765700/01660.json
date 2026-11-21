@@ -1,0 +1,18 @@
+{
+  "psmid": "19005765700", "pageid": "01660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T15:35:03Z",
+  "note": "the first footnote lines end Williston's bracketed note (ii) of the previous page",
+  "citations": [
+    {"seq": 1, "raw": "Fisher v. Pimbley, 11 East, 188", "case_name": "Fisher v. Pimbley",
+     "volume": 11, "reporter_abbr": "East", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18090223", "confidence": "high"},
+    {"seq": 2, "raw": "Cousins v. Paddon, 5 Tyrw. 535", "case_name": "Cousins v. Paddon",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 535,
+     "status": "linked_english_reports", "er_case_id": "18350048", "pincite": false, "confidence": "medium",
+     "note": "Tyrwhitt has no source; linked to the same case at 2 CrM & R 547"},
+    {"seq": 3, "raw": "4 Dowl. 488, S. C.", "case_name": "Cousins v. Paddon",
+     "volume": 4, "reporter_abbr": "Dowl.", "page": 488,
+     "status": "linked_english_reports", "er_case_id": "18350048", "pincite": false, "confidence": "medium",
+     "note": "Dowling's Practice Cases has no source; linked to the same case at 2 CrM & R 547"}
+  ]
+}

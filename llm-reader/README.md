@@ -74,7 +74,7 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, Smith's Leading
   Cases (a collection, not a report), Chitty on Pleading (`1 Chitty, 498,
   1st edit.`, not Chitty's K.B. Reports), Gilbert on Replevin (`Gilb. Rep. (Hunt's Edit.)`,
-  not Gilbert's Reports), and the practice books Richardson's K. B. and Manning's Exchequer), statutes
+  not Gilbert's Reports), and the practice books Richardson's K. B. and Manning's Exchequer, `Mann. Exch.`), statutes
   (`4 Ann. c. 16`), an abridgment entry that names no year-book folio
   (`Fitz. Abr. tit. Eject. firm. 2`), a reporter's preface (`Co. Pref. to
   10 Rep.`), rules of court even when printed in a report

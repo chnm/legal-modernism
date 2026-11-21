@@ -1,0 +1,103 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00870",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:31:02Z",
+  "note": "printed p. 61 (*77-78); effect of oyer, counter-plea to oyer; footnote (o) is Chitty (not a case); the letters of (o) and (q) are garbled in the OCR",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Paine v. Emery, 5 Tyrw. 1097",
+      "case_name": "Paine v. Emery",
+      "volume": 5,
+      "reporter_abbr": "Tyrw.",
+      "page": 1097,
+      "status": "linked_english_reports",
+      "er_case_id": "18350185",
+      "confidence": "medium",
+      "note": "Tyrwhitt has no source; linked to the same case's report, 2 CrM & R 304"
+    },
+    {
+      "seq": 2,
+      "raw": "2 C., M. & R. 304, S. C.",
+      "case_name": "Paine v. Emery",
+      "volume": 2,
+      "reporter_abbr": "C., M. & R.",
+      "page": 304,
+      "status": "linked_english_reports",
+      "er_case_id": "18350185",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Smith r. Jeinnings, 9 Dowl. 155",
+      "case_name": "Smith v. Jennings",
+      "volume": 9,
+      "reporter_abbr": "Dowl.",
+      "page": 155,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases have no source and no stub at 9 Dowl. 155; no ER record of Smith v. Jennings 1838-43. The same case is cited at 9 Dowl. 162 on p. 60"
+    },
+    {
+      "seq": 4,
+      "raw": "A.hton v. Freeston, 2 Man. & Gr. 1",
+      "case_name": "Ashton v. Freeston",
+      "volume": 2,
+      "reporter_abbr": "Man. & Gr.",
+      "page": 1,
+      "status": "linked_english_reports",
+      "er_case_id": "18401039",
+      "confidence": "high",
+      "note": "ER: Thomas Ashton v Humphrey May Freestun, 2 Man & G 1"
+    },
+    {
+      "seq": 5,
+      "raw": ".TJifrey ,. White, Doug. 175",
+      "case_name": "Jeffery v. White",
+      "volume": 2,
+      "reporter_abbr": "Doug.",
+      "page": 476,
+      "status": "linked_english_reports",
+      "er_case_id": "17800101",
+      "confidence": "high",
+      "note": "printed Doug. 175 (probably 475 in the one-volume Douglas); found by name at 2 Doug 476; volume supplied"
+    },
+    {
+      "seq": 6,
+      "raw": "Snell v. Snell, 4 Barn. & Cress. 711",
+      "case_name": "Snell v. Snell",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Cress.",
+      "page": 741,
+      "status": "linked_english_reports",
+      "er_case_id": "18250796",
+      "confidence": "high",
+      "note": "OCR 711 read as 741 (Thomas Snell against John Snell, 4 B & C 741)"
+    },
+    {
+      "seq": 7,
+      "raw": "1 Satnil. 9 b n. 1",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Williams's note to Jevens v. Harridge, whose ER record at 1 Wms Saund 8 runs past 9 (case begins at 1 Wms Saund 1)"
+    },
+    {
+      "seq": 8,
+      "raw": "Ibid.",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 9,
+      "status": "linked_english_reports",
+      "er_case_id": "18450277",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "footnote (s), Ibid. = 1 Saund. 9 b, n. 1 of footnote (r), a single cite"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "psmid": "19005765700", "pageid": "01530",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T15:29:06Z",
+  "note": "the first footnote lines continue note (u) of the previous page",
+  "citations": [
+    {"seq": 1, "raw": "note (a) to llind v. Gray, 1 Mi. & (G.01.", "case_name": "Hind v. Gray",
+     "volume": 1, "reporter_abbr": "M. & G.", "page": 201,
+     "status": "linked_english_reports", "er_case_id": "18400554", "pincite": true, "confidence": "high",
+     "note": "page garbled; 1843 edition prints 1 M. & G. 201; note to Hinde v Gray, which begins at 1 Man & G 195"},
+    {"seq": 2, "raw": "llriscae r. li!l. 10 M. & W. 7.35", "case_name": "Briscoe v. Hill",
+     "volume": 10, "reporter_abbr": "M. & W.", "page": 735,
+     "status": "linked_english_reports", "er_case_id": "18421141", "confidence": "high"},
+    {"seq": 3, "raw": "Slale r. llawley, 1:1 5I & W. 757", "case_name": "Slade v. Hawley",
+     "volume": 13, "reporter_abbr": "M. & W.", "page": 757,
+     "status": "linked_english_reports", "er_case_id": "18450495", "confidence": "high"},
+    {"seq": 4, "raw": "1 Mani. & G. 201, n.", "case_name": "Hind v. Gray",
+     "volume": 1, "reporter_abbr": "Man. & G.", "page": 201,
+     "status": "linked_english_reports", "er_case_id": "18400554", "pincite": true, "confidence": "high",
+     "note": "the same note to Hinde v Gray, case begins at 195"},
+    {"seq": 5, "raw": "Humphreys v. Bethily, 2 Vent 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 222,
+     "status": "linked_english_reports", "er_case_id": "17260504", "confidence": "high",
+     "note": "the English Reports also hold an earlier stage of the suit at 2 Vent 198"}
+  ]
+}
