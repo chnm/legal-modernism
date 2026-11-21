@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00001", "pageid": "05540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:47:54Z",
+  "note": "Appendix (Notes) p. lxviii, notes (61)-(62); 27 Eliz. c. 6 is a statute, Co. Litt. by Hargrave a treatise. Cross-checked with the 1831 edition (hathi00002/043xx)",
+  "citations": [
+    {"seq": 1, "raw": "7 Rep. 3. a. Bulwer's Case", "case_name": "Bulwer's Case",
+     "volume": 7, "reporter_abbr": "Rep.", "page": 3,
+     "status": "linked_english_reports", "er_case_id": "15720058", "pincite": true, "confidence": "high",
+     "note": "this edition prints the name after the cite; Bulwer's Case begins at 7 Co Rep 1"},
+    {"seq": 2, "raw": "1 Saund. 74. n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) to Peacock v. Bell and Kendal, which begins at 1 Wms Saund 73 (the next record begins at 76), as the 1831 reader judged"}
+  ]
+}

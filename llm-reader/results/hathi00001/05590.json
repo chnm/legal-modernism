@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "05590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:49:13Z",
+  "note": "Appendix (Notes) p. lxxiii, notes (66)-(67); Bracton not recorded. Name from the 1831 edition (hathi00002/04370)",
+  "citations": [
+    {"seq": 1, "raw": "Cro. Jac. 560", "reporter_abbr": "Cro. Jac.", "page": 360,
+     "status": "linked_english_reports", "er_case_id": "17910448", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Halsey v. Carpenter (1831 and later editions, which print Cro. Jac. 360; the 1827 edition's OCR reads 's60'), Coke on pleading performance of a bond's condition in certainty; this scan's '560' is OCR for 360; the case begins at Cro Jac 359"}
+  ]
+}

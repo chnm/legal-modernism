@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "05410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:45:58Z",
+  "note": "Appendix (Notes) p. lv, notes (47)-(49); Reeves's History not recorded. Name from the 1831 edition (hathi00002/04260)",
+  "citations": [
+    {"seq": 1, "raw": "2 Wils. 143", "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "medium",
+     "note": "no name printed; Brudnell v. Roberts (1831 edition), on traversing a seisin in fee alleged in the lessor"}
+  ]
+}

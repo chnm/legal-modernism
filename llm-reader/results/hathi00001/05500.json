@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "05500",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:47:21Z",
+  "note": "Appendix (Notes) p. lxiv, note (57) continued; Bracton and Bac. Ab. not recorded",
+  "citations": [
+    {"seq": 1, "raw": "40 Ed. 3. 45", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fol. 45; no source for the year books"}
+  ]
+}
