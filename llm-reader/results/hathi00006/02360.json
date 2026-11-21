@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "02360",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T04:07:46Z",
+  "note": "printed pp. 338-340; same setting as hathi00005/02360",
+  "citations": [
+    {"seq": 1, "raw": "Hill v. Montagu, 2 M. & S. 377", "case_name": "Hill v. Montagu",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 377,
+     "status": "linked_english_reports", "er_case_id": "18140256", "confidence": "high"},
+    {"seq": 2, "raw": "Hinton v. Roffey, 3 Mod. 35, S. P.", "case_name": "Hinton v. Roffey",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 35,
+     "status": "linked_english_reports", "er_case_id": "17930538", "confidence": "high"},
+    {"seq": 3, "raw": "J'Anson v. Stuart, 1 T. R. 748", "case_name": "J'Anson v. Stuart",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 748,
+     "status": "linked_english_reports", "er_case_id": "17870116", "confidence": "high"}
+  ]
+}

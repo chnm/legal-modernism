@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "02220",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T04:03:37Z",
+  "note": "printed pp. 314-316; same setting as hathi00005/02220; Bacon's Abridgment and Chitty skipped; Bateman v. Allen's name is printed at the foot of the previous page; the OCR puts footnote (q) before (p), recorded in letter order",
+  "citations": [
+    {"seq": 1, "raw": "Bateman v. Allen, Cro. Eliz. 438", "case_name": "Bateman v. Allen",
+     "reporter_abbr": "Cro. Eliz.", "page": 438,
+     "status": "linked_english_reports", "er_case_id": "16530193", "pincite": true, "confidence": "high",
+     "note": "name printed at the foot of the previous page; case begins at Cro Eliz 437"},
+    {"seq": 2, "raw": "Childes v. Westcot, ibid. 482", "case_name": "Childes v. Westcot",
+     "reporter_abbr": "Cro. Eliz.", "page": 482,
+     "status": "linked_english_reports", "er_case_id": "16530449", "confidence": "high",
+     "note": "ibid. = Cro. Eliz."},
+    {"seq": 3, "raw": "Dyer, 91 b", "volume": 1, "reporter_abbr": "Dyer", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "17941118", "pincite": true, "confidence": "medium",
+     "note": "no name printed; volume supplied; Mervyn et Ux' v. Lyds (lease by husband and wife, the point of the text) begins at 1 Dy 90 and is long enough (1783 words) to reach 91 b; three other cases begin at 91 (Albeney's Case, Lyttleton v. Huccleton, Turney v. Sturges)"},
+    {"seq": 4, "raw": "6 Mod. 117", "volume": 6, "reporter_abbr": "Mod.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "17940655", "confidence": "medium",
+     "note": "no name printed; Elwis v. Lombe, the only case at 6 Mod 117, a liberum tenementum case"},
+    {"seq": 5, "raw": "12 Mod. 508", "volume": 12, "reporter_abbr": "Mod.", "page": 508,
+     "status": "linked_english_reports", "er_case_id": "17961459", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the README's choice: Pell v. Garlick, beginning at 12 Mod 506"},
+    {"seq": 6, "raw": "1 Saund. 347, d, n. (6.)", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
+     "status": "linked_english_reports", "er_case_id": "18450192", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note falls in Potter v. North, 1 Wms Saund 346"},
+    {"seq": 7, "raw": "5 Hen. 7, 10 a, pl. 2", "volume": 5, "reporter_abbr": "Y.B.", "page": 10,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 5 Hen. VII, fo. 10 a, pl. 2; no source"}
+  ]
+}

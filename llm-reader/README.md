@@ -226,7 +226,8 @@ Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
 Perry and Davison, Gale and Davison, Scott N.R.,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
 in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
-when that cite is a treatise.
+when that cite is a treatise. When it follows a footnote holding a single
+case, it is recorded as a citation of that case.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
 report at `medium` and say so in `note`: the link is to the case. The same
@@ -352,6 +353,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   (Harmer v. Rowe, 2 Chit. Rep. 334, linked to 6 M & S 146).
 - An Anonymous is an unambiguous name when it is the only Anonymous
   beginning at that page.
+- A `no_match` to a reporter with no source (Willes, the year books) is
+  graded by how surely the cite was read: `high` when legible with a name
+  printed, `medium` when legible without one.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
