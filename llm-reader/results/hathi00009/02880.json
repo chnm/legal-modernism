@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00009", "pageid": "02880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:58:43Z",
+  "note": "Stephen, chapter II (p. 264): several pleas carried beyond really distinct defences",
+  "citations": [
+    {"seq": 1, "raw": "Lord Clinton v. Morton, 2 Str., 1000", "case_name": "Lord Clinton v. Morton",
+     "volume": 2, "reporter_abbr": "Str.", "page": 1000,
+     "status": "linked_english_reports", "er_case_id": "17952430", "confidence": "high"}
+  ]
+}

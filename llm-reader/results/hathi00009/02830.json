@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00009", "pageid": "02830",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:57:47Z",
+  "note": "Stephen, chapter II (p. 259): several counts for the same cause of action. Tidd and a cross-reference skipped; footnote (l) matches hathi00002/02540 note for note",
+  "citations": [
+    {"seq": 1, "raw": "Meeke v. Oxlade, 1 N. R., 289", "case_name": "Meeke v. Oxlade",
+     "volume": 1, "reporter_abbr": "N. R.", "page": 289,
+     "status": "linked_english_reports", "er_case_id": "18050197", "confidence": "high",
+     "note": "Bosanquet and Puller's New Reports, stored in ER as 1 Bos & Pul 289 (Mekke v Oxlade, 1805)"},
+    {"seq": 2, "raw": "Gabell v. Shaw, 2 Chit. Rep., 299", "case_name": "Gabell v. Shaw",
+     "volume": 2, "reporter_abbr": "Chit. Rep.", "page": 299,
+     "status": "linked_stub", "stub_cite": "2 Chit. 299", "confidence": "high",
+     "note": "Chitty's K.B. Reports are in the stubs only; no Gabell v. Shaw in the English Reports"},
+    {"seq": 3, "raw": "Thomas v. Hanscombe, 1 Bing., 281", "case_name": "Thomas v. Hanscombe",
+     "volume": 1, "reporter_abbr": "Bing.", "page": 281,
+     "status": "linked_english_reports", "er_case_id": "18230583", "confidence": "high"},
+    {"seq": 4, "raw": "Brindley v. Dennet, 2 Bing., 184", "case_name": "Brindley v. Dennet",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 184,
+     "status": "linked_english_reports", "er_case_id": "18240660", "confidence": "high"},
+    {"seq": 5, "raw": "Nel- son v. Griffiths, ibid, 412", "case_name": "Nelson v. Griffiths",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 412,
+     "status": "linked_english_reports", "er_case_id": "18240930", "confidence": "high",
+     "note": "ibid expanded to 2 Bing."}
+  ]
+}

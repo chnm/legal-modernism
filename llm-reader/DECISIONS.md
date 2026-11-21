@@ -152,7 +152,10 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    other numbers than printed (e.g. Jones v. Kitchin, 1 Bos. & Pul. 77, is
    at 76 in some records). Bridgwater v. Bythway, 3 Lev. 113, is 17970039
    without `pincite`, at `medium` (settled 2026-11-21; drop it from item
-   2's list; hathi00006/01780 has it at `high`).
+   2's list; hathi00006/01780 has it at `high`). Grade every `no_match`
+   by the README's rule (`high` legible and named, `medium` legible
+   unnamed); earlier records mix them (Denison v. Richardson, Holding v.
+   Haling, Hickman v. Walker).
    Hartford v. Jones, 2 Salk. 654: relink every record to the duplicate
    with a `word_count`.
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
