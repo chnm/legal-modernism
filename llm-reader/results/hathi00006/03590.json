@@ -1,0 +1,9 @@
+{
+  "psmid": "hathi00006", "pageid": "03590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:15:11Z",
+  "note": "Appendix pp. lxviii-lxx, notes (47)-(49); Plac. Ab. 136 and 90 are Placitorum Abbreviatio (records of pleas, not reports); Turnebus on Quintilian is not law. Same printed page and footnotes as hathi00005/03590",
+  "citations": [
+    {"seq": 1, "raw": "10 Hen. 6, 7", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Hen. VI fo. 7; no source"}
+  ]
+}

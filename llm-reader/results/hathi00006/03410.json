@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00006", "pageid": "03410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:13:15Z",
+  "note": "Appendix pp. xli-xliii, note (34) continued; Blackstone and the Grand Coustumier are not cases. Same printed page and footnotes as hathi00005/03410",
+  "citations": [
+    {"seq": 1, "raw": "Vin. Ab. Trial, (B. 2), 10, cites 29 Ap. xxxvii. 19, (E. 2.)", "volume": 29, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "low",
+     "note": "year book cited through Viner (trial by inspection of nonage); '29 Ap. xxxvii. 19' reading unclear (no 29th year of Edw. II; perhaps 29 Ass. pl. 37, Edw. III); folio uncertain, so left out; no source. Kept consistent with the 1854 copy's record"}
+  ]
+}

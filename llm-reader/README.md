@@ -353,9 +353,10 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   (Harmer v. Rowe, 2 Chit. Rep. 334, linked to 6 M & S 146).
 - An Anonymous is an unambiguous name when it is the only Anonymous
   beginning at that page.
-- A `no_match` to a reporter with no source (Willes, the year books) is
-  graded by how surely the cite was read: `high` when legible with a name
-  printed, `medium` when legible without one.
+- A `no_match` to a reporter with no source (Willes, Tyrwhitt) is graded by
+  how surely the cite was read: `high` when legible with a name printed,
+  `medium` when legible without one. Year books, which are cited without
+  names, are `high` whenever legible.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
