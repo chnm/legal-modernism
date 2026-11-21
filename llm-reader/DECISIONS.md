@@ -194,7 +194,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    (Willion v. Berkley, 1 Plowden 222, pin cite) is recorded in the 1895
    records but skipped in the 1831 record of the same footnote: align.
    "Anon., 2 Salk. 519" is 17950161 everywhere (19005765700/01510–01800
-   picked 17950162 on two pages). Remove `case_name` where no name is printed
+   picked 17950162 on two pages). A bare `Lutw.` page matching a stub is
+   `high` (the volume follows from the page); many records have `medium`. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

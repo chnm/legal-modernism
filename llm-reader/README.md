@@ -415,6 +415,11 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - A case found by its printed name at a corrected page (Richley v. Proone,
   printed 386, at 286) is `high` when the name is unambiguous: the name
   decides, and `page` holds the corrected number.
+- Earlier editions' records are a cross-check, but some predate the rules
+  here; where they differ from this README, follow the README.
+- For a parallel cite linked to another reporter's record, leave
+  `pincite` unset when you cannot tell whether the cited page is the first
+  of its own report.
 - `pincite` is false when the cite is the case's first page in another
   report and the link goes to its record in the English Reports' reporter
   (Harmer v. Rowe, 2 Chit. Rep. 334, linked to 6 M & S 146).
@@ -442,6 +447,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   (n.s.)) takes the series' own volume in `volume`, with the printed one in
   `note`. A page supplied for a cite printed without one is `high` when the
   name is unique in that volume, `medium` otherwise.
+- Lutwyche is paged as one run, so the stub's `1 Lutw.` or `2 Lutw.` follows
+  from the page and is not "supplied": a bare `Lutw. 1592` matching
+  `2 Lutw. 1592` is an exact match.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
