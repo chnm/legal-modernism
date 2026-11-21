@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05440",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:58:12Z",
+  "note": "Printed page 490. Stephen's note (o) is Ibid. after Archbold (a treatise) and a cross-reference, not recorded. Matches 1894 19005765000/05040; links kept.",
+  "citations": [
+    {"seq": 1, "raw": "11 East, 263", "volume": 11, "reporter_abbr": "East", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18090247", "confidence": "medium",
+     "note": "no name printed; Vivian v. Blake begins at 11 East 263, on costs of several pleas under the statute of Anne, as the text says"},
+    {"seq": 2, "raw": "2 Burr. 763", "volume": 2, "reporter_abbr": "Burr.", "page": 753,
+     "status": "linked_english_reports", "er_case_id": "17590006", "confidence": "medium",
+     "note": "763 read 753, as every earlier edition prints (1824-1900); no name printed; Cooke v. Sayer begins at 2 Burr 753, on several pleas and costs, which fits the text (the 1827 edition names it)"}
+  ]
+}

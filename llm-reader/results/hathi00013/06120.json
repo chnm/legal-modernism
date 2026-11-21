@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06120",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:58:31Z",
+  "note": "Appendix notes (62)-(65), printed p. 558; matches 1894 Andrews 19005765000/05650. Gilbert's History of the Common Pleas, Blackstone, statutes and cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 74, n. 2", "volume": 1, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true,
+     "confidence": "medium",
+     "note": "Peacock v. Bell and Kendal, begun at 1 Wms Saund 69 and split by the English Reports; the record at 73 holds p. 74 and its note on venue; no name printed"},
+    {"seq": 2, "raw": "2 Saund. 171 c", "volume": 2, "reporter_abbr": "Saund.", "page": 171,
+     "status": "linked_english_reports", "er_case_id": "18450101", "pincite": true,
+     "confidence": "medium",
+     "note": "Hambleton v. Veere begins at 2 Wms Saund 169; p. 171 c is in its notes (time aided after verdict); no name printed"}
+  ]
+}
