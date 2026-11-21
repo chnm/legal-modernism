@@ -1,0 +1,30 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02710",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:09:15Z",
+  "note": "printed pp. 348-349; Co. Litt., Chitty on Pleading and cross-reference skipped; cross-checked against Gale 19005785400/02600",
+  "citations": [
+    {"seq": 1, "raw": "The King. v. Knollys, Ld. Ray. 13", "case_name": "The King v. Knollys", "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "17921920", "pincite": true, "confidence": "high",
+     "note": "volume supplied; case begins at 1 Ld Raym 11"},
+    {"seq": 2, "raw": "Mayor of Guilford v. Clarke, 2 Vent. 247", "case_name": "Mayor of Guilford v. Clarke", "volume": 2, "reporter_abbr": "Vent.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "17260570", "confidence": "high"},
+    {"seq": 3, "raw": "Deybel's case, 4 Barn. & Ald. 243", "case_name": "Deybel's Case", "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high"},
+    {"seq": 4, "raw": "Holmes v. Broughton, 10 Wendell, 75", "case_name": "Holmes v. Broughton", "volume": 10, "reporter_abbr": "Wend.", "page": 75,
+     "status": "linked_cap", "cap_case_id": 2012862, "confidence": "high"},
+    {"seq": 5, "raw": "Walker v. Maxwell, 1 Mass. Rep. 103", "case_name": "Walker v. Maxwell", "volume": 1, "reporter_abbr": "Mass.", "page": 103,
+     "status": "linked_cap", "cap_case_id": 42665, "confidence": "medium",
+     "note": "CAP has the case as 1 Mass. 79 (a differently paged edition of vol. 1); linked by name"},
+    {"seq": 6, "raw": "Pearsall v. Dwight, 2 Id. 34", "case_name": "Pearsall v. Dwight", "volume": 2, "reporter_abbr": "Mass.", "page": 84,
+     "status": "linked_cap", "cap_case_id": 2007327, "confidence": "high",
+     "note": "Id. = Mass.; printed 34 (in both copies) for 84, where CAP has the case (2 Mass. 84)"},
+    {"seq": 7, "raw": "Legg v. Legg, 8 Id. 99", "case_name": "Legg v. Legg", "volume": 8, "reporter_abbr": "Mass.", "page": 99,
+     "status": "linked_cap", "cap_case_id": 2028486, "confidence": "high",
+     "note": "Id. = Mass."},
+    {"seq": 8, "raw": "Ibid.", "case_name": "Legg v. Legg", "volume": 8, "reporter_abbr": "Mass.", "page": 99,
+     "status": "linked_cap", "cap_case_id": 2028486, "confidence": "medium",
+     "note": "Ibid. repeats the previous cite, Legg v. Legg, 8 Mass. 99 (Vermont law presumed like Massachusetts)"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02230",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:04:56Z",
+  "note": "printed pp. 273-274; cross-checked against Gale 19005785400/02120",
+  "citations": [
+    {"seq": 1, "raw": "Lord Clinton v. Morton, 2 Stra. 1000", "case_name": "Lord Clinton v. Morton", "volume": 2, "reporter_abbr": "Stra.", "page": 1000,
+     "status": "linked_english_reports", "er_case_id": "17952430", "confidence": "high", "note": "other cases also begin at 2 Str 1000; the name decides"}
+  ]
+}

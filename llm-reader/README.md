@@ -65,7 +65,9 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   left out and the plea in `note`. Records of pleas (Placitorum Abbreviatio) are not reports.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
-  Coke's Entries, Wentworth) are not.
+  Coke's Entries, Wentworth, Upper Bench Precedents) are not. A bare `Ibid.`
+  or `see same cases` pointing back to a whole earlier footnote of several
+  cites is not recorded again.
 - Not cases: treatises and abridgments (Tidd, Co. Litt., Com. Dig., Bac. Abr.,
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, Smith's Leading
   Cases (a collection, not a report), Chitty on Pleading (`1 Chitty, 498,
@@ -238,8 +240,10 @@ court suffix: `3 Wils KB 558`, Saunders is `1 Wms Saund 73`, Yelverton
 volume the printed cite never shows (`2 Cowp`, `3 Dy`, `1 Plowden`); Rep.
 temp. Hard. is `Cas T H`, Sir T. Raymond `T Raym`, Leonard `3 Leo 205`, Holt's Nisi Prius plain `Holt` (King's
 Bench is `Holt KB`). Plowden's first 130 pages
-are missing. Keilwey and Benloe
-are stored as groups of cases by term: link the group whose pages contain
+are missing. Dalison is stored as `2 Ben & D`
+(the 1689 Benloe and Dalison, 123 E.R. 225–315; `1 Ben & D` is that edition's
+Benloe, paged differently from the 1661 `Benl` Stephen cites). Keilwey,
+Benloe and Dalison are stored as groups of cases by term: link the group whose pages contain
 the cite, at `medium`, `Show KB`, `Freem KB`, `Holt KB`, `Moo KB`,
 `Barn KB`; when an exact cite misses, match the volume and the start of the
 reporter's name (`er_parallel_cite ~ '^3 Wils'`) to see how it is stored.

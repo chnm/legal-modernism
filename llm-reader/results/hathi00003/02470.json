@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02470",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:10:36Z",
+  "note": "printed pp. 310-311; Coke's Entries, Rastall's Entries, Wentworth, Upper Bench Precedents (books of precedents), Comyns's Digest, Chitty, Co. Litt., Spelman and a cross-reference skipped; cross-checked against Gale 19005785400/02360",
+  "citations": [
+    {"seq": 1, "raw": "Denham v. Stephenson, 1 Salk. 355", "case_name": "Denham v. Stephenson", "volume": 1, "reporter_abbr": "Salk.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "17951002", "confidence": "high"},
+    {"seq": 2, "raw": "The Duke of Newcastle v. Wright, 1 Lev. 190", "case_name": "Duke of Newcastle v. Wright", "volume": 1, "reporter_abbr": "Lev.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "17931096", "confidence": "high"},
+    {"seq": 3, "raw": "Reynoldson v. Blake, 1 Ld. Raym. 202", "case_name": "Reynoldson v. Blake", "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 202,
+     "status": "linked_english_reports", "er_case_id": "17922006", "pincite": true, "confidence": "high", "note": "case begins at 1 Ld Raym 192"},
+    {"seq": 4, "raw": "Dumsday v. Hughes, 3 Bos. & Pul. 453", "case_name": "Dumsday v. Hughes", "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 453,
+     "status": "linked_english_reports", "er_case_id": "18030628", "confidence": "high"},
+    {"seq": 5, "raw": "Blackborough v. Davis, 12 Mod. 619", "case_name": "Blackborough v. Davis", "volume": 12, "reporter_abbr": "Mod.", "page": 619,
+     "status": "linked_english_reports", "er_case_id": "17960721", "pincite": true, "confidence": "high", "note": "case begins at 12 Mod 615"},
+    {"seq": 6, "raw": "Roe v. Lord, 2 Bla. Rep. 1099", "case_name": "Roe d. Thorne v. Lord", "volume": 2, "reporter_abbr": "Bla. Rep.", "page": 1099,
+     "status": "linked_english_reports", "er_case_id": "17460449", "confidence": "high"},
+    {"seq": 7, "raw": "Rellow v. Rowden, Show. 244", "case_name": "Kellow v. Rowden", "volume": 1, "reporter_abbr": "Show.", "page": 244,
+     "status": "linked_english_reports", "er_case_id": "17940941", "confidence": "high", "note": "Rellow for Kellow; volume supplied, 1 Show KB 244"},
+    {"seq": 8, "raw": "2 Saund. 45, (e)", "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "confidence": "medium",
+     "note": "no name printed; Saunders's note in William v. Gwyn, whose second ER record begins at 2 Wms Saund 45"},
+    {"seq": 9, "raw": "Vynior's case, 8 Rep. 82 b", "case_name": "Vynior's Case", "volume": 8, "reporter_abbr": "Rep.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high", "note": "ER splits Vynior's Case at 8 Co Rep 80 and 81; 82 b falls in the record beginning at 81"}
+  ]
+}

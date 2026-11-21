@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02410",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:08:47Z",
+  "note": "printed pp. 300-302; Comyns's Digest, Bracton and the Appendix skipped; cross-checked against Gale 19005785400/02300",
+  "citations": [
+    {"seq": 1, "raw": "Crispin v. Williamson, 8 Taunt. 107", "case_name": "Crispin v. Williamson", "volume": 8, "reporter_abbr": "Taunt.", "page": 107,
+     "status": "linked_english_reports", "er_case_id": "18170806", "confidence": "high"},
+    {"seq": 2, "raw": "Nightingale v. Wilcoxson, 10 Barn. & Cres. 215", "case_name": "Nightingale v. Wilcoxson", "volume": 10, "reporter_abbr": "Barn. & Cres.", "page": 215,
+     "status": "linked_english_reports", "er_case_id": "18290152", "pincite": true, "confidence": "high", "note": "case begins at 10 B & C 202"},
+    {"seq": 3, "raw": "Rubery v. Stevens, 4 Barn. & Adol. 241", "case_name": "Rubery v. Stevens", "volume": 4, "reporter_abbr": "Barn. & Adol.", "page": 241,
+     "status": "linked_english_reports", "er_case_id": "18320257", "confidence": "high"},
+    {"seq": 4, "raw": "Rivers v. Griffiths, 5 Barn. & Ald. 630", "case_name": "Rivers v. Griffiths", "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 630,
+     "status": "linked_english_reports", "er_case_id": "18220278", "confidence": "high"}
+  ]
+}

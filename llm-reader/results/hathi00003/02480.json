@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02480",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:10:58Z",
+  "note": "printed pp. 311-313; Co. Litt., Chitty, Archbold, Wentworth, Viner, statutes and cross-references skipped; cross-checked against Gale 19005785400/02370",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 235 b. n. (9)", "volume": 1, "reporter_abbr": "Saund.", "page": 235,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note falls in Thursby v. Plant, whose first ER record begins at 1 Wms Saund 230 (second at 237)"},
+    {"seq": 2, "raw": "1 Saund. 276 a, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note falls in Duppa v. Mayo, 1 Wms Saund 275"}
+  ]
+}
