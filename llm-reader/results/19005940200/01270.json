@@ -1,0 +1,13 @@
+{
+  "psmid": "19005940200", "pageid": "01270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:15:08Z",
+  "note": "printed p. 101; imparlance in modern practice, entry of a special imparlance in the plea. Chitty and Tidd are treatises, not recorded; 'supra, p. 99' is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 2. n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; footnote (u); Saunders's note (2) at 2 falls in Mellor v. Walker, 2 Wms Saund 1"},
+    {"seq": 2, "raw": "2 Saund. 2. n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; footnote (x); Saunders's note (2) at 2 falls in Mellor v. Walker, 2 Wms Saund 1"}
+  ]
+}

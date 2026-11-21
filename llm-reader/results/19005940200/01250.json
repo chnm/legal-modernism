@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "01250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:14:55Z",
+  "note": "printed p. 99; general and special imparlance; entry of a general imparlance. Com. Dig., Chitty and Booth are treatises, not recorded. Same footnote (o) as the 1831 edition (hathi00002/01020)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 2. n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) at 2 falls in Mellor v. Walker, 2 Wms Saund 1. As in the 1831 records"}
+  ]
+}

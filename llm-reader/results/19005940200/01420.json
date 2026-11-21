@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "01420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:17:47Z",
+  "note": "printed p. 116; the verdict; the jury consider only the question in issue",
+  "citations": [
+    {"seq": 1, "raw": "Clark v. Hougham, 2 Barn. & Cres. 149", "case_name": "Clark v. Hougham",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "18230046", "confidence": "high"},
+    {"seq": 2, "raw": "Green v. Crane, 11 Mod. 7", "case_name": "Green v. Crane",
+     "volume": 11, "reporter_abbr": "Mod.", "page": 37,
+     "status": "linked_english_reports", "er_case_id": "17961079", "confidence": "high",
+     "note": "OCR dropped a digit: Green, Executor, against Crane is 11 Mod 37, as the 1831 edition prints it (the cases at 11 Mod 7 are Stannian v. Davies and an Anonymous)"}
+  ]
+}

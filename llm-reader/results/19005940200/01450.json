@@ -1,0 +1,26 @@
+{
+  "psmid": "19005940200", "pageid": "01450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:18:35Z",
+  "note": "printed p. 119; immaterial variance; the postea. Footnote (z), continued from p. 118: B. N. P. (Buller's Nisi Prius), Doct. Pl., Arch. and Phillips on Evidence are treatises; Tidd likewise. Same cites as the 1831 edition (hathi00002/01170), whose records this follows for the Wilson cite",
+  "citations": [
+    {"seq": 1, "raw": "Price v. Brown, Str. 690", "case_name": "Price v. Brown",
+     "volume": 2, "reporter_abbr": "Str.", "page": 690,
+     "status": "linked_english_reports", "er_case_id": "17952853", "confidence": "high",
+     "note": "footnote (z), continued; no volume printed, supplied 2. ER has Price vers Brown at 2 Str 691, a page off the cited edition's paging (Strange)"},
+    {"seq": 2, "raw": "1 ils. 116. S. C.", "case_name": "Price v. Brown",
+     "volume": 1, "reporter_abbr": "Wils.", "page": 116,
+     "status": "no_match", "confidence": "low",
+     "note": "footnote (z); OCR 'ils' for Wils. S. C. of Price v. Brown (2 Str 691); no report of it in 1 Wils KB: page 116 falls in Alcorn v. Westbrook (1 Wils KB 115), a different case on the same point, so the S. C. is probably wrong; not linked, per the README and the other editions' records"},
+    {"seq": 3, "raw": "Coare v. Giblett, 4 East, 85", "case_name": "Coare v. Giblett",
+     "volume": 4, "reporter_abbr": "East", "page": 85,
+     "status": "linked_english_reports", "er_case_id": "18030626", "confidence": "high"},
+    {"seq": 4, "raw": "Price v. Brown, Str. 690", "case_name": "Price v. Brown",
+     "volume": 2, "reporter_abbr": "Str.", "page": 690,
+     "status": "linked_english_reports", "er_case_id": "17952853", "confidence": "high",
+     "note": "footnote (a); no volume printed, supplied 2; 2 Str 691 in ER"},
+    {"seq": 5, "raw": "1 Wils. 116. S. C.", "case_name": "Price v. Brown",
+     "volume": 1, "reporter_abbr": "Wils.", "page": 116,
+     "status": "no_match", "confidence": "low",
+     "note": "footnote (a); page 116 falls in Alcorn v. Westbrook (1 Wils KB 115), not Price v. Brown, so not linked"}
+  ]
+}

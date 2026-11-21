@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "01470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:19:01Z",
+  "note": "printed p. 121; new trial and the bill of exceptions. 1 Sel. is Sellon's Practice, a treatise; Westm. 2, 13 Ed. 1 c. 31 a statute. Footnote (e) continues on the next page",
+  "citations": [
+    {"seq": 1, "raw": "Money v. Leach, 3 Burr. 1692", "case_name": "Money v. Leach",
+     "volume": 3, "reporter_abbr": "Burr.", "page": 1692,
+     "status": "linked_english_reports", "er_case_id": "17650046", "confidence": "high"}
+  ]
+}
