@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00009", "pageid": "02700",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:53:42Z",
+  "note": "Stephen, chapter II (p. 246): distinct answers to distinct claims; several defendants. Vin. Ab. and Doctor and Student (Doct. Pl.) are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Johns v. Whitley, 3 Wils., 132", "case_name": "Johns v. Whitley",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 132,
+     "status": "linked_english_reports", "er_case_id": "17990241", "pincite": true, "confidence": "high",
+     "note": "Johns versus Whitley and Others begins at 3 Wils KB 127 (7037 words), which holds page 132; an earlier stage of the suit is reported at 3 Wils KB 65"}
+  ]
+}

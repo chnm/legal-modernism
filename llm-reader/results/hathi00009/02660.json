@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00009", "pageid": "02660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:52:36Z",
+  "note": "Stephen, chapter II (p. 242): traverse too narrow (prescription entire); Section III, singleness of issue; Rule I, pleadings must not be double. Doctor and Student (Doct. Pl.), Com. Dig. and Bac. Ab. are not recorded. Footnotes match hathi00006/01820-01830",
+  "citations": [
+    {"seq": 1, "raw": "Osborne v. Rogers, 1 Saund., 267", "case_name": "Osborne v. Rogers",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 267,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "high",
+     "note": "Osborne v. Rogers begins in the ER record at 1 Wms Saund 264; the cited page is the first of its second record, at 267 (pincite, per the README)"},
+    {"seq": 2, "raw": "Morewood v. Wood, 4 T. R., 157", "case_name": "Morewood v. Wood",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17911272", "confidence": "high"},
+    {"seq": 3, "raw": "Briddle and Napper's Case, 11 Rep., 10 b", "case_name": "Priddle and Napper's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 10,
+     "status": "linked_english_reports", "er_case_id": "15720297", "pincite": true, "confidence": "high",
+     "note": "OCR 'Briddle' for Priddle; case begins at 11 Co Rep 8"},
+    {"seq": 4, "raw": "Bradburn v. Kennerdale, Carth., 164", "case_name": "Bradburn v. Kennerdale",
+     "reporter_abbr": "Carth.", "page": 164,
+     "status": "linked_english_reports", "er_case_id": "17410041", "confidence": "high"},
+    {"seq": 5, "raw": "1 Saund., 268, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 268,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note in Osborne v. Rogers; 268 falls in the ER record at 1 Wms Saund 267"},
+    {"seq": 6, "raw": "Hum- phreys v. Bethily, 2 Vent., 198, 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "recorded once at its first page, as in hathi00006; dropped: 222 (ER also has a second record of Humphreys v. Bethily at 2 Vent 222, id 17260504)"}
+  ]
+}

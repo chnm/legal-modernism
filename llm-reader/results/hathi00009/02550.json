@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00009", "pageid": "02550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:49:10Z",
+  "note": "Stephen, chapter II (p. 231): traverses that introduce new matter conclude with a verification. Cross-reference (u) not recorded. Note (s) on the previous page ends with Henderson v. Withy: this edition does not print the Calvert v. Gordon of the 1857 edition (hathi00006/01720), an addition of its American editor",
+  "citations": [
+    {"seq": 1, "raw": "Gainsford v. Griffith, 1 Saund., 54", "case_name": "Gainsford v. Griffith",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 54,
+     "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high",
+     "note": "the ER records of Gainsford v. Griffith begin at 1 Wms Saund 51 and 58; 54 falls in the record at 51"},
+    {"seq": 2, "raw": "Richards v. Hodges, 2 Saund., 82", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "18450217", "pincite": true, "confidence": "high",
+     "note": "the ER records of Richards v. Hodges begin at 2 Wms Saund 80 and 83; 82 falls in the record at 80"}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00009", "pageid": "02670",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:52:58Z",
+  "note": "Stephen, chapter II (p. 243): duplicity in the declaration (the penal bill). Note letter (l) OCR'd as (2). Footnotes match hathi00006/01830-01840 and hathi00002/02380",
+  "citations": [
+    {"seq": 1, "raw": "49 Ed. III, 45", "volume": 49, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 49 Edw. III, fol. 45 (per Finchden); no source covers the year books. Variant: the 1824, 1827, 1838, 1843, 1857 and 1895 editions print 40 Ed. 3, 45; the 1831 edition, like this one, prints 49 (Finchden was chief justice of the Common Pleas from 45 Edw. III, so 49 is plausible)"},
+    {"seq": 2, "raw": "15 Ed. IV, 1", "volume": 15, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 15 Edw. IV, fol. 1; no source covers the year books"},
+    {"seq": 3, "raw": "Humphreys v. Bethily, 2 Vent., 198, 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "recorded once at its first page, as in the other editions; dropped: 222 (ER also has a second record of Humphreys v. Bethily at 2 Vent 222, id 17260504)"}
+  ]
+}

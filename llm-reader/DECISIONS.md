@@ -151,7 +151,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
 6. **`page` holds the corrected reading** where a named case is found at
    other numbers than printed (e.g. Jones v. Kitchin, 1 Bos. & Pul. 77, is
    at 76 in some records). Bridgwater v. Bythway, 3 Lev. 113, is 17970039
-   without `pincite` (settled 2026-11-21; drop it from item 2's list).
+   without `pincite`, at `medium` (settled 2026-11-21; drop it from item
+   2's list; hathi00006/01780 has it at `high`).
    Hartford v. Jones, 2 Salk. 654: relink every record to the duplicate
    with a `word_count`.
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
