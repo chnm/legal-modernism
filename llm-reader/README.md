@@ -377,6 +377,9 @@ American cases in the later editions (Andrews, 1894, and after):
 - Smith's Leading Cases is not recorded, even when cited under a case name
   ("Cutter v. Powell, 2 Smith's L. C.").
 - When several cases begin at one CAP cite (19 How. 393), the name decides.
+  When a printed cite is to a different real case of the same name (Wilson
+  v. N.Y. & N.H. Ry., 18 R.I. 491 for 598), link the one the passage
+  describes, at `medium`, with the printed numbers in `note`.
 - In some CAP volumes (16 N.Y., 3 Mass.) `first_page` is offset from the
   cites throughout: judge pin cites against `cap.citations` there.
 - A case named in the text with its cite in a footnote is one citation.
