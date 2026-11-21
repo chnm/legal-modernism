@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00009", "pageid": "03670",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:29:35Z",
+  "note": "Stephen, chapter II (p. 343): ancient forms (count on a writ of right, statute of limitations); Bracton and a cross-reference to the Appendix skipped; footnote (l) OCR'd '(1)'",
+  "citations": [
+    {"seq": 1, "raw": "Slade v. Dowland, 2 Bos. & Pul., 570", "case_name": "Slade v. Dowland",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 570,
+     "status": "linked_english_reports", "er_case_id": "18010498", "confidence": "high"},
+    {"seq": 2, "raw": "Dally v. King, 1 H. Bl. 1", "case_name": "Dally v. King",
+     "volume": 1, "reporter_abbr": "H. Bl.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "17880010", "confidence": "high"},
+    {"seq": 3, "raw": "Dow- land v. Slade, 5 East, 272", "case_name": "Dowland v. Slade",
+     "volume": 5, "reporter_abbr": "East", "page": 272,
+     "status": "linked_english_reports", "er_case_id": "18040256", "confidence": "high"},
+    {"seq": 4, "raw": "Dyster v. Battye, 3 Barn. & Ald., 448", "case_name": "Dyster v. Battye",
+     "volume": 3, "reporter_abbr": "Barn. & Ald.", "page": 448,
+     "status": "linked_english_reports", "er_case_id": "18200036", "confidence": "high"}
+  ]
+}

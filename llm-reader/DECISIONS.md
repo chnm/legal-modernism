@@ -155,7 +155,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    2's list; hathi00006/01780 has it at `high`). Grade every `no_match`
    by the README's rule (`high` legible and named, `medium` legible
    unnamed); earlier records mix them (Denison v. Richardson, Holding v.
-   Haling, Hickman v. Walker).
+   Haling, Hickman v. Walker). "1 Saund. 374, n. 1" (1831, 1871) is 274,
+   The King v. Sutton, as the English editions print it; hathi00002 links
+   Toomes v. Etherington.
    Hartford v. Jones, 2 Salk. 654: relink every record to the duplicate
    with a `word_count`.
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
