@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "04960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:38:03Z",
+  "note": "Appendix (Notes) p. x, end of note (5) and notes (6)-(7) on oral pleading; also cites Glanville, Reeves, Muratori, Heineccius (not cases)",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 58. b.", "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "medium",
+     "note": "no name printed; Beecher's Case, as the 1831 edition names it, begins at 8 Co Rep 58 (folio b dropped), on appearance by attorney; 'acc.' (accord) follows the cite"}
+  ]
+}

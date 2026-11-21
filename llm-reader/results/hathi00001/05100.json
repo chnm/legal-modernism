@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "05100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:39:44Z",
+  "note": "Appendix (Notes) p. xxiv, end of note (16) and notes (17)-(18); also cites Hargrave's Law Tracts and Co. Litt. (not cases). The OCR prints the footnote letters of (r) and (s) swapped ('(3) Co. Litt.', '(r) 1 Ed. 2. 8'); the year book is footnote (s), as the text's markers show",
+  "citations": [
+    {"seq": 1, "raw": "1 Ed. 2. 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 1 Edw. II, fo. 8; no source for the year books"}
+  ]
+}

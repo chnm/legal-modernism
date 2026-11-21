@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "05070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:39:19Z",
+  "note": "Appendix (Notes) p. xxi, end of note (13) and note (14) on the language of pleading; also cites Booth, Com. Dig., Reeves, Blackstone, Luders (not cases)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 43., n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (1) at p. 43 belongs to William v. Gwyn, whose 16,646-word record begins at 2 Wms Saund 42 (a real action, fitting the text on judgment against a tenant who does not appear), as in the 1831 record"}
+  ]
+}
