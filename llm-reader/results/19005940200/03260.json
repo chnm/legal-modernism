@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "03260",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:07:55Z",
+  "note": "printed p. 299; severance leads to several issues; a pleading is double whatever the class of its answers. Com. Dig. skipped. Cross-checked with the 1831 edition (hathi00002)",
+  "citations": [
+    {"seq": 1, "raw": "Morrow v. Belcher, 4 Barn. & Cres. 704", "case_name": "Marrow v. Belcher",
+     "volume": 4, "reporter_abbr": "Barn. & Cres.", "page": 704,
+     "status": "linked_english_reports", "er_case_id": "18250789", "confidence": "high"},
+    {"seq": 2, "raw": "Bleeke v. Grove, I Sid. 176", "case_name": "Bleeke v. Grove",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "17140060", "pincite": true, "confidence": "high",
+     "note": "OCR 'I' for 1; ER Bleeke versus Grove begins at 1 Sid 175 (1326 words)"}
+  ]
+}

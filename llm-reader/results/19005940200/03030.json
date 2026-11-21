@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "03030",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:02:42Z",
+  "note": "printed p. 276; traverse involving new matter concludes with a verification; debt on bond for performance of covenants. Note (u) is a cross-reference. Cross-checked with hathi00002/02270 (1831)",
+  "citations": [
+    {"seq": 1, "raw": "Gainsford v. Griffith, 1 Saund. 54", "case_name": "Gainsford v. Griffith",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 54,
+     "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 51"}
+  ]
+}

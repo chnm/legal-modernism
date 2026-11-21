@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "03170",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:05:59Z",
+  "note": "printed p. 290; traverse of a seisin in fee; the chase of Cranborn in Tollard Royal. Cross-checked with hathi00002/02360 (1831)",
+  "citations": [
+    {"seq": 1, "raw": "Sir Francis Leke's Case, Dyer, 365", "case_name": "Sir Francis Leke's Case",
+     "reporter_abbr": "Dyer", "page": 365,
+     "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
+     "note": "ER 3 Dy 365"},
+    {"seq": 2, "raw": "2 Saund. 206. a. n. (22)", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "note (22) to Goram v. Sweeting (2 Saund. 200-207, notes 21-24), ER record at 2 Wms Saund 205, titled 'Same v Bateman', by the README's choice already made"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "03100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:04:18Z",
+  "note": "printed p. 283 (OCR '289'); levancy and couchancy immaterial; traverse must not be taken on an immaterial point. Com. Dig. and Bac. Ab. skipped. Cross-checked with the 1831 edition (hathi00002)",
+  "citations": [
+    {"seq": 1, "raw": "Jones v. Powell, 5 Barn. and Cres. 647", "case_name": "Jones v. Powell",
+     "volume": 5, "reporter_abbr": "Barn. and Cres.", "page": 647,
+     "status": "linked_english_reports", "er_case_id": "18260975", "confidence": "high"}
+  ]
+}

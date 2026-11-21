@@ -1,0 +1,21 @@
+{
+  "psmid": "19005940200", "pageid": "03010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:02:11Z",
+  "note": "printed p. 274; tender of issue by record, by certificate, witnesses or inspection, and by wager of law. Chitty, Tidd, Co. Ent., Rast., Mod. Ent., Lil. Ent. (precedents) and Booth skipped. Cross-checked with hathi00002/02260 (1831) and hathi00001/02720 (1824)",
+  "citations": [
+    {"seq": 1, "raw": "Thorn v. Rolfe, Moore, 14", "case_name": "Thorn v. Rolfe",
+     "reporter_abbr": "Moore", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "16881119", "confidence": "high",
+     "note": "Moo KB 14, Thorn vers Rolfe"},
+    {"seq": 2, "raw": "Benl. 86. S. C.", "case_name": "Thorn v. Rolfe",
+     "reporter_abbr": "Benl.", "page": 86,
+     "status": "linked_english_reports", "er_case_id": "17941944", "confidence": "medium",
+     "note": "S. C. of Thorn v. Rolfe; the English Reports' Benloe has nothing for pages 44-88, so linked to the same case's report in Dyer, Thorne v. Rolff, 2 Dy 185, as in the other editions"},
+    {"seq": 3, "raw": "17 Ed. III. pl. 116", "volume": 17, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 17 Edw. III, plea 116, no folio printed; no source covers the year books"},
+    {"seq": 4, "raw": "24Ed. HI. pl. 10", "volume": 24, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 24 Edw. III, plea 10, no folio printed (OCR 'HI' for III); no source covers the year books"}
+  ]
+}

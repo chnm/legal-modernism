@@ -265,6 +265,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    README's 17950161. Yelv. 13 (hathi00001 04210-04500) is linked to Wood
    v. Haukshead at Yel 14 by the 1831 name, though Crispe v. Viroll begins
    at Yel 13: check which case the passage describes, in every edition.
+   The year book "40 Ed. 3. 45, per Finchden" (1827 p. 293) is 49 only in
+   the 1831 HathiTrust record; check it against its Gale twin and the
+   other editions, per the README's variant-reading rule.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then
