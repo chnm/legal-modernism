@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00009", "pageid": "00490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:59:03Z",
+  "note": "Tyler's dissertation on parties to actions (p. 25), its first page; footnote (e) is printed '(c.)'",
+  "citations": [
+    {"seq": 1, "raw": "Lester v. Wright, 2 Hill, 320", "case_name": "Lister v. Wright",
+     "volume": 2, "reporter_abbr": "Hill", "page": 320,
+     "status": "linked_cap", "cap_case_id": 2042672, "confidence": "high",
+     "note": "printed 'Lester'; CAP has Lister v. Wright at 2 Hill 320 (1842)"},
+    {"seq": 2, "raw": "1 Saund., 291b, note 4", "case_name": "Cabell v. Vaughan",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 291,
+     "status": "linked_english_reports", "er_case_id": "18450026", "pincite": true,
+     "confidence": "medium",
+     "note": "no name printed; Williams's note 4 to Cabell v. Vaughan on joint obligors, which the English Reports split into records at 1 Wms Saund 288 and 291; the note falls in the later record"},
+    {"seq": 3, "raw": "New York and Sharon Canal Company v. Fulton Bank, 7 Wend., 412", "case_name": "New York and Sharon Canal Co. v. Fulton Bank",
+     "volume": 7, "reporter_abbr": "Wend.", "page": 412,
+     "status": "linked_cap", "cap_case_id": 2009603, "confidence": "high"}
+  ]
+}
