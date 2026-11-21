@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00006", "pageid": "00710",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T03:39:21Z",
+  "note": "pp. 75-76; amendment; Reeves, Arch. Prac., Tidd and Manning's Exchequer are treatises",
+  "citations": [
+    {"seq": 1, "raw": "Rush v. Seymour, 10 Mod. 88", "case_name": "Rush v. Seymour",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 88,
+     "status": "linked_english_reports", "er_case_id": "17953003", "confidence": "high"},
+    {"seq": 2, "raw": "Rush v. Seymour, 10 Mod. 88", "case_name": "Rush v. Seymour",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 88,
+     "status": "linked_english_reports", "er_case_id": "17953003", "confidence": "high"},
+    {"seq": 3, "raw": "Dumsday v. Hughes, 3 Bos. & Pul. 453", "case_name": "Dumsday v. Hughes",
+     "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 453,
+     "status": "linked_english_reports", "er_case_id": "18030628", "confidence": "high"},
+    {"seq": 4, "raw": "Charlwood v. Morgan, 1 N. R. 64, 233", "case_name": "Charlwood v. Morgan",
+     "volume": 1, "reporter_abbr": "N. R.", "page": 64,
+     "status": "linked_english_reports", "er_case_id": "18040260", "confidence": "high",
+     "note": "Bosanquet and Puller's New Reports, stored in ER as 1 Bos & Pul 64 (1804); dropped: 233"},
+    {"seq": 5, "raw": "Hull v. Blake, 4 Taunt. 572", "case_name": "Hull v. Blake",
+     "volume": 4, "reporter_abbr": "Taunt.", "page": 572,
+     "status": "linked_english_reports", "er_case_id": "18120356", "confidence": "high"},
+    {"seq": 6, "raw": "The King v. Cooke, 2 Barn. & Cress. 871", "case_name": "The King v. Cooke",
+     "volume": 2, "reporter_abbr": "Barn. & Cress.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high"},
+    {"seq": 7, "raw": "Carr v. Hinchliff, 4 Barn. & Cress. 547", "case_name": "Carr v. Hinchliff",
+     "volume": 4, "reporter_abbr": "Barn. & Cress.", "page": 547,
+     "status": "linked_english_reports", "er_case_id": "18250050", "confidence": "high"}
+  ]
+}

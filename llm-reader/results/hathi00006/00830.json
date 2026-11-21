@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00006", "pageid": "00830",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T03:41:45Z",
+  "note": "pp. 94-96; new trial; Tidd and its Ibid. are a treatise",
+  "citations": [
+    {"seq": 1, "raw": "Carstairs v. Stein, 4 M. & S. 192", "case_name": "Carstairs v. Stein",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 192,
+     "status": "linked_english_reports", "er_case_id": "18150778", "confidence": "high"},
+    {"seq": 2, "raw": "Swinnerton v. Marquis of Stafford, 3 Taunt. 91, 232", "case_name": "Swinnerton v. Marquis of Stafford",
+     "volume": 3, "reporter_abbr": "Taunt.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "18100376", "confidence": "high",
+     "note": "dropped: 232 (a second report of the same case, 3 Taunt 232, 18100415)"}
+  ]
+}

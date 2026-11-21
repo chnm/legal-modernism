@@ -61,7 +61,7 @@ printing as a Gale volume already read, whose records are the cross-check
 | hathi00003 | 1841 | 19005785400 (its pageids run 120 behind this copy's at the start of the text and 110 behind from about p. 138; check as you go) |
 | hathi00004 | 1851 | 19005764100 (its pageids run 60 behind this copy's, at least through the opening chapters; check as you go) |
 | hathi00005 | 1854 | 19005784900 (its pageids run 60 behind this copy's, at least through p. 22; check as you go) |
-| hathi00006 | 1857 | 19005781000 (the 1859 printing of the same 8th American edition) |
+| hathi00006 | 1857 | 19005781000 (the 1859 printing of the same 8th American edition; its pageids run 60 behind this copy's). hathi00005 (1854) is the same setting of type at the same pageid from the start of the text, as hathi00004 (1851) is for hathi00005 |
 | hathi00009 | 1871 | none read |
 | hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500) |
 | hathi00013 | 1901 | none read |

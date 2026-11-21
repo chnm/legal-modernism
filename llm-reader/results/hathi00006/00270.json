@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "00270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:40:04Z",
+  "note": "pp. 5-7; Reeves, Bl. Com., Bract., Gilb. Hist. C. P., Steph. on Plead. are treatises and 13 Ed. I. c. 24 a statute: not recorded. Same page as hathi00005/00270",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 48, 49", "volume": 8, "reporter_abbr": "Rep.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "15720206", "pincite": true,
+     "confidence": "medium", "note": "Coke's Reports, no case name printed; 8 Co Rep 48 falls in Jehu Webb's Case (8 Co Rep 45, 6369 words, next case at 51), which discusses writs in consimili casu, the point of the footnote; same as the 1854 and 1859 readings; dropped: 49"}
+  ]
+}

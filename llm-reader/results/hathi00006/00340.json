@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00006", "pageid": "00340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T03:37:27Z",
+  "note": "p. 16; same page as hathi00005/00340",
+  "citations": [
+    {"seq": 1, "raw": "22 Ass. 41", "volume": 22, "reporter_abbr": "Y.B.", "page": 41,
+     "status": "no_match", "confidence": "high",
+     "note": "22 Edw. III, Liber Assisarum (year book), pl. 41; year books have no source here"}
+  ]
+}
