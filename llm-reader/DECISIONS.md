@@ -53,6 +53,18 @@ whose report may print Price v. Brown as cited. Interim rule: the Wilson cite
 is `no_match` in every edition. Decision wanted: leave it, or link it to
 Alcorn v. Westbrook as a case reported only as cited in another (`low`).
 
+### 9. Parallel cites to reprint series in the American notes
+
+Andrews (1894) and later American editors print, beside almost every
+American case, its reprint in American Decisions, American Reports,
+American State Reports or L.R.A. (and, for English cases, Eng. C. L. or
+English Ruling Cases). None of these series is in CAP or the English
+Reports. Interim rule: each is recorded as its own citation, linked to the
+case's own report at `medium`, as "S. C." reports are. That roughly doubles
+the citations from these notes. Decision wanted: keep recording them, or
+leave reprint parallels out. The 1894 readers of pageids 01070–01360 left
+them out (noted per page); align once decided.
+
 ## Findings for issues
 
 ### 3. Gaps in the English Reports and stubs

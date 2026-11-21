@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "01270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:14:31Z",
+  "note": "p. 64, Stephen's text (§ 38, original writs and the Statute of Westminster 2). His notes otherwise cite Bracton, Gilbert's C.P., Blackstone (here Cooley's), Reeves and Wooddeson.",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 48, 9",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "15720206", "pincite": true, "confidence": "medium",
+     "note": "Coke's Reports, no case name printed; 8 Co Rep 48 falls in Jehu Webb's Case (begins at 45), on original writs, as the 1831 records have it; every edition prints 48, 49. dropped: 9 (49)"}
+  ]
+}

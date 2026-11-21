@@ -314,11 +314,13 @@ page, and by name.
 
 American cases in the later editions (Andrews, 1894, and after):
 
-- Each printed parallel cite is its own citation. One to a collection CAP
+- Each printed parallel cite is its own citation. One to a series CAP
   does not hold as a reporter (American Decisions, American Reports,
-  L.R.A., or a regional reporter not in `cap.citations` for that case)
-  links the same case's official report in CAP at `medium`, as a report
-  with no source does; one CAP holds links directly.
+  American State Reports, L.R.A., a regional reporter not in
+  `cap.citations` for that case) links the same case's official report in
+  CAP at `medium`, as a report with no source does; one CAP holds links
+  directly. Reprints of English cases (Eng. C. L., English Ruling Cases)
+  likewise link the case's own report in the English Reports at `medium`.
 - A recent case cited only by regional reporter (`37 N. E. Rep. 136`) is
   found by name and year in CAP, usually under its official report.
 - When the volume-join pin-cite query misses (some reporters' volumes are
@@ -328,8 +330,16 @@ American cases in the later editions (Andrews, 1894, and after):
   cite into that case.
 - CAP's own cite strings are sometimes wrong (Allen v. Patterson stored as
   `7 N.Y.3d 476`): trust the name, year and pages, and say so in `note`.
-- Collections of reprinted cases (English Ruling Cases, the English Common
-  Law Reports reprint) are like Smith's Leading Cases: not recorded.
+- Where CAP holds one case twice (69 Hun 489 as its own record and as a
+  cite on an N.Y.S. record), link the record of the cited reporter.
+- `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
+  reporter.
+- When several cases begin at one CAP cite (19 How. 393), the name decides.
+- CAP's `first_page` can disagree with the printed cite in any reporter
+  (Gardner v. Clark, 21 N.Y. 399, `first_page` 428), not only early Johnson's
+  and Massachusetts: look in `cap.citations` and by name.
+- The edition's own table of cases is a good source for a page number the
+  OCR lost or garbled; say so in `note`.
 
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.
