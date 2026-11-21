@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "01920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:32:24Z",
+  "note": "printed p. 166; certainty of the issue, the ancient jury as witnesses. An Appendix note and a cross-reference skipped",
+  "citations": [
+    {"seq": 1, "raw": "the King v. Cook, 2 Barn. and Cres. 871", "case_name": "The King v. Cook",
+     "volume": 2, "reporter_abbr": "B. & C.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high",
+     "note": "The King against Cooke (1824)"}
+  ]
+}

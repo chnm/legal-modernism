@@ -1,0 +1,17 @@
+{
+  "psmid": "19005940200", "pageid": "02000",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:34:23Z",
+  "note": "printed p. 174; special demurrer must show the fault particularly. 1 Chitty (Chitty on Pleading), 1 Arch. (Archbold's Practice), a cross-reference and an Appendix note skipped. The Saunders cites agree with the 1831 record (hathi00002/01560)",
+  "citations": [
+    {"seq": 1, "raw": "Clue v. Baily, 1 Vent. 240", "case_name": "Clue v. Baily",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 240,
+     "status": "linked_english_reports", "er_case_id": "17260326", "confidence": "high",
+     "note": "two cases begin at 1 Vent 240; the printed name picks Clue versus Baily"},
+    {"seq": 2, "raw": "1 Saund. 161. n. ()", "volume": 1, "reporter_abbr": "Saund.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "18450147", "confidence": "medium",
+     "note": "no name printed; Saunders's note (1) (number lost in the OCR; the 1831 edition prints it) to Lenthall v. Cooke, which begins at 1 Wms Saund 161"},
+    {"seq": 3, "raw": "337 b. n. (a)", "volume": 1, "reporter_abbr": "Saund.", "page": 337,
+     "status": "linked_english_reports", "er_case_id": "18450103", "pincite": true, "confidence": "medium",
+     "note": "volume and reporter carried from the preceding 1 Saund.; note (3) (OCR '(a)'; the 1831 edition prints (3)) to Hancocke v. Prowd, which begins at 1 Wms Saund 336"}
+  ]
+}

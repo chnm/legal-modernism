@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "02080",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:36:36Z",
+  "note": "printed p. 182; faults cured by the statutes of jeofails; election to demur or plead. Blackstone's Commentaries skipped",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 228 c. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) at 1 Saund. 228 c is the note to Stennel v. Hogg (1 Wms Saund 226), per the README's choice"}
+  ]
+}

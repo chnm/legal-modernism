@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "01890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:32:02Z",
+  "note": "printed p. 163; antiquity of the term issue, repleader, material issues. An Appendix note and a cross-reference skipped. Agrees with the 1831 record (hathi00002/01480)",
+  "citations": [
+    {"seq": 1, "raw": "Year-book, 1 Ed. II. 14", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high",
+     "note": "year book 1 Edw. II, fo. 14; no source for the year books"}
+  ]
+}
