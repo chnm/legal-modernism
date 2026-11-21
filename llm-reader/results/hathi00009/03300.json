@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00009", "pageid": "03300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:14:44Z",
+  "note": "Stephen, chapter II (p. 306): performance of conditions to be shown specially. Footnote (q) OCR'd as (9.)",
+  "citations": [
+    {"seq": 1, "raw": "Halsey v. Carpenter, Cro. Jac., 359", "case_name": "Halsey v. Carpenter",
+     "reporter_abbr": "Cro. Jac.", "page": 359,
+     "status": "linked_english_reports", "er_case_id": "17910448", "confidence": "high"},
+    {"seq": 2, "raw": "Wimbleton v. Holdrip, 1 Lev., 303", "case_name": "Wimbleton v. Holdrip",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "17931330", "confidence": "high"}
+  ]
+}

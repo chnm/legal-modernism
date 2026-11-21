@@ -1,0 +1,26 @@
+{
+  "psmid": "hathi00009", "pageid": "03110",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:07:50Z",
+  "note": "Stephen, chapter II (p. 287): title of possession; possession sufficient against a wrong-doer. Com. Dig. and cross-reference skipped; footnote (l) OCR'd as (1.); footnotes match hathi00006/02240 and hathi00002/02820",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 47 a., n. 1", "volume": 2, "reporter_abbr": "Saund.", "page": 47,
+     "status": "linked_english_reports", "er_case_id": "18450304", "confidence": "medium",
+     "note": "no name printed; two ER records begin at 2 Wms Saund 47; Wilbraham v. Snow (special property of a carrier or finder in goods) fits the text, not Fowell v. Forrest; as in hathi00006/02240"},
+    {"seq": 2, "raw": "Taylor v. Eastwood, 1 East., 212", "case_name": "Taylor v. Eastwood",
+     "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "high"},
+    {"seq": 3, "raw": "Grimstead v. Marlowe, 4 T. R., 717", "case_name": "Grimstead v. Marlowe",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 717,
+     "status": "linked_english_reports", "er_case_id": "17923080", "confidence": "high"},
+    {"seq": 4, "raw": "Greenhow v. Ilsley, Willes, 619", "case_name": "Greenhow v. Ilsley",
+     "reporter_abbr": "Willes", "page": 619,
+     "status": "linked_english_reports", "er_case_id": "17900754", "confidence": "medium",
+     "note": "Willes has no source; linked the same case as reported in Barnes's Notes, Grenhow against Ilsley and Others, Bar N 136"},
+    {"seq": 5, "raw": "Waring v. Griffiths, 1 Burr., 440", "case_name": "Waring v. Griffiths",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 440,
+     "status": "linked_english_reports", "er_case_id": "17580127", "confidence": "high"},
+    {"seq": 6, "raw": "Langford v. Webber, 3 Mod., 132", "case_name": "Langford v. Webber",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 132,
+     "status": "linked_english_reports", "er_case_id": "17930659", "confidence": "high"}
+  ]
+}

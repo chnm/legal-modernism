@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00009", "pageid": "03310",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:15:01Z",
+  "note": "Stephen, chapter II (p. 307): general plea of performance and assigning a breach; usury plea. Index cross-reference and Com. Dig. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Plower v. Ross, 5 Taunt., 386", "case_name": "Plomer v. Ross",
+     "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high",
+     "note": "OCR 'Plower' for Plomer; ER 'Plomer and another v Ross' at 5 Taunt 386"},
+    {"seq": 2, "raw": "Sayre v. Binns, Cowp., 577", "case_name": "Sayre v. Minns",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 577,
+     "status": "linked_english_reports", "er_case_id": "17770027", "pincite": true, "confidence": "high",
+     "note": "per Lord Mansfield; OCR 'Binns' for Minns; volume 2 supplied (ER 2 Cowp); Sayre et Al' versus Minns begins at 2 Cowp 575"}
+  ]
+}

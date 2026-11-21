@@ -360,7 +360,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   14 East 291), is graded by
   how surely the cite was read: `high` when legible with a name printed,
   `medium` when legible without one. Year books, which are cited without
-  names, are `high` whenever legible.
+  names, are `high` whenever legible. A supplied volume or reporter makes
+  any `no_match` `medium`.
 - Where the English Reports hold two records of one case at one cite
   (Hartford v. Jones, 2 Salk. 654), link the one with a `word_count`.
 - A series cited as numbered straight through ("17 Martin" for 5 Mart.
