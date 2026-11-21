@@ -191,7 +191,9 @@ Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
 report of the suit, not a pin cite into 3 Lev 109. Colt v. Bishop of
 Coventry (Hob. 140–164) is 17920644, the record with text (titled "De
 Termino Sancti Mich", with the case's name in `murrell_title`), not the
-empty 17921247. Record each of
+empty 17921247. Buckley v. Rice Thomas (Plowd. 118–128, in Plowden's
+missing pages) is Dyer's report, "Bulkeley v Thomas", 2 Dy 113 (17941482),
+linked at `medium`, a pin cite past 113. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`),
 except where the printed name alone picks the case, which is `high`
 (Stephen v. Arthur, Salk. 544).

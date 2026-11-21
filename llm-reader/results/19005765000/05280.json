@@ -1,0 +1,12 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05280",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:11:24Z",
+  "note": "Appendix p. 465, notes (16)-(18). Also cites Heineccius, Hargrave's Law Tracts, Co. Litt. 71 b (not cases). The scan prints footnotes (r) and (s) with their texts swapped: the year book belongs to the 'demurroins' passage (marker (s)), Co. Litt. to the demurrer etymology, as in the 1824 and 1831 editions.",
+  "citations": [
+    {"seq": 1, "raw": "I Ed. ,8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 1 Edw. II, fo. 8; the OCR has lost the reign numeral ('I Ed. ,8'), read from the 1824 and 1831 editions ('1 Edw. 2, 8'); no source for the year books"}
+  ]
+}

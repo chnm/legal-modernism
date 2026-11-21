@@ -1,0 +1,104 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03890",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:56:58Z",
+  "note": "Printed page 325. Bl. Com., Co. Litt., Com. Dig., Bac. Ab., Pomeroy's Code Remedies and cross-references skipped. Stephen's footnotes follow the 1831 record (hathi00002/02640); Andrews's notes (two columns interleaved in the scan) checked against the 1901 edition (hathi00013/04280).",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Bradish v. Bishop, Cro. Ellz 2a0",
+      "case_name": "Bradish v. Bishop",
+      "reporter_abbr": "Cro. Eliz.",
+      "page": 260,
+      "status": "linked_english_reports",
+      "er_case_id": "16530307",
+      "confidence": "high",
+      "note": "page garbled '2a0', read 260 as other editions print it"
+    },
+    {
+      "seq": 2,
+      "raw": "Per Iluller, Ji, Thn King v. HOlland, 5 TP. 020",
+      "case_name": "The King v. Holland",
+      "volume": 5,
+      "reporter_abbr": "T. R.",
+      "page": 620,
+      "status": "linked_english_reports",
+      "er_case_id": "17942213",
+      "pincite": true,
+      "confidence": "high",
+      "note": "OCR '5 TP. 020', read 5 T. R. 620 (other editions); ER The King against E J Hollond begins at 5 TR 607"
+    },
+    {
+      "seq": 3,
+      "raw": "Amnry v. Brodrick, 2 Barn. & Aid. 71r",
+      "case_name": "Amory v. Brodrick",
+      "volume": 5,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 712,
+      "status": "linked_english_reports",
+      "er_case_id": "18220303",
+      "confidence": "high",
+      "note": "printed '2 ... 71r'; the case is at 5 B & A 712, as the 1831 edition prints it"
+    },
+    {
+      "seq": 4,
+      "raw": "PI. Com. 1i0b",
+      "reporter_abbr": "Pl. Com.",
+      "page": 190,
+      "status": "linked_english_reports",
+      "er_case_id": "18160164",
+      "pincite": true,
+      "confidence": "low",
+      "note": "Plowden, cited through Com. Dig.; page garbled '1i0b', read 190 b (other editions); no name printed; page 190 falls in Wrotesley v Adams, which begins at 1 Plowden 187, as in the 1831 record; volume supplied"
+    },
+    {
+      "seq": 5,
+      "raw": "The King v. Burdett, 4 Bari Ad. Sd. 1, 170",
+      "case_name": "The King v. Burdett",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 175,
+      "status": "linked_english_reports",
+      "er_case_id": "18200632",
+      "pincite": true,
+      "confidence": "high",
+      "note": "OCR garbled; read 4 Barn. & Ald. 175, 176 as every other edition prints it; case begins at 4 B & A 95; dropped: 176"
+    },
+    {
+      "seq": 6,
+      "raw": "Calvun' Case, 7 Rep. t",
+      "case_name": "Calvin's Case",
+      "volume": 7,
+      "reporter_abbr": "Rep.",
+      "page": 1,
+      "status": "linked_english_reports",
+      "er_case_id": "15720064",
+      "confidence": "high",
+      "note": "page garbled 't', read 1 (other editions); stored in ER as 7 Co Rep 1 a"
+    },
+    {
+      "seq": 7,
+      "raw": "Atna Powder Co. v. Hildebrand (Ind., 1894), 37 N. E. Rep. 180",
+      "case_name": "Aetna Powder Co. v. Hildebrand",
+      "volume": 37,
+      "reporter_abbr": "N. E. Rep.",
+      "page": 136,
+      "status": "linked_cap",
+      "cap_case_id": 1629017,
+      "confidence": "medium",
+      "note": "printed 180, read 136 (1901 edition); North Eastern Reporter cite not in CAP; linked to the official report, 137 Ind. 462 (1894), found by name and year"
+    },
+    {
+      "seq": 8,
+      "raw": "Wilson v.Johnson (N.J.), 29 Atl. Rep, 419",
+      "case_name": "Wilson v. Johnson",
+      "volume": 29,
+      "reporter_abbr": "Atl. Rep.",
+      "page": 419,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "an 1894 New Jersey case cited by the Atlantic Reporter only; no Wilson v. Johnson in CAP's N.J. reporters in any year, nor 29 A. 419 in cap.citations; the Wilson v. Johnson CAP holds for 1894 is Indiana (145 Ind. 40), which does not fit '(N.J.)'"
+    }
+  ]
+}

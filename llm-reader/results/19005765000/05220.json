@@ -1,0 +1,29 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05220",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:58:24Z",
+  "note": "Appendix Notes (9)-(11) (printed p. 459); Placitorum Abbreviatio entries are records of pleas, skipped; cross-checked with hathi00002/04000",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Year-book, 21 Ed. IV., 35",
+      "volume": 21,
+      "reporter_abbr": "Y.B.",
+      "page": 35,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 21 Edw. IV, fo. 35; no source for the year books"
+    },
+    {
+      "seq": 2,
+      "raw": "Year-book, 3 Ed. I., 59",
+      "volume": 3,
+      "reporter_abbr": "Y.B.",
+      "page": 59,
+      "status": "no_match",
+      "confidence": "medium",
+      "note": "year book, 3 Edw. II, fo. 59. The OCR reads 3 Ed. I., but the sentence says 'the third year of Edward II' and every other edition, the 1901 Andrews included, prints 3 Ed. II (or 3 Ed. 2), so read as a dropped I; no source for the year books"
+    }
+  ]
+}

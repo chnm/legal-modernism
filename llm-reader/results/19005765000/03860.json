@@ -1,0 +1,99 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03860",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:55:16Z",
+  "note": "Printed page 322. Stephen's (n) 1 Sel. Pract. (treatise) skipped. Andrews's notes 1 and 2 have their two columns interleaved in the scan; recorded in reading order (note 1 left column, right column, then note 2), checked against the 1901 edition (hathi00013/04240).",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Grills v. Mannell, Willes, 378",
+      "case_name": "Grills v. Mannell",
+      "reporter_abbr": "Willes",
+      "page": 378,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Willes's Reports have no source; no report of Grills v. Mannell found in the English Reports by name (er_name/murrell_title ILIKE '%grills%', '%mannell%')"
+    },
+    {
+      "seq": 2,
+      "raw": "Potter v. Earnest, 45 Ind. 410",
+      "case_name": "Potter v. Earnest",
+      "volume": 45,
+      "reporter_abbr": "Ind.",
+      "page": 416,
+      "status": "linked_cap",
+      "cap_case_id": 1428490,
+      "confidence": "high",
+      "note": "printed 410, read 416 (CAP and the 1901 edition)"
+    },
+    {
+      "seq": 3,
+      "raw": "Bartlett v. Prescott, 41 N. H. 493",
+      "case_name": "Bartlett v. Prescott",
+      "volume": 41,
+      "reporter_abbr": "N. H.",
+      "page": 493,
+      "status": "linked_cap",
+      "cap_case_id": 8711783,
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Nye v. Spencer, 41 Me. 272",
+      "case_name": "Nye v. Spencer",
+      "volume": 41,
+      "reporter_abbr": "Me.",
+      "page": 272,
+      "status": "linked_cap",
+      "cap_case_id": 688394,
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Alderman v. French, 1 Pick. 1",
+      "case_name": "Alderman v. French",
+      "volume": 1,
+      "reporter_abbr": "Pick.",
+      "page": 1,
+      "status": "linked_cap",
+      "cap_case_id": 2070929,
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "11 Am. Dec. 114",
+      "case_name": "Alderman v. French",
+      "volume": 11,
+      "reporter_abbr": "Am. Dec.",
+      "page": 114,
+      "status": "linked_cap",
+      "cap_case_id": 2070929,
+      "confidence": "medium",
+      "note": "American Decisions parallel cite, not held by CAP; linked to the official report"
+    },
+    {
+      "seq": 7,
+      "raw": "Hunter v. Bilyeu, 39 I11. 367",
+      "case_name": "Hunter v. Bilyeu",
+      "volume": 39,
+      "reporter_abbr": "Ill.",
+      "page": 367,
+      "status": "linked_cap",
+      "cap_case_id": 5260627,
+      "confidence": "high"
+    },
+    {
+      "seq": 8,
+      "raw": "Miliken v. Jones, 7 111 372",
+      "case_name": "Millikin v. Jones",
+      "volume": 77,
+      "reporter_abbr": "Ill.",
+      "page": 372,
+      "status": "linked_cap",
+      "cap_case_id": 821776,
+      "confidence": "high",
+      "note": "printed '7', read 77 (1901 edition; cited as 77 Ill. 372 on page 318)"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03970",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:01:04Z",
+  "note": "Printed page 333. Com. Dig. skipped; (f) 'Ibid.' points back to the whole of footnote (e) and is not recorded again. Stephen's footnotes follow the 1831 record (hathi00002/02720); Andrews's note checked against the 1901 edition (hathi00013/04360).",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "The King v. Burdett, 4 Barn. & Aid. 172",
+      "case_name": "The King v. Burdett",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 172,
+      "status": "linked_english_reports",
+      "er_case_id": "18200632",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 4 B & A 95"
+    },
+    {
+      "seq": 2,
+      "raw": "Dowdalc's Case, 6 Rep. 47 b",
+      "case_name": "Dowdale's Case",
+      "volume": 6,
+      "reporter_abbr": "Rep.",
+      "page": 47,
+      "status": "linked_english_reports",
+      "er_case_id": "15720102",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 6 Co Rep 46"
+    },
+    {
+      "seq": 3,
+      "raw": "Dowdale's Case, 6 Rep. 4G b",
+      "case_name": "Dowdale's Case",
+      "volume": 6,
+      "reporter_abbr": "Rep.",
+      "page": 46,
+      "status": "linked_english_reports",
+      "er_case_id": "15720102",
+      "confidence": "high",
+      "note": "page '4G' read 46 (1901 and 1831 editions)"
+    },
+    {
+      "seq": 4,
+      "raw": "Calvin's Case, 7 Rep. 27 a",
+      "case_name": "Calvin's Case",
+      "volume": 7,
+      "reporter_abbr": "Rep.",
+      "page": 27,
+      "status": "linked_english_reports",
+      "er_case_id": "15720064",
+      "pincite": true,
+      "confidence": "high",
+      "note": "Calvin's Case begins at 7 Co Rep 1 a; the name decides over the ER record filed at 7 Co Rep 27"
+    },
+    {
+      "seq": 5,
+      "raw": "Halsey v. Carpenter, Cro. Jac. 859",
+      "case_name": "Halsey v. Carpenter",
+      "reporter_abbr": "Cro. Jac.",
+      "page": 359,
+      "status": "linked_english_reports",
+      "er_case_id": "17910448",
+      "confidence": "high",
+      "note": "printed 859, read 359 (1901 edition); three ER records at Cro Jac 359, this is Halsey against Carpenter"
+    },
+    {
+      "seq": 6,
+      "raw": "Denison v. Richard- son, 14 East, 201",
+      "case_name": "Denison v. Richardson",
+      "volume": 14,
+      "reporter_abbr": "East",
+      "page": 291,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "printed 201, read 291 (1901 edition); no ER record of Denison v. Richardson by name or at 14 East 291 (the README's example of a case missing from a reporter with a source)"
+    },
+    {
+      "seq": 7,
+      "raw": "People v. Ryder, 12 N. Y. 433",
+      "case_name": "People v. Ryder",
+      "volume": 12,
+      "reporter_abbr": "N. Y.",
+      "page": 433,
+      "status": "linked_cap",
+      "cap_case_id": 2016197,
+      "confidence": "high",
+      "note": "CAP: People ex rel. Crane v. Ryder (1855)"
+    },
+    {
+      "seq": 8,
+      "raw": "Moxley v. Moxley, 2 Met. (Ky.) 311",
+      "case_name": "Moxley v. Moxley",
+      "volume": 2,
+      "reporter_abbr": "Met. (Ky.)",
+      "page": 311,
+      "status": "linked_cap",
+      "cap_case_id": 4373007,
+      "pincite": true,
+      "confidence": "high",
+      "note": "CAP: Moxley's administrators v. Moxley (1859), 2 Met. 309; next case at 314"
+    },
+    {
+      "seq": 9,
+      "raw": "King v. Roxborough, 2 Tyr. 473",
+      "case_name": "King v. Roxborough",
+      "volume": 2,
+      "reporter_abbr": "Tyr.",
+      "page": 473,
+      "status": "linked_english_reports",
+      "er_case_id": "18320253",
+      "confidence": "medium",
+      "note": "Tyrwhitt has no source (a stub '2 Tyrw. 473' exists, but the ER report is preferred); the same case is Ring v. Roxbrough, 2 Cr & J 418 (1832), found by name ('King' is a misprint or misreading of Ring)"
+    }
+  ]
+}

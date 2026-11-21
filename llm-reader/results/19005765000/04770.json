@@ -1,0 +1,11 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04770",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:58:35Z",
+  "note": "Printed page 413. Stephen's footnotes (c) and (d) are cross-references; Andrews's note 1 cites one case.",
+  "citations": [
+    {"seq": 1, "raw": "Gridley v. City of Bloomington, 68 IlL 47", "case_name": "Gridley v. City of Bloomington", "volume": 68, "reporter_abbr": "Ill.", "page": 47,
+     "status": "linked_cap", "cap_case_id": 2627461, "confidence": "high"}
+  ]
+}

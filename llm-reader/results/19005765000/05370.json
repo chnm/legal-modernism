@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:12:45Z",
+  "note": "Appendix p. 474, note (33) and Andrews's editor's note on amendments; also cites statutes of jeofails, Blackstone, Tidd and the 1808 report of the Pennsylvania judges (not cases)",
+  "citations": [
+    {"seq": 1, "raw": "McDuffee v. I & It Ry. (1873), 52 N. H. 430", "case_name": "McDuffee v. P. & R. Ry.",
+     "volume": 52, "reporter_abbr": "N. H.", "page": 430, "year": 1873,
+     "status": "linked_cap", "cap_case_id": 471345, "confidence": "high",
+     "note": "'I & It' is OCR for 'P. & R.' (Portland & Rochester Railroad)"}
+  ]
+}

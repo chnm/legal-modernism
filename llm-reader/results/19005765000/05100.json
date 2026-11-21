@@ -1,0 +1,56 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05100",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:56:11Z",
+  "note": "Appendix (printed p. 447), continuing Bowen L.J.'s opinion in Hannay v. Smurthwaite; 'ubi supra' references resolved to the cites printed on pageid 05080",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Booth v. Briscoe (ubi supr1a)",
+      "case_name": "Booth v. Briscoe",
+      "volume": 2,
+      "reporter_abbr": "Q. B. Div.",
+      "page": 496,
+      "status": "linked_stub",
+      "stub_cite": "2 Q.B.D. 496",
+      "confidence": "medium",
+      "note": "ubi supra expanded to 2 Q. B. Div. 496 (printed 490 on pageid 05080, corrected there)"
+    },
+    {
+      "seq": 2,
+      "raw": "Booth v. Briscoc (ttbi supra)",
+      "case_name": "Booth v. Briscoe",
+      "volume": 2,
+      "reporter_abbr": "Q. B. Div.",
+      "page": 496,
+      "status": "linked_stub",
+      "stub_cite": "2 Q.B.D. 496",
+      "confidence": "medium",
+      "note": "ubi supra expanded to 2 Q. B. Div. 496, as above"
+    },
+    {
+      "seq": 3,
+      "raw": "Gort v. Rowney (ubi supra) [17 Q. B. D. 625]",
+      "case_name": "Gort v. Rowney",
+      "volume": 17,
+      "reporter_abbr": "Q. B. D.",
+      "page": 625,
+      "status": "linked_stub",
+      "stub_cite": "17 Q.B.D. 625",
+      "confidence": "high"
+    },
+    {
+      "seq": 4,
+      "raw": "Burstall v. Beyfus (ubi supra)",
+      "case_name": "Burstall v. Beyfus",
+      "volume": 50,
+      "reporter_abbr": "L. T. Rep. (N. S.)",
+      "page": 542,
+      "status": "linked_stub",
+      "stub_cite": "50 L.T. 542",
+      "confidence": "medium",
+      "note": "ubi supra expanded to the first cite printed for it on pageid 05080, 50 L. T. Rep. (N. S.) 542 (also cited there as 26 Ch. D. 35)"
+    }
+  ]
+}

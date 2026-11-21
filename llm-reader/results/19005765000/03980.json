@@ -1,0 +1,152 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:01:43Z",
+  "note": "Printed page 334. Co. Litt., Com. Dig., 1 Chitty Pl. and cross-references skipped. Andrews's notes 1-3 have their two columns interleaved in the scan; recorded in note order (1, 2, 3). Numbers checked against the 1901 edition (hathi00013/04370).",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Per Buller, J., The King v. Holland, 6 T. I. 02C",
+      "case_name": "The King v. Holland",
+      "volume": 5,
+      "reporter_abbr": "T. R.",
+      "page": 620,
+      "status": "linked_english_reports",
+      "er_case_id": "17942213",
+      "pincite": true,
+      "confidence": "high",
+      "note": "OCR '6 T. I. 02C', read 5 T. R. 620 (1901 edition; cited so on page 325); ER The King against E J Hollond begins at 5 TR 607"
+    },
+    {
+      "seq": 2,
+      "raw": "The King v. Bishop of Chester, 2 Salk. 51",
+      "case_name": "The King v. Bishop of Chester",
+      "volume": 2,
+      "reporter_abbr": "Salk.",
+      "page": 561,
+      "status": "linked_english_reports",
+      "er_case_id": "17951535",
+      "pincite": true,
+      "confidence": "high",
+      "note": "printed 51 (the 1901 edition prints 661); read 561, inside Rex v Bishop of Chester, Pierce and Cook, which begins at 2 Salk 560, found by name"
+    },
+    {
+      "seq": 3,
+      "raw": "Cooke v. Birt, 5 Taunt. 715",
+      "case_name": "Cooke v. Birt",
+      "volume": 5,
+      "reporter_abbr": "Taunt.",
+      "page": 765,
+      "status": "linked_english_reports",
+      "er_case_id": "18140661",
+      "confidence": "high",
+      "note": "printed 715, read 765 (1901 edition)"
+    },
+    {
+      "seq": 4,
+      "raw": "Relyea v. Beaver, 34 Barb. 547",
+      "case_name": "Relyea v. Beaver",
+      "volume": 34,
+      "reporter_abbr": "Barb.",
+      "page": 547,
+      "status": "linked_cap",
+      "cap_case_id": 5071751,
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Spencer v. Trafford, 42 Md. 1",
+      "case_name": "Spencer v. Trafford",
+      "volume": 42,
+      "reporter_abbr": "Md.",
+      "page": 1,
+      "status": "linked_cap",
+      "cap_case_id": 1846945,
+      "confidence": "high",
+      "note": "the 1901 edition prints 43 Md. 1, which is another case (Miller v. Eschbach)"
+    },
+    {
+      "seq": 6,
+      "raw": "How- land v. Davis, 40 Mich. 545",
+      "case_name": "Howland v. Davis",
+      "volume": 40,
+      "reporter_abbr": "Mich.",
+      "page": 545,
+      "status": "linked_cap",
+      "cap_case_id": 1328490,
+      "confidence": "high"
+    },
+    {
+      "seq": 7,
+      "raw": "Frank v. Morris, 57 111. 139",
+      "case_name": "Frank v. Morris",
+      "volume": 57,
+      "reporter_abbr": "Ill.",
+      "page": 139,
+      "status": "linked_cap",
+      "cap_case_id": 5241706,
+      "pincite": true,
+      "confidence": "high",
+      "note": "case runs 138-141"
+    },
+    {
+      "seq": 8,
+      "raw": "Ladue v. Ladue, 10 Vt 189",
+      "case_name": "Ladue v. Ladue",
+      "volume": 16,
+      "reporter_abbr": "Vt.",
+      "page": 189,
+      "status": "linked_cap",
+      "cap_case_id": 4420948,
+      "confidence": "high",
+      "note": "printed 10, read 16 (1901 edition and CAP)"
+    },
+    {
+      "seq": 9,
+      "raw": "Lockwood v. Bigelow, 11 Minn. 113",
+      "case_name": "Lockwood v. Bigelow",
+      "volume": 11,
+      "reporter_abbr": "Minn.",
+      "page": 113,
+      "status": "linked_cap",
+      "cap_case_id": 558652,
+      "confidence": "high"
+    },
+    {
+      "seq": 10,
+      "raw": "Williams v. Nesbit, 05 Ind. 171",
+      "case_name": "Williams v. Nesbit",
+      "volume": 65,
+      "reporter_abbr": "Ind.",
+      "page": 171,
+      "status": "linked_cap",
+      "cap_case_id": 1516688,
+      "confidence": "high",
+      "note": "printed 05, read 65 (1901 edition)"
+    },
+    {
+      "seq": 11,
+      "raw": "Brown v. Harmon, 21 Barb. 508",
+      "case_name": "Brown v. Harmon",
+      "volume": 21,
+      "reporter_abbr": "Barb.",
+      "page": 508,
+      "status": "linked_cap",
+      "cap_case_id": 2421288,
+      "confidence": "high"
+    },
+    {
+      "seq": 12,
+      "raw": "Wellington v. Milliken, 82 Me. 89",
+      "case_name": "Wellington v. Milliken",
+      "volume": 82,
+      "reporter_abbr": "Me.",
+      "page": 58,
+      "status": "linked_cap",
+      "cap_case_id": 569546,
+      "confidence": "high",
+      "note": "printed 89 (the 1901 edition prints '5B'); read 58, CAP's first page, found by name"
+    }
+  ]
+}

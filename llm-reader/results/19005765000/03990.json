@@ -1,0 +1,193 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03990",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:02:22Z",
+  "note": "Printed page 335. Bl. Com., Thompson on Trials and Foster's Federal Practice skipped. Andrews's note 1 on nonsuit runs in two columns; recorded in reading order and checked against the 1901 edition (hathi00013/04380), which replaces Elmore v. Grymes with Castle v. Bullard.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Carlisle v. Trears, Cowp. G71",
+      "case_name": "Carlisle v. Trears",
+      "volume": 2,
+      "reporter_abbr": "Cowp.",
+      "page": 671,
+      "status": "linked_english_reports",
+      "er_case_id": "17760067",
+      "confidence": "high",
+      "note": "page 'G71' read 671 (1901 edition); volume supplied, stored in ER as 2 Cowp 671"
+    },
+    {
+      "seq": 2,
+      "raw": "Nordmanser v. Hitch- cock, 40 Mo. 178",
+      "case_name": "Nordmanser v. Hitchcock",
+      "volume": 40,
+      "reporter_abbr": "Mo.",
+      "page": 178,
+      "status": "linked_cap",
+      "cap_case_id": 985732,
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Elmore v. Grymtes, 1 Pet. 469",
+      "case_name": "Elmore v. Grymes",
+      "volume": 1,
+      "reporter_abbr": "Pet.",
+      "page": 469,
+      "status": "linked_cap",
+      "cap_case_id": 1432365,
+      "confidence": "high",
+      "note": "CAP: Doe on the Demise of Elmore v. Grymes (1828)"
+    },
+    {
+      "seq": 4,
+      "raw": "Berry v. Savage, 2 Scam. 201",
+      "case_name": "Berry v. Savage",
+      "volume": 2,
+      "reporter_abbr": "Scam.",
+      "page": 261,
+      "status": "linked_cap",
+      "cap_case_id": 2476384,
+      "confidence": "high",
+      "note": "printed 201, read 261, CAP's cite 2 Scam. 261 (1840), found by name; the 1901 edition prints 3 Scam. 261, which is Aldrich v. Sharp"
+    },
+    {
+      "seq": 5,
+      "raw": "IHens- ley v. Peck, 13 Mo. 587",
+      "case_name": "Hensley v. Peck",
+      "volume": 13,
+      "reporter_abbr": "Mo.",
+      "page": 587,
+      "status": "linked_cap",
+      "cap_case_id": 8856853,
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Gordon v. Goodell, 84 Ill. 429",
+      "case_name": "Gordon v. Goodell",
+      "volume": 34,
+      "reporter_abbr": "Ill.",
+      "page": 429,
+      "status": "linked_cap",
+      "cap_case_id": 5288254,
+      "confidence": "high",
+      "note": "printed 84 (in both editions), but 84 Ill. 429 is Toledo, Wabash & Western Ry. v. Asbury; Gordon v. Goodell is 34 Ill. 429 (1864), found by name"
+    },
+    {
+      "seq": 7,
+      "raw": "Rankin v. Curtenius, 12 IIL 334",
+      "case_name": "Rankin v. Curtenius",
+      "volume": 12,
+      "reporter_abbr": "Ill.",
+      "page": 334,
+      "status": "linked_cap",
+      "cap_case_id": 2578899,
+      "confidence": "high",
+      "note": "CAP cite 12 Ill. 334, first_page 336"
+    },
+    {
+      "seq": 8,
+      "raw": "Howe v. Harroun, 17 Ill. 494",
+      "case_name": "Howe v. Harroun",
+      "volume": 17,
+      "reporter_abbr": "Ill.",
+      "page": 494,
+      "status": "linked_cap",
+      "cap_case_id": 2593007,
+      "confidence": "high"
+    },
+    {
+      "seq": 9,
+      "raw": "Wilson S. M. Co. v. Lewis, 10 Ill. App. 191",
+      "case_name": "Wilson S. M. Co. v. Lewis",
+      "volume": 10,
+      "reporter_abbr": "Ill. App.",
+      "page": 191,
+      "status": "linked_cap",
+      "cap_case_id": 852667,
+      "confidence": "high"
+    },
+    {
+      "seq": 10,
+      "raw": "Holmes v. C. &A. Ry., 94 Ill. 439",
+      "case_name": "Holmes v. C. & A. Ry.",
+      "volume": 94,
+      "reporter_abbr": "Ill.",
+      "page": 439,
+      "status": "linked_cap",
+      "cap_case_id": 2730228,
+      "confidence": "high"
+    },
+    {
+      "seq": 11,
+      "raw": "Bates v. Jenkins, Breese (11.), 411",
+      "case_name": "Bates v. Jenkins",
+      "volume": 1,
+      "reporter_abbr": "Breese",
+      "page": 411,
+      "status": "linked_cap",
+      "cap_case_id": 435590,
+      "confidence": "high",
+      "note": "Breese = 1 Ill.; CAP cite 1 Ill. 411 (1831)"
+    },
+    {
+      "seq": 12,
+      "raw": "Holmes v. C. & A. Ry., 94 Ill. 484",
+      "case_name": "Holmes v. C. & A. Ry.",
+      "volume": 94,
+      "reporter_abbr": "Ill.",
+      "page": 439,
+      "status": "linked_cap",
+      "cap_case_id": 2730228,
+      "confidence": "medium",
+      "note": "printed 484 (the 1901 edition prints 434); Holmes v. Chicago & Alton Railroad runs 439-445, so neither page is in it; linked by name, page set to the case's first page"
+    },
+    {
+      "seq": 13,
+      "raw": "Id.",
+      "case_name": "Holmes v. C. & A. Ry.",
+      "volume": 94,
+      "reporter_abbr": "Ill.",
+      "page": 439,
+      "status": "linked_cap",
+      "cap_case_id": 2730228,
+      "confidence": "medium",
+      "note": "Id. expands to the previous cite, Holmes v. C. & A. Ry., 94 Ill. (printed 484); linked by name"
+    },
+    {
+      "seq": 14,
+      "raw": "Central Tr. Co. v. Pullman P. C. Co., 139 U. S. 24",
+      "case_name": "Central Tr. Co. v. Pullman P. C. Co.",
+      "volume": 139,
+      "reporter_abbr": "U. S.",
+      "page": 24,
+      "status": "linked_cap",
+      "cap_case_id": 3552854,
+      "confidence": "high"
+    },
+    {
+      "seq": 15,
+      "raw": "Bournonville v. Goodall, 10 Pa. St 133",
+      "case_name": "Bournonville v. Goodall",
+      "volume": 10,
+      "reporter_abbr": "Pa. St.",
+      "page": 133,
+      "status": "linked_cap",
+      "cap_case_id": 962666,
+      "confidence": "high"
+    },
+    {
+      "seq": 16,
+      "raw": "Oscanyan v. Arms, 103 U. S. 261",
+      "case_name": "Oscanyan v. Arms",
+      "volume": 103,
+      "reporter_abbr": "U. S.",
+      "page": 261,
+      "status": "linked_cap",
+      "cap_case_id": 1522233,
+      "confidence": "high"
+    }
+  ]
+}

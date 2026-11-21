@@ -1,0 +1,24 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:11:50Z",
+  "note": "Printed page 363: matter of law and public statutes need not be stated; private acts must be. Blackstone's Commentaries is a treatise.",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Lymo Regis, Doug. 148", "case_name": "The King v. Lyme Regis", "volume": 1, "reporter_abbr": "Doug.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "17790084", "confidence": "medium",
+     "note": "volume 1 supplied; the README's choice: King v. Lyme Regis, Doug. 148, is the record at 1 Doug 149 (Douglas paged differently in different editions)"},
+    {"seq": 2, "raw": "Boyco v. Wiltaker, Doug. 97", "case_name": "Boyce v. Whitaker", "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; ER 'Boyce against Whitaker' begins at 1 Doug 94"},
+    {"seq": 3, "raw": "Partridge v. Strange, Plow. 84", "case_name": "Partridge v. Strange", "volume": 1, "reporter_abbr": "Plow.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "Plowden's first 130 pages are missing from the ER; the same case found by name in Dyer, 'Partridge against Strange and Others' at 1 Dy 74"},
+    {"seq": 4, "raw": "Platt v. Hill, Ld. Ray. 3L", "case_name": "Platt v. Hill", "volume": 1, "reporter_abbr": "Ld. Ray.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "17921830", "confidence": "high",
+     "note": "page cut off in the OCR ('3L'), supplied as 381 from the case found by name; volume 1 supplied"},
+    {"seq": 5, "raw": "Boyce v. Whitaler, Doug. 97", "case_name": "Boyce v. Whitaker", "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; ER 'Boyce against Whitaker' begins at 1 Doug 94"}
+  ]
+}

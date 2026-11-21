@@ -1,0 +1,18 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05290",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:11:50Z",
+  "note": "Appendix p. 466, notes (19)-(21). Also cites Bracton, Corvinus, the Digest, Bac. Ab., 1 Chitty (on Pleading) 243 (not cases). Footnote (b) prints no case name in Andrews's editions (the 1831 edition names Bowyer v. Cook, which identifies the string); cross-checked with hathi00002/04070 and the 1901 hathi00013/05760.",
+  "citations": [
+    {"seq": 1, "raw": "5 lMod. 140", "volume": 5, "reporter_abbr": "Mod.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17940334", "pincite": true, "confidence": "medium",
+     "note": "OCR 140 for 146 (the 1831 and 1901 editions print 146); Bowyer v. Cook, which begins at 5 Mod 145; no name printed in this edition"},
+    {"seq": 2, "raw": "Carth. W33", "reporter_abbr": "Carth.", "page": 363,
+     "status": "linked_english_reports", "er_case_id": "17410040", "confidence": "medium",
+     "note": "OCR 'W33' for 363 (the 1831 and 1901 editions print 363); Bowyer v. Cook, ER titles it Bowers v. Cook"},
+    {"seq": 3, "raw": "1 SalL 297", "volume": 1, "reporter_abbr": "Salk.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "17951706", "confidence": "medium",
+     "note": "same case (Bowyer v. Cook), ER's 'Fooler v. Cooke' among the three cases at 1 Salk 297, as chosen for the 1831 edition"}
+  ]
+}

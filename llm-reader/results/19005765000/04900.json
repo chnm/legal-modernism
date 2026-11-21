@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04900",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:12:11Z",
+  "note": "Printed page 426. Stephen's footnotes (i)-(o) (Appendix, Finch, Co. Litt., Com. Dig. and cross-references skipped), then Andrews's note 1.",
+  "citations": [
+    {"seq": 1, "raw": "Mlilner v. Crowdall, 1 Show. 838", "case_name": "Milner v. Crowdall", "volume": 1, "reporter_abbr": "Show.", "page": 338,
+     "status": "linked_english_reports", "er_case_id": "17941142", "confidence": "high", "note": "OCR 838 read 338; ER Millner, an Attorney, against Crowdall"},
+    {"seq": 2, "raw": "Leyfield's Case, 10 Rep. 8S", "case_name": "Leyfield's Case", "volume": 10, "reporter_abbr": "Rep.", "page": 88,
+     "status": "linked_english_reports", "er_case_id": "15720100", "confidence": "high", "note": "OCR 8S read 88"},
+    {"seq": 3, "raw": "Dugger v..Oglesby, 99 Il. 405", "case_name": "Dugger v. Oglesby", "volume": 99, "reporter_abbr": "Ill.", "page": 405,
+     "status": "linked_cap", "cap_case_id": 2829366, "confidence": "high"}
+  ]
+}

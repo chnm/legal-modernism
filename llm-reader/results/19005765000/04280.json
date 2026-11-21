@@ -1,0 +1,23 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04280",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:12:16Z",
+  "note": "Printed page 364: matters judicially noticed; matter coming more properly from the other side. Co. Litt., Chitty, Com. Dig. and Puterbaugh are treatises; 'vide supra' skipped.",
+  "citations": [
+    {"seq": 1, "raw": "Stowell v. Lord Zouch, Plow. 87C", "case_name": "Stowell v. Lord Zouch", "volume": 1, "reporter_abbr": "Plow.", "page": 376,
+     "status": "linked_english_reports", "er_case_id": "18160191", "pincite": true, "confidence": "high",
+     "note": "OCR '87C' for 376; ER 'Stowel v Lord Zouch' begins at 1 Plowden 352 and runs to 377, where Nevil's Case begins"},
+    {"seq": 2, "raw": "Walowigham's Case, id. 564", "case_name": "Walsingham's Case", "volume": 2, "reporter_abbr": "Plow.", "page": 564,
+     "status": "linked_english_reports", "er_case_id": "18160205", "pincite": true, "confidence": "high",
+     "note": "id. = Plow.; ER 'The Queen's Attorney, against Thomas Walsingham' begins at 2 Plowden 546 (43,879 words)"},
+    {"seq": 3, "raw": "St. John v. St. John, Hob. 78", "case_name": "St. John v. St. John", "reporter_abbr": "Hob.", "page": 78,
+     "status": "linked_english_reports", "er_case_id": "17922074", "confidence": "high",
+     "note": "two records begin at Hob 78; the name decides"},
+    {"seq": 4, "raw": "Hotam.v. East India Co., 1 T. B. 8", "case_name": "Hotham v. East India Co.", "volume": 1, "reporter_abbr": "T. R.", "page": 638,
+     "status": "linked_english_reports", "er_case_id": "17870048", "confidence": "high",
+     "note": "page garbled in the OCR ('8'), supplied as 638 from the case found by name in 1 TR"},
+    {"seq": 5, "raw": "Romer v. Conter, 53 Minn. 171", "case_name": "Romer v. Conter", "volume": 53, "reporter_abbr": "Minn.", "page": 171,
+     "status": "linked_cap", "cap_case_id": 759644, "confidence": "high", "note": "Andrews's note 2"}
+  ]
+}

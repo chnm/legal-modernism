@@ -1,0 +1,79 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05080",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:55:25Z",
+  "note": "Appendix, editor's note on joinder of parties, setting out Bowen L.J.'s opinion in Hannay v. Smurthwaite. English cases after 1865 are not in the English Reports; linked to stubs where one exists",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Hannay v. Smurthwait, 69 L. T, Rep. 677",
+      "case_name": "Hannay v. Smurthwaite",
+      "volume": 69,
+      "reporter_abbr": "L. T. Rep.",
+      "page": 677,
+      "status": "linked_stub",
+      "stub_cite": "69 L.T. 677",
+      "confidence": "high",
+      "note": "Law Times Reports (1893, C.A.); stub cite matches exactly"
+    },
+    {
+      "seq": 2,
+      "raw": "Booth v. Briscoe, 2 Q. B. Div. 490",
+      "case_name": "Booth v. Briscoe",
+      "volume": 2,
+      "reporter_abbr": "Q. B. Div.",
+      "page": 496,
+      "status": "linked_stub",
+      "stub_cite": "2 Q.B.D. 496",
+      "confidence": "medium",
+      "note": "OCR 490 for 496: Booth v. Briscoe (1877) is reported at 2 Q.B.D. 496, and a stub exists there; the 490 stub is taken to be another case"
+    },
+    {
+      "seq": 3,
+      "raw": "Ays- cough v. Bullard, 00 L. T. Rep. (N. S.) 471",
+      "case_name": "Ayscough v. Bullar",
+      "volume": 60,
+      "reporter_abbr": "L. T. Rep. (N. S.)",
+      "page": 471,
+      "status": "linked_stub",
+      "stub_cite": "60 L.T. 471",
+      "confidence": "medium",
+      "note": "OCR 00 for 60 (the 1889 volume, beside Arnison v. Smith in 60 L.T.); stub 60 L.T. 471"
+    },
+    {
+      "seq": 4,
+      "raw": "Arnison v. Smith, 60 L. T. Rep. (N. S.) 206",
+      "case_name": "Arnison v. Smith",
+      "volume": 60,
+      "reporter_abbr": "L. T. Rep. (N. S.)",
+      "page": 206,
+      "status": "linked_stub",
+      "stub_cite": "60 L.T. 206",
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "Burstall v. Beyfus, 50 L. T. Rep. (N. S.) 542",
+      "case_name": "Burstall v. Beyfus",
+      "volume": 50,
+      "reporter_abbr": "L. T. Rep. (N. S.)",
+      "page": 542,
+      "status": "linked_stub",
+      "stub_cite": "50 L.T. 542",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "20 Ch. Div. 85",
+      "case_name": "Burstall v. Beyfus",
+      "volume": 26,
+      "reporter_abbr": "Ch. Div.",
+      "page": 35,
+      "status": "linked_stub",
+      "stub_cite": "26 L.R.Ch. 35",
+      "confidence": "medium",
+      "note": "parallel cite; OCR 20 for 26 and 85 for 35: Burstall v. Beyfus (1884) is 26 Ch. D. 35, the Chancery Division volume of 1884 beside 50 L.T.; stub 26 L.R.Ch. 35"
+    }
+  ]
+}
