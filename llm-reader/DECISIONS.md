@@ -27,6 +27,9 @@ The records are not yet consistent on `7 Edw. 2, 213, 226`: hathi00002
 and hathi00009 (appendix) record two citations; the other editions drop
 226. Align them once this is decided.
 
+Since 2026-11-21, a second number that another edition names as its own
+case is recorded as a second citation (README).
+
 Interim rule: the second number is dropped and listed in `note`
 (`dropped: 508, 532`); a second Saunders page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`) is recorded as a second citation.
@@ -217,7 +220,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Taaffe 18 Cal. 388, Pease v. McKusick, Cushman v. Hayes, Rector v.
    Gaines, Illinois Fire Ins. v. Stanton, Wadhams v. Swan): restore them.
    19005765000/05690 "Sed vide 2 Taunt. 21" is 2 Taunt. 281 (the 1824 text),
-   Taylor v. Needham, pin cite, `medium`. Remove `case_name` where no name is printed
+   Taylor v. Needham, pin cite, `medium`. hathi00002/01530 seq 2 is
+   5 Hen. 7, 13 a (OCR "5 Hen. 8, 23 a"), `high`. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

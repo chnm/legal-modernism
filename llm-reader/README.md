@@ -208,7 +208,9 @@ at `low`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
-so they can be recovered. A note on the same page (`2 Saund. 410, and note (3)`, or `97, and 97 b,
+so they can be recovered. But where another edition prints a case name at
+that second number ("8 Rep. 39. 59": Griesley's Case and Beecher's Case),
+it is a second citation. A note on the same page (`2 Saund. 410, and note (3)`, or `97, and 97 b,
 n. (2)`: a folio letter is the same page) is one record. The
 exception is a second page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page

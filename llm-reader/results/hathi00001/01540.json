@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "01540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:38:30Z",
+  "note": "printed p. 132; amercement, signing judgment. Styles's Practical Register, Arch. Pract., Impey and Manning's Exchequer are not reports, skipped. The 1831 edition (hathi00002/01340) names the two cases at 8 Rep. 39 and 59, so 59 is a second cite and not noise",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 39.", "volume": 8, "reporter_abbr": "Rep.", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "15720166", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Griesley's Case, which begins at 8 Co Rep 38"},
+    {"seq": 2, "raw": "59.", "volume": 8, "reporter_abbr": "Rep.", "page": 59,
+     "status": "linked_english_reports", "er_case_id": "15720036", "pincite": true, "confidence": "medium",
+     "note": "no name printed; reporter and volume carried from the cite before; the 1831 edition names Beecher's Case, which begins at 8 Co Rep 58"}
+  ]
+}
