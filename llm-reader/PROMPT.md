@@ -63,7 +63,7 @@ printing as a Gale volume already read, whose records are the cross-check
 | hathi00005 | 1854 | 19005784900 (its pageids run 60 behind this copy's, at least through p. 22; check as you go) |
 | hathi00006 | 1857 | 19005781000 (the 1859 printing of the same 8th American edition; its pageids run 60 behind this copy's). hathi00005 (1854) is the same setting of type at the same pageid from the start of the text, as hathi00004 (1851) is for hathi00005 |
 | hathi00009 | 1871 | none read (Samuel Tyler's edition, from the 2nd London edition, with his own preface, introduction, dissertation on parties and notes) |
-| hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500) |
+| hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500). Tyler's third American edition; cross-check against hathi00009 (1871 Tyler) by content |
 | hathi00013 | 1901 | none read |
 
 Skip a page that already has a results file. When done, run
