@@ -23,6 +23,10 @@ most are OCR noise. But some are real:
 - `1 Sch. & Lef. 320. 324`, where 324 is probably Shannon v. Shannon, the
   replevin case the passage needs, and 320 only the stub's first page.
 
+The records are not yet consistent on `7 Edw. 2, 213, 226`: hathi00002
+and hathi00009 (appendix) record two citations; the other editions drop
+226. Align them once this is decided.
+
 Interim rule: the second number is dropped and listed in `note`
 (`dropped: 508, 532`); a second Saunders page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`) is recorded as a second citation.
