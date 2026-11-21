@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "04420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:44:56Z",
+  "note": "printed p. 415; 1831 hathi00002/03210",
+  "citations": [
+    {"seq": 1, "raw": "Robert Bradshaw's Case, 9 Rep. 60 b.", "case_name": "Robert Bradshaw's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "15720314", "confidence": "high"},
+    {"seq": 2, "raw": "Gale v. Reed, 8 East, so", "case_name": "Gale v. Reed",
+     "volume": 8, "reporter_abbr": "East", "page": 80,
+     "status": "linked_english_reports", "er_case_id": "18060334", "confidence": "high",
+     "note": "OCR so for 80"}
+  ]
+}

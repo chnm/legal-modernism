@@ -1,0 +1,31 @@
+{
+  "psmid": "19005940200", "pageid": "04250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:37:48Z",
+  "note": "printed p. 398; Co. Litt., Bac. Ab. and Com. Dig. are treatises, Reg. Plac. a book of precedents, not recorded; 1831 hathi00002/03100",
+  "citations": [
+    {"seq": 1, "raw": "Dovaston v. Payne, 2 1I. Bl. 530", "case_name": "Dovaston v. Payne",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 530,
+     "status": "linked_english_reports", "er_case_id": "17954015", "pincite": true, "confidence": "high",
+     "note": "OCR 1I. for H.; case begins at 2 H Bl 527"},
+    {"seq": 2, "raw": "Casseres v. Bell, 8 T. R. 166", "case_name": "Casseres v. Bell",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17990622", "confidence": "high"},
+    {"seq": 3, "raw": "Vynior's Case, 8 Rep. 81 b.", "case_name": "Vynior's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high",
+     "note": "ER splits the case into records at 8 Co Rep 80 and 81; folio 81 b falls in the one at 81, a pin cite since the case begins at 80"},
+    {"seq": 4, "raw": "2 Saund. 305 an. 13)", "volume": 2, "reporter_abbr": "Saund.", "page": 305,
+     "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
+     "note": "2 Saund. 305 a, n. (13) as the 1824 and 1831 editions print it; Saunders's note in Dean and Chapter of Windsor v. Gover, which begins at 2 Wms Saund 302"},
+    {"seq": 5, "raw": "Sheers v. Brooks, 2 H. Bl. 120", "case_name": "Sheers v. Brooks",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 120,
+     "status": "linked_english_reports", "er_case_id": "17923175", "confidence": "high"},
+    {"seq": 6, "raw": "Handford v. Palmer, 2 Brod. and Bing. 361", "case_name": "Handford v. Palmer",
+     "volume": 2, "reporter_abbr": "Brod. & Bing.", "page": 361,
+     "status": "linked_english_reports", "er_case_id": "18200601", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Br & B 359"},
+    {"seq": 7, "raw": "Marsh v. Bulteel, 5 Barn. and Aid. 507", "case_name": "Marsh v. Bulteel",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 507,
+     "status": "linked_english_reports", "er_case_id": "18220069", "confidence": "high"}
+  ]
+}

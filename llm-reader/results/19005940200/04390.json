@@ -1,0 +1,22 @@
+{
+  "psmid": "19005940200", "pageid": "04390",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:44:12Z",
+  "note": "printed p. 412; the top lines of the footnotes continue note (n) from p. 411 (Buckley v. ... begins there). The 'Plow. 118.' after Partridge v. Strange repeats the first Plowden page cited (the 1831 edition prints 'Plow. 118. 54. 85.'), treated as noise, not recorded (dropped: Plow. 118). Supra cross-reference, Bac. Ab. not recorded; 1831 hathi00002/03190",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
+     "volume": 1, "reporter_abbr": "Plowd.", "page": 118,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "name begins on p. 411; ER's Plowden lacks pages 1-130; per the README the same case is Dyer's report, 'Sir Richard Bulkeley against Thomas', 2 Dy 113; Plow. 118 is the report's first page, not a pin cite"},
+    {"seq": 2, "raw": "' nbish v. Tailbois, 54", "case_name": "Wimbish v. Tailbois",
+     "volume": 1, "reporter_abbr": "Plowd.", "page": 54,
+     "status": "no_match", "confidence": "medium",
+     "note": "OCR lost the start of Wimbish; reporter Plowden carried from the preceding cite (supplied, so medium); ER's Plowden lacks pages 1-130, and no Wimbish/Wymbish or Tailbois/Talboys case of the period is elsewhere in ER (only Bellicote v. Taylboys, Cro Eliz 107, and Bennet v. Talboys, later cases)"},
+    {"seq": 3, "raw": "Partridge v. Strange, 85", "case_name": "Partridge v. Strange",
+     "reporter_abbr": "Plowd.", "page": 85,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "reporter Plowden carried from the preceding cite; ER's Plowden lacks pages 1-130; the same case found by name in ER as 1 Dy 74, 'Partridge against Strange and Others'"},
+    {"seq": 4, "raw": "lartley v. Herring, 8 T. R. 130", "case_name": "Hartley v. Herring",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 130,
+     "status": "linked_english_reports", "er_case_id": "17990601", "confidence": "high"}
+  ]
+}

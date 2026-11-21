@@ -272,6 +272,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Hussey, Carth 9 (17410299) by the rule that the English Reports beat a
    stub; the 1824 (hathi00001 03310-03600) and 1831 records link the stub
    `2 Lutw. 1231`. Align every edition to the English Reports record.
+   Dal. 67 (the Dalison group at 2 Ben & D 57) is `medium` in 1827 but
+   `low` in the 1824 and 1831 records; pick one.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

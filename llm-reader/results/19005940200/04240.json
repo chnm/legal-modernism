@@ -1,0 +1,21 @@
+{
+  "psmid": "19005940200", "pageid": "04240",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:37:23Z",
+  "note": "printed p. 397; 1831 hathi00002/03090-03100",
+  "citations": [
+    {"seq": 1, "raw": "Hotham v. East India Company, 1 T. R. 638", "case_name": "Hotham v. East India Company",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 638,
+     "status": "linked_english_reports", "er_case_id": "17870048", "confidence": "high"},
+    {"seq": 2, "raw": "Smith v. Fevercll, 2 Mod. 6", "case_name": "Smith v. Feverell",
+     "volume": 2, "reporter_abbr": "Mod.", "page": 6,
+     "status": "linked_english_reports", "er_case_id": "17931002", "confidence": "high"},
+    {"seq": 3, "raw": "1 Freeman, 190. S. C.", "case_name": "Smith v. Feverell",
+     "volume": 1, "reporter_abbr": "Freem.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "18260565", "confidence": "high",
+     "note": "S. C. of Smith v. Feverell; ER Freem KB 190, 'Smith v Fetherwell'"},
+    {"seq": 4, "raw": "Green- how v. Ilsley, Willes, 619", "case_name": "Greenhow v. Ilsley",
+     "reporter_abbr": "Willes", "page": 619,
+     "status": "linked_english_reports", "er_case_id": "17900754", "confidence": "medium",
+     "note": "Willes's Reports have no source; the same case found by name in ER as Barnes 136, 'Grenhow against Ilsley'"}
+  ]
+}
