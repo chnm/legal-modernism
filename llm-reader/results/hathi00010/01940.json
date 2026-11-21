@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00010", "pageid": "01940",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:21:28Z",
+  "note": "Stephen, chapter II (p. 168): the general issues; ne dona pas in formedon; ne disturba pas in quare impedit. Reg. Plac., Doct. & Stud. and Bac. Ab. are treatises; 10 Went. (Wentworth) is a book of precedents; (s), (t) cross-references. Matches 1871 hathi00009/01920",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob., 162", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "high",
+     "note": "the Commendam case begins at Hob 140, where the English Reports hold two records of it: 17920644 (er_name 'De Termino Sancti' Mich', murrell_title 'Colt and Glover v Bishop of Coventry and Lichfield', 18474 words) and 17921247 (titled for the case, no word_count); linked the one with a word_count per the README, where the 1871 record (hathi00009/01920) linked 17921247"}
+  ]
+}

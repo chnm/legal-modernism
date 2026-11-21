@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00010", "pageid": "02250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:21:31Z",
+  "note": "Stephen, chapter II (p. 199): no pleading to a good inducement; a traverse denies in manner and form. Com. Dig. and the cross-reference supra, p. 118 are not recorded. Matches 1871 hathi00009/02230",
+  "citations": [
+    {"seq": 1, "raw": "Foden v. Haines, Comb., 245", "case_name": "Foden v. Haines",
+     "reporter_abbr": "Comb.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17240198", "confidence": "high"},
+    {"seq": 2, "raw": "Hoar v. Mill, 4 M. & S., 47)", "case_name": "Hoar v. Mill",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 470,
+     "status": "linked_english_reports", "er_case_id": "18160242", "confidence": "high",
+     "note": "OCR '47)' for 470 (470 in the 1871 text)"}
+  ]
+}

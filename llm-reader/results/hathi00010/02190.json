@@ -1,0 +1,23 @@
+{
+  "psmid": "hathi00010", "pageid": "02190",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:19:55Z",
+  "note": "Stephen, chapter II (p. 193): the inducement without new matter; where the special traverse applies at the present day. 9 Went. and Rast. Ent. are books of precedents. Matches 1871 hathi00009/02170",
+  "citations": [
+    {"seq": 1, "raw": "Stennell v. Hogg, 1 Saund., 223", "case_name": "Stennel v. Hogg",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 223,
+     "status": "linked_english_reports", "er_case_id": "18450242", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 220"},
+    {"seq": 2, "raw": "Mayor of Oxford v. Richardson, 4. T. R., 437", "case_name": "Mayor of Oxford v. Richardson",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 437,
+     "status": "linked_english_reports", "er_case_id": "17911479", "confidence": "high",
+     "note": "ER 'The Mayor and Commonalty of Orford against Richardson'; printed Oxford, as in the other editions"},
+    {"seq": 3, "raw": "Horne v. Lewin, 1 Ld. Ray., 641", "case_name": "Horne v. Lewin",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 641,
+     "status": "linked_english_reports", "er_case_id": "17921158", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Ld Raym 639"},
+    {"seq": 4, "raw": "Horne v. Lewin, 1 Ld. Ray., 641", "case_name": "Horne v. Lewin",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 641,
+     "status": "linked_english_reports", "er_case_id": "17921158", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Ld Raym 639"}
+  ]
+}

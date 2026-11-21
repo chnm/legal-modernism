@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00010", "pageid": "01810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:18:20Z",
+  "note": "Stephen, chapter II (p. 155): the chief objects of pleading and the plan of the chapter; matches 1871 hathi00009/01790",
+  "citations": [
+    {"seq": 1, "raw": "Collett v. Lord Keith, 2 East., 260", "case_name": "Collett v. Lord Keith",
+     "volume": 2, "reporter_abbr": "East", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "18020175", "confidence": "high"},
+    {"seq": 2, "raw": "J'Anson v. Stuart, 1 T. R., 748", "case_name": "J'Anson v. Stuart",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 748,
+     "status": "linked_english_reports", "er_case_id": "17870116", "confidence": "high"},
+    {"seq": 3, "raw": "Holmes v. Catesby, ? Taunt., 543", "case_name": "Holmes v. Catesby",
+     "volume": 1, "reporter_abbr": "Taunt.", "page": 543,
+     "status": "linked_english_reports", "er_case_id": "18090216", "confidence": "high",
+     "note": "volume OCR'd as '?'; 1 Taunt. as the 1871 edition prints, and the named case is at 1 Taunt 543"}
+  ]
+}

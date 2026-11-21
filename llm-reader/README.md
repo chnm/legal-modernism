@@ -188,7 +188,10 @@ the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 "2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
 Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Bridgwater v.
 Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
-report of the suit, not a pin cite into 3 Lev 109. Record each of
+report of the suit, not a pin cite into 3 Lev 109. Colt v. Bishop of
+Coventry (Hob. 140–164) is 17920644, the record with text (titled "De
+Termino Sancti Mich", with the case's name in `murrell_title`), not the
+empty 17921247. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`).
 A second report of a case found only inside a different case's report
 (Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally; Price
@@ -381,7 +384,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   goes in `note`.
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
-  printed) are your reading of it. A volume you supplied goes in `volume`, and
+  printed) are your reading of it. `case_name` is left out when no name is
+  printed; the link identifies the case. A volume you supplied goes in `volume`, and
   `note` says so; likewise `volume` and `page` hold the corrected reading when
   the named case is found at other numbers than those printed (which stay in
   `raw`).

@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00010", "pageid": "02430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:19:10Z",
+  "note": "Stephen, chapter II (p. 217): the effect of admission by pleading over; protestation. Bac. Ab., Com. Dig., Co. Litt., the Appendix and cross-references are not recorded. Text and notes match hathi00009/02410",
+  "citations": [
+    {"seq": 1, "raw": "Wilcox v. Servant of Skipwith, 2 Mod., 4", "case_name": "Wilcox v. Servant of Skipwith",
+     "volume": 2, "reporter_abbr": "Mod.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "17931312", "confidence": "high"},
+    {"seq": 2, "raw": "10 Ed., IV, 12", "volume": 10, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Edw. IV, fol. 12; no source"},
+    {"seq": 3, "raw": "The King v. The Bishop of Chester, 2 Salk., 561", "case_name": "The King v. The Bishop of Chester",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 561,
+     "status": "linked_english_reports", "er_case_id": "17951535", "pincite": true, "confidence": "high",
+     "note": "Rex v. Bishop of Chester, Pierce and Cook begins at 2 Salk 560"},
+    {"seq": 4, "raw": "2 Saund., 103 a, n. 1", "volume": 2, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450117", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (1) on protestation, to Holdipp v. Otway, which begins at 2 Wms Saund 102; no name printed"},
+    {"seq": 5, "raw": "17 Ed. II, 534", "volume": 17, "reporter_abbr": "Y.B.", "page": 534,
+     "status": "no_match", "confidence": "high", "note": "year book, 17 Edw. II, p. 534; no source"},
+    {"seq": 6, "raw": "43 Ed. III, 17", "volume": 43, "reporter_abbr": "Y.B.", "page": 17,
+     "status": "no_match", "confidence": "high", "note": "year book, 43 Edw. III, fol. 17; no source"},
+    {"seq": 7, "raw": "40 Ed. III, 17, 46", "volume": 40, "reporter_abbr": "Y.B.", "page": 17,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 40 Edw. III, fol. 17; dropped: 46 (a second folio or plea number), as in the 1871 and 1831 records; no source"},
+    {"seq": 8, "raw": "48 Ed. III, 11", "volume": 48, "reporter_abbr": "Y.B.", "page": 11,
+     "status": "no_match", "confidence": "high", "note": "year book, 48 Edw. III, fol. 11; no source"}
+  ]
+}

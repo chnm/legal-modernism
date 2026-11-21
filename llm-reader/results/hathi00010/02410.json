@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00010", "pageid": "02410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:18:35Z",
+  "note": "Stephen, chapter II (p. 215): the colour must not amount to a real right; rules of pleadings in general begin: every pleading must answer the whole. Doct. Pl. and Com. Dig. are not recorded. Text and notes match hathi00009/02390",
+  "citations": [
+    {"seq": 1, "raw": "Radford v. Harbyn, Cro. Jac., 122", "case_name": "Radford v. Harbyn",
+     "reporter_abbr": "Cro. Jac.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17910806", "confidence": "high"},
+    {"seq": 2, "raw": "1 Saund., 28, n. 3", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "Saunders's note (3) to Birks v. Trippet, which begins at 1 Wms Saund 28; no name printed"},
+    {"seq": 3, "raw": "Herlakenden's Case, 4 Rep., 62 a", "case_name": "Herlakenden's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 62,
+     "status": "linked_english_reports", "er_case_id": "15980017", "confidence": "high"}
+  ]
+}

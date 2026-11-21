@@ -161,9 +161,13 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    unnamed); earlier records mix them (Denison v. Richardson, Holding v.
    Haling, Hickman v. Walker). "1 Saund. 374, n. 1" (1831, 1871) is 274,
    The King v. Sutton, as the English editions print it; hathi00002 links
-   Toomes v. Etherington.
+   Toomes v. Etherington. Remove `case_name` where no name is printed
+   (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
+   bare Saund. 319 n. 6).
    Hartford v. Jones, 2 Salk. 654: relink every record to the duplicate
-   with a `word_count`.
+   with a `word_count`. Likewise Colt v. Bishop of Coventry (Hob.): relink
+   17921247 to 17920644 in hathi00002, hathi00006, hathi00009 and the Gale
+   records.
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
    as a back-reference; earlier records left it out.
 8. **A bare `Ibid.` after a footnote mixing a case and a treatise**
@@ -181,9 +185,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    for a first page in another report linked through the same-case rule
    (Harmer v. Rowe, Lucas v. Nockells); earlier records set it.
 9. After the pass: validate everything, commit, and post each Decisions and
-   Findings unit above as its own GitHub issue, linked from #439. Then start
-   the UK editions (7 official copies, 4,219 pages; restart the progress page
-   with `--jurisdiction UK` or none).
+   Findings unit above as its own GitHub issue, linked from #439. Then stop:
+   the owner decided (2026-11-21) not to read the UK editions.
 
 Already aligned across editions (recorded in the README's "choices already
 made"): 1 Saund. 228 n. (1), 1 Saund. 318 n. (3), 2 Saund. 291 n., 2 Saund.

@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00010", "pageid": "02650",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:23:36Z",
+  "note": "Stephen, chapter II (p. 239): traverse too large by quantity, place or circumstance, or by the conjunctive. Doctor and Student (Doct. Pl.) and cross-reference (c) are not recorded. Text and notes match hathi00009/02630",
+  "citations": [
+    {"seq": 1, "raw": "Colborne v. Stockdale, Str., 493", "case_name": "Colborne v. Stockdale",
+     "volume": 1, "reporter_abbr": "Str.", "page": 493,
+     "status": "linked_english_reports", "er_case_id": "17950843", "confidence": "high",
+     "note": "volume 1 supplied"},
+    {"seq": 2, "raw": "8 Mod., 58 S. C.", "case_name": "Colborne v. Stockdale",
+     "volume": 8, "reporter_abbr": "Mod.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "17950851", "pincite": true, "confidence": "high",
+     "note": "S. C. of Colborne v. Stockdale; Coleborne against Stockdale begins at 8 Mod 57 (two Rex cases begin at 58, but the S. C. decides)"},
+    {"seq": 3, "raw": "Lane v. Alexander, Yelv., 122", "case_name": "Lane v. Alexander",
+     "reporter_abbr": "Yelv.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17921377", "confidence": "high"}
+  ]
+}

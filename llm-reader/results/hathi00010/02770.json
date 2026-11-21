@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00010", "pageid": "02770",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:19:50Z",
+  "note": "Stephen, chapter II (p. 251): the cumulative traverse; de injuria absque tali causa. Matches 1871 hathi00009/02750. Cross-references (o) and (q) are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Robinson v. Rayley, 1 Burr., 316", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 316,
+     "status": "linked_english_reports", "er_case_id": "17570030", "confidence": "high",
+     "note": "ER 'Robinson versus Raley'"},
+    {"seq": 2, "raw": "O'Brien v. Saxon, 2 Barn. & Cres., 908", "case_name": "O'Brien v. Saxon",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 908,
+     "status": "linked_english_reports", "er_case_id": "18240124", "confidence": "high"},
+    {"seq": 3, "raw": "Phillips v. Howgate, 5 Barn. & Ald., 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

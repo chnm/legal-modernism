@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00010", "pageid": "02840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:20:40Z",
+  "note": "Stephen, chapter II (p. 258): several counts and the rule against duplicity. Matches 1871 hathi00009/02820. Cross-references (i) and (k) are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Phillips v. Howgate, 5 Barn. & Ald., 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

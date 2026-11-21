@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00010", "pageid": "02990",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:23:39Z",
+  "note": "Stephen, chapter II (p. 273): the venire from the body of the county under 4 Ann. c. 16; whether the venue must be laid truly. Matches 1871 hathi00009/02970. Statutes and a cross-reference skipped",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 5, n. 3", "volume": 2, "reporter_abbr": "Saund.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "18450156", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note to Mellor v Walker, whose ER record at 2 Wms Saund 4 contains page 5 (Jeffreson v Morton begins at 6); the same note as on p. 272"}
+  ]
+}

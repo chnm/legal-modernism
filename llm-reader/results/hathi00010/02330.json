@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00010", "pageid": "02330",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:24:02Z",
+  "note": "Stephen, chapter II (p. 207): colour illustrated by the plea of release. The Appendix, Reg. Plac. and cross-references are not recorded. Matches 1871 hathi00009/02310",
+  "citations": [
+    {"seq": 1, "raw": "Gifford v. Perkins, 1 Sid., 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high"}
+  ]
+}
