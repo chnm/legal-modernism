@@ -352,7 +352,10 @@ American cases in the later editions (Andrews, 1894, and after):
   Trials, and the like.
 - `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
   reporter.
-- CAP files some series under other names: Hun is "N.Y. Sup. Ct." (2 Hun =
+- A reprint's "own report" may be a stub when the English Reports lack the
+  case (Harrop v. Hirst, `4 L.R. Exch. 43`).
+- CAP files some series under other names: Kernan is N.Y. 11–14 (2 Kern. =
+  12 N.Y.); Hun is "N.Y. Sup. Ct." (2 Hun =
   9 N.Y. Sup. Ct.); the circuit-court reporters (Story, Paine, Washington
   C.C.) are in F. Cas., with cites such as `1 Paine, 422`. A case cited
   only in L.R.A. links its official report at `medium`.
