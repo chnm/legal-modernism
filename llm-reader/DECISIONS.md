@@ -232,6 +232,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    reversed it the same day: after the last U.S. edition, read the UK
    editions (7 official copies, 4,219 pages) with ONE reader at a time,
    slow and steady. The progress page shows both (no `--jurisdiction`).
+   Order, as the owner confirmed: (a) finish the U.S. reading; (b) read the
+   UK editions; (c) the consistency pass above, over U.S. and UK records;
+   (d) post the decisions and findings as issues; (e) the stubs (item 10).
 10. The owner wants the identified `no_match` cases (finding 10) added to
     `legalhist.stub_cases` (asked 2026-11-21). Draft it (a migration, or a
     change to `db/stub_cases.sql` so `make db-stubs` keeps them) and remind
