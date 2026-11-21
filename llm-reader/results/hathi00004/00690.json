@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "00690",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:47:17Z",
+  "note": "printed p. 73; end of the American editor's note on imparlance, same cites as Gale 19005764100/00630. Arch. Prac., Booth, Chitty, Lib. Plac. (precedents) and rules of court are not cases",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 2, n.(2.)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "after Lib. Plac.; Saunders's note (2) in Mellor v. Walker, which begins at 2 Wms Saund 1"},
+    {"seq": 2, "raw": "2 Saund. 2, n. (2.)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "general special imparlance; Mellor v. Walker, begins at 2 Wms Saund 1"},
+    {"seq": 3, "raw": "2 Saund. 2, п. (2.)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "special imparlance by the Prothonotary; OCR Cyrillic п for n; Mellor v. Walker, begins at 2 Wms Saund 1"},
+    {"seq": 4, "raw": "2 Saund. 2, n. (2.)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "after 2 Chitty, 423; Mellor v. Walker, begins at 2 Wms Saund 1"}
+  ]
+}
