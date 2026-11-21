@@ -1,0 +1,65 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01290",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:27:14Z",
+  "note": "writ of error and bail in error; Tidd, statutes and rules of court not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Birch r. Triste, 8 East. 412",
+      "case_name": "Birch v. Triste",
+      "volume": 8,
+      "reporter_abbr": "East",
+      "page": 412,
+      "status": "linked_english_reports",
+      "er_case_id": "18070264",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Levy v. Price, 2 Mees. & Wels. 533",
+      "case_name": "Levy v. Price",
+      "volume": 2,
+      "reporter_abbr": "Mees. & Wels.",
+      "page": 533,
+      "status": "linked_english_reports",
+      "er_case_id": "18370162",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "5 DowL 775, S. C.",
+      "case_name": "Levy v. Price",
+      "volume": 5,
+      "reporter_abbr": "Dowl.",
+      "page": 775,
+      "status": "linked_english_reports",
+      "er_case_id": "18370162",
+      "confidence": "medium",
+      "note": "S. C. of Levy v. Price; Dowling's Practice Cases have no source (no stub at 775), linked to the same case's report at 2 M & W 533"
+    },
+    {
+      "seq": 4,
+      "raw": "Knight v. Thynne, 9 Dowl. 984",
+      "case_name": "Knight v. Thynne",
+      "volume": 9,
+      "reporter_abbr": "Dowl.",
+      "page": 984,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases have no source and no stub at 9 Dowl. 984; no Knight v. Thynne in the English Reports (searched Thynne 1838-45)"
+    },
+    {
+      "seq": 5,
+      "raw": "Alstrop v. Sexton, 1 Dowl. N. S. 33",
+      "case_name": "Alstrop v. Sexton",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 33,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases, New Series, have no source and no stub at 1 Dowl. N.S. 33; no Alstrop or Sexton case of 1838-45 in the English Reports"
+    }
+  ]
+}

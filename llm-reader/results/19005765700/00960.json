@@ -1,0 +1,103 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00960",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:27:50Z",
+  "note": "printed p. 70 (*88-89); trial at bar, trial before the sheriff. A statute skipped; footnote (c) continues on the next page",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Rowe v. Brenton, 8 Barn. & Cres. 737",
+      "case_name": "Rowe v. Brenton",
+      "volume": 8,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 737,
+      "status": "linked_english_reports",
+      "er_case_id": "18280213",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Brown v. Lord Granville, 1 Har. & Wol. 270",
+      "case_name": "Brown v. Lord Granville",
+      "volume": 1,
+      "reporter_abbr": "Har. & Wol.",
+      "page": 270,
+      "status": "linked_stub",
+      "stub_cite": "1 Har. & W. 270",
+      "confidence": "high",
+      "note": "Harrison and Wollaston (K.B. 1835-36) has no source; the English Reports' Brown v Lord Granville, 10 Bing 69 (C.P. 1833), is an earlier proceeding in another court, not this report"
+    },
+    {
+      "seq": 3,
+      "raw": "Paddock v. Forester, 8 Dowl. 834",
+      "case_name": "Paddock v. Forester",
+      "volume": 8,
+      "reporter_abbr": "Dowl.",
+      "page": 834,
+      "status": "linked_english_reports",
+      "er_case_id": "18400165",
+      "confidence": "medium",
+      "note": "Dowling has no source; linked to the same case, Paddock v Forrester, 1 Man & G 583, in preference to the stub 8 Dowl. 834"
+    },
+    {
+      "seq": 4,
+      "raw": "1 Man. & Gr. 588, S. C.",
+      "case_name": "Paddock v. Forester",
+      "volume": 1,
+      "reporter_abbr": "Man. & Gr.",
+      "page": 583,
+      "status": "linked_english_reports",
+      "er_case_id": "18400165",
+      "confidence": "high",
+      "note": "printed 588; the 1843 edition prints 583, where the case begins"
+    },
+    {
+      "seq": 5,
+      "raw": "Price v. Morgan, 2 Mee. & Wels. 63",
+      "case_name": "Price v. Morgan",
+      "volume": 2,
+      "reporter_abbr": "Mee. & Wels.",
+      "page": 53,
+      "status": "linked_english_reports",
+      "er_case_id": "18360173",
+      "confidence": "high",
+      "note": "printed 63; the 1843 edition prints 53, where the case begins"
+    },
+    {
+      "seq": 6,
+      "raw": "Allen v. Pink, 4 lee. & Wels. 140",
+      "case_name": "Allen v. Pink",
+      "volume": 4,
+      "reporter_abbr": "Mee. & Wels.",
+      "page": 140,
+      "status": "linked_english_reports",
+      "er_case_id": "18380002",
+      "confidence": "high"
+    },
+    {
+      "seq": 7,
+      "raw": "6 Dowl. 668, S. C.",
+      "case_name": "Allen v. Pink",
+      "volume": 6,
+      "reporter_abbr": "Dowl.",
+      "page": 668,
+      "status": "linked_english_reports",
+      "er_case_id": "18380002",
+      "confidence": "medium",
+      "note": "S. C. of Allen v. Pink; Dowling has no source, linked to 4 M & W 140"
+    },
+    {
+      "seq": 8,
+      "raw": "Walker v. Needham, 4 Scott's N. R. 222",
+      "case_name": "Walker v. Needham",
+      "volume": 4,
+      "reporter_abbr": "Scott N. R.",
+      "page": 222,
+      "status": "linked_stub",
+      "stub_cite": "4 Scott N. R. 222",
+      "confidence": "high",
+      "note": "no Walker v. Needham in the English Reports (Man & G searched by name)"
+    }
+  ]
+}

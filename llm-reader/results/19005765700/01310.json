@@ -1,0 +1,55 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01310",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:28:01Z",
+  "note": "error in fact and in law; Tidd and Manning's Exchequer Practice not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "King v. Jones, 2 Ld. Raym. 1525",
+      "case_name": "King v. Jones",
+      "volume": 2,
+      "reporter_abbr": "Ld. Raym.",
+      "page": 1525,
+      "status": "linked_english_reports",
+      "er_case_id": "17900555",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Evans v. Chester, 2 Mees. & Wels. 847",
+      "case_name": "Evans v. Chester",
+      "volume": 2,
+      "reporter_abbr": "Mees. & Wels.",
+      "page": 847,
+      "status": "linked_english_reports",
+      "er_case_id": "18370093",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "Bruce v. Wait, 1 Man. & Gr. 1",
+      "case_name": "Bruce v. Wait",
+      "volume": 1,
+      "reporter_abbr": "Man. & Gr.",
+      "page": 1,
+      "status": "linked_english_reports",
+      "er_case_id": "18400556",
+      "confidence": "high",
+      "note": "the Exchequer Chamber proceeding in error, not the Exchequer reports at 3 M & W 15 and 21"
+    },
+    {
+      "seq": 4,
+      "raw": "1 Scott's N. R. 81",
+      "case_name": "Bruce v. Wait",
+      "volume": 1,
+      "reporter_abbr": "Scott N. R.",
+      "page": 81,
+      "status": "linked_english_reports",
+      "er_case_id": "18400556",
+      "confidence": "medium",
+      "note": "parallel cite of Bruce v. Wait; Scott's New Reports have no source, linked to the same case's report at 1 Man & G 1"
+    }
+  ]
+}
