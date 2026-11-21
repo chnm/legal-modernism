@@ -332,7 +332,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 }
 ```
 
-- `seq` numbers the citations 1, 2, 3 in the order printed.
+- `seq` numbers the citations 1, 2, 3 in the order printed: text, then
+  footnotes by their letter. Where the scan's text interleaves the lines of
+  two footnotes, follow the printed order and say so in `note`.
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
   printed) are your reading of it. A volume you supplied goes in `volume`, and

@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "01280",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:56:06Z",
+  "note": "printed page 162 (third page so numbered); Co. Litt., Heath's Maxims, Com. Dig., Vin. Ab. and Chitty are treatises or abridgments, and 21 Jac. 1 c. 12 and 3 & 4 Will. 4 c. 42 statutes; not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Fits v. Freestone, 1 Mod. 310", "case_name": "Fits v. Freestone",
+     "volume": 1, "reporter_abbr": "Mod.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "17961002", "confidence": "high",
+     "note": "page 310 corrected to 210: ER 'Fits and Another against Freestone' is 1 Mod 210; no case begins at 1 Mod 310"},
+    {"seq": 2, "raw": "Abbot v. Chap- man, 2 Lev. 81", "case_name": "Abbot v. Chapman",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930001", "confidence": "high",
+     "note": "Doe v. Parmiter also begins at 2 Lev 81; the name decides"}
+  ]
+}

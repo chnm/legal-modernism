@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "01380",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:51:13Z",
+  "note": "printed pages 177-179; 3 Reeves' Hist. and Bac. Ab. are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Courtney v. Phelps, 1 Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Sid 300; the printed name decides over the case beginning at 301"},
+    {"seq": 2, "raw": "Herring v. Blacklow, Cro. Eliz. 30", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high"},
+    {"seq": 3, "raw": "10 Hen. 6, 7, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 7, pl. 21; no source"}
+  ]
+}
