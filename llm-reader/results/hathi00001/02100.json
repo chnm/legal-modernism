@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:51:19Z",
+  "note": "printed p. 188; exceptions to the replication de injuria; the special traverse, example declaration in covenant. Doct. Pl., 1 Chitty and 1 Arch. are treatises, skipped. The 1831 edition (hathi00002/01770) names the case; its added cite in the preceding note (Jones v. Kitchen) is not printed in this edition",
+  "citations": [
+    {"seq": 1, "raw": "8 Rep. 67. a.", "volume": 8, "reporter_abbr": "Rep.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "15720123", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Crogate's Case, which begins at 8 Co Rep 66"}
+  ]
+}

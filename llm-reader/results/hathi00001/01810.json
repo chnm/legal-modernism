@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "01810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:43:21Z",
+  "note": "printed p. 159; general and special demurrer. Co. Litt., Reg. Plac., Bac. Ab. and the statutes are skipped. The 1831 record (hathi00002/01540) names the case but links the empty record 17921247; the README's choice is 17920644",
+  "citations": [
+    {"seq": 1, "raw": "Per Lord Hobart, Hob. 164.", "reporter_abbr": "Hob.", "page": 164,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Colt v. Bishop of Coventry, which begins at Hob 140 (the record with text, per the README)"}
+  ]
+}

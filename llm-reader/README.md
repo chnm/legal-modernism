@@ -182,7 +182,8 @@ from the name and the passage.) `english_reports.cases.word_count`
 helps: a case whose record is a hundred words cannot reach a page several
 pages on, and a long record starting a page earlier usually holds the notes
 printed on the next. Choices already made (2 Saund. 319 n. (6) covers
-319 b and 319 c printed without a note number): 2 Saund. 291 n. (the videlicet)
+319 b and 319 c printed without a note number, and 1 Saund. 228 n. (1)
+covers 228 a, b and c): 2 Saund. 291 n. (the videlicet)
 is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
 Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
@@ -210,7 +211,8 @@ record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
 so they can be recovered. But where another edition prints a case name at
 that second number ("8 Rep. 39. 59": Griesley's Case and Beecher's Case),
-it is a second citation. A note on the same page (`2 Saund. 410, and note (3)`, or `97, and 97 b,
+it is a second citation; a second number that is only another record of the
+same case (2 Vent. 198, 222, Humphreys v. Bethily) stays one citation. A note on the same page (`2 Saund. 410, and note (3)`, or `97, and 97 b,
 n. (2)`: a folio letter is the same page) is one record. The
 exception is a second page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page

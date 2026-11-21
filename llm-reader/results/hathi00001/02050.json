@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:50:17Z",
+  "note": "printed p. 183; relaxation of not guilty in case; non cepit in replevin. 1 Chitty and 2 Chitty (Chitty on Pleading) skipped. The 1831 edition (hathi00002/01740) names the case",
+  "citations": [
+    {"seq": 1, "raw": "3 Burr. 1353.", "volume": 3, "reporter_abbr": "Burr.", "page": 1353,
+     "status": "linked_english_reports", "er_case_id": "17620069", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Bird v. Randall (Lord Mansfield's explanation), which begins at 3 Burr 1345"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "01860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:45:14Z",
+  "note": "printed p. 164; judgment on the whole record regards substance only; effect of pleading over without demurrer. Footnote (r) printed before (q) in the scan. The 1831 edition (hathi00002/01580) prints this note as 'Humphreys v. Bethily, 2 Vent. 222'",
+  "citations": [
+    {"seq": 1, "raw": "2 Vent. 198-222.", "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "medium",
+     "note": "OCR '198-222' for '198. 222.'; Humphreys v. Bethily, named in the 1831 edition, begins at 2 Vent 198; dropped: 222 (a second English Reports record of the same case, 17260504, as the 1831 reader also did at hathi00002/02390)"}
+  ]
+}

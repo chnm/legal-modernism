@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:48:53Z",
+  "note": "printed p. 179; not guilty in trespass denies possession; the general issue in assumpsit. Footnote (b) is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "7 T. R. 354.", "volume": 7, "reporter_abbr": "T. R.", "page": 354,
+     "status": "linked_english_reports", "er_case_id": "17970501", "confidence": "medium",
+     "note": "no name printed; the 1831 edition (hathi00002/01700) names Dodd v. Kyffin, misprinting the page as 254; Dodd v. Kyffin begins at 7 TR 354"}
+  ]
+}
