@@ -1,0 +1,11 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03560",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:56:07Z",
+  "citations": [
+    {"seq": 1, "raw": "Robert Bradshaw's case, 9 Rep. 60 b", "case_name": "Robert Bradshaw's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "15720314", "confidence": "high"}
+  ]
+}

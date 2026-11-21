@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:50:01Z",
+  "note": "printed p. 365 (*452-453); departure in the replication",
+  "citations": [
+    {"seq": 1, "raw": "Hickman v. Walker, Wille, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "high",
+     "note": "OCR 'Wille'; Willes's Reports have no source; no other report of Hickman v. Walker found in ER by name"}
+  ]
+}

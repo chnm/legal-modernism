@@ -1,0 +1,28 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03940",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:51:21Z",
+  "note": "printed p. 368 (*456-457); examples of what is not a departure",
+  "citations": [
+    {"seq": 1, "raw": "Fulmenton v. Steward, Plowd. 102", "case_name": "Fulmerston v. Steward",
+     "volume": 1, "reporter_abbr": "Plowd.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "medium",
+     "note": "OCR Fulmenton; Plowden pages 1-130 are not in the English Reports source; linked to the same case's Dyer report (S. C. follows), Fulmerston against Stuard, 1 Dy 102 (as in the 1894 edition's record)"},
+    {"seq": 2, "raw": "Dyer, 102 b., S.C.", "case_name": "Fulmerston v. Steward",
+     "volume": 1, "reporter_abbr": "Dyer", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "high",
+     "note": "S. C. = Fulmerston v. Steward; volume 1 supplied; ER Fulmerston against Stuard"},
+    {"seq": 3, "raw": "Paooe c. Paooe, 8 Bing. N. C. 904", "case_name": "Pascoe v. Pascoe",
+     "volume": 3, "reporter_abbr": "Bing. N. C.", "page": 904,
+     "status": "linked_english_reports", "er_case_id": "18370822", "pincite": true, "confidence": "high",
+     "note": "OCR Paooe c. Paooe and 8 for 3; Pascoe v. Pascoe begins at 3 Bing NC 898 (next record 907)"},
+    {"seq": 4, "raw": "Vere P. Smith, 2 Lev. 5", "case_name": "Vere v. Smith",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+    {"seq": 5, "raw": "1 Vent. 121, S. C.", "case_name": "Vere v. Smith",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high",
+     "note": "S. C. = Vere v. Smith"}
+  ]
+}

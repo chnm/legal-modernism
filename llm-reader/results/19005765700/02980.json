@@ -1,0 +1,19 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:56:15Z",
+  "note": "printed page 272, star pages *334-335",
+  "citations": [
+    {"seq": 1, "raw": "Pope P. Tillmn, 7 Taunt. 042", "case_name": "Pope v. Tillman",
+     "volume": 7, "reporter_abbr": "Taunt.", "page": 642,
+     "status": "linked_english_reports", "er_case_id": "18170560", "confidence": "high",
+     "note": "OCR '042' for 642"},
+    {"seq": 2, "raw": "Lawley v. Gattacre, Cro. Jae. 498", "case_name": "Lawley v. Gattacre",
+     "reporter_abbr": "Cro. Jac.", "page": 498,
+     "status": "linked_english_reports", "er_case_id": "17910610", "confidence": "high"},
+    {"seq": 3, "raw": "Knight v. Symms, Crth. 204", "case_name": "Knight v. Symms",
+     "reporter_abbr": "Carth.", "page": 204,
+     "status": "linked_english_reports", "er_case_id": "17410207", "confidence": "high"}
+  ]
+}

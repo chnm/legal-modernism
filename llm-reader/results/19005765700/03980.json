@@ -1,0 +1,26 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:56:28Z",
+  "note": "printed p. 372 (*461-462); examples of pleas amounting to the general issue; Doct. Pl., Vin. Ab., Bro. Traverse pl. 275 (an abridgment entry) and the supra cross-reference (d) not recorded; year-book folios checked against the 1843 copy 19005904300/04950",
+  "citations": [
+    {"seq": 1, "raw": "10 Hen. VI. 16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 16; year books have no source"},
+    {"seq": 2, "raw": "22 Hen. VI. 87", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 22 Hen. VI, cited through Doct. Pl. 42; OCR 87, read 37 from the 1843 copy; year books have no source"},
+    {"seq": 3, "raw": "22 Edw. IV. 29", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 22 Edw. IV, fol. 29, cited through Vin. Ab.; year books have no source"},
+    {"seq": 4, "raw": "Gifford v. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high",
+     "note": "two records begin at 1 Sid 450; the name decides"},
+    {"seq": 5, "raw": "1 Vent. 77, S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. = Gifford v. Perkins; the name decides between the two records at 1 Vent 77"}
+  ]
+}

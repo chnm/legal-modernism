@@ -1,0 +1,29 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:57:12Z",
+  "note": "printed p. 346 (*427-429); testatum existit; Rule VI, things to be pleaded according to their legal effect; Wentworth (a book of precedents), Bac. Ab. and Com. Dig. not recorded; 'Howell v.' at the foot is recorded on the next page",
+  "citations": [
+    {"seq": 1, "raw": "Ring v. Roxbrough, 2 Crompt. & Jer. 418", "case_name": "Ring v. Roxbrough",
+     "volume": 2, "reporter_abbr": "Crompt. & Jer.", "page": 418,
+     "status": "linked_english_reports", "er_case_id": "18320253", "confidence": "high"},
+    {"seq": 2, "raw": "2 Tyr. 470", "case_name": "Ring v. Roxbrough",
+     "volume": 2, "reporter_abbr": "Tyr.", "page": 470,
+     "status": "linked_english_reports", "er_case_id": "18320253", "confidence": "medium",
+     "note": "parallel report in Tyrwhitt, which has no source; linked to the same case's ER report at 2 Cr & J 418"},
+    {"seq": 3, "raw": "Bultivant v. Holman, Cro. Jac. 537", "case_name": "Bultivant v. Holman",
+     "reporter_abbr": "Cro. Jac.", "page": 537,
+     "status": "linked_english_reports", "er_case_id": "17910171", "confidence": "high"},
+    {"seq": 4, "raw": "1 Wmns. Saund. 274, n. (1)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 274,
+     "status": "linked_english_reports", "er_case_id": "18450258", "pincite": true, "confidence": "medium",
+     "note": "no name printed; 274 n. (1) falls in The King v. Sutton (1 Wms Saund 273; next record 275)"},
+    {"seq": 5, "raw": "2 Wins. Saund. 07, and 07 b., n. (2)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "18450129", "confidence": "medium",
+     "note": "OCR 07 for 97; one record for 97 and 97 b, n. (2) (a folio letter is the same page); no name printed; Jaques v. Cesar begins at 2 Wms Saund 97, and a low note number belongs to the case beginning there"},
+    {"seq": 6, "raw": "Barker v. Lade, 4 Mod. 150", "case_name": "Barker v. Lade",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 150,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149 (next record 151)"}
+  ]
+}

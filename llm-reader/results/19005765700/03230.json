@@ -1,0 +1,28 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03230",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:53:53Z",
+  "note": "Co. Litt. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Lamb v. Mills, 4 Mod. 877", "case_name": "Lamb v. Mills",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 377,
+     "status": "linked_english_reports", "er_case_id": "17930653", "confidence": "high",
+     "note": "OCR 877 for 377"},
+    {"seq": 2, "raw": "1 Wns. Saund. 298, n. (1)",
+     "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) in Greene v. Jones, which begins at 1 Wms Saund 295, the record at 298 holding the page"},
+    {"seq": 3, "raw": "Rowland v. Veale, Cowp. 18", "case_name": "Rowland v. Veale",
+     "volume": 1, "reporter_abbr": "Cowp.", "page": 18,
+     "status": "linked_english_reports", "er_case_id": "17740043", "confidence": "high"},
+    {"seq": 4, "raw": "Belk v. Broadbent, 8 T. R. 183", "case_name": "Belk v. Broadbent",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 183,
+     "status": "linked_english_reports", "er_case_id": "17892449", "confidence": "high",
+     "note": "OCR 8 for 3"},
+    {"seq": 5, "raw": "1 Wins. Saund. 92, n. (2)",
+     "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 92,
+     "status": "linked_english_reports", "er_case_id": "18450182", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (2) to Pitt v. Knight, which begins at 1 Wms Saund 86 (next record at 97)"}
+  ]
+}

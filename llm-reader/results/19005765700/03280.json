@@ -1,0 +1,25 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03280",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:56:21Z",
+  "note": "'(at p. 542)' after Roakes v. Manser is a pinpoint within the case just cited, not recorded again; cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "Wimbleton v. Holdrip, 1 Lev. 808", "case_name": "Wimbleton v. Holdrip",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "17931330", "confidence": "high",
+     "note": "OCR 808 for 303"},
+    {"seq": 2, "raw": "Roakes v. Manser, 1 C. B. 531", "case_name": "Roakes v. Manser",
+     "volume": 1, "reporter_abbr": "C. B.", "page": 531,
+     "status": "linked_english_reports", "er_case_id": "18450742", "confidence": "high"},
+    {"seq": 3, "raw": "Kepp v. Wiggett, 6 C. B. 280", "case_name": "Kepp v. Wiggett",
+     "volume": 6, "reporter_abbr": "C. B.", "page": 280,
+     "status": "linked_english_reports", "er_case_id": "18480591", "confidence": "high"},
+    {"seq": 4, "raw": "Kemble v. Mills, 1 M. & G.757", "case_name": "Kemble v. Mills",
+     "volume": 1, "reporter_abbr": "M. & G.", "page": 757,
+     "status": "linked_english_reports", "er_case_id": "18400947", "confidence": "high"},
+    {"seq": 5, "raw": "Procter v. Sargent, 2 M. & G. 20", "case_name": "Procter v. Sargent",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 20,
+     "status": "linked_english_reports", "er_case_id": "18401044", "confidence": "high"}
+  ]
+}

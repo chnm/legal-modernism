@@ -429,6 +429,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   names, are `high` whenever legible. When another edition prints a
   different regnal year, reign or folio, keep this edition's reading, at
   `medium` unless most editions agree with it, and note the variant. A
+  reading that is only this scan's OCR garbling (46 for 45) is not a
+  variant: take the legible text of another copy, at `medium`. A cite
+  marked "S. P." (same point) is recorded like any other. A
   supplied volume or reporter makes a `no_match` at most `medium` (a rule
   that sets `low` still holds; a reporter carried over from the cite
   before counts as supplied); the volume of a single-volume reporter
