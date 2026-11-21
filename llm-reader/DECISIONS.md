@@ -251,6 +251,14 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    `high` (rules of 2026-11-21; earlier records vary). `pincite` is false
    for a first page in another report linked through the same-case rule
    (Harmer v. Rowe, Lucas v. Nockells); earlier records set it.
+   UK 1824 (hathi00001 03310-03600): "11 Rep. 25 b. 55 a" (03370) drops
+   55 a as a second number, though Edward Savel's Case begins at 11 Co Rep
+   55 and is not Harpur's Case; decide whether a legible second number
+   that falls in a different case is a citation (decision 1), and align the
+   1831 and 1894 records. Plow. 128 (Buckley) is `no_match` in the 1831
+   record but linked to 17941482 in 1824; align to the README. Dyer is
+   recorded as volume 1 though the English Reports split it into 1-3 Dy;
+   check each Dyer record's volume against its record.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

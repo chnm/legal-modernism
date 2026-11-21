@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "03420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:55:54Z",
+  "note": "printed p. 320; names of persons not parties, variance in a name. Com. Dig. skipped. Names from the 1831 edition (hathi00002/02790, 02800)",
+  "citations": [
+    {"seq": 1, "raw": "Plow. 128", "reporter_abbr": "Plow.", "page": 128,
+     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Buckley v. Rice Thomas (1831 edition), Plowd. 118-128, in Plowden's missing pages; linked to Dyer's report, Bulkeley v Thomas, 2 Dy 113, per the README's choice; 128 is a later page of the Plowden report, so a pin cite (the 1831 record predates the rule)"},
+    {"seq": 2, "raw": "3 Bos. and Pul. 559", "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 559,
+     "status": "linked_english_reports", "er_case_id": "18030749", "confidence": "medium",
+     "note": "no name printed; Whitwell v. Bennett (1831 edition), Couch for Crouch"},
+    {"seq": 3, "raw": "1 Camp. 195", "volume": 1, "reporter_abbr": "Camp.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "18080090", "confidence": "medium",
+     "note": "no name printed; Bowditch v. Mawley (1831 edition)"},
+    {"seq": 4, "raw": "4 Taunt. 810", "volume": 4, "reporter_abbr": "Taunt.", "page": 810,
+     "status": "linked_english_reports", "er_case_id": "18130278", "confidence": "medium",
+     "note": "no name printed; Hutchinson v. Piper (1831 edition)"}
+  ]
+}

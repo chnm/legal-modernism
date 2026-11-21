@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:56:42Z",
+  "note": "printed p. 323; possession sufficient against a wrong-doer. Com. Dig. and the cross-reference (a) skipped. Name from the 1831 edition (hathi00002/02820)",
+  "citations": [
+    {"seq": 1, "raw": "1 East, 212", "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "medium",
+     "note": "no name printed; Taylor v. Eastwood (1831 edition)"}
+  ]
+}

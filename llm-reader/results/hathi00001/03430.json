@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:56:10Z",
+  "note": "printed p. 321; the Waterpark variance; Rule V, title. Com. Dig. and Bract. skipped; (r) 'Ibid.' refers back to them. Name from the 1831 edition (hathi00002/02800)",
+  "citations": [
+    {"seq": 1, "raw": "2 Barn. and Ald. 756", "volume": 2, "reporter_abbr": "Barn. & Ald.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18190514", "confidence": "medium",
+     "note": "no name printed; Walters v. Mace (1831 edition)"}
+  ]
+}

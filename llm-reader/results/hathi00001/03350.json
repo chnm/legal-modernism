@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03350",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:52:34Z",
+  "note": "printed p. 313; time material in usurious contracts. The cross-reference to p. 131 and 3 Bl. Com. skipped; the case of note (m) is cited on the next page. Name from the 1831 edition (hathi00002/02740), whose Saunders notes are not printed here",
+  "citations": [
+    {"seq": 1, "raw": "Cowp. 671", "reporter_abbr": "Cowp.", "page": 671,
+     "status": "linked_english_reports", "er_case_id": "17760067", "confidence": "medium",
+     "note": "no name printed; Carlisle v. Trears (1831 edition), the only ER record at 2 Cowp 671"}
+  ]
+}

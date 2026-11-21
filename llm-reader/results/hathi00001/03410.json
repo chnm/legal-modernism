@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:55:34Z",
+  "note": "printed p. 319; the tender case; Rule IV, names of persons. The Appendix note, Com. Dig. and Bract. skipped; (l) 'Ibid.' refers back to Com. Dig. Name from the 1831 edition (hathi00002/02790)",
+  "citations": [
+    {"seq": 1, "raw": "5 Barn. and Ald. 630", "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 630,
+     "status": "linked_english_reports", "er_case_id": "18220278", "confidence": "medium",
+     "note": "no name printed; Rivers v. Griffith (1831 edition)"}
+  ]
+}

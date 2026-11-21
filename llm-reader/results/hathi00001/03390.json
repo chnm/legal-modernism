@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "03390",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:54:51Z",
+  "note": "printed p. 317; quantity and quality stated loosely. Names from the 1831 edition (hathi00002/02770, 02760), whose 2 Saund. 94 b is not printed here",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 74. b. n. (1).", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; two ER records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby record; picked Taylor v. Wells, as the other editions' readers did"},
+    {"seq": 2, "raw": "2 Salk. 643.", "volume": 2, "reporter_abbr": "Salk.", "page": 643,
+     "status": "linked_english_reports", "er_case_id": "17952363", "confidence": "medium",
+     "note": "no name printed; Layton v. Grindall (1831 edition), the keys case; an empty Anonymous record also begins at 2 Salk 643"},
+    {"seq": 3, "raw": "2 Saund. 74. b. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; as seq 1, Taylor v. Wells picked over the empty Mauleverer v. Hawxby record"},
+    {"seq": 4, "raw": "3 Wils. 292", "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+     "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "medium",
+     "note": "no name printed; Chamberlain v. Greenfield (1831 edition)"}
+  ]
+}

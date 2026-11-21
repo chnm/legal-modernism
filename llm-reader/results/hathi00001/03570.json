@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "03570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:00:39Z",
+  "note": "printed p. 335; the plea of liberum tenementum and what it covers. 2 Chitty and Doct. Pl. are treatises. Cross-checked with the 1831 edition (hathi00002/02910)",
+  "citations": [
+    {"seq": 1, "raw": "5 Hen. 7. 10. a. pl. 2", "volume": 5, "reporter_abbr": "Y.B.", "page": 10,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 5 Hen. VII fo. 10 a, pl. 2; legible; no source"},
+    {"seq": 2, "raw": "1 Saund. 347. d. n. (6)", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
+     "status": "linked_english_reports", "er_case_id": "18450192", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page 347 d falls in Potter v. North, which begins at 1 Wms Saund 346 (next record at 350)"}
+  ]
+}

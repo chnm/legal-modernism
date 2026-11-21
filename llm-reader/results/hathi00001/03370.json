@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00001", "pageid": "03370",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:54:07Z",
+  "note": "printed p. 315; Rule III, quality, quantity and value. The first footnote lines end note (s) from p. 314; Bract. and Doct. Pl. are treatises; (t) refers back to the authorities last cited. Names from the 1831 edition (hathi00002/02750, 02760) and the 1894 reprint (19005765000/04010)",
+  "citations": [
+    {"seq": 1, "raw": "11 Rep. 25. b. 55. a.", "volume": 11, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720178", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Harpur's Case (1831 edition and 1894 reprint), Henry Harpur's Case, which begins at 11 Co Rep 23; dropped: 55 a (every edition prints it and none names a case there, though Edward Savel's Case begins at 11 Co Rep 55, so it may be a second citation)"},
+    {"seq": 2, "raw": "Carth. 204", "reporter_abbr": "Carth.", "page": 204,
+     "status": "linked_english_reports", "er_case_id": "17410207", "confidence": "medium",
+     "note": "no name printed; Knight v. Symms (1831 edition)"},
+    {"seq": 3, "raw": "1 East. 441", "volume": 1, "reporter_abbr": "East", "page": 441,
+     "status": "linked_english_reports", "er_case_id": "18010244", "confidence": "medium",
+     "note": "no name printed; Doe v. Plowman (1831 edition)"},
+    {"seq": 4, "raw": "8 East. 357", "volume": 8, "reporter_abbr": "East", "page": 357,
+     "status": "linked_english_reports", "er_case_id": "18060163", "confidence": "medium",
+     "note": "no name printed; Goodtitle d. Wright v. Otway (1831 edition, which misprints 375)"},
+    {"seq": 5, "raw": "13 East. 102", "volume": 13, "reporter_abbr": "East", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18100553", "confidence": "medium",
+     "note": "no name printed; Andrews v. Whitehead (1831 edition)"},
+    {"seq": 6, "raw": "5 Rep. 34. b.", "volume": 5, "reporter_abbr": "Rep.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "15720292", "confidence": "medium",
+     "note": "no name printed; Playter's Case (1831 edition), the trespass for fish"},
+    {"seq": 7, "raw": "2 Lutw. 1374", "volume": 2, "reporter_abbr": "Lutw.", "page": 1374,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1374", "confidence": "medium",
+     "note": "no name printed; Dale v. Phillipson (1831 edition); Lutwyche is only in the stubs, and the cite matches exactly"}
+  ]
+}

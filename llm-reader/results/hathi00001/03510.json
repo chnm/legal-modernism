@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "03510",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:58:43Z",
+  "note": "printed p. 329; commencement of particular estates and of copyholds. 2 Chitty and Bac. Abr. skipped; (r) 'See same cases' points back to the whole of note (q) and is not recorded again. Names from the 1831 edition (hathi00002/02860)",
+  "citations": [
+    {"seq": 1, "raw": "Cro. Jac. 103", "reporter_abbr": "Cro. Jac.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "17910804", "confidence": "medium",
+     "note": "no name printed; two ER records begin at Cro Jac 103; the 1831 edition names Pyster v. Hemling"},
+    {"seq": 2, "raw": "Cro. Car. 190", "reporter_abbr": "Cro. Car.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "17922141", "confidence": "medium",
+     "note": "no name printed; two ER records begin at Cro Car 190; the 1831 edition names Shepheard's Case"},
+    {"seq": 3, "raw": "4 Mod. 346", "volume": 4, "reporter_abbr": "Mod.", "page": 346,
+     "status": "linked_english_reports", "er_case_id": "17930906", "confidence": "medium",
+     "note": "no name printed; Robinson v. Smith (1831 edition)"},
+    {"seq": 4, "raw": "4 Rep. 22. b.", "volume": 4, "reporter_abbr": "Rep.", "page": 22,
+     "status": "linked_english_reports", "er_case_id": "15810013", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Brown's Case (1831 edition), which begins at 4 Co Rep 21; Rivet's Case begins at 22, but the other edition's name decides"}
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00001", "pageid": "03380",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T20:54:32Z",
+  "note": "printed p. 316; uncertainty of goods and lands, value. The Appendix note skipped. Names from the 1831 edition (hathi00002/02760, 02770)",
+  "citations": [
+    {"seq": 1, "raw": "4 Burr. 2455", "volume": 4, "reporter_abbr": "Burr.", "page": 2455,
+     "status": "linked_english_reports", "er_case_id": "17690004", "confidence": "medium",
+     "note": "no name printed; Bertie v. Pickering (1831 edition)"},
+    {"seq": 2, "raw": "Ld. Ray. 1410. S. P.", "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 1410,
+     "status": "linked_english_reports", "er_case_id": "17902179", "confidence": "medium",
+     "note": "no name printed; volume 2 supplied; three ER records begin at 2 Ld Raym 1410; the 1831 edition names Wiatt v. Essington"},
+    {"seq": 3, "raw": "7 Taunt. 642", "volume": 7, "reporter_abbr": "Taunt.", "page": 642,
+     "status": "linked_english_reports", "er_case_id": "18170560", "confidence": "medium",
+     "note": "no name printed; Pope v. Tillman (1831 edition), the replevin case"},
+    {"seq": 4, "raw": "Cro. Jac. 498", "reporter_abbr": "Cro. Jac.", "page": 498,
+     "status": "linked_english_reports", "er_case_id": "17910610", "confidence": "medium",
+     "note": "no name printed; two ER records begin at Cro Jac 498; the 1831 edition names Lawley v. Gattacre"},
+    {"seq": 5, "raw": "Carth. 204", "reporter_abbr": "Carth.", "page": 204,
+     "status": "linked_english_reports", "er_case_id": "17410207", "confidence": "medium",
+     "note": "no name printed; Knight v. Symms (1831 edition), the ejectment for Long Furlongs"}
+  ]
+}
