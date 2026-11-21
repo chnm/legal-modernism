@@ -1,0 +1,31 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:37:27Z",
+  "note": "printed p. 175 (*213-214); inducement must not be a direct denial nor a confession and avoidance; first footnote is (x), printed '(z)' by the OCR; 1843 copy 19005904300/02480 read for the notes; Com. Dig. is an abridgment",
+  "citations": [
+    {"seq": 1, "raw": "Hughes v. Phillips, Yelv. 88", "case_name": "Hughes v. Phillips",
+     "reporter_abbr": "Yelv.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "17921174", "confidence": "high",
+     "note": "OCR 88 for 38 (1843 copy prints Yelv. 38)"},
+    {"seq": 2, "raw": "86 Hen. VI. 15",
+     "volume": 36, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 36 Hen. VI, fol. 15; OCR 86 for 36, read from the 1843 copy; no source for the year books"},
+    {"seq": 3, "raw": "Lambert v. Cook, Ld. Raym. 288", "case_name": "Lambert v. Cook",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 238,
+     "status": "linked_english_reports", "er_case_id": "17921363", "pincite": true,
+     "confidence": "high", "note": "volume supplied (1); OCR 288 for 238 (1843 copy prints 238); Lambert vers Cook begins at 1 Ld Raym 237"},
+    {"seq": 4, "raw": "Helier v. Whytier, Cro. Eliz. 650", "case_name": "Helier v. Whytier",
+     "reporter_abbr": "Cro. Eliz.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "high"},
+    {"seq": 5, "raw": "Pearson v. Rogers, 9 A. & E. 808", "case_name": "Pearson v. Rogers",
+     "volume": 9, "reporter_abbr": "A. & E.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "18381028", "confidence": "high",
+     "note": "OCR 808 for 303 (1843 copy prints 303)"},
+    {"seq": 6, "raw": "Helier v. Whytier, Cro. Eliz. 650", "case_name": "Helier v. Whytier",
+     "reporter_abbr": "Cro. Eliz.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "high"}
+  ]
+}

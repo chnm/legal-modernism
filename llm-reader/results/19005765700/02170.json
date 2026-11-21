@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02170",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:37:31Z",
+  "note": "printed p. 191 (*233-234); colour defined; absolute and qualified confession",
+  "citations": [
+    {"seq": 1, "raw": "Year- Book, 40 Edw. 11. 23", "volume": 40, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "medium",
+     "note": "40 Edw. III; OCR 'Edw. 11.' for Edw. III. (the text says the reign of Edw. III, and the 1843 edition prints 40 Edw. III. 23); year books have no source"},
+    {"seq": 2, "raw": "Gale c. Capern, 1 Ad. & Ell. 102", "case_name": "Gale v. Capern",
+     "volume": 1, "reporter_abbr": "Ad. & Ell.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18340667", "confidence": "high"}
+  ]
+}

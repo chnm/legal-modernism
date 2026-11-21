@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02030",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:38:11Z",
+  "note": "printed p. 177 (*216-217); traverse upon a bad traverse (King qui tam v. Bolton); Com. Dig. is an abridgment; the rule of court is not recorded",
+  "citations": [
+    {"seq": 1, "raw": "King qui tam v. Bolton, Stra. 117", "case_name": "King qui tam v. Bolton",
+     "volume": 1, "reporter_abbr": "Str.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "17952285", "confidence": "high",
+     "note": "volume supplied (1); King qui tam versus Bolton, 1 Str 117"},
+    {"seq": 2, "raw": "Hembrow e. Bailey, 3 Tyrw. 152", "case_name": "Hembrow v. Bailey",
+     "volume": 3, "reporter_abbr": "Tyrw.", "page": 152,
+     "status": "linked_english_reports", "er_case_id": "18320143", "pincite": false,
+     "confidence": "medium", "note": "Tyrwhitt has no source; same case linked in Crompton and Meeson, Hembro v Bailey, 1 Cr & M 204 (cited so on the previous page)"}
+  ]
+}

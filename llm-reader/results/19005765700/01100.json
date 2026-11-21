@@ -1,0 +1,112 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01100",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:35:25Z",
+  "note": "printed p. 84 (*105-106); arrest of judgment. Footnote printed (A) is (h): Blackstone, Reeves's History and a statute skipped. The bracketed notes in (i) and (ii) are a later editor's",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Leach v. Thomas, 2 M. & W. 427",
+      "case_name": "Leach v. Thomas",
+      "volume": 2,
+      "reporter_abbr": "M. & W.",
+      "page": 427,
+      "status": "linked_english_reports",
+      "er_case_id": "18370159",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Airey v. Fearnsides, 4 M. & W. 168",
+      "case_name": "Airey v. Fearnsides",
+      "volume": 4,
+      "reporter_abbr": "M. & W.",
+      "page": 168,
+      "status": "linked_english_reports",
+      "er_case_id": "18380012",
+      "confidence": "high"
+    },
+    {
+      "seq": 3,
+      "raw": "6 DowL 654, S. C.",
+      "case_name": "Airey v. Fearnsides",
+      "volume": 6,
+      "reporter_abbr": "Dowl.",
+      "page": 654,
+      "status": "linked_english_reports",
+      "er_case_id": "18380012",
+      "confidence": "medium",
+      "note": "S. C.; Dowling has no source, linked to 4 M & W 168"
+    },
+    {
+      "seq": 4,
+      "raw": "Empson v. Griffin, 11 Ad. & Ell. 186",
+      "case_name": "Empson v. Griffin",
+      "volume": 11,
+      "reporter_abbr": "Ad. & Ell.",
+      "page": 186,
+      "status": "linked_english_reports",
+      "er_case_id": "18391130",
+      "confidence": "high"
+    },
+    {
+      "seq": 5,
+      "raw": "3 Per. & Dav. 160, S. C.",
+      "case_name": "Empson v. Griffin",
+      "volume": 3,
+      "reporter_abbr": "Per. & Dav.",
+      "page": 160,
+      "status": "linked_english_reports",
+      "er_case_id": "18391130",
+      "confidence": "medium",
+      "note": "S. C.; Perry and Davison have no source, linked to 11 Ad & E 186"
+    },
+    {
+      "seq": 6,
+      "raw": "Gould v. Oliver, 2 Man. & Gr. 231",
+      "case_name": "Gould v. Oliver",
+      "volume": 2,
+      "reporter_abbr": "Man. & Gr.",
+      "page": 231,
+      "status": "linked_english_reports",
+      "er_case_id": "18400097",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 2 Man & G 208"
+    },
+    {
+      "seq": 7,
+      "raw": "Kitchenman v. Skeel, 3 Ex. 49",
+      "case_name": "Kitchenman v. Skeel",
+      "volume": 3,
+      "reporter_abbr": "Ex.",
+      "page": 49,
+      "status": "linked_english_reports",
+      "er_case_id": "18480905",
+      "confidence": "high"
+    },
+    {
+      "seq": 8,
+      "raw": "Atkinson v. Davies, 11 M. & W. 236",
+      "case_name": "Atkinson v. Davies",
+      "volume": 11,
+      "reporter_abbr": "M. & W.",
+      "page": 236,
+      "status": "linked_english_reports",
+      "er_case_id": "18430403",
+      "confidence": "high"
+    },
+    {
+      "seq": 9,
+      "raw": "Gordon v. Ellis, 7 M. & G. 607",
+      "case_name": "Gordon v. Ellis",
+      "volume": 7,
+      "reporter_abbr": "M. & G.",
+      "page": 607,
+      "status": "linked_english_reports",
+      "er_case_id": "18440659",
+      "confidence": "high"
+    }
+  ]
+}

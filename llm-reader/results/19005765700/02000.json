@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02000",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:37:03Z",
+  "note": "printed p. 174 (*212-213); the inducement must amount to an answer in substance; 1843 copy 19005904300/02460 read for n. (w); Bac. Ab. and Com. Dig. are abridgments",
+  "citations": [
+    {"seq": 1, "raw": "Anon. 8 Salk. 353", "case_name": "Anonymous",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "OCR 8 for 3 (1843 copy prints 3 Salk. 353); the only Anonymous beginning at 3 Salk 353"},
+    {"seq": 2, "raw": "Dike v. Ricks, Cro. Car. 888", "case_name": "Dike v. Ricks",
+     "reporter_abbr": "Cro. Car.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true,
+     "confidence": "high", "note": "OCR 888; 1843 copy prints Cro. Car. 336; Dike against Ricks begins at Cro Car 335 (another case begins at 336, but the name decides)"},
+    {"seq": 3, "raw": "Matthews v. Taylor, 2 M. & G. 607", "case_name": "Matthews v. Taylor",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 667,
+     "status": "linked_english_reports", "er_case_id": "18410513", "confidence": "high",
+     "note": "printed 607; 1843 copy prints 667, where Mathews v Taylor begins (2 Man & G 667)"}
+  ]
+}

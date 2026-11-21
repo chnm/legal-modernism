@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765700",
+  "pageid": "01970",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:36:20Z",
+  "note": "printed p. 171 (*208-209); special traverse used where the denial needs no new matter; '9 Went. 211, 308' is Wentworth's precedents, not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Stennel v. Hogg, 1 Saund. 228", "case_name": "Stennel v. Hogg",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true,
+     "confidence": "high", "note": "Stennel v Hogg is split in the English Reports at 1 Wms Saund 220 and 226; 228 falls in the record at 226 (Skinner v Gunton also begins at 228, but the printed name decides; cf. the choice that 1 Saund. 228 n. (1) is Stennel v. Hogg)"},
+    {"seq": 2, "raw": "Mayor of Orford v. Richardson, 4 T. R. 487", "case_name": "Mayor of Orford v. Richardson",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 437,
+     "status": "linked_english_reports", "er_case_id": "17911479", "confidence": "high",
+     "note": "OCR 487 for 437; Mayor of Orford v Richardson begins at 4 TR 437"}
+  ]
+}

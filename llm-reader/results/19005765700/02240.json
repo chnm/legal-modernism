@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02240",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:39:01Z",
+  "note": "printed p. 198 (*242-243); express colour by a charter of demise; Went. Ind. (precedents), Doct. Pl., Chitty not recorded; footnote (s) OCR'd '(a)'",
+  "citations": [
+    {"seq": 1, "raw": "2 Edw. IV. 8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "2 Edw. IV; year books have no source"},
+    {"seq": 2, "raw": "Leyfield's case, 10 Rep. 89 b.", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 89,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 Co Rep 88"}
+  ]
+}

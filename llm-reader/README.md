@@ -181,7 +181,8 @@ edition's text for the same footnote does tell them apart, at `medium`.
 from the name and the passage.) `english_reports.cases.word_count`
 helps: a case whose record is a hundred words cannot reach a page several
 pages on, and a long record starting a page earlier usually holds the notes
-printed on the next. Choices already made: 2 Saund. 291 n. (the videlicet)
+printed on the next. Choices already made (2 Saund. 319 n. (6) covers
+319 b and 319 c printed without a note number): 2 Saund. 291 n. (the videlicet)
 is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
 Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
@@ -236,7 +237,9 @@ Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
 Perry and Davison, Gale and Davison, Scott (C.P.) and Scott N.R.,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
 in the English Reports by name first; it wins over a stub even when the
-stub matches the cite exactly. Willmore, Wollaston and Davison (`Will. W.
+stub matches the cite exactly. If two English Reports records of that name
+fit, pick one by year and subject and link it at `low`; do not fall back to
+the stub. Willmore, Wollaston and Davison (`Will. W.
 & D.`, 1837–38) has no source and no stubs. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
 when that cite is a treatise. When it follows a footnote holding a single
 case, it is recorded as a citation of that case.

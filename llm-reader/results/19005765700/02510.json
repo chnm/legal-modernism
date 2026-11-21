@@ -1,0 +1,25 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02510",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:40:02Z",
+  "note": "printed page 225, star pages *276-277; checked against the 1843 edition (19005904300/03100)",
+  "citations": [
+    {"seq": 1, "raw": "Bridgwater v. Bythway, 3 Lev. 113", "case_name": "Bridgwater v. Bythway",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 113,
+     "status": "linked_english_reports", "er_case_id": "17970039", "confidence": "high",
+     "note": "choice already made: the record at 3 Lev 113 (17970039); the printed name picks it from Britton v Batthurst at the same page"},
+    {"seq": 2, "raw": "Britton v. Cole, 3 Salk. 409", "case_name": "Britton v. Cole",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 409,
+     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
+     "note": "printed 3 Salk. 409 here and in 1843, but no case is at 3 Salk 409 (the volume's records end at 400); Britton v Cole is at 1 Salk 408, read as a misprint for 1 Salk. 409"},
+    {"seq": 3, "raw": "Sir Ralph Bovy's case, 1 Vent. 217", "case_name": "Sir Ralph Bovy's Case",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "17260724", "pincite": true, "confidence": "high",
+     "note": "the English Reports split Bovy's Case into records at 1 Vent 193, 211 and 217; the cite is the record at 217, a pincite since the case begins at 193"},
+    {"seq": 4, "raw": "Ricketts v. Loftus, 14 Q. B. 482", "case_name": "Ricketts v. Loftus",
+     "volume": 14, "reporter_abbr": "Q. B.", "page": 482,
+     "status": "linked_english_reports", "er_case_id": "18491215", "confidence": "high",
+     "note": "Williston's bracketed note"}
+  ]
+}

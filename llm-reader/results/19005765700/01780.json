@@ -1,0 +1,27 @@
+{
+  "psmid": "19005765700", "pageid": "01780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T15:41:31Z",
+  "note": "R. G. H. 4 Will. IV. is a rule of court, not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Waddilove v. Barnett, 2 Bing. N. C. 538", "case_name": "Waddilove v. Barnett",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 538,
+     "status": "linked_english_reports", "er_case_id": "18360375", "confidence": "high"},
+    {"seq": 2, "raw": "Cook v. Moylan, 1 Ex. 67", "case_name": "Cook v. Moylan",
+     "volume": 1, "reporter_abbr": "Ex.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "18470570", "confidence": "high"},
+    {"seq": 3, "raw": "Moore !. Eddowes, 7 Car. & P. 203", "case_name": "Moore v. Eddowes",
+     "volume": 7, "reporter_abbr": "Car. & P.", "page": 203,
+     "status": "linked_english_reports", "er_case_id": "18370175", "confidence": "high"},
+    {"seq": 4, "raw": "Williams r. Vines, 6 Q. E. 35..", "case_name": "Williams v. Vines",
+     "volume": 6, "reporter_abbr": "Q. B.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "18440709", "confidence": "high",
+     "note": "page garbled '35..'; Williams v Vines is at 6 QB 355"},
+    {"seq": 5, "raw": "Owen vi. Challis, 6 C. B. 11:", "case_name": "Owen v. Challis",
+     "volume": 6, "reporter_abbr": "C. B.", "page": 115,
+     "status": "linked_english_reports", "er_case_id": "18480496", "confidence": "high",
+     "note": "page garbled '11:'; Owen v Challis is at 6 CB 115"},
+    {"seq": 6, "raw": "Coupland t. Challis, 2 Ex. 682", "case_name": "Coupland v. Challis",
+     "volume": 2, "reporter_abbr": "Ex.", "page": 682,
+     "status": "linked_english_reports", "er_case_id": "18480713", "confidence": "high"}
+  ]
+}

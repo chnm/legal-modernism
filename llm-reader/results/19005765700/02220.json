@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02220",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:38:44Z",
+  "note": "printed p. 196 (*239-240); traverse that the close was not the plaintiff's; advantage of pleading specially; checked against 19005904300/02730",
+  "citations": [
+    {"seq": 1, "raw": "Heath v. Milward, 2 Bing. N. C. 98", "case_name": "Heath v. Milward",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 98,
+     "status": "linked_english_reports", "er_case_id": "18350785", "confidence": "high"},
+    {"seq": 2, "raw": "Purnell v. Young, 6 Dowl. 355", "case_name": "Purnell v. Young",
+     "volume": 6, "reporter_abbr": "Dowl.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "18380210", "pincite": false, "confidence": "medium",
+     "note": "Dowling's Practice Cases (no source); linked to the case's English Reports record, 3 M & W 288"},
+    {"seq": 3, "raw": "Browne v. Dawson, 4 P. & D. 855", "case_name": "Browne v. Dawson",
+     "volume": 4, "reporter_abbr": "P. & D.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "18400898", "pincite": false, "confidence": "medium",
+     "note": "OCR '855' for 355 (1843 edition prints 4 P. & D. 355); Perry and Davison (no source); linked to the case's English Reports record, 12 Ad & E 624"}
+  ]
+}
