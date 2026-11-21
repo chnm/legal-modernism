@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "01150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:11:43Z",
+  "note": "printed p. 89; form of a plea puis darrein continuance. Chitty on Pleading, Archbold and Com. Dig. are treatises, not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Lyttleton v. Cross, a Barn. and Cres. 317", "case_name": "Lyttleton v. Cross",
+     "volume": 3, "reporter_abbr": "Barn. & Cres.", "page": 317,
+     "status": "linked_english_reports", "er_case_id": "18240102", "confidence": "high",
+     "note": "volume OCR'd 'a', read as 3: Lyttleton against Cross and Moody, 3 B & C 317 (1824). A later report of the suit is at 4 B & C 117"}
+  ]
+}
