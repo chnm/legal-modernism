@@ -1,0 +1,25 @@
+{
+  "psmid": "19005773800", "pageid": "05290",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:47:03Z",
+  "note": "Second appendix pp. cxxxvii-cxxxviii, note 14 continued: pleas in trover. As in hathi00006/04120.",
+  "citations": [
+    {"seq": 1, "raw": "Lamine v. Dorrel, 2 Ld. Raym. 1217", "case_name": "Lamine v. Dorrell",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1217,
+     "status": "linked_english_reports", "er_case_id": "17901050", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Ld Raym 1216"},
+    {"seq": 2, "raw": "7 T. . 391", "volume": 7, "reporter_abbr": "T. R.", "page": 391,
+     "status": "linked_english_reports", "er_case_id": "17970569", "confidence": "high",
+     "note": "OCR lost the R of T. R.; no name printed; Webb v. Fox, 7 TR 391, the special plea of bankruptcy in trover, named on the page before"},
+    {"seq": 3, "raw": "Kenicot v. Boyan, Yelv. 199", "case_name": "Kenicot v. Bogan",
+     "reporter_abbr": "Yelv.", "page": 199,
+     "status": "linked_english_reports", "er_case_id": "17921307", "pincite": true, "confidence": "high",
+     "note": "OCR Boyan for Bogan; case begins at Yel 198"},
+    {"seq": 4, "raw": "S. C. 2 Bulst. 250", "case_name": "Kenicot v. Bogan",
+     "volume": 2, "reporter_abbr": "Bulst.", "page": 250,
+     "status": "linked_english_reports", "er_case_id": "17921308", "confidence": "high",
+     "note": "S. C. = Kenicot v. Bogan; ER has Kennycott v. Bogen"},
+    {"seq": 5, "raw": "Carth. 1", "reporter_abbr": "Carth.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "17410292", "confidence": "low",
+     "note": "cited with Kenicot v. Bogan for Holt's approval of the plea; Rogers v. Mayhoe and Aby v. Buxton both begin at Carth 1 and nothing tells them apart; picked the first, as the earlier editions' records did"}
+  ]
+}

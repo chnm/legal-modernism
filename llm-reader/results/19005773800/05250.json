@@ -1,0 +1,29 @@
+{
+  "psmid": "19005773800", "pageid": "05250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:45:54Z",
+  "note": "Second appendix pp. cxxxiv-cxxxv, note 12 (Gould on title; want of probable cause in malicious prosecution). As in hathi00006/04090.",
+  "citations": [
+    {"seq": 1, "raw": "Jones v. Given, Gilb. Cas. 201", "case_name": "Jones v. Givin",
+     "reporter_abbr": "Gilb. Cas.", "page": 201,
+     "status": "linked_english_reports", "er_case_id": "17600108", "pincite": true, "confidence": "high",
+     "note": "ER has Jones v. Givin at Gilb Cas 185 (9,739 words); 201 taken as a page inside the long report"},
+    {"seq": 2, "raw": "S. 0. 10 sod. 214", "case_name": "Jones v. Gwynn",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 214,
+     "status": "linked_english_reports", "er_case_id": "17952240", "confidence": "high",
+     "note": "OCR 'S. 0. 10 sod.' for 'S. C. 10 Mod.'; S. C. = Jones v. Givin; stored as Jones against Gwynn, 10 Mod 214"},
+    {"seq": 3, "raw": "Carman v. Trueman, (in Error,) 1 Bro. P. C. 101", "case_name": "Carnan v. Truman",
+     "volume": 1, "reporter_abbr": "Bro. P. C.", "page": 101,
+     "status": "linked_english_reports", "er_case_id": "17880162", "confidence": "high",
+     "note": "stored as Thomas Carnan v. John Truman (in Error), 1 Bro PC 101"},
+    {"seq": 4, "raw": "2 Mnfobrd, 23", "volume": 2, "reporter_abbr": "Munf.", "page": 23,
+     "status": "linked_cap", "cap_case_id": 6717342, "pincite": true, "confidence": "medium",
+     "note": "OCR Mnfobrd for Munford; Roane J.'s opinion; page falls in Kirtley v. Deck (2 Munf. 10; the next case begins at 25), cited on the next page on the same subject"},
+    {"seq": 5, "raw": "W7ite v. Dingley, 4 Mass. Rep. 435", "case_name": "White v. Dingley",
+     "volume": 4, "reporter_abbr": "Mass.", "page": 435,
+     "status": "linked_cap", "cap_case_id": 2003897, "pincite": true, "confidence": "high",
+     "note": "case cited 4 Mass. 433"},
+    {"seq": 6, "raw": "Ellis v. Thilman, 3 Call's Rep. 3", "case_name": "Ellis v. Thilman",
+     "volume": 3, "reporter_abbr": "Call", "page": 3,
+     "status": "linked_cap", "cap_case_id": 6714816, "confidence": "high"}
+  ]
+}
