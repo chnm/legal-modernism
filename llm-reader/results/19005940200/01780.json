@@ -1,0 +1,15 @@
+{
+  "psmid": "19005940200", "pageid": "01780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:29:41Z",
+  "note": "printed p. 152; errors in fact. 'Supra, p. 128' is a cross-reference. Same footnotes (c), (d) as the 1831 edition (hathi00002/01410)",
+  "citations": [
+    {"seq": 1, "raw": "Bird v. Pegg, 5 Barn. and Aid. 418", "case_name": "Bird v. Pegg",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 418,
+     "status": "linked_english_reports", "er_case_id": "18210004", "confidence": "high",
+     "note": "OCR 'Aid.' for Ald."},
+    {"seq": 2, "raw": "Kii' \\. ,h n L: L Lord 1iay m. 1i;'5,", "case_name": "King v. Jones",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1525,
+     "status": "linked_english_reports", "er_case_id": "17900555", "confidence": "medium",
+     "note": "footnote (d) badly garbled in this scan; read from the 1831 edition's text, 'King v. Jones, 2 Lord Raym. 1525' (a married woman's suit: Edward King and Judith his Wife v. Thomas Jones)"}
+  ]
+}
