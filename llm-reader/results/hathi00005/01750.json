@@ -1,0 +1,24 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "01750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:02:17Z",
+  "note": "printed pages 237-239; Tidd, cross-references and the Appendix note are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Griffith v. Crockford, 3 Brod. & Bing. 1", "case_name": "Griffith v. Crockford",
+     "volume": 3, "reporter_abbr": "Brod. & Bing.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "18210439", "confidence": "high"},
+    {"seq": 2, "raw": "2 Saund. 319, n. (6)", "case_name": "Bennet v. Holbech",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18450012", "pincite": true, "confidence": "medium",
+     "note": "Williams's note (6) at 2 Saund. 319 is the note to Bennet v. Holbech (2 Wms Saund 317), per the README's choice already made"},
+    {"seq": 3, "raw": "Whitehead v. Buckland, Stile, 402", "case_name": "Whitehead v. Buckland",
+     "reporter_abbr": "Stile", "page": 402,
+     "status": "linked_english_reports", "er_case_id": "16580760", "pincite": true,
+     "confidence": "high", "note": "case begins at Sty 401"},
+    {"seq": 4, "raw": "Campbell v. St. John, 1 Salk. 210", "case_name": "Campbell v. St. John",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 219,
+     "status": "linked_english_reports", "er_case_id": "17950720", "confidence": "high",
+     "note": "printed 210 read as 219; Campbell v. St John is at 1 Salk 219 (the cases at 210 are Zouch v. Thompson and Medina v. Stoughton), and the Gale copy reads 219"}
+  ]
+}

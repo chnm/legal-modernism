@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "01660",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:59:35Z",
+  "note": "printed pages 222-224; footnote marker (x) printed as (a) in the scan; cross-references are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 299 b. n. (5)", "volume": 1, "reporter_abbr": "Saund.", "page": 299,
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note on the common bar in Greene v. Jones (ER records at 1 Wms Saund 295 and 298); 299 falls in the record at 298"},
+    {"seq": 2, "raw": "Elwis v. Lombe, 6 Mod. 117", "case_name": "Elwis v. Lombe",
+     "volume": 6, "reporter_abbr": "Mod.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "17940655", "confidence": "high"},
+    {"seq": 3, "raw": "Salk. 453. S. C.", "case_name": "Elwis v. Lombe",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 453,
+     "status": "linked_english_reports", "er_case_id": "17951982", "confidence": "high",
+     "note": "S. C. of Elwis v. Lombe; volume 2 supplied, ER 'Helvis versus Lamb' at 2 Salk 453"},
+    {"seq": 4, "raw": "Cocker v. Crompton, 1 Barn. & Cress. 489", "case_name": "Cocker v. Crompton",
+     "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 489,
+     "status": "linked_english_reports", "er_case_id": "18230472", "confidence": "high"}
+  ]
+}
