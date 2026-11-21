@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00009", "pageid": "03700",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:32:27Z",
+  "note": "Stephen, chapter II (p. 346): commencements and conclusions of replications; Wentworth, Lib. Plac., Liber Intrat., Rastall (precedents), Chitty and Arch. skipped; footnote (b) matches hathi00006/02720",
+  "citations": [
+    {"seq": 1, "raw": "Sabine v. Johnstone, 1 Bos. & Pul., 60", "case_name": "Sabine v. Johnstone",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "17970500", "confidence": "high"}
+  ]
+}
