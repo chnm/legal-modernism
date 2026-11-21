@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00009", "pageid": "04190",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:46:35Z",
+  "note": "Stephen, Conclusion (p. 395): inconsistent pleas, costs under the statute of Anne, the general issue; Arch. and cross-references skipped; cross-checked with hathi00002/03870",
+  "citations": [
+    {"seq": 1, "raw": "11 East, 263", "volume": 11, "reporter_abbr": "East", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18090247", "confidence": "medium",
+     "note": "no name printed; Vivian v. Blake begins at 11 East 263, on costs of several pleas under the statute of Anne, as the text says"},
+    {"seq": 2, "raw": "2 Burr., 753", "volume": 2, "reporter_abbr": "Burr.", "page": 753,
+     "status": "linked_english_reports", "er_case_id": "17590006", "confidence": "medium",
+     "note": "no name printed; Cooke v. Sayer begins at 2 Burr 753, on several pleas and costs, which fits the text"}
+  ]
+}

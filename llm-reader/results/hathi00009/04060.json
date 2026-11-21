@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00009", "pageid": "04060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:44:46Z",
+  "note": "Stephen, chapter II (p. 382): profert excused for lost deeds; its origin; Chitty, Co. Litt., Appendix and cross-references skipped; cross-checked with hathi00002/03740",
+  "citations": [
+    {"seq": 1, "raw": "Read v. Brookman, 3 T. R., 156", "case_name": "Read v. Brookman",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 156,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 TR 151"},
+    {"seq": 2, "raw": "Carver v. Pinkney, 3 Lev., 82", "case_name": "Carver v. Pinkney",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "17970048", "confidence": "high"},
+    {"seq": 3, "raw": "Leyfield's Case, 10 Rep., 92 b", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 92,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 Co Rep 88"}
+  ]
+}

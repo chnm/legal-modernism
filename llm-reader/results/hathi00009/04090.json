@@ -1,0 +1,30 @@
+{
+  "psmid": "hathi00009", "pageid": "04090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:45:21Z",
+  "note": "Stephen, chapter II (p. 385): sham pleas and fictions; cross-checked with hathi00002/03770",
+  "citations": [
+    {"seq": 1, "raw": "Thomas v. Vandermoolen, 2 Barn. & Ald., 197", "case_name": "Thomas v. Vandermoolen",
+     "volume": 2, "reporter_abbr": "Barn. & Ald.", "page": 197,
+     "status": "linked_english_reports", "er_case_id": "18180713", "confidence": "high"},
+    {"seq": 2, "raw": "Bartley v. Godslake, ibid., 199", "case_name": "Bartley v. Godslake",
+     "volume": 2, "reporter_abbr": "Barn. & Ald.", "page": 199,
+     "status": "linked_english_reports", "er_case_id": "18180004", "confidence": "high",
+     "note": "ibid. expanded to 2 Barn. & Ald."},
+    {"seq": 3, "raw": "Shadwell v. Berthoud, 5 Barn. & Ald., 750, 751", "case_name": "Shadwell v. Berthoud",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 750,
+     "status": "linked_english_reports", "er_case_id": "18220329", "pincite": true, "confidence": "high",
+     "note": "case begins at 5 B & A 749; dropped: 751"},
+    {"seq": 4, "raw": "Richley v. Proone, 1 Barn. & Cres., 286", "case_name": "Richley v. Proone",
+     "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 286,
+     "status": "linked_english_reports", "er_case_id": "18230201", "confidence": "high"},
+    {"seq": 5, "raw": "Merington v. Becket, 2 Barn. & Cres., 81", "case_name": "Merington v. Becket",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "18230146", "confidence": "high"},
+    {"seq": 6, "raw": "Bell v. Alexander, 6 M. & S. 133", "case_name": "Bell v. Alexander",
+     "volume": 6, "reporter_abbr": "M. & S.", "page": 133,
+     "status": "linked_english_reports", "er_case_id": "18170299", "confidence": "high"},
+    {"seq": 7, "raw": "Young v. Gadderer, 1 Bing., 380", "case_name": "Young v. Gadderer",
+     "volume": 1, "reporter_abbr": "Bing.", "page": 380,
+     "status": "linked_english_reports", "er_case_id": "18230781", "confidence": "high"}
+  ]
+}
