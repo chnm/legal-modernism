@@ -268,6 +268,10 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    The year book "40 Ed. 3. 45, per Finchden" (1827 p. 293) is 49 only in
    the 1831 HathiTrust record; check it against its Gale twin and the
    other editions, per the README's variant-reading rule.
+   Saunders v. Hussey, 2 Lutw. 1231: the 1827 reader linked Sanders v.
+   Hussey, Carth 9 (17410299) by the rule that the English Reports beat a
+   stub; the 1824 (hathi00001 03310-03600) and 1831 records link the stub
+   `2 Lutw. 1231`. Align every edition to the English Reports record.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

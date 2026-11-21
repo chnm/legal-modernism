@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "03880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:24:55Z",
+  "note": "printed p. 361; derivation of title; a seisin in fee simple alleged per se. 2 Chitty (the treatise), a cross-reference (supra, pp. 41, 42, 206), Co. Litt. and Doct. Pl. skipped; footnote markers (x) and (z) OCR'd '(C)' and '(2)'",
+  "citations": [
+    {"seq": 1, "raw": "Scavage v. Hawkins, Cro. Car. 571", "case_name": "Scavage v. Hawkins",
+     "reporter_abbr": "Cro. Car.", "page": 571,
+     "status": "linked_english_reports", "er_case_id": "17922101", "confidence": "high",
+     "note": "two ER records at Cro Car 571; the printed name picks Scavage against Hawkins"}
+  ]
+}

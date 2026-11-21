@@ -1,0 +1,24 @@
+{
+  "psmid": "19005940200", "pageid": "03730",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:20:27Z",
+  "note": "printed p. 346; the day of forbearance material though under a videlicet; the plea follows the day in the declaration. Footnote marker (e) OCR'd '(c)'; 3 Bl. Com. and cross-references (sup. p. 143, supra p. 340) skipped; cross-checked with the 1831 edition (hathi00002/02750)",
+  "citations": [
+    {"seq": 1, "raw": "Johnson v. Picket, cited, Grimwood v. Barritt, 6 T. R. 46", "case_name": "Johnson v. Picket",
+     "volume": 6, "reporter_abbr": "T. R.", "page": 463,
+     "status": "linked_english_reports", "er_case_id": "17954208", "pincite": true, "confidence": "high",
+     "note": "page OCR'd '46', read 463 from the 1831 edition; Johnson v. Picket is known only as cited in Grimwood against Barrit, which begins at 6 TR 460"},
+    {"seq": 2, "raw": "Hardy v. Cathcart, 5 Taunt. 2", "case_name": "Hardy v. Cathcart",
+     "volume": 5, "reporter_abbr": "Taunt.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18130412", "confidence": "high"},
+    {"seq": 3, "raw": "2 Saund. 5. n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "18450156", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note to Mellor v Walker, whose ER record at 2 Wms Saund 4 contains page 5"},
+    {"seq": 4, "raw": "Hawe v. Planner, 1 Saund. 14", "case_name": "Hawe v. Planner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "18450106", "pincite": true, "confidence": "high",
+     "note": "ER records of Hawe v Planner at 1 Wms Saund 10 and 13; Bennet v. Filkins begins at 14, but the name decides: linked the second Hawe v. Planner record"},
+    {"seq": 5, "raw": "Higgins v. Highficld, 13 East, 407", "case_name": "Higgins v. Highfield",
+     "volume": 13, "reporter_abbr": "East", "page": 407,
+     "status": "linked_english_reports", "er_case_id": "18110253", "confidence": "high"}
+  ]
+}

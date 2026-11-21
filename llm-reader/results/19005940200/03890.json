@@ -1,0 +1,30 @@
+{
+  "psmid": "19005940200", "pageid": "03890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:25:13Z",
+  "note": "printed p. 362; derivation of the fee where seisin is alleged in another; the commencement of particular estates must be shown. A cross-reference (supra, p. 205), Upper Bench Precedents and Wentworth's Index (books of precedents), Co. Litt. and Rastall's Entries skipped; cross-checked with the 1831 edition (hathi00002/02860)",
+  "citations": [
+    {"seq": 1, "raw": "Scilly v. Dally, 2 Salk. 56S", "case_name": "Scilly v. Dally",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 562,
+     "status": "linked_english_reports", "er_case_id": "17953046", "confidence": "high",
+     "note": "OCR '56S' for 562, as the 1831 edition prints it"},
+    {"seq": 2, "raw": "Carth. 444. S.C.", "case_name": "Scilly v. Dally",
+     "reporter_abbr": "Carth.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17410309", "confidence": "high",
+     "note": "S. C.: Silly versus Dally at Carth 444"},
+    {"seq": 3, "raw": "Searl v. Bunnion, 8 Mod. 70", "case_name": "Searl v. Bunnion",
+     "volume": 2, "reporter_abbr": "Mod.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high",
+     "note": "OCR 8 for 2: Searl against Bunion is at 2 Mod 70, cited so on p. 358"},
+    {"seq": 4, "raw": "Johns v. Whitley, 3 Wils. 72", "case_name": "Johns v. Whitley",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 72,
+     "status": "linked_english_reports", "er_case_id": "17990240", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 Wils KB 65"},
+    {"seq": 5, "raw": "Hendy v. Stephenson, 10 Eat, 60", "case_name": "Hendy v. Stephenson",
+     "volume": 10, "reporter_abbr": "East", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "18080259", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 East 55"},
+    {"seq": 6, "raw": "I Saund. 1s6 d. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "18450165", "confidence": "medium",
+     "note": "no name printed; OCR '1s6' for 186; note to Mounson v. Redshaw, which begins at 1 Wms Saund 186"}
+  ]
+}
