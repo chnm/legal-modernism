@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01610",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:24:27Z",
+  "note": "printed page 107, sections 61-62; Andrews's bracketed text ends and Stephen's text resumes at section 62 (the superior courts). Notes 1-3, columns interleaved, recorded in note order. Andrews' American Law is a treatise.",
+  "citations": [
+    {"seq": 1, "raw": "Castle v. Ballard, 23 How. 172", "case_name": "Castle v. Ballard",
+     "volume": 23, "reporter_abbr": "How.", "page": 172,
+     "status": "linked_cap", "cap_case_id": 3462779, "confidence": "high",
+     "note": "CAP: Castle v. Bullard (1859)"},
+    {"seq": 2, "raw": "Rich v. N. Y. C. & II. R. Ry. Co., 87 N. Y. 387", "case_name": "Rich v. N. Y. C. & H. R. Ry. Co.",
+     "volume": 87, "reporter_abbr": "N. Y.", "page": 387,
+     "status": "linked_cap", "cap_case_id": 549321, "pincite": true, "confidence": "high",
+     "note": "case runs 87 N.Y. 382-400; cited at 382 on page 86"},
+    {"seq": 3, "raw": "W., St. L. & P. Ry. Co. v. Shacklet, 105 111. 364", "case_name": "W., St. L. & P. Ry. Co. v. Shacklet",
+     "volume": 105, "reporter_abbr": "Ill.", "page": 364,
+     "status": "linked_cap", "cap_case_id": 2787967, "confidence": "high"},
+    {"seq": 4, "raw": "Donovan v. Hartford Ry. Co., 65 Conn. 201", "case_name": "Donovan v. Hartford Ry. Co.",
+     "volume": 65, "reporter_abbr": "Conn.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 806171, "confidence": "high"},
+    {"seq": 5, "raw": "29 L. R. A. 297", "case_name": "Donovan v. Hartford Ry. Co.",
+     "volume": 29, "reporter_abbr": "L. R. A.", "page": 297,
+     "status": "linked_cap", "cap_case_id": 806171, "confidence": "medium",
+     "note": "L.R.A. parallel, linked to the official report 65 Conn. 201"},
+    {"seq": 6, "raw": "Donovan v. Hartford, etc. Ky. Co., 3 ... Go Conn. 201", "case_name": "Donovan v. Hartford, etc. Ry. Co.",
+     "volume": 65, "reporter_abbr": "Conn.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 806171, "confidence": "high",
+     "note": "name in the text, cite in note 3 (OCR 'Go' for 65)"}
+  ]
+}
