@@ -123,6 +123,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
 1. **Year books:** `reporter_abbr` `Y.B.`, regnal year as `volume`, reign in
    `note`, `page` empty when cited by plea number only; confidence `high`
    when legible. Early records use `Ed. 3.`, `Hen. 6`, `Ass.` and low/medium.
+   The Liber Assisarum (`22 Ass. 41`) is by plea: empty `page`, plea in
+   `note` (records to 2026-11-21 put it in `page`).
 2. **Pin cites on split English Reports records:** a cite in a later record
    of a case that begins earlier is `pincite: true`, even at that record's
    first page. Early records often lack it: Peacock v. Bell (1 Saund. 73),

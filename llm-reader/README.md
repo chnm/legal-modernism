@@ -366,7 +366,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
-  21`) keeps the folio as `page` and the plea in `note`.
+  21`) keeps the folio as `page` and the plea in `note`. The Liber
+  Assisarum (`22 Ass. 41`) is cited by plea: `page` is empty and the plea
+  goes in `note`.
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
   printed) are your reading of it. A volume you supplied goes in `volume`, and
