@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "02260",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:41:21Z",
+  "note": "printed p. 200; the general issue in case; special pleas still allowed. 1 Chitty (on pleading) is a treatise: skipped",
+  "citations": [
+    {"seq": 1, "raw": "Bird v, Randall, s Burr, 1353", "case_name": "Bird v. Randall",
+     "volume": 3, "reporter_abbr": "Burr.", "page": 1353,
+     "status": "linked_english_reports", "er_case_id": "17620069", "pincite": true, "confidence": "high",
+     "note": "OCR 's' for 3; begins at 3 Burr 1345"}
+  ]
+}

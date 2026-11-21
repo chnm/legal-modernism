@@ -1,0 +1,25 @@
+{
+  "psmid": "19005940200", "pageid": "02170",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T22:39:23Z",
+  "note": "printed p. 191; what the general issues deny: formedon, quare impedit, non est factum. Arch., Bac. Ab. and Com. Dig. are treatises: skipped. Cross-checked against hathi00002/01680",
+  "citations": [
+    {"seq": 1, "raw": "Dowland v. Slade, 5 East, 289", "case_name": "Dowland v. Slade",
+     "volume": 5, "reporter_abbr": "East", "page": 289,
+     "status": "linked_english_reports", "er_case_id": "18040256", "pincite": true, "confidence": "high",
+     "note": "begins at 5 East 272"},
+    {"seq": 2, "raw": "Colt v. Bishop of Coventry, Hob. 162", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "begins at Hob 140; the README's choice, the record with text, not the empty 17921247"},
+    {"seq": 3, "raw": "Yates v. Boen, 2 Str. 1104", "case_name": "Yates v. Boen",
+     "volume": 2, "reporter_abbr": "Str.", "page": 1104,
+     "status": "linked_english_reports", "er_case_id": "17954003", "confidence": "high"},
+    {"seq": 4, "raw": "Col- lins v. Blantern, 2 Wils. 547", "case_name": "Collins v. Blantern",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 347,
+     "status": "linked_english_reports", "er_case_id": "17990101", "pincite": true, "confidence": "high",
+     "note": "OCR 547 for 347, as the 1831 edition prints; ER splits the case into records at 2 Wils KB 341 and 347, so the cite links the second record and is a pin cite under the README's split-case rule (the 1831 record leaves pincite unset)"},
+    {"seq": 5, "raw": "Pigot's Case, 11 Rep. 26 b", "case_name": "Pigot's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 26,
+     "status": "linked_english_reports", "er_case_id": "15720180", "confidence": "high"}
+  ]
+}
