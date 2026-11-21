@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05510",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T17:00:03Z",
+  "note": "Printed page 497. New in 1901: Editor's Note B, setting out Prentice J.'s memorandum of decision in Winchester Repeating Arms Co. v. New York, New Haven & Hartford R.R. (Conn. Super. Ct. 1898), as reported in the Yale Law Journal. Craft Refrigerating Co. v. Quinnipiac Brewing Co. is named first without a report and then cited at 63 Conn. 551: one record.",
+  "citations": [
+    {"seq": 1, "raw": "THE WINCHESTER REPEATING ARMS COMPANY vs. THE NEW YORK, NEW HAVEN AND HARTFORD RAILROAD COMPANY. ... Reported in Yale Law Journal, Vol. 7 March, 1898, p. 245", "case_name": "Winchester Repeating Arms Co. v. New York, New Haven & Hartford R.R. Co.", "volume": 7, "reporter_abbr": "Yale L.J.", "page": 245, "year": 1898,
+     "status": "no_match", "confidence": "high",
+     "note": "Connecticut Superior Court, New Haven County, February 9, 1898, reported only in the Yale Law Journal (the case title heads the opinion, the report is in its footnote 1); not in CAP by name (only Morris v. and Russell v. Winchester Repeating Arms Co.); no stub"},
+    {"seq": 2, "raw": "The Craft Refrigerating Co. v. The Quinnipiac Brewing Co., 63 Conn. 551", "case_name": "Craft Refrigerating Co. v. Quinnipiac Brewing Co.", "volume": 63, "reporter_abbr": "Conn.", "page": 551,
+     "status": "linked_cap", "cap_case_id": 8846416, "confidence": "high", "note": "CAP Craft Refrigerating Machine Co. v. Quinnipiac Brewing Co. (1893)"}
+  ]
+}

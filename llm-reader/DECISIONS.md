@@ -211,7 +211,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    add the bare "Id." (Dana v. Bryant); 03580 "1 Lev. 83" (Pullin v.
    Nicholas) is doubtful: the 1824 text prints 1 Lev. 32 (Serjeant v.
    Fairfax, `low`). Buckley v. Rice Thomas at Plow. 118 is not a pin cite
-   (hathi00013/04620–04910 set one); 123 and 128 a are. Remove `case_name` where no name is printed
+   (hathi00013/04620–04910 set one); 123 and 128 a are. A printed page
+   inside the named case is a pin cite as printed; some 1894 records
+   corrected it to the first page (Wilson v. Poole 33 Ind. 448, Gostorfs v.
+   Taaffe 18 Cal. 388, Pease v. McKusick, Cushman v. Hayes, Rector v.
+   Gaines, Illinois Fire Ins. v. Stanton, Wadhams v. Swan): restore them. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

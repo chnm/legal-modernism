@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06210",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T17:01:19Z",
+  "note": "Appendix notes (80)-(82), printed p. 567. Blackstone, Placitorum Abbreviatio (records of pleas), Bracton and Britton skipped; one editor's footnote cites an American case",
+  "citations": [
+    {"seq": 1, "raw": "Houghton v. Townshend, 8 How. Pr. 41L", "case_name": "Houghton v. Townshend",
+     "volume": 8, "reporter_abbr": "How. Pr.", "page": 441,
+     "status": "linked_cap", "cap_case_id": 2194497, "confidence": "high",
+     "note": "CAP's Houghton v. Townsend (1853), 8 How. Pr. 441; OCR '41L' for 441"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06080",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T17:00:21Z",
+  "note": "Appendix p. 554, notes (57)-(58). Bracton, Bac. Ab., Smith's De Republica Anglorum and the System of Pleading skipped",
+  "citations": [
+    {"seq": 1, "raw": "40 Ed. 3, 45", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fo. 45; no source for the year books"}
+  ]
+}

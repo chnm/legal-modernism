@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T17:00:08Z",
+  "note": "Appendix p. 553, note (57) continued. Terrien, the canon law, the Digest and the Placitorum Abbreviatio (records of pleas) skipped",
+  "citations": [
+    {"seq": 1, "raw": "1 Ed. 2, 15", "volume": 1, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 1 Edw. II, fo. 15; Stephen's own editions (1831, 1871, 1895) print fo. 14, Andrews's (1894, 1901) 15, so this edition's reading is kept at medium; no source for the year books"},
+    {"seq": 2, "raw": "Ibid, 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "Ibid. expanded to 1 Ed. 2, 8, year book, 1 Edw. II, fo. 8; no source for the year books"}
+  ]
+}
