@@ -205,7 +205,12 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Swan 54 (pin cite); 02860 Illinois Fire Ins. v. Stanton 359 (pin cite);
    seq order on 02830, 02890, 02920, 02990 (interleaved columns).
    "Holt's Inst. 562" (1894 records, e.g. 19005765000/03340) is 561, no
-   `pincite`. 19005765000/03690: the year book is 1 Hen. 7, fo. 16, not 10. Remove `case_name` where no name is printed
+   `pincite`. 19005765000/03690: the year book is 1 Hen. 7, fo. 16, not 10.
+   Also in 19005765000: 03550 Digby v. Fitzharbert is Hob. 104, a pin cite
+   into 101; 03650 Cornwallis v. Savery is 2 Burr. 773, a pin cite; 03440
+   add the bare "Id." (Dana v. Bryant); 03580 "1 Lev. 83" (Pullin v.
+   Nicholas) is doubtful: the 1824 text prints 1 Lev. 32 (Serjeant v.
+   Fairfax, `low`). Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

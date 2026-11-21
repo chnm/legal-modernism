@@ -431,7 +431,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 ```
 
 - `seq` numbers the citations 1, 2, 3 in the order printed: text, then
-  footnotes by their letter. Where the scan's text interleaves the lines of
+  footnotes by their letter, then an editor's numbered notes (a note
+  continued from the previous page included). Where the scan's text interleaves the lines of
   two footnotes, or puts whole footnotes out of letter order, follow the
   letters and say so in `note`.
 - A case found by its printed name at a corrected page (Richley v. Proone,
