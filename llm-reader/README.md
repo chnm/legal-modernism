@@ -383,6 +383,9 @@ American cases in the later editions (Andrews, 1894, and after):
 - A number a later edition misprints where earlier editions print it
   right (2 Wils. 145 for 143) follows the earlier editions: `high` when
   the name is printed and unambiguous, else `medium`.
+- A page a later editor prints differently from every earlier edition but
+  that still falls inside the named case (Coare v. Giblett, 4 East 90 for
+  85) is kept as printed, a pin cite.
 - A reprint cite (Eng. C. L., Am. Dec.) keeps the reprint's own page in
   `page`; the link goes to the case's own report.
 

@@ -10,8 +10,8 @@
      "status": "linked_english_reports", "er_case_id": "17953080", "confidence": "high",
      "note": "volume supplied: 2 Str 1131"},
     {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyrw. 405", "case_name": "Thynne v. Woodman",
-     "volume": 2, "reporter_abbr": "Tyrw.", "page": 405,
-     "status": "no_match", "confidence": "high",
-     "note": "Tyrwhitt has no source; no Thynne v. Woodman (or Thyne) in the English Reports, Crompton and Jervis included; no stub at 2 Tyrw. 405 (nearest 402, 406)"}
+     "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
+     "note": "OCR '405' for 495, which every edition 1835-1901 prints (hathi00013/02740); no Thynne v. Woodman in the English Reports; linked to the stub 2 Tyrw. 495 (coordinator's correction)"}
   ]
 }

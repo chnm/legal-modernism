@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03060",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:37:55Z",
+  "note": "End of section 131 (1894 p. 02700); Stephen's footnotes (o) Blackstone and (p) Tidd; Andrews's note 1 on the disposal of a case on appeal. Powell's and Elliott's Appellate Procedure not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Garland v. Davis, 4 How. 131", "case_name": "Garland v. Davis",
+     "volume": 4, "reporter_abbr": "How.", "page": 131,
+     "status": "linked_cap", "cap_case_id": 1503931, "confidence": "high"},
+    {"seq": 2, "raw": "Swarington v. Pendleton, 4 S. & R 389", "case_name": "Swarington v. Pendleton",
+     "volume": 4, "reporter_abbr": "S. & R.", "page": 389,
+     "status": "linked_cap", "cap_case_id": 1801984, "confidence": "high",
+     "note": "CAP's Swearingen's Executor v. Pendleton's Executrix (1818)"},
+    {"seq": 3, "raw": "Pain v. Cowdin, 17 Pick. 142", "case_name": "Pain v. Cowdin",
+     "volume": 17, "reporter_abbr": "Pick.", "page": 142,
+     "status": "linked_cap", "cap_case_id": 2023967, "confidence": "high"},
+    {"seq": 4, "raw": "Union Nat. Bank v. Manistee Lumber Co., 43 111. App. 525", "case_name": "Union Nat. Bank v. Manistee Lumber Co.",
+     "volume": 43, "reporter_abbr": "Ill. App.", "page": 525,
+     "status": "linked_cap", "cap_case_id": 5054725, "confidence": "high"},
+    {"seq": 5, "raw": "Mueller v. U. S. Mutual Ins. Co., 51 111. App. 40", "case_name": "Mueller v. U. S. Mutual Ins. Co.",
+     "volume": 51, "reporter_abbr": "Ill. App.", "page": 40,
+     "status": "linked_cap", "cap_case_id": 5116042, "confidence": "high",
+     "note": "CAP's Mueller v. United States Mutual Accident Ass'n (1893)"},
+    {"seq": 6, "raw": "Columbus, P. & L R Co. v. Simpson, 5 Ohio St. 251", "case_name": "Columbus, P. & I. R. Co. v. Simpson",
+     "volume": 5, "reporter_abbr": "Ohio St.", "page": 251,
+     "status": "linked_cap", "cap_case_id": 509764, "confidence": "high"}
+  ]
+}

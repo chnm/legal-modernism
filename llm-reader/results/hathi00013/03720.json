@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:37:18Z",
+  "note": "Printed p. 318, § 164 (express color). Stephen's footnotes (m) and (n), no Andrews notes. Brown's Entries (a book of precedents), Doct. Pldg. and the supra reference not recorded. Matches 1894 page 03360.",
+  "citations": [
+    {"seq": 1, "raw": "8 Edw. IV. 8",
+     "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "medium",
+     "note": "Year Book 2 Edw. IV, f. 8; this scan's '8 Edw.' is OCR garbling: the Gale copy of 1901 and the 1894 edition print 2 Edw. IV. 8; year books have no source"},
+    {"seq": 2, "raw": "Leyfleld's Case, 10 Rep. 89 b", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 89,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "OCR 'Leyfleld'; Doctor Leyfield's Case begins at 10 Co Rep 88"}
+  ]
+}
