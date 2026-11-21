@@ -1,0 +1,32 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:44:19Z",
+  "note": "printed p. 211 (*258-259); new assignment extra viam; it is in the nature of a replication; Williston's bracketed notes (hh) and (hhh) hold the cases; 9 Went. (precedents) not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Bracegirdle v. Peacock, 8 Q. B. 174", "case_name": "Bracegirdle v. Peacock",
+     "volume": 8, "reporter_abbr": "Q. B.", "page": 174,
+     "status": "linked_english_reports", "er_case_id": "18450021", "confidence": "high"},
+    {"seq": 2, "raw": "Webber v. Sparkes, 10 M. & W. 485", "case_name": "Webber v. Sparkes",
+     "volume": 10, "reporter_abbr": "M. & W.", "page": 485,
+     "status": "linked_english_reports", "er_case_id": "18420979", "confidence": "high"},
+    {"seq": 3, "raw": "Huddart v. Rigby, L. R. 5 Q. B. 139", "case_name": "Huddart v. Rigby",
+     "volume": 5, "reporter_abbr": "L. R. Q. B.", "page": 139,
+     "status": "linked_stub", "stub_cite": "5 L.R.Q.B. 139", "confidence": "high",
+     "note": "Law Reports, Queen's Bench (1870), after the English Reports; no English Reports record found"},
+    {"seq": 4, "raw": "Hawthorn v. Newcastle Railway Co., 3 Q. B. 734", "case_name": "Hawthorn v. Newcastle Railway Co.",
+     "volume": 3, "reporter_abbr": "Q. B.", "page": 734,
+     "status": "linked_english_reports", "er_case_id": "18400739", "confidence": "high"},
+    {"seq": 5, "raw": "Bowen r. Jenkin, 6 A. & E. 911", "case_name": "Bowen v. Jenkin",
+     "volume": 6, "reporter_abbr": "A. & E.", "page": 911,
+     "status": "linked_english_reports", "er_case_id": "18370033", "confidence": "high"},
+    {"seq": 6, "raw": "Page r. IIatchett, 8 Q. B. 187", "case_name": "Page v. Hatchett",
+     "volume": 8, "reporter_abbr": "Q. B.", "page": 187,
+     "status": "linked_english_reports", "er_case_id": "18450173", "confidence": "high",
+     "note": "a second record of Page v. Hatchett is at 8 QB 593; the cite is to 187"},
+    {"seq": 7, "raw": "Loweth v. Smith, 12 M. & W. 582", "case_name": "Loweth v. Smith",
+     "volume": 12, "reporter_abbr": "M. & W.", "page": 582,
+     "status": "linked_english_reports", "er_case_id": "18440242", "confidence": "high"}
+  ]
+}

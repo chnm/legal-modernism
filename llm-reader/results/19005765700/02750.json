@@ -1,0 +1,25 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:44:05Z",
+  "note": "printed page 249, star page *305; the footnote (k) begun on the previous page ('See Ferguson') continues here; numbers checked against the 1843 edition (19005904300/03380)",
+  "citations": [
+    {"seq": 1, "raw": "Fcrguson v. Mitchel;, 4 Dowl. 512", "case_name": "Ferguson v. Mitchell",
+     "volume": 4, "reporter_abbr": "Dowl.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "18350092", "confidence": "medium",
+     "note": "printed 512; the 1843 edition prints 4 Dowl. 513. Dowling's Practice Cases have no source; same case linked at 2 CrM & R 687"},
+    {"seq": 2, "raw": "1 Tyr. & Gr. 179, S. C.", "case_name": "Ferguson v. Mitchell",
+     "volume": 1, "reporter_abbr": "Tyr. & Gr.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "18350092", "confidence": "medium",
+     "note": "Tyrwhitt and Granger has no source; same case linked at 2 CrM & R 687"},
+    {"seq": 3, "raw": "Jourdain v. Johnson, 5 Tyrw. 521", "case_name": "Jourdain v. Johnson",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 524,
+     "status": "linked_english_reports", "er_case_id": "18350150", "confidence": "medium",
+     "note": "printed 521; the 1838 and 1843 editions print 5 Tyrw. 524. Tyrwhitt has no source; same case linked at 2 CrM & R 564"},
+    {"seq": 4, "raw": "4 Dowl. J:il, S. C", "case_name": "Jourdain v. Johnson",
+     "volume": 4, "reporter_abbr": "Dowl.", "page": 534,
+     "status": "linked_english_reports", "er_case_id": "18350150", "confidence": "medium",
+     "note": "page garbled ('J:il'); the 1838 and 1843 editions print 4 Dowl. 534. Dowling has no source; same case linked at 2 CrM & R 564"}
+  ]
+}

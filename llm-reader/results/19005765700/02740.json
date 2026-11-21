@@ -1,0 +1,18 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02740",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:43:40Z",
+  "note": "printed page 248, star page *304; the cite to Ferguson that begins at the foot of the page is recorded on the next page, where its numbers are printed",
+  "citations": [
+    {"seq": 1, "raw": "Hartley v. Manton, 5 Q. 11. 247", "case_name": "Hartley v. Manton",
+     "volume": 5, "reporter_abbr": "Q. B.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "18430032", "confidence": "high"},
+    {"seq": 2, "raw": "Phillips v. Claggett, 10 1. & W. 102", "case_name": "Phillips v. Claggett",
+     "volume": 10, "reporter_abbr": "M. & W.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18420708", "confidence": "high"},
+    {"seq": 3, "raw": "Phillijiq r. Ilowgate, 5 P :rn. & Ald. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02730",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:43:30Z",
+  "note": "printed page 247, star page *303; Bac. Ab. is an abridgment",
+  "citations": [
+    {"seq": 1, "raw": "Courtenay v. Earle, 10 C. B. 73", "case_name": "Courtenay v. Earle",
+     "volume": 10, "reporter_abbr": "C. B.", "page": 73,
+     "status": "linked_english_reports", "er_case_id": "18500858", "confidence": "high"}
+  ]
+}

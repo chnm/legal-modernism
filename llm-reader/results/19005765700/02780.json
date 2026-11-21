@@ -1,0 +1,12 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02780",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:45:02Z",
+  "note": "printed page 252, star page *309",
+  "citations": [
+    {"seq": 1, "raw": "Lord Clinton v. Morton, 2 Stra. 1000", "case_name": "Lord Clinton v. Morton",
+     "volume": 2, "reporter_abbr": "Stra.", "page": 1000,
+     "status": "linked_english_reports", "er_case_id": "17952430", "confidence": "high"}
+  ]
+}

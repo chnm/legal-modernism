@@ -74,7 +74,7 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   Vin. Abr., Arch. Pract., Chit. Pl., Selw. N. P., 2 Inst., Booth, Smith's Leading
   Cases (a collection, not a report), Chitty on Pleading (`1 Chitty, 498,
   1st edit.`, not Chitty's K.B. Reports), Gilbert on Replevin (`Gilb. Rep. (Hunt's Edit.)`,
-  not Gilbert's Reports), and the practice books Richardson's K. B. and Manning's Exchequer, `Mann. Exch.`), statutes
+  not Gilbert's Reports), and the practice books Richardson's K. B., Manning's Exchequer, `Mann. Exch.`, and the Practical Register, `Pract. Reg.`), statutes
   (`4 Ann. c. 16`), an abridgment entry that names no year-book folio
   (`Fitz. Abr. tit. Eject. firm. 2`), a reporter's preface (`Co. Pref. to
   10 Rep.`), rules of court even when printed in a report
@@ -192,7 +192,8 @@ Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
 report of the suit, not a pin cite into 3 Lev 109. Colt v. Bishop of
 Coventry (Hob. 140–164) is 17920644, the record with text (titled "De
 Termino Sancti Mich", with the case's name in `murrell_title`), not the
-empty 17921247. Buckley v. Rice Thomas (Plowd. 118–128, in Plowden's
+empty 17921247. "Anon., 2 Salk. 519" (three Anonymous cases begin there)
+is 17950161, at `low`. Buckley v. Rice Thomas (Plowd. 118–128, in Plowden's
 missing pages) is Dyer's report, "Bulkeley v Thomas", 2 Dy 113 (17941482),
 linked at `medium`, a pin cite past 113. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`),
@@ -240,7 +241,8 @@ in the English Reports by name first; it wins over a stub even when the
 stub matches the cite exactly. If two English Reports records of that name
 fit, pick one by year and subject and link it at `low`; do not fall back to
 the stub. Willmore, Wollaston and Davison (`Will. W.
-& D.`, 1837–38) has no source and no stubs. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
+& D.`, 1837–38) and Gale's Exchequer Reports (`Gale`, 1835–36) have no
+source and no stubs. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
 when that cite is a treatise. When it follows a footnote holding a single
 case, it is recorded as a citation of that case.
 When the cited reporter has no source but the same case is reported in one

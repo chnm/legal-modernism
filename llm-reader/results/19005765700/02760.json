@@ -1,0 +1,27 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02760",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:44:35Z",
+  "note": "printed page 250, star pages *306-307; the statute 4 Anne, c. 16 not recorded",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 209 (e)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "209 e falls in Foxwist v. Tremaine, 2 Wms Saund 207-211 (record of 10,989 words; the next record, its continuation, begins at 212), the leading case on pleading in abatement to part and in bar to the residue"},
+    {"seq": 2, "raw": "Herries v. Jameson, 5 T. R. 553", "case_name": "Herries v. Jameson",
+     "volume": 5, "reporter_abbr": "T. R.", "page": 553,
+     "status": "linked_english_reports", "er_case_id": "17942193", "confidence": "high"},
+    {"seq": 3, "raw": "Hill v. White, O Bing. N. C. 26", "case_name": "Hill v. White",
+     "volume": 6, "reporter_abbr": "Bing. N. C.", "page": 26,
+     "status": "linked_english_reports", "er_case_id": "18391090", "confidence": "high",
+     "note": "OCR 'O' for 6"},
+    {"seq": 4, "raw": "8 Dowl. 13, S. C.", "case_name": "Hill v. White",
+     "volume": 8, "reporter_abbr": "Dowl.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "18391090", "confidence": "medium",
+     "note": "Dowling's Practice Cases have no source; same case linked at 6 Bing NC 26"},
+    {"seq": 5, "raw": "Chitty v. Dendy, 3 Ad. & Ell. 819", "case_name": "Chitty v. Dendy",
+     "volume": 3, "reporter_abbr": "Ad. & Ell.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18350719", "confidence": "medium",
+     "note": "printed 819; the 1838 and 1843 editions print 3 Ad. & Ell. 319; no record titled Chitty v. Dendy; the record at 3 Ad & E 319 is titled 'Chitty against Luxford' (1835), the same plaintiff, taken to be the case (as at 02280)"}
+  ]
+}
