@@ -1,0 +1,27 @@
+{
+  "psmid": "hathi00013", "pageid": "04660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:44:02Z",
+  "note": "Printed page 412 (section 219): matter of law and public statutes need not be stated; private acts must be. Blackstone's Commentaries is a treatise. Matches 1894 19005765000/04270.",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Lyme Regis, Doug. 148", "case_name": "The King v. Lyme Regis",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "17790084", "confidence": "medium",
+     "note": "volume 1 supplied; the README's choice: King v. Lyme Regis, Doug. 148, is the record at 1 Doug 149 (Douglas paged differently in different editions)"},
+    {"seq": 2, "raw": "Boyce v. Whitaker, Doug. 97", "case_name": "Boyce v. Whitaker",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; ER 'Boyce against Whitaker' begins at 1 Doug 94"},
+    {"seq": 3, "raw": "Partridge v. Strange, Plow. 81", "case_name": "Partridge v. Strange",
+     "volume": 1, "reporter_abbr": "Plow.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "OCR 81 for 84 (every other edition prints Plow. 84); Plowden's first 130 pages are missing from the ER; the same case found by name in Dyer, 'Partridge against Strange and Others' at 1 Dy 74"},
+    {"seq": 4, "raw": "Platt v. Hill, Ld. Ray. 381", "case_name": "Platt v. Hill",
+     "volume": 1, "reporter_abbr": "Ld. Ray.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "17921830", "confidence": "high",
+     "note": "volume 1 supplied; ER 'Platt vers Hill' at 1 Ld Raym 381"},
+    {"seq": 5, "raw": "Boyce v. Whitaker, Doug. 97", "case_name": "Boyce v. Whitaker",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17790056", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; ER 'Boyce against Whitaker' begins at 1 Doug 94"}
+  ]
+}

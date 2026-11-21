@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "04220",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:46:09Z",
+  "note": "§ 188 continued, several pleas carried farther in practice; Stephen's footnote (i) and Andrews's note 1 (two columns interleaved). Matches 1894 19005765000/03840.",
+  "citations": [
+    {"seq": 1, "raw": "Lord Clinton v. Morton, 2 Str. 1000", "case_name": "Lord Clinton v. Morton",
+     "volume": 2, "reporter_abbr": "Str.", "page": 1000,
+     "status": "linked_english_reports", "er_case_id": "17952430", "confidence": "high"},
+    {"seq": 2, "raw": "Gilmore v. Nowland, 26 III 200", "case_name": "Gilmore v. Nowland",
+     "volume": 26, "reporter_abbr": "Ill.", "page": 200,
+     "status": "linked_cap", "cap_case_id": 5243713, "confidence": "high"}
+  ]
+}

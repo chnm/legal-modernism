@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "04090",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:42:13Z",
+  "note": "§ 183, the general issue as a double plea; footnotes (o)-(q) cite only Buller's Nisi Prius (a treatise) and cross-references. Andrews's note 1 adds, new in 1901, Wiley v. Rouse's Point. Matches 1894 19005765000/03730.",
+  "citations": [
+    {"seq": 1, "raw": "Wiley v. Rouse's Point, 86 Hun, 495", "case_name": "Wiley v. Rouse's Point",
+     "volume": 86, "reporter_abbr": "Hun", "page": 495,
+     "status": "linked_cap", "cap_case_id": 4781037, "confidence": "high",
+     "note": "new in 1901; Wiley v. Village of Rouse's Point (1895), 86 Hun = 93 N.Y. Sup. Ct. 495; CAP also holds the case as 33 N.Y.S. 773 (3026184), carrying the Hun cite, but the Hun record is the cited reporter's"}
+  ]
+}

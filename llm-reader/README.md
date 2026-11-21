@@ -359,6 +359,9 @@ American cases in the later editions (Andrews, 1894, and after):
   Trials, and the like.
 - `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
   reporter.
+- Not recorded: an annotation cited without its case ("48 L. R. A. 177,
+  note"), and a case cited only to this book's own Appendix or "supra" with
+  no report printed anywhere on the page.
 - A reprint's "own report" may be a stub when the English Reports lack the
   case (Harrop v. Hirst, `4 L.R. Exch. 43`).
 - CAP files some series under other names: Kernan is N.Y. 11–14 (2 Kern. =

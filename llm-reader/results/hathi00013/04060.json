@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "04060",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:41:31Z",
+  "note": "§§ 180-181, immaterial matter and inducement in duplicity; Stephen's footnotes (e)-(g), no Andrews notes. Bac. Ab. not recorded; (g) is a cross-reference. Matches 1894 19005765000/03700.",
+  "citations": [
+    {"seq": 1, "raw": "Executors of Qrenelif e, Dyer, 48", "case_name": "Executors of Grenelife",
+     "reporter_abbr": "Dyer", "page": 42,
+     "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
+     "note": "page printed 48 in OCR; the case is Dyer 42, as in the Gale 1901 copy and the 1894 edition (ER 1 Dy 42)"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013", "pageid": "04570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:49:29Z",
+  "note": "Printed page 403 (number lost in the OCR): title laid in an adversary by descent; title must be strictly proved. 'Vide supra' cross-references skipped. Matches 1894 19005765000/04180.",
+  "citations": [
+    {"seq": 1, "raw": "Denbam v. Stephenaon, 1 Salk. 356", "case_name": "Denham v. Stephenson", "volume": 1, "reporter_abbr": "Salk.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "17951002", "confidence": "high",
+     "note": "printed 356; the 1894 edition and page 397 of this one print 355, where Denham v. Stephenson (164 words, so not reaching 356) begins"},
+    {"seq": 2, "raw": "Cud lip T. Bundle, Garth. 20*", "case_name": "Cudlip v. Rundle", "reporter_abbr": "Carth.", "page": 202,
+     "status": "linked_english_reports", "er_case_id": "17410095", "confidence": "high",
+     "note": "OCR '20*' for 202; ER 'Cudlip versus Rundle' at Carth 202"}
+  ]
+}

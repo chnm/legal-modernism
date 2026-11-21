@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "04230",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:46:23Z",
+  "note": "§ 188 continued, inconsistent pleas and several replications; Stephen's (k) Com. Dig., (l) 1 Sel. Pract. and 2 Chitty (treatises) not recorded, (m) a cross-reference. Andrews's notes 1-3, the columns interleaved, recorded in note order. Matches 1894 19005765000/03850 for (l) and note 1; note 2 (Supply Ditch, Farnan) is new in 1901, and 1901 drops 1894's Duerr v. Triebner and the Hilary Term rules from note 3.",
+  "citations": [
+    {"seq": 1, "raw": "Chitty T. Hume, 13 East, 255", "case_name": "Chitty v. Hume",
+     "volume": 13, "reporter_abbr": "East", "page": 255,
+     "status": "linked_english_reports", "er_case_id": "18110125", "confidence": "high",
+     "note": "Rama Chitty v. Hume"},
+    {"seq": 2, "raw": "Buhler v. Wentworth, 17 Barb. 649", "case_name": "Buhler v. Wentworth",
+     "volume": 17, "reporter_abbr": "Barb.", "page": 649,
+     "status": "linked_cap", "cap_case_id": 4953586, "confidence": "high"},
+    {"seq": 3, "raw": "Supply Ditch Co. v. El- oott, 10 Cola 327", "case_name": "Supply Ditch Co. v. Elcott",
+     "volume": 10, "reporter_abbr": "Colo.", "page": 327,
+     "status": "linked_cap", "cap_case_id": 2573413, "confidence": "high",
+     "note": "new in 1901; CAP's Supply Ditch Co. v. Elliott (1887)"},
+    {"seq": 4, "raw": "3 Am. St. R 586", "case_name": "Supply Ditch Co. v. Elcott",
+     "volume": 3, "reporter_abbr": "Am. St. R.", "page": 586,
+     "status": "linked_cap", "cap_case_id": 2573413, "confidence": "medium",
+     "note": "new in 1901; American State Reports parallel cite, not held by CAP; linked to the official report"},
+    {"seq": 5, "raw": "Farnan v. Childs, 66 III 544", "case_name": "Farnan v. Childs",
+     "volume": 66, "reporter_abbr": "Ill.", "page": 544,
+     "status": "linked_cap", "cap_case_id": 2620964, "confidence": "high",
+     "note": "new in 1901 (1873)"}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "04170",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:44:29Z",
+  "note": "§ 187 continued, several counts on the same facts differently represented. Andrews's note 1 is new in 1901 (no counterpart in the 1894 edition, which has no Gorman, Fish or Moulton); its two columns interleaved, recorded in note order. It runs onto the next page.",
+  "citations": [
+    {"seq": 1, "raw": "Gorman v. Judge, 27 Mich. 138", "case_name": "Gorman v. Judge",
+     "volume": 27, "reporter_abbr": "Mich.", "page": 138,
+     "status": "linked_cap", "cap_case_id": 1954641, "confidence": "high",
+     "note": "new in 1901; People ex rel. Gorman v. Judge of the Newaygo Circuit Court (1873)"},
+    {"seq": 2, "raw": "Fish v. Farwell, 160 111. 236", "case_name": "Fish v. Farwell",
+     "volume": 160, "reporter_abbr": "Ill.", "page": 236,
+     "status": "linked_cap", "cap_case_id": 3127866, "confidence": "high",
+     "note": "new in 1901 (1895)"},
+    {"seq": 3, "raw": "Moulton v. Trask, 9 Met. 577", "case_name": "Moulton v. Trask",
+     "volume": 9, "reporter_abbr": "Met.", "page": 577,
+     "status": "linked_cap", "cap_case_id": 1966087, "confidence": "high",
+     "note": "new in 1901 (1845)"}
+  ]
+}

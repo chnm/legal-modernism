@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05080",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:49:56Z",
+  "note": "printed p. 454, §§ 244-245 (1894 p. 403, 19005765000/04670, which also holds what 1901 prints on p. 455). Stephen's footnote (d), then Andrews's notes 1-3 in two interleaved columns, recorded in note order. Ames' Cases (a casebook) not recorded. New in 1901: note 1, Union Pac. Ry. Co. v. Wyler, to the new passage on departure in declaring.",
+  "citations": [
+    {"seq": 1, "raw": "Hickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source; no report of Hickman v. Walker found by name in the English Reports"},
+    {"seq": 2, "raw": "Union Pac. Ry. Co. v. Wyler, 158 U. S. 285", "case_name": "Union Pac. Ry. Co. v. Wyler",
+     "volume": 158, "reporter_abbr": "U. S.", "page": 285,
+     "status": "linked_cap", "cap_case_id": 1220486, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 3, "raw": "Bartlett v. \"Wells, 1 Best & Smith, 886", "case_name": "Bartlett v. Wells",
+     "volume": 1, "reporter_abbr": "Best & Smith", "page": 836,
+     "status": "linked_english_reports", "er_case_id": "18620291", "confidence": "high",
+     "note": "OCR 886 for 836, where ER has the case (as the 1894 record reads it)"},
+    {"seq": 4, "raw": "Sterns v. Patterson. 14 Johns, 132", "case_name": "Sterns v. Patterson",
+     "volume": 14, "reporter_abbr": "Johns.", "page": 132,
+     "status": "linked_cap", "cap_case_id": 376184, "confidence": "high"},
+    {"seq": 5, "raw": "Burr v. Baldwin, 2 Wend. 580", "case_name": "Burr v. Baldwin",
+     "volume": 2, "reporter_abbr": "Wend.", "page": 580,
+     "status": "linked_cap", "cap_case_id": 3514654, "confidence": "high"},
+    {"seq": 6, "raw": "Button v. Holden, 4 id. 643", "case_name": "Dutton v. Holden",
+     "volume": 4, "reporter_abbr": "Wend.", "page": 643,
+     "status": "linked_cap", "cap_case_id": 2005428, "confidence": "high",
+     "note": "id. = Wend.; OCR 'Button' for Dutton"}
+  ]
+}

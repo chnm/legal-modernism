@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03900",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:44:27Z",
+  "note": "Printed p. 336, § 168 (new matter in a traverse requires a verification). Stephen's footnote (b), no Andrews notes. Matches 1894 page 03540.",
+  "citations": [
+    {"seq": 1, "raw": "Vere v. Smith, 2 Lev. 5", "case_name": "Vere v. Smith",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+    {"seq": 2, "raw": "Vent 121", "case_name": "Vere v. Smith",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high",
+     "note": "parallel report of Vere v. Smith; volume 1 supplied; ER: Vere versus Smith, 1 Vent 121"}
+  ]
+}

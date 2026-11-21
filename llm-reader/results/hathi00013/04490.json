@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00013", "pageid": "04490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:47:05Z",
+  "note": "Printed page 395: allegation of title in its full extent; seisin in fee. Chitty, 2 Bl. Com. and Co. Litt. are treatises; (i) and Andrews's note 1 are cross-references. Matches 1894 19005765000/04100.",
+  "citations": [
+    {"seq": 1, "raw": "Savage v. Hawkins, Cro. Car. OTL", "case_name": "Savage v. Hawkins", "reporter_abbr": "Cro. Car.", "page": 571,
+     "status": "linked_english_reports", "er_case_id": "17922101", "confidence": "high",
+     "note": "page garbled 'OTL', read 571 (the 1894 edition and the ER record 'Scavage against Hawkins' at Cro Car 571)"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05090",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:50:17Z",
+  "note": "printed p. 455, § 245 (1894 pp. 403-404, 19005765000/04670 and 04680). Stephen's footnotes (e)-(h) (the cross-references in (f) not recorded), then Andrews's note 1. Ames' Cases (a casebook) not recorded. New in 1901: the bracketed sentence on the two kinds of departure; no new cases.",
+  "citations": [
+    {"seq": 1, "raw": "Eoberts v. Mariett, 2 Saund. 188", "case_name": "Roberts v. Mariett",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18450223", "confidence": "high",
+     "note": "OCR 'Eoberts' for Roberts"},
+    {"seq": 2, "raw": "1 Saund. 117, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note 1 at 117, in Cutler v. Southern (begins 113; ER's record at 1 Wms Saund 116 holds 116 onward), as the 1894 record links it"},
+    {"seq": 3, "raw": "Cutler v. Southern, 1 Saund. 116", "case_name": "Cutler v. Southern",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "high",
+     "note": "ER splits the case, beginning at 1 Wms Saund 113 (18450053), with this record at 116"},
+    {"seq": 4, "raw": "Dyer, 253 b", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume 3 supplied; the only ER record beginning at 3 Dy 253 is Cecil's Case, not confirmed as the covenant-to-fence case in the text (as the 1831 and 1894 records link it)"},
+    {"seq": 5, "raw": "Fisher v. Pimbley, 11 East, 188", "case_name": "Fisher v. Pimbley",
+     "volume": 11, "reporter_abbr": "East", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18090223", "confidence": "high"},
+    {"seq": 6, "raw": "Allen v. Watson, 16 Johns. 205", "case_name": "Allen v. Watson",
+     "volume": 16, "reporter_abbr": "Johns.", "page": 205,
+     "status": "linked_cap", "cap_case_id": 378265, "confidence": "high"}
+  ]
+}
