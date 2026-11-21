@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "01210",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:44:37Z",
+  "note": "printed pages 155-157, same setting as hathi00005/01210; Bac. Ab. is an abridgment, Rastall and Winch's Entries books of precedents, and Hil. T. 4 Will. 4 a rule of court; not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 162", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
+     "note": "the Commendam case begins at Hob 140"},
+    {"seq": 2, "raw": "Read v. Brookman, 3 T. R. 158", "case_name": "Read v. Brookman",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 TR 151"}
+  ]
+}

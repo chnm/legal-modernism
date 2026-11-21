@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "00920",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:44:38Z",
+  "note": "printed pages 107-109; same page and footnote as hathi00005/00920; Booth and Com. Dig. are not reports",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 45, n. (4)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), whose second ER record begins at 2 Wms Saund 45; the case begins at 42"}
+  ]
+}

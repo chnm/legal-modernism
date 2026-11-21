@@ -343,6 +343,11 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - A case found by its printed name at a corrected page (Richley v. Proone,
   printed 386, at 286) is `high` when the name is unambiguous: the name
   decides, and `page` holds the corrected number.
+- `pincite` is false when the cite is the case's first page in another
+  report and the link goes to its record in the English Reports' reporter
+  (Harmer v. Rowe, 2 Chit. Rep. 334, linked to 6 M & S 146).
+- An Anonymous is an unambiguous name when it is the only Anonymous
+  beginning at that page.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.

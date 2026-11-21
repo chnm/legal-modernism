@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "01070",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:46:32Z",
+  "note": "printed pages 133-134; same page and footnotes as hathi00005/01070; Bracton is a treatise",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Cook, 2 Barn. & Cres. 871", "case_name": "The King v. Cook",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high"}
+  ]
+}
