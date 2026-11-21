@@ -331,7 +331,14 @@ American cases in the later editions (Andrews, 1894, and after):
 - CAP's own cite strings are sometimes wrong (Allen v. Patterson stored as
   `7 N.Y.3d 476`): trust the name, year and pages, and say so in `note`.
 - Where CAP holds one case twice (69 Hun 489 as its own record and as a
-  cite on an N.Y.S. record), link the record of the cited reporter.
+  cite on an N.Y.S. record), link the record of the cited reporter; where
+  two records share one cite (Steinmetz v. Currey, 1 Dall. 234), link the
+  one whose `first_page` matches.
+- `id.` carries across the two columns of an editor's notes: it is the
+  reporter last cited in the notes' reading order.
+- American treatises, casebooks and dictionaries are not reports: Bouvier,
+  Burrill, Ames's Cases, Leading Criminal Cases, Puterbaugh, Thompson on
+  Trials, and the like.
 - `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
   reporter.
 - CAP files some series under other names: Hun is "N.Y. Sup. Ct." (2 Hun =

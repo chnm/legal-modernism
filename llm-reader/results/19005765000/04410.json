@@ -1,0 +1,16 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04410",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:54:39Z",
+  "note": "printed p. 377. Stephen's footnotes (q)-(s); (q) is a cross-reference. No Andrews note; the 'Sukeforth v. Lord, 87 Cal. 399' that the 1901 edition prints at the end of note 1 on its p. 426 is not on this page or the last in this edition.",
+  "citations": [
+    {"seq": 1, "raw": "Robert Bradshaw's Case, 0 Rep. 60 b", "case_name": "Robert Bradshaw's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "15720314", "confidence": "high",
+     "note": "OCR 0 for 9"},
+    {"seq": 2, "raw": "Gale v. Read, 8 East,.80", "case_name": "Gale v. Reed",
+     "volume": 8, "reporter_abbr": "East", "page": 80,
+     "status": "linked_english_reports", "er_case_id": "18060334", "confidence": "high"}
+  ]
+}

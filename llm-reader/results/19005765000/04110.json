@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04110",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:53:30Z",
+  "note": "Printed page 347: derivation of the fee; commencement of particular estates. Doct. Pl., Co. Litt. and Chitty are treatises; Upper Bench Precedents and Wentworth's Index are books of precedents. Note (o) runs on to the next page. Cross-checked with hathi00002/02860.",
+  "citations": [
+    {"seq": 1, "raw": "Scilly v. Dally, 2 Salk. 502", "case_name": "Scilly v. Dally", "volume": 2, "reporter_abbr": "Salk.", "page": 562,
+     "status": "linked_english_reports", "er_case_id": "17953046", "confidence": "high", "note": "OCR 502 for 562"},
+    {"seq": 2, "raw": "Carth. 444, S. 0.", "case_name": "Scilly v. Dally", "reporter_abbr": "Carth.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17410309", "confidence": "high", "note": "S. C.: Silly versus Dally at Carth 444"},
+    {"seq": 3, "raw": "Searl v. Bunnlon, 2 Mod. 70", "case_name": "Searl v. Bunnion", "volume": 2, "reporter_abbr": "Mod.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high"},
+    {"seq": 4, "raw": "Johns v. Whitley, 8 Wils. 72", "case_name": "Johns v. Whitley", "volume": 3, "reporter_abbr": "Wils.", "page": 72,
+     "status": "linked_english_reports", "er_case_id": "17990240", "pincite": true, "confidence": "high",
+     "note": "OCR 8 for 3; case begins at 3 Wils KB 65"},
+    {"seq": 5, "raw": "Heady v. Stephenson, 10 East, (60", "case_name": "Hendy v. Stephenson", "volume": 10, "reporter_abbr": "East", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "18080259", "pincite": true, "confidence": "high",
+     "note": "OCR 'Heady' for Hendy; case begins at 10 East 55"}
+  ]
+}

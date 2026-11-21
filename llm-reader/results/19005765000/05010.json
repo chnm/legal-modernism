@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:53:25Z",
+  "note": "Conclusion (printed p. 437); Stephen's notes (h), (i) are cross-references only; Andrews's note 1 cites one case",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "McFall v. Ramsay, 20 How. 427",
+      "case_name": "McFaul v. Ramsey",
+      "volume": 20,
+      "reporter_abbr": "How.",
+      "page": 523,
+      "status": "linked_cap",
+      "cap_case_id": 5679946,
+      "confidence": "high",
+      "note": "Printed 427 here and in the 1901 edition, but 20 How. 427 is Suydam v. Williamson; McFaul v. Ramsey (1857, Grier J.) is 20 How. 523, as this edition cites it earlier (pageid 02730). The name decides; page corrected to 523"
+    }
+  ]
+}

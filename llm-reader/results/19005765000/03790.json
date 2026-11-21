@@ -1,0 +1,116 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03790",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:52:42Z",
+  "note": "Printed page 315. Stephen's (d) is a cross-reference. Andrews's note 1 cites code-state cases on several counts for one cause; checked against the 1901 edition (hathi00013/04160), which drops Manders v. Craft and cites Leonard v. Roberts as 20 Colo. 88.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Sturgis v. Burton, 8 Ohio St. 215",
+      "case_name": "Sturgis v. Burton",
+      "volume": 8,
+      "reporter_abbr": "Ohio St.",
+      "page": 215,
+      "status": "linked_cap",
+      "cap_case_id": 513436,
+      "confidence": "high",
+      "note": "CAP spells it Sturges v. Burton (1858)"
+    },
+    {
+      "seq": 2,
+      "raw": "The note to that case in 72 American Dec. 5r",
+      "case_name": "Sturgis v. Burton",
+      "volume": 72,
+      "reporter_abbr": "Am. Dec.",
+      "page": 582,
+      "status": "linked_cap",
+      "cap_case_id": 513436,
+      "confidence": "medium",
+      "note": "the note to Sturges v. Burton as reprinted in American Decisions, which CAP does not hold; linked to the official report. Page garbled ('5r'), read 582 from the 1901 edition"
+    },
+    {
+      "seq": 3,
+      "raw": "Pearson v. M. & t'S P. Ry., 45 Ia. 407",
+      "case_name": "Pearson v. M. & St. P. Ry.",
+      "volume": 45,
+      "reporter_abbr": "Ia.",
+      "page": 497,
+      "status": "linked_cap",
+      "cap_case_id": 2312765,
+      "confidence": "high",
+      "note": "printed 407, read 497 (1901 edition prints 497); Pearson v. Milwaukee & St. Paul R. Co. (1877)"
+    },
+    {
+      "seq": 4,
+      "raw": "Brink- man v. Hunter, 78 Mo. 172",
+      "case_name": "Brinkman v. Hunter",
+      "volume": 73,
+      "reporter_abbr": "Mo.",
+      "page": 172,
+      "status": "linked_cap",
+      "cap_case_id": 448843,
+      "confidence": "high",
+      "note": "printed 78, read 73 (1901 edition prints 73)"
+    },
+    {
+      "seq": 5,
+      "raw": "Whitney v..C. & N. W. Ry., 27 Wis. 327",
+      "case_name": "Whitney v. C. & N. W. Ry.",
+      "volume": 27,
+      "reporter_abbr": "Wis.",
+      "page": 327,
+      "status": "linked_cap",
+      "cap_case_id": 11284705,
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "Wil- son v. Saltiel,.61 Cal. 209",
+      "case_name": "Wilson v. Saltiel",
+      "volume": 61,
+      "reporter_abbr": "Cal.",
+      "page": 209,
+      "status": "linked_cap",
+      "cap_case_id": 2268189,
+      "confidence": "medium",
+      "note": "CAP's case at 61 Cal. 209 is Wilson v. Smith (1882), a complaint in two counts for the same threshing services, which fits the passage; no case of the printed name found in CAP. The 1901 edition prints the same name and cite"
+    },
+    {
+      "seq": 7,
+      "raw": "Leonard v. Roberts (Colo.), 36 Pac. Rep. 880",
+      "case_name": "Leonard v. Roberts",
+      "volume": 36,
+      "reporter_abbr": "Pac. Rep.",
+      "page": 880,
+      "status": "linked_cap",
+      "cap_case_id": 2465367,
+      "confidence": "medium",
+      "note": "Pacific Reporter cite not in CAP for this case; linked to its official report, 20 Colo. 88 (1894), as the 1901 edition cites it"
+    },
+    {
+      "seq": 8,
+      "raw": "Manders v. Craft, 8 Colo. App. 23.0",
+      "case_name": "Manders v. Craft",
+      "volume": 3,
+      "reporter_abbr": "Colo. App.",
+      "page": 236,
+      "status": "linked_cap",
+      "cap_case_id": 4468200,
+      "confidence": "high",
+      "note": "printed '8 ... 23.0', read 3 Colo. App. 236 (1893), found by name"
+    },
+    {
+      "seq": 9,
+      "raw": "Jansen v. Railway Co., 6 Utabl 253",
+      "case_name": "Jansen v. Railway Co.",
+      "volume": 6,
+      "reporter_abbr": "Utah",
+      "page": 253,
+      "status": "linked_cap",
+      "cap_case_id": 8874426,
+      "confidence": "high",
+      "note": "CAP: Jensen v. Union Pacific Railway Co. (1889)"
+    }
+  ]
+}

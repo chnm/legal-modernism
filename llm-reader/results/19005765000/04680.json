@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04680",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:53:22Z",
+  "note": "Printed page 404. Stephen's footnotes (g)-(i); the statute 31 Hen. 8 skipped. Cross-checked with hathi00013/05090 and hathi00002/03480-03490.",
+  "citations": [
+    {"seq": 1, "raw": "Cutler v. Southern, 1 Saund. 11.", "case_name": "Cutler v. Southern", "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "high",
+     "note": "OCR 11 read 116, as the 1831 and 1901 editions print; ER splits the case, beginning at 1 Wms Saund 113 (18450053), with this record at 116"},
+    {"seq": 2, "raw": "Dyer, 253 b.", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume 3 supplied; the only ER record beginning at 3 Dy 253 is Cecil's Case, not confirmed as the covenant-to-fence case in the text (as recorded for the 1831 edition)"},
+    {"seq": 3, "raw": "MIolo v; Wallis, 1 Lev. 81", "case_name": "Mole v. Wallis", "volume": 1, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930733", "confidence": "high", "note": "OCR MIolo; ER Mole against Wallis"}
+  ]
+}

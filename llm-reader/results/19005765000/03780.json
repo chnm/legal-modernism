@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03780",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:52:09Z",
+  "note": "Printed page 314. Stephen's footnotes (a)-(c) are cross-references; Andrews's note 1 cites Gould's Pleading (a treatise, skipped) and one case.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Hopkins v.'Medley, 97 Ill, 402",
+      "case_name": "Hopkins v. Medley",
+      "volume": 97,
+      "reporter_abbr": "Ill.",
+      "page": 402,
+      "status": "linked_cap",
+      "cap_case_id": 2842619,
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "psmid": "19005765000",
+  "pageid": "04130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:54:26Z",
+  "note": "Printed page 349: derivation of title by conveyance; pleading according to legal effect. Rastall's and Coke's Entries, Upper Bench Precedents and Wentworth are books of precedents; Com. Dig., Chitty, Co. Litt., Spelman, Archbold and Viner are treatises. Cross-checked with hathi00013/04520.",
+  "citations": [
+    {"seq": 1, "raw": "Dumsday v. Hughes, S Bos. & Pul. 458", "case_name": "Dumsday v. Hughes", "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 453,
+     "status": "linked_english_reports", "er_case_id": "18030628", "confidence": "high",
+     "note": "OCR 'S' for 3 and 458 for 453 (the 1831 edition prints 3 Bos. and Pul. 453)"},
+    {"seq": 2, "raw": "Blackborough v. Davis, 12 Mod. 010", "case_name": "Blackborough v. Davis", "volume": 12, "reporter_abbr": "Mod.", "page": 619,
+     "status": "linked_english_reports", "er_case_id": "17960721", "pincite": true, "confidence": "high",
+     "note": "OCR '010' for 619 (1901 edition prints 619); case begins at 12 Mod 615"},
+    {"seq": 3, "raw": "8 Rep. 82, b", "volume": 8, "reporter_abbr": "Rep.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "low",
+     "note": "no name printed; Coke on feoffment, gift and demise; 8 Co Rep 82 b falls in Vynior's Case (ER records at 80 and 81; Sir Richard Pexhall's Case begins at 83); the subject is not obviously that case's"}
+  ]
+}
