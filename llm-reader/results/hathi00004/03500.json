@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00004", "pageid": "03500",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T02:24:40Z",
+  "note": "Appendix pp. lv-lvii, notes (42)-(44); 10 Went. 159 is Wentworth's book of precedents, not a report; Rules of Hil. T. 4 W. 4 are rules of court. Gale 19005764100/03440.",
+  "citations": [
+    {"seq": 1, "raw": "Heard v. Baskerville, Hob. 232", "case_name": "Heard v. Baskerville",
+     "reporter_abbr": "Hob.", "page": 232,
+     "status": "linked_english_reports", "er_case_id": "17921070", "confidence": "high"}
+  ]
+}
