@@ -187,7 +187,8 @@ is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
 Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 "2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
-Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Bridgwater v.
+Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`; a nearby page
+printed or OCR'd (562, 563, 661) is a misprint of 561, not a pin cite. Bridgwater v.
 Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
 report of the suit, not a pin cite into 3 Lev 109. Colt v. Bishop of
 Coventry (Hob. 140–164) is 17920644, the record with text (titled "De

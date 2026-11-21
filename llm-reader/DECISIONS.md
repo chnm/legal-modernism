@@ -203,7 +203,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    56 Am. Dec. 164 and Bennett v. McIntire 6 L.R.A. 736; 02990 Williams v.
    Preston Am. Dec. 179; 03030 McKinley v. McGregor 522; 03040 Wadhams v.
    Swan 54 (pin cite); 02860 Illinois Fire Ins. v. Stanton 359 (pin cite);
-   seq order on 02830, 02890, 02920, 02990 (interleaved columns). Remove `case_name` where no name is printed
+   seq order on 02830, 02890, 02920, 02990 (interleaved columns).
+   "Holt's Inst. 562" (1894 records, e.g. 19005765000/03340) is 561, no
+   `pincite`. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line
