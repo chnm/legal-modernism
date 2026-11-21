@@ -1,0 +1,90 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00930",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:26:25Z",
+  "note": "printed p. 67 (*84-85); form of the nisi prius record. Arch. Pract., rules of court and cross-references skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Hodges v. Diley, 7 Dowl. 555",
+      "case_name": "Hodges v. Diley",
+      "volume": 7,
+      "reporter_abbr": "Dowl.",
+      "page": 555,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases have no source and no stub at 7 Dowl. 555; no Hodges v. Diley in the English Reports 1834-42"
+    },
+    {
+      "seq": 2,
+      "raw": "Wilks v. Dodd, 8 Scott, 769",
+      "case_name": "Wilks v. Dodd",
+      "volume": 3,
+      "reporter_abbr": "Scott",
+      "page": 769,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "OCR '8 Scott' read as 3 Scott, as the 1843 edition prints it; no stub at 3 or 8 Scott 769; no Wilks v. Dodd in the English Reports"
+    },
+    {
+      "seq": 3,
+      "raw": "Worthington a. Wigley, 6 DowL 209",
+      "case_name": "Worthington v. Wigley",
+      "volume": 6,
+      "reporter_abbr": "Dowl.",
+      "page": 209,
+      "status": "linked_english_reports",
+      "er_case_id": "18370417",
+      "confidence": "medium",
+      "note": "Dowling has no source; linked to the same case's report in the English Reports, Worthington v Wigley, 3 Bing NC 454"
+    },
+    {
+      "seq": 4,
+      "raw": "8 Seott,6555, S. C.",
+      "case_name": "Worthington v. Wigley",
+      "volume": 3,
+      "reporter_abbr": "Scott",
+      "page": 555,
+      "status": "linked_english_reports",
+      "er_case_id": "18370417",
+      "confidence": "medium",
+      "note": "OCR '8 Seott,6555' read as 3 Scott 555; S. C. of Worthington v. Wigley, linked to its English Reports report, 3 Bing NC 454, in preference to the stub 3 Scott 555"
+    },
+    {
+      "seq": 5,
+      "raw": "Watts v. Ball, 1 Man. & Gr. 208",
+      "case_name": "Watts v. Ball",
+      "volume": 1,
+      "reporter_abbr": "Man. & Gr.",
+      "page": 208,
+      "status": "linked_english_reports",
+      "er_case_id": "18400597",
+      "confidence": "high"
+    },
+    {
+      "seq": 6,
+      "raw": "1 Sott's N. R 178",
+      "case_name": "Watts v. Ball",
+      "volume": 1,
+      "reporter_abbr": "Scott N. R.",
+      "page": 178,
+      "status": "linked_english_reports",
+      "er_case_id": "18400597",
+      "confidence": "medium",
+      "note": "Scott's New Reports have no source; linked to the same case at 1 Man & G 208"
+    },
+    {
+      "seq": 7,
+      "raw": "8 Dowl. 589, S. C.",
+      "case_name": "Watts v. Ball",
+      "volume": 8,
+      "reporter_abbr": "Dowl.",
+      "page": 589,
+      "status": "linked_english_reports",
+      "er_case_id": "18400597",
+      "confidence": "medium",
+      "note": "S. C. of Watts v. Ball; Dowling has no source, linked to 1 Man & G 208"
+    }
+  ]
+}

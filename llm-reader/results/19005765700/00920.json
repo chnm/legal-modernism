@@ -1,0 +1,56 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00920",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:25:43Z",
+  "note": "printed p. 66 (*83-84); modes of trial, trial by jury. Vin. Abr., a statute and a cross-reference skipped",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Fletcher v. Pynsett, Cro. Jac. 102",
+      "case_name": "Fletcher v. Pynsett",
+      "reporter_abbr": "Cro. Jac.",
+      "page": 102,
+      "status": "linked_english_reports",
+      "er_case_id": "17910363",
+      "confidence": "high"
+    },
+    {
+      "seq": 2,
+      "raw": "Machell v. Garrett, 8 Salk. 64",
+      "case_name": "Machell v. Garrett",
+      "volume": 3,
+      "reporter_abbr": "Salk.",
+      "page": 64,
+      "status": "linked_english_reports",
+      "er_case_id": "17952477",
+      "confidence": "high",
+      "note": "OCR '8 Salk.' read as 3 Salk."
+    },
+    {
+      "seq": 3,
+      "raw": "12 Mod. 276; 8. C.",
+      "case_name": "Machell v. Garrett",
+      "volume": 12,
+      "reporter_abbr": "Mod.",
+      "page": 276,
+      "status": "linked_english_reports",
+      "er_case_id": "17961378",
+      "confidence": "high",
+      "note": "S. C. of Machell v. Garrett; stored as Michell v Garrett, 12 Mod 276"
+    },
+    {
+      "seq": 4,
+      "raw": "Ilderton v. Ilderton, 2 H. Bla. 158",
+      "case_name": "Ilderton v. Ilderton",
+      "volume": 2,
+      "reporter_abbr": "H. Bla.",
+      "page": 156,
+      "status": "linked_english_reports",
+      "er_case_id": "17931510",
+      "pincite": true,
+      "confidence": "high",
+      "note": "printed 158; the 1831, 1857 and 1871 editions print 2 H. Bl. 156, followed here; case begins at 2 H Bl 145"
+    }
+  ]
+}

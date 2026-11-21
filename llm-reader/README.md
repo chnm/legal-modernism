@@ -233,9 +233,11 @@ books. Lutwyche (`Lutw.`) and Chitty's King's Bench Reports (`Chit.`) are in
 the stubs only, and so, at most, are the practice and later reporters common
 in the 1867 and later editions' notes: Dowling (`Dowl.`, `Dowl. N.S.`),
 Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
-Perry and Davison, Gale and Davison, Scott N.R.,
+Perry and Davison, Gale and Davison, Scott (C.P.) and Scott N.R.,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
-in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
+in the English Reports by name first; it wins over a stub even when the
+stub matches the cite exactly. Willmore, Wollaston and Davison (`Will. W.
+& D.`, 1837–38) has no source and no stubs. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
 when that cite is a treatise. When it follows a footnote holding a single
 case, it is recorded as a citation of that case.
 When the cited reporter has no source but the same case is reported in one

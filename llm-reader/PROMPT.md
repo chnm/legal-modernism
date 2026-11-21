@@ -65,6 +65,7 @@ printing as a Gale volume already read, whose records are the cross-check
 | hathi00009 | 1871 | none read (Samuel Tyler's edition, from the 2nd London edition, with his own preface, introduction, dissertation on parties and notes) |
 | hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500). Tyler's third American edition; cross-check against hathi00009 (1871 Tyler) by content |
 | 19005765000 | 1894 | none (Gale is the official copy). James DeWitt Andrews's edition (Chicago: Callaghan): Stephen's first-edition text with Andrews's own American notes, introduction and added chapters |
+| 19005765700 | 1895 | none (Gale is the official copy). Samuel Williston's edition (Cambridge: Harvard Law Review Publishing Association): a reprint of the 5th English edition (1843, Stephen's last), with Williston's bracketed notes on English decisions of the next decade. No American edition read carries this text; the 1843 English Gale copy 19005904300 (unread, text in the database) does, its pageids 80–150 and more above this copy's, star pages ([*41]) marking the 1843 pagination |
 | hathi00013 | 1901 | none read; carries Andrews's text (about 360 pageids after the 1894 Gale copy's), so the 1894 records are its cross-check |
 
 Skip a page that already has a results file. When done, run
