@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00004", "pageid": "02420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:09:50Z",
+  "note": "printed pp. 348-349; Co. Litt., Chitty and cross-references are not recorded; the American editor's note [28] continues on the next page. Same printing as Gale 19005764100/02360",
+  "citations": [
+    {"seq": 1, "raw": "The King v. Knollys, Ld. Ray. 13", "case_name": "Rex v. Knollys",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "17921920", "pincite": true, "confidence": "high",
+     "note": "volume supplied; ER record begins at 1 Ld Raym 11"},
+    {"seq": 2, "raw": "Mayor of Guilford v. Clarke, 2 Vent. 247", "case_name": "Mayor of Guildford v. Clarke",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "17260570", "confidence": "high"},
+    {"seq": 3, "raw": "Deybel's case, 4 Barn. & Ald. 243", "case_name": "Deybel's Case",
+     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high"}
+  ]
+}

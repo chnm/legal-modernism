@@ -141,7 +141,8 @@ When this page's OCR has lost a line that every other edition prints, record
 the cite from the other editions at `medium`, with `raw` as they print it and
 a note saying so.
 
-Record `raw` exactly as printed, OCR errors and all.
+Record `raw` exactly as printed, OCR errors and all, but with line breaks
+inside a citation collapsed to single spaces.
 
 ### Looking the case up
 

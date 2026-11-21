@@ -56,7 +56,8 @@ Alcorn v. Westbrook as a case reported only as cited in another (`low`).
 Reporters cited in Stephen with no source: Willes; Marshall's Common Pleas
 (1813–16); J. B. Moore; Tyrwhitt; Manning and Ryland (one stub);
 the year books. Missing ranges: Plowden pp. 1–130; Benloe pp. 44–88;
-14 East 289–301 (Denison v. Richardson); 1 Esp 449–456. Readers link the
+14 East 289–301 (Denison v. Richardson, probably the missing id
+18110402 between Bowring v. Pritchard, 18110401, and Bateman v. Smith, 18110403); 1 Esp 449–456. Readers link the
 same case through another reporter where they can. Dalison, thought to be
 missing, is in the English Reports as `2 Ben & D` (123 E.R. 225–315), which a
 search for `Dal` misses; its records are untitled groups of notes.

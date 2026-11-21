@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00004", "pageid": "02400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:08:40Z",
+  "note": "printed pp. 345-346; Co. Litt., Com. Dig. and cross-references are not recorded. Same printing as Gale 19005764100/02340",
+  "citations": [
+    {"seq": 1, "raw": "Deybel's case, 4 Barn.\nAld. 243", "case_name": "Deybel's Case",
+     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high",
+     "note": "OCR dropped the ampersand of Barn. & Ald."}
+  ]
+}
