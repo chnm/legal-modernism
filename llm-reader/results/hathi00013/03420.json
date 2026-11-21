@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03420",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:32:33Z",
+  "note": "Printed p. 288, § 155 (replication de injuria). Stephen's footnotes (p), (q), then Andrews's notes 1 and 2, whose columns the scan interleaves. Chitty, Doctrina Placitandi and Archbold not recorded. Matches 1894 page 03060; Clearwater v. Meredith is new in 1901, and note 2 (Gerrish v. Train) begins on this page in 1901. 'Allen' at the foot continues on the next page (v. Scott, 13 Ill. 80), recorded there.",
+  "citations": [
+    {"seq": 1, "raw": "Crogate's Case, 8 Rep. 67 a", "case_name": "Crogate's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "15720123", "pincite": true, "confidence": "high",
+     "note": "case begins at 8 Co Rep 66"},
+    {"seq": 2, "raw": "Selby v. Bardon, 3 B. & Aid. 2", "case_name": "Selby v. Bardons",
+     "volume": 3, "reporter_abbr": "B. & Ad.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",
+     "note": "printed B. & Ald.; Selby v. Bardons is 3 B. & Ad. 2 (1832)"},
+    {"seq": 3, "raw": "9 Bing. 756", "case_name": "Selby v. Bardons",
+     "volume": 9, "reporter_abbr": "Bing.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18330017", "confidence": "high",
+     "note": "the same case in the Exchequer Chamber, Bardons v. Selby, 9 Bing 756"},
+    {"seq": 4, "raw": "Ciearwater v. Her- edith, 1 Wall. 25", "case_name": "Clearwater v. Meredith",
+     "volume": 1, "reporter_abbr": "Wall.", "page": 25,
+     "status": "linked_cap", "cap_case_id": 3471778, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 5, "raw": "Gerrish v. Trein, 3 Pick. 124", "case_name": "Gerrish v. Train",
+     "volume": 3, "reporter_abbr": "Pick.", "page": 124,
+     "status": "linked_cap", "cap_case_id": 2010358, "confidence": "high"}
+  ]
+}

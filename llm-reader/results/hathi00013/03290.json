@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03290",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:34:36Z",
+  "note": "§ 144 end (common traverse, plea of the Statute of Limitations) and § 145, of the general issue; Stephen's footnotes (k)-(m) are cross-references and a note on form; Andrews's note 1 cites one case (1894 page 02930).",
+  "citations": [
+    {"seq": 1, "raw": "Chapman v. Smith, 16 How. 114", "case_name": "Chapman v. Smith",
+     "volume": 16, "reporter_abbr": "How.", "page": 114,
+     "status": "linked_cap", "cap_case_id": 3483976, "confidence": "high",
+     "note": "CAP's Chapman ex rel. Leavitt v. Smith (1853)"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "psmid": "hathi00013", "pageid": "02450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:33:56Z",
+  "note": "p. 191, end of Stephen's special demurrer and § 104 (arrival at issue by tendering issue of fact); (c) is a cross-reference. Andrews's notes on demurrer, whose two columns are interleaved in the scan: recorded left then right; in 1894 at 19005765000/01970-01980.",
+  "citations": [
+    {"seq": 1, "raw": "Danielson v. Gude, 11 Colo. 87", "case_name": "Danielson v. Gude",
+     "volume": 11, "reporter_abbr": "Colo.", "page": 87,
+     "status": "linked_cap", "cap_case_id": 2587042, "confidence": "high"},
+    {"seq": 2, "raw": "Stewart v. Masterson, 131 U. S. 151", "case_name": "Stewart v. Masterson",
+     "volume": 131, "reporter_abbr": "U. S.", "page": 151,
+     "status": "linked_cap", "cap_case_id": 5698263, "confidence": "high"},
+    {"seq": 3, "raw": "Cook v. Scott, 1 Gilm. 333", "case_name": "Cook v. Scott",
+     "volume": 1, "reporter_abbr": "Gilm.", "page": 333,
+     "status": "linked_cap", "cap_case_id": 2466898, "confidence": "high"},
+    {"seq": 4, "raw": "People v. Lane, 36 III App. 649", "case_name": "People v. Lane",
+     "volume": 36, "reporter_abbr": "Ill. App.", "page": 649,
+     "status": "linked_cap", "cap_case_id": 5012065, "confidence": "high"},
+    {"seq": 5, "raw": "McFaul v. Ramsey, 20 How. 523", "case_name": "McFaul v. Ramsey",
+     "volume": 20, "reporter_abbr": "How.", "page": 523,
+     "status": "linked_cap", "cap_case_id": 5679946, "confidence": "high"},
+    {"seq": 6, "raw": "Birdseye v. Smith, 32 Barb. 219", "case_name": "Birdseye v. Smith",
+     "volume": 32, "reporter_abbr": "Barb.", "page": 219,
+     "status": "linked_cap", "cap_case_id": 5048486, "pincite": true, "confidence": "high",
+     "note": "case runs 32 Barb. 217-222"},
+    {"seq": 7, "raw": "Susquehanna & W. V. R. Co. v. Blatchford, 78 U. S. 172", "case_name": "Susquehanna & W. V. R. Co. v. Blatchford",
+     "volume": 78, "reporter_abbr": "U. S.", "page": 172,
+     "status": "linked_cap", "cap_case_id": 3414217, "confidence": "high",
+     "note": "11 Wall. 172; CAP names it Coal Co. v. Blatchford"}
+  ]
+}

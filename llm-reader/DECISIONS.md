@@ -227,8 +227,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    for a first page in another report linked through the same-case rule
    (Harmer v. Rowe, Lucas v. Nockells); earlier records set it.
 9. After the pass: validate everything, commit, and post each Decisions and
-   Findings unit above as its own GitHub issue, linked from #439. Then stop:
-   the owner decided (2026-11-21) not to read the UK editions.
+   Findings unit above as its own GitHub issue, linked from #439.
+   The owner first decided (2026-11-21) not to read the UK editions, then
+   reversed it the same day: after the last U.S. edition, read the UK
+   editions (7 official copies, 4,219 pages) with ONE reader at a time,
+   slow and steady. The progress page shows both (no `--jurisdiction`).
 10. The owner wants the identified `no_match` cases (finding 10) added to
     `legalhist.stub_cases` (asked 2026-11-21). Draft it (a migration, or a
     change to `db/stub_cases.sql` so `make db-stubs` keeps them) and remind
