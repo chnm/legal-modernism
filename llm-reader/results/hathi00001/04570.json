@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00001", "pageid": "04570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:31:54Z",
+  "note": "printed p. 435; Rule VI, pleas in abatement must give a better writ. Com. Dig. not recorded; (q) is a cross-reference. Names from the 1831 edition",
+  "citations": [
+    {"seq": 1, "raw": "4 T. R. 227", "volume": 4, "reporter_abbr": "T. R.", "page": 227,
+     "status": "linked_english_reports", "er_case_id": "17911347", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Evans v. Stevens (1831 edition), which begins at 4 TR 224"},
+    {"seq": 2, "raw": "2 Bos. and Pul. 120", "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 120,
+     "status": "linked_english_reports", "er_case_id": "18000092", "confidence": "medium",
+     "note": "no name printed; Mainwaring v. Newman (1831 edition), 2 Bos & Pul 120"},
+    {"seq": 3, "raw": "8 T. R. 515", "volume": 8, "reporter_abbr": "T. R.", "page": 515,
+     "status": "linked_english_reports", "er_case_id": "18000138", "confidence": "medium",
+     "note": "no name printed; Haworth v. Spraggs (1831 edition), 8 TR 515"},
+    {"seq": 4, "raw": "8 T. R. 515", "volume": 8, "reporter_abbr": "T. R.", "page": 515,
+     "status": "linked_english_reports", "er_case_id": "18000138", "confidence": "medium",
+     "note": "no name printed; Haworth v. Spraggs (1831 edition), 8 TR 515"},
+    {"seq": 5, "raw": "1 Saund. 284., n. (4)", "volume": 1, "reporter_abbr": "Saund.", "page": 284,
+     "status": "linked_english_reports", "er_case_id": "18450073", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (4) at 284 falls in Duppa v. Mayo (begins 1 Wms Saund 275), in the ER record that begins at 282, as in the 1831 record"},
+    {"seq": 6, "raw": "4 T. R. 227", "volume": 4, "reporter_abbr": "T. R.", "page": 227,
+     "status": "linked_english_reports", "er_case_id": "17911347", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Evans v. Stevens (1831 edition), which begins at 4 TR 224"}
+  ]
+}
