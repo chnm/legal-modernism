@@ -355,7 +355,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   (Harmer v. Rowe, 2 Chit. Rep. 334, linked to 6 M & S 146).
 - An Anonymous is an unambiguous name when it is the only Anonymous
   beginning at that page.
-- A `no_match` to a reporter with no source (Willes, Tyrwhitt), or to a
+- A `no_match` to a reporter with no source (Willes, Tyrwhitt; a reporter
+  held only as stubs, like Lutwyche, counts as one), or to a
   case missing from one that has a source (Denison v. Richardson,
   14 East 291), is graded by
   how surely the cite was read: `high` when legible with a name printed,
