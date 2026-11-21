@@ -163,7 +163,12 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    The King v. Sutton, as the English editions print it; hathi00002 links
    Toomes v. Etherington. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
-   bare Saund. 319 n. 6).
+   bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
+   grading rules; bring the matching hathi00009 (1871) records into line
+   (e.g. Holding v. Haling `high`, Ld. Ray. 333 S. C. `low`, Blockley v.
+   Slater `medium`, no `case_name` on 1 Ld. Raym. 202). Buckley v. Rice
+   Thomas, Plowd. 128 a, is Bulkeley v Thomas, 2 Dy 113 (17941482), pin
+   cite, `medium`, in every edition; several records left it `no_match`.
    Hartford v. Jones, 2 Salk. 654: relink every record to the duplicate
    with a `word_count`. Likewise Colt v. Bishop of Coventry (Hob.): relink
    17921247 to 17920644 in hathi00002, hathi00006, hathi00009 and the Gale

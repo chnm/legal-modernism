@@ -1,0 +1,24 @@
+{
+  "psmid": "hathi00010", "pageid": "03610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:27:03Z",
+  "note": "Stephen, chapter II (p. 335): certainty to a common intent; negatives pregnant; Bac. Ab., Styles' Pract. Reg. and a cross-reference to the Appendix skipped; text and footnotes match hathi00009/03590",
+  "citations": [
+    {"seq": 1, "raw": "Hamond v. Dod, Cro. Car., 6", "case_name": "Hamond v. Dod",
+     "reporter_abbr": "Cro. Car.", "page": 6,
+     "status": "linked_english_reports", "er_case_id": "17921018", "pincite": true, "confidence": "high",
+     "note": "case begins at Cro Car 5"},
+    {"seq": 2, "raw": "Harlow v. Wright, ibid., 195", "case_name": "Harlow v. Wright",
+     "reporter_abbr": "Cro. Car.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "17921029", "confidence": "high",
+     "note": "ibid. = Cro. Car."},
+    {"seq": 3, "raw": "Myn v. Cole, Cro. Jac., 87", "case_name": "Myn v. Cole",
+     "reporter_abbr": "Cro. Jac.", "page": 87,
+     "status": "linked_english_reports", "er_case_id": "17910725", "confidence": "high"},
+    {"seq": 4, "raw": "28 Hen. VI, 7", "volume": 28, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 28 Hen. VI, fo. 7; no source"},
+    {"seq": 5, "raw": "Slade v. Drake, Hob., 295", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high"}
+  ]
+}

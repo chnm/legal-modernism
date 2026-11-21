@@ -1,0 +1,26 @@
+{
+  "psmid": "hathi00010", "pageid": "03280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:33:02Z",
+  "note": "Stephen, chapter II (p. 302, the folio OCR'd as 802): end of the statutory avowry; Rule VI, the pleadings must show authority. 2 Chitty, Co. Litt., Com. Dig. and Selw. N. P. are treatises. Matches the 1871 hathi00009/03260; this scan prints 2 Saund. 284 c correctly",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 284 c., n. 3", "volume": 2, "reporter_abbr": "Saund.", "page": 284,
+     "status": "linked_english_reports", "er_case_id": "18450187", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note on 11 Geo. II c. 19 falls in Poole v. Longuevill, 2 Wms Saund 282"},
+    {"seq": 2, "raw": "1 Saund., 298, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note to Greene v. Jones, split in ER into records at 1 Wms Saund 295 and 298; page 298 begins the second, a pin cite since the case begins at 295"},
+    {"seq": 3, "raw": "Lamb v. Mills, 4 Mod., 377", "case_name": "Lamb v. Mills",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 377,
+     "status": "linked_english_reports", "er_case_id": "17930653", "confidence": "high"},
+    {"seq": 4, "raw": "Matthews v. Cary, 3 Mod., 137", "case_name": "Matthews v. Cary",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 137,
+     "status": "linked_english_reports", "er_case_id": "17930712", "confidence": "high"},
+    {"seq": 5, "raw": "Carth., 73, S. C.", "case_name": "Matthews v. Cary",
+     "reporter_abbr": "Carth.", "page": 73,
+     "status": "linked_english_reports", "er_case_id": "17410236", "confidence": "high",
+     "note": "S. C. of Matthews v. Cary; ER 'Matthews versus Carey'"},
+    {"seq": 6, "raw": "Collet v. Lord Keith, 2 East., 260", "case_name": "Collet v. Lord Keith",
+     "volume": 2, "reporter_abbr": "East", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "18020175", "confidence": "high"}
+  ]
+}

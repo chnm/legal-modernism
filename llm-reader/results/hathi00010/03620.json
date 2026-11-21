@@ -1,0 +1,23 @@
+{
+  "psmid": "hathi00010", "pageid": "03620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:27:23Z",
+  "note": "Stephen, chapter II (p. 336): negatives pregnant; Com. Dig. and a cross-reference skipped; text and footnotes match hathi00009/03600",
+  "citations": [
+    {"seq": 1, "raw": "Auberie v. James, Vent., 70", "case_name": "Auberie v. James",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17260222", "confidence": "high",
+     "note": "volume 1 supplied; ER 'Aubery versus James'"},
+    {"seq": 2, "raw": "1 Sid., 444", "case_name": "Auberie v. James",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17140026", "confidence": "high",
+     "note": "same case (S. C. at the end of the string); ER 1 Sid 444 'Awbry versus James'"},
+    {"seq": 3, "raw": "2 Keb., 623, S. C.", "case_name": "Auberie v. James",
+     "volume": 2, "reporter_abbr": "Keb.", "page": 623,
+     "status": "no_match", "confidence": "high",
+     "note": "S. C. of Auberie v. James; the records at 2 Keb 623 are other cases (Morris v. Creech, Taylor v. Wells, Fernhaw v. Watkins), and no Aubery/Awbry v. James is found in Keble. The 1871 record grades this medium; graded high here under the README rule for a legible, named case missing from a reporter with a source"},
+    {"seq": 4, "raw": "Auberie v. James, Vent., 70", "case_name": "Auberie v. James",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17260222", "confidence": "high",
+     "note": "volume 1 supplied"}
+  ]
+}

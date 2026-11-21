@@ -192,7 +192,9 @@ report of the suit, not a pin cite into 3 Lev 109. Colt v. Bishop of
 Coventry (Hob. 140–164) is 17920644, the record with text (titled "De
 Termino Sancti Mich", with the case's name in `murrell_title`), not the
 empty 17921247. Record each of
-these choices at `medium` (unless a pin-cite or name fault makes it `low`).
+these choices at `medium` (unless a pin-cite or name fault makes it `low`),
+except where the printed name alone picks the case, which is `high`
+(Stephen v. Arthur, Salk. 544).
 A second report of a case found only inside a different case's report
 (Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally; Price
 v. Brown, "1 Wils. 116, S. C.", inside Alcorn v. Westbrook) is `no_match`
@@ -368,8 +370,10 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   names, are `high` whenever legible. When another edition prints a
   different regnal year, reign or folio, keep this edition's reading, at
   `medium` unless most editions agree with it, and note the variant. A
-  supplied volume or reporter makes
-  any `no_match` `medium`.
+  supplied volume or reporter makes a `no_match` at most `medium` (a rule
+  that sets `low` still holds; a reporter carried over from the cite
+  before counts as supplied); the volume of a single-volume reporter
+  (Plowden, stored as `1 Plowden`) is not "supplied".
 - Where the English Reports hold two records of one case at one cite
   (Hartford v. Jones, 2 Salk. 654), link the one with a `word_count`.
 - A series cited as numbered straight through ("17 Martin" for 5 Mart.
@@ -385,7 +389,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
   printed) are your reading of it. `case_name` is left out when no name is
-  printed; the link identifies the case. A volume you supplied goes in `volume`, and
+  printed for the cite; a name printed at the head of a string of parallel
+  reports, or before `S. C.`, counts for every cite of that string. A volume you supplied goes in `volume`, and
   `note` says so; likewise `volume` and `page` hold the corrected reading when
   the named case is found at other numbers than those printed (which stay in
   `raw`).

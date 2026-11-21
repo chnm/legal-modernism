@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00010", "pageid": "03870",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:34:29Z",
+  "note": "Stephen, chapter II (p. 361): examples of pleas amounting to the general issue; footnote (l) OCR'd '(2.)'; cross-reference skipped; text and footnotes match hathi00009/03850",
+  "citations": [
+    {"seq": 1, "raw": "Saunders's Case, 12 Mod., 513", "case_name": "Saunders's Case",
+     "volume": 12, "reporter_abbr": "Mod.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "17961557", "confidence": "high"},
+    {"seq": 2, "raw": "Lynnet v. Wood, Cro. Car., 157", "case_name": "Lynnet v. Wood",
+     "reporter_abbr": "Cro. Car.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17921474", "confidence": "high",
+     "note": "ER: Lynner against Wood"},
+    {"seq": 3, "raw": "Jaques's Case, Sty., 355", "case_name": "Jaques's Case",
+     "reporter_abbr": "Sty.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "16580367", "confidence": "high",
+     "note": "ER title 'Iaques'"},
+    {"seq": 4, "raw": "Gifford v. Perkins, 1 Sid., 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high"},
+    {"seq": 5, "raw": "1 Vent., 77, S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. of Gifford v. Perkins"}
+  ]
+}
