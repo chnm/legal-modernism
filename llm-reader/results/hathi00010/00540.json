@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00010", "pageid": "00540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:13:14Z",
+  "note": "Tyler's dissertation on parties (p. 28): agents, joint and several contracts; footnotes (l) and (m) are OCR'd '(2.)' and '(1.)'",
+  "citations": [
+    {"seq": 1, "raw": "Pigott v. Thompson, 3, B. & P.", "case_name": "Pigott v. Thompson",
+     "volume": 3, "reporter_abbr": "B. & P.", "page": 147,
+     "status": "linked_english_reports", "er_case_id": "18020202", "confidence": "high",
+     "note": "page printed without a number; supplied 147 from the case found by name, the only Pigott v. Thompson in 3 Bos & Pul"},
+    {"seq": 2, "raw": "Thort and others v. Spackman, 2, B. & Ad., 962", "case_name": "Short v. Spackman",
+     "volume": 2, "reporter_abbr": "B. & Ad.", "page": 962,
+     "status": "linked_english_reports", "er_case_id": "18310917", "confidence": "high",
+     "note": "OCR 'Thort' for Short"}
+  ]
+}

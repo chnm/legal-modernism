@@ -191,8 +191,9 @@ Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
 report of the suit, not a pin cite into 3 Lev 109. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`).
 A second report of a case found only inside a different case's report
-(Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally) is
-`no_match`. Ignore a second
+(Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally; Price
+v. Brown, "1 Wils. 116, S. C.", inside Alcorn v. Westbrook) is `no_match`
+at `low`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),

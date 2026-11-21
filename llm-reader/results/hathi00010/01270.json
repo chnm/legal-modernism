@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00010", "pageid": "01270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:12:06Z",
+  "note": "Stephen, chapter I (p. 101): oyer, how given and of what; Com. Dig., Tidd, Sellon and Archbold are treatises. Same page as hathi00009/01250",
+  "citations": [
+    {"seq": 1, "raw": "Simpson v. Garside, Lutw., 1644", "case_name": "Simpson v. Garside",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1644,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1644",
+     "confidence": "medium", "note": "volume 2 supplied (Lutwyche paged as one run; stubs split at 1 and 2); Lutwyche is in the stubs only"},
+    {"seq": 2, "raw": "Jevons v. Harridge, 1 Sid., 308", "case_name": "Jevons v. Harridge",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 308,
+     "status": "linked_english_reports", "er_case_id": "17140321",
+     "confidence": "high"},
+    {"seq": 3, "raw": "Page v. Divine, 2 T. R., 40", "case_name": "Page v. Divine",
+     "volume": 2, "reporter_abbr": "T. R.", "page": 40,
+     "status": "linked_english_reports", "er_case_id": "17870154",
+     "confidence": "high"},
+    {"seq": 4, "raw": "1 Saund., 9 b, n. e",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true,
+     "confidence": "medium", "note": "no name printed; Williams's note at 9 b on a copy of the attestation, belonging to Jevens v. Harridge, which begins at 1 Wms Saund 8"},
+    {"seq": 5, "raw": "Ward v. Griffith, Ld. Ray., 83", "case_name": "Ward v. Griffith",
+     "volume": 1, "reporter_abbr": "Ld. Ray.", "page": 83,
+     "status": "linked_english_reports", "er_case_id": "17922748",
+     "confidence": "high", "note": "no volume printed; vol. 1 supplied from the case name"},
+    {"seq": 6, "raw": "The King v. Amery, 1 T. R., 149", "case_name": "The King v. Amery",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "17860059",
+     "confidence": "high"}
+  ]
+}

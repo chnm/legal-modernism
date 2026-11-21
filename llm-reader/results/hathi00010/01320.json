@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00010", "pageid": "01320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:13:11Z",
+  "note": "Stephen, chapter I (p. 106): general special imparlance; present practice of imparlance; Chitty is a treatise. Same page as hathi00009/01300",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 2, n. 2",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true,
+     "confidence": "medium", "note": "no name printed; Williams's note (2) at 2, in Mellor v. Walker, which begins at 2 Wms Saund 1"}
+  ]
+}
