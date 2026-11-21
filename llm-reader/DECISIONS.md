@@ -156,7 +156,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Gale 1851 record (19005764100, the page 60 below hathi00004 02740) has
    it. Also align that copy's "2 Saund. 410, and note (3), ibid." and
    "2 Saund. 97, and 97 b, n. (2)" to one record each, and 1 Saund. 23 n. (2)
-   to Birks v. Trippet at 28.
+   to Birks v. Trippet at 28. In the 1851 appendix: 2 Mass. 53 is a pin
+   cite into Benson v. Swift (50), and 2 Saund. 380 n. (14) has `low` in some
+   records and `medium` in others; pick one.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439. Then start
    the UK editions (7 official copies, 4,219 pages; restart the progress page

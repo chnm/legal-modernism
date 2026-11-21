@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "04110",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:36:23Z",
+  "note": "Second appendix pp. cxxxvii-cxxxviii, note 14 continued, quoting Metcalf's notes to Yelverton on pleas in trover; Tidd's Practice is a treatise; Holt's dictum is not cited here; Gale 19005764100/04050",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Markham & Pitt's case, 3 Leon. 205",
+      "case_name": "Markham and Pitt's Case",
+      "volume": 3,
+      "reporter_abbr": "Leon.",
+      "page": 205,
+      "status": "linked_english_reports",
+      "er_case_id": "16860135",
+      "confidence": "high",
+      "note": "ER stores Leonard as '3 Leo 205'"
+    },
+    {
+      "seq": 2,
+      "raw": "Yelv. 174. α. 174. b.",
+      "reporter_abbr": "Yelv.",
+      "page": 174,
+      "status": "linked_english_reports",
+      "er_case_id": "17921868",
+      "pincite": true,
+      "confidence": "low",
+      "note": "Metcalf's note in Yelverton at 174 a-b, recorded once (folio letters are the same page); no case begins at Yel 174, so the page falls in Priestley v. White (Yel 173)"
+    }
+  ]
+}

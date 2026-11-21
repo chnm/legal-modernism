@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00004",
+  "pageid": "04020",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:31:54Z",
+  "note": "Second appendix pp. cxxvii-cxxviii, notes 6-7; Chitty's pamphlet, the statute 3 & 4 W. 4 c. 42, Gould and Stephen's own appendix are not cases",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Jelf v. Oriel, 4 Car. & P. 22",
+      "case_name": "Jelf v. Oriel",
+      "volume": 4,
+      "reporter_abbr": "Car. & P.",
+      "page": 22,
+      "status": "linked_english_reports",
+      "er_case_id": "18290674",
+      "confidence": "high"
+    }
+  ]
+}
