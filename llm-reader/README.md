@@ -312,6 +312,25 @@ early Johnson's and Massachusetts Reports (Hopkins v. Hopkins is cited
 `first_page`/`last_page` misses, look in `cap.citations` for cites near the
 page, and by name.
 
+American cases in the later editions (Andrews, 1894, and after):
+
+- Each printed parallel cite is its own citation. One to a collection CAP
+  does not hold as a reporter (American Decisions, American Reports,
+  L.R.A., or a regional reporter not in `cap.citations` for that case)
+  links the same case's official report in CAP at `medium`, as a report
+  with no source does; one CAP holds links directly.
+- A recent case cited only by regional reporter (`37 N. E. Rep. 136`) is
+  found by name and year in CAP, usually under its official report.
+- When the volume-join pin-cite query misses (some reporters' volumes are
+  not joined), search `cap.citations.cite` with a pattern on the reporter
+  and volume, then check pages.
+- A cite one page past CAP's `first_page` (common in Ill. App.) is a pin
+  cite into that case.
+- CAP's own cite strings are sometimes wrong (Allen v. Patterson stored as
+  `7 N.Y.3d 476`): trust the name, year and pages, and say so in `note`.
+- Collections of reprinted cases (English Ruling Cases, the English Common
+  Law Reports reprint) are like Smith's Leading Cases: not recorded.
+
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.
 
