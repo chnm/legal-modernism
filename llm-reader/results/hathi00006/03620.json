@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00006", "pageid": "03620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:18:01Z",
+  "note": "Appendix pp. lxxiii-lxxiv, note 54 continued; same page as hathi00005/03620; Terrien, civil and canon law, and Plac. Ab. (records of pleas) are not reports",
+  "citations": [
+    {"seq": 1, "raw": "1 Ed. 2, 14", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high", "note": "year book, 1 Edw. II fo. 14; no source"},
+    {"seq": 2, "raw": "Ibid. 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "Ibid. expanded to the year book 1 Edw. II fo. 8; no source"},
+    {"seq": 3, "raw": "40 Ed. 3, 45", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high", "note": "year book, 40 Edw. III fo. 45; no source"}
+  ]
+}

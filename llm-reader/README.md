@@ -357,6 +357,8 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   how surely the cite was read: `high` when legible with a name printed,
   `medium` when legible without one. Year books, which are cited without
   names, are `high` whenever legible.
+- Where the English Reports hold two records of one case at one cite
+  (Hartford v. Jones, 2 Salk. 654), link the one with a `word_count`.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.

@@ -1,0 +1,48 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "04080",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T04:23:31Z",
+  "note": "Second appendix pp. cxxxiii-cxxxiv, notes 11 (end) and 12 (Gould on title in the declaration); Gould is a treatise. Same printed page as hathi00005/04080.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Saund. 207, n. 24",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205 (the README's choice)"
+    },
+    {
+      "seq": 2,
+      "raw": "2 Saund. 206, note 21",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 206,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205 (the README's choice)"
+    },
+    {
+      "seq": 3,
+      "raw": "Ib. 207, note 24",
+      "case_name": "Goram v. Sweeting",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 207,
+      "status": "linked_english_reports",
+      "er_case_id": "18450230",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "Ib. = 2 Saund.; Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205"
+    }
+  ]
+}
