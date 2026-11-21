@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log/slog"
 	"net/http"
+	"os"
 	"time"
 	_ "time/tzdata" // so America/New_York resolves without system zoneinfo
 )
@@ -40,6 +41,7 @@ td{padding:3px 6px;border-bottom:1px solid #eee}
 <div class="big">{{printf "%.1f" .All.Pct}}%</div>
 <div class="bar"><div class="fill" style="width:{{printf "%.2f" .All.Pct}}%"></div></div>
 <p>{{.All.Done}} of {{.All.Total}} pages read · {{.Citations}} citations recorded · updated {{.Now}}</p>
+<p>Rate over the past {{.Window}}: <b>{{.PerHour}} pages per hour</b> ({{.Recent}} pages written)</p>
 <table>{{range .Rows}}<tr><td>{{.Label}}</td><td><div class="mini"><div style="width:{{printf "%.1f" .Pct}}%"></div></div></td><td>{{.Done}} / {{.Total}}</td></tr>{{end}}</table>
 </body></html>`))
 
@@ -52,8 +54,15 @@ var newYork = func() *time.Location {
 	return loc
 }()
 
+// rateWindow is how far back the progress page looks to estimate the reading
+// rate.
+const rateWindow = 10 * time.Minute
+
 // serve shows a progress bar: the pages of the manifest that have a record,
-// re-counted from the results directory on every request.
+// re-counted from the results directory on every request, and the rate of
+// reading, from the records written in the last rateWindow. The rate goes by
+// each record file's modification time, not its read_at, which readers
+// sometimes estimate; a coordinator's edit to an old record also counts.
 func serve(manifest, dir, title string, jurisdictions map[string]bool, port int) error {
 	pages, err := readManifest(manifest)
 	if err != nil {
@@ -66,7 +75,11 @@ func serve(manifest, dir, title string, jurisdictions map[string]bool, port int)
 			Rows      []progressRow
 			Citations int
 			Now       string
-		}{Title: title, Now: time.Now().In(newYork).Format("3:04:05 pm MST")}
+			Window    string
+			Recent    int
+			PerHour   int
+		}{Title: title, Now: time.Now().In(newYork).Format("3:04:05 pm MST"), Window: "ten minutes"}
+		since := time.Now().Add(-rateWindow)
 		idx := map[string]int{}
 		for _, p := range pages {
 			if len(jurisdictions) > 0 && !jurisdictions[p.Jurisdiction] {
@@ -81,7 +94,10 @@ func serve(manifest, dir, title string, jurisdictions map[string]bool, port int)
 			}
 			data.Rows[i].Total++
 			data.All.Total++
-			if done(dir, p) {
+			if info, err := os.Stat(resultPath(dir, p.Psmid, p.Pageid)); err == nil {
+				if info.ModTime().After(since) {
+					data.Recent++
+				}
 				data.Rows[i].Done++
 				data.All.Done++
 				if rec, err := readRecord(resultPath(dir, p.Psmid, p.Pageid)); err == nil {
@@ -89,6 +105,7 @@ func serve(manifest, dir, title string, jurisdictions map[string]bool, port int)
 				}
 			}
 		}
+		data.PerHour = int(float64(data.Recent) * float64(time.Hour) / float64(rateWindow))
 		if err := progressPage.Execute(w, data); err != nil {
 			slog.Error("rendering progress", "error", err)
 		}
