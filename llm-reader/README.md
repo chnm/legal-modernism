@@ -480,6 +480,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - Lutwyche is paged as one run, so the stub's `1 Lutw.` or `2 Lutw.` follows
   from the page and is not "supplied": a bare `Lutw. 1592` matching
   `2 Lutw. 1592` is an exact match.
+- A cite printed without a name is `medium` even when it matches a stub
+  exactly; another edition's or a reprint's name for it may decide among
+  several cases at one page.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.

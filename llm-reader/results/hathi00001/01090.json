@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "01090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:25:10Z",
+  "note": "printed p. 87; oyer in open court and by the present practice; Com. Dig., Tidd and Sellon are treatises, skipped. The 1831 edition (hathi00002/00980, 00990) names the cases this edition cites bare",
+  "citations": [
+    {"seq": 1, "raw": "Lutw. 1644", "volume": 2, "reporter_abbr": "Lutw.", "page": 1644,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1644", "confidence": "medium",
+     "note": "no name printed; the 1831 edition names it Simpson v. Garside. Lutwyche is paged as one run, so page 1644 is the stub 2 Lutw. 1644, an exact match"},
+    {"seq": 2, "raw": "1 Sid. 308.", "volume": 1, "reporter_abbr": "Sid.", "page": 308,
+     "status": "linked_english_reports", "er_case_id": "17140321", "confidence": "medium",
+     "note": "no name printed; Jevons v. Harridge, 1 Sid 308, the only case there, as named in the 1831 edition"},
+    {"seq": 3, "raw": "2 T. R. 40.", "volume": 2, "reporter_abbr": "T. R.", "page": 40,
+     "status": "linked_english_reports", "er_case_id": "17870154", "confidence": "medium",
+     "note": "no name printed; two cases begin at 2 TR 40 (Page v. Divine, Milbourne v. Nixon); the 1831 edition names Page v. Divine, on oyer"}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "01130",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:26:38Z",
+  "note": "printed p. 91; general and special imparlance, entry of general imparlance; Com. Dig. and Booth are treatises, skipped; the scan prints footnote (x) before (u), sequence follows the letters",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 2, n. (2).", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) at 2, on oyer after imparlance, falls in Mellor v. Walker, 2 Wms Saund 1 (next record at 4). As in the 1831 record (hathi00002/01020)"},
+    {"seq": 2, "raw": "2 Saund. 45. b.", "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "no name printed; William v. Gwyn, on the view, in its second ER record beginning at 2 Wms Saund 45; the case begins at 42, so a pin cite"},
+    {"seq": 3, "raw": "2 Saund. 2, n. (2).", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "repeat of seq 1; Mellor v. Walker, 2 Wms Saund 1"}
+  ]
+}

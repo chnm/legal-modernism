@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "01180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:27:44Z",
+  "note": "printed p. 96; delivery and correction of the demurrer-book or paper-book; Arch. Pract. is a treatise, skipped; footnotes printed (m), (o), (n), (p), sequence follows the letters",
+  "citations": [
+    {"seq": 1, "raw": "Str. 1131.", "volume": 2, "reporter_abbr": "Str.", "page": 1131,
+     "status": "linked_english_reports", "er_case_id": "17953080", "confidence": "medium",
+     "note": "no name or volume printed; three cases begin at 2 Str 1131; the 1831 edition (hathi00002/01060) names Shepley v. Marsh, on setting the paper-book right. Volume 2 supplied"}
+  ]
+}
