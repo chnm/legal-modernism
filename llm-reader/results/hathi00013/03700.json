@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03700",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:40:05Z",
+  "note": "Printed p. 316, § 164: implied and express color. Stephen's footnotes (g)-(k), then Andrews's note 1, interleaved in the scan. Reg. Plac., Bac. Ab. and supra references not recorded. Matches 1894 page 03340.",
+  "citations": [
+    {"seq": 1, "raw": "Hatton v. Morse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high",
+     "note": "one of two cases at 3 Salk 273 (with Horne v. Lewin); the name decides"},
+    {"seq": 2, "raw": "Holt's lost. 663", "case_name": "Hatton v. Morse",
+     "reporter_abbr": "Holt's Inst.", "page": 561,
+     "status": "linked_english_reports", "er_case_id": "17380398", "confidence": "medium",
+     "note": "Holt's K.B. Reports, as the README rules for Hatton v. Morse ('Holt's Inst. 561, S. C.'); OCR '663' read as 561, as the 1831-1859 editions print (1871 and 1895 OCR '661', the 1894 record read 562); Hatton versus Morse begins at Holt KB 561 (369 words, so it does not run far past it)"},
+    {"seq": 3, "raw": "Ft Dearborn Lodge v. Klein, 115 HL 177", "case_name": "Ft. Dearborn Lodge v. Klein",
+     "volume": 115, "reporter_abbr": "Ill.", "page": 177,
+     "status": "linked_cap", "cap_case_id": 2877010, "confidence": "high"}
+  ]
+}
