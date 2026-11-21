@@ -358,6 +358,11 @@ American cases in the later editions (Andrews, 1894, and after):
   and Massachusetts: look in `cap.citations` and by name.
 - The edition's own table of cases is a good source for a page number the
   OCR lost or garbled; say so in `note`.
+- A number a later edition misprints where earlier editions print it
+  right (2 Wils. 145 for 143) follows the earlier editions: `high` when
+  the name is printed and unambiguous, else `medium`.
+- A reprint cite (Eng. C. L., Am. Dec.) keeps the reprint's own page in
+  `page`; the link goes to the case's own report.
 
 **Code reporter** (`legalhist.code_reporter`, New York code cases): match
 `official_citation` or `parallel_citation`, and `name`.

@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765000",
+  "pageid": "05600",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:18:59Z",
+  "note": "Appendix note (57) continued; cross-checked with hathi00013/06070 and hathi00002/04310. Terrien, the canon law, the Digest and Plac. Ab. (records of pleas) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Ed. 2, 15", "volume": 1, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 1 Edw. II, fol. 15; the regnal year is lost in this OCR but the text says 'the first year of Ed. II.' and the 1901 edition prints '1 Ed. 2, 15'; Stephen's earlier editions (1831, 1871, 1895) print fol. 14, Andrews's (1894, 1901) 15; no source for the year books"},
+    {"seq": 2, "raw": "Ibid. 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "Ibid. expanded to 1 Ed. 2, 8, year book, 1 Edw. II, fol. 8; no source for the year books"}
+  ]
+}
