@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00013", "pageid": "00540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:10:29Z",
+  "note": "p. 4, the editor's introduction (section 4), matching p. 1 of the 1894 Andrews (19005765000/00600); footnotes 1 and 2 are new in 1901. Andrews' American Law, Cooley's Blackstone and Warren's Law Studies are treatises, not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Reynolds v. Stockton, 140 U. S. 254", "case_name": "Reynolds v. Stockton",
+     "volume": 140, "reporter_abbr": "U. S.", "page": 254,
+     "status": "linked_cap", "cap_case_id": 3554311, "confidence": "high"},
+    {"seq": 2, "raw": "Waterman v. Law- rence, 19 CaL 210", "case_name": "Waterman v. Lawrence",
+     "volume": 19, "reporter_abbr": "Cal.", "page": 210,
+     "status": "linked_cap", "cap_case_id": 2202040, "confidence": "high"},
+    {"seq": 3, "raw": "Munday v. Vail, 34 N. J. L. 418", "case_name": "Munday v. Vail",
+     "volume": 34, "reporter_abbr": "N. J. L.", "page": 418,
+     "status": "linked_cap", "cap_case_id": 384270, "confidence": "high"}
+  ]
+}

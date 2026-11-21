@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00013", "pageid": "00640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:12:30Z",
+  "note": "p. 14 (section 9), new in 1901. Mitford's Equity Pleading (Tyler's ed.) is a treatise.",
+  "citations": [
+    {"seq": 1, "raw": "Hill v. McCarthy, 3 N. Y. Code R. 49", "case_name": "Hill v. McCarthy",
+     "volume": 3, "reporter_abbr": "N. Y. Code R.", "page": 49,
+     "status": "linked_code_reporter", "code_reporter_id": 481, "confidence": "high"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00013", "pageid": "00520",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:10:10Z",
+  "note": "p. 2 (sections 2-3). New in 1901: not in the 1894 Andrews. The Harvard Law Review and Crackenthorpe's address are not reports.",
+  "citations": [
+    {"seq": 1, "raw": "Heacock v. Hosrner, 109 111. 249", "case_name": "Heacock v. Hosmer",
+     "volume": 109, "reporter_abbr": "Ill.", "page": 249,
+     "status": "linked_cap", "cap_case_id": 2854926, "pincite": true, "confidence": "high",
+     "note": "case runs 109 Ill. 245-253"}
+  ]
+}

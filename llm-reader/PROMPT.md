@@ -66,7 +66,7 @@ printing as a Gale volume already read, whose records are the cross-check
 | hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500). Tyler's third American edition; cross-check against hathi00009 (1871 Tyler) by content |
 | 19005765000 | 1894 | none (Gale is the official copy). James DeWitt Andrews's edition (Chicago: Callaghan): Stephen's first-edition text with Andrews's own American notes, introduction and added chapters |
 | 19005765700 | 1895 | none (Gale is the official copy). Samuel Williston's edition (Cambridge: Harvard Law Review Publishing Association): a reprint of the 5th English edition (1843, Stephen's last), with Williston's bracketed notes on English decisions of the next decade. No American edition read carries this text; the 1843 English Gale copy 19005904300 (unread, text in the database) does, its pageids 80–150 and more above this copy's, star pages ([*41]) marking the 1843 pagination |
-| hathi00013 | 1901 | none read; carries Andrews's text (about 360 pageids after the 1894 Gale copy's), so the 1894 records are its cross-check |
+| hathi00013 | 1901 | none read. Andrews's second edition (Chicago: Callaghan, 1901), retitled "Principles of Pleading in Civil Actions under the Common-Law System and as Modified ... under Modern Codes": the 1894 text with interpolations, new sections, renumbered (cross-check the 1894 records by text, not section). It lines up with the 1894 copy only loosely in the parties chapters (about −30 to +40), then +360 to +410 from the Proceedings chapter (1901 ~01400) and +470 late in the appendix |
 
 Skip a page that already has a results file. When done, run
 `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db --psmid <PSMID>` (once
