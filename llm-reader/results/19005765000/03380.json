@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03380",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:42:50Z",
+  "note": "Stephen's text on the rules of express color and the start of section 132; his footnotes (t)-(y), no Andrews notes. Bac. Ab., Com. Dig. and Doct. Pl. not recorded. Checked against the 1831 record (hathi00002/02100).",
+  "citations": [
+    {"seq": 1, "raw": "Kellw. 103",
+     "reporter_abbr": "Keilw.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "16880202", "pincite": true, "confidence": "medium",
+     "note": "no name printed (the 1831 edition prints 'Anon. Keilw. 103 b'); the ER stores Keilwey by groups: Keil 102 'Caus Incerti Temporis' runs to Keil 137 and holds 103"},
+    {"seq": 2, "raw": "Radford v. Harbyn, Cro. Jao. 12", "case_name": "Radford v. Harbyn",
+     "reporter_abbr": "Cro. Jac.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17910806", "confidence": "high",
+     "note": "page cut to '12' in OCR; 122 where the named case begins, as the 1831 edition prints"}
+  ]
+}

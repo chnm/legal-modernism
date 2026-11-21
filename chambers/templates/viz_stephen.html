@@ -1,0 +1,109 @@
+{{define "styles"}}
+        /* In the viewport: the figure is as wide as a column of prose, like a
+           figure in an article, and each chart takes its height from its width. */
+        .viz-figure { max-width: 52rem; }
+        .viz-figure .viz-draft { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.25rem; }
+        .viz-figure .viz-panel-title { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.25rem; }
+{{end}}
+
+{{define "content"}}
+    <div class="viz viz-figure">
+        <header>
+            <p class="viz-draft">Draft public visualization</p>
+            <h1 class="viz-title" id="viz-title">The cases cited in the American editions of Stephen on Pleading</h1>
+            <p class="viz-subtitle" id="viz-subtitle" aria-live="polite">Loading the citations&hellip;</p>
+        </header>
+
+        <div id="viz-legend"></div>
+        <h2 class="viz-panel-title">Citations in each edition</h2>
+        <div class="viz-chart" id="viz-counts">
+            <p class="viz-message">Loading&hellip;</p>
+        </div>
+        <h2 class="viz-panel-title">Share of each edition's citations</h2>
+        <div class="viz-chart" id="viz-shares"></div>
+
+        <footer class="viz-foot">
+            <p class="viz-source"><strong>Source:</strong> Making of Modern Law; HathiTrust; Caselaw Access Project; the English Reports; citations read and linked by Claude.</p>
+            <p class="viz-notes"><strong>Notes:</strong>
+                The American editions of Henry John Stephen's <em>Treatise on the Principles of Pleading in Civil Actions</em>,
+                placed by the year of the copy read, from Francis J. Troubat's editions of 1831 to 1857 through those of Franklin Fiske Heard (1867),
+                Samuel Tyler (1871, 1882) and James DeWitt Andrews (1894 onward). One copy of each edition is counted: a HathiTrust scan where
+                there is one, else Gale's. Claude read every page of the copy, notes and appendix included, and looked each citation of a case up:
+                a citation is American when it was found in the Caselaw Access Project or the New York Code Reporter, or is to an American reporter
+                no source covers; English when it was found in the English Reports, or is to an English reporter they do not cover; and unknown
+                when no case or reporter could be identified. Each citation printed counts, so a case cited twice counts twice.
+                An edition marked * is only partly read, and its figures are of the pages read so far (a hollow point, an asterisk over the bar);
+                editions not yet read are absent. The readings are a machine's and have not been checked by hand.
+            </p>
+            <details class="viz-data">
+                <summary>Show the data</summary>
+                <div id="viz-table"></div>
+            </details>
+        </footer>
+    </div>
+{{end}}
+
+{{define "scripts"}}
+    <script type="module">
+        import { ensureStyles } from "/static/viz/style.js";
+        import { summarize, chart, legend, table, height } from "/static/viz/stephen.js";
+
+        const API = "/api/viz/stephen";
+
+        ensureStyles();
+
+        const el = {
+            title: document.getElementById("viz-title"),
+            subtitle: document.getElementById("viz-subtitle"),
+            legend: document.getElementById("viz-legend"),
+            counts: document.getElementById("viz-counts"),
+            shares: document.getElementById("viz-shares"),
+            table: document.getElementById("viz-table"),
+        };
+
+        const message = (text) => {
+            el.counts.replaceChildren(Object.assign(document.createElement("p"), { className: "viz-message", textContent: text }));
+            el.shares.replaceChildren();
+        };
+
+        let summary = null;
+        function draw() {
+            if (!summary || summary.editions.length === 0) return;
+            const width = el.counts.clientWidth || 800;
+            const h = height(width);
+            el.counts.replaceChildren(chart(summary, { width, height: h, measure: "count" }));
+            el.shares.replaceChildren(chart(summary, { width, height: h, measure: "share" }));
+        }
+
+        // Resize: redraw at the new width, once the window settles.
+        let resizeTimer = null;
+        new ResizeObserver(() => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(draw, 80);
+        }).observe(el.counts);
+
+        (async () => {
+            let data;
+            try {
+                const r = await fetch(API);
+                if (!r.ok) throw new Error(`${await r.text()} (${r.status})`.trim());
+                data = await r.json();
+            } catch (err) {
+                el.subtitle.textContent = "The citations could not be loaded.";
+                message(err.message);
+                return;
+            }
+            summary = summarize(data);
+            if (summary.editions.length === 0) {
+                el.subtitle.textContent = "No American edition has been read yet.";
+                message("Nothing to chart until the readings of an official copy are loaded (llm-reader load).");
+                return;
+            }
+            el.title.textContent = summary.title;
+            el.subtitle.innerHTML = summary.subtitle;
+            el.legend.replaceChildren(legend());
+            draw();
+            el.table.replaceChildren(table(summary));
+        })();
+    </script>
+{{end}}

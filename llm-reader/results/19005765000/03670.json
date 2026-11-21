@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:45:41Z",
+  "note": "Stephen's text on distinct answers to distinct claims; his footnotes (r)-(u) (the scan prints (u) as (t)), no Andrews notes. Bac. Ab., Com. Dig., Co. Litt. and Vin. Ab. not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Johns v. Whitley, 3 Wils. 127", "case_name": "Johns v. Whitley",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 127,
+     "status": "linked_english_reports", "er_case_id": "17990241", "confidence": "high",
+     "note": "ER 3 Wils KB 127 (an earlier stage at 65)"}
+  ]
+}

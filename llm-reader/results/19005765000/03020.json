@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03020",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:45:04Z",
+  "note": "Printed p. 238. Stephen's footnotes (e), (f); Andrews's note 1 is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "12 Mod. 877",
+     "volume": 12, "reporter_abbr": "Mod.", "page": 377,
+     "status": "linked_english_reports", "er_case_id": "17961443", "pincite": true, "confidence": "medium",
+     "note": "page printed 877, read 377; no name printed here, but later editions name Paramour v. Johnson (hathi00010/02030), which begins at 12 Mod 376 and holds Holt's dictum on accord and satisfaction under non assumpsit"}
+  ]
+}

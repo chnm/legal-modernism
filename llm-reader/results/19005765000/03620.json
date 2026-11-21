@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03620",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:43:23Z",
+  "note": "Stephen's text (Sir Francis Leke's case; the chase at Tollard Royal; traverse too narrow), his footnotes (d)-(e), no Andrews notes. Numbers garbled in the OCR, read from the 1831 text and record (hathi00002/02360): Sir Francis Leke's Case, Dyer, 365, and 2 Saund. 206. a. n. (22).",
+  "citations": [
+    {"seq": 1, "raw": "Sir Francis Loire's Case, Dyer, 301 b", "case_name": "Sir Francis Leke's Case",
+     "reporter_abbr": "Dyer", "page": 365,
+     "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
+     "note": "name and page garbled (Loire's, 301 b); the 1831 text prints Sir Francis Leke's Case, Dyer. 365, ER 3 Dy 365"},
+    {"seq": 2, "raw": "2 Saund. 20 a, n. 2?",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "page and note garbled; the 1831 text prints 2 Saund. 206. a. n. (22), note (22) to Goram v. Sweeting, ER record at 2 Wms Saund 205 ('Same versus Bateman'). No name printed"},
+    {"seq": 3, "raw": "Wo., ' v. BldIdeln, IIob, 119", "case_name": "Wood v. Budden",
+     "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high",
+     "note": "name garbled in OCR; Wood v. Budden, Hob 119, as the 1831 text prints"}
+  ]
+}

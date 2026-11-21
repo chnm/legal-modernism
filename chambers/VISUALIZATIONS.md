@@ -188,6 +188,9 @@ chart to chart. Add a row whenever a visualization fixes one.
 | Subsequent borrower (two or more steps) | `#4daf4a` | `schemeSet1` green | `/viz/field-code` |
 | Did not borrow (no step reaches a Field code) | `#984ea3` | `schemeSet1` purple | `/viz/field-code` |
 | New York, set apart from the Mid-Atlantic when a chart colours by region | `#e41a1c` | `schemeSet1` red, the Field code's, since the Field codes are New York's | `/viz/field-code` |
+| American cases, the United States whole (a chart that splits citations only into US, UK and unknown) | `#4269d0` | `observable10` blue, New England's, since such a chart shows no regions | `/viz/stephen` |
+| English cases (UK), in the same split | `#ff725c` | `observable10` red-orange, the United Kingdom's | `/viz/stephen` |
+| Unknown jurisdiction (no case or reporter identified) | `#9498a0` | `observable10` grey, the territories', since such a chart shows no territories | `/viz/stephen` |
 
 Only the pink (`#ff8ab7`) of `observable10` is still free. The lighter
 colours (`#97bbf5`, `#6cc5b0`, `#ff725c`, `#efb118`, `#9498a0`) are below 3:1
@@ -198,3 +201,8 @@ of a code's descent, which no other chart shows, and sit near the
 `observable10` blue, green and purple of New England, the Midwest and the
 Mountain West, so a chart that shows both regions and descent will need one
 of the two recoloured. In `style.js` they are `borrowingColors`.
+The US, UK and unknown split of the Stephen on Pleading chart reuses three
+`observable10` colours already in the registry rather than the last free
+pink, which sits too close to the UK's red-orange; it is `citedColors` in
+`style.js`. A chart that shows both the regions and that split would need
+the United States recoloured.

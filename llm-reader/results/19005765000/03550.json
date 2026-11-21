@@ -1,0 +1,32 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03550",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:37:43Z",
+  "note": "Stephen's text (the silver bowl case; Rule III, issue well tendered must be accepted; the similiter), his footnotes (c)-(e) (the scan prints the marker of (c) as (o)), and Andrews's note 1, its two columns interleaved: recorded in note order. Bac. Ab. and Gilbert's Common Pleas not recorded; (e) is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "Hayman v. Gerrard, 1 Saund. 102", "case_name": "Hayman v. Gerrard",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "high",
+     "note": "the ER splits Hayman v. Gerrard into records at 1 Wms Saund 99 and 102; the cite is the first page of the second record"},
+    {"seq": 2, "raw": "Cornwallis v. Savery, Burr. 772", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high",
+     "note": "volume 2 supplied"},
+    {"seq": 3, "raw": "Sayre v. Minus, Cowp). 75", "case_name": "Sayre v. Minns",
+     "reporter_abbr": "Cowp.", "page": 575,
+     "status": "linked_english_reports", "er_case_id": "17770027", "confidence": "high",
+     "note": "page printed 75, a digit lost; Sayre v. Minns begins at Cowp 575"},
+    {"seq": 4, "raw": "Digby v. Fitzharbort, Hob. 101", "case_name": "Digby v. Fitzharbert",
+     "reporter_abbr": "Hob.", "page": 101,
+     "status": "linked_english_reports", "er_case_id": "17920663", "confidence": "high"},
+    {"seq": 5, "raw": "Daws v. Winship, 16 Pick. 291", "case_name": "Dawes v. Winship",
+     "volume": 16, "reporter_abbr": "Mass.", "page": 291,
+     "status": "linked_cap", "cap_case_id": 2035253, "confidence": "high",
+     "note": "printed '16 Pick.'; Dawes v. Winship is 16 Mass. 291 (1820), Pickering's volumes being numbered from 1 after 17 Mass."},
+    {"seq": 6, "raw": "Hapgood v. Houghton, 8 id. 450", "case_name": "Hapgood v. Houghton",
+     "volume": 8, "reporter_abbr": "Pick.", "page": 451,
+     "status": "linked_cap", "cap_case_id": 2013171, "confidence": "high",
+     "note": "id. = Pick.; printed 450, CAP cites the case as 8 Pick. 451 (1829)"}
+  ]
+}

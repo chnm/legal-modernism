@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03310",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:40:53Z",
+  "note": "Stephen's text on color, with a plea in trespass quare clausum fregit; his footnotes (a)-(d), no Andrews notes. Reg. Plac., the Appendix and supra references not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "1 Sid. 43",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "medium",
+     "note": "no name printed here; the first edition's text, which this edition keeps, prints '1 Sid. 450.' (1824), and later editions 'Gifford v. Perkins, 1 Sid. 450': OCR 43 read as 450. The case at 1 Sid 43 is Jason & Kete"}
+  ]
+}

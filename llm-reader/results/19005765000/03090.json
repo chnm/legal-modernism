@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03090",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:48:08Z",
+  "note": "Printed p. 245. Stephen's footnotes (s), (t); Chitty and the Appendix cross-reference not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Bouduell v. Roberts, 2 Wils. 143", "case_name": "Brudnell v. Roberts",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "high",
+     "note": "OCR 'Bouduell'; Brudnell v. Roberts, 2 Wils KB 143"},
+    {"seq": 2, "raw": "Palmer v. Elkins, Lord Ray. S Ae50", "case_name": "Palmer v. Ekins",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1550,
+     "status": "linked_english_reports", "er_case_id": "17901324", "confidence": "high",
+     "note": "volume and page garbled; Palmer v. Ekins, 2 Ld Raym 1550; dropped: 'note 4' (likely OCR noise)"}
+  ]
+}

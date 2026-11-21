@@ -1,0 +1,31 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03650",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:44:37Z",
+  "note": "Stephen's examples of duplicity in the declaration, a plea in abatement and a plea in bar; his footnotes (l)-(o) (markers garbled in the scan), no Andrews notes. Com. Dig. and Vin. Ab. not recorded, but the year book Vin. Ab. cites is.",
+  "citations": [
+    {"seq": 1, "raw": "hllumphreys v. Betlily, 2 Vent. 108, 22", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "printed 108, read as 198 (cited Vent. 198 on p. 300); dropped: 22 (probably 222, where the ER has a later report of the same case, 17260504)"},
+    {"seq": 2, "raw": "Hart v. Longfleld, 7 Mod. 148", "case_name": "Hart v. Longfield",
+     "volume": 7, "reporter_abbr": "Mod.", "page": 148,
+     "status": "linked_english_reports", "er_case_id": "17961127", "confidence": "high"},
+    {"seq": 3, "raw": "Corn wallis v. Savery, 2 Burr. 77;", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high",
+     "note": "last digit lost in OCR; Cornwallis v. Savery is at 2 Burr 772"},
+    {"seq": 4, "raw": "Manser's Case, 2 Rep. 4", "case_name": "Manser's Case",
+     "volume": 2, "reporter_abbr": "Rep.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "high",
+     "note": "Manser's Case (ER Painter v Manser) begins at 2 Co Rep 3 (3275 words; an empty record of it at 2 Co Rep 1); 4 is a pin cite (Goddard v. Denton also begins at 4, but the name decides)"},
+    {"seq": 5, "raw": "Trevelan v. Seco aob, Carth. 8", "case_name": "Trevilian v. Seccomb",
+     "reporter_abbr": "Carth.", "page": 8,
+     "status": "linked_english_reports", "er_case_id": "17410405", "confidence": "high",
+     "note": "ER Trevelian versus Seccomb; Lake v. Raw also begins at Carth 8, the name decides"},
+    {"seq": 6, "raw": "15 HIen. 7, 10", "volume": 15, "reporter_abbr": "Y.B.", "page": 10,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 15 Hen. VII, fo. 10, cited through Vin. Ab.; no source covers the year books"}
+  ]
+}

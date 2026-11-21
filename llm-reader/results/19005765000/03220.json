@@ -1,0 +1,29 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03220",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:35:39Z",
+  "note": "Stephen's text, section 126 on the qualities of the special traverse; his footnotes (p) and (q), no Andrews notes. Bac. Ab. and Com. Dig. not recorded. Checked against the 1831 records (hathi00002/01920, 01930).",
+  "citations": [
+    {"seq": 1, "raw": "Anon., 3 Salk. 353", "case_name": "Anonymous",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "the only Anonymous at 3 Salk 353 (Bullen v. Benson also begins there)"},
+    {"seq": 2, "raw": "Dike v. Ricks, Cro. Car. 33i", "case_name": "Dike v. Ricks",
+     "reporter_abbr": "Cro. Car.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true, "confidence": "high",
+     "note": "OCR '33i' read as 336, as the 1831 and 1871 editions print; case begins at Cro Car 335"},
+    {"seq": 3, "raw": "Hughes v. Phelps, Yelv. 38", "case_name": "Hughes v. Phelps",
+     "reporter_abbr": "Yelv.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "17921174", "confidence": "high",
+     "note": "ER: Hughes versus Phillips, Yel 38"},
+    {"seq": 4, "raw": "Cro. Elz. 755; S. C.", "case_name": "Hughes v. Phelps",
+     "reporter_abbr": "Cro. Eliz.", "page": 755,
+     "status": "linked_english_reports", "er_case_id": "16531043", "pincite": true, "confidence": "high",
+     "note": "S. C. of Hughes v. Phelps; ER: Huish against Philips, beginning at Cro Eliz 754"},
+    {"seq": 5, "raw": "B Hen. 6,15",
+     "volume": 36, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "36 Hen. VI, f. 15, the regnal year garbled as 'B' and read from the 1831 edition; year books have no source"}
+  ]
+}

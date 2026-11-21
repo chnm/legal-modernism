@@ -58,6 +58,8 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /viz/field-code", s.handleVizFieldCode)
 	mux.HandleFunc("GET /api/viz/field-code/codes", serveData("field-code-codes.json"))
 	mux.HandleFunc("GET /api/viz/field-code/borrowings", serveData("field-code-borrowings.json"))
+	mux.HandleFunc("GET /viz/stephen", s.handleVizStephen)
+	mux.HandleFunc("GET /api/viz/stephen", s.handleVizStephenAPI)
 
 	// Static files.
 	staticSub, err := fs.Sub(staticFS, "static")

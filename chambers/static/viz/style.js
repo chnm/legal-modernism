@@ -52,6 +52,19 @@ export const borrowingColors = {
   "Did not borrow": "#984ea3",
 };
 
+// The jurisdiction of a cited case when a chart splits citations only into
+// American, English and unknown, as the Stephen on Pleading chart
+// (stephen.js) does. The United Kingdom keeps its red-orange; the United
+// States, whole, takes observable10's first blue, New England's, since a chart
+// that shows the country whole does not show its regions; a case whose
+// jurisdiction is unknown takes the grey of the territories, which such a
+// chart does not show either. In legend and stacking order.
+export const citedColors = {
+  US: "#4269d0", // observable10 blue (groupColors["new-england"])
+  UK: "#ff725c", // observable10 red-orange (groupColors.uk)
+  Unknown: "#9498a0", // observable10 grey (groupColors.territories)
+};
+
 export const colors = {
   ink: "#212529",
   muted: "#6c757d",

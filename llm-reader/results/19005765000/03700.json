@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03700",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:47:15Z",
+  "note": "Stephen's text on immaterial matter and inducement in duplicity; his footnotes (e)-(g), no Andrews notes. Bac. Ab. not recorded; (g) is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "Executors of Grenelife, Dyer, 42", "case_name": "Executors of Grenelife",
+     "reporter_abbr": "Dyer", "page": 42,
+     "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
+     "note": "ER 1 Dy 42"}
+  ]
+}

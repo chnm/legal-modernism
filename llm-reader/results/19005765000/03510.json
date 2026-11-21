@@ -1,0 +1,25 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03510",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:36:13Z",
+  "note": "Stephen's text on the conclusion to the country and the mise in a writ of right, his footnotes (n)-(s), and Andrews's note 1. Heath's Maxims, Bracton, Ryley's Placita Parliamentaria (records, not reports), Blackstone, Coke's Entries and Chitty not recorded; 'Supra' and 'p. 100' are cross-references.",
+  "citations": [
+    {"seq": 1, "raw": "Weltalo v. Glover, 10 Mod. IC0", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high",
+     "note": "page garbled (IC0, and 160 in footnote (o)); Weltale against Glover is at 10 Mod 166"},
+    {"seq": 2, "raw": "Weltale v. Glover, 10 Mod. 160", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high",
+     "note": "printed 160; Weltale against Glover is at 10 Mod 166 (10 Mod 160 is Miles v. Williams)"},
+    {"seq": 3, "raw": "Bindon v. Robinson, 1 Johns. 510", "case_name": "Bindon v. Robinson",
+     "volume": 1, "reporter_abbr": "Johns.", "page": 516,
+     "status": "linked_cap", "cap_case_id": 2128258, "confidence": "high",
+     "note": "printed 510; Bindon v. Robinson is at 1 Johns. 516"},
+    {"seq": 4, "raw": "Labagh v. Cantine, 18 id. 270", "case_name": "Labagh v. Cantine",
+     "volume": 13, "reporter_abbr": "Johns.", "page": 272,
+     "status": "linked_cap", "cap_case_id": 374459, "confidence": "high",
+     "note": "id. = Johns.; printed 18 and 270, Labagh v. Cantine is at 13 Johns. 272 (as on p. 286)"}
+  ]
+}

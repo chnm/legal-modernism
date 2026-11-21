@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03570",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:38:54Z",
+  "note": "Stephen's text on joinder in demurrer (no demurrer upon demurrer), his footnotes (k)-(l), and Andrews's note 1, its two columns interleaved. Bac. Ab. not recorded; (k) is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "Clay Fire Ins. Co. v. Wuster- hausen, 75 111. 85", "case_name": "Clay Fire Ins. Co. v. Wusterhausen",
+     "volume": 75, "reporter_abbr": "Ill.", "page": 285,
+     "status": "linked_cap", "cap_case_id": 2700580, "confidence": "high",
+     "note": "page printed 85, a digit lost; the case is at 75 Ill. 285 (1874)"},
+    {"seq": 2, "raw": "Keener v. Finger, 70 N. C. 48", "case_name": "Keener v. Finger",
+     "volume": 70, "reporter_abbr": "N. C.", "page": 48,
+     "status": "linked_cap", "cap_case_id": 8684035, "pincite": true, "confidence": "high",
+     "note": "case runs 70 N.C. 35-55; 48 is a pin cite"}
+  ]
+}

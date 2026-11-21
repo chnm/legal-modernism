@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765000",
+  "pageid": "02360",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:35:59Z",
+  "note": "Stephen's text on the record of nisi prius and trial at bar; footnote (n) cites Tidd only. Andrews's note 1 on propositions of law in trials by the court cites three Illinois cases.",
+  "citations": [
+    {"seq": 1, "raw": "Field v. Crawford, 146 Ill. 136", "case_name": "Field v. Crawford",
+     "volume": 146, "reporter_abbr": "Ill.", "page": 136,
+     "status": "linked_cap", "cap_case_id": 3066009, "confidence": "high"},
+    {"seq": 2, "raw": "Com- mercial Nat. Bank v. Cannif (Ill., 1894), 87 N. E. Rep. 898", "case_name": "Commercial Nat. Bank v. Canniff",
+     "volume": 37, "reporter_abbr": "N. E. Rep.", "page": 898, "year": 1894,
+     "status": "linked_cap", "cap_case_id": 5469710, "confidence": "medium",
+     "note": "printed 87 read as 37 (N.E. vol. 37 is 1894); cited only by regional reporter, found by name and year under its official report, 151 Ill. 329 (CAP spells it Cauniff); not the 1893 Appellate Court decision at 51 Ill. App. 579"},
+    {"seq": 3, "raw": "Am. Ex Bank v. Chicago Nat Bank, 181 II. 547", "case_name": "Am. Ex. Bank v. Chicago Nat. Bank",
+     "volume": 131, "reporter_abbr": "Ill.", "page": 547,
+     "status": "linked_cap", "cap_case_id": 5417472, "confidence": "high",
+     "note": "printed 181 read as 131 (3 as 8); American Exchange National Bank v. Chicago National Bank (1889)"}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03100",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:48:25Z",
+  "note": "Printed p. 246. Stephen's footnotes (u), (x), then Andrews's note 1 (continued on p. 247). Bac. Ab. and the Hilary Rules not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Bennett v. Fillkns, 1 Saund. 21", "case_name": "Bennet v. Filkins",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 21,
+     "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Wms Saund 20"},
+    {"seq": 2, "raw": "Walters v. Hodges, Lut. 1625", "case_name": "Walters v. Hodges",
+     "reporter_abbr": "Lutw.", "page": 1625,
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche has no source; the stubs hold no 2 Lutw. at or near 1625"},
+    {"seq": 3, "raw": "1 Saund. 103b",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page 103 falls in Hayman v. Gerrard (begins at 1 Wms Saund 99; ER record from 102 holds 103)"}
+  ]
+}

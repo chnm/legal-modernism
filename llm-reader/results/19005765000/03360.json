@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03360",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:42:01Z",
+  "note": "Stephen's text on giving express color; his footnotes (m) and (n) ((n) printed '(i)'), no Andrews notes. Brown's Entries (a book of precedents), Doct. Pl. and the supra reference not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "2 Edw. IV. 8",
+     "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "Year Book 2 Edw. IV, f. 8; year books have no source"},
+    {"seq": 2, "raw": "Leyfield's Case, 10 Rep. 80 b", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 89,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "OCR '80 b' read as 89 b, as the 1831 edition prints; Doctor Leyfield's Case begins at 10 Co Rep 88"}
+  ]
+}

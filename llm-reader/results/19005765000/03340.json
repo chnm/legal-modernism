@@ -1,0 +1,20 @@
+{
+  "psmid": "19005765000",
+  "pageid": "03340",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T14:41:33Z",
+  "note": "Stephen's text on implied and express color; his footnotes (g)-(k), then Andrews's note 1, interleaved in the scan. Reg. Plac., Bac. Ab. and supra references not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Hatton v. Morse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high",
+     "note": "one of two cases at 3 Salk 273 (with Horne v. Lewin); the name decides"},
+    {"seq": 2, "raw": "Holt's Inst. 562", "case_name": "Hatton v. Morse",
+     "reporter_abbr": "Holt's Inst.", "page": 562,
+     "status": "linked_english_reports", "er_case_id": "17380398", "pincite": true, "confidence": "medium",
+     "note": "Holt's K.B. Reports, as the README rules for Hatton v. Morse ('Holt's Inst. 561, S. C.'); the case begins at Holt KB 561 (369 words, running onto 562)"},
+    {"seq": 3, "raw": "FL Dearborn Lodge v. Klein, 115 IlL 177", "case_name": "Ft. Dearborn Lodge v. Klein",
+     "volume": 115, "reporter_abbr": "Ill.", "page": 177,
+     "status": "linked_cap", "cap_case_id": 2877010, "confidence": "high"}
+  ]
+}
