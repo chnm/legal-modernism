@@ -335,7 +335,11 @@ American cases in the later editions (Andrews, 1894, and after):
   the same way. Reprints of English cases (Eng. C. L., English Ruling Cases)
   likewise link the case's own report in the English Reports at `medium`.
 - A recent case cited only by regional reporter (`37 N. E. Rep. 136`) is
-  found by name and year in CAP, usually under its official report.
+  found by name and year in CAP, usually under its official report. One CAP
+  does not hold at all (an unofficially reported Texas Civil Appeals case)
+  is `no_match`, `high` when legible and named.
+- To find the same passage in another edition when pageids don't line up,
+  search `moml.page_ocrtext` for that psmid with a distinctive case name.
 - When the volume-join pin-cite query misses (some reporters' volumes are
   not joined), search `cap.citations.cite` with a pattern on the reporter
   and volume, then check pages.

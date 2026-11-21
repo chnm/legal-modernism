@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03610",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:36:38Z",
+  "note": "Printed p. 307, §§ 160-161 (traverses in general). Stephen's footnotes (z) (OCR '(*)') and (a), then Andrews's note 1. Com. Dig. and the supra reference not recorded. Matches 1894 page 03250.",
+  "citations": [
+    {"seq": 1, "raw": "Toden v. Haines. Comb. 245", "case_name": "Foden v. Haines",
+     "reporter_abbr": "Comb.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17240198", "confidence": "high",
+     "note": "OCR 'Toden' for Foden; ER: Foden and Haines"},
+    {"seq": 2, "raw": "Prosser v. Woodward, 21 Wend. 205", "case_name": "Prosser v. Woodward",
+     "volume": 21, "reporter_abbr": "Wend.", "page": 205,
+     "status": "linked_cap", "cap_case_id": 2151814, "confidence": "high"},
+    {"seq": 3, "raw": "Thomas v. Black, 8 Houst 507", "case_name": "Thomas v. Black",
+     "volume": 8, "reporter_abbr": "Houst.", "page": 507,
+     "status": "linked_cap", "cap_case_id": 64747, "confidence": "high"}
+  ]
+}

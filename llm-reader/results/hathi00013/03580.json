@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03580",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:35:50Z",
+  "note": "Printed p. 304, § 159 (qualities of the special traverse). Stephen's footnotes (p) and (q) (continued on the next page), no Andrews notes. Bac. Ab. and Com. Dig. not recorded. The OCR garbles many digits (8 for 3); readings follow the 1894 record (page 03220).",
+  "citations": [
+    {"seq": 1, "raw": "Anon., 3 Salic. 853", "case_name": "Anonymous",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "page printed 853, read 353; the only Anonymous at 3 Salk 353 (Bullen v. Benson also begins there)"},
+    {"seq": 2, "raw": "Dike v. Ricks, Cm Car. 886", "case_name": "Dike v. Ricks",
+     "reporter_abbr": "Cro. Car.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true, "confidence": "high",
+     "note": "OCR 'Cm Car. 886' read as Cro. Car. 336, as earlier editions print; case begins at Cro Car 335"},
+    {"seq": 3, "raw": "Hughes T. Phelps, Yelv. 38", "case_name": "Hughes v. Phelps",
+     "reporter_abbr": "Yelv.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "17921174", "confidence": "high",
+     "note": "ER: Hughes versus Phillips, Yel 38"},
+    {"seq": 4, "raw": "Cro. Eliz. 765; 8. 0.", "case_name": "Hughes v. Phelps",
+     "reporter_abbr": "Cro. Eliz.", "page": 755,
+     "status": "linked_english_reports", "er_case_id": "16531043", "pincite": true, "confidence": "high",
+     "note": "S. C. of Hughes v. Phelps; page printed 765, read 755 as earlier editions print; ER: Huish against Philips, beginning at Cro Eliz 754"},
+    {"seq": 5, "raw": "86 Hen. 8, 15",
+     "volume": 36, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "36 Hen. VI, f. 15: OCR '86 Hen. 8' read from the 1831 and 1894 editions; year books have no source"}
+  ]
+}

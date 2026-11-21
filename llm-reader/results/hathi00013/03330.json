@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03330",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:35:50Z",
+  "note": "§ 145 end and § 146; Andrews's note 1 from the previous page continues in two columns (left, then right); note 2 begins at the foot. Cooley's Blackstone, Chitty, Maxwell and Pomeroy not recorded (1894 page 02970).",
+  "citations": [
+    {"seq": 1, "raw": "Gardner v. Buck- bee, 3 Cow. 120", "case_name": "Gardner v. Buckbee",
+     "volume": 3, "reporter_abbr": "Cow.", "page": 120,
+     "status": "linked_cap", "cap_case_id": 2157950, "confidence": "high"},
+    {"seq": 2, "raw": "Ld. Raym. 217",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "17920385", "confidence": "low",
+     "note": "no name or volume printed; volume 1 supplied; two cases begin at 1 Ld Raym 217 (Parker v. Mellor, Brown v. Cornish) and 3 Ld Raym 217 is Mosley v. Coldwell; nothing on the page tells them apart, Brown v. Cornish picked as in the 1894 record"},
+    {"seq": 3, "raw": "Waidner v. Pauley, 141 111. 442", "case_name": "Waidner v. Pauley",
+     "volume": 141, "reporter_abbr": "Ill.", "page": 442,
+     "status": "linked_cap", "cap_case_id": 5457134, "confidence": "high",
+     "note": "CAP spells it Pauly"},
+    {"seq": 4, "raw": "McKyring v. Bull, 16 N. Y. 297", "case_name": "McKyring v. Bull",
+     "volume": 16, "reporter_abbr": "N. Y.", "page": 297,
+     "status": "linked_cap", "cap_case_id": 1297854, "confidence": "high",
+     "note": "CAP cites it 16 N.Y. 297 (its first_page reads 289)"},
+    {"seq": 5, "raw": "Youngs v. Kent, 46 N. Y. 672", "case_name": "Youngs v. Kent",
+     "volume": 46, "reporter_abbr": "N. Y.", "page": 672,
+     "status": "linked_cap", "cap_case_id": 2052629, "confidence": "high"},
+    {"seq": 6, "raw": "Burley v. German Am. Bank, 111 U. S. 221", "case_name": "Burley v. German Am. Bank",
+     "volume": 111, "reporter_abbr": "U. S.", "page": 221,
+     "status": "linked_cap", "cap_case_id": 3506442, "pincite": true, "confidence": "high",
+     "note": "case runs 216-223"}
+  ]
+}
