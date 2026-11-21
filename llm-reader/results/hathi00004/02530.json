@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00004", "pageid": "02530",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:04:13Z",
+  "note": "printed pp. 366-367; Bac. Ab. and cross-references are not recorded; footnotes printed in two columns, recorded in footnote order; Buckley v. Rice is cut off and recorded on the next page, where its report is printed; same footnotes as 19005764100/02470",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 410, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note falls in Lord Arlington v. Merricke, 2 Wms Saund 403"},
+    {"seq": 2, "raw": "Oglethorp v. Hyde, Cro. Eliz. 233", "case_name": "Oglethorpe v. Hyde",
+     "reporter_abbr": "Cro. Eliz.", "page": 233,
+     "status": "linked_english_reports", "er_case_id": "16531413", "confidence": "high"},
+    {"seq": 3, "raw": "2 Saund. 410, n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note falls in Lord Arlington v. Merricke, 2 Wms Saund 403"},
+    {"seq": 4, "raw": "Ibid.", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "bare Ibid. repeats 2 Saund. 410, n. (2), in Lord Arlington v. Merricke"},
+    {"seq": 5, "raw": "Earl of Kerry v. Baxter, 4 East, 340", "case_name": "Earl of Kerry v. Baxter",
+     "volume": 4, "reporter_abbr": "East", "page": 340,
+     "status": "linked_english_reports", "er_case_id": "18030719", "confidence": "high"}
+  ]
+}
