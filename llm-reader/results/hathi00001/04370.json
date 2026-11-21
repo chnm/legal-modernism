@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00001", "pageid": "04370",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:27:37Z",
+  "note": "printed p. 415; colour and the general issue. (k) is a cross-reference. Names from the 1831 edition",
+  "citations": [
+    {"seq": 1, "raw": "Salk. 394", "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Holler v. Bush (1831 edition)"},
+    {"seq": 2, "raw": "12 Mod. 537", "volume": 12, "reporter_abbr": "Mod.", "page": 537,
+     "status": "linked_english_reports", "er_case_id": "17960550", "confidence": "medium",
+     "note": "no name printed; Anon. (1831 edition), the only Anonymous at 12 Mod 537"},
+    {"seq": 3, "raw": "513.514.", "volume": 12, "reporter_abbr": "Mod.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "17961557", "confidence": "medium",
+     "note": "reporter carried over from 12 Mod. 537; no name printed; Saunders's Case (1831 edition), one of four cases beginning at 12 Mod 513; dropped: 514"},
+    {"seq": 4, "raw": "Cro. Car. 157", "reporter_abbr": "Cro. Car.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17921474", "confidence": "medium",
+     "note": "no name printed; Lynnet v. Wood (1831 edition), ER Lynner against Wood"},
+    {"seq": 5, "raw": "2 Mod. 274", "volume": 2, "reporter_abbr": "Mod.", "page": 274,
+     "status": "linked_english_reports", "er_case_id": "17930153", "confidence": "medium",
+     "note": "no name printed; Birch v. Wilson (1831 edition)"}
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00001", "pageid": "04340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:26:54Z",
+  "note": "printed p. 412; Rule II, a plea amounting to the general issue. Co. Litt., Doct. and Stud., Com. Dig., Bac. Ab. and Doct. Pl. not recorded, but the year book Doct. Pl. cites is; (t) is a cross-reference. Footnote (x) is printed before (u) in the scan; seq follows the letters. Names from the 1831 edition",
+  "citations": [
+    {"seq": 1, "raw": "10 Hen. 6. 16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Hen. VI; no source"},
+    {"seq": 2, "raw": "22 Hen. 6. 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI; no source"},
+    {"seq": 3, "raw": "Salk. 394", "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Holler v. Bush (1831 edition)"},
+    {"seq": 4, "raw": "2 Mod. 277", "volume": 2, "reporter_abbr": "Mod.", "page": 277,
+     "status": "linked_english_reports", "er_case_id": "17930153", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Birch v. Wilson (1831 edition), which begins at 2 Mod 274"},
+    {"seq": 5, "raw": "Cro. Car. 157", "reporter_abbr": "Cro. Car.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17921474", "confidence": "medium",
+     "note": "no name printed; Lynnet v. Wood (1831 edition), ER Lynner against Wood"},
+    {"seq": 6, "raw": "Hob. 127", "reporter_abbr": "Hob.", "page": 127,
+     "status": "linked_english_reports", "er_case_id": "17922191", "confidence": "medium",
+     "note": "no name printed; Warner v. Wainsford (1831 edition)"},
+    {"seq": 7, "raw": "12 Mod. 537", "volume": 12, "reporter_abbr": "Mod.", "page": 537,
+     "status": "linked_english_reports", "er_case_id": "17960550", "confidence": "medium",
+     "note": "no name printed; Anon. (1831 edition), the only Anonymous at 12 Mod 537 (Hall against Bond and May against King also begin there)"},
+    {"seq": 8, "raw": "513. 514.", "volume": 12, "reporter_abbr": "Mod.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "17961557", "confidence": "medium",
+     "note": "reporter carried over from 12 Mod. 537; no name printed; Saunders's Case (1831 edition), one of four cases beginning at 12 Mod 513; dropped: 514"},
+    {"seq": 9, "raw": "10 Hen. 6. 16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Hen. VI; no source; note (u)"},
+    {"seq": 10, "raw": "22 Hen. 6. 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI, cited through Doct. Pl.; no source; note (x)"}
+  ]
+}

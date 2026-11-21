@@ -262,7 +262,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Saunders page with no note ("1 Saund. 276. n. (2). 211.", hathi00001
    03910-04200) was recorded as a second citation, as in 1831; check the
    rule and align. The 1831 Anonymous at 2 Salk. 519 is 17950160, not the
-   README's 17950161.
+   README's 17950161. Yelv. 13 (hathi00001 04210-04500) is linked to Wood
+   v. Haukshead at Yel 14 by the 1831 name, though Crispe v. Viroll begins
+   at Yel 13: check which case the passage describes, in every edition.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

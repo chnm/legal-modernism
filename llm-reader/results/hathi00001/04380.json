@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00001", "pageid": "04380",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:27:48Z",
+  "note": "printed p. 416; special pleas of matter provable under the general issue; the court's discretion. Bac. Ab. not recorded; (l) and (m) are cross-references. Names from the 1831 edition, which adds Carr v. Hinchliff to note (n); not recorded here",
+  "citations": [
+    {"seq": 1, "raw": "Salk. 394", "volume": 1, "reporter_abbr": "Salk.", "page": 394,
+     "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Holler v. Bush (1831 edition)"},
+    {"seq": 2, "raw": "Carth. 356", "reporter_abbr": "Carth.", "page": 356,
+     "status": "linked_english_reports", "er_case_id": "17410182", "confidence": "medium",
+     "note": "no name printed; Hussey v. Jacob (1831 edition)"},
+    {"seq": 3, "raw": "2 Mod. 274", "volume": 2, "reporter_abbr": "Mod.", "page": 274,
+     "status": "linked_english_reports", "er_case_id": "17930153", "confidence": "medium",
+     "note": "no name printed; Birch v. Wilson (1831 edition)"},
+    {"seq": 4, "raw": "Hob. 127", "reporter_abbr": "Hob.", "page": 127,
+     "status": "linked_english_reports", "er_case_id": "17922191", "confidence": "medium",
+     "note": "no name printed; Warner v. Wainsford (1831 edition)"},
+    {"seq": 5, "raw": "1 Leon. 178", "volume": 1, "reporter_abbr": "Leon.", "page": 178,
+     "status": "linked_english_reports", "er_case_id": "16870888", "confidence": "medium",
+     "note": "no name printed; Ward and Blunt's Case (1831 edition)"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "04280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:25:33Z",
+  "note": "printed p. 406; examples of departure in the replication and rejoinder. Name from the 1831 edition",
+  "citations": [
+    {"seq": 1, "raw": "Willes, 27", "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "medium",
+     "note": "no name printed; Hickman v. Walker (1831 edition); Willes's Reports have no source here, and the 1831 reader found no other report of it by name"}
+  ]
+}
