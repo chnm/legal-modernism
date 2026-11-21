@@ -340,6 +340,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   footnotes by their letter. Where the scan's text interleaves the lines of
   two footnotes, or puts whole footnotes out of letter order, follow the
   letters and say so in `note`.
+- A case found by its printed name at a corrected page (Richley v. Proone,
+  printed 386, at 286) is `high` when the name is unambiguous: the name
+  decides, and `page` holds the corrected number.
 - A stub link is `high` when the printed cite matches the stub exactly,
   `medium` when you supplied the volume or corrected a number.
 - A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.

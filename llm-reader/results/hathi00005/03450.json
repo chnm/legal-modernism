@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00005", "pageid": "03450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T03:21:00Z",
+  "note": "Appendix pp. xlvii-xlix, notes (35)-(37); Reeves, Hale, Coke's Institutes, Bracton, Heath's Maxims, Blackstone, Finch are not cases. Same page as hathi00004/03450.",
+  "citations": [
+    {"seq": 1, "raw": "17 Ed. II. 534", "volume": 17, "reporter_abbr": "Y.B.", "page": 534,
+     "status": "no_match", "confidence": "high", "note": "Year book, 17 Edw. II (Maynard's continuous paging); no source"},
+    {"seq": 2, "raw": "7 Ed. II. 213", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
+     "status": "no_match", "confidence": "high", "note": "Year book, 7 Edw. II (Maynard's continuous paging); no source"},
+    {"seq": 3, "raw": "ibid. 226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
+     "status": "no_match", "confidence": "high", "note": "ibid. = Year book, 7 Edw. II, p. 226; no source"}
+  ]
+}

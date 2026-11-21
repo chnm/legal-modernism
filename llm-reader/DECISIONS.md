@@ -160,7 +160,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    cite into Benson v. Swift (50), and 2 Saund. 380 n. (14) has `low` in some
    records and `medium` in others; pick one. Every "choice already made"
    in the README (12 Mod. 508, Doug. 148, ...) is `medium`; earlier records
-   have some at `low`.
+   have some at `low`. A stub matching the printed cite exactly is `high`,
+   and a case found by an unambiguous printed name at a corrected page is
+   `high` (rules of 2026-11-21; earlier records vary).
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439. Then start
    the UK editions (7 official copies, 4,219 pages; restart the progress page
