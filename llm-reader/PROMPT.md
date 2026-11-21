@@ -2,8 +2,8 @@
 
 The coordinating session gives each reader subagent this prompt, with
 `<PSMID>`, `<FIRST>` and `<LAST>` filled in from `bin/llm-reader todo`. A
-round is two readers of 30 pages each (the owner asked for no more than two
-at a time, to spare tokens); after a round the coordinator runs
+round is three readers of 30 pages each (the owner allows up to three at a
+time, to spare tokens); after a round the coordinator runs
 `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db`, commits
 `llm-reader/results`, and pushes. To resume after a restart, take the next
 pages from `bin/llm-reader todo --jurisdiction US --limit 150`. Questions for

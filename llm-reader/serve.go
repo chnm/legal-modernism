@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"time"
+	_ "time/tzdata" // so America/New_York resolves without system zoneinfo
 )
 
 type progressRow struct {
@@ -42,6 +43,15 @@ td{padding:3px 6px;border-bottom:1px solid #eee}
 <table>{{range .Rows}}<tr><td>{{.Label}}</td><td><div class="mini"><div style="width:{{printf "%.1f" .Pct}}%"></div></div></td><td>{{.Done}} / {{.Total}}</td></tr>{{end}}</table>
 </body></html>`))
 
+// newYork is the time zone the progress page reports its time in.
+var newYork = func() *time.Location {
+	loc, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		return time.UTC
+	}
+	return loc
+}()
+
 // serve shows a progress bar: the pages of the manifest that have a record,
 // re-counted from the results directory on every request.
 func serve(manifest, dir, title string, jurisdictions map[string]bool, port int) error {
@@ -56,7 +66,7 @@ func serve(manifest, dir, title string, jurisdictions map[string]bool, port int)
 			Rows      []progressRow
 			Citations int
 			Now       string
-		}{Title: title, Now: time.Now().Format("15:04:05")}
+		}{Title: title, Now: time.Now().In(newYork).Format("3:04:05 pm MST")}
 		idx := map[string]int{}
 		for _, p := range pages {
 			if len(jurisdictions) > 0 && !jurisdictions[p.Jurisdiction] {
