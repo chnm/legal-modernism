@@ -1,0 +1,23 @@
+{
+  "psmid": "hathi00009", "pageid": "02180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:36:51Z",
+  "note": "Stephen, chapter II (p. 194, OCR'd '191'): the modern rule on common and special traverses where no new matter is alleged. Bac. Ab. and 1 Chitty (on Pleading) are treatises; note (l) OCR'd '(7.)'",
+  "citations": [
+    {"seq": 1, "raw": "Robinson v. Rayley, 1 Burr., 320", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 320,
+     "status": "linked_english_reports", "er_case_id": "17570030", "pincite": true, "confidence": "high",
+     "note": "ER 'Robinson versus Raley' begins at 1 Burr 316"},
+    {"seq": 2, "raw": "1 Saund., 103 a, b, n. 3",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note (3) to Hayman v. Gerrard (ER records at 1 Wms Saund 99 and 102); 103 falls in the record at 102; folios a, b are the same page; same link as hathi00002"},
+    {"seq": 3, "raw": "Smith v. Dovers, 2 Doug., 430", "case_name": "Smith v. Dovers",
+     "volume": 2, "reporter_abbr": "Doug.", "page": 430,
+     "status": "linked_english_reports", "er_case_id": "17800068", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Doug 428"},
+    {"seq": 4, "raw": "1 Saund., 103 a, n. 3",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the same note (3) to Hayman v. Gerrard as seq 2; record from 1 Wms Saund 102"}
+  ]
+}

@@ -133,7 +133,7 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Jones (1 Saund. 298), William v. Gwyn (2 Saund. 45), Manser's Case
    (2 Rep. 3), Collins v. Blantern, Bridgwater v. Bythway (3 Lev. 113, check
    whether one case or two). Conversely a folio-lettered first page
-   (Dyer 171 b) is not a pin cite.
+   (Dyer 171 b, 1 Saund. 295 a n. 1 in hathi00002) is not a pin cite.
 3. **`no_match` read before the same-case rule:** compare each Gale
    `no_match` with other editions' records of the same footnote and link
    the same case through another report where they did: Willes (Eaton v.

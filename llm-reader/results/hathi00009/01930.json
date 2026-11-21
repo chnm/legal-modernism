@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00009", "pageid": "01930",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:30:54Z",
+  "note": "Stephen, chapter II (p. 169): general issues of non est factum, nil debet, non detinet, not guilty; end of note (x) from p. 168. Rast. and Winch. Ent. are books of entries; 1 Tidd a treatise",
+  "citations": [
+    {"seq": 1, "raw": "Read v. Brookman, 3 T. R., 158", "case_name": "Read v. Brookman",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "end of note (x) from p. 168; case begins at 3 TR 151; same link as hathi00006"}
+  ]
+}
