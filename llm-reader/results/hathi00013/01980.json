@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:17:54Z",
+  "note": "printed page 144, section 87 (process, the capias); 1894 p. 98 (pageid 01610). Stephen's notes (y)-(a) cite Bracton, Blackstone, Tidd and Sellon (not recorded). Andrews's note 1, whose two columns the scan interleaves, cites Semayne's Case; Smith's Leading Cases and Cooley's Blackstone are not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Semayne's Case, 5 Coke, 91", "case_name": "Semayne's Case",
+     "volume": 5, "reporter_abbr": "Coke", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "15720333", "confidence": "high"}
+  ]
+}

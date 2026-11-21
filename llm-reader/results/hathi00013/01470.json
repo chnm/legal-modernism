@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01470",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:18:47Z",
+  "note": "printed page 97, half-title 'System of Pleading followed in the National Courts' with an epigraph",
+  "citations": [
+    {"seq": 1, "raw": "Thompson v. Kail way Co., 6 Wall. 137", "case_name": "Thompson v. Railway Co.",
+     "volume": 6, "reporter_abbr": "Wall.", "page": 137,
+     "status": "linked_cap", "cap_case_id": 3454262, "pincite": true, "confidence": "high",
+     "note": "quotation from Thompson v. Railroad Companies, 6 Wall. 134-139 (1867)"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "02010",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:18:24Z",
+  "note": "printed page 147, sections 88-89 (oral pleading, formation of issue); 1894 pp. 101-102 (pageids 01640-01650). Stephen's notes (i)-(p) cite the Appendix, Bracton, Gilbert and Reeves (not recorded). Andrews's note 1 on the issue begins; Greenleaf on Evidence is not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Avon Mfg. Co. v. Andrews, 30 Conn. 476", "case_name": "Avon Mfg. Co. v. Andrews",
+     "volume": 30, "reporter_abbr": "Conn.", "page": 476,
+     "status": "linked_cap", "cap_case_id": 532423, "confidence": "high"},
+    {"seq": 2, "raw": "Marshall v. Haney, 9 Gill, 251", "case_name": "Marshall v. Haney",
+     "volume": 9, "reporter_abbr": "Gill", "page": 251,
+     "status": "linked_cap", "cap_case_id": 1712622, "confidence": "high"},
+    {"seq": 3, "raw": "Leopard v. Ches. & O. Ry. Co., 1 Gill, 228", "case_name": "Leopard v. Ches. & O. Ry. Co.",
+     "volume": 1, "reporter_abbr": "Gill", "page": 228,
+     "status": "linked_cap", "cap_case_id": 1016692, "pincite": true, "confidence": "high",
+     "note": "Leopard v. Chesapeake & Ohio Canal Co., 1 Gill 222-234"},
+    {"seq": 4, "raw": "Bassett v. Johnson, 2 N. J. Eq. 154", "case_name": "Bassett v. Johnson",
+     "volume": 2, "reporter_abbr": "N. J. Eq.", "page": 154,
+     "status": "linked_cap", "cap_case_id": 500967, "confidence": "high"},
+    {"seq": 5, "raw": "Eberhart v. Sanger, 1 Wis. 72", "case_name": "Eberhart v. Sanger",
+     "volume": 51, "reporter_abbr": "Wis.", "page": 72,
+     "status": "linked_cap", "cap_case_id": 8703030, "confidence": "high",
+     "note": "volume printed 1, corrected to 51 (as in the 1894 edition); CAP names it Eberhardt v. Sanger (1881)"},
+    {"seq": 6, "raw": "Simons v. Winters, 5 Pet. 141", "case_name": "Simonton v. Winter",
+     "volume": 5, "reporter_abbr": "Pet.", "page": 141,
+     "status": "linked_cap", "cap_case_id": 534509, "confidence": "high",
+     "note": "name printed Simons v. Winters"}
+  ]
+}

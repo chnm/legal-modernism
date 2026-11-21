@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "02050",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:19:50Z",
+  "note": "printed page 151, section 92 (written pleadings); 1894 pp. 105-106 (pageids 01680-01690). Stephen's notes (b)-(d) cite Reeves only. The end of Andrews's note 2 (the quotation on the object of pleading) cites Swift & Co. v. Raleigh; the 1894 edition's Legnard v. Crane Co. is not printed here. 'Ante, p. 148' is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "Swift & Co. v. Raleigh, 54 111. App. 44", "case_name": "Swift & Co. v. Raleigh",
+     "volume": 54, "reporter_abbr": "Ill. App.", "page": 44,
+     "status": "linked_cap", "cap_case_id": 5103610, "confidence": "high"}
+  ]
+}

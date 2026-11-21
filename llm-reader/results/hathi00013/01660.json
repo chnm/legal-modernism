@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01660",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:16:19Z",
+  "note": "p. 112, secs. 65-67: forms of action, writ of right, formedon. Stephen's notes cite F. N. B., Blackstone, Archbold and Chitty (treatises); Andrews's notes cite a statute and Newell on Ejectment. One case.",
+  "citations": [
+    {"seq": 1, "raw": "Ex parte Bradstreet, 7 Pet. 634", "case_name": "Ex parte Bradstreet",
+     "volume": 7, "reporter_abbr": "Pet.", "page": 634,
+     "status": "linked_cap", "cap_case_id": 1436154, "confidence": "high"}
+  ]
+}

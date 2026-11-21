@@ -326,7 +326,8 @@ American cases in the later editions (Andrews, 1894, and after):
 
 - Each printed parallel cite is its own citation. One to a series CAP
   does not hold as a reporter (American Decisions, American Reports,
-  American State Reports, L.R.A., a regional reporter not in
+  American State Reports, L.R.A., the Lawyers' Edition (`L. ed.`), a
+  regional reporter not in
   `cap.citations` for that case) links the same case's official report in
   CAP at `medium`, as a report with no source does; one CAP holds links
   directly. Reprints of English cases (Eng. C. L., English Ruling Cases)

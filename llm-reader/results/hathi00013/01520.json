@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01520",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:21:22Z",
+  "note": "printed page 98, section 52; new 1901 text. The notes open with the end of note 2 from page 97 (University Law Review; Fritz v. Hathaway), then notes 1-4 of this page. University Law Review and Phillips' Code Pleading are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "Fritz v. Hathaway, 135 Pa. St. 280", "case_name": "Fritz v. Hathaway",
+     "volume": 135, "reporter_abbr": "Pa. St.", "page": 280,
+     "status": "linked_cap", "cap_case_id": 817450, "pincite": true, "confidence": "high",
+     "note": "continuation of note 2 from page 97; quotation from Fritz v. Hathaway, 135 Pa. 274-281 (1890)"},
+    {"seq": 2, "raw": "U. P. Ey. Co. v. Wyler, 158 U. S. 285", "case_name": "U. P. Ry. Co. v. Wyler",
+     "volume": 158, "reporter_abbr": "U. S.", "page": 285,
+     "status": "linked_cap", "cap_case_id": 1220486, "confidence": "high"},
+    {"seq": 3, "raw": "Supervisors v. Decker, 30 Wis. 624", "case_name": "Supervisors v. Decker",
+     "volume": 30, "reporter_abbr": "Wis.", "page": 624,
+     "status": "linked_cap", "cap_case_id": 11286046, "confidence": "high"}
+  ]
+}

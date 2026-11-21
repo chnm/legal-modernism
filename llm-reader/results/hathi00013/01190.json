@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01190",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:20:43Z",
+  "note": "p. 69 (§ 43, Dicey's rules 20-22 against the modern American rules), new in 1901. Wigton v. Smith and Clark v. Miller are cited in the right column's text, before the footnotes.",
+  "citations": [
+    {"seq": 1, "raw": "Wigton v. Smith, 57 Neb. 299", "case_name": "Wigton v. Smith",
+     "volume": 57, "reporter_abbr": "Neb.", "page": 299,
+     "status": "linked_cap", "cap_case_id": 599091, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 2, "raw": "Clark v. Miller, 4 Wend. 628", "case_name": "Clark v. Miller",
+     "volume": 4, "reporter_abbr": "Wend.", "page": 628,
+     "status": "linked_cap", "cap_case_id": 2005460, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 3, "raw": "Atwater v. Fowler, 1 Edw. Ch. 417", "case_name": "Atwater v. Fowler",
+     "volume": 1, "reporter_abbr": "Edw. Ch.", "page": 417,
+     "status": "linked_cap", "cap_case_id": 485768, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 4, "raw": "McMurray v. Rawson, 3 Hill, 59", "case_name": "McMurray v. Rawson",
+     "volume": 3, "reporter_abbr": "Hill", "page": 59,
+     "status": "linked_cap", "cap_case_id": 2172566, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 5, "raw": "Duncan v. Lyon, 3 Johns. Ch. 351", "case_name": "Duncan v. Lyon",
+     "volume": 3, "reporter_abbr": "Johns. Ch.", "page": 351,
+     "status": "linked_cap", "cap_case_id": 1976924, "confidence": "high",
+     "note": "new in 1901"},
+    {"seq": 6, "raw": "1 L. ed. 644", "case_name": "Duncan v. Lyon",
+     "volume": 1, "reporter_abbr": "L. ed.", "page": 644,
+     "status": "linked_cap", "cap_case_id": 1976924, "confidence": "medium",
+     "note": "the Lawyers' Edition reprint of the New York chancery reports, not in CAP; linked to the official report, 3 Johns. Ch. 351; new in 1901"}
+  ]
+}

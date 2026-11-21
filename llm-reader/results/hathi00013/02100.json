@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "02100",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:21:34Z",
+  "note": "printed page 156, section 94, Andrews's new passage on pleading facts under the codes (new in 1901). Pomeroy, Bliss and the Code Commissioners' Report are not recorded. People v. Ryder is named in the text with its cite in note 2.",
+  "citations": [
+    {"seq": 1, "raw": "People v. Kyder, 12 N. Y. 433-487", "case_name": "People v. Ryder",
+     "volume": 12, "reporter_abbr": "N. Y.", "page": 433,
+     "status": "linked_cap", "cap_case_id": 2016197, "confidence": "high",
+     "note": "name in the text, cite in note 2; name printed Kyder, read Ryder (CAP: People ex rel. Crane v. Ryder, 12 N.Y. 433-442); recorded at its first page; dropped: 487"},
+    {"seq": 2, "raw": "Hill v. Barrett, 14 B. Mon. 83", "case_name": "Hill v. Barrett",
+     "volume": 14, "reporter_abbr": "B. Mon.", "page": 83,
+     "status": "linked_cap", "cap_case_id": 2337612, "confidence": "high",
+     "note": "CAP: Hill ex rel. Wintersmith v. Barrett, 53 Ky. (14 B. Mon.) 83"},
+    {"seq": 3, "raw": "Cook v. Warren, 88 N. Y. 37", "case_name": "Cook v. Warren",
+     "volume": 88, "reporter_abbr": "N. Y.", "page": 37,
+     "status": "linked_cap", "cap_case_id": 550770, "confidence": "high"}
+  ]
+}

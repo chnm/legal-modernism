@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01080",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:13:44Z",
+  "note": "p. 58 (§ 31, Harris v. Swanson, Gray v. Wilson, Wright v. McLemore), matching the 1894's pp. 45-46 (19005765000/01040-01050). Footnotes 1-3 each support a case named in the text.",
+  "citations": [
+    {"seq": 1, "raw": "62 Ala. 299", "case_name": "Harris v. Swanson",
+     "volume": 62, "reporter_abbr": "Ala.", "page": 299,
+     "status": "linked_cap", "cap_case_id": 5588797, "confidence": "high",
+     "note": "footnote 1 to Harris v. Swanson named in the text (footnote number run into the volume, '162')"},
+    {"seq": 2, "raw": "Meigs,394", "case_name": "Gray v. Wilson",
+     "volume": 1, "reporter_abbr": "Meigs", "page": 394,
+     "status": "linked_cap", "cap_case_id": 8542648, "confidence": "high",
+     "note": "footnote 2 to Gray v. Wilson named in the text; Meigs is a single-volume reporter"},
+    {"seq": 3, "raw": "lOYerg. 235", "case_name": "Wright v. McLemore",
+     "volume": 10, "reporter_abbr": "Yerg.", "page": 235,
+     "status": "linked_cap", "cap_case_id": 8541895, "confidence": "high",
+     "note": "footnote 3 to Wright v. McLemore named in the text"}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "00870",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:16:27Z",
+  "note": "p. 37, Andrews's chapter II (§ 21, assignment of choses in action). This passage and its footnotes are new in 1901 (the 1894's § 12 at 19005765000/00890-00900 goes straight to parties to contracts). Andrews' Am. Law, Pomeroy's Eq. Jur. and the appendix note in 1 Cranch are not cases; fn 7 'Id.' repeats Andrews' Am. Law. The trailing '177188' is noise.",
+  "citations": [
+    {"seq": 1, "raw": "Jessel v. Insurance Co., 3 Hill, 88", "case_name": "Jessel v. Insurance Co.",
+     "volume": 3, "reporter_abbr": "Hill", "page": 88,
+     "status": "linked_cap", "cap_case_id": 2172574, "confidence": "high",
+     "note": "CAP's Jessel v. Williamsburgh Insurance (1842), its cite stored as '3 Hill & Den. 88'"},
+    {"seq": 2, "raw": "Diamond M. Co. v. Roeber, 106 N. Y. 473", "case_name": "Diamond M. Co. v. Roeber",
+     "volume": 106, "reporter_abbr": "N. Y.", "page": 473,
+     "status": "linked_cap", "cap_case_id": 2210453, "confidence": "high"},
+    {"seq": 3, "raw": "Jessel v. Insurance Co., supra", "case_name": "Jessel v. Insurance Co.",
+     "volume": 3, "reporter_abbr": "Hill", "page": 88,
+     "status": "linked_cap", "cap_case_id": 2172574, "confidence": "high",
+     "note": "supra: 3 Hill, 88, cited in footnote 3"},
+    {"seq": 4, "raw": "Gruber v. Baker, 20 Nev. 459", "case_name": "Gruber v. Baker",
+     "volume": 20, "reporter_abbr": "Nev.", "page": 459,
+     "status": "linked_cap", "cap_case_id": 4658867, "pincite": true, "confidence": "high",
+     "note": "case runs 453-485"},
+    {"seq": 5, "raw": "9 L. R. A. 302", "case_name": "Gruber v. Baker",
+     "volume": 9, "reporter_abbr": "L. R. A.", "page": 302,
+     "status": "linked_cap", "cap_case_id": 4658867, "confidence": "medium",
+     "note": "the Lawyers' Reports Annotated has no source; linked to the official report, 20 Nev. 453"}
+  ]
+}

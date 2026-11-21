@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "00910",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:17:55Z",
+  "note": "p. 41, Andrews's chapter II (§ 22, privity); rewritten from the 1894's § 12 (19005765000/00900), with new footnotes. Footnote columns interleaved; recorded in footnote order 1-5. 'Lawrence v. Fox is the extreme' (fn 5) names the case with no cite and is not recorded; the 'supra' references are resolved to the cites earlier on the page.",
+  "citations": [
+    {"seq": 1, "raw": "Marston v. Bigelow, 150 Mass. 45", "case_name": "Marston v. Bigelow",
+     "volume": 150, "reporter_abbr": "Mass.", "page": 45,
+     "status": "linked_cap", "cap_case_id": 780630, "confidence": "high"},
+    {"seq": 2, "raw": "5 L. R. A. 43", "case_name": "Marston v. Bigelow",
+     "volume": 5, "reporter_abbr": "L. R. A.", "page": 43,
+     "status": "linked_cap", "cap_case_id": 780630, "confidence": "medium",
+     "note": "the Lawyers' Reports Annotated has no source; linked to the official report, 150 Mass. 45"},
+    {"seq": 3, "raw": "Lawrence v. Fox, 20 N. Y. 268", "case_name": "Lawrence v. Fox",
+     "volume": 20, "reporter_abbr": "N. Y.", "page": 268,
+     "status": "linked_cap", "cap_case_id": 2022913, "confidence": "high"},
+    {"seq": 4, "raw": "Lawrence v. Fox, supra", "case_name": "Lawrence v. Fox",
+     "volume": 20, "reporter_abbr": "N. Y.", "page": 268,
+     "status": "linked_cap", "cap_case_id": 2022913, "confidence": "high",
+     "note": "footnote 3; supra: 20 N. Y. 268"},
+    {"seq": 5, "raw": "Lawrence v. Fox, supra", "case_name": "Lawrence v. Fox",
+     "volume": 20, "reporter_abbr": "N. Y.", "page": 268,
+     "status": "linked_cap", "cap_case_id": 2022913, "confidence": "high",
+     "note": "footnote 4; supra: 20 N. Y. 268"},
+    {"seq": 6, "raw": "Marston v. Bigelow, supra", "case_name": "Marston v. Bigelow",
+     "volume": 150, "reporter_abbr": "Mass.", "page": 45,
+     "status": "linked_cap", "cap_case_id": 780630, "confidence": "high",
+     "note": "footnote 5; supra: 150 Mass. 45"}
+  ]
+}

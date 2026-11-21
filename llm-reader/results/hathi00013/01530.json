@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "01530",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:21:55Z",
+  "note": "printed page 99, section 52: Stephen's rule that the declaration must conform to the writ, which the 1894 prints as section 219 at pp. 416-417 (19005765000/04800-04810); the 1901 moves it into Andrews's chapter V. Stephen's footnotes (s)-(z) first (Com. Dig., Bac. Ab., Co. Litt., Bracton skipped), then Andrews's notes 1-2 (columns interleaved; Phillips' Code Pleading and Dicey on Parties skipped).",
+  "citations": [
+    {"seq": 1, "raw": "Young v. Watson, Cro. Eliz. 308", "case_name": "Young v. Watson",
+     "reporter_abbr": "Cro. Eliz.", "page": 308,
+     "status": "linked_english_reports", "er_case_id": "16532271", "confidence": "high"},
+    {"seq": 2, "raw": "Edward v. Watkin, id. 185", "case_name": "Edward v. Watkin",
+     "reporter_abbr": "Cro. Eliz.", "page": 185,
+     "status": "linked_english_reports", "er_case_id": "16530671", "confidence": "high",
+     "note": "id. = Cro. Eliz.; ER Edwards against Watkin"},
+    {"seq": 3, "raw": "1 Saund. 318, n. 3", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
+     "status": "linked_english_reports", "er_case_id": "18450197", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the README's choice for 1 Saund. 318 n. (3): Redman v. Edolph, record at 1 Wms Saund 317"},
+    {"seq": 4, "raw": "Supervisors vs. Decker, 30 Wis. 624", "case_name": "Supervisors v. Decker",
+     "volume": 30, "reporter_abbr": "Wis.", "page": 624,
+     "status": "linked_cap", "cap_case_id": 11286046, "confidence": "high"},
+    {"seq": 5, "raw": "Wright v. Snedecor, 46 Ala. 92", "case_name": "Wright v. Snedecor",
+     "volume": 46, "reporter_abbr": "Ala.", "page": 92,
+     "status": "linked_cap", "cap_case_id": 3147033, "confidence": "high"},
+    {"seq": 6, "raw": "Hambrick v. Wilkins, 65 Miss. 18", "case_name": "Hambrick v. Wilkins",
+     "volume": 65, "reporter_abbr": "Miss.", "page": 18,
+     "status": "linked_cap", "cap_case_id": 371909, "confidence": "high"},
+    {"seq": 7, "raw": "7 Am. St. R 631", "case_name": "Hambrick v. Wilkins",
+     "volume": 7, "reporter_abbr": "Am. St. Rep.", "page": 631,
+     "status": "linked_cap", "cap_case_id": 371909, "confidence": "medium",
+     "note": "American State Reports parallel, linked to the official report 65 Miss. 18; the 1894 record reads the page 61, but this edition prints 631 legibly"}
+  ]
+}
