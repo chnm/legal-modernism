@@ -1,0 +1,19 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02860",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:49:11Z",
+  "note": "printed page 260, star pages *318-319; Com. Dig., Reeves's History, Bracton, Littleton and the statute 27 Eliz. c. 6 not recorded; checked against the 1838 and 1843 editions (19005904300/03520)",
+  "citations": [
+    {"seq": 1, "raw": "Craft c. Boite, 1 Saund. 246 b.", "case_name": "Craft v. Boite",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 246,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high",
+     "note": "the English Reports split the case into records at 1 Wms Saund 241 and 246; 246 b falls in the second, a pincite since the case begins at 241"},
+    {"seq": 2, "raw": "8 Edw. III. 8 PI. 20", "volume": 8, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 8 Edw. III, fol. 8, pl. 20 (the 1838 and 1843 editions agree); no source"},
+    {"seq": 3, "raw": "46 Edw. III. 16", "volume": 45, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 45 Edw. III, fol. 15: the 1838 and 1843 editions print 45 Edw. III. 15; this OCR reads 46 ... 16, taken as the usual 5-for-6 misreading; no source"}
+  ]
+}

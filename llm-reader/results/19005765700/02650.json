@@ -1,0 +1,13 @@
+{
+  "psmid": "19005765700",
+  "pageid": "02650",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:46:08Z",
+  "note": "printed page 239, star pages *292-294; Com. Dig. and Bac. Ab. are abridgments",
+  "citations": [
+    {"seq": 1, "raw": "Bleke v. Grove, 1 Sid. 176", "case_name": "Bleke v. Grove",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "17140060", "pincite": true, "confidence": "high",
+     "note": "stored as Bleeke v Grove, beginning at 1 Sid 175 (1326 words)"}
+  ]
+}

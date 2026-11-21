@@ -1,0 +1,32 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:48:55Z",
+  "note": "3 Chitty skipped",
+  "citations": [
+    {"seq": 1, "raw": "Leyfield's case, 10 Co. 80 b", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Co.", "page": 89,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "OCR 80 for 89 (the 1843 edition and footnote (f) on the previous page print 89 b); case begins at 10 Co Rep 88"},
+    {"seq": 2, "raw": "Stott v. Stott, 16 East, 343", "case_name": "Stott v. Stott",
+     "volume": 16, "reporter_abbr": "East", "page": 343,
+     "status": "linked_english_reports", "er_case_id": "18120521", "confidence": "high"},
+    {"seq": 3, "raw": "Johnson v. Faulkner, 2 G. & D. 184", "case_name": "Johnson v. Faulkner",
+     "volume": 2, "reporter_abbr": "G. & D.", "page": 184,
+     "status": "linked_english_reports", "er_case_id": "18420041", "pincite": false, "confidence": "medium",
+     "note": "Gale and Davison, no source; same case (1842) in the English Reports at 2 QB 925"},
+    {"seq": 4, "raw": "Lambert v. Stroo- then, Willes, 218", "case_name": "Lambert v. Stroothen",
+     "reporter_abbr": "Willes", "page": 218,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source; no other report of Lambert v. Stroothen (or Strother) found in the English Reports by name"},
+    {"seq": 5, "raw": "Smith v. Royston, 1 Dowl. N. S. 124", "case_name": "Smith v. Royston",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 124,
+     "status": "linked_english_reports", "er_case_id": "18410677", "pincite": false, "confidence": "medium",
+     "note": "Dowling's Practice Cases, new series; linked to the same case's English Reports report, 8 M & W 381"},
+    {"seq": 6, "raw": "8 M. & W. 881, S. C.", "case_name": "Smith v. Royston",
+     "volume": 8, "reporter_abbr": "M. & W.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "18410677", "confidence": "high",
+     "note": "OCR 881 for 381"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03360",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:46:02Z",
+  "citations": [
+    {"seq": 1, "raw": "Deybel's case, 4 Barn. & Ald. 243", "case_name": "Deybel's Case",
+     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high"},
+    {"seq": 2, "raw": "The King v. Lyme Regis, Doug. 150", "case_name": "The King v. Lyme Regis",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 150,
+     "status": "linked_english_reports", "er_case_id": "17790084", "pincite": true, "confidence": "high",
+     "note": "volume supplied; per Buller J.; the record begins at 1 Doug 149 (choice already made for Doug. 148)"}
+  ]
+}
