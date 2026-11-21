@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "00720",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:09:21Z",
+  "note": "p. 22, the 1901 editor's introduction (§ 16, distinctive features of code reforms; the 1894 § 7 at 19005765000/00760, rewritten and expanded, with new text on Pennsylvania procedure and new footnotes 1 and 2). Footnote columns are interleaved. Pa. Bar Ass'n Rep., Andrews' Am. Law and 3 Black. Com. are not cases; footnote 3 is a cross-reference.",
+  "citations": [
+    {"seq": 1, "raw": "Lyle v. Richards, 9 S. & R. 340, opinion of Duncan, J., p. 355", "case_name": "Lyle v. Richards",
+     "volume": 9, "reporter_abbr": "S. & R.", "page": 340,
+     "status": "linked_cap", "cap_case_id": 8878674, "pincite": true, "confidence": "high",
+     "note": "case runs 322-377; dropped: 355 (Duncan J.'s opinion, same case); new in 1901"},
+    {"seq": 2, "raw": "McConihay v. Wright, 121 U. S. 206", "case_name": "McConihay v. Wright",
+     "volume": 121, "reporter_abbr": "U. S.", "page": 206,
+     "status": "linked_cap", "cap_case_id": 678722, "pincite": true, "confidence": "high",
+     "note": "case begins at 201; new in 1901"}
+  ]
+}
