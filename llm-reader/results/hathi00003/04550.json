@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00003", "pageid": "04550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T00:40:07Z",
+  "note": "Second appendix, p. cxxxiii: notes 10 (end) and 11 (Sir Francis Leake's case, from Williams's notes to Saunders); the Dyer and Yelverton cases are cross-references to the text, not citations; cross-checked with 19005785400/04440",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 207. n. 24", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "Goram v. Sweeting begins at 2 Saund. 200; the English Reports title its records at 2 Wms Saund 200 and 205 'Same v Bateman'; this is the record holding the cited page (choice already made in the README)"},
+    {"seq": 2, "raw": "Gardiner v. Croasdale, 2 Burr. 904", "case_name": "Gardiner v. Croasdale",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 904,
+     "status": "linked_english_reports", "er_case_id": "17600685", "confidence": "high"},
+    {"seq": 3, "raw": "2 Saund. 206. a, note 22", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "Goram v. Sweeting, 2 Saund. 200; the ER record at 2 Wms Saund 205 ('Same v Bateman') holds the cited page"},
+    {"seq": 4, "raw": "2 Saund. 207, n. 24", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "Goram v. Sweeting, 2 Saund. 200; the ER record at 2 Wms Saund 205 ('Same v Bateman') holds the cited page"}
+  ]
+}

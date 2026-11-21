@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00003", "pageid": "04320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T00:34:26Z",
+  "note": "Second appendix, p. cx, note 2 on replevin; Ham. N. P., the Mirrour and Gilb. Repl. are treatises; cross-checked with 19005785400/04210",
+  "citations": [
+    {"seq": 1, "raw": "1 Mason, 322", "volume": 1, "reporter_abbr": "Mason", "page": 322,
+     "status": "linked_cap", "cap_case_id": 6674814, "pincite": true, "confidence": "medium",
+     "note": "no name printed; falls in Meany v. Head, 1 Mason 319, a replevin case"},
+    {"seq": 2, "raw": "1 Scho. & Lef. 320. 324", "volume": 1, "reporter_abbr": "Sch. & Lef.", "page": 320,
+     "status": "linked_stub", "stub_cite": "1 Sch. & Lef. 320", "confidence": "medium",
+     "note": "no name printed; Schoales and Lefroy has no source; a stub begins at 320; dropped: 324"},
+    {"seq": 3, "raw": "7 Johns. 140", "volume": 7, "reporter_abbr": "Johns.", "page": 140,
+     "status": "linked_cap", "cap_case_id": 369101, "confidence": "medium",
+     "note": "no name printed; Pangburn v. Patridge begins at 140"},
+    {"seq": 4, "raw": "10 Id. 373", "volume": 10, "reporter_abbr": "Johns.", "page": 373,
+     "status": "linked_cap", "cap_case_id": 2136017, "pincite": true, "confidence": "medium",
+     "note": "Id. is Johns.; no name printed; Hopkins v. Hopkins (cited 10 Johns. 369, a replevin case) runs over 373"},
+    {"seq": 5, "raw": "14 Id. 86", "volume": 14, "reporter_abbr": "Johns.", "page": 86,
+     "status": "linked_cap", "cap_case_id": 376208, "pincite": true, "confidence": "medium",
+     "note": "Id. is Johns.; no name printed; falls in Thompson v. Button, 14 Johns. 84, a replevin case"},
+    {"seq": 6, "raw": "15 Id. 401", "volume": 15, "reporter_abbr": "Johns.", "page": 401,
+     "status": "linked_cap", "cap_case_id": 2140945, "confidence": "medium",
+     "note": "Id. is Johns.; no name printed; Gardner v. Campbell begins at 401"},
+    {"seq": 7, "raw": "12 Rep. 79", "volume": 12, "reporter_abbr": "Rep.", "page": 79,
+     "status": "linked_english_reports", "er_case_id": "15720003", "confidence": "medium",
+     "note": "no name printed; the 'Admiralty' report at 12 Co Rep 79, cited for replevin of a ship taken off Scarborough"},
+    {"seq": 8, "raw": "5 Rep. 107", "volume": 5, "reporter_abbr": "Rep.", "page": 107,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true, "confidence": "medium",
+     "note": "no name printed; falls in Sir Henry Constable's Case (5 Co Rep 106), on wreck"}
+  ]
+}
