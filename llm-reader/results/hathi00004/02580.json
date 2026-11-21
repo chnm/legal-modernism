@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00004", "pageid": "02580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:05:28Z",
+  "note": "printed pp. 374-376; same footnotes as 19005764100/02520",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 211, n (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 211,
+     "status": "linked_english_reports", "er_case_id": "18450083", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note on the statute of frauds falls in Forth v. Stanton (1 Wms Saund 210); Doughty v. Neal begins at 211 but the subject fits Forth v. Stanton"},
+    {"seq": 2, "raw": "Anon. 2 Salk. 519", "case_name": "Anonymous",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 519,
+     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519 and cannot be told apart; same choice as the previous page"},
+    {"seq": 3, "raw": "1 Saund. 276, d. e. n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note falls in Duppa v. Mayo (begins 1 Wms Saund 275)"}
+  ]
+}

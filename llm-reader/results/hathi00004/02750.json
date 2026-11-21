@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00004", "pageid": "02750",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:09:54Z",
+  "note": "printed pp. 402-404; Chitty, Wentworth, the Appendix and cross-references are not recorded; same footnotes as 19005764100/02690",
+  "citations": [
+    {"seq": 1, "raw": "Took v. Glascock, 1 Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "Took v. Glascock begins at 1 Wms Saund 250"},
+    {"seq": 2, "raw": "Veale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "Veale v. Warner begins at 1 Wms Saund 323"},
+    {"seq": 3, "raw": "Weeks v. Peach, I Salk. 179", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high",
+     "note": "'I' read as 1"}
+  ]
+}

@@ -151,7 +151,13 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    at 76 in some records).
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
    as a back-reference; earlier records left it out.
-8. After the pass: validate everything, commit, and post each Decisions and
+8. **A bare `Ibid.` after a footnote mixing a case and a treatise**
+   (Le Bret v. Papillon, 4 East 502; 2 Chitty 421) is not recorded; the
+   Gale 1851 record (19005764100, the page 60 below hathi00004 02740) has
+   it. Also align that copy's "2 Saund. 410, and note (3), ibid." and
+   "2 Saund. 97, and 97 b, n. (2)" to one record each, and 1 Saund. 23 n. (2)
+   to Birks v. Trippet at 28.
+9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439. Then start
    the UK editions (7 official copies, 4,219 pages; restart the progress page
    with `--jurisdiction UK` or none).

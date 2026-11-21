@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00004", "pageid": "02620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T01:06:39Z",
+  "note": "printed pp. 381-382; Bac. Ab., Styles' Pract. Reg. and the Appendix reference are not recorded; same footnotes as 19005764100/02560",
+  "citations": [
+    {"seq": 1, "raw": "Myn v. Cole, Cro. Jac. 87", "case_name": "Myn v. Cole",
+     "reporter_abbr": "Cro. Jac.", "page": 87,
+     "status": "linked_english_reports", "er_case_id": "17910725", "confidence": "high"},
+    {"seq": 2, "raw": "28 Hen. 6, 7", "volume": 28, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high", "note": "year book, 28 Hen. VI fo. 7; no source"},
+    {"seq": 3, "raw": "Slade v. Drake, Hob. 295", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high"},
+    {"seq": 4, "raw": "Auberie v. James, Vent. 70", "case_name": "Auberie v. James",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17260222", "confidence": "high",
+     "note": "volume 1 supplied"},
+    {"seq": 5, "raw": "1 Sid. 444", "volume": 1, "reporter_abbr": "Sid.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17140026", "confidence": "high",
+     "note": "same case; ER 1 Sid 444 'Awbry versus James'"},
+    {"seq": 6, "raw": "2 Keb. 623, S. C.", "volume": 2, "reporter_abbr": "Keb.", "page": 623,
+     "status": "no_match", "confidence": "medium",
+     "note": "S. C. of Auberie v. James; the records at 2 Keb 623 are other cases and no Aubery/Awbry v. James is found in Keble (as in the other editions' readings)"}
+  ]
+}
