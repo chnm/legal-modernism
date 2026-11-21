@@ -1,0 +1,28 @@
+{
+  "psmid": "19005773800", "pageid": "04940",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:37:29Z",
+  "note": "Second appendix p. cxi, note 2 on replevin continued; same text as hathi00006/03870; Fitzherbert N. B., Com. Dig., Gilb. Rep. (Hunt's edition of Gilbert on Replevin), Morg. Vad. Mec. and Chit. Pl. skipped. The Six Carpenters' Case is named at the foot of the previous page (04930) and its cite printed here",
+  "citations": [
+    {"seq": 1, "raw": "Six Carpenters' Case, 8 Rep. 146", "case_name": "The Six Carpenters' Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "15720452", "confidence": "high"},
+    {"seq": 2, "raw": "Yclv. 146 a.", "reporter_abbr": "Yelv.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17922163",
+     "confidence": "low", "note": "OCR 'Yclv.'; same cite as on 04930; two cases begin at Yel 146 (Cope v. Temple and Wilshire v. -), not told apart; picked Cope v. Temple"},
+    {"seq": 3, "raw": "2 Lutw. 1956", "volume": 2, "reporter_abbr": "Lutw.", "page": 1956,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1956",
+     "confidence": "high", "note": "no name printed; a stub begins at exactly 2 Lutw. 1956"},
+    {"seq": 4, "raw": "1 New amZp. Rep. 38", "volume": 1, "reporter_abbr": "N.H.", "page": 38,
+     "status": "linked_cap", "cap_case_id": 6752673, "pincite": true,
+     "confidence": "medium", "note": "OCR 'New amZp.' for New Hamp.; no name printed; falls in Brown v. Smith, 1 N.H. 36-39, on impounding animals"},
+    {"seq": 5, "raw": "Scheales & Lefroy, ubi supra", "volume": 1, "reporter_abbr": "Sch. & Lef.", "page": 320,
+     "status": "linked_stub", "stub_cite": "1 Sch. & Lef. 320",
+     "confidence": "low", "note": "ubi supra resolved to 1 Sch. & Lef. 320 (with 324), cited on 04920 for the Irish replevin practice"},
+    {"seq": 6, "raw": "15 Mass. 359", "volume": 15, "reporter_abbr": "Mass.", "page": 359,
+     "status": "linked_cap", "cap_case_id": 2055234,
+     "confidence": "medium", "note": "no name printed; Badger v. Phinney, cited 15 Mass. 359 (CAP first_page 323), replevin without a tortious taking"},
+    {"seq": 7, "raw": "11 Id. 147", "volume": 11, "reporter_abbr": "Mass.", "page": 147,
+     "status": "linked_cap", "cap_case_id": 2053466,
+     "confidence": "medium", "note": "Id. is Mass.; no name printed; Jackson v. Mayo, cited 11 Mass. 147 (CAP first_page 141)"}
+  ]
+}

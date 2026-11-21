@@ -1,0 +1,15 @@
+{
+  "psmid": "19005773800", "pageid": "04880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T04:36:10Z",
+  "note": "Appendix pp. cv-cvi, notes 78-80; same text as hathi00006/03820-03830; Bracton, Vin. Ab. and the Placitorum Abbreviatio entry are not reports",
+  "citations": [
+    {"seq": 1, "raw": "Constable's casse, 5 Rep. 108 a", "case_name": "Constable's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 108,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true,
+     "confidence": "high", "note": "Sir Henry Constable's Case begins at 5 Co Rep 106"},
+    {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 665,
+     "status": "no_match", "confidence": "high",
+     "note": "volume 1 supplied (Lutwyche paged as one run; the stubs put 607-697 in 1 Lutw.); Lutwyche is only in the stubs, which have nothing at 665; no Ladd v. Garrod in the English Reports by name (as in hathi00006/03820). Graded high as a legible, named cite to a reporter with no source"}
+  ]
+}
