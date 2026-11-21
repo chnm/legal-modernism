@@ -1,0 +1,19 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04180",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:05:30Z",
+  "note": "printed p. 392 (*487-488); Rule VIII, entitling; Rule IX, pleadings ought to be true; rules of court, Chitty on Pleading, Archbold, Bac. Ab., the statute 3 Edw. I. c. 29 and 2 Inst. not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Topping v. Fuge, 1 Marsh. 341", "case_name": "Topping v. Fuge",
+     "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
+     "note": "Marshall's C.P. Reports have no source; two records of Topping v. Fuge (1814) are in Taunton, 5 Taunt 330 and 5 Taunt 771; picked 330 as nearer the place of 1 Marsh. 341 in the run of 5 Taunt, not confirmed"},
+    {"seq": 2, "raw": "Slade v. Drake, Hob. 295", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high"},
+    {"seq": 3, "raw": "Smith v Yeomans, 1 Saund. 316", "case_name": "Smith v. Yeomans",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 316,
+     "status": "linked_english_reports", "er_case_id": "18450240", "confidence": "high"}
+  ]
+}

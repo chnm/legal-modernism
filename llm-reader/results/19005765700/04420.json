@@ -1,0 +1,29 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04420",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:04:02Z",
+  "note": "Notes 10-11 (*xix-xx). Not recorded: 'the Year-books, viz.: 1 Ed. II.' (named with no folio), Terrien, Co. Litt., the Grand Coustumier.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Year-book, 21 Ed. IV. 35",
+      "volume": 21,
+      "reporter_abbr": "Y.B.",
+      "page": 35,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 21 Edw. IV, fo. 35; every edition agrees (1854 Gale OCR reads 85)"
+    },
+    {
+      "seq": 2,
+      "raw": "Year-book, 3 Ed. II. 59",
+      "volume": 3,
+      "reporter_abbr": "Y.B.",
+      "page": 59,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 3 Edw. II, fo. 59; every edition agrees"
+    }
+  ]
+}

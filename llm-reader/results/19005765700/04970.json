@@ -1,0 +1,10 @@
+{
+  "psmid": "19005765700", "pageid": "04970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:03:56Z",
+  "note": "Appendix, end of Note 57 and start of Note 58 (printed p. 471). Com. Dig. is not a case.",
+  "citations": [
+    {"seq": 1, "raw": "Powers r. Cook, 1 Ld. Raym. 63", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04090",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:01:47Z",
+  "note": "printed p. 383 (*475-476); Rule III, pleas must be pleaded in due order; Co. Litt., Com. Dig., Chitty on Pleading, Bac. Ab. and supra cross-references not recorded; checked against the 1843 copy 19005904300/05090-05100",
+  "citations": [
+    {"seq": 1, "raw": "Year-book, 35 Hen. VII. 12", "volume": 35, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 35 Hen. VI, fol. 12: 'Hen. VII.' here (Henry VII reigned only 24 years), read from the 1843 copy and footnote (a), which print 35 Hen. VI. 12; year books have no source"},
+    {"seq": 2, "raw": "Longueville v. Thistleworth, Ld. Raym. 970", "case_name": "Longueville v. Thistleworth",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 970,
+     "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
+     "note": "volume 2 supplied; ER Sir Edward Longueville v The Inhabitants of Thistleworth begins at 2 Ld Raym 969"},
+    {"seq": 3, "raw": "Year-book, 35 Hen. VI. 12", "volume": 35, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 35 Hen. VI, fol. 12; year books have no source"}
+  ]
+}

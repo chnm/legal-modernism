@@ -1,0 +1,15 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04120",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:03:09Z",
+  "note": "printed p. 386 (*479-480); the common and special verification; footnotes (p)-(u) are cross-references; checked against the 1843 copy 19005904300/05140",
+  "citations": [
+    {"seq": 1, "raw": "10 Edw. 1II. 23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fol. 23 (OCR 1II; the 1843 copy prints III); year books have no source"},
+    {"seq": 2, "raw": "ibid. 25", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
+     "status": "no_match", "confidence": "high",
+     "note": "ibid. = year book 10 Edw. III, fol. 25; year books have no source"}
+  ]
+}

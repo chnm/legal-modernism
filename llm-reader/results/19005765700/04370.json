@@ -1,0 +1,44 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:02:52Z",
+  "note": "Note 5 (*xi-xii). Not recorded: Glanville, Bracton, Tidd, Gilbert's C. P., Reeves, the statute of Westminster 2.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "10 E. III. 19, pl. 21",
+      "volume": 10,
+      "reporter_abbr": "Y.B.",
+      "page": 19,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 10 Edw. III, pl. 21; the 1843 (19005904300) and other copies print '10 E. 3, 19, pl. 21'"
+    },
+    {
+      "seq": 2,
+      "raw": "Johnson r. Birley, 5 Barn. & Ald. 542",
+      "case_name": "Johnson v. Birley",
+      "volume": 5,
+      "reporter_abbr": "Barn. & Ald.",
+      "page": 542,
+      "status": "linked_english_reports",
+      "er_case_id": "18220198",
+      "pincite": true,
+      "confidence": "high",
+      "note": "case begins at 5 B & A 540; 'r.' is OCR for 'v.'"
+    },
+    {
+      "seq": 3,
+      "raw": "Beecher's case, 3 Rep. 58 b",
+      "case_name": "Beecher's Case",
+      "volume": 8,
+      "reporter_abbr": "Rep.",
+      "page": 58,
+      "status": "linked_english_reports",
+      "er_case_id": "15720036",
+      "confidence": "high",
+      "note": "printed volume 3 corrected to 8: Beecher's Case is 8 Co Rep 58; folio letter b dropped"
+    }
+  ]
+}

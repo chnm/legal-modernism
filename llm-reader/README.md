@@ -236,6 +236,7 @@ the stubs only, and so, at most, are the practice and later reporters common
 in the 1867 and later editions' notes: Dowling (`Dowl.`, `Dowl. N.S.`),
 Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
 Perry and Davison, Gale and Davison, Scott (C.P.) and Scott N.R.,
+Harrison and Wollaston, Moore and Payne,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
 in the English Reports by name first; it wins over a stub even when the
 stub matches the cite exactly. If two English Reports records of that name

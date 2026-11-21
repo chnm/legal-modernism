@@ -1,0 +1,28 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03830",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:03:14Z",
+  "note": "printed p. 357 (*442-443); actio non ulterius; commencements and conclusions of pleadings by way of estoppel; Selw. N. P., Arch., Chitty on Pleading, the Rule of court H. T. 4 Will. IV and the bare 'Ibid.' (pointing to Com. Dig./Saunders note) not recorded; numbers checked against the 1843 copy 19005904300/04760",
+  "citations": [
+    {"seq": 1, "raw": "Evans a. Proeser, 8 T. R. 186", "case_name": "Evans v. Prosser",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "17892450", "confidence": "high",
+     "note": "OCR 8 for 3; Evans against Prosser is at 3 TR 186"},
+    {"seq": 2, "raw": "Veale v. Warner, 1 Wms. Saund. 825", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "OCR 825 for 325 (the 1843 copy prints 325); ER splits Veale v. Warner at 1 Wms Saund 323 and 326; 325 falls in the first"},
+    {"seq": 3, "raw": "8 Ed. IIL 2L", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 3 Edw. III, garbled here ('8 Ed. IIL 2L') but legible in the 1843 copy as 3 Ed. III. 21"},
+    {"seq": 4, "raw": "Took v. Glasook, 1 Saund. 257", "case_name": "Took v. Glascock",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 257,
+     "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
+     "note": "ER splits Took v. Glascock at 1 Wms Saund 250 and 260; 257 falls in the first"},
+    {"seq": 5, "raw": "Veale v. Warner, 1 Saund. 825", "case_name": "Veale v. Warner",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
+     "note": "footnote (h); OCR 825 for 325; falls in the record at 1 Wms Saund 323"}
+  ]
+}

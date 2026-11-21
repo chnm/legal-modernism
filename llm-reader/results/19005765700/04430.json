@@ -1,0 +1,19 @@
+{
+  "psmid": "19005765700",
+  "pageid": "04430",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:04:21Z",
+  "note": "Note 11 continued (*xx-xxi). Not recorded: the Anglo-Saxon pleas of Gundulf and Pichot and of Penenden (cited through Hickes's Thesaurus and Coke's preface to 9 Rep., not reports), Hallam, the Assises de Jerusalem.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Year-book, 7 Hen. VI. p. 29",
+      "volume": 7,
+      "reporter_abbr": "Y.B.",
+      "page": 29,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 7 Hen. VI, fo. 29; all editions agree except the 1867, which reads p. 28"
+    }
+  ]
+}

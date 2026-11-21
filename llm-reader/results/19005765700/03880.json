@@ -1,0 +1,28 @@
+{
+  "psmid": "19005765700",
+  "pageid": "03880",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:06:39Z",
+  "note": "printed p. 362 (*448-450); examples of Rule IX; footnote (y) continued from p. 361 is printed first; footnotes (z) and (a) both read here; the cross-reference supra p. 91 not recorded; numbers checked against the 1843 copy 19005904300/04820",
+  "citations": [
+    {"seq": 1, "raw": "Coudin v. Padden, 4 Dowl. 494", "case_name": "Cousins v. Padden",
+     "volume": 4, "reporter_abbr": "Dowl.", "page": 494,
+     "status": "linked_english_reports", "er_case_id": "18350048", "confidence": "medium",
+     "note": "OCR Coudin; the 1843 copy prints Cousins; Dowling's practice report, linked to the same case's ER report at 2 CrM & R 547 (Cousins v Paddon, 1835)"},
+    {"seq": 2, "raw": "Hill v. White, 0 Bing. N. C. 26", "case_name": "Hill v. White",
+     "volume": 6, "reporter_abbr": "Bing. N. C.", "page": 26,
+     "status": "linked_english_reports", "er_case_id": "18391090", "confidence": "high",
+     "note": "OCR 0 for 6; 'Hill v White and Williams' at 6 Bing NC 26 (another record of the parties begins at 23)"},
+    {"seq": 3, "raw": "8 DowL 18", "case_name": "Hill v. White",
+     "volume": 8, "reporter_abbr": "Dowl.", "page": 13,
+     "status": "linked_english_reports", "er_case_id": "18391090", "confidence": "medium",
+     "note": "OCR 18 for 13 (the 1843 copy prints 13); Dowling's practice report, linked to the ER report at 6 Bing NC 26 rather than the stub 8 Dowl. 13"},
+    {"seq": 4, "raw": "Webb c. Martin, 1 Lev. 48", "case_name": "Webb v. Martin",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "17931279", "confidence": "high"},
+    {"seq": 5, "raw": "Hedgee v. Chapman, 2 Bing. 528", "case_name": "Hedges v. Chapman",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 523,
+     "status": "linked_english_reports", "er_case_id": "18250402", "confidence": "high",
+     "note": "OCR 528 for 523, as cited on p. 361"}
+  ]
+}
