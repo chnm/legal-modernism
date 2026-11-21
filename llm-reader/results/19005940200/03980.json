@@ -1,0 +1,18 @@
+{
+  "psmid": "19005940200", "pageid": "03980",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:28:57Z",
+  "note": "printed p. 371; title alleged in an adversary need not be shown precisely; a title of possession. A cross-reference (supra, pp. 355, 356) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Rider v. Smith, 3 T. R. 766", "case_name": "Rider v. Smith",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 766,
+     "status": "linked_english_reports", "er_case_id": "17902424", "confidence": "high"},
+    {"seq": 2, "raw": "Derisley v. Custance, 4 T. R. 77", "case_name": "Derisley v. Custance",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17902510", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 TR 75"},
+    {"seq": 3, "raw": "The Attorney General v. Meller, Hardr. 459", "case_name": "The Attorney General v. Meller",
+     "reporter_abbr": "Hardr.", "page": 459,
+     "status": "linked_english_reports", "er_case_id": "16600267", "pincite": true, "confidence": "high",
+     "note": "case begins at Hard 451 and runs to 459 (the next record begins at 460)"}
+  ]
+}

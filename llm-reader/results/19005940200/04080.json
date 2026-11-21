@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "04080",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:32:02Z",
+  "note": "printed p. 381; conuzance as bailiff pleaded generally; Rule VII, whatever is alleged must be alleged with certainty. Com. Dig. skipped; cross-checked with the 1831 edition (hathi00002/02980)",
+  "citations": [
+    {"seq": 1, "raw": "Matthews v. Cary, s Mod. 138", "case_name": "Matthews v. Cary",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 138,
+     "status": "linked_english_reports", "er_case_id": "17930712", "pincite": true, "confidence": "high",
+     "note": "OCR 's' for 3, as the 1831 edition prints it; case begins at 3 Mod 137"}
+  ]
+}

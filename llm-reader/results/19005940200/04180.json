@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "04180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:34:29Z",
+  "note": "printed p. 391; matter of evidence need not appear on the record; matter the court notices ex officio need not be stated. Co. Litt. and Com. Dig. (treatises) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Deybel's Case, 4 Barn. and Aid. 243", "case_name": "Deybel's Case",
+     "volume": 4, "reporter_abbr": "Barn. & Ald.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high",
+     "note": "OCR 'Aid.' for Ald."}
+  ]
+}

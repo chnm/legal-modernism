@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "03930",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:27:35Z",
+  "note": "printed p. 366; conveyances pleaded by legal effect (gift, enfeoffed, release, sursum reddidit), and when a deed need be alleged. Coke's Entries, Upper Bench Precedents and Wentworth (books of precedents), 2 Chitty, Co. Litt., Spelman and Archbold (treatises) skipped; cross-checked with the 1831 edition (hathi00002/02880)",
+  "citations": [
+    {"seq": 1, "raw": "Vy. nior' Case, 8 Rep. 82 b", "case_name": "Vynior's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high",
+     "note": "OCR 'Vy. nior'' for Vynior's; ER records at 8 Co Rep 80 and 81; page 82 falls in the second"},
+    {"seq": 2, "raw": "I Saund. 235s b. n, (9)", "volume": 1, "reporter_abbr": "Saund.", "page": 235,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR '235s' for 235; page 235 b falls in Thursby v. Plant, ER records at 1 Wms Saund 230 and 237"}
+  ]
+}
