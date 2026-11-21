@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00010", "pageid": "04780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:40:57Z",
+  "note": "Stephen, Appendix p. liv, note 57 continued (rule against duplicity); matches 1871 hathi00009/04760. Terrien and Plac. Ab. (records of pleas, not reports) skipped",
+  "citations": [
+    {"seq": 1, "raw": "1 Ed. II, 14", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 1 Edw. II, fol. 14; no source for the year books"},
+    {"seq": 2, "raw": "Ibid., 8", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "Ibid. expanded to 1 Ed. II, 8, year book, 1 Edw. II, fol. 8; no source for the year books"},
+    {"seq": 3, "raw": "40 Ed. III, 45", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fol. 45; no source for the year books"}
+  ]
+}

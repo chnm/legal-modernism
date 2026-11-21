@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00010", "pageid": "04840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:37:41Z",
+  "note": "Stephen, Appendix p. lx, notes 64-65 (aider by verdict; quality, quantity and value); matches the 1871 hathi00009/04820. The statutes 16 & 17 Car. II c. 8 and 4 Ann. c. 16 skipped",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund., 171 c", "volume": 2, "reporter_abbr": "Saund.", "page": 171,
+     "status": "linked_english_reports", "er_case_id": "18450101", "pincite": true,
+     "confidence": "medium",
+     "note": "Saunders's note at 171 c falls in Hambleton v. Veere, which begins at 2 Wms Saund 169 (next case, Yard v. Ford, at 172); no name printed"},
+    {"seq": 2, "raw": "Playter's Case, 5 Rep., 34 b", "case_name": "Playter's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "15720292", "confidence": "high",
+     "note": "5 Co Rep 34; folio letter b is the same page"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00010", "pageid": "04850",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T13:37:52Z",
+  "note": "Stephen, Appendix p. lxi, end of note 65 and start of note 66; footnote (s) OCR'd as (8.). Matches the 1871 hathi00009/04830",
+  "citations": [
+    {"seq": 1, "raw": "Ward v. Harris, 2 Bos. & Pul., 265", "case_name": "Ward v. Harris",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 265,
+     "status": "linked_english_reports", "er_case_id": "18000241", "confidence": "high"},
+    {"seq": 2, "raw": "Pope v. Tillman, 7 Taunt., 642", "case_name": "Pope v. Tillman",
+     "volume": 7, "reporter_abbr": "Taunt.", "page": 642,
+     "status": "linked_english_reports", "er_case_id": "18170560", "confidence": "high"}
+  ]
+}

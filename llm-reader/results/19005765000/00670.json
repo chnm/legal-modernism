@@ -1,0 +1,12 @@
+{
+  "psmid": "19005765000",
+  "pageid": "00670",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:40:17Z",
+  "note": "p. 8, the 1894 editor's introduction, quoting Justice Grier; footnote 1 cites Blackstone's Commentaries (not recorded)",
+  "citations": [
+    {"seq": 1, "raw": "McFaul v. Ramsey, 20 How. 523", "case_name": "McFaul v. Ramsey",
+     "volume": 20, "reporter_abbr": "How.", "page": 523,
+     "status": "linked_cap", "cap_case_id": 5679946, "confidence": "high"}
+  ]
+}

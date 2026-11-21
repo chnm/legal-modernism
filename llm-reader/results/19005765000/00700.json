@@ -1,0 +1,17 @@
+{
+  "psmid": "19005765000",
+  "pageid": "00700",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T13:40:48Z",
+  "note": "p. 11, the 1894 editor's introduction. Footnote 1 cites the Speeches of Isaeus (Warren's Law Studies) and then two cases; footnotes 2 and 3 cite Blackstone and the Appendix (not recorded). The scan interleaves the footnote columns.",
+  "citations": [
+    {"seq": 1, "raw": "Robinson v. Bnyley, 1 Burr. 819", "case_name": "Robinson v. Bailey",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "17570030", "pincite": true, "confidence": "medium",
+     "note": "page 819 read as 319 (the table of cases prints 1 Burr. 319); the case at 1 Burr 316 is Robinson v. Raley, Lord Mansfield's remarks on special pleading, which fits the passage; the editor's 'Bailey' is taken as a variant of Raley"},
+    {"seq": 2, "raw": "McFaul v. RIusey, 20 Elow. 523", "case_name": "McFaul v. Ramsey",
+     "volume": 20, "reporter_abbr": "How.", "page": 523,
+     "status": "linked_cap", "cap_case_id": 5679946, "confidence": "high",
+     "note": "OCR 'RIusey', 'Elow.'; the same case cited on p. 8"}
+  ]
+}
