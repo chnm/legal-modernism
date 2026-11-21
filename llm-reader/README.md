@@ -65,7 +65,7 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
   left out and the plea in `note`. Records of pleas (Placitorum Abbreviatio) are not reports.
 - Reports that are also books of entries (`Lutw.`) are reports: record them.
   Books of precedents only (Lilly's Entries, Modern Entries, Rastall,
-  Coke's Entries, Wentworth, Upper Bench Precedents, Liber Placitandi) are
+  Coke's Entries, East's Entries, Wentworth, Upper Bench Precedents, Liber Placitandi) are
   not. A year book garbled in the OCR but read surely from another
   edition's text is `medium`. A bare `Ibid.`
   or `see same cases` pointing back to a whole earlier footnote of several

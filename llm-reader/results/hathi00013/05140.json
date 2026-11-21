@@ -1,0 +1,32 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05140",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:52:39Z",
+  "note": "printed p. 460, § 247 (1894 p. 408, 19005765000/04720). Stephen's footnotes (z)-(d); (d) a cross-reference. No Andrews note; nothing new in 1901.",
+  "citations": [
+    {"seq": 1, "raw": "Saunder's Case, 12 Mod. 513, 514", "case_name": "Saunders's Case",
+     "volume": 12, "reporter_abbr": "Mod.", "page": 513,
+     "status": "linked_english_reports", "er_case_id": "17961557", "confidence": "high",
+     "note": "dropped: 514"},
+    {"seq": 2, "raw": "Lynnett v. Wood, Cro. Car. 157", "case_name": "Lynnett v. Wood",
+     "reporter_abbr": "Cro. Car.", "page": 157,
+     "status": "linked_english_reports", "er_case_id": "17921474", "confidence": "high",
+     "note": "ER Lynner against Wood"},
+    {"seq": 3, "raw": "Jaques' Case, Sti. 355", "case_name": "Jaques' Case",
+     "reporter_abbr": "Sty.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "16580367", "confidence": "high",
+     "note": "'Sti.' for Sty.; ER name 'Iaques'"},
+    {"seq": 4, "raw": "Hallett v. Byrt, 5 Mod. 258", "case_name": "Hallett v. Byrt",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 252,
+     "status": "linked_english_reports", "er_case_id": "17940773", "pincite": true, "confidence": "high",
+     "note": "258 (misprint or OCR; the Gale copy of 1901 loses the page) for 252, which the 1831 edition prints; 258 falls in R. v. Wilton, and the name decides. ER's records of Hallet v. Byrt begin at 5 Mod 248 and 251; 252 falls in the second, as the 1894 record links it"},
+    {"seq": 5, "raw": "Gifford v. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high"},
+    {"seq": 6, "raw": "1 Vent. 77, S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. = Gifford v. Perkins"}
+  ]
+}
