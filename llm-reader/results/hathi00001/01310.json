@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "01310",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:31:37Z",
+  "note": "printed p. 109; payment of a sum in gross proves the issue; the postea. Footnote (r) is Tidd (treatise)",
+  "citations": [
+    {"seq": 1, "raw": "Str. 690.", "volume": 2, "reporter_abbr": "Str.", "page": 690,
+     "status": "linked_english_reports", "er_case_id": "17952853", "confidence": "medium",
+     "note": "no name or volume printed; volume 2 supplied. The 1831 edition (hathi00002/01170) names Price v. Brown, Str. 690, for this point; ER has Price vers Brown at 2 Str 691, a page off (Strange's editions are paged differently). Three other cases begin at 2 Str 690 (Southerton v Whitlock, Lambell v Pretty John, East-India Co v Pullen); the subject and the other edition's name pick Price v Brown"}
+  ]
+}

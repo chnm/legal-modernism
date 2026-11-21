@@ -39,6 +39,8 @@ Run shell commands one at a time: the worktree guard refuses compound
 commands, loops and scripts in `/tmp`, and any command naming the worktree's
 absolute path (its `github` looks like git), so use relative paths
 (`bin/llm-reader`, `llm-reader/results/...`). Write each record with the Write tool.
+The guard also refuses any command containing the letters "git", even
+inside a word ("legitimate"): choose another search term.
 
 Other readers write into the same results directory at the same time. Never
 edit a file outside your own page range, and never run `sed`, a glob or a

@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00001", "pageid": "01420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:34:50Z",
+  "note": "printed p. 120; award of repleader, venire facias de novo. Bac. Ab., Com. Dig. and Co. Ent. (entries) skipped; (l) and (m) are cross-references. No names printed; names from the 1831 record (hathi00002/01260), whose footnote adds Stephens v. Cooper, 3 Lev. 440, not printed here",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 319. b. n. (6.)", "volume": 2, "reporter_abbr": "Saund.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18450012", "pincite": true, "confidence": "medium",
+     "note": "Williams's note (6) at 2 Saund. 319 is the note to Bennet v. Holbech (2 Wms Saund 317), per the README's standing choice"},
+    {"seq": 2, "raw": "2 Vent. 196.", "volume": 2, "reporter_abbr": "Vent.", "page": 196,
+     "status": "linked_english_reports", "er_case_id": "17260031", "confidence": "medium",
+     "note": "no name printed; three cases begin at 2 Vent 196; the 1831 edition names Anon., the Anonymus record there"},
+    {"seq": 3, "raw": "2 Str. 847.", "volume": 2, "reporter_abbr": "Str.", "page": 847,
+     "status": "linked_english_reports", "er_case_id": "17951645", "confidence": "medium",
+     "note": "no name printed; Enys v. Mohun"},
+    {"seq": 4, "raw": "5 Taunt. 386.", "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "medium",
+     "note": "no name printed; Plomer v. Ross"},
+    {"seq": 5, "raw": "8 Taunt. 413", "volume": 8, "reporter_abbr": "Taunt.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "18180481", "confidence": "medium",
+     "note": "no name printed; Clears v. Stevens"},
+    {"seq": 6, "raw": "2 Saund. 20.", "volume": 2, "reporter_abbr": "Saund.", "page": 20,
+     "status": "linked_english_reports", "er_case_id": "18450131", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the form of an award of repleader in Jeffreson v. Morton, which begins at 2 Wms Saund 6 (the 1831 edition names it, misprinting 5 Saund.)"}
+  ]
+}

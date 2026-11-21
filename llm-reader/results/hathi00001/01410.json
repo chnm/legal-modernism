@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "01410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:34:32Z",
+  "note": "printed p. 119; repleader, immaterial issue (debt on bond, payment of part). Footnote (h) is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Hob. 113", "reporter_abbr": "Hob.", "page": 113,
+     "status": "linked_english_reports", "er_case_id": "17921310", "confidence": "medium",
+     "note": "no name printed; three cases begin at Hob 113 (Acuna v. Bingley, Stukeley v. Underhill, Kent and Hall); the 1831 edition (hathi00002/01260) names Kent v. Hall, the bond case of the example"},
+    {"seq": 2, "raw": "5 Taunt. 386.", "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "medium",
+     "note": "no name printed; Plomer v. Ross, the only case at 5 Taunt 386"}
+  ]
+}
