@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05730",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:55:50Z",
+  "note": "Appendix Notes (13)-(14) (printed p. 519), = 1894 19005765000/05260; Booth, Com. Dig., Reeves, Blackstone and Luders are treatises, not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "2 Saund. 43, n. 1",
+      "volume": 2,
+      "reporter_abbr": "Saund.",
+      "page": 43,
+      "status": "linked_english_reports",
+      "er_case_id": "18450306",
+      "pincite": true,
+      "confidence": "medium",
+      "note": "no name printed; Williams's note (1) at 2 Saund. 43 belongs to William v. Gwyn, a real action, whose record begins at 2 Wms Saund 42 (16,646 words; a second record of the case begins at 45). Same link as the 1894 record"
+    }
+  ]
+}

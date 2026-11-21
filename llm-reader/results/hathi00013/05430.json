@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05430",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:57:56Z",
+  "note": "Printed page 489. Stephen's note (n) cites Archbold only; Andrews's note 1, columns interleaved, cites one case. Matches 1894 19005765000/05030; link kept.",
+  "citations": [
+    {"seq": 1, "raw": "Manders v. Craft, 3 Colo, App. 236", "case_name": "Manders v. Craft", "volume": 3, "reporter_abbr": "Colo. App.", "page": 236,
+     "status": "linked_cap", "cap_case_id": 4468200, "confidence": "high"}
+  ]
+}

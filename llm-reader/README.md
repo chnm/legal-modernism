@@ -358,7 +358,8 @@ American cases in the later editions (Andrews, 1894, and after):
   Burrill, Ames's Cases, Leading Criminal Cases, Puterbaugh, Thompson on
   Trials, and the like.
 - `id.` standing for a reporter (`110 id. 588` after a U.S. cite) is that
-  reporter.
+  reporter. "Heretofore cited" and "stated ante" pointing to a cite pages
+  away are read like `supra`, at `medium`.
 - Not recorded: an annotation cited without its case ("48 L. R. A. 177,
   note"), and a case cited only to this book's own Appendix or "supra" with
   no report printed anywhere on the page.

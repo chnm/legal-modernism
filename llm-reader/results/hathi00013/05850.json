@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05850",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:54:39Z",
+  "note": "Appendix p. 531, Andrews's editor's note on the statutes of amendment (new in 1901); Roberts' Digest and Blackstone's Law Tracts are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Thorpe v. Hook, 1 Dowl. P. C. 501", "case_name": "Thorpe v. Hook",
+     "volume": 1, "reporter_abbr": "Dowl. P. C.", "page": 501,
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases (1831-33); no English Reports record of Thorpe (Thorp) v. Hook by er_name or murrell_title, 1830-34 searched; no stub at 1 Dowl. 501 (nearest 499, 505)"},
+    {"seq": 2, "raw": "Bicknell v. Wetherill, 41 Eng. C. L. R 837", "case_name": "Bicknell v. Wetherill",
+     "volume": 41, "reporter_abbr": "Eng. C. L. R.", "page": 837,
+     "status": "linked_english_reports", "er_case_id": "18410812", "confidence": "medium",
+     "note": "reprint in the English Common Law Reports (41 E.C.L. = 1 Q.B.); linked to the case's own report, Bicknell against Wetherell, 1 QB 914 (1841)"}
+  ]
+}

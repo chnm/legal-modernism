@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05310",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:54:00Z",
+  "note": "Printed page 477. Stephen's footnotes (c)-(h): Chitty, Arch., Com. Dig., the Appendix and cross-references skipped; Andrews's note 1 marker has no note text on this page. Matches 1894 19005765000/04930; link kept.",
+  "citations": [
+    {"seq": 1, "raw": "Topping v. Frye, 1 Marsh. 341", "case_name": "Topping v. Fuge", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
+     "note": "Andrews prints Frye for Fuge; Marshall's Common Pleas Reports have no source; linked to the same case in Taunton, Topping v Fuge and Ingram, 5 Taunt 330 (1814), as in the 1824 and 1894 records; 5 Taunt 771 is a later report of the same parties"}
+  ]
+}

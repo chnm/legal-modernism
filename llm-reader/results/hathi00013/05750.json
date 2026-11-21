@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05750",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:56:09Z",
+  "note": "Appendix p. 521, notes (16)-(18), = 1894 19005765000/05280. Also cites Heineccius, Hargrave's Law Tracts, Co. Litt. 71 b (not cases). As in the 1894, the footnotes (r) and (s) are printed with their texts swapped: the year book belongs to the 'demurroins' passage, Co. Litt. to the demurrer etymology, as in the 1824 and 1831 editions.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "1 Ed. 2, 8",
+      "volume": 1,
+      "reporter_abbr": "Y.B.",
+      "page": 8,
+      "status": "no_match",
+      "confidence": "high",
+      "note": "year book, 1 Edw. II, fo. 8; legible here; no source for the year books"
+    }
+  ]
+}

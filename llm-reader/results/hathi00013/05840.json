@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "05840",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:54:11Z",
+  "note": "Appendix p. 530, end of note (33) and the start of Andrews's editor's note on amendments (new in 1901); statutes, Blackstone and Tidd are not cases",
+  "citations": [
+    {"seq": 1, "raw": "McDuffee v. R. & R. Ry. (1873), 52 N. H. 430", "case_name": "McDuffee v. R. & R. Ry.",
+     "volume": 52, "reporter_abbr": "N. H.", "page": 430, "year": 1873,
+     "status": "linked_cap", "cap_case_id": 471345, "confidence": "high",
+     "note": "CAP's McDuffee v. Portland & Rochester Railroad, 52 N.H. 430-459 (1873); Doe, J., quoted"}
+  ]
+}

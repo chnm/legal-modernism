@@ -53,6 +53,7 @@
      "note": "Law Reports, Queen's Bench (1871), after the English Reports; the stub matches the cite exactly"},
     {"seq": 14, "raw": "Suke- forth v. Lord, 87 CaL 399", "case_name": "Sukeforth v. Lord",
      "volume": 87, "reporter_abbr": "Cal.", "page": 399,
-     "status": "linked_cap", "cap_case_id": 4388304, "confidence": "high"}
+     "status": "linked_cap", "cap_case_id": 4388304, "confidence": "high",
+     "note": "new in 1901 (not printed in the 1894)"}
   ]
 }
