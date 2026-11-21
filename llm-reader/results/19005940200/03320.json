@@ -1,0 +1,13 @@
+{
+  "psmid": "19005940200", "pageid": "03320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:10:14Z",
+  "note": "printed p. 305; de injuria absque tali causa traverses several facts forming one proposition. Supra cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "O'Brien v. Saxon, 2 Barn. & Cres. 908", "case_name": "O'Brien v. Saxon",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 908,
+     "status": "linked_english_reports", "er_case_id": "18240124", "confidence": "high"},
+    {"seq": 2, "raw": "Phillips v. llowgate, 5 Barn. & Aid. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

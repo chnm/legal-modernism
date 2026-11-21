@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "03410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:11:34Z",
+  "note": "printed p. 314; pleading to several counts; judgment pro tanto. Footnote (h) OCR'd as '(I)' in the text. Supra cross-references skipped",
+  "citations": [
+    {"seq": 1, "raw": "Phillips v. llowg;at, 5 Barn. & Aid. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

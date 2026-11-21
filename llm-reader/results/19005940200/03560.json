@@ -1,0 +1,18 @@
+{
+  "psmid": "19005940200", "pageid": "03560",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:14:49Z",
+  "note": "printed p. 329; venue, from the jurors as witnesses of the neighbourhood. Footnote (h) OCR'd as '(I)' in the text. Co. Litt. by Hargrave, Gilbert's History of the Common Pleas, Bac. Ab. and Blackstone skipped",
+  "citations": [
+    {"seq": 1, "raw": "Ilderton v. Ilderton, 2 H. Bl. 161", "case_name": "Ilderton v. Ilderton",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "17931510", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 145 (the 1831 edition prints 156)"},
+    {"seq": 2, "raw": "Per Lord Mansfield, Mos. tyn v. Fabrigas, Cowp. 176", "case_name": "Mostyn v. Fabrigas",
+     "reporter_abbr": "Cowp.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "17740104", "pincite": true, "confidence": "high",
+     "note": "Lord Mansfield's judgment; case begins at 1 Cowp 161, stored with volume 1 the cite does not print"},
+    {"seq": 3, "raw": "2 Hen. VII. 4", "volume": 2, "reporter_abbr": "Y.B.", "page": 4,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 2 Hen. VII, fo. 4; no source covers the year books"}
+  ]
+}
