@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00009", "pageid": "04300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:49:37Z",
+  "note": "Stephen, Appendix p. viii, end of note 5 and note 6: appearance by attorney, oral pleading; Bracton, Tidd, Gilbert C. P., Reeves and Glanville skipped; cross-checked with hathi00002/03960",
+  "citations": [
+    {"seq": 1, "raw": "10 Ed. III, 19, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fo. 19, pl. 21; no source for the year books"},
+    {"seq": 2, "raw": "Beecher's Case, 8 Rep., 58 b.", "case_name": "Beecher's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",
+     "note": "8 Co Rep 58, folio b"}
+  ]
+}

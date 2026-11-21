@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00009", "pageid": "04360",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T06:50:22Z",
+  "note": "Stephen, Appendix p. xiv, note 11 continued: the origin of records; Co. Litt. and the Grand Coustumier skipped; cross-checked with hathi00002/04010",
+  "citations": [
+    {"seq": 1, "raw": "Year-Book, 7 Henry VI, p. 29", "volume": 7, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Hen. VI, fo. 29; no source for the year books"}
+  ]
+}
