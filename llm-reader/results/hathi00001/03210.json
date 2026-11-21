@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "03210",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:26:57Z",
+  "note": "printed p. 299; no venue for denials or matter of inducement; parish, town or hamlet, not a hundred; the venue in the action. Com. Dig., Co. Litt., Bac. Ab. and cross-references skipped; names from the 1831 edition (hathi00002/02640), whose added Scott v. Brest this edition does not print",
+  "citations": [
+    {"seq": 1, "raw": "Pl. Com. 190. b.", "reporter_abbr": "Pl. Com.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "18160164", "pincite": true, "confidence": "low",
+     "note": "Plowden, cited through Com. Dig.; no name printed; 190 falls in Wrotesley v. Adams, which begins at 1 Plowden 187 (16234 words; next case at 198), as the 1831 record reads it"},
+    {"seq": 2, "raw": "4 Barn. and Ald. 175, 176", "volume": 4, "reporter_abbr": "Barn. and Ald.", "page": 175,
+     "status": "linked_english_reports", "er_case_id": "18200632", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names The King v. Burdett, which begins at 4 B & A 95 (30215 words); dropped: 176"},
+    {"seq": 3, "raw": "7 Rep. 1", "volume": 7, "reporter_abbr": "Rep.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "15720064", "confidence": "medium",
+     "note": "no name printed; Calvin's Case (7 Co Rep 1 a) and Bulwer's Case (7 Co Rep 1) both begin at 7 Rep. 1; the 1831 edition names Calvin's Case"}
+  ]
+}

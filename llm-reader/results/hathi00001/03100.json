@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "03100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:24:15Z",
+  "note": "printed p. 288; several counts must purport to be distinct causes of action. Bac. Ab. skipped; names from the 1831 edition (hathi00002/02560)",
+  "citations": [
+    {"seq": 1, "raw": "7 Mod. 148", "volume": 7, "reporter_abbr": "Mod.", "page": 148,
+     "status": "linked_english_reports", "er_case_id": "17961127", "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Hart v. Longfield, the only case at 7 Mod 148"},
+    {"seq": 2, "raw": "1 Salk. 213", "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17953851", "confidence": "medium",
+     "note": "no name printed; three cases begin at 1 Salk 213 (West v. Troles, Nevil v. Soper, Tilsden v. Palfriman); the 1831 edition names West v. Troles"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:28:35Z",
+  "note": "printed p. 306; local and transitory actions; a local action arising abroad cannot be maintained in England. Vin. Ab., Co. Litt. and an Appendix note skipped; name from the 1831 edition (hathi00002/02690)",
+  "citations": [
+    {"seq": 1, "raw": "Per Buller, J. 4 T. R. 503", "volume": 4, "reporter_abbr": "T. R.", "page": 503,
+     "status": "linked_english_reports", "er_case_id": "17922926", "confidence": "medium",
+     "note": "no name printed; the only case at 4 TR 503, Doulson v. Matthews (trespass to land in Canada), as the 1831 edition names it"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "03150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:25:17Z",
+  "note": "printed p. 293; inconsistent several pleas, formerly refused, now allowed save the general issue and a tender. Com. Dig., Sel. Pract. and Chitty on Pleading (2 Chitty, 502) skipped; name from the 1831 edition (19005816500/02520), whose added 2 Bing. 325 this edition does not print",
+  "citations": [
+    {"seq": 1, "raw": "13 East, 255", "volume": 13, "reporter_abbr": "East", "page": 255,
+     "status": "linked_english_reports", "er_case_id": "18110125", "confidence": "medium",
+     "note": "no name printed; the only case at 13 East 255, Rama Chitty v. Hume, as the 1831 edition names it"}
+  ]
+}
