@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "01890",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:03:00Z",
+  "note": "printed p. 220-221; 2 Chitty (precedents) not recorded",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Took v. Glascock, 1 Saund. 257",
+      "case_name": "Took v. Glascock",
+      "volume": 1,
+      "reporter_abbr": "Saund.",
+      "page": 257,
+      "status": "linked_english_reports",
+      "er_case_id": "18450282",
+      "pincite": true,
+      "confidence": "high",
+      "note": "ER splits the case at 1 Wms Saund 250 and 260; 257 falls in the record at 250"
+    },
+    {
+      "seq": 2,
+      "raw": "Plummer v. Woodburn, 4 Barn. & Cres. 625",
+      "case_name": "Plummer v. Woodburn",
+      "volume": 4,
+      "reporter_abbr": "Barn. & Cres.",
+      "page": 625,
+      "status": "linked_english_reports",
+      "er_case_id": "18250183",
+      "confidence": "high"
+    }
+  ]
+}

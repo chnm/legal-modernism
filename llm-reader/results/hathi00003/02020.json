@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02020",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-20T23:59:28Z",
+  "note": "printed pp. 240-241; cross-checked against Gale 19005785400/01910",
+  "citations": [
+    {"seq": 1, "raw": "Anon. 2 Vent. 196", "case_name": "Anonymous", "volume": 2, "reporter_abbr": "Vent.", "page": 196,
+     "status": "linked_english_reports", "er_case_id": "17260031", "confidence": "high", "note": "the one Anonymus case at 2 Vent 196"},
+    {"seq": 2, "raw": "Jones v. Powell, 5 Barn. & Cress. 647", "case_name": "Jones v. Powell", "volume": 5, "reporter_abbr": "Barn. & Cress.", "page": 647,
+     "status": "linked_english_reports", "er_case_id": "18260975", "confidence": "high"},
+    {"seq": 3, "raw": "Hall v. Tapper, 3 Barn. & Ald. 655", "case_name": "Hall v. Tapper", "volume": 3, "reporter_abbr": "Barn. & Adol.", "page": 655,
+     "status": "linked_english_reports", "er_case_id": "18320133", "confidence": "high",
+     "note": "printed 'Barn. & Ald.' but Hall v. Tapper is at 3 B & Ad 655 (1832); nothing at 3 B & A 655"}
+  ]
+}

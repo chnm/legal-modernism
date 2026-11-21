@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02060",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:00:26Z",
+  "note": "printed pp. 246-248; Comyns's Digest and cross-references skipped; cross-checked against Gale 19005785400/01950",
+  "citations": [
+    {"seq": 1, "raw": "Lane v. Alexander, Yelv. 122", "case_name": "Lane v. Alexander", "reporter_abbr": "Yelv.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17921377", "confidence": "high"},
+    {"seq": 2, "raw": "Gorman v. Sweeting, 2 Saund. 295", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 205,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "printed 295 read as 205; README's choice already made: Goram v. Sweeting (2 Saund. 200-207) is the ER records at 2 Wms Saund 200 and 205, titled 'Same v Bateman'; this is the record holding p. 205"},
+    {"seq": 3, "raw": "Sir Francis Leke's case, Dy. 365", "case_name": "Sir Francis Leke's Case", "reporter_abbr": "Dy.", "page": 365,
+     "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high", "note": "the case is at 3 Dy 365"},
+    {"seq": 4, "raw": "2 Saund. 207. n. (24)", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+     "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
+     "note": "README's choice already made: notes 21-24 at 2 Saund. 206-207 are Goram v. Sweeting's, ER record at 2 Wms Saund 205 ('Same v Bateman'), not Foxwist v. Tremaine's, which begins at 207"},
+    {"seq": 5, "raw": "Wood v. Budden, Hob. 119", "case_name": "Wood v. Budden", "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"},
+    {"seq": 6, "raw": "Tatem v. Perient, Yelv. 195", "case_name": "Tatem v. Perient", "reporter_abbr": "Yelv.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "17922443", "confidence": "high"},
+    {"seq": 7, "raw": "Carvick v. Blagrave, 1 Brod. & Bing. 531", "case_name": "Carvick v. Blagrave", "volume": 1, "reporter_abbr": "Brod. & Bing.", "page": 531,
+     "status": "linked_english_reports", "er_case_id": "18190281", "confidence": "high"},
+    {"seq": 8, "raw": "Palmer v. Ekins, 2 Str. 818", "case_name": "Palmer v. Ekins", "volume": 2, "reporter_abbr": "Str.", "page": 818,
+     "status": "linked_english_reports", "er_case_id": "17952725", "pincite": true, "confidence": "high", "note": "Palmer v. Ekins begins at 2 Str 817"},
+    {"seq": 9, "raw": "Ld. Ray. 1550", "case_name": "Palmer v. Ekins", "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 1550,
+     "status": "linked_english_reports", "er_case_id": "17901324", "confidence": "high", "note": "the same case's other report; volume 2 supplied"}
+  ]
+}

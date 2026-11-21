@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02120",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:01:32Z",
+  "note": "printed pp. 255-257; Bacon's Abridgment, Comyns's Digest, Co. Litt. and Viner skipped; cross-checked against Gale 19005785400/02010",
+  "citations": [
+    {"seq": 1, "raw": "Johns v. Whitley, 3 Wils. 132", "case_name": "Johns v. Whitley", "volume": 3, "reporter_abbr": "Wils.", "page": 132,
+     "status": "linked_english_reports", "er_case_id": "17990241", "pincite": true, "confidence": "high",
+     "note": "falls in the second ER record of Johns v. Whitley, which begins at 3 Wils KB 127 (the first is at 3 Wils KB 65)"}
+  ]
+}

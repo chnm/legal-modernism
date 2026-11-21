@@ -178,7 +178,8 @@ pages on, and a long record starting a page earlier usually holds the notes
 printed on the next. Choices already made: 2 Saund. 291 n. (the videlicet)
 is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
-"2 Stark. 36, S. C.", are both 6 M & S 146. Ignore a second
+"2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
+Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
