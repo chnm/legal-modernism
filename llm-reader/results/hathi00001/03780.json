@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "03780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:07:52Z",
+  "note": "printed p. 356; want of a survey is matter of defence; but matter essential to a prima facie right must be shown. The scan reads note (q) as (g). Names from the 1831 edition (hathi00002/03090, 03100)",
+  "citations": [
+    {"seq": 1, "raw": "1 T. R. 638", "volume": 1, "reporter_abbr": "T. R.", "page": 638,
+     "status": "linked_english_reports", "er_case_id": "17870048", "confidence": "medium",
+     "note": "no name printed; Hotham v. East India Company (1831 edition), the short-tonnage charter-party"},
+    {"seq": 2, "raw": "2 Mod. 6", "volume": 2, "reporter_abbr": "Mod.", "page": 6,
+     "status": "linked_english_reports", "er_case_id": "17931002", "confidence": "medium",
+     "note": "no name printed; Smith v. Feverell (1831 edition)"},
+    {"seq": 3, "raw": "1. Freeman, 190. S. C.", "volume": 1, "reporter_abbr": "Freem.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "18260565", "confidence": "medium",
+     "note": "S. C. of 2 Mod. 6, Smith v. Feverell (1831 edition); ER Freem KB 190, 'Smith v Fetherwell'"}
+  ]
+}

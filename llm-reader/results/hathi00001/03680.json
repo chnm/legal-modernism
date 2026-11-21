@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "03680",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:05:26Z",
+  "note": "printed p. 346; the offer of a bond must be set out; a plea of prize must show the cause and the court. Names from the 1831 edition (hathi00002/02990, 03030)",
+  "citations": [
+    {"seq": 1, "raw": "Hob. 69. 77", "reporter_abbr": "Hob.", "page": 69,
+     "status": "linked_english_reports", "er_case_id": "17920165", "confidence": "medium",
+     "note": "no name printed; Austin v. Jervoise (1831 edition). dropped: 77"},
+    {"seq": 2, "raw": "Carth. 31", "reporter_abbr": "Carth.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "17410023", "confidence": "medium",
+     "note": "no name printed; Beak v. Tyrrell (1831 edition)"}
+  ]
+}
