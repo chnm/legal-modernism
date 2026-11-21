@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "02320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:57:34Z",
+  "note": "printed p. 210; no traverse upon a traverse. Com. Dig. and Bac. Ab. are abridgments, skipped. Names from the 1831 edition and Andrews (19005765000/03230)",
+  "citations": [
+    {"seq": 1, "raw": "Cro. El. 650", "reporter_abbr": "Cro. Eliz.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "medium",
+     "note": "no name printed; other editions name Helier v. Whytier, Cro Eliz 650"},
+    {"seq": 2, "raw": "3 Salk. 353", "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
+     "note": "no name printed; two cases begin at 3 Salk 353 (Anonymous, Bullen v. Benson); other editions print 'Anon.'"},
+    {"seq": 3, "raw": "Vaughan, 62", "reporter_abbr": "Vaugh.", "page": 62,
+     "status": "linked_english_reports", "er_case_id": "18230260", "pincite": true, "confidence": "medium",
+     "note": "no name printed; other editions name The King v. Bishop of Worcester, the quare impedit beginning at Vaugh 53"},
+    {"seq": 4, "raw": "Hob. 104", "reporter_abbr": "Hob.", "page": 104,
+     "status": "linked_english_reports", "er_case_id": "17920663", "pincite": true, "confidence": "medium",
+     "note": "no name printed; other editions name Digby v. Fitzharbert, which begins at Hob 101"}
+  ]
+}

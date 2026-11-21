@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02390",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:59:52Z",
+  "note": "printed p. 217; traverse of matter not alleged (the promise to marry; the executrix's plea in abatement, whose cite follows on the next page). The footnote marker '(1)' is (l)",
+  "citations": [
+    {"seq": 1, "raw": "Carth. 99", "reporter_abbr": "Carth.", "page": 99,
+     "status": "linked_english_reports", "er_case_id": "17410094", "confidence": "medium",
+     "note": "no name printed; other editions name Crosse v. Hunt, Carth 99, the promise-to-marry case in the text"}
+  ]
+}

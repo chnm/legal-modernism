@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00001", "pageid": "02400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:00:11Z",
+  "note": "printed p. 218; Holt's dictum on traversing what is not alleged; exception for matter necessarily implied (replevin). Com. Dig. is an abridgment, skipped. Names from the 1831 edition (hathi00002/01990)",
+  "citations": [
+    {"seq": 1, "raw": "1 Lord Ray, 63", "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Powers v. Cook, 1 Ld Raym 63 (the executrix's plea in abatement)"},
+    {"seq": 2, "raw": "1 Salk. 298., S. C.", "volume": 1, "reporter_abbr": "Salk.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "17952846", "confidence": "medium",
+     "note": "S. C. of the case at 1 Ld Raym 63; ER 'Powers versus Coot' (Aston v. Sherman also begins at 1 Salk 298)"},
+    {"seq": 3, "raw": "1 Saund. 312. d. n. (4.)", "volume": 1, "reporter_abbr": "Saund.", "page": 312,
+     "status": "linked_english_reports", "er_case_id": "18450069", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (4) at 312 d, in Rex v. Kilderby, whose record begins at 1 Wms Saund 311"},
+    {"seq": 4, "raw": "2 Salk. 629", "volume": 2, "reporter_abbr": "Salk.", "page": 629,
+     "status": "linked_english_reports", "er_case_id": "17951791", "confidence": "medium",
+     "note": "no name printed; three cases begin at 2 Salk 629; the 1831 edition names Gilbert v. Parker (the replevin case in the text)"},
+    {"seq": 5, "raw": "6 Mod. 158., S. C.", "volume": 6, "reporter_abbr": "Mod.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17940732", "confidence": "medium",
+     "note": "S. C. of the case at 2 Salk 629; ER Gilbert v. Parker, 6 Mod 158"}
+  ]
+}

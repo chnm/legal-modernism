@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02350",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T17:58:19Z",
+  "note": "printed p. 213; demurrer to a faulty inducement; traverses in general. Com. Dig. is an abridgment and 'Suprà, p. 107' a cross-reference, skipped. The 1831 edition (hathi00002/01950) names the case",
+  "citations": [
+    {"seq": 1, "raw": "Comb. 245", "reporter_abbr": "Comb.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17240198", "confidence": "medium",
+     "note": "no name printed; two cases begin at Comb 245 (Foden and Haines, Rex v. King); the 1831 edition names Foden v. Haines"}
+  ]
+}
