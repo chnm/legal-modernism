@@ -215,7 +215,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    inside the named case is a pin cite as printed; some 1894 records
    corrected it to the first page (Wilson v. Poole 33 Ind. 448, Gostorfs v.
    Taaffe 18 Cal. 388, Pease v. McKusick, Cushman v. Hayes, Rector v.
-   Gaines, Illinois Fire Ins. v. Stanton, Wadhams v. Swan): restore them. Remove `case_name` where no name is printed
+   Gaines, Illinois Fire Ins. v. Stanton, Wadhams v. Swan): restore them.
+   19005765000/05690 "Sed vide 2 Taunt. 21" is 2 Taunt. 281 (the 1824 text),
+   Taylor v. Needham, pin cite, `medium`. Remove `case_name` where no name is printed
    (e.g. hathi00009/02580 and hathi00010/02600, "Bennet v. Holbech" on a
    bare Saund. 319 n. 6). The hathi00010 (1882) records apply the current
    grading rules; bring the matching hathi00009 (1871) records into line

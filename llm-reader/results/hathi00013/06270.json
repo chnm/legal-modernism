@@ -1,0 +1,12 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "06270",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T17:02:09Z",
+  "note": "Appendix notes (87)-(88), printed p. 573; note (88) reprints Stephen's original text on production of suit (1894 Andrews 19005765000/04830). Placitorum Abbreviatio (records of pleas) and Bracton skipped",
+  "citations": [
+    {"seq": 1, "raw": "7 Ed. 2, 242", "volume": 7, "reporter_abbr": "Y.B.", "page": 242,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, p. 242, as the 1831 edition prints; no source for the year books"}
+  ]
+}
