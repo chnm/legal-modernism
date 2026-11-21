@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00001", "pageid": "02560",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:05:26Z",
+  "note": "printed p. 234; immaterial parts need no answer; every pleading confesses what it does not traverse. Com. Dig. and Bac. Ab. skipped, 'Suprà' cross-references skipped. The 1831 edition (hathi00002/02120, 02130) prints only Hudson v. Jones, 1 Salk. 91 and Nicholson v. Simpson, Fort. 356 in (e), and 2 Mod. 4 in (h)",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 28. n. (3).", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "no name printed; Williams's note (3) to Birks v. Trippet, which begins at 1 Wms Saund 28"},
+    {"seq": 2, "raw": "Str. 297.", "volume": 1, "reporter_abbr": "Str.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "17952662", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; the only case at 1 Str 297, Nicholson v. Simpson, the case of which 11 Mod. 336 and Fort. 356 (S. C.) are also reports"},
+    {"seq": 3, "raw": "1 Salk. 91.", "volume": 1, "reporter_abbr": "Salk.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "17952104", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition names Hudson v. Jones, whose record begins at 1 Salk 90 (Gwam v. Roe also begins there)"},
+    {"seq": 4, "raw": "11 Mod. 336.", "volume": 11, "reporter_abbr": "Mod.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17961415", "confidence": "medium",
+     "note": "no name printed; two cases begin at 11 Mod 336; Nicholson v. Simpson, the case of Str. 297 and Fort. 356 (S. C.) beside it"},
+    {"seq": 5, "raw": "Fort. 356. S. C.", "reporter_abbr": "Fort.", "page": 356,
+     "status": "linked_english_reports", "er_case_id": "17480129", "confidence": "medium",
+     "note": "S. C. of 11 Mod. 336; ER Nicholson and Simpson, Fort 356, as the 1831 edition names it"},
+    {"seq": 6, "raw": "2 Mod. 5.", "volume": 2, "reporter_abbr": "Mod.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931312", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the 1831 edition prints Wilcox v. Servant of Skipwith, 2 Mod. 4; that record (943 words) begins at 2 Mod 4 and holds page 5, kept as printed"}
+  ]
+}

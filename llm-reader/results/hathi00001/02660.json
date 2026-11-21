@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:07:35Z",
+  "note": "printed p. 244; end of the new assignment form; new assignment in trespass and in case. Wentworth (precedents), Chitty on Pleading and Vin. Ab. skipped. The scan breaks footnote (e) across lines out of order ('1 Chitty, 602. Vin. Ab. Novel Assignment, 4, 5. Vide 1 Bos. and Pul. 413.'). The 1831 edition (hathi00002/02210) drops the clause on trespass on the case and this cite",
+  "citations": [
+    {"seq": 1, "raw": "1 Bos. and Pul. 413.", "volume": 1, "reporter_abbr": "Bos. and Pul.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "17990708", "confidence": "medium",
+     "note": "no name printed; the only case at 1 Bos & Pul 413, Griffiths v. Eyles (1799), cited for new assignment in trespass on the case"}
+  ]
+}

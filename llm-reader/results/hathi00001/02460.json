@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02460",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:02:38Z",
+  "note": "printed p. 224; end of the example plea and why it wants colour. Name from the 1831 edition (hathi00002/02050)",
+  "citations": [
+    {"seq": 1, "raw": "Cro. Jac. 229", "reporter_abbr": "Cro. Jac.", "page": 229,
+     "status": "linked_english_reports", "er_case_id": "17910763", "confidence": "medium",
+     "note": "no name printed; three cases begin at Cro Jac 229; the 1831 edition names Patrickson v. Barton"}
+  ]
+}
