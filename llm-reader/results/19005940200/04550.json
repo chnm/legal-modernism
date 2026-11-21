@@ -1,0 +1,21 @@
+{
+  "psmid": "19005940200", "pageid": "04550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:50:03Z",
+  "note": "printed p. 428; two affirmatives do not make a good issue. Com. Dig., Co. Litt., Doct. Pl. not recorded; supra cross-reference not recorded; footnotes (k), (l) OCR'd as (h), (I); 1831 hathi00002/03300",
+  "citations": [
+    {"seq": 1, "raw": "Wood v. Butts, Cro. Eliz. 260", "case_name": "Wood v. Butts",
+     "reporter_abbr": "Cro. Eliz.", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "16532222", "confidence": "high"},
+    {"seq": 2, "raw": "Chandler v. Roberts, Doug. 6o", "case_name": "Chandler v. Roberts",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "17790039", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied; OCR 6o for 60; ER has the case at 1 Doug 58 (next record at 61), Buller's dictum within it"},
+    {"seq": 3, "raw": "Zouclh nnt 13iiifield's Case, I Lcon. 77", "case_name": "Zouch and Bamfield's Case",
+     "volume": 1, "reporter_abbr": "Leon.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "16870944", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Leo 75"},
+    {"seq": 4, "raw": "5 Ilen. 7. . 1, 12.", "volume": 5, "reporter_abbr": "Y.B.", "page": 11,
+     "status": "no_match", "confidence": "medium",
+     "note": "Year book, 5 Hen. VII, fo. 11 (OCR '. 1'; the 1831 edition prints 5 Hen. 7. 11, 12); no source. dropped: 12"}
+  ]
+}

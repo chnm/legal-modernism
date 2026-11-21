@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "04790",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:56:13Z",
+  "note": "printed p. 452; departure in the replication and the rejoinder; 1831 hathi00002/03470",
+  "citations": [
+    {"seq": 1, "raw": "Hickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source; no Hickman v. Walker found by name in ER 1720-1800 (only unrelated Hickman cases); no stub"}
+  ]
+}

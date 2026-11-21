@@ -1,0 +1,24 @@
+{
+  "psmid": "19005940200", "pageid": "04600",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:51:17Z",
+  "note": "printed p. 433; pleading according to legal effect (release, surrender, reservation). Supra cross-reference not recorded",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 97", "volume": 2, "reporter_abbr": "Saund.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "18450129", "confidence": "medium",
+     "note": "no name printed; Jaques v. Cesar begins at 2 Wms Saund 97"},
+    {"seq": 2, "raw": "Barkerv. Lade, 4 Mod. 150, 151", "case_name": "Barker v. Lade",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 150,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149. dropped: 151"},
+    {"seq": 3, "raw": "Barker v. Lade, 4 Mod. 151", "case_name": "Barker v. Lade",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 151,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149"},
+    {"seq": 4, "raw": "Moore v. Earl of Plymouth, 3 Barn, and Aid. 66", "case_name": "Moore v. Earl of Plymouth",
+     "volume": 3, "reporter_abbr": "Barn. & Ald.", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "18190651", "confidence": "high"},
+    {"seq": 5, "raw": "Strond v. Lady Gcrrard, 1 Salk. 8", "case_name": "Stroud v. Lady Gerrard",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 8,
+     "status": "linked_english_reports", "er_case_id": "17953289", "confidence": "high"}
+  ]
+}

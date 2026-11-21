@@ -1,0 +1,32 @@
+{
+  "psmid": "19005940200", "pageid": "04720",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:54:11Z",
+  "note": "printed p. 445; onerari non; pleadings tendering issue; defect in commencement or conclusion. Com. Dig. not recorded; Appendix note and supra cross-references not recorded; footnote (x) runs onto the next page; 1831 hathi00002/03430",
+  "citations": [
+    {"seq": 1, "raw": "Brown v. Cornish, Salk. 516", "case_name": "Brown v. Cornish",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 516,
+     "status": "linked_english_reports", "er_case_id": "17950651", "confidence": "high",
+     "note": "volume 2 supplied"},
+    {"seq": 2, "raw": "Ben- net v. Filkins, 1 Saund. 14 b", "case_name": "Bennet v. Filkins",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "18450013", "confidence": "high"},
+    {"seq": 3, "raw": "Ibid. 290. n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 290,
+     "status": "linked_english_reports", "er_case_id": "18450025", "pincite": true, "confidence": "medium",
+     "note": "Ibid. = 1 Saund.; no name printed; note falls in Cabell v. Vaughan, 1 Wms Saund 288"},
+    {"seq": 4, "raw": "Nowlan v. Geddes, 1 East, 634", "case_name": "Nowlan v. Geddes",
+     "volume": 1, "reporter_abbr": "East", "page": 634,
+     "status": "linked_english_reports", "er_case_id": "18010328", "confidence": "high"},
+    {"seq": 5, "raw": "Wilson v. Kemp, 2 M. and S. 549", "case_name": "Wilson v. Kemp",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 549,
+     "status": "linked_english_reports", "er_case_id": "18140395", "confidence": "high"},
+    {"seq": 6, "raw": "Le Bret v. Papillon, 4 East, 502", "case_name": "Le Bret v. Papillon",
+     "volume": 4, "reporter_abbr": "East", "page": 502,
+     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "high"},
+    {"seq": 7, "raw": "Weeks v. Pacah, 1 Salk. 179", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high"},
+    {"seq": 8, "raw": "Powell v. Fullerlon, 2 Bos. and Pul. 420", "case_name": "Powell v. Fullerton",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 420,
+     "status": "linked_english_reports", "er_case_id": "18010234", "confidence": "high"}
+  ]
+}

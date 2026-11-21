@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "04760",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:55:30Z",
+  "note": "printed p. 449; joint justification of false imprisonment bad as to both; reason of Rule IX; 1831 hathi00002/03450",
+  "citations": [
+    {"seq": 1, "raw": "Hedges v. Chapman, 2 Bing. 523", "case_name": "Hedges v. Chapman",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 523,
+     "status": "linked_english_reports", "er_case_id": "18250402", "confidence": "high"}
+  ]
+}

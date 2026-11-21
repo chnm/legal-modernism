@@ -1,0 +1,13 @@
+{
+  "psmid": "19005940200", "pageid": "04540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:49:51Z",
+  "note": "printed p. 427; argumentative pleas (the velvet wager; the plaintiff never had any goods). Doct. Pl. not recorded; footnote (h) OCR'd as (A); 1831 hathi00002/03300",
+  "citations": [
+    {"seq": 1, "raw": "Lcdesham v. Lubrani, Cro. Eliz. 870", "case_name": "Ledesham v. Lubram",
+     "reporter_abbr": "Cro. Eliz.", "page": 870,
+     "status": "linked_english_reports", "er_case_id": "16531203", "confidence": "high"},
+    {"seq": 2, "raw": "Dyer, 4i a.", "volume": 1, "reporter_abbr": "Dyer", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "17940666", "pincite": true, "confidence": "low",
+     "note": "no name printed; OCR 4i for 43 (1831 edition: Dyer, 43 a); 43 a falls in Executors of Grenelife v. W- (1 Dy 42), next case begins at 44"}
+  ]
+}

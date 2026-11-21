@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "04630",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:52:08Z",
+  "note": "printed p. 436; Rule VIII, formal commencements and conclusions; plea to the jurisdiction. Co. Litt., Com. Dig., 1 Chitty (treatise) not recorded; Appendix note a cross-reference; 1831 hathi00002/03360",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. o09. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR o09 for 209 (1831 edition: 209. n. (1)); note falls in Foxwist v. Tremaine, 2 Wms Saund 207 (next record at 212)"},
+    {"seq": 2, "raw": "Per Holt, C. J., Bowyer v. Cook, 5 Mod. 146", "case_name": "Bowyer v. Cook",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17940334", "pincite": true, "confidence": "high",
+     "note": "case begins at 5 Mod 145 (next case at 147)"}
+  ]
+}
