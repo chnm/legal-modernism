@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00300",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:23:31Z",
+  "note": "Printed p. 4 (star pp. 4-5). Notes (d) and (e) otherwise cite treatises (Selwyn's Practice, Bl. Com., Hale's Discourse, Arch. Pract., F. N. B.), not recorded.",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Doe d. Kinston v. Kingston, 1 Dowl. N. S. 263",
+      "case_name": "Doe d. Kingston v. Kingston",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 263,
+      "status": "linked_stub",
+      "stub_cite": "1 Dowl. N.S. 263",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases, New Series (1841-42); no report of Doe d. Kingston v. Kingston found in the English Reports by name, so the exact stub"
+    }
+  ]
+}

@@ -105,6 +105,19 @@ In early Johnson's and Massachusetts Reports, `cap.cases.first_page` can
 differ from the cite in `cap.citations` (Hopkins v. Hopkins, cited
 `10 Johns. 369`, first_page 375).
 
+### 10. Cases identified but with no stub
+
+Readers link a stub only when one exists at the case's first page (they
+cannot create stubs: `llm_links.stub_cite` is a foreign key onto
+`legalhist.stub_cases`, which `make db-stubs` derives from the pipeline's
+misses). A case the reader identified (name, volume, reporter, corrected
+page) in a reporter with no source and no stub at that page is recorded as
+`no_match` with the reading kept: Lutwyche pages with no stub, Root,
+Weekly Notes of Cases, the Kentucky Law Reporter, Law Reports of the 1890s,
+and others. `SELECT ... FROM moml_citations.llm_links WHERE status =
+'no_match' AND volume IS NOT NULL` lists them; they could seed stubs or a
+review list.
+
 ### 8. Pages missing from MOML scans
 
 The 1859 edition's scan (19005781000) has no page for printed pp. cxxv and
@@ -204,6 +217,10 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439. Then stop:
    the owner decided (2026-11-21) not to read the UK editions.
+10. The owner wants the identified `no_match` cases (finding 10) added to
+    `legalhist.stub_cases` (asked 2026-11-21). Draft it (a migration, or a
+    change to `db/stub_cases.sql` so `make db-stubs` keeps them) and remind
+    the owner when the reading is done; they run it with write access.
 
 Already aligned across editions (recorded in the README's "choices already
 made"): 1 Saund. 228 n. (1), 1 Saund. 318 n. (3), 2 Saund. 291 n., 2 Saund.

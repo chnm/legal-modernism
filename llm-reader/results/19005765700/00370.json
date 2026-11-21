@@ -1,0 +1,21 @@
+{
+  "psmid": "19005765700",
+  "pageid": "00370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T15:21:34Z",
+  "note": "printed p. 11; otherwise statutes only",
+  "citations": [
+    {
+      "seq": 1,
+      "raw": "Doe d. Kingston v. Kingston, 1 Do'wl. N. S. 263",
+      "case_name": "Doe d. Kingston v. Kingston",
+      "volume": 1,
+      "reporter_abbr": "Dowl. N. S.",
+      "page": 263,
+      "status": "linked_stub",
+      "stub_cite": "1 Dowl. N.S. 263",
+      "confidence": "high",
+      "note": "Dowling's Practice Cases, new series (1841-42); no English Reports record of the case found by name, so the exact stub"
+    }
+  ]
+}

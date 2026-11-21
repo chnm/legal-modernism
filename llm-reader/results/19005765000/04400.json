@@ -6,9 +6,9 @@
   "note": "printed p. 376. Stephen's footnotes (n)-(p), then Andrews's note 1 in two columns, printed here in reading order. Note (o) 'Cited Plow. 128' is an unnamed case cited inside Buckley v. Rice Thomas, not recorded. Com. Dig. and Maxwell, Code Pl. are treatises. The 1901 edition (hathi00013/04800) ends the note with 'See Sukeforth v. Lord, 87 Cal. 399', which this page does not print (see the next page).",
   "citations": [
     {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
-     "volume": 1, "reporter_abbr": "Plowd.", "page": 118,
-     "status": "no_match", "confidence": "high",
-     "note": "ER's Plowden lacks pages 1-130, and no case of this name is elsewhere in ER"},
+     "reporter_abbr": "Plowd.", "page": 118,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "ER's Plowden lacks pages 1-130; linked by the same-case rule to Dyer's report, Bulkeley v Thomas, 2 Dy 113 (README choice; coordinator's correction)"},
     {"seq": 2, "raw": "Wimbish v. Tailbols, Plow. 54, 55", "case_name": "Wimbish v. Tailbois",
      "volume": 1, "reporter_abbr": "Plowd.", "page": 54,
      "status": "no_match", "confidence": "high",

@@ -6,9 +6,9 @@
   "note": "printed p. 392. Rule VII. Stephen's footnotes (b), (c) (Com. Dig. and Bracton not recorded), then Andrews's note 1 in two columns, which run in sequence here. 3 Black. Com. and Pomeroy, Code Rem. are treatises. Garbled numbers read with the 1901 edition (hathi00013/04970), which adds Miller v. Blow and Cook v. Warner at the head of the note; they are not in this edition.",
   "citations": [
     {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 1i3", "case_name": "Buckley v. Rice Thomas",
-     "volume": 1, "reporter_abbr": "Plowd.", "page": 123,
-     "status": "no_match", "confidence": "high",
-     "note": "OCR '1i3' for 123 (the 1901 edition prints 123); ER's Plowden lacks pages 1-130, and no case of this name is elsewhere in ER"},
+     "reporter_abbr": "Plowd.", "page": 123,
+     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium",
+     "note": "OCR '1i3' for 123 (the 1901 edition prints 123); ER's Plowden lacks pages 1-130; linked by the same-case rule to Dyer's report, Bulkeley v Thomas, 2 Dy 113, a pin cite (the Plowden report begins at 118) (README choice; coordinator's correction)"},
     {"seq": 2, "raw": "Dally v. King, 1 I. Bl. 1", "case_name": "Dally v. King",
      "volume": 1, "reporter_abbr": "H. Bl.", "page": 1,
      "status": "linked_english_reports", "er_case_id": "17880010", "confidence": "high"},
