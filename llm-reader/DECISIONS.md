@@ -148,7 +148,8 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    (HathiTrust records).
 6. **`page` holds the corrected reading** where a named case is found at
    other numbers than printed (e.g. Jones v. Kitchin, 1 Bos. & Pul. 77, is
-   at 76 in some records).
+   at 76 in some records). Bridgwater v. Bythway, 3 Lev. 113, is 17970039
+   without `pincite` (settled 2026-11-21; drop it from item 2's list).
 7. **`sup.` after a case name** (Martin v. Kesterton, sup.) is now recorded
    as a back-reference; earlier records left it out.
 8. **A bare `Ibid.` after a footnote mixing a case and a treatise**

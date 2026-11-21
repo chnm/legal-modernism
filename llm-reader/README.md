@@ -184,7 +184,9 @@ is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
 Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 "2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
-Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Record each of
+Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Bridgwater v.
+Bythway, 3 Lev. 113, is the record at 3 Lev 113 (17970039), a separate
+report of the suit, not a pin cite into 3 Lev 109. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`).
 A second report of a case found only inside a different case's report
 (Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally) is
@@ -200,7 +202,9 @@ number is cut off and printed on no page you have, supply it from the case
 found by name and say so. A cite repeated on a page, or the same case cited in two footnotes, is
 recorded each time it is printed. When
 the English Reports split one case into several records, link the record the
-cited page falls in.
+cited page falls in; when the case begins in an earlier record, the cite is
+`pincite: true`, even at the later record's first page (Craft v. Boite at
+1 Saund. 246, Osborne v. Rogers at 267).
 
 **Identify the reporter.** `legalhist.whitelist` maps printed spellings
 (`reporter_found`) to a `reporter_standard`, and `legalhist.reporters` gives

@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00006",
+  "pageid": "01550",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:53:18Z",
+  "note": "printed pages 206-207; same page and footnotes as hathi00005/01550; Reg. Plac., Chitty on Pleading, Bac. Ab. and the cross-reference are not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Hatton v. Morse, 3 Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high"},
+    {"seq": 2, "raw": "Holt's Inst. 561, S. C.", "case_name": "Hatton v. Morse",
+     "reporter_abbr": "Holt", "page": 561,
+     "status": "linked_english_reports", "er_case_id": "17380398", "confidence": "medium",
+     "note": "S. C. of Hatton v. Morse; Holt's K.B. Reports, Holt KB 561, per the README's choice"}
+  ]
+}
