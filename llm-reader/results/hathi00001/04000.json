@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00001", "pageid": "04000",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:15:33Z",
+  "note": "printed p. 378; Section V, Rule I: pleadings must not be insensible nor repugnant. Com. Dig., Bac. Ab. and Vin. Ab. not recorded. Names from the 1831 edition (hathi00002/03250)",
+  "citations": [
+    {"seq": 1, "raw": "1 Salk. 324", "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "medium",
+     "note": "no name printed; Wyat v. Aland (1831 edition)"},
+    {"seq": 2, "raw": "1 Salk. 213", "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17952651", "confidence": "medium",
+     "note": "no name printed; Nevill v. Soper (1831 edition)"},
+    {"seq": 3, "raw": "7 Rep. 25", "volume": 7, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720063", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Butt's Case (1831 edition), which ER begins at 7 Co Rep 23 (the record at 25 is Hall v. Bishop of Bath and Wells); the 1831 name decides"},
+    {"seq": 4, "raw": "2 Lut. 1324", "volume": 2, "reporter_abbr": "Lutw.", "page": 1324,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1324", "confidence": "medium",
+     "note": "no name printed; Hutchinson v. Jackson (1831 edition); Lutwyche is in the stubs only, and the stub matches exactly"},
+    {"seq": 5, "raw": "1 Salk. 324", "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "medium",
+     "note": "no name printed; Wyat v. Aland (1831 edition)"},
+    {"seq": 6, "raw": "1 Salk. 213", "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17952651", "confidence": "medium",
+     "note": "no name printed; Nevill v. Soper (1831 edition)"},
+    {"seq": 7, "raw": "7 Rep. 25", "volume": 7, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720063", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Butt's Case (1831 edition), which begins at 7 Co Rep 23"}
+  ]
+}

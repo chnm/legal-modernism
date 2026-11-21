@@ -1,0 +1,28 @@
+{
+  "psmid": "hathi00001", "pageid": "04010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:15:52Z",
+  "note": "printed p. 379; surplusage, and Rule II: pleadings must not be ambiguous. Gilb. C. P., Co. Litt. and Com. Dig. not recorded. Note (h) prints only 2 Saund. 306 n. (14), not the 291 n. (1) of the 1831 edition. The '38.' printed apart belongs to note (i), '5 M. and S. 38'. Names from the 1831 edition (hathi00002/03250, 03260)",
+  "citations": [
+    {"seq": 1, "raw": "5 East, 255", "volume": 5, "reporter_abbr": "East", "page": 255,
+     "status": "linked_english_reports", "er_case_id": "18040251", "pincite": true, "confidence": "medium",
+     "note": "no name printed; The King v. Stevens (1831 edition), which begins at 5 East 244"},
+    {"seq": 2, "raw": "1 Salk. 324-5", "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "medium",
+     "note": "no name printed; Wyat v. Aland (1831 edition). dropped: 325 (end of range)"},
+    {"seq": 3, "raw": "2 Saund. 306. n. (14.)", "volume": 2, "reporter_abbr": "Saund.", "page": 306,
+     "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note; 306 falls in Dean and Chapter of Windsor v. Gover (2 Wms Saund 302, next case at 307)"},
+    {"seq": 4, "raw": "Yelv. 36", "reporter_abbr": "Yelv.", "page": 36,
+     "status": "linked_english_reports", "er_case_id": "17921888", "confidence": "medium",
+     "note": "no name printed; Purcell v. Bradley (1831 edition)"},
+    {"seq": 5, "raw": "2 H. Bl. 530", "volume": 2, "reporter_abbr": "H. Bl.", "page": 530,
+     "status": "linked_english_reports", "er_case_id": "17954015", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Dovaston v. Payne (1831 edition), which begins at 2 H Bl 527"},
+    {"seq": 6, "raw": "5 M. and S. 38.", "volume": 5, "reporter_abbr": "M. & S.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "18160442", "confidence": "medium",
+     "note": "no name printed; the page '38.' is printed on a line of its own above notes (i)-(l); Thornton v. Adams (1831 edition)"},
+    {"seq": 7, "raw": "2 Rep. 3", "volume": 2, "reporter_abbr": "Rep.", "page": 3,
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Manser's Case (1831 edition); ER splits Painter v. Manser into records at 2 Co Rep 1 and 3, so folio 3 is a pincite"}
+  ]
+}

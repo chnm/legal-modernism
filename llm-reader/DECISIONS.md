@@ -258,7 +258,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    1831 and 1894 records. Plow. 128 (Buckley) is `no_match` in the 1831
    record but linked to 17941482 in 1824; align to the README. Dyer is
    recorded as volume 1 though the English Reports split it into 1-3 Dy;
-   check each Dyer record's volume against its record.
+   check each Dyer record's volume against its record. A bare second
+   Saunders page with no note ("1 Saund. 276. n. (2). 211.", hathi00001
+   03910-04200) was recorded as a second citation, as in 1831; check the
+   rule and align. The 1831 Anonymous at 2 Salk. 519 is 17950160, not the
+   README's 17950161.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

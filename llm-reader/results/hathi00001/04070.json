@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "04070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:17:34Z",
+  "note": "printed p. 385; argumentative pleas, and two affirmatives make no good issue. The scan interleaves notes (b)-(e) in two columns; followed the letters. Doct. Pl., Com. Dig. and Co. Litt. not recorded. Names from the 1831 edition (hathi00002/03300)",
+  "citations": [
+    {"seq": 1, "raw": "Cro. Eliz. 870", "reporter_abbr": "Cro. Eliz.", "page": 870,
+     "status": "linked_english_reports", "er_case_id": "16531203", "confidence": "medium",
+     "note": "no name printed; Ledesham v. Lubram (1831 edition)"},
+    {"seq": 2, "raw": "Dyer, 43", "volume": 1, "reporter_abbr": "Dyer", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "17940666", "pincite": true, "confidence": "medium",
+     "note": "no name printed in any edition; volume 1 supplied; 43 falls in Executors of Grenelife v. W- (1 Dy 42, 3229 words), next case begins at 44"},
+    {"seq": 3, "raw": "Cro. El. 260", "reporter_abbr": "Cro. Eliz.", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "16532222", "confidence": "medium",
+     "note": "no name printed; Wood v. Butts (1831 edition)"},
+    {"seq": 4, "raw": "Per Buller, J., Doug. 60", "volume": 1, "reporter_abbr": "Doug.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "17790039", "pincite": true, "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Chandler v. Roberts (1831 edition), which ER begins at 1 Doug 58 (Douglas paged differently by edition)"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "04060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:17:16Z",
+  "note": "printed p. 384; a negative plea pursuing the covenant held good; Rule III: pleadings must not be argumentative. Com. Dig., Bac. Ab. and Co. Litt. not recorded. Names from the 1831 edition (hathi00002/03290)",
+  "citations": [
+    {"seq": 1, "raw": "1 Lev. 83", "volume": 1, "reporter_abbr": "Lev.", "page": 83,
+     "status": "linked_english_reports", "er_case_id": "17930854", "confidence": "medium",
+     "note": "no name printed; Pullin v. Nicholas (1831 edition)"},
+    {"seq": 2, "raw": "Cro. Jac. 559", "reporter_abbr": "Cro. Jac.", "page": 559,
+     "status": "linked_english_reports", "er_case_id": "17910612", "confidence": "medium",
+     "note": "no name printed; Lea v. Luthell (1831 edition)"}
+  ]
+}

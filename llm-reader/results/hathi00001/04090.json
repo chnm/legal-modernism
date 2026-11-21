@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00001", "pageid": "04090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:18:24Z",
+  "note": "printed p. 387; two negatives make no good issue; a party to a deed pleads non est factum, a stranger that he did not grant. Co. Litt., Reg. Plac., Com. Dig. and Doct. Pl. not recorded; the Appendix note is a cross-reference. The scan prints note (n) after (p); followed the letters. Names from the 1831 edition (hathi00002/03310; Robinson v. Corbett and Taylor v. Needham from its other passages, 02000 and 02010) and the 1894 Andrews (19005765000/04530)",
+  "citations": [
+    {"seq": 1, "raw": "6 East, 557", "volume": 6, "reporter_abbr": "East", "page": 557,
+     "status": "linked_english_reports", "er_case_id": "18050219", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Martin v. Smith (1831 and 1894 editions), which begins at 6 East 555"},
+    {"seq": 2, "raw": "Lutw. 662", "volume": 1, "reporter_abbr": "Lutw.", "page": 662,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 662", "confidence": "medium",
+     "note": "no name printed; Robinson v. Corbett (named with this cite elsewhere in the 1831 edition); Lutwyche is paged as one run and held only as stubs; exact match"},
+    {"seq": 3, "raw": "2 Taunt. 281", "volume": 2, "reporter_abbr": "Taunt.", "page": 281,
+     "status": "linked_english_reports", "er_case_id": "18100119", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Taylor v. Needham (named with 2 Taunt. 281 elsewhere in Stephen), which ER begins at 2 Taunt 278 (next case at 283)"},
+    {"seq": 4, "raw": "2 Hen. 4. 20", "volume": 2, "reporter_abbr": "Y.B.", "page": 20,
+     "status": "no_match", "confidence": "high",
+     "note": "Year book, 2 Hen. IV, fo. 20; no source"},
+    {"seq": 5, "raw": "20 Ed. 4. 1", "volume": 20, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "high",
+     "note": "Year book, 20 Edw. IV, fo. 1; no source"},
+    {"seq": 6, "raw": "1 Lutw. 662", "volume": 1, "reporter_abbr": "Lutw.", "page": 662,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 662", "confidence": "medium",
+     "note": "no name printed; Robinson v. Corbett; the stub matches exactly"}
+  ]
+}

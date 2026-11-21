@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "04050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:17:03Z",
+  "note": "printed p. 383; the traverse de injuria, and the loose modern construction of the rule against negatives pregnant. Com. Dig. not recorded; the reference to p. 186 is a cross-reference. Name from the 1831 edition (hathi00002/03280)",
+  "citations": [
+    {"seq": 1, "raw": "Vent. 70", "volume": 1, "reporter_abbr": "Vent.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17260222", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Auberie v. James (1831 edition), ER 'Aubery versus James' (the other record at 1 Vent 70 is Green v. Cubit)"},
+    {"seq": 2, "raw": "Sid. 444", "volume": 1, "reporter_abbr": "Sid.", "page": 444,
+     "status": "linked_english_reports", "er_case_id": "17140026", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; the same case, ER 'Awbry versus James' (the other record at 1 Sid 444 is Richards v. Hodges)"},
+    {"seq": 3, "raw": "2 Keb. 623", "volume": 2, "reporter_abbr": "Keb.", "page": 623,
+     "status": "no_match", "confidence": "medium",
+     "note": "no name printed; the same case (Auberie v. James, 1831 edition); the records at 2 Keb 623 are Morris v. Creech, Taylor v. Wells and Fernhaw v. Watkins, and no Aubery/Awbry v. James is in Keble"},
+    {"seq": 4, "raw": "Vent. 70", "volume": 1, "reporter_abbr": "Vent.", "page": 70,
+     "status": "linked_english_reports", "er_case_id": "17260222", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Auberie v. James (1831 edition)"}
+  ]
+}
