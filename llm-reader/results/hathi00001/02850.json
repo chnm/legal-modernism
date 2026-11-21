@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "02850",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:16:27Z",
+  "note": "printed p. 263; the Cranborn chase verdict; traverse too narrow, the servant's assumpsit (Osborne v. Rogers). Names from the 1831 edition (hathi00002/02370)",
+  "citations": [
+    {"seq": 1, "raw": "Hob. 119.", "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "medium",
+     "note": "no name printed; Wood v. Budden, the Cranborn chase case, as the 1831 edition names it"},
+    {"seq": 2, "raw": "1 Saund. 267,", "volume": 1, "reporter_abbr": "Saund.", "page": 267,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Osborne v. Rogers, the servant's assumpsit, as the 1831 edition names it; ER has it at 1 Wms Saund 264 and 267, so a pin cite into the record at 267 even at its first page"},
+    {"seq": 3, "raw": "268. n. (1).", "volume": 1, "reporter_abbr": "Saund.", "page": 268,
+     "status": "linked_english_reports", "er_case_id": "18450168", "pincite": true, "confidence": "medium",
+     "note": "a second page carrying its own note, so a second citation; 1 Saund. carried from the previous cite; Williams's note (1) to Osborne v. Rogers, in the ER record at 267 (the 1831 edition prints only 267)"}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "psmid": "hathi00001", "pageid": "02820",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:15:25Z",
+  "note": "printed p. 260; the gaming bond traverse too large (to wit, £1500), the copyhold grant traverse; traverse in the conjunctive. Names from the 1831 edition (hathi00002/02350)",
+  "citations": [
+    {"seq": 1, "raw": "Str. 493.", "volume": 1, "reporter_abbr": "Str.", "page": 493,
+     "status": "linked_english_reports", "er_case_id": "17950843", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Colborne v. Stockdale (ER 1 Str 493), as the 1831 edition names it"},
+    {"seq": 2, "raw": "8 Mod. 58. S. C.", "volume": 8, "reporter_abbr": "Mod.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "17950851", "pincite": true, "confidence": "medium",
+     "note": "S. C. of Str. 493, Colborne v. Stockdale; ER has Coleborne against Stockdale beginning at 8 Mod 57 (the two cases beginning at 8 Mod 58 are Crown cases)"},
+    {"seq": 3, "raw": "Yelv. 122.", "reporter_abbr": "Yelv.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17921377", "confidence": "medium",
+     "note": "no name printed; Lane v. Alexander (ER Yel 122), the only case there, as the 1831 edition names it"}
+  ]
+}

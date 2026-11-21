@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00001", "pageid": "02880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:17:38Z",
+  "note": "printed p. 266; duplicity: the penal bill, the promise to pay a sum certain and quantum meruit, ten outlawries in abatement. Names from the 1831 edition (hathi00002/02390) and Andrews 1894 (19005765000/03650)",
+  "citations": [
+    {"seq": 1, "raw": "2 Vent. 198. 222.", "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "medium",
+     "note": "no name printed; two cases begin at 2 Vent 198; the 1831 edition names Humphreys v. Bethily, the penal bill. dropped: 222 (another record of the same case, 17260504)"},
+    {"seq": 2, "raw": "7 Mod. 148.", "volume": 7, "reporter_abbr": "Mod.", "page": 148,
+     "status": "linked_english_reports", "er_case_id": "17961127", "confidence": "medium",
+     "note": "no name printed; Hart v. Longfield, as the 1831 edition names it"},
+    {"seq": 3, "raw": "2 Burr. 773.", "volume": 2, "reporter_abbr": "Burr.", "page": 773,
+     "status": "linked_english_reports", "er_case_id": "17590007", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Andrews 1894 names Cornwallis v. Savery (2 Burr 772, 1441 words, to 774), so 773 is a pin cite into it"},
+    {"seq": 4, "raw": "2 Rep. 4.", "volume": 2, "reporter_abbr": "Rep.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Andrews 1894 names Manser's Case (ER Painter v Manser, 2 Co Rep 3), so a pin cite into it, not Goddard v. Denton, which begins at 4 on the delivery of deeds"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "02740",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:11:24Z",
+  "note": "printed p. 252; the clerk's bond and the robbery rejoinder concluding with a verification, which is Vere v. Smith (named in the 1831 edition, hathi00002/02270)",
+  "citations": [
+    {"seq": 1, "raw": "2 Lev. 5.", "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "medium",
+     "note": "no name printed; Vere v. Smith, the clerk's bond and the robbery"},
+    {"seq": 2, "raw": "Vent. 121.", "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "medium",
+     "note": "no name printed; volume 1 supplied; Vere v. Smith"}
+  ]
+}

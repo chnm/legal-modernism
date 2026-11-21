@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00001", "pageid": "02900",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T18:18:11Z",
+  "note": "printed p. 268; the double replication; several distinct demands may be alleged (covenant to pay by instalments). 'Suprà, p. 151' skipped. Name from the 1831 edition (hathi00002/02400)",
+  "citations": [
+    {"seq": 1, "raw": "Rep. temp. Hard. 289.", "reporter_abbr": "Rep. temp. Hard.", "page": 289,
+     "status": "linked_english_reports", "er_case_id": "18150208", "confidence": "medium",
+     "note": "no name printed; Humphreys v. Churchman (ER Cas T H 289), the only case there, as the 1831 edition names it"}
+  ]
+}
