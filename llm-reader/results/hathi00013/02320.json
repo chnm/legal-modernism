@@ -1,0 +1,23 @@
+{
+  "psmid": "hathi00013", "pageid": "02320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:28:54Z",
+  "note": "p. 178, Stephen on the division and order of pleas (§ 97); footnotes (e)-(u). Co. Litt., Com. Dig., Chitty and Bac. Ab. are treatises; (t) is a cross-reference. Andrews's notes: the end of note 2 from p. 177 (as 1894 19005765000/01990), notes 1-3 here. 1 Lead. Cr. Cas. 272 (Leading Criminal Cases, a casebook) and Gould's Pleading are not recorded. The 1901 edition rearranges this part of Stephen's text: the 1894 reading of Rex v. Gibson is at 19005765000/02550.",
+  "citations": [
+    {"seq": 1, "raw": "Longueville v. Thistleworth, Lord Bay. 970", "case_name": "Longueville v. Thistleworth",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 970,
+     "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
+     "note": "volume supplied; 'Bay.' is OCR for Ray.; Sir Edward Longueville v. The Inhabitants of Thistleworth begins at 2 Ld Raym 969"},
+    {"seq": 2, "raw": "Fordyce v. Hathorn, 57 Mo. 120", "case_name": "Fordyce v. Hathorn",
+     "volume": 57, "reporter_abbr": "Mo.", "page": 120,
+     "status": "linked_cap", "cap_case_id": 8851335, "confidence": "high"},
+    {"seq": 3, "raw": "Dwiggins v. Clark, 94 Ind. 49", "case_name": "Dwiggins v. Clark",
+     "volume": 94, "reporter_abbr": "Ind.", "page": 49,
+     "status": "linked_cap", "cap_case_id": 1340750, "confidence": "high"},
+    {"seq": 4, "raw": "Chris- tian v. Williams, 111 Mo. 429", "case_name": "Christian v. Williams",
+     "volume": 111, "reporter_abbr": "Mo.", "page": 429,
+     "status": "linked_cap", "cap_case_id": 935577, "confidence": "high"},
+    {"seq": 5, "raw": "Rex v. Gibson, 8 East, 107", "case_name": "Rex v. Gibson",
+     "volume": 8, "reporter_abbr": "East", "page": 107,
+     "status": "linked_english_reports", "er_case_id": "18060338", "confidence": "high"}
+  ]
+}

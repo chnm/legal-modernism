@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "02880",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:31:10Z",
+  "note": "Stephen's text on the grand assise, trial by record and by certificate (1894 p. 02520); footnotes (p)-(s). Chitty, Arch., Bl. Com. and Cooley's Blackstone (Andrews's note 1) not recorded.",
+  "citations": [
+    {"seq": 1, "raw": "Tyssen v. Clarke, 8 Wils. 419, 641", "case_name": "Tyssen v. Clarke",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 419,
+     "status": "linked_english_reports", "er_case_id": "17990509", "confidence": "high",
+     "note": "printed 8 read as 3 (3 as 8); dropped: 641 (541 in the 1831 text; the English Reports have a further report at 3 Wils KB 541)"},
+    {"seq": 2, "raw": "Hardman v. Clegg, 1 Holt, N. P. R. 657", "case_name": "Hardman v. Clegg",
+     "volume": 1, "reporter_abbr": "Holt N. P.", "page": 657,
+     "status": "linked_english_reports", "er_case_id": "18170070", "confidence": "high",
+     "note": "stored in the English Reports as Holt 657"},
+    {"seq": 3, "raw": "2 Saund. 45 e",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 45,
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note in William v. Gwyn (a writ of right), begun at 2 Wms Saund 42, the record at 45, as in the 1831 and 1894 records"},
+    {"seq": 4, "raw": "Galton y. Harvey, 1 Bos. & Pul. 192", "case_name": "Galton v. Harvey",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 192,
+     "status": "linked_english_reports", "er_case_id": "17980027", "confidence": "high",
+     "note": "printed 192, the case's first page (the 1831 text prints 195)"}
+  ]
+}

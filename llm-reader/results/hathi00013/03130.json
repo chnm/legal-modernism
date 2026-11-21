@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "03130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:27:35Z",
+  "note": "§ 134, single and several issues; Andrews's notes 1 (a cross-reference) and 2, whose two columns are interleaved in the scan. Bliss's Code Pleading not recorded (1894 page 02770).",
+  "citations": [
+    {"seq": 1, "raw": "Clearwater v. Meredith, 1 Wall 26",
+     "case_name": "Clearwater v. Meredith",
+     "volume": 1, "reporter_abbr": "Wall.", "page": 25,
+     "status": "linked_cap", "cap_case_id": 3471778, "confidence": "high",
+     "note": "printed 26 (Gale copy '2.', 1894 OCR '20G'); Clearwater v. Meredith is 1 Wall. 25 (1863), the only case of the name; read as its first page"}
+  ]
+}

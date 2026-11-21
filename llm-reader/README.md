@@ -245,7 +245,8 @@ the stub. Willmore, Wollaston and Davison (`Will. W.
 & D.`, 1837–38) and Gale's Exchequer Reports (`Gale`, 1835–36) have no
 source and no stubs. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
 when that cite is a treatise. When it follows a footnote holding a single
-case, it is recorded as a citation of that case.
+case, it is recorded as a citation of that case. A bare `Id.` is read the
+same way.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
 report at `medium` and say so in `note`: the link is to the case. The same
@@ -330,7 +331,8 @@ American cases in the later editions (Andrews, 1894, and after):
   regional reporter not in
   `cap.citations` for that case) links the same case's official report in
   CAP at `medium`, as a report with no source does; one CAP holds links
-  directly. Reprints of English cases (Eng. C. L., English Ruling Cases)
+  directly. A reprint in a periodical (American Law Register) is treated
+  the same way. Reprints of English cases (Eng. C. L., English Ruling Cases)
   likewise link the case's own report in the English Reports at `medium`.
 - A recent case cited only by regional reporter (`37 N. E. Rep. 136`) is
   found by name and year in CAP, usually under its official report.

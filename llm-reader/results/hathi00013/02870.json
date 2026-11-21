@@ -1,0 +1,27 @@
+{
+  "psmid": "hathi00013",
+  "pageid": "02870",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T16:30:51Z",
+  "note": "Stephen's text on venire de novo and the grand assise (1894 p. 02510); footnotes (l)-(o) are cross-references, Chitty and a statute, not recorded. Andrews's note 1 from the previous page continued (rule (5) to Potter v. Titcomb, then closing remarks), and a new note 1 to the venire de novo paragraph (Union Bank v. Manistee Co.); the columns are interleaved in the scan, recorded in reading order.",
+  "citations": [
+    {"seq": 1, "raw": "Willes, 532",
+     "reporter_abbr": "Willes", "page": 532,
+     "status": "no_match", "confidence": "medium",
+     "note": "no name printed; Willes's Reports have no source here and no stub at Willes 532"},
+    {"seq": 2, "raw": "Stafford v. Mayor of Albany, 6 Johns. 1", "case_name": "Stafford v. Mayor of Albany",
+     "volume": 6, "reporter_abbr": "Johns.", "page": 1,
+     "status": "linked_cap", "cap_case_id": 2132752, "confidence": "high"},
+    {"seq": 3, "raw": "Magouen v. Lap- ham, 19 Pick. 419", "case_name": "Magoun v. Lapham",
+     "volume": 19, "reporter_abbr": "Pick.", "page": 419,
+     "status": "linked_cap", "cap_case_id": 2037686, "confidence": "high"},
+    {"seq": 4, "raw": "Potter v. Titcomb, 7 Greenl. 302", "case_name": "Potter v. Titcomb",
+     "volume": 7, "reporter_abbr": "Greenl.", "page": 302,
+     "status": "linked_cap", "cap_case_id": 9504559, "confidence": "high",
+     "note": "Greenleaf is 7 Me. 302 (1831)"},
+    {"seq": 5, "raw": "Union Bank v. Manistee Co., 43 111. App. 525", "case_name": "Union Bank v. Manistee Co.",
+     "volume": 43, "reporter_abbr": "Ill. App.", "page": 525,
+     "status": "linked_cap", "cap_case_id": 5054725, "confidence": "high",
+     "note": "new in 1901; CAP: Union National Bank v. Manistee Lumber Co. (1892)"}
+  ]
+}

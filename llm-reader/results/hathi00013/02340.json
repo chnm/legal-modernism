@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00013", "pageid": "02340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:29:41Z",
+  "note": "p. 180, end of Stephen's plea to the jurisdiction and § 99 (plea in suspension, parol demurrer); (f) cites Wentworth's precedents and (g) the Appendix, neither recorded. Andrews's note on jurisdiction continues, as in 1894 19005765000/02000. Chitty is a treatise.",
+  "citations": [
+    {"seq": 1, "raw": "Black's Ex'rs v. Black's Ex'rs, 34 Pa. St, 354", "case_name": "Black's Ex'rs v. Black's Ex'rs",
+     "volume": 34, "reporter_abbr": "Pa. St.", "page": 354,
+     "status": "linked_cap", "cap_case_id": 417970, "confidence": "high"},
+    {"seq": 2, "raw": "Harkness v. Hyde, 98 U. S. 476", "case_name": "Harkness v. Hyde",
+     "volume": 98, "reporter_abbr": "U. S.", "page": 476,
+     "status": "linked_cap", "cap_case_id": 11271, "confidence": "high"},
+    {"seq": 3, "raw": "So. Pac. R. Co. v. Denton, 146 U. S. 202", "case_name": "So. Pac. R. Co. v. Denton",
+     "volume": 146, "reporter_abbr": "U. S.", "page": 202,
+     "status": "linked_cap", "cap_case_id": 3564356, "confidence": "high"},
+    {"seq": 4, "raw": "Farmington v. Pills- bury, 114 U. S. 138", "case_name": "Farmington v. Pillsbury",
+     "volume": 114, "reporter_abbr": "U. S.", "page": 138,
+     "status": "linked_cap", "cap_case_id": 11293204, "confidence": "high"},
+    {"seq": 5, "raw": "Hartog v. Mem- ory, 116 id. 588", "case_name": "Hartog v. Memory",
+     "volume": 116, "reporter_abbr": "U. S.", "page": 588,
+     "status": "linked_cap", "cap_case_id": 3517152, "confidence": "high",
+     "note": "'id.' is U. S."},
+    {"seq": 6, "raw": "Greene v. Tacoma, 53 Fed. R. 562", "case_name": "Greene v. Tacoma",
+     "volume": 53, "reporter_abbr": "Fed. Rep.", "page": 562,
+     "status": "linked_cap", "cap_case_id": 3808940, "confidence": "high"},
+    {"seq": 7, "raw": "Fain v. Crawford, 91 Ga. 30", "case_name": "Fain v. Crawford",
+     "volume": 91, "reporter_abbr": "Ga.", "page": 30,
+     "status": "linked_cap", "cap_case_id": 370279, "confidence": "high"},
+    {"seq": 8, "raw": "Eidling v. Stewart, 7^ id. 539", "case_name": "Ridling v. Stewart",
+     "volume": 77, "reporter_abbr": "Ga.", "page": 539,
+     "status": "linked_cap", "cap_case_id": 61504, "confidence": "high",
+     "note": "'id.' is Ga.; volume OCR'd '7^', read 77 as in the 1894 edition"}
+  ]
+}

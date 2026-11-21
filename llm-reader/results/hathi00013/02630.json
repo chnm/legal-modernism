@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00013", "pageid": "02630",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:29:53Z",
+  "note": "Stephen's text on counter-pleas and start of section 113 (making up the issue); footnotes (e)-(k), no Andrews notes. Chitty, Reg. Plac. and Bro. Ent. (a book of entries) not recorded; (f) is a cross-reference. Matches 1894 19005765000/02280.",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 2, note 2",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (2) in Mellor v. Walker, 2 Wms Saund 1"},
+    {"seq": 2, "raw": "1 Saund. 9 b, n. 1",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note in Jevens v. Harridge, the record at 1 Wms Saund 8 (the suit's first record is at 1 Wms Saund 1)"},
+    {"seq": 3, "raw": "Id.",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 9,
+     "status": "linked_english_reports", "er_case_id": "18450277", "pincite": true, "confidence": "medium",
+     "note": "Id. expanded to 1 Saund. 9 b, n. 1, the cite before; Jevens v. Harridge, record at 1 Wms Saund 8"}
+  ]
+}

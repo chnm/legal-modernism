@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00013", "pageid": "02690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:31:33Z",
+  "note": "Sections 116-118: issues in law, the modes of trial, trial by jury; footnotes (e)-(i), no Andrews notes. Bl. Com. not recorded; (e), (f) are cross-references. Matches 1894 19005765000/02340.",
+  "citations": [
+    {"seq": 1, "raw": "Cro. Jac. 102",
+     "reporter_abbr": "Cro. Jac.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17910363", "confidence": "medium",
+     "note": "no name printed; three cases begin at Cro Jac 102, and the later editions print Fletcher v. Pynsett for this footnote (as recorded in the 1894 reading)"},
+    {"seq": 2, "raw": "Ilderton v. nderton, 2 H. BL 146", "case_name": "Ilderton v. Ilderton",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17931510", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 145 (8259 words); the 1894 OCR reads 145, this scan 146"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00013", "pageid": "02310",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T16:28:20Z",
+  "note": "p. 177, Stephen on demurrer and the classes of pleas (§§ 96-98; §§ 66-68 in 1894); notes (a), (c), (d) are cross-references to the Appendix. Andrews's notes 1 and 2; the scan interleaves their two columns, recorded left then right. Note 2 matches 1894 19005765000/01990; note 1 (Mutual Aid Soc. v. Paine, Delahay v. Clement) is new in 1901. Bliss and Pomeroy are treatises.",
+  "citations": [
+    {"seq": 1, "raw": "Mutual Aid Soc. v. Paine, 122 111. 628", "case_name": "Independent Order of Mutual Aid v. Paine",
+     "volume": 122, "reporter_abbr": "Ill.", "page": 628,
+     "status": "linked_cap", "cap_case_id": 5391339, "pincite": true, "confidence": "high",
+     "note": "case runs 122 Ill. 625-630; new in 1901"},
+    {"seq": 2, "raw": "Delahay v. Clement, 8 Scam. 201", "case_name": "Delahay v. Clement",
+     "volume": 3, "reporter_abbr": "Scam.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 2471496, "confidence": "high",
+     "note": "volume OCR'd 8, read 3 (Scammon has four volumes); new in 1901"},
+    {"seq": 3, "raw": "Pitts' Sons' Mfg. Co. v. Commer- cial Nat. Bank, 121 111. 582", "case_name": "Pitts' Sons' Mfg. Co. v. Commercial Nat. Bank",
+     "volume": 121, "reporter_abbr": "Ill.", "page": 582,
+     "status": "linked_cap", "cap_case_id": 5386199, "confidence": "high"},
+    {"seq": 4, "raw": "Gardner v. Clark, 21 N. Y. 399", "case_name": "Gardner v. Clark",
+     "volume": 21, "reporter_abbr": "N. Y.", "page": 399,
+     "status": "linked_cap", "cap_case_id": 1750009, "confidence": "high",
+     "note": "CAP's cite 21 N.Y. 399 (its first_page field says 428)"},
+    {"seq": 5, "raw": "Gardner v. Ogclen, 22 N. Y. 327", "case_name": "Gardner v. Ogden",
+     "volume": 22, "reporter_abbr": "N. Y.", "page": 327,
+     "status": "linked_cap", "cap_case_id": 2026270, "confidence": "high"},
+    {"seq": 6, "raw": "Id.", "case_name": "Gardner v. Ogden",
+     "volume": 22, "reporter_abbr": "N. Y.", "page": 327,
+     "status": "linked_cap", "cap_case_id": 2026270, "confidence": "medium",
+     "note": "Id. expanded to the previous cite, Gardner v. Ogden, 22 N.Y. 327, as in the 1894 record"}
+  ]
+}
