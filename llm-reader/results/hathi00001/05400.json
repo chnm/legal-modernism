@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00001", "pageid": "05400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T21:44:51Z",
+  "note": "Appendix (Notes) p. liv, end of note (45) and start of note (46); pp. 121, 248 are cross-references. Name for the Hobart cite from the 1831 edition (hathi00002/04250)",
+  "citations": [
+    {"seq": 1, "raw": "Hob. 252", "reporter_abbr": "Hob.", "page": 232,
+     "status": "linked_english_reports", "er_case_id": "17921070", "confidence": "medium",
+     "note": "no name printed; Heard v. Baskervile (1831 edition), Hobart on special demurrer under 27 Eliz. c. 5; this scan's '252' is OCR for 232, which Gale's copy of the same edition (19005920500/05380) and the 1831 and 1894 editions print; Hob 252 is Lake v. Hatton, unrelated"},
+    {"seq": 2, "raw": "3 T. R. 158", "volume": 3, "reporter_abbr": "T. R.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "low",
+     "note": "no name printed in any edition; Ashurst J.'s dictum that there is no general issue in quare impedit; 3 TR 158 falls inside Read v. Brookman (3 TR 151, 4,909 words), the only case spanning that page, as the 1894 reader judged; the dictum's case not confirmed"}
+  ]
+}
