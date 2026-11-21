@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "03130",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:18:19Z",
+  "note": "printed pp. 413-415; same footnotes as Gale 19005785400/03020",
+  "citations": [
+    {"seq": 1, "raw": "Mole v. Wallis, 1 Lev. 81", "case_name": "Mole v. Wallis", "volume": 1, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930733", "confidence": "high"},
+    {"seq": 2, "raw": "Fulmerston v. Steward, Plowd. 102", "case_name": "Fulmerston v. Steward", "reporter_abbr": "Plowd.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "medium",
+     "note": "Plowden's first 130 pages are missing from the ER; linked to the same case in 1 Dy 102 (Fulmerston against Stuard), cited S. C."},
+    {"seq": 3, "raw": "Dyer, 102, b. S. C.", "case_name": "Fulmerston v. Steward", "volume": 1, "reporter_abbr": "Dyer", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "high",
+     "note": "S. C.; volume supplied from the ER (1 Dy 102)"}
+  ]
+}

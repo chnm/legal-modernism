@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02980",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:21:51Z",
+  "note": "printed pp. 390-391; supra and Evans on Pleading (American editor's note) skipped; cross-checked against Gale 19005785400/02870",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 97", "volume": 2, "reporter_abbr": "Saund.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "18450129", "confidence": "medium",
+     "note": "no name printed; Jaques v. Cesar begins at 2 Wms Saund 97"},
+    {"seq": 2, "raw": "Barker v. Lade, 4 Mod. 150, 151", "case_name": "Barker v. Lade", "volume": 4, "reporter_abbr": "Mod.", "page": 150,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149; dropped: 151"},
+    {"seq": 3, "raw": "Barker v. Lade, 4 Mod. 151", "case_name": "Barker v. Lade", "volume": 4, "reporter_abbr": "Mod.", "page": 151,
+     "status": "linked_english_reports", "er_case_id": "17930107", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Mod 149"},
+    {"seq": 4, "raw": "Moore v. Earl of Plymouth, 3 Barn. & Ald. 66", "case_name": "Moore v. Earl of Plymouth", "volume": 3, "reporter_abbr": "Barn. & Ald.", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "18190651", "confidence": "high"},
+    {"seq": 5, "raw": "Stroud v. Lady Gerrard, 1 Salk. 8", "case_name": "Stroud v. Lady Gerrard", "volume": 1, "reporter_abbr": "Salk.", "page": 8,
+     "status": "linked_english_reports", "er_case_id": "17953289", "confidence": "high"}
+  ]
+}

@@ -178,14 +178,16 @@ from the name and the passage.) `english_reports.cases.word_count`
 helps: a case whose record is a hundred words cannot reach a page several
 pages on, and a long record starting a page earlier usually holds the notes
 printed on the next. Choices already made: 2 Saund. 291 n. (the videlicet)
-is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; King v. Lyme Regis, Doug. 148, is
+is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
+Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 "2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
 Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
-so they can be recovered. A note on the same page (`2 Saund. 410, and note (3)`) is one record. The
+so they can be recovered. A note on the same page (`2 Saund. 410, and note (3)`, or `97, and 97 b,
+n. (2)`: a folio letter is the same page) is one record. The
 exception is a second page carrying its own note
 (`2 Saund. 116 b. 411, n. (4)`): that is a second citation. When a page
 number is cut off and printed on no page you have, supply it from the case
@@ -213,7 +215,8 @@ in the 1867 and later editions' notes: Dowling (`Dowl.`, `Dowl. N.S.`),
 Dowling and Lowndes, Dowling and Ryland (in Barnewall and Cresswell),
 Perry and Davison, Gale and Davison, Scott N.R.,
 Hodges, Nevile and Perry, the Law Journal and the Jurist. Find the same case
-in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite.
+in the English Reports by name first. A bare `Ibid.` with no page repeats the previous cite, and is not recorded
+when that cite is a treatise.
 When the cited reporter has no source but the same case is reported in one
 that does (Willes's case found in Barnes or Strange by name), link that
 report at `medium` and say so in `note`: the link is to the case. The same
@@ -331,7 +334,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
   printed) are your reading of it. A volume you supplied goes in `volume`, and
-  `note` says so.
+  `note` says so; likewise `volume` and `page` hold the corrected reading when
+  the named case is found at other numbers than those printed (which stay in
+  `raw`).
 - `status` is `linked_cap`, `linked_english_reports`, `linked_code_reporter`,
   `linked_stub` or `no_match`, with exactly the matching one of
   `cap_case_id` (number), `er_case_id` (string), `code_reporter_id` (number),

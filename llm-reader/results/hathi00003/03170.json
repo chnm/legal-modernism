@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "03170",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:19:31Z",
+  "note": "printed pp. 419-421; same footnotes as Gale 19005785400/03060",
+  "citations": [
+    {"seq": 1, "raw": "22 Hen. 6, 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI, cited through Doct. Pl.; no source"},
+    {"seq": 2, "raw": "22 Edw. 4. 29", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Edw. IV, cited through Vin. Ab. and Bro.; no source"},
+    {"seq": 3, "raw": "Gifford v. Perkins, 1 Sid. 470", "case_name": "Gifford v. Perkins", "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "medium",
+     "note": "Gifford versus Perkins is at 1 Sid 450 in the ER; printed 470 (also so in the Gale copy) read as 450, linked by name"},
+    {"seq": 4, "raw": "1 Vent. 77, S C.", "case_name": "Gifford v. Perkins", "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high", "note": "S. C. of Gifford v. Perkins"}
+  ]
+}

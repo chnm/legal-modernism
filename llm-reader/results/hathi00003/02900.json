@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00003",
+  "pageid": "02900",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T00:19:37Z",
+  "note": "printed pp. 378-379; Co. Litt., Com. Dig. and Evans on Pleading (American editor's note) skipped; cross-checked against Gale 19005785400/02790",
+  "citations": [
+    {"seq": 1, "raw": "Dy. 66", "volume": 1, "reporter_abbr": "Dy.", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "17941176", "pincite": true, "confidence": "medium",
+     "note": "volume supplied; no name printed. Mynours v. Turke and Yorke is the last case beginning at 1 Dy 65 and runs to 67, so 66 falls in it"},
+    {"seq": 2, "raw": "Purcell v. Bradly, Yelv. 36", "case_name": "Purcell v. Bradly", "reporter_abbr": "Yelv.", "page": 36,
+     "status": "linked_english_reports", "er_case_id": "17921888", "confidence": "high"},
+    {"seq": 3, "raw": "Rose v. Stan- den, 2 Mod. 295", "case_name": "Rose v. Standen", "volume": 2, "reporter_abbr": "Mod.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17930916", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Mod 294"},
+    {"seq": 4, "raw": "Dovaston v. Payne, 2 H. Bl. 530", "case_name": "Dovaston v. Payne", "volume": 2, "reporter_abbr": "H. Bl.", "page": 530,
+     "status": "linked_english_reports", "er_case_id": "17954015", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 527"},
+    {"seq": 5, "raw": "Thornton v. Adams, 5 M. & S. 38", "case_name": "Thornton v. Adams", "volume": 5, "reporter_abbr": "M. & S.", "page": 38,
+     "status": "linked_english_reports", "er_case_id": "18160442", "confidence": "high"},
+    {"seq": 6, "raw": "Lord Huntingtower v. Gardiner, 1 Barn. & Cres. 297", "case_name": "Lord Huntingtower v. Gardiner", "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "18230206", "confidence": "high",
+     "note": "ER er_name 'Same against Ireland'; murrell_title Lord Huntingtower v Gardiner"},
+    {"seq": 7, "raw": "Fletcher v. Pogson, 3 Barn. &. Cres. 192", "case_name": "Fletcher v. Pogson", "volume": 3, "reporter_abbr": "Barn. & Cres.", "page": 192,
+     "status": "linked_english_reports", "er_case_id": "18240053", "confidence": "high"},
+    {"seq": 8, "raw": "6 Barn. & Cres. 295", "volume": 6, "reporter_abbr": "Barn. & Cres.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "18270080", "confidence": "medium",
+     "note": "no name printed; Hobson v. Middleton begins at 6 B & C 295"},
+    {"seq": 9, "raw": "Manser's case, 2 Rep. 3", "case_name": "Manser's Case", "volume": 2, "reporter_abbr": "Rep.", "page": 3,
+     "status": "linked_english_reports", "er_case_id": "15840013", "confidence": "high",
+     "note": "ER Painter v Manser, 2 Co Rep 3 (a record at 2 Co Rep 1 has the same title and no text)"}
+  ]
+}
