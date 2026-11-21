@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00009", "pageid": "01820",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:26:48Z",
+  "note": "Stephen, chapter II (p. 158): demurrer for substance or form, general and special demurrers, the statutes of 27 Eliz. and 4 Anne; Co. Litt., Reg. Plac. and Bac. Ab. are treatises and abridgments, (a) a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob., 164", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 164,
+     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
+     "note": "the Commendam case (Colt & Glover v. Bishop of Coventry & Lichfield) begins at Hob 140; as in hathi00002 and hathi00006"}
+  ]
+}

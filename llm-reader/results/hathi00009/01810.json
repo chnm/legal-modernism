@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00009", "pageid": "01810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:26:32Z",
+  "note": "Stephen, chapter II (p. 157): Rule I, demur or plead by traverse or confession and avoidance; of demurrer. Reg. Plac. and Tidd are treatises, (u) a cross-reference. The same footnote as hathi00002/01530 (this edition, like the 1831, lacks the 1857 editor's Dyer and later Barn. & Cress. cites)",
+  "citations": [
+    {"seq": 1, "raw": "21 Hen. VI, 12",
+     "volume": 21, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 21 Hen. VI, fol. 12; no source for the year books"},
+    {"seq": 2, "raw": "5 Hen. VIII, 23 a, 14 a. b.",
+     "volume": 5, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 5 Hen. VIII, fol. 23 a, as printed here and in the 1831 edition; the 1857 edition (hathi00006/01100) prints 5 Hen. 7, 13 a. 14 a. b., so the reign and folio are doubtful; dropped: 14 a. b.; no source for the year books"},
+    {"seq": 3, "raw": "Merceron v. Dowson, 5 Barn. & Cres. 479", "case_name": "Merceron v. Dowson",
+     "volume": 5, "reporter_abbr": "Barn. & Cres.", "page": 479,
+     "status": "linked_english_reports", "er_case_id": "18260400", "confidence": "high"}
+  ]
+}

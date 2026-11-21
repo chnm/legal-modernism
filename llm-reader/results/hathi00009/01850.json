@@ -1,0 +1,25 @@
+{
+  "psmid": "hathi00009", "pageid": "01850",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:27:58Z",
+  "note": "Stephen, chapter II (p. 161): exceptions to judgment on the whole record (respondeat ouster, the plaintiff's own ground, matters of form); (p) a cross-reference. Matches hathi00006/01140 except for that edition's American note (Humphreys v. Bethily)",
+  "citations": [
+    {"seq": 1, "raw": "Belasyse v. Hester, Lutw., 1592", "case_name": "Belasyse v. Hester",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1592,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "medium",
+     "note": "volume 2 supplied (Lutwyche is paged as one run; the stubs split it, and 1592 is in the second volume); Lutwyche is in the stubs only"},
+    {"seq": 2, "raw": "Routh v. Weddell, 1667", "case_name": "Routh v. Weddell",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1667,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1667", "confidence": "medium",
+     "note": "no reporter printed; carried from the preceding Lutw. cite; volume 2 supplied"},
+    {"seq": 3, "raw": "Hastrop v. Hastings, 1 Salk., 212", "case_name": "Hastrop v. Hastings",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "17951949", "confidence": "high"},
+    {"seq": 4, "raw": "Rich v. Pilkington, Carth., 172", "case_name": "Rich v. Pilkington",
+     "reporter_abbr": "Carth.", "page": 172,
+     "status": "linked_english_reports", "er_case_id": "17410289", "pincite": true, "confidence": "high",
+     "note": "case begins at Carth 171"},
+    {"seq": 5, "raw": "Marsh v. Bulteel, 5 Barn. & Ald., 507", "case_name": "Marsh v. Bulteel",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 507,
+     "status": "linked_english_reports", "er_case_id": "18220069", "confidence": "high"}
+  ]
+}
