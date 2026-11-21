@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "00700",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T02:43:21Z",
+  "note": "printed pages 73-75",
+  "citations": [
+    {"seq": 1, "raw": "Shepley v. Marsh, Stra. 1131", "case_name": "Shepley v. Marsh",
+     "volume": 2, "reporter_abbr": "Stra.", "page": 1131,
+     "status": "linked_english_reports", "er_case_id": "17953080", "confidence": "high",
+     "note": "volume 2 supplied"},
+    {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyrw. 495", "case_name": "Thynne v. Woodman",
+     "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
+     "note": "Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name; linked to the exact stub, as in the Gale reading of this edition (19005784900/00640)"}
+  ]
+}
