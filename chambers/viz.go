@@ -270,22 +270,39 @@ type vizStephenRow struct {
 // a foreign key onto legalhist.reporters, whose jurisdiction is us:xx or
 // uk:xx); a citation that matched nothing, or a stub whose reporter has no
 // jurisdiction, is Unknown.
+//
+// TEMPORARY (owner's request, 2026-11-21): the chart also takes copies that
+// are not official (moml.editions.copy_of an American treatise) when they
+// are of a year no other copy has, such as the 1859 printing of the 1857
+// edition. One copy stands for each year: the official one if there is one,
+// else the one with the most pages read. To go back to official copies only,
+// drop the second branch of the copies CTE.
 const vizStephenSQL = `
 WITH copies AS (
-    SELECT v.bibliographicid, v.psmid, v.year, v.edition_statement
+    SELECT v.bibliographicid, v.psmid, v.year, v.edition_statement, true AS official
       FROM moml.editions e
       JOIN moml.treatises t USING (bibliographicid)
       JOIN moml.volumes v USING (bibliographicid)
      WHERE e.work_id = $1 AND t.jurisdiction = 'US'
-), editions AS (
+    UNION ALL
+    SELECT v.bibliographicid, v.psmid, v.year, v.edition_statement, false
+      FROM moml.editions e
+      JOIN moml.treatises t ON t.bibliographicid = e.copy_of
+      JOIN moml.volumes v ON v.bibliographicid = e.bibliographicid
+     WHERE e.work_id = $1 AND t.jurisdiction = 'US'
+), read AS (
     SELECT c.bibliographicid, min(c.psmid) AS psmid, min(c.year) AS year,
-           min(c.edition_statement) AS edition_statement,
+           min(c.edition_statement) AS edition_statement, bool_and(c.official) AS official,
            count(r.pageid) AS pages_read, count(*) AS pages
       FROM copies c
       JOIN moml.page p USING (psmid)
       LEFT JOIN moml_citations.llm_pages r USING (psmid, pageid)
      GROUP BY c.bibliographicid
     HAVING count(r.pageid) > 0
+), editions AS (
+    SELECT DISTINCT ON (year) *
+      FROM read
+     ORDER BY year, official DESC, pages_read DESC, bibliographicid
 ), links AS (
     SELECT c.bibliographicid,
            CASE WHEN l.status IN ('linked_cap', 'linked_code_reporter') OR rep.jurisdiction LIKE 'us:%' THEN 'US'
