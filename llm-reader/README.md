@@ -184,7 +184,11 @@ is Dakin's Case; 12 Mod. 508 is Pell v. Garlick; Salk. 544 is
 Stephen v. Arthur; 2 Saund. 62 b, n. (5) is Hodsden v. Harridge; King v. Lyme Regis, Doug. 148, is
 the record at 1 Doug 149; Harmer v. Rowe, 2 Chit. Rep. 334 and its
 "2 Stark. 36, S. C.", are both 6 M & S 146. "Holt's Inst. 561, S. C." (Hatton v.
-Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Ignore a second
+Morse) is Holt's K.B. Reports, Holt KB 561, at `medium`. Record each of
+these choices at `medium` (unless a pin-cite or name fault makes it `low`).
+A second report of a case found only inside a different case's report
+(Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally) is
+`no_match`. Ignore a second
 number printed after a cite (`2 Ld. Raym. 882, 883`, `1 N. R. 64. 233`):
 record the citation once, at its first page; such numbers are often OCR
 noise. Always list the numbers you dropped in `note` (`dropped: 508, 532`),
@@ -334,7 +338,12 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
 
 - `seq` numbers the citations 1, 2, 3 in the order printed: text, then
   footnotes by their letter. Where the scan's text interleaves the lines of
-  two footnotes, follow the printed order and say so in `note`.
+  two footnotes, or puts whole footnotes out of letter order, follow the
+  letters and say so in `note`.
+- A stub link is `high` when the printed cite matches the stub exactly,
+  `medium` when you supplied the volume or corrected a number.
+- A year book printed with a folio and a plea number (`10 Hen. 6, 7, pl.
+  21`) keeps the folio as `page` and the plea in `note`.
 - `raw` is the citation as printed (with the case name if printed); `case_name`,
   `volume`, `reporter_abbr` (as printed, corrected), `page` and `year` (when
   printed) are your reading of it. A volume you supplied goes in `volume`, and

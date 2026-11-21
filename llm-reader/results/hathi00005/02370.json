@@ -1,0 +1,27 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "02370",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:12:53Z",
+  "note": "printed pp. 340-341",
+  "citations": [
+    {"seq": 1, "raw": "Mure v. Kaye, 4 Taunt. 34", "case_name": "Mure v. Kaye",
+     "volume": 4, "reporter_abbr": "Taunt.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "18110388", "confidence": "high"},
+    {"seq": 2, "raw": "Beak v. Tyrell, Carth. 31", "case_name": "Beak v. Tyrrell",
+     "reporter_abbr": "Carth.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "17410023", "confidence": "high"},
+    {"seq": 3, "raw": "Lewis v. Preston, 1 Show. 290", "case_name": "Lewis v. Preston",
+     "volume": 1, "reporter_abbr": "Show.", "page": 290,
+     "status": "linked_english_reports", "er_case_id": "17941011", "confidence": "high",
+     "note": "two ER records at 1 Show KB 290; the name picks Lewis against Preston"},
+    {"seq": 4, "raw": "Skin. 303, S. C.", "case_name": "Lewis v. Preston",
+     "reporter_abbr": "Skin.", "page": 303,
+     "status": "linked_english_reports", "er_case_id": "17280262", "confidence": "high",
+     "note": "S. C. of Lewis v. Preston; two ER records at Skin 303, the name picks Lewis and Preston"},
+    {"seq": 5, "raw": "Collet v. The Bailiffs of Shrewsbury, 2 Leo. 34", "case_name": "Collet v. The Bailiffs of Shrewsbury",
+     "volume": 2, "reporter_abbr": "Leo.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "16870176", "confidence": "high",
+     "note": "two ER records at 2 Leo 34; the name picks Collet and the Bailiffs of Shrewsbury's Case"}
+  ]
+}

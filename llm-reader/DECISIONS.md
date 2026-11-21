@@ -158,7 +158,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    "2 Saund. 97, and 97 b, n. (2)" to one record each, and 1 Saund. 23 n. (2)
    to Birks v. Trippet at 28. In the 1851 appendix: 2 Mass. 53 is a pin
    cite into Benson v. Swift (50), and 2 Saund. 380 n. (14) has `low` in some
-   records and `medium` in others; pick one.
+   records and `medium` in others; pick one. Every "choice already made"
+   in the README (12 Mod. 508, Doug. 148, ...) is `medium`; earlier records
+   have some at `low`.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439. Then start
    the UK editions (7 official copies, 4,219 pages; restart the progress page

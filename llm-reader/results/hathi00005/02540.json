@@ -1,0 +1,24 @@
+{
+  "psmid": "hathi00005",
+  "pageid": "02540",
+  "model": "claude-opus-5-5",
+  "read_at": "2026-11-21T03:09:35Z",
+  "note": "printed pp. 368-369; Bac. Ab., the statute 23 Hen. 6 and cross-references not recorded; 'Buckley v. Rice' of footnote (s) begins on the previous page",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Rice Thomas Plow. 118", "case_name": "Buckley v. Rice Thomas",
+     "reporter_abbr": "Plow.", "page": 118,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "name begins on the previous page; ER's Plowden lacks pages 1-130; the same case is reported in Dyer as 'Sir Richard Bulkeley against Thomas', 2 Dy 113, linked to the case"},
+    {"seq": 2, "raw": "Wimbish v. Tailbois, ibid. 54, 55", "case_name": "Wimbish v. Tailbois",
+     "reporter_abbr": "Plow.", "page": 54,
+     "status": "no_match", "confidence": "high",
+     "note": "ibid. = Plowden; ER's Plowden lacks pages 1-130 and no other report found by name (Wimb/Wymb, Taill/Tailbo/Talboys: only other cases). dropped: 55"},
+    {"seq": 3, "raw": "Partridge v. Strange, ibid. 85", "case_name": "Partridge v. Strange",
+     "reporter_abbr": "Plow.", "page": 85,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "ibid. = Plowden, whose pages 1-130 ER lacks; the same case is reported as 1 Dy 74, linked to the case"},
+    {"seq": 4, "raw": "Hartly v. Herring, 8 T. R. 130", "case_name": "Hartley v. Herring",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 130,
+     "status": "linked_english_reports", "er_case_id": "17990601", "confidence": "high"}
+  ]
+}
