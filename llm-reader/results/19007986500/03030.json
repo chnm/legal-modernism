@@ -1,0 +1,17 @@
+{
+  "psmid": "19007986500", "pageid": "03030",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:51:51Z",
+  "note": "printed p. 275; inconsistent several pleas now permitted; the statute of Anne reaches pleas only. Sellon's Practice, Chitty on Pleading (2 Chitty, 502, 1st ed.) and the cross-reference (supra, p. 257, 273) skipped. Cross-checked against hathi00003/02240 and 19005940200/03510",
+  "citations": [
+    {"seq": 1, "raw": "Rama Chitty v. Hume, 13 East, 255", "case_name": "Rama Chitty v. Hume",
+     "volume": 13, "reporter_abbr": "East", "page": 255,
+     "status": "linked_english_reports", "er_case_id": "18110125", "confidence": "high"},
+    {"seq": 2, "raw": "Shaw v. Lord Alvanley, 2 Bing. 325", "case_name": "Shaw v. Lord Alvanley",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18240864", "confidence": "high"},
+    {"seq": 3, "raw": "Serle v. Bradshaw, 4 Tyr. 69", "case_name": "Serle v. Bradshaw",
+     "volume": 4, "reporter_abbr": "Tyr.", "page": 69,
+     "status": "linked_english_reports", "er_case_id": "18330243", "confidence": "medium",
+     "note": "Tyrwhitt has no source here; the same case (1833) is in the English Reports as 2 Cr & M 148, linked by name"}
+  ]
+}

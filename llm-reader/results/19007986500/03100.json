@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "03100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:53:06Z",
+  "note": "printed p. 282; the venue in the body an unmeaning form; ancient practice of summoning from the venue of the fact in issue. Co. Litt. and Bac. Ab. skipped. Cross-checked against hathi00003/02290",
+  "citations": [
+    {"seq": 1, "raw": "43 Ed. S, 1", "volume": 43, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 43 Edw. III, fo. 1; OCR 'S' for 3, read from the 1841 edition's '43 Ed. 3, 1'; no source covers the year books"}
+  ]
+}

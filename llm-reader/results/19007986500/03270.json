@@ -1,0 +1,20 @@
+{
+  "psmid": "19007986500", "pageid": "03270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:56:56Z",
+  "note": "printed p. 299; quality and quantity specified loosely (packs of flax, a library, keys, goods in aggravation). Footnote (q) OCR'd '(9)' in the notes",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 74 b. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; 74 b is page 74; two English Reports records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby; picked Taylor v. Wells, as on p. 297"},
+    {"seq": 2, "raw": "Layton v. Grindall, 2 Salk. 643", "case_name": "Layton v. Grindall",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 643,
+     "status": "linked_english_reports", "er_case_id": "17952363", "confidence": "high"},
+    {"seq": 3, "raw": "2 Saund. 74 b. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "repeat; no name printed; two English Reports records begin at 2 Wms Saund 74, picked Taylor v. Wells"},
+    {"seq": 4, "raw": "Chamberlain v. Greenfield, S Wils. 292", "case_name": "Chamberlain v. Greenfield",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+     "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "high",
+     "note": "OCR 'S' for 3; stored as 3 Wils KB 292"}
+  ]
+}

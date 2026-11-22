@@ -1,0 +1,32 @@
+{
+  "psmid": "19007986500", "pageid": "03250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:56:33Z",
+  "note": "printed p. 297; the nature and number of fish, species of cattle, particulars of goods. Footnote markers (k), (l), (m) OCR'd '(Ic', '(1)', '(in)' in the text. Cross-checked against 19005940200/03750",
+  "citations": [
+    {"seq": 1, "raw": "Playter's case, 5 Rep. 34 b", "case_name": "Playter's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "15720292", "confidence": "high",
+     "note": "stored as 5 Co Rep 34"},
+    {"seq": 2, "raw": "2 Saund. 74, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; two English Reports records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby; picked Taylor v. Wells, as the other editions' readers did"},
+    {"seq": 3, "raw": "Chamberlain v. Greenfield, 3Wils. 292", "case_name": "Chamberlain v. Greenfield",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+     "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "high",
+     "note": "stored as 3 Wils KB 292"},
+    {"seq": 4, "raw": "Dale v. Phillipson, 2 Lutw. 1374", "case_name": "Dale v. Phillipson",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1374,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1374", "confidence": "high",
+     "note": "Lutwyche is held only as stubs; no English Reports record of Dale v. Phillipson by name"},
+    {"seq": 5, "raw": "Bertie v. Pickering, 4 Burr. 2455", "case_name": "Bertie v. Pickering",
+     "volume": 4, "reporter_abbr": "Burr.", "page": 2455,
+     "status": "linked_english_reports", "er_case_id": "17690004", "confidence": "high"},
+    {"seq": 6, "raw": "Wiat v. Essington, Lord lRay. 1410, S. P.", "case_name": "Wiat v. Essington",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1410,
+     "status": "linked_english_reports", "er_case_id": "17902179", "confidence": "high",
+     "note": "volume 2 supplied from the case name (Wiatt vers Essington, 2 Ld Raym 1410)"},
+    {"seq": 7, "raw": "Pope v. Tillman, 7 Taunt. 642", "case_name": "Pope v. Tillman",
+     "volume": 7, "reporter_abbr": "Taunt.", "page": 642,
+     "status": "linked_english_reports", "er_case_id": "18170560", "confidence": "high"}
+  ]
+}

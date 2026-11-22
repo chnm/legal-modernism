@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "03060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:52:16Z",
+  "note": "printed p. 278; end of Rule I (duplicity passed by); Rule II, not both to plead and demur. Appendix cross-reference and Bacon's Abridgment skipped",
+  "citations": [
+    {"seq": 1, "raw": "Bolton v. Cannon, 1 Vent. 272", "case_name": "Bolton v. Cannon",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 272,
+     "status": "linked_english_reports", "er_case_id": "17260272", "pincite": true, "confidence": "high",
+     "note": "Bolton versus Cannon begins at 1 Vent 271"}
+  ]
+}

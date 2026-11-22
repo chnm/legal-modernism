@@ -1,0 +1,30 @@
+{
+  "psmid": "19007986500", "pageid": "03240",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:56:14Z",
+  "note": "printed p. 296; Rule III, quality, quantity and value. Bracton and Doctrina Placitandi skipped; footnote (h) 'See the authorities last cited' not recorded again. Cross-checked against 19005940200/03740 and hathi00003/02380",
+  "citations": [
+    {"seq": 1, "raw": "IIarpur's case, 11 Rep. 25 1i.", "case_name": "Harpur's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720178", "pincite": true, "confidence": "high",
+     "note": "25 b (OCR '1i.'); Henry Harpur's Case begins at 11 Co Rep 23"},
+    {"seq": 2, "raw": "Knight v. Symms, Carth. 204", "case_name": "Knight v. Symms",
+     "reporter_abbr": "Carth.", "page": 204,
+     "status": "linked_english_reports", "er_case_id": "17410207", "confidence": "high"},
+    {"seq": 3, "raw": "Doe v. Plowman, 1 East, 441", "case_name": "Doe v. Plowman",
+     "volume": 1, "reporter_abbr": "East", "page": 441,
+     "status": "linked_english_reports", "er_case_id": "18010244", "confidence": "high"},
+    {"seq": 4, "raw": "Goodtitle v. Otway, 8 East, 357", "case_name": "Goodtitle v. Otway",
+     "volume": 8, "reporter_abbr": "East", "page": 357,
+     "status": "linked_english_reports", "er_case_id": "18060163", "confidence": "high"},
+    {"seq": 5, "raw": "Andrews v. Whitelead, 13 East, 102", "case_name": "Andrews v. Whitehead",
+     "volume": 13, "reporter_abbr": "East", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18100553", "confidence": "high",
+     "note": "OCR 'Whitelead'"},
+    {"seq": 6, "raw": "1 Saund. 333, n.(7)", "volume": 1, "reporter_abbr": "Saund.", "page": 333,
+     "status": "linked_english_reports", "er_case_id": "18450102", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page 333 falls in Hancocke v. Prowd, whose English Reports records begin at 1 Wms Saund 328 and 336"},
+    {"seq": 7, "raw": "a Saund. 74, n.(1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "OCR 'a' for 2, as the 1827 and 1841 editions print it; no name printed; two English Reports records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby; picked Taylor v. Wells, as the other editions' readers did"}
+  ]
+}
