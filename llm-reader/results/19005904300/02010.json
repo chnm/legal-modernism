@@ -1,0 +1,27 @@
+{
+  "psmid": "19005904300", "pageid": "02010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:02:16Z",
+  "note": "p. 167, costs on demurrer; the opening of Pleadings. Footnote (r) concluded from p. 166 with its cite, then (s)-(v) ((v) OCR '(i)'). Skipped: Sel. Pract. and 2 Tidd (practice books), a cross-reference. As 1838 (19005967100/01950-01960), with Wright v. Goddard and Plummer v. Lee (cases of 1837-38) added",
+  "citations": [
+    {"seq": 1, "raw": "Lord Cromwell's case, 4 Rep. 14 a", "case_name": "Lord Cromwell's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "15780080", "pincite": true, "confidence": "high",
+     "note": "The Lord Cromwell's Case begins at 4 Co Rep 12; the quoted advice is at 14 a (other cases begin at 14, but the name decides)"},
+    {"seq": 2, "raw": "Hitchin v. Stevens, 2 Show. 244", "case_name": "Hitchin v. Stevens",
+     "volume": 2, "reporter_abbr": "Show.", "page": 233,
+     "status": "linked_english_reports", "er_case_id": "17940851", "confidence": "high",
+     "note": "printed 244 (probably its number among Shower's cases); the case is at 2 Show KB 233, found by name, as the 1838 and 1895 records read it"},
+    {"seq": 3, "raw": "Wright v. Goddard, 8 A. & E. 144", "case_name": "Wright v. Goddard",
+     "volume": 8, "reporter_abbr": "A. & E.", "page": 144,
+     "status": "linked_english_reports", "er_case_id": "18380575", "confidence": "high",
+     "note": "added in 1843 (a case of 1838)"},
+    {"seq": 4, "raw": "Cameron v. Reynolds, Cowp. 407", "case_name": "Cameron v. Reynolds",
+     "reporter_abbr": "Cowp.", "page": 407,
+     "status": "linked_english_reports", "er_case_id": "17760026", "pincite": true, "confidence": "high",
+     "note": "Cameron v. Reynolds begins at 1 Cowp 403; Sayer v. Pocock begins at 407, but the printed name decides"},
+    {"seq": 5, "raw": "Plummer v. Lee, 2 M. & W. 495", "case_name": "Plummer v. Lee",
+     "volume": 2, "reporter_abbr": "M. & W.", "page": 495,
+     "status": "linked_english_reports", "er_case_id": "18370198", "confidence": "high",
+     "note": "added in 1843 (a case of 1837)"}
+  ]
+}

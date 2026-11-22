@@ -303,6 +303,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    against an annotation cited without its case is in the American
    section. Decide whether it covers an English reporter's note, and drop
    or keep both records alike.
+   The 1895 Williston records link some Gale & Davison, Scott N.R. and
+   Dowling cites to stubs where the English Reports have the case by name
+   (Hinton v. Dibdin, 2 QB 646; Arbouin v. Anderson, 1 QB 497; Davis v.
+   Black, 1 QB 900; Paddock v. Forrester; Smith v. Goldsworthy); recheck
+   every 1895 `linked_stub` against `er_name` and `murrell_title`.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "02040",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:02:51Z",
+  "note": "p. 170, the general issue; the plea of ne disturba pas in quare impedit. Footnotes (b) (cross-reference) and (c). Skipped: Bac. Ab., Appendix note. Same cites as the 1838 and 1895 records",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 16z2", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "OCR '16z2' for 162; Colt v. Bishop of Coventry runs Hob 140-164; linked to the record with text (17920644, 'De Termino Sancti Mich'), not the empty 17921247, per the README's choice"},
+    {"seq": 2, "raw": "Read v. Brbokman, 3 T. R. 158", "case_name": "Read v. Brookman",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "the case begins at 3 TR 151"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "psmid": "19005904300", "pageid": "01970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:01:16Z",
+  "note": "p. 163, aider by verdict: the King's Bench rule and Serjeant Williams's statement; its limits. Footnotes (i) (OCR '(t)') and (k); 1843 adds Harris v. Goodwyn (1841) to (k)",
+  "citations": [
+    {"seq": 1, "raw": "Jackson v. Pesked, I M. & S. 234", "case_name": "Jackson v. Pesked",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18130139", "confidence": "high"},
+    {"seq": 2, "raw": "1 Saund. 228, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note (1) at 1 Saund. 228, the note to Stennel v. Hogg (record at 1 Wms Saund 226), per the README's choice"},
+    {"seq": 3, "raw": "Harris v. Goodwyn, 2 M. & G. 405", "case_name": "Harris v. Goodwyn",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 405,
+     "status": "linked_english_reports", "er_case_id": "18410233", "confidence": "high",
+     "note": "added in 1843 (a case of 1841)"},
+    {"seq": 4, "raw": "2 Scott's N. t. 459", "case_name": "Harris v. Goodwyn",
+     "volume": 2, "reporter_abbr": "Scott N. R.", "page": 459,
+     "status": "linked_english_reports", "er_case_id": "18410233", "confidence": "medium",
+     "note": "OCR 'N. t.' for N. R.; parallel cite, S. C.; Scott's New Reports have no source; linked to the same case's report at 2 Man & G 405"},
+    {"seq": 5, "raw": "9 Dowl. 409, S. C.", "case_name": "Harris v. Goodwyn",
+     "volume": 9, "reporter_abbr": "Dowl.", "page": 409,
+     "status": "linked_english_reports", "er_case_id": "18410233", "confidence": "medium",
+     "note": "S. C.; Dowling's Practice Cases have no source (no stub at 409); linked to the same case's report at 2 Man & G 405"}
+  ]
+}

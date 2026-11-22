@@ -1,0 +1,33 @@
+{
+  "psmid": "19005904300", "pageid": "02060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:03:22Z",
+  "note": "p. 172, general issues not guilty, non assumpsit, non cepit. Footnote (g) as in 1838 (19005967100/02010) without Harding v. Stokes, adding the parallel reports of Faulkner v. Chevell and Jones v. Williams (1838)",
+  "citations": [
+    {"seq": 1, "raw": "Henslow v. Fawcett, 3 Ad. & Ell. 59, n. (a)", "case_name": "Henslow v. Fawcett",
+     "volume": 3, "reporter_abbr": "Ad. & Ell.", "page": 59,
+     "status": "linked_english_reports", "er_case_id": "18350629", "pincite": true, "confidence": "high",
+     "note": "the reporter's note to the case, which begins at 3 Ad & E 51"},
+    {"seq": 2, "raw": "Coppin, q. t. v. Carter, 1 T. R. 462", "case_name": "Coppin v. Carter",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 462,
+     "status": "linked_english_reports", "er_case_id": "17860211", "confidence": "high"},
+    {"seq": 3, "raw": "FauLknerv. Chevell, 2 Har. & W. 183", "case_name": "Faulkner v. Chevell",
+     "volume": 2, "reporter_abbr": "Har. & W.", "page": 183,
+     "status": "linked_english_reports", "er_case_id": "18360744", "confidence": "medium",
+     "note": "Harrison and Wollaston has no source; linked to the same case's report, Faulkner against Chevell, 5 Ad & E 213 (1836), cited next"},
+    {"seq": 4, "raw": "5 A. & E. 213", "case_name": "Faulkner v. Chevell",
+     "volume": 5, "reporter_abbr": "A. & E.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "18360744", "confidence": "high"},
+    {"seq": 5, "raw": "6 Nev. & M. 704, S. C.", "case_name": "Faulkner v. Chevell",
+     "volume": 6, "reporter_abbr": "Nev. & M.", "page": 704,
+     "status": "linked_english_reports", "er_case_id": "18360744", "confidence": "medium",
+     "note": "S. C.; Nevile and Manning has no source; linked to the same case's report at 5 Ad & E 213"},
+    {"seq": 6, "raw": "Jones v. Williams, 4 M. & W. 375", "case_name": "Jones v. Williams",
+     "volume": 4, "reporter_abbr": "M. & W.", "page": 375,
+     "status": "linked_english_reports", "er_case_id": "18380147", "confidence": "high",
+     "note": "added in 1843 (a case of 1838)"},
+    {"seq": 7, "raw": "7 Dowl. 206, S. C.", "case_name": "Jones v. Williams",
+     "volume": 7, "reporter_abbr": "Dowl.", "page": 206,
+     "status": "linked_english_reports", "er_case_id": "18380147", "confidence": "medium",
+     "note": "S. C.; Dowling's Practice Cases have no source; linked to the same case's report at 4 M & W 375"}
+  ]
+}
