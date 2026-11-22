@@ -1,0 +1,31 @@
+{
+  "psmid": "19005904300", "pageid": "03790",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:08:08Z",
+  "note": "p. 345; the commencement of a copyhold must be shown, by admittance pleaded as a grant from the lord; customary freeholds. Skipped: Bac. Ab. and Chitty on Pleading; 'See same cases' in (f) points back to (e) and is not recorded again. Cross-checked with 19005967100/03680 and 03690",
+  "citations": [
+    {"seq": 1, "raw": "Pyster v. Hemling, Cro. Jac. 103", "case_name": "Pyster v. Hemling",
+     "reporter_abbr": "Cro. Jac.", "page": 103,
+     "status": "linked_english_reports", "er_case_id": "17910804", "confidence": "high"},
+    {"seq": 2, "raw": "Shepheard's case, Cro. Car. 190", "case_name": "Shepheard's Case",
+     "reporter_abbr": "Cro. Car.", "page": 190,
+     "status": "linked_english_reports", "er_case_id": "17922141", "confidence": "high"},
+    {"seq": 3, "raw": "Robinson v. Smith, 4 Mod. 346", "case_name": "Robinson v. Smith",
+     "volume": 4, "reporter_abbr": "Mod.", "page": 346,
+     "status": "linked_english_reports", "er_case_id": "17930906", "confidence": "high"},
+    {"seq": 4, "raw": "Brown's case, 4 Rep. 22 b", "case_name": "Brown's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 22,
+     "status": "linked_english_reports", "er_case_id": "15810013", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 Co Rep 21; the name decides over Rivet's Case, which the ER stores at 4 Co Rep 22"},
+    {"seq": 5, "raw": "Croucher v. Oldfield, Salk. 365", "case_name": "Crowther v. Oldfield",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 365,
+     "status": "linked_english_reports", "er_case_id": "17950946", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied from the case name; ER 'Crouther versus Oldfeild' begins at 1 Salk 364"},
+    {"seq": 6, "raw": "Roe v. Vernon, 5 East, St.", "case_name": "Roe d. Conolly v. Vernon",
+     "volume": 5, "reporter_abbr": "East", "page": 51,
+     "status": "linked_english_reports", "er_case_id": "18040195", "confidence": "high",
+     "note": "OCR 'St.' for 51, as the 1838 edition prints"},
+    {"seq": 7, "raw": "Burrell v. Dodd, 3 Bos. & Pul. 378", "case_name": "Burrell v. Dodd",
+     "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 378,
+     "status": "linked_english_reports", "er_case_id": "18030580", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "psmid": "19005904300", "pageid": "03640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:02:44Z",
+  "note": "p. 330; time of the substance of the issue must be proved as laid; usurious contracts. (p) is a cross-reference to pp. 120-121. Parkinson v. Whitehead (1841) is new since the 1838 edition. Cross-checked with 19005967100/03540 and 19005765700",
+  "citations": [
+    {"seq": 1, "raw": "Nightingale v. Wilcoxon, 10 Barn. & Cress. 215", "case_name": "Nightingale v. Wilcoxon",
+     "volume": 10, "reporter_abbr": "Barn. & Cress.", "page": 215,
+     "status": "linked_english_reports", "er_case_id": "18290152", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 B & C 202 (the 1895 reprint prints 216)"},
+    {"seq": 2, "raw": "Edge v. Strafford, 1 Cromp. & Jer. 391", "case_name": "Edge v. Strafford",
+     "volume": 1, "reporter_abbr": "Cromp. & Jer.", "page": 391,
+     "status": "linked_english_reports", "er_case_id": "18310070", "confidence": "high"},
+    {"seq": 3, "raw": "Parkinson v. Whitehead, 2 M. & G. 329", "case_name": "Parkinson v. Whitehead",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 329,
+     "status": "linked_english_reports", "er_case_id": "18410254", "confidence": "high"},
+    {"seq": 4, "raw": "2 Scott's N. S. 620, S.C.", "case_name": "Parkinson v. Whitehead",
+     "volume": 2, "reporter_abbr": "Scott N. R.", "page": 620,
+     "status": "linked_english_reports", "er_case_id": "18410254", "confidence": "medium",
+     "note": "S.C. = Parkinson v. Whitehead; Scott's New Reports have no source; same case linked at 2 Man & G 329"},
+    {"seq": 5, "raw": "Carlisle v. Trears, Cowp. 671", "case_name": "Carlisle v. Trears",
+     "reporter_abbr": "Cowp.", "page": 671,
+     "status": "linked_english_reports", "er_case_id": "17760067", "confidence": "high",
+     "note": "stored as 2 Cowp 671"},
+    {"seq": 6, "raw": "Fox v. Keeling, 2 A. & E. 670", "case_name": "Fox v. Keeling",
+     "volume": 2, "reporter_abbr": "A. & E.", "page": 670,
+     "status": "linked_english_reports", "er_case_id": "18350451", "confidence": "high"}
+  ]
+}
