@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "05640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:19:03Z",
+  "note": "Appendix Notes 18-20, p. xxx (plea in bar; traverse). Commissioners' report, Britton, Ducange, Chitty on Pleading, Bac. Ab. and Finch are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "Lambert v. Stroother, Willes, 224", "case_name": "Lambert v. Strother",
+     "reporter_abbr": "Willes", "page": 224,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source and no stub; no Lambert v. Strother in the English Reports under another reporter (searched er_name and murrell_title for Strother/Stroother), as the other editions' records"}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "psmid": "19005904300", "pageid": "05800",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:21:13Z",
+  "note": "Appendix Note 28, p. xlvi (pleading under Edw. II.): Bracton, Reeves and Hale are not cases. Cross-checked with 1838 (19005967100).",
+  "citations": [
+    {"seq": 1, "raw": "17 Ed. II., 534", "volume": 17, "reporter_abbr": "Y.B.", "page": 534,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 17 Edw. II, p. 534 (Maynard's edition, paged as one run), on estoppel and protestation; no source for the year books"},
+    {"seq": 2, "raw": "7 Ed. II., 213", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, on negatives pregnant; no source for the year books"},
+    {"seq": 3, "raw": "ibid. 226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
+     "status": "no_match", "confidence": "high",
+     "note": "ibid. expanded to 7 Edw. II. 226, year book, 7 Edw. II; no source for the year books"}
+  ]
+}

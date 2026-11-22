@@ -1,0 +1,10 @@
+{
+  "psmid": "19005904300", "pageid": "05540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:17:26Z",
+  "note": "Appendix Note 11, p. xx (records). Hickes, Hallam, Coke's preface to 9 Rep. (a reporter's preface) and the Assises de Jerusalem are not cases. Cross-checked with 1838 (19005967100).",
+  "citations": [
+    {"seq": 1, "raw": "the Year-book, 7 Hen. VI. p. 29", "volume": 7, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Hen. VI, p. 29; no source for the year books"}
+  ]
+}

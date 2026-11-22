@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "05410",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:15:41Z",
+  "note": "Appendix Notes 2-3, p. vii. Civilians (Quinctilian, Brisson, Voet, Inst., Sigonius) and Bl. Com. are not cases.",
+  "citations": [
+    {"seq": 1, "raw": "Doe d. Kingston v. Kingston, 1 Dowl. N. S. 263", "case_name": "Doe d. Kingston v. Kingston",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 263,
+     "status": "linked_stub", "stub_cite": "1 Dowl. N.S. 263", "confidence": "high",
+     "note": "Dowling's Practice Cases, new series; no English Reports record of Doe d. Kingston v. Kingston found by er_name or murrell_title, so the exact stub."}
+  ]
+}
