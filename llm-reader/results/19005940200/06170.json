@@ -1,0 +1,17 @@
+{
+  "psmid": "19005940200", "pageid": "06170",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:25:59Z",
+  "note": "Appendix Notes, printed p. lxxviii (end of Note 66, start of Note 67 on negative pregnant). Bracton skipped. The '7 Ed.' at the foot continues on the next page. Order: text (Rex v. Cooke), then footnotes (a), (b)",
+  "citations": [
+    {"seq": 1, "raw": "Rex v. Cooke, 2 Barn. and Cres. 871.", "case_name": "Rex v. Cooke",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 871,
+     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high"},
+    {"seq": 2, "raw": "Halsey v. Carpenter, Cro. Jac. s60.", "case_name": "Halsey v. Carpenter",
+     "reporter_abbr": "Cro. Jac.", "page": 360,
+     "status": "linked_english_reports", "er_case_id": "17910448", "pincite": true, "confidence": "high",
+     "note": "OCR 's60' for 360, as the 1831 edition prints; Halsey against Carpenter begins at Cro Jac 359 (Barret v. Winchcomb begins at 360)"},
+    {"seq": 3, "raw": "28 lien. 6. 7.", "volume": 28, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 28 Hen. VI, fol. 7 (OCR 'lien.' for Hen.); no source for the year books"}
+  ]
+}

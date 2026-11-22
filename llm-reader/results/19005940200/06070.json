@@ -1,0 +1,16 @@
+{
+  "psmid": "19005940200", "pageid": "06070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:23:36Z",
+  "note": "Appendix Notes, printed p. lxviii (Note 57 continued). Bracton (cross-reference) and Bac. Ab. skipped. Cross-checked with hathi00002/04310 and the other editions' text",
+  "citations": [
+    {"seq": 1, "raw": "1 Ed. 2. 14.", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 1 Edw. II, fol. 14; no source for the year books"},
+    {"seq": 2, "raw": "Ibid. s.", "volume": 1, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "medium",
+     "note": "Ibid. expanded to 1 Ed. 2. 8, year book, 1 Edw. II; this scan's OCR reads 's', every other edition prints 8; no source for the year books"},
+    {"seq": 3, "raw": "40 Ed. 3. 45.", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fol. 45; no source for the year books"}
+  ]
+}
