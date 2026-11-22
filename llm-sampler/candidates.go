@@ -352,8 +352,8 @@ func candidatesFor(ctx context.Context, pool *pgxpool.Pool, lk *lookups, c *Dete
 		}
 	}
 
-	if tokens := nameTokens(c.CaseName); len(tokens) > 0 {
-		if err := searchNames(ctx, pool, set, tokens, ceiling, lk.citePatterns(c)); err != nil {
+	if tokens, weak := nameTokens(c.CaseName); len(tokens) > 0 {
+		if err := searchNames(ctx, pool, set, tokens, weak, ceiling, lk.citePatterns(c)); err != nil {
 			return nil, err
 		}
 	}
@@ -544,7 +544,7 @@ var (
 	word   = regexp.MustCompile(`[\p{L}]+`)
 	// Words too common in case names to find a case by.
 	common = map[string]bool{
-		"anonymous": true, "anon": true, "case": true, "cases": true, "state": true, "states": true,
+		"anonymous": true, "anon": true, "doe": true, "roe": true, "dem": true, "rex": true, "reg": true, "the": true, "and": true, "case": true, "cases": true, "state": true, "states": true,
 		"united": true, "people": true, "commonwealth": true, "king": true, "queen": true, "regina": true,
 		"bank": true, "company": true, "railroad": true, "railway": true, "insurance": true, "city": true,
 		"county": true, "town": true, "parte": true, "matter": true, "estate": true, "lessee": true,
@@ -554,26 +554,28 @@ var (
 )
 
 // nameTokens picks the words to search a case name by: the most distinctive
-// word of each party, or of the whole name when it has no "v.".
-func nameTokens(name string) []string {
-	var out []string
+// word of each party, or of the whole name when it has no "v.". The words
+// are weak when they would match too many cases to search every reporter
+// by: a single short word (Re Ewin), or short words only (Law v. Lee).
+func nameTokens(name string) (tokens []string, weak bool) {
 	for _, part := range versus.Split(name, 2) {
 		best := ""
 		for _, w := range word.FindAllString(part, -1) {
 			w = strings.ToLower(w)
-			if len(w) >= 4 && !common[w] && len(w) > len(best) {
+			if len(w) >= 3 && !common[w] && len(w) > len(best) {
 				best = w
 			}
 		}
 		if best != "" {
-			out = append(out, best)
+			tokens = append(tokens, best)
 		}
 	}
-	// One short word finds too many cases to be worth offering.
-	if len(out) == 1 && len(out[0]) < 6 {
-		return nil
+	longest := 0
+	for _, t := range tokens {
+		longest = max(longest, len(t))
 	}
-	return out
+	weak = longest < 4 || (len(tokens) == 1 && longest < 6)
+	return tokens, weak
 }
 
 // searchNames offers the cases whose names hold every token, decided no
@@ -582,10 +584,14 @@ func nameTokens(name string) []string {
 //
 // volume and series are LIKE patterns for a cite in the cited volume and in
 // the cited reporter; cases they match come first, so that a common name
-// (Waddell v. Waddell) still finds the case in the reporter cited.
-func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tokens []string, ceiling int, pat [2][]string) error {
+// (Waddell v. Waddell) still finds the case in the reporter cited. Weak
+// tokens are searched in the cited reporter only.
+func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tokens []string, weak bool, ceiling int, pat [2][]string) error {
 	if ceiling == 0 {
 		ceiling = 1930
+	}
+	if weak && len(pat[1]) == 0 {
+		return nil
 	}
 	// With a word from each party, the words are cut to their first letters,
 	// since names are spelled variously (Stansfeld, Stansfield); two parties
@@ -605,9 +611,10 @@ func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tok
 		       coalesce((SELECT string_agg(ci.cite, '; ' ORDER BY ci.type DESC, ci.cite) FROM cap.citations ci WHERE ci."case" = c.id), '')
 		  FROM cap.cases c
 		 WHERE c.decision_year <= $2 AND c.name_abbreviation ILIKE ALL($1)
+		   AND (NOT $6 OR EXISTS (SELECT 1 FROM cap.citations ci WHERE ci."case" = c.id AND ci.cite LIKE ANY($5)))
 		 ORDER BY EXISTS (SELECT 1 FROM cap.citations ci WHERE ci."case" = c.id AND ci.cite LIKE ANY($4)) DESC,
 		          EXISTS (SELECT 1 FROM cap.citations ci WHERE ci."case" = c.id AND ci.cite LIKE ANY($5)) DESC,
-		          c.decision_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
+		          c.decision_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1], weak)
 	if err != nil {
 		return fmt.Errorf("searching CAP names: %w", err)
 	}
@@ -627,8 +634,9 @@ func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tok
 		       coalesce(murrell_year, er_year), coalesce(word_count, 0)
 		  FROM english_reports.cases
 		 WHERE er_year <= $2 + 1 AND (er_name ILIKE ALL($1) OR murrell_title ILIKE ALL($1))
+		   AND (NOT $6 OR coalesce(er_parallel_cite LIKE ANY($5), false))
 		 ORDER BY coalesce(er_parallel_cite LIKE ANY($4), false) DESC, coalesce(er_parallel_cite LIKE ANY($5), false) DESC,
-		          er_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
+		          er_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1], weak)
 	if err != nil {
 		return fmt.Errorf("searching English Reports names: %w", err)
 	}
