@@ -1,0 +1,13 @@
+{
+  "psmid": "19007986500", "pageid": "04010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:20:05Z",
+  "note": "printed p. 373; inducement need not be precisely alleged; matters of aggravation in trespass",
+  "citations": [
+    {"seq": 1, "raw": "Riggs v. Bullinghl;llm, Cro. Eliz. 715", "case_name": "Riggs v. Bullingham",
+     "reporter_abbr": "Cro. Eliz.", "page": 715,
+     "status": "linked_english_reports", "er_case_id": "16531614", "confidence": "high"},
+    {"seq": 2, "raw": "Cihamberhlin v. Greenfield, 3 Wils. 292", "case_name": "Chamberlain v. Greenfield",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 292,
+     "status": "linked_english_reports", "er_case_id": "17990091", "confidence": "high"}
+  ]
+}

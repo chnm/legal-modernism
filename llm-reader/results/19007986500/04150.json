@@ -1,0 +1,30 @@
+{
+  "psmid": "19007986500", "pageid": "04150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:24:16Z",
+  "note": "printed p. 387; two negatives make no good issue; rule 4, pleadings must not be in the alternative (the gaoler's hypothetical plea). Footnote markers (y), (z) OCR'd 'C)', '(s)'; Com. Dig. skipped. Cross-checked with the 1841 edition (hathi00003/02950, 02960)",
+  "citations": [
+    {"seq": 1, "raw": "Martin v. Smith, 6 East, 557", "case_name": "Martin v. Smith",
+     "volume": 6, "reporter_abbr": "East", "page": 557,
+     "status": "linked_english_reports", "er_case_id": "18050219", "pincite": true, "confidence": "high",
+     "note": "case begins at 6 East 555"},
+    {"seq": 2, "raw": "Gritliths v. Eyles, 1 Bos. & Pul. 413", "case_name": "Griffiths v. Eyles",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "17990708", "confidence": "high"},
+    {"seq": 3, "raw": "Cook v. Cox, S M. & S. 114", "case_name": "Cook v. Cox",
+     "volume": 3, "reporter_abbr": "M. & S.", "page": 114,
+     "status": "linked_english_reports", "er_case_id": "18140511", "pincite": true, "confidence": "high",
+     "note": "OCR 'S' for 3; case begins at 3 M & S 110"},
+    {"seq": 4, "raw": "The King v. lIhereton, 8 Iod. 330", "case_name": "The King v. Brereton",
+     "volume": 8, "reporter_abbr": "Mod.", "page": 330,
+     "status": "linked_english_reports", "er_case_id": "17953393", "pincite": true, "confidence": "high",
+     "note": "case begins at 8 Mod 328"},
+    {"seq": 5, "raw": "Withelley v. Snrsfield, 1 Show. 127", "case_name": "Witherley v. Sarsfield",
+     "volume": 1, "reporter_abbr": "Show.", "page": 127,
+     "status": "linked_english_reports", "er_case_id": "17942104", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Show KB 125"},
+    {"seq": 6, "raw": "Rex v. Morley, 1 You. & Jer. 21l", "case_name": "Rex v. Morley",
+     "volume": 1, "reporter_abbr": "Y. & J.", "page": 221,
+     "status": "linked_english_reports", "er_case_id": "18270282", "confidence": "high",
+     "note": "OCR '21l' for 221 (the 1841 edition prints 221)"}
+  ]
+}

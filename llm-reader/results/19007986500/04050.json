@@ -1,0 +1,29 @@
+{
+  "psmid": "19007986500", "pageid": "04050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:20:58Z",
+  "note": "printed p. 377; section V, rule 1: pleadings must not be insensible nor repugnant. Com. Dig., Bac. Ab. and Vin. Ab. skipped. Cross-checked with the 1841 edition (hathi00003/02890)",
+  "citations": [
+    {"seq": 1, "raw": "Wyat v. Ayland, 1 Salk. 824", "case_name": "Wyat v. Ayland",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high",
+     "note": "OCR '824' for 324"},
+    {"seq": 2, "raw": "Nevill v.Soper, 1 Salk. 213", "case_name": "Nevill v. Soper",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17952651", "confidence": "high"},
+    {"seq": 3, "raw": "Butt's case, 7 Rep. 25 a.", "case_name": "Butt's Case",
+     "volume": 7, "reporter_abbr": "Rep.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "15720063", "pincite": true, "confidence": "high",
+     "note": "case begins at 7 Co Rep 23 (3161 words); the ER record at 25 is Hall v. Bishop of Bath and Wells, but the printed name decides"},
+    {"seq": 4, "raw": "llutchliisont v. Jnckson, 2 Lut. 1324", "case_name": "Hutchinson v. Jackson",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1324,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1324", "confidence": "high",
+     "note": "Lutwyche is only in the stubs"},
+    {"seq": 5, "raw": "Wyat v. Aland, 1 Salk. 324", "case_name": "Wyat v. Aland",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high"},
+    {"seq": 6, "raw": "Nevill v. Super, I Salk. C13", "case_name": "Nevill v. Soper",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17952651", "confidence": "high",
+     "note": "OCR 'C13' for 213"}
+  ]
+}
