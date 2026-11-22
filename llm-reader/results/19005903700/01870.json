@@ -1,0 +1,24 @@
+{
+  "psmid": "19005903700", "pageid": "01870",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:32:45Z",
+  "note": "p. 159, not guilty does not put matter of inducement in issue. Footnotes (i) (OCR '(0i'), (k); hathi00008/02050 (1866) prints the same cases",
+  "citations": [
+    {"seq": 1, "raw": "Torrence v. Gibbins, 5 Q. B. 207", "case_name": "Torrence v. Gibbins",
+     "volume": 5, "reporter_abbr": "Q. B.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "18431097", "confidence": "high",
+     "note": "OCR '207' for 297 (hathi00008 prints 297)"},
+    {"seq": 2, "raw": "Holloway v. Abell, 7 Car. & P. 628", "case_name": "Holloway v. Abell",
+     "volume": 7, "reporter_abbr": "Car. & P.", "page": 528,
+     "status": "linked_english_reports", "er_case_id": "18360964", "confidence": "high",
+     "note": "OCR '628' for 528 (hathi00008 prints 528)"},
+    {"seq": 3, "raw": "Haddrick v. Helop, 12 Q. B. 267", "case_name": "Haddrick v. Heslop",
+     "volume": 12, "reporter_abbr": "Q. B.", "page": 267,
+     "status": "linked_english_reports", "er_case_id": "18480013", "confidence": "high"},
+    {"seq": 4, "raw": "Watldns v. Lee, 5 M. & W. 270", "case_name": "Watkins v. Lee",
+     "volume": 5, "reporter_abbr": "M. & W.", "page": 270,
+     "status": "linked_english_reports", "er_case_id": "18390343", "confidence": "high"},
+    {"seq": 5, "raw": "Drumnond v. Pigou, 2 Bing. N. C. 114", "case_name": "Drummond v. Pigou",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 114,
+     "status": "linked_english_reports", "er_case_id": "18350790", "confidence": "high"}
+  ]
+}

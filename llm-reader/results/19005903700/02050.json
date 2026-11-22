@@ -1,0 +1,18 @@
+{
+  "psmid": "19005903700", "pageid": "02050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:40:52Z",
+  "note": "p. 177, colour in pleadings in confession and avoidance. Footnotes (n)-(r); Reg. Plac. and 1 Chitty (7th edit., Chitty on Pleading) not reports; (p), (r) refer to the Appendix",
+  "citations": [
+    {"seq": 1, "raw": "McPherson v. Daniels, 10 Barn. & Cress. 263", "case_name": "M'Pherson v. Daniels",
+     "volume": 10, "reporter_abbr": "Barn. & Cress.", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high"},
+    {"seq": 2, "raw": "Hatton v. MIorse, S Salk. 273", "case_name": "Hatton v. Morse",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high",
+     "note": "OCR 'S' for 3; two cases begin at 3 Salk 273; the name decides, as in the 1843 record"},
+    {"seq": 3, "raw": "Year- ]Book, 40 Edw. II. 23",
+     "volume": 40, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 40 Edw. III, fol. 23: this scan reads 'Edw. II.' (and 'reign cd Edw. II.' in the text), but Edward II reigned under 20 years; the 1843 edition and hathi00008 (1866) print 40 Edw. III. 23; the year books have no source"}
+  ]
+}

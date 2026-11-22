@@ -1,0 +1,13 @@
+{
+  "psmid": "19005903700", "pageid": "01810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:29:26Z",
+  "note": "p. 153, non assumpsit: illegal consideration; statutory non-compliance (Carriers Act, Apothecaries Act; statutes skipped). Footnotes (t), (u)",
+  "citations": [
+    {"seq": 1, "raw": "Potts v. Sparrow, 1 Bing. N. C. 594", "case_name": "Potts v. Sparrow",
+     "volume": 1, "reporter_abbr": "Bing. N. C.", "page": 594,
+     "status": "linked_english_reports", "er_case_id": "18350648", "confidence": "high"},
+    {"seq": 2, "raw": "Syms v. Chaplin, 5 A. & E. 634", "case_name": "Syms v. Chaplin",
+     "volume": 5, "reporter_abbr": "A. & E.", "page": 634,
+     "status": "linked_english_reports", "er_case_id": "18361055", "confidence": "high"}
+  ]
+}
