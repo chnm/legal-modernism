@@ -26,6 +26,13 @@
         .matrix th.ed.us .jur { color: var(--us); }
         .matrix th.ed.uk .jur { color: var(--uk); }
         .matrix th.ed a { display: block; font-variant-numeric: tabular-nums; }
+        /* Where the column's citations come from: the LLM reading stands out,
+           the pipeline is quiet. */
+        .matrix th.ed .src { display: block; margin-top: 2px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.03em;
+                             border-radius: 2px; line-height: 1.3; }
+        .matrix th.ed .src.llm { background: #212529; color: #fff; }
+        .matrix th.ed .src.pipe { color: #868e96; font-weight: 400; }
+        .key .sw.llm { background: #212529; border-color: #212529; width: auto; padding: 0 0.3rem; font-size: 0.6rem; }
 
         /* The cells: filled where the edition cites the case, blank where it is older than the case. */
         .matrix td.m, .matrix td.x, .matrix td.b { padding: 1px; text-align: center; }
@@ -59,14 +66,19 @@
         {{if .Author}}<span class="label">Author</span><span>{{derefStr .Author}}</span>{{end}}
         <span class="label">Editions shown</span><span>{{.Shown}}{{if .Editions}}, {{.Years}}{{end}}{{if .Outside}}; {{.Outside}} outside the treatise view, never shown{{end}}</span>
         <span class="label">Cases cited</span><span>{{num .Total}}{{if .Paged}}, {{num .Nav.PageSize}} to a page in the order chosen{{end}}</span>
-        {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} detected in these editions</span>{{end}}
+        {{if .Editions}}<span class="label">Citations from</span><span>{{.Methods}}</span>{{end}}
+        {{if .Cites}}<span class="label">Citations linked</span><span>{{.LinkedPct}} of the {{num .Cites}} found in these editions</span>{{end}}
     </div>
     <p class="small text-secondary mb-2" style="max-width: 62rem;">
         A column is an edition, earliest first; a row is a case that at least one of the editions shown cites.
-        Only linked citations are here, and the share that linked differs from edition to edition, so a cell left
-        empty may be a citation the linker did not resolve rather than a case the edition dropped.
+        An edition Claude has read page by page is shown from that reading (marked <strong>LLM</strong>), which links
+        most of its citations; any other edition is shown from the pipeline, the detector and linker.
+        Only linked citations are here, and the share that linked differs from edition to edition and far more
+        between the two methods, so a cell left empty may be a citation that was not resolved rather than a case the
+        edition dropped.
         Every count, and the first and last edition to cite a case, is among the editions shown.
-        Click a year for the edition, a case for its record, and a filled cell for the citations behind it.
+        Click a year for the edition, a case for its record, and a filled cell for the citations behind it: the
+        pipeline's citations, or for the LLM reading the first page that cites the case.
     </p>
     <p class="small key mb-3">
         {{$uk := and .UK (ne .Jur "us")}}{{$us := and .US (ne .Jur "uk")}}
@@ -75,6 +87,7 @@
         <span><span class="sw {{if $us}}us{{else}}uk{{end}}">3</span>More than once</span>
         <span>{{if $uk}}<span class="sw uk-tint"></span>{{end}}{{if $us}}<span class="sw us-tint"></span>{{end}}Does not cite it</span>
         <span><span class="sw blank"></span>Published before the case was decided</span>
+        {{if .LLMEditions}}<span><span class="sw llm">LLM</span>The column is Claude's reading of the edition, not the pipeline</span>{{end}}
     </p>
 
     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
@@ -122,6 +135,7 @@
                     <span class="lbl">{{.PlaceLabel}}{{if .Statement}}<br><span class="st">{{.Statement}}</span>{{end}}</span>
                     <span class="jur">{{.JurisdictionLabel}}</span>
                     <a href="{{.URL}}">{{.YearLabel}}</a>
+                    {{if .LLM}}<span class="src llm" title="Claude's page-by-page reading: {{num .LLMPages}} pages read">LLM</span>{{else if $.LLMEditions}}<span class="src pipe" title="The pipeline: the detector and linker">pipe</span>{{end}}
                 </th>
                 {{end}}
             </tr>
@@ -136,7 +150,7 @@
                 {{range .Editions}}<td class="m">{{num .Entered}}</td>{{end}}
             </tr>
             <tr>
-                <th scope="row" class="case" title="The share of the citations detected in the edition that linked to a case">Citations linked</th><td colspan="5"></td>
+                <th scope="row" class="case" title="The share of the citations found in the edition that linked to a case, by the method the column is shown from">Citations linked</th><td colspan="5"></td>
                 {{range .Editions}}<td class="m">{{if .HasCounts}}{{.LinkedPct}}{{else}}&mdash;{{end}}</td>{{end}}
             </tr>
         </tbody>
