@@ -126,7 +126,9 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `<span class="label">Author</span><span>Stephen, Henry John</span>`)
 		require.Contains(t, out, "All 3 editions (2 UK, 1 US), 1824–1831; 1 outside the treatise view, never shown")
 		require.Contains(t, out, `<span class="label">Cases cited</span><span>2</span>`)
-		require.Contains(t, out, "24% of the 994 detected in these editions")
+		require.Contains(t, out, "24% of the 994 found in these editions")
+		require.Contains(t, out, "The pipeline (the detector and linker) for all 3 editions")
+		require.NotContains(t, out, `class="src`, "no method marks when no column is the LLM reading")
 
 		// The editions shown and the order, each link keeping the other.
 		require.Contains(t, out, `<a href="/works/1107/cases?sort=entered" class="btn btn-primary">All editions</a>`)
