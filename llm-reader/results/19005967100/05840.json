@@ -1,0 +1,10 @@
+{
+  "psmid": "19005967100", "pageid": "05840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:52:07Z",
+  "note": "printed p. lxvii; Appendix Notes, Note (39), the absque hoc illustrated from the Year-books. Plac. Ab. (a record of pleas) skipped. Same footnote as 1835 (19007986500/05500).",
+  "citations": [
+    {"seq": 1, "raw": "10 Hen. VI. 7.", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 7, guardian in chivalry pleading without that he held in socage; footnote marker OCR'd '(0' for (l); no source for the year books"}
+  ]
+}
