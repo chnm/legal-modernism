@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "05480",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:55:29Z",
+  "note": "Appendix Notes, p. lxvii, end of Note (44), Notes (45) and (46), start of Note (47). Cross-references and Reeves skipped. Same footnote as the 1827 edition (19005940200/05980).",
+  "citations": [
+    {"seq": 1, "raw": "Brudncll v. Roberts, '2 Wils. 143.", "case_name": "Brudnell v. Roberts",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "17990076", "confidence": "high",
+     "note": "2 Wils KB 143"}
+  ]
+}
