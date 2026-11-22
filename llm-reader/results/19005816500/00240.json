@@ -5,6 +5,6 @@
   "read_at": "2026-11-20T02:08:15Z",
   "citations": [
     {"seq": 1, "raw": "Peacock v. Bell, 1 Saund. 7S", "case_name": "Peacock v. Bell", "volume": 1, "reporter_abbr": "Saund.", "page": 73,
-     "status": "linked_english_reports", "er_case_id": "18450174", "confidence": "high", "note": "OCR 7S read as 73; ER stores Saunders as 1 Wms Saund 73 (Peacock versus Bell and Kendal), a second entry at 69 is the same case"}
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true, "confidence": "high", "note": "OCR 7S read as 73; ER stores Saunders as 1 Wms Saund 73 (Peacock versus Bell and Kendal), a second entry at 69 is the same case; the English Reports split the case, which begins in the record at 1 Wms Saund 69; this later record makes the cite a pin cite (consistency pass)"}
   ]
 }

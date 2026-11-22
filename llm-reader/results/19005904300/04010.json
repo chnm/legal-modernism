@@ -4,8 +4,8 @@
   "note": "p. 367; justification under process: the cause of action need not be set forth; an officer pleads the writ only, a party the judgment too; return of the writ. Co. Litt. skipped. Andrews v. Marris (1841) is new since the 1838 edition. Cross-checked with 19005967100/03900, 03910",
   "citations": [
     {"seq": 1, "raw": "1 Wmis. Saund. 298, n. (1)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 298,
-     "status": "linked_english_reports", "er_case_id": "18450100", "confidence": "medium",
-     "note": "no name printed; OCR 'Wmis.'; Williams's note to Greene v. Jones, which begins at 1 Wms Saund 298"},
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR 'Wmis.'; Williams's note to Greene v. Jones, which begins at 1 Wms Saund 298; the English Reports split the case, which begins in the record at 1 Wms Saund 295; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Rowland v. Veale, Cowp. 18", "case_name": "Rowland v. Veale",
      "volume": 1, "reporter_abbr": "Cowp.", "page": 18,
      "status": "linked_english_reports", "er_case_id": "17740043", "confidence": "high",

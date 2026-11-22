@@ -156,8 +156,9 @@
       "page": 3,
       "status": "linked_english_reports",
       "er_case_id": "15840013",
+      "pincite": true,
       "confidence": "high",
-      "note": "ER Painter v Manser, 2 Co Rep 3"
+      "note": "ER Painter v Manser, 2 Co Rep 3; the English Reports split the case, which begins in the record at 2 Co Rep 1; this later record makes the cite a pin cite (consistency pass)"
     }
   ]
 }

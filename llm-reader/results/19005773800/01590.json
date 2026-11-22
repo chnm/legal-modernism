@@ -9,7 +9,7 @@
      "status": "linked_english_reports", "er_case_id": "18170370", "confidence": "medium",
      "note": "'2 Stark' printed at the foot of page 01580, '36, S. C.' here; S. C. = Harmer v. Rowe, 2 Chit. Rep. 334. ER's record at 2 Stark 36 is Ingledew v. Douglas and its Starkie volume has no Harmer v. Rowe (Harmer v. Wright at 35 names another defendant), so the cited pages are missing from the source; linked to the same case at 6 M & S 146 (1817), as the README directs"},
     {"seq": 2, "raw": "Collins r. Blantern, 2 Wils. 347", "case_name": "Collins v. Blantern", "volume": 2, "reporter_abbr": "Wils.", "page": 347,
-     "status": "linked_english_reports", "er_case_id": "17990101", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "17990101", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 2 Wils KB 341; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 3, "raw": "Whelp- dale's Case, 5 Rep. 119 a", "case_name": "Whelpdale's Case", "volume": 5, "reporter_abbr": "Rep.", "page": 119,
      "status": "linked_english_reports", "er_case_id": "15720473", "confidence": "high"},
     {"seq": 4, "raw": "Anon. 5 Mlod. 15", "case_name": "Anonymous", "volume": 5, "reporter_abbr": "Mod.", "page": 18,

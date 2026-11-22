@@ -25,8 +25,9 @@
       "page": 45,
       "status": "linked_english_reports",
       "er_case_id": "18450305",
+      "pincite": true,
       "confidence": "medium",
-      "note": "folio 45 b; William v. Gwyn, the second ER record beginning at 2 Wms Saund 45, on the view"
+      "note": "folio 45 b; William v. Gwyn, the second ER record beginning at 2 Wms Saund 45, on the view; the English Reports split the case, which begins in the record at 2 Wms Saund 42; this later record makes the cite a pin cite (consistency pass)"
     },
     {
       "seq": 3,

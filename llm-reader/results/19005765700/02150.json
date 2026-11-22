@@ -7,10 +7,10 @@
   "citations": [
     {"seq": 1, "raw": "Hawe v. Planner, 1 Saund. 13", "case_name": "Hawe v. Planner",
      "volume": 1, "reporter_abbr": "Saund.", "page": 13,
-     "status": "linked_english_reports", "er_case_id": "18450106", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "18450106", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 1 Wms Saund 10; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Earl of Manchester v. Vale, 1 Saund. 27", "case_name": "Earl of Manchester v. Vale",
      "volume": 1, "reporter_abbr": "Saund.", "page": 27,
-     "status": "linked_english_reports", "er_case_id": "18450256", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "18450256", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 1 Wms Saund 23; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 3, "raw": "Taylor v. Cole, 3 T. R. 298", "case_name": "Taylor v. Cole",
      "volume": 3, "reporter_abbr": "T. R.", "page": 298,
      "status": "linked_english_reports", "er_case_id": "17892473", "pincite": true, "confidence": "high",

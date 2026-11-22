@@ -146,9 +146,8 @@
       "page": 334,
       "status": "linked_english_reports",
       "confidence": "medium",
-      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions.",
-      "er_case_id": "18170370",
-      "pincite": true
+      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions. 2 Chit. Rep. 334 is the case's first page in Chitty, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)",
+      "er_case_id": "18170370"
     },
     {
       "seq": 13,
@@ -159,9 +158,8 @@
       "page": 36,
       "status": "linked_english_reports",
       "er_case_id": "18170370",
-      "pincite": true,
       "confidence": "medium",
-      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions."
+      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions. 2 Stark. 36 is the first page of the Starkie report, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)"
     },
     {
       "seq": 14,

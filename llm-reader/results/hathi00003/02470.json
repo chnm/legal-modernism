@@ -20,8 +20,8 @@
     {"seq": 7, "raw": "Rellow v. Rowden, Show. 244", "case_name": "Kellow v. Rowden", "volume": 1, "reporter_abbr": "Show.", "page": 244,
      "status": "linked_english_reports", "er_case_id": "17940941", "confidence": "high", "note": "Rellow for Kellow; volume supplied, 1 Show KB 244"},
     {"seq": 8, "raw": "2 Saund. 45, (e)", "volume": 2, "reporter_abbr": "Saund.", "page": 45,
-     "status": "linked_english_reports", "er_case_id": "18450305", "confidence": "medium",
-     "note": "no name printed; Saunders's note in William v. Gwyn, whose second ER record begins at 2 Wms Saund 45"},
+     "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note in William v. Gwyn, whose second ER record begins at 2 Wms Saund 45; the English Reports split the case, which begins in the record at 2 Wms Saund 42; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 9, "raw": "Vynior's case, 8 Rep. 82 b", "case_name": "Vynior's Case", "volume": 8, "reporter_abbr": "Rep.", "page": 82,
      "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high", "note": "ER splits Vynior's Case at 8 Co Rep 80 and 81; 82 b falls in the record beginning at 81"}
   ]

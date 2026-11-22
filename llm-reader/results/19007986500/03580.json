@@ -7,7 +7,7 @@
      "volume": 4, "reporter_abbr": "Mod.", "page": 377,
      "status": "linked_english_reports", "er_case_id": "17930653", "confidence": "high"},
     {"seq": 2, "raw": "1 Saund. 293, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 298,
-     "status": "linked_english_reports", "er_case_id": "18450100", "confidence": "medium",
-     "note": "no name printed; OCR '293' for 298, as the 1841 edition prints it and as cited on the previous page; Greene v. Jones, whose ER record begins at 1 Wms Saund 298"}
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR '293' for 298, as the 1841 edition prints it and as cited on the previous page; Greene v. Jones, whose ER record begins at 1 Wms Saund 298; the English Reports split the case, which begins in the record at 1 Wms Saund 295; this later record makes the cite a pin cite (consistency pass)"}
   ]
 }

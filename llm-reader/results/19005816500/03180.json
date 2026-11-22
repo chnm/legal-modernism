@@ -27,7 +27,7 @@
      "status": "linked_english_reports", "er_case_id": "18240053", "confidence": "high"},
     {"seq": 7, "raw": "Manser's Case, 2 Rep. 3", "case_name": "Manser's Case",
      "volume": 2, "reporter_abbr": "Rep.", "page": 3,
-     "status": "linked_english_reports", "er_case_id": "15840013", "confidence": "high",
-     "note": "ER Painter v Manser, 2 Co Rep 3"}
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "high",
+     "note": "ER Painter v Manser, 2 Co Rep 3; the English Reports split the case, which begins in the record at 2 Co Rep 1; this later record makes the cite a pin cite (consistency pass)"}
   ]
 }

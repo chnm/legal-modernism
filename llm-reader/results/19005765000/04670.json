@@ -8,7 +8,7 @@
     {"seq": 1, "raw": "Hiclkman v. Walker, Willes, 27", "case_name": "Hickman v. Walker", "reporter_abbr": "Willes", "page": 27,
      "status": "no_match", "confidence": "high", "note": "Willes's Reports have no source; no report of Hickman v. Walker found by name in the English Reports"},
     {"seq": 2, "raw": "Roberts v. Mairiett, 2 Saund. 188", "case_name": "Roberts v. Marriett", "volume": 2, "reporter_abbr": "Saund.", "page": 188,
-     "status": "linked_english_reports", "er_case_id": "18450223", "confidence": "high", "note": "OCR Mairiett; ER Roberts versus Mariett"},
+     "status": "linked_english_reports", "er_case_id": "18450223", "pincite": true, "confidence": "high", "note": "OCR Mairiett; ER Roberts versus Mariett; the English Reports split the case, which begins in the record at 2 Wms Saund 183; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 3, "raw": "1 Saund. 117, n. I.", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
      "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
      "note": "Williams's note 1 at 117, in Cutler v. Southern (begins 113; ER record at 1 Wms Saund 116 holds 116 onward)"},

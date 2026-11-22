@@ -359,7 +359,16 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    341 after Topping v. Fuge, Goram v. Sweeting's 2 Saund. 207, Haworth v.
    Spraggs, Lord Arlington v. Merricke), and hathi00002/02750 seq 12 `page`
    375→357 (Goodtitle v. Otway); open question: whether a printed "ibid."
-   is a carried-over reporter (graded as printed, `high` when named); U4 grading (item 6's no_match
+   is a carried-over reporter (graded as printed, `high` when named);
+   U5 pin cites: DONE 2026-11-22, 160 citations (8 Skin. 660 names
+   restored, the other 14 were bare cites in separate footnotes; 125 split
+   cases set; 3 folio first pages and 17 Harmer v. Rowe parallels unset;
+   7 printed 1894 pin cites restored). For U9: Vynior's Case (46 cites at
+   8 Co Rep 81 are pin cites, 10 are not; 81 b is the case's usual cite,
+   so the 80 record may be a different matter); Manser's Case (the 2 Co
+   Rep 1 record is empty, so 2 Rep. 3 may not be a pin cite); Weedon v.
+   Woodbridge, 13 QB 470 (two decisions, 1849 and 1850, or one split?);
+   Sir Ralph Bovy's Case, 1 Vent. 217 (marked a pin cite, probably not); U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

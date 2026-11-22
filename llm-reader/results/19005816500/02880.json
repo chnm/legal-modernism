@@ -13,8 +13,9 @@
       "page": 298,
       "status": "linked_english_reports",
       "er_case_id": "18450100",
+      "pincite": true,
       "confidence": "medium",
-      "note": "note to Greene v. Jones; ER records at 1 Wms Saund 295 and 298, page 298 begins the second"
+      "note": "note to Greene v. Jones; ER records at 1 Wms Saund 295 and 298, page 298 begins the second; the English Reports split the case, which begins in the record at 1 Wms Saund 295; this later record makes the cite a pin cite (consistency pass)"
     },
     {
       "seq": 2,

@@ -4,7 +4,7 @@
   "note": "p. 271, Rule IV, the pleadings must show authority; a by-law justification. Skipped: Co. Litt., Com. Dig.",
   "citations": [
     {"seq": 1, "raw": "1 Wms. Saund. 298, n. (1)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 298,
-     "status": "linked_english_reports", "er_case_id": "18450100", "confidence": "medium",
-     "note": "no name printed; Williams's note (1) to Greene v. Jones, which begins at 1 Wms Saund 298, as in the 1860 record"}
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (1) to Greene v. Jones, which begins at 1 Wms Saund 298, as in the 1860 record; the English Reports split the case, which begins in the record at 1 Wms Saund 295; this later record makes the cite a pin cite (consistency pass)"}
   ]
 }

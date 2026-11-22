@@ -144,9 +144,8 @@
       "page": 36,
       "status": "linked_english_reports",
       "er_case_id": "18170370",
-      "pincite": true,
       "confidence": "medium",
-      "note": "S. C. = Harmer v. Rowe; linked to 6 M & S 146 per the README (2 Stark 35 is Harmer v. Wright, another defendant)"
+      "note": "S. C. = Harmer v. Rowe; linked to 6 M & S 146 per the README (2 Stark 35 is Harmer v. Wright, another defendant); 2 Stark. 36 is the first page of the Starkie report, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)"
     },
     {
       "seq": 13,

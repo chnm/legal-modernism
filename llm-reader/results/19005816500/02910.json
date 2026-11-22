@@ -132,8 +132,9 @@
       "page": 116,
       "status": "linked_english_reports",
       "er_case_id": "18450054",
+      "pincite": true,
       "confidence": "medium",
-      "note": "note to Cutler v. Southern; ER records at 1 Wms Saund 113 and 116, page 116 begins the second"
+      "note": "note to Cutler v. Southern; ER records at 1 Wms Saund 113 and 116, page 116 begins the second; the English Reports split the case, which begins in the record at 1 Wms Saund 113; this later record makes the cite a pin cite (consistency pass)"
     }
   ]
 }

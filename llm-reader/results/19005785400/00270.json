@@ -13,8 +13,9 @@
       "page": 73,
       "status": "linked_english_reports",
       "er_case_id": "18450174",
+      "pincite": true,
       "confidence": "high",
-      "note": "ER splits the case into 1 Wms Saund 69 and 73; the record at 73 is the cited page"
+      "note": "ER splits the case into 1 Wms Saund 69 and 73; the record at 73 is the cited page; the English Reports split the case, which begins in the record at 1 Wms Saund 69; this later record makes the cite a pin cite (consistency pass)"
     }
   ]
 }

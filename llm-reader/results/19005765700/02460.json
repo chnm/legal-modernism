@@ -7,7 +7,7 @@
   "citations": [
     {"seq": 1, "raw": "Ilayman v. Gerrard, 1 Saund. 102", "case_name": "Hayman v. Gerrard",
      "volume": 1, "reporter_abbr": "Saund.", "page": 102,
-     "status": "linked_english_reports", "er_case_id": "18450110", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 1 Wms Saund 99; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Cornwallis v. Savery, Burr. 772", "case_name": "Cornwallis v. Savery",
      "volume": 2, "reporter_abbr": "Burr.", "page": 772,
      "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high",

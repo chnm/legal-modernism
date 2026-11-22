@@ -25,9 +25,8 @@
       "page": 334,
       "status": "linked_english_reports",
       "confidence": "medium",
-      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions.",
-      "er_case_id": "18170370",
-      "pincite": true
+      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions. 2 Chit. Rep. 334 is the case's first page in Chitty, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)",
+      "er_case_id": "18170370"
     },
     {
       "seq": 3,
@@ -38,9 +37,8 @@
       "page": 36,
       "status": "linked_english_reports",
       "confidence": "medium",
-      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions.",
-      "er_case_id": "18170370",
-      "pincite": true
+      "note": "Harmer v. Rowe: linked to its English Reports report at 6 M & S 146, which the guide prefers to a Chitty stub; the Starkie 'S. C.' is linked there too, since 2 Stark 35 is Harmer v. Wright, another defendant. Aligned by the coordinator across editions. 2 Stark. 36 is the first page of the Starkie report, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)",
+      "er_case_id": "18170370"
     },
     {
       "seq": 4,
@@ -51,8 +49,9 @@
       "page": 347,
       "status": "linked_english_reports",
       "er_case_id": "17990101",
+      "pincite": true,
       "confidence": "high"
-    },
+    , "note": "the English Reports split the case, which begins in the record at 2 Wils KB 341; this later record makes the cite a pin cite (consistency pass)"},
     {
       "seq": 5,
       "raw": "Whelpdale's Case, 5 Rep. 119 a",
@@ -72,9 +71,8 @@
       "page": 295,
       "status": "linked_english_reports",
       "er_case_id": "18450099",
-      "pincite": true,
       "confidence": "medium",
-      "note": "Saunders's note at 295 a, to Greene v. Jones, which begins at 295"
+      "note": "Saunders's note at 295 a, to Greene v. Jones, which begins at 295; 295 a is Greene v. Jones's first page (1 Wms Saund 295); a folio letter is the same page, so not a pin cite (consistency pass)"
     },
     {
       "seq": 7,

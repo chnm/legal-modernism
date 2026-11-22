@@ -7,7 +7,7 @@
   "citations": [
     {"seq": 1, "raw": "Earl of Manchester v. Vale, 1 Saund. 27", "case_name": "Earl of Manchester v. Vale",
      "volume": 1, "reporter_abbr": "Saund.", "page": 27,
-     "status": "linked_english_reports", "er_case_id": "18450256", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "18450256", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 1 Wms Saund 23; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "M'Pherson v. Daniels, 10 Barn. & Cress. 263", "case_name": "M'Pherson v. Daniels",
      "volume": 10, "reporter_abbr": "Barn. & Cress.", "page": 263,
      "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high"},

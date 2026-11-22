@@ -48,7 +48,7 @@
      "note": "no name printed; note to Cutler v. Southern, split in ER into records at 1 Wms Saund 113 and 116; a pin cite since the case begins at 113"},
     {"seq": 13, "raw": "Barker v. Thorold, 1 Saund. 47", "case_name": "Barker v. Thorold",
      "volume": 1, "reporter_abbr": "Saund.", "page": 47,
-     "status": "linked_english_reports", "er_case_id": "18450007", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "18450007", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 1 Wms Saund 40; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 14, "raw": "Varley v. Manton, 9 Bing. 863", "case_name": "Varley v. Manton",
      "volume": 9, "reporter_abbr": "Bing.", "page": 363,
      "status": "linked_english_reports", "er_case_id": "18320849", "confidence": "high",

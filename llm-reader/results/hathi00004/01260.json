@@ -144,9 +144,8 @@
       "page": 334,
       "status": "linked_english_reports",
       "er_case_id": "18170370",
-      "pincite": true,
       "confidence": "medium",
-      "note": "README's choice: Harmer v. Rowe, 2 Chit. Rep. 334 and its Starkie S. C. are both linked to the English Reports report at 6 M & S 146"
+      "note": "README's choice: Harmer v. Rowe, 2 Chit. Rep. 334 and its Starkie S. C. are both linked to the English Reports report at 6 M & S 146; 2 Chit. Rep. 334 is the case's first page in Chitty, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)"
     },
     {
       "seq": 13,
@@ -157,9 +156,8 @@
       "page": 36,
       "status": "linked_english_reports",
       "er_case_id": "18170370",
-      "pincite": true,
       "confidence": "medium",
-      "note": "S. C. = Harmer v. Rowe; README's choice, linked to 6 M & S 146, since 2 Stark 35 is Harmer v. Wright, another defendant"
+      "note": "S. C. = Harmer v. Rowe; README's choice, linked to 6 M & S 146, since 2 Stark 35 is Harmer v. Wright, another defendant; 2 Stark. 36 is the first page of the Starkie report, linked through the same-case rule to 6 M & S 146, so not a pin cite (consistency pass)"
     },
     {
       "seq": 14,

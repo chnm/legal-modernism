@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "Peacock v. Bell, 1 Saund. 73", "case_name": "Peacock v. Bell",
      "volume": 1, "reporter_abbr": "Saund.", "page": 73,
-     "status": "linked_english_reports", "er_case_id": "18450174", "confidence": "high",
-     "note": "ER 1 Wms Saund 73, Peacock versus Bell and Kendal; as in the 1827 record (19005940200/00300)"}
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true, "confidence": "high",
+     "note": "ER 1 Wms Saund 73, Peacock versus Bell and Kendal; as in the 1827 record (19005940200/00300); the English Reports split the case, which begins in the record at 1 Wms Saund 69; this later record makes the cite a pin cite (consistency pass)"}
   ]
 }

@@ -13,8 +13,9 @@
       "page": 27,
       "status": "linked_english_reports",
       "er_case_id": "18450256",
+      "pincite": true,
       "confidence": "high",
-      "note": "ER splits the case at 1 Wms Saund 23 and 27"
+      "note": "ER splits the case at 1 Wms Saund 23 and 27; the English Reports split the case, which begins in the record at 1 Wms Saund 23; this later record makes the cite a pin cite (consistency pass)"
     },
     {
       "seq": 2,

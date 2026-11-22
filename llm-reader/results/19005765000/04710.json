@@ -31,8 +31,8 @@
      "status": "no_match", "confidence": "medium", "note": "year book, 22 Hen. VI, cited through Doct. Pl.; read as the 1831 edition prints (22 Hen. 6. 37); 1901 OCR reads 28 Hen. 6, 87; no source"},
     {"seq": 12, "raw": "22 Edw. 4, 2.", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
      "status": "no_match", "confidence": "medium", "note": "year book, 22 Edw. IV, cited through Vin. Ab.; folio 29 as the 1831 and 1901 editions print; no source"},
-    {"seq": 13, "raw": "Cushman v. Hayes, 4611., 155", "case_name": "Cushman v. Hayes", "volume": 46, "reporter_abbr": "Ill.", "page": 145,
-     "status": "linked_cap", "cap_case_id": 5296760, "confidence": "high", "note": "name split across columns/pages; printed 155 (1901 too), CAP case begins at 46 Ill. 145"},
+    {"seq": 13, "raw": "Cushman v. Hayes, 4611., 155", "case_name": "Cushman v. Hayes", "volume": 46, "reporter_abbr": "Ill.", "page": 155,
+     "status": "linked_cap", "cap_case_id": 5296760, "pincite": true, "confidence": "high", "note": "name split across columns/pages; printed 155 (1901 too), CAP case begins at 46 Ill. 145; 155 is as printed and falls inside Cushman v. Hayes (46 Ill. 145-156), so it is kept as a pin cite rather than corrected to the first page (consistency pass)"},
     {"seq": 14, "raw": "Wadliami v. Swan, 109id.54", "case_name": "Wadhams v. Swan", "volume": 109, "reporter_abbr": "Ill.", "page": 54,
      "status": "linked_cap", "cap_case_id": 2854735, "pincite": true, "confidence": "high", "note": "id. = Ill.; case runs 46-62 (1901 prints 109 id. 54)"}
   ]

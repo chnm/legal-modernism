@@ -23,7 +23,7 @@
     {"seq": 7, "raw": "Miller v. Martin, 8 N. J. L. 201", "case_name": "Miller v. Martin", "volume": 8, "reporter_abbr": "N.J.L.", "page": 247,
      "status": "linked_cap", "cap_case_id": 16614, "confidence": "high",
      "note": "printed 201; the only Miller v. Martin in 8 N.J.L. is at 247 (1825); 8 N.J.L. 204 is another case; linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
-    {"seq": 8, "raw": "Wilson v. Poole, 33 Ind. 448", "case_name": "Wilson v. Poole", "volume": 33, "reporter_abbr": "Ind.", "page": 443,
-     "status": "linked_cap", "cap_case_id": 1481290, "confidence": "high", "note": "OCR 448 read 443"}
+    {"seq": 8, "raw": "Wilson v. Poole, 33 Ind. 448", "case_name": "Wilson v. Poole", "volume": 33, "reporter_abbr": "Ind.", "page": 448,
+     "status": "linked_cap", "cap_case_id": 1481290, "pincite": true, "confidence": "high", "note": "OCR 448 read 443; 448 is as printed and falls inside Wilson v. Poole (33 Ind. 443-449), so it is kept as a pin cite rather than corrected to the first page (consistency pass)"}
   ]
 }

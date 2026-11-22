@@ -4,8 +4,8 @@
   "note": "Stephen, chapter II (p. 283): quality and quantity specified loosely; debt and indebitatus assumpsit. A cross-reference skipped; footnotes (q) and (s) OCR'd as (7) and (8). Matches the 1871 hathi00009/03070; this scan reads Layton v. Grindall's page correctly as 643",
   "citations": [
     {"seq": 1, "raw": "2 Saund., 94 b, n. 1", "volume": 2, "reporter_abbr": "Saund.", "page": 94,
-     "status": "linked_english_reports", "er_case_id": "18450112", "confidence": "medium",
-     "note": "no name printed; lettered page 94 b, a note to Hesketh v. Lee, which begins at 2 Wms Saund 94 (the folio letter is the same page, so not a pin cite)"},
+     "status": "linked_english_reports", "er_case_id": "18450112", "pincite": true, "confidence": "medium",
+     "note": "no name printed; lettered page 94 b, a note to Hesketh v. Lee, which begins at 2 Wms Saund 94 (the folio letter is the same page, so not a pin cite); the English Reports split the case, which begins in the record at 2 Wms Saund 84; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Layton v. Grindall, 2 Salk., 643", "case_name": "Layton v. Grindall",
      "volume": 2, "reporter_abbr": "Salk.", "page": 643,
      "status": "linked_english_reports", "er_case_id": "17952363", "confidence": "high"},

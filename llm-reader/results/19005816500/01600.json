@@ -8,7 +8,7 @@
      "status": "linked_english_reports", "er_case_id": "17954003", "confidence": "high"},
     {"seq": 2, "raw": "Collins v. Blantcrn, 2 Wils. 347", "case_name": "Collins v. Blantern",
      "volume": 2, "reporter_abbr": "Wils.", "page": 347,
-     "status": "linked_english_reports", "er_case_id": "17990101", "confidence": "high"},
+     "status": "linked_english_reports", "er_case_id": "17990101", "pincite": true, "confidence": "high", "note": "the English Reports split the case, which begins in the record at 2 Wils KB 341; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 3, "raw": "Pigot's Case, 11 Rep. 26 b", "case_name": "Pigot's Case",
      "volume": 11, "reporter_abbr": "Rep.", "page": 26,
      "status": "linked_english_reports", "er_case_id": "15720180", "confidence": "high"},

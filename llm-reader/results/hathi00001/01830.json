@@ -4,8 +4,8 @@
   "note": "printed p. 161; special demurrer must show the fault; demurrer admits facts sufficiently pleaded. Bac. Ab. and Com. Dig. skipped. Cites printed without names; agrees with the 1831 record (hathi00002/01560), which names the East and T. R. cases",
   "citations": [
     {"seq": 1, "raw": "1 Saund. 161. n. (1).", "volume": 1, "reporter_abbr": "Saund.", "page": 161,
-     "status": "linked_english_reports", "er_case_id": "18450147", "confidence": "medium",
-     "note": "Saunders's note to Lenthall v. Cooke, 1 Wms Saund 161"},
+     "status": "linked_english_reports", "er_case_id": "18450147", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note to Lenthall v. Cooke, 1 Wms Saund 161; the English Reports split the case, which begins in the record at 1 Wms Saund 156; this later record makes the cite a pin cite (consistency pass)"},
     {"seq": 2, "raw": "337. b. n. (3).", "volume": 1, "reporter_abbr": "Saund.", "page": 337,
      "status": "linked_english_reports", "er_case_id": "18450103", "pincite": true, "confidence": "medium",
      "note": "volume and reporter carried from the preceding 1 Saund.; a second page with its own note, so a second citation; note to Hancocke v. Prowd, which begins at 1 Wms Saund 336"},

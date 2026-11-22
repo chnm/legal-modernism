@@ -24,8 +24,9 @@
       "page": 267,
       "status": "linked_english_reports",
       "er_case_id": "18450168",
+      "pincite": true,
       "confidence": "high",
-      "note": "ER splits Osborne v. Rogers at 1 Wms Saund 264 and 267; linked the record at the cited page"
+      "note": "ER splits Osborne v. Rogers at 1 Wms Saund 264 and 267; linked the record at the cited page; the English Reports split the case, which begins in the record at 1 Wms Saund 264; this later record makes the cite a pin cite (consistency pass)"
     },
     {
       "seq": 3,

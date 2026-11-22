@@ -13,8 +13,9 @@
       "page": 45,
       "status": "linked_english_reports",
       "er_case_id": "18450305",
+      "pincite": true,
       "confidence": "medium",
-      "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), which has a record beginning at 2 Wms Saund 45"
+      "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), which has a record beginning at 2 Wms Saund 45; the English Reports split the case, which begins in the record at 2 Wms Saund 42; this later record makes the cite a pin cite (consistency pass)"
     }
   ]
 }

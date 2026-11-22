@@ -31,8 +31,8 @@
      "status": "linked_english_reports", "er_case_id": "18620471", "confidence": "high", "note": "id. = Best & Smith"},
     {"seq": 12, "raw": "Andrus v. Waring, 20 Johns. 153", "case_name": "Andrus v. Waring", "volume": 20, "reporter_abbr": "Johns.", "page": 153,
      "status": "linked_cap", "cap_case_id": 2142439, "confidence": "high"},
-    {"seq": 13, "raw": "Pease v; McKusick, 25 Me. 75", "case_name": "Pease v. McKusick", "volume": 25, "reporter_abbr": "Me.", "page": 73,
-     "status": "linked_cap", "cap_case_id": 8845902, "confidence": "high", "note": "OCR 75 read 73"},
+    {"seq": 13, "raw": "Pease v; McKusick, 25 Me. 75", "case_name": "Pease v. McKusick", "volume": 25, "reporter_abbr": "Me.", "page": 75,
+     "status": "linked_cap", "cap_case_id": 8845902, "pincite": true, "confidence": "high", "note": "OCR 75 read 73; 75 is as printed and falls inside Pease v. McKusick (25 Me. 73-76), so it is kept as a pin cite rather than corrected to the first page (consistency pass)"},
     {"seq": 14, "raw": "Keag v; Goodwin, 16 Mass. 1", "case_name": "Keay v. Goodwin", "volume": 16, "reporter_abbr": "Mass.", "page": 1,
      "status": "linked_cap", "cap_case_id": 2035313, "confidence": "high", "note": "OCR Keag; CAP Keay v. Goodwin"}
   ]
