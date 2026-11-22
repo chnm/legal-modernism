@@ -521,6 +521,9 @@ Write one file per page to `llm-reader/results/<psmid>/<pageid>.json`:
   `cap_case_id` (number), `er_case_id` (string), `code_reporter_id` (number),
   `stub_cite` (string), and none for `no_match`.
 - `pincite` is true when the cited page is inside the case, not its first page.
+  The database column is `NOT NULL DEFAULT false` and the loader reads a plain
+  boolean, so a `pincite` left unset (cannot tell) and one set to false both
+  load as false: there, false means "not known to be a pin cite".
 - `confidence` is `high` (name and cite agree), `medium` (one is uncertain, or
   no name is printed), or `low` (a guess worth recording).
 - `note` explains anything not obvious: an OCR correction, a choice between
