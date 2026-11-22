@@ -1,0 +1,17 @@
+{
+  "psmid": "19007986500", "pageid": "03860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:14:38Z",
+  "note": "printed p. 358; breaches assigned generally in replications on agents' bonds. Footnote marker (x) OCR'd '(.z)', '(r)'",
+  "citations": [
+    {"seq": 1, "raw": "Cornwallis v. Savery, 2 Burr. 772", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high"},
+    {"seq": 2, "raw": "Shlum v. Fnrrington, 1 Bos. & Pul. 640", "case_name": "Shum v. Farrington",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 640,
+     "status": "linked_english_reports", "er_case_id": "17970365", "confidence": "high"},
+    {"seq": 3, "raw": "Burton v. Webb, 8 T. R. 459", "case_name": "Barton v. Webb",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 459,
+     "status": "linked_english_reports", "er_case_id": "18000054", "confidence": "high",
+     "note": "printed or OCR'd 'Burton'; Barton v. Webb, as at p. 355"}
+  ]
+}

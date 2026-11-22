@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "03840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:14:22Z",
+  "note": "printed p. 356; necessaries alleged generally in assumpsit",
+  "citations": [
+    {"seq": 1, "raw": "Crvps v. Baynton, 3 Bulst. 31", "case_name": "Cryps v. Baynton",
+     "volume": 3, "reporter_abbr": "Bulst.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "16880258", "confidence": "high"}
+  ]
+}
