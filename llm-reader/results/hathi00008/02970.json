@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00008", "pageid": "02970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:29:31Z",
+  "note": "p. 261, title of possession sufficient against a wrong-doer. The scan splits footnote (b)'s case names from their cites across lines; read in order. Skipped: Com. Dig., (c) a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Taylor v. Eastwood, 1 East, 212", "case_name": "Taylor v. Eastwood",
+     "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "high"},
+    {"seq": 2, "raw": "Grimstead v. Marlowe, 4 T. R. 717", "case_name": "Grimstead v. Marlowe",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 717,
+     "status": "linked_english_reports", "er_case_id": "17923080", "confidence": "high"},
+    {"seq": 3, "raw": "Purnell v. Young, 3 M. & W. 288", "case_name": "Purnell v. Young",
+     "volume": 3, "reporter_abbr": "M. & W.", "page": 288,
+     "status": "linked_english_reports", "er_case_id": "18380210", "confidence": "high"},
+    {"seq": 4, "raw": "Carnaby v. Welby, 8 A. & E. 872", "case_name": "Carnaby v. Welby",
+     "volume": 8, "reporter_abbr": "A. & E.", "page": 872,
+     "status": "linked_english_reports", "er_case_id": "18380962", "confidence": "high"}
+  ]
+}

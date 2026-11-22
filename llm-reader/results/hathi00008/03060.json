@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00008", "pageid": "03060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:32:22Z",
+  "note": "p. 270, second exception: avowry or cognizance generally under 11 Geo. II. c. 19 s. 22 (statute). Footnote (z) OCR '(2)'; Bullen and Leake's Precedents skipped",
+  "citations": [
+    {"seq": 1, "raw": "2 Wms. Saund. 285, n. (3)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 285,
+     "status": "linked_english_reports", "er_case_id": "18450187", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (3) to Poole v. Longuevill, which begins at 2 Wms Saund 282, on the statute 11 Geo. II. c. 19"}
+  ]
+}

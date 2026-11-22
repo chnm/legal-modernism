@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "03010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:31:01Z",
+  "note": "p. 265, a title of possession against an adversary and its limits. Skipped: (i) (OCR '(2)') a cross-reference, Com. Dig.",
+  "citations": [
+    {"seq": 1, "raw": "Hill v. Saunders, 4 B. & C. 536", "case_name": "Hill v. Saunders",
+     "volume": 4, "reporter_abbr": "B. & C.", "page": 536,
+     "status": "linked_english_reports", "er_case_id": "18250126", "pincite": true, "confidence": "high",
+     "note": "Hill against Saunders begins at 4 B & C 529"}
+  ]
+}

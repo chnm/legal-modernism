@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00008", "pageid": "02920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:28:23Z",
+  "note": "p. 256, the Statute of Frauds; a devise must be alleged in writing; a grant by deed. Skipped: (i) Vin. Abr. and Co. Litt., (k) a cross-reference, (l) statutes, (o) Vin. Abr.",
+  "citations": [
+    {"seq": 1, "raw": "1 Wms. Saund. 276 a. n. (2)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (2) to Duppa v. Mayo, which begins at 1 Wms Saund 275 (27215 words), as in the 1860 record"},
+    {"seq": 2, "raw": "Porter v. Gray, Cro. Eliz. 245", "case_name": "Porter v. Gray",
+     "reporter_abbr": "Cro. Eliz.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "16531539", "confidence": "high",
+     "note": "Love v Wotton also begins at Cro Eliz 245; the name decides"},
+    {"seq": 3, "raw": "1 Wms. Saund. 234, n. (3)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (3) to Thursby v. Plant, which begins at 1 Wms Saund 230 (next record 237), as in the 1860 record"},
+    {"seq": 4, "raw": "Lathbury v. Arnold, 1 Bing. 217", "case_name": "Lathbury v. Arnold",
+     "volume": 1, "reporter_abbr": "Bing.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "18230498", "confidence": "high"}
+  ]
+}

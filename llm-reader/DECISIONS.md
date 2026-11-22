@@ -327,6 +327,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    second record at 3 Ld Raym 336) by the rule that the English Reports
    beat a stub; every other edition links the stub. Align, and look for
    other Lutwyche stubs whose case is in the English Reports by name.
+   Hawkins v. Eckles, 2 B. & P. 359, 361, n. (a): 1835 and 1866 record 361
+   n. (a) as a second citation (a second page with its own note); other
+   editions drop it. Align by the README rule.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then
