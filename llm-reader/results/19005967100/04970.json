@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "04970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:35:18Z",
+  "note": "printed p. 465; rule 5, dilatory pleas at a preliminary stage; rule 6, affirmative pleadings not concluding to the country must conclude with a verification. Footnote (n) adds two cases of 1834-36 (Snow v. Stevens, Goodchild v. Pledge). Com. Dig., Co. Litt., Finch's Law, the Appendix note and the cross-reference (o) not recorded. Cross-checked with the 1843 text (19005904300/05130)",
+  "citations": [
+    {"seq": 1, "raw": "Snow v. Stevens, 2 Dov . 664", "case_name": "Snow v. Stevens",
+     "volume": 2, "reporter_abbr": "Dowl.", "page": 664,
+     "status": "linked_stub", "stub_cite": "2 Dowl. 664", "confidence": "medium",
+     "note": "OCR 'Dov .' for Dowl., as the 1843 edition prints; Dowling's Practice Cases have no source; no Snow v. Stevens (or Stephens) of the 1830s in ER by name; the stub matches the cite"},
+    {"seq": 2, "raw": "Goodchild v. Pledge, 2 Gale, 7", "case_name": "Goodchild v. Pledge",
+     "volume": 2, "reporter_abbr": "Gale", "page": 7,
+     "status": "linked_english_reports", "er_case_id": "18360091", "confidence": "medium",
+     "note": "Gale's Exchequer Reports have no source; the same case is Goodchild v Pledge, 1 M & W 363 (1836); linked to the case"}
+  ]
+}

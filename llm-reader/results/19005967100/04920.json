@@ -1,0 +1,18 @@
+{
+  "psmid": "19005967100", "pageid": "04920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:33:45Z",
+  "note": "printed p. 460; the declaration must lay damages; damages cannot exceed those laid. Com. Dig., Booth, Vin. Ab. and the cross-reference (q) not recorded. Cross-checked with the 1835 records and the 1843 text (19005904300/05070)",
+  "citations": [
+    {"seq": 1, "raw": "Cuming v. Sibley, 4 Burr. 2489", "case_name": "Cuming v. Sibley",
+     "volume": 4, "reporter_abbr": "Burr.", "page": 2489,
+     "status": "linked_english_reports", "er_case_id": "17690007", "confidence": "high"},
+    {"seq": 2, "raw": "Robert Pilford's case, 10 Rep. 116 b, 117 a, b", "case_name": "Robert Pilford's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
+     "note": "Robert Pilfold's Case begins at 10 Co Rep 115; dropped: 117"},
+    {"seq": 3, "raw": "Robert Pil- ford's case, 10 Rep. 117 a, b", "case_name": "Robert Pilford's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
+     "note": "Robert Pilfold's Case begins at 10 Co Rep 115"}
+  ]
+}
