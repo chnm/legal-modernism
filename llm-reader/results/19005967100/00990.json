@@ -1,0 +1,10 @@
+{
+  "psmid": "19005967100", "pageid": "00990",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:26:18Z",
+  "note": "printed p. 68; replication concluded and rejoinder by traverse; 2 Richardson's K. B. 60 (twice, OCR '0O', 'Go') is Richardson's practice of the King's Bench, a practice book, not a case. Same footnotes as 1835 19007986500/00890 (p. 61)",
+  "citations": [
+    {"seq": 1, "raw": "8 Edw. III. pl. 20", "volume": 8, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 8 Edw. III, plea 20, no folio printed; year books have no source here"}
+  ]
+}
