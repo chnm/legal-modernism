@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "01100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:06:22Z",
+  "note": "p. 83, proceedings after verdict. The page opens with the end of footnote (p) from p. 82 (C.L.P. Act 1852 s. 46, special case without pleadings); (q) (OCR '(g)') cites the Rules of E. T. 1853 and (r) (OCR '(k)') Archbold's Practice, running onto p. 84",
+  "citations": [
+    {"seq": 1, "raw": "Elliott v. Bishop, 11 Exch. 113, 321", "case_name": "Elliott v. Bishop",
+     "volume": 11, "reporter_abbr": "Exch.", "page": 113,
+     "status": "linked_english_reports", "er_case_id": "18550465", "confidence": "high",
+     "note": "ER Bishop v Elliott, 11 Exch 113 (1855), the same suit; dropped: 321 (another record of the same suit, Elliott v Bishop, 11 Exch 321, 18550656)"}
+  ]
+}

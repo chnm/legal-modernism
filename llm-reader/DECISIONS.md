@@ -308,6 +308,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    (Hinton v. Dibdin, 2 QB 646; Arbouin v. Anderson, 1 QB 497; Davis v.
    Black, 1 QB 900; Paddock v. Forrester; Smith v. Goldsworthy); recheck
    every 1895 `linked_stub` against `er_name` and `murrell_title`.
+   Gwynne v. Burnell: 1860 prints 6 Bing. N.C. 463 twice (01170, 01190),
+   kept as a pin cite; 1843 and 1866 print 453, the first page. Decide
+   whether 463 is a misprint. 2 Saund. 319 e is linked to Bennet v.
+   Holbech by extension of the README's 319 b/c choice (1860 01100-01200);
+   confirm.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

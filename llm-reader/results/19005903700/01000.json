@@ -1,0 +1,18 @@
+{
+  "psmid": "19005903700", "pageid": "01000",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:03:05Z",
+  "note": "p. 73, the jury try only the issue; distributive findings. Footnote (b) runs onto p. 74",
+  "citations": [
+    {"seq": 1, "raw": "Olark v. Hougham, 2 Barn. & Cres. 149", "case_name": "Clark v. Hougham",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "18230046", "confidence": "high",
+     "note": "OCR 'Olark' for Clark"},
+    {"seq": 2, "raw": "Uther v. Rich, 10 Ad. & Ell. 784", "case_name": "Uther v. Rich",
+     "volume": 10, "reporter_abbr": "Ad. & Ell.", "page": 784,
+     "status": "linked_english_reports", "er_case_id": "18390859", "confidence": "high"},
+    {"seq": 3, "raw": "Traherne v. Gardner, 8 Ell.,& 11. 161", "case_name": "Traherne v. Gardner",
+     "volume": 8, "reporter_abbr": "Ell. & Bl.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "18570740", "confidence": "high",
+     "note": "OCR '11.' for Bl.; ER 8 El & Bl 161 (1857), Traherne and Parry against Gardner and Newman"}
+  ]
+}

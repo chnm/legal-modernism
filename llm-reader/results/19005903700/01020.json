@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "01020",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:04:04Z",
+  "note": "p. 75, the doctrine of variance; the page opens with the end of footnote (c) from p. 74 (Byles, Phillipps and Taylor on Evidence, not cases)",
+  "citations": [
+    {"seq": 1, "raw": "Horsefall v. Testar, 7 Taunt. 385", "case_name": "Horsefall v. Testar",
+     "volume": 7, "reporter_abbr": "Taunt.", "page": 385,
+     "status": "linked_english_reports", "er_case_id": "18170304", "confidence": "high",
+     "note": "two records begin at 7 Taunt 385 (Bird v Morse, Horsefall v Testar); the name decides"}
+  ]
+}
