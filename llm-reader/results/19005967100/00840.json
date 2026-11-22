@@ -1,0 +1,26 @@
+{
+  "psmid": "19005967100", "pageid": "00840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:22:35Z",
+  "note": "printed p. 53; plea to the jurisdiction (county palatine). The end of footnote (z), with Ryland v. Wormald (1837), and the cases of footnote (a) are new in 1838: 1835's footnote here (19007986500/00740, p. 46) cites only Com. Dig. and Wentworth. Com. Dig. and 1 Went. 49 (precedents) are not cases",
+  "citations": [
+    {"seq": 1, "raw": "Ryland v. Wormald, 2 Mee. & W. 393", "case_name": "Ryland v. Wormald",
+     "volume": 2, "reporter_abbr": "M. & W.", "page": 393,
+     "status": "linked_english_reports", "er_case_id": "18370278", "confidence": "high",
+     "note": "ER 2 M & W 393, Ryland v Wormald (1837; murrell_title Ryland v Worland); dilatory pleas within four days; continues footnote (z) from p. 52"},
+    {"seq": 2, "raw": "Chapman v. Madison, 2 Str. 1089", "case_name": "Chapman v. Maddison",
+     "volume": 2, "reporter_abbr": "Str.", "page": 1089,
+     "status": "linked_english_reports", "er_case_id": "17950783", "confidence": "high",
+     "note": "two records begin at 2 Str 1089; the name picks Chapman vers Maddison over Hooper v Shepherd"},
+    {"seq": 3, "raw": "Wilbraham v. Lownds, 12 Mod. b35", "case_name": "Wilbraham v. Lownds",
+     "volume": 12, "reporter_abbr": "Mod.", "page": 535,
+     "status": "linked_english_reports", "er_case_id": "17962234", "confidence": "high",
+     "note": "OCR b35 read as 535; ER 12 Mod 535, Wilbraham against Lownds"},
+    {"seq": 4, "raw": "Lampley v. Thomas, 1 Wils. 193", "case_name": "Lampley v. Thomas",
+     "volume": 1, "reporter_abbr": "Wils.", "page": 193,
+     "status": "linked_english_reports", "er_case_id": "17990258", "confidence": "high"},
+    {"seq": 5, "raw": "Perry v. Jones, Doug. 213", "case_name": "Penry v. Jones",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17790106", "confidence": "high",
+     "note": "volume supplied: ER 1 Doug 213, Penry against Jones (1779), printed Perry"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "00880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:23:25Z",
+  "note": "printed p. 57; modern alterations to pleas in abatement (original writ, misnomer); text cites statutes. Footnote (g), with two Tyrwhitt cases of 1835, is new in 1838 (the 1835 edition, revised for the Hilary Rules, has no such note at its p. 48-49)",
+  "citations": [
+    {"seq": 1, "raw": "Moody v. Aslatt, 5 Tyr. 492", "case_name": "Moody v. Aslatt",
+     "volume": 5, "reporter_abbr": "Tyr.", "page": 492,
+     "status": "linked_english_reports", "er_case_id": "18350173", "confidence": "medium",
+     "note": "Tyrwhitt has no source (a stub 5 Tyrw. 492 exists); the same case by name is in the English Reports at 1 CrM & R 771, Moody v Aslatt (1835), preferred over the stub, at medium"},
+    {"seq": 2, "raw": "Finch v. Cocken, ibid. 774", "case_name": "Finch v. Cocken",
+     "volume": 5, "reporter_abbr": "Tyr.", "page": 774,
+     "status": "linked_english_reports", "er_case_id": "18350093", "confidence": "medium",
+     "note": "ibid. expanded to 5 Tyr.; Tyrwhitt has no source (a stub 5 Tyrw. 774 exists); the same case by name is in the English Reports at 2 CrM & R 196, Finch v Cocken and Others (1835), preferred over the stub, at medium"}
+  ]
+}
