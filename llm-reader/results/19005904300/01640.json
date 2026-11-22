@@ -1,0 +1,18 @@
+{
+  "psmid": "19005904300", "pageid": "01640",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:50:34Z",
+  "note": "p. 130, what may be error: error in fact, infancy; footnotes (f) (cross-reference) and (g, OCR '(y)'), which runs onto p. 131 (Bird v. Pegg, recorded there). Castledine v. Mundy and Beven v. Cheshire are added in 1843 (the 1838 footnote, 19005967100/01600, prints only Bird v. Pegg); same footnote as the 1895 Williston (19005765700/01300)",
+  "citations": [
+    {"seq": 1, "raw": "Castledine v. Mundy, 4 B. & Adol. 90", "case_name": "Castledine v. Mundy",
+     "volume": 4, "reporter_abbr": "B. & Adol.", "page": 90,
+     "status": "linked_english_reports", "er_case_id": "18320789", "confidence": "high"},
+    {"seq": 2, "raw": "1 Nev. & M. 635, S. C.", "case_name": "Castledine v. Mundy",
+     "volume": 1, "reporter_abbr": "Nev. & M.", "page": 635,
+     "status": "linked_english_reports", "er_case_id": "18320789", "confidence": "medium",
+     "note": "S. C.; Nevile and Manning have no source, linked to the same case at 4 B & Ad 90, preferred over the stub 1 Nev. & M. 635"},
+    {"seq": 3, "raw": "Beven v. Cheshire, 3 Dowl. 70", "case_name": "Beven v. Cheshire",
+     "volume": 3, "reporter_abbr": "Dowl.", "page": 70,
+     "status": "linked_stub", "stub_cite": "3 Dowl. 70", "confidence": "high",
+     "note": "Dowling's Practice Cases; no Beven/Bevan v. Cheshire in the English Reports"}
+  ]
+}

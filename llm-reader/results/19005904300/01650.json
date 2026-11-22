@@ -1,0 +1,16 @@
+{
+  "psmid": "19005904300", "pageid": "01650",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:50:44Z",
+  "note": "p. 131, coverture as error in fact, coram nobis, error in law; footnote (g) continued from p. 130, then (h)-(k). Tidd, Manning's Exchequer Practice ('1 Manning, 490') and the cross-reference skipped. Evans v. Chester (1837) is added in 1843 (the 1838 footnotes, 19005967100/01600-01610, print Bird v. Pegg and King v. Jones); same footnotes as the 1895 Williston (19005765700/01300-01310)",
+  "citations": [
+    {"seq": 1, "raw": "Bird v. Pegg, 5 Barn. & Aid. 418", "case_name": "Bird v. Pegg",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 418,
+     "status": "linked_english_reports", "er_case_id": "18210004", "confidence": "high"},
+    {"seq": 2, "raw": "King v. Jones, 2 Ld. Raym. 1525", "case_name": "King v. Jones",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1525,
+     "status": "linked_english_reports", "er_case_id": "17900555", "confidence": "high"},
+    {"seq": 3, "raw": "Evans v. Chester, 2 Mees. & Wels. 847", "case_name": "Evans v. Chester",
+     "volume": 2, "reporter_abbr": "Mees. & Wels.", "page": 847,
+     "status": "linked_english_reports", "er_case_id": "18370093", "confidence": "high"}
+  ]
+}

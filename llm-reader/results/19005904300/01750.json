@@ -1,0 +1,10 @@
+{
+  "psmid": "19005904300", "pageid": "01750",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:52:46Z",
+  "note": "p. 141, coming to issue from Glanville and the Year-Books on; footnotes (h, OCR '(A)'), a cross-reference, and (i), the year book and Appendix Notes 10 and 32",
+  "citations": [
+    {"seq": 1, "raw": "Year-Book, 1 Ed. II. 14", "volume": 1, "reporter_abbr": "Y.B.", "page": 14,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 1 Edw. II, fol. 14; no source for the year books"}
+  ]
+}
