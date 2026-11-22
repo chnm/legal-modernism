@@ -2,8 +2,8 @@
  "note": "printed page 284-285; Com. Dig., Doct. Pl. and Bac. Ab. skipped; the top footnote lines are the end of note (p) from the previous page; cross-checked with Gale 19005816500/02250",
  "citations": [
   {"seq": 1, "raw": "Britton v. Cole, 3 Salk. 409", "case_name": "Britton v. Cole", "volume": 1, "reporter_abbr": "Salk.", "page": 409,
-   "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
-   "note": "printed 3 Salk. here and in the Gale copy; 3 Salk has nothing at 409 in ER and no Britton v Cole, while 1 Salk 408 is Britton versus Cole (Freeman v Blewitt begins at 409; the printed name decides). Read as 1 Salk. 409, a printer's 3 for 1"},
+   "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "high",
+   "note": "printed 3 Salk. here and in the Gale copy; 3 Salk has nothing at 409 in ER and no Britton v Cole, while 1 Salk 408 is Britton versus Cole (Freeman v Blewitt begins at 409; the printed name decides). Read as 1 Salk. 409, a printer's 3 for 1; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
   {"seq": 2, "raw": "Sir Ralph Bovy's Case, 1 Vent. 217", "case_name": "Sir Ralph Bovy's Case", "volume": 1, "reporter_abbr": "Vent.", "page": 217,
    "status": "linked_english_reports", "er_case_id": "17260724", "confidence": "high"},
   {"seq": 3, "raw": "Leech v. Widsley, 1 Vent. 54", "case_name": "Leech v. Widsley", "volume": 1, "reporter_abbr": "Vent.", "page": 54,

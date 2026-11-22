@@ -36,10 +36,10 @@
      "volume": 1, "reporter_abbr": "Salk.", "page": 324,
      "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high",
      "note": "dropped: 325 (end of range)"},
-    {"seq": 10, "raw": "2 Saund. 291. n. (1).", "case_name": "Dakin's Case",
+    {"seq": 10, "raw": "2 Saund. 291. n. (1).",
      "volume": 2, "reporter_abbr": "Saund.", "page": 291,
      "status": "linked_english_reports", "er_case_id": "18450055", "pincite": true, "confidence": "medium",
-     "note": "Williams's note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290), per the README's choice already made"},
+     "note": "Williams's note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290), per the README's choice already made; no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 11, "raw": "306. n. (14).", "volume": 2, "reporter_abbr": "Saund.", "page": 306,
      "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
      "note": "second Saunders page with its own note; 306 falls in Dean and Chapter of Windsor v. Gover (2 Wms Saund 302, next case at 307), whose note (13) is at 305 a"}

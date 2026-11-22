@@ -6,8 +6,8 @@
     {"seq": 1, "raw": "Topping v. Fuge, 1 Marsh, 341", "case_name": "Topping v. Fuge", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
      "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
      "note": "Marshall's C.P. Reports (1813-16) have no source; the same case is in Taunton twice, 5 Taunt 330 and 5 Taunt 771 (a later stage), and which one 1 Marsh. 341 reports cannot be told here; 330 chosen as in the other editions' readings"},
-    {"seq": 2, "raw": "1 Marsh, 341", "case_name": "Topping v. Fuge", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+    {"seq": 2, "raw": "1 Marsh, 341", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
      "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
-     "note": "no name printed; repeat of Topping v. Fuge in the American editor's bracketed note; linked as seq 1"}
+     "note": "no name printed; repeat of Topping v. Fuge in the American editor's bracketed note; linked as seq 1; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

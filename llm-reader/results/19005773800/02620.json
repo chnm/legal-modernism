@@ -5,8 +5,8 @@
   "read_at": "2026-11-20T13:57:01Z",
   "note": "Com. Dig., Blackstone and cross-references skipped",
   "citations": [
-    {"seq": 1, "raw": "2 Saund. 201, e, n. (1)", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 201,
-     "status": "linked_english_reports", "er_case_id": "18450278", "pincite": true, "confidence": "medium", "note": "no name printed; the README's choice: Goram v. Sweeting is the ER record at 2 Wms Saund 200 (titled 'The Same v Bateman'), which holds 201"},
+    {"seq": 1, "raw": "2 Saund. 201, e, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 201,
+     "status": "linked_english_reports", "er_case_id": "18450278", "pincite": true, "confidence": "medium", "note": "no name printed; the README's choice: Goram v. Sweeting is the ER record at 2 Wms Saund 200 (titled 'The Same v Bateman'), which holds 201; no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 2, "raw": "ibid. 171, a, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 171,
      "status": "linked_english_reports", "er_case_id": "18450101", "pincite": true, "confidence": "medium", "note": "ibid. = 2 Saund.; note falls in Hambleton v. Veere, which begins at 2 Wms Saund 169"},
     {"seq": 3, "raw": "Ring v. Roxborough, 2 Tyr. 468", "case_name": "Ring v. Roxbrough", "volume": 2, "reporter_abbr": "Tyr.", "page": 468,

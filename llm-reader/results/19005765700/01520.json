@@ -4,8 +4,8 @@
   "citations": [
     {"seq": 1, "raw": "Belasyse r. Ilester, Lutw. 1592", "case_name": "Belasyse v. Hester",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1592,
-     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "medium",
-     "note": "Lutwyche is held only as stubs; volume 2 supplied from the stub registry's split"},
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "high",
+     "note": "Lutwyche is held only as stubs; volume 2 supplied from the stub registry's split; named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"},
     {"seq": 2, "raw": "Routh v. Weddell, id. 1607", "case_name": "Routh v. Weddell",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1667,
      "status": "linked_stub", "stub_cite": "2 Lutw. 1667", "confidence": "medium",

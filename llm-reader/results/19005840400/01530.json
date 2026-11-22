@@ -21,7 +21,7 @@
      "status": "linked_english_reports", "er_case_id": "16530974", "confidence": "high"},
     {"seq": 6, "raw": "Anon. 3 Salk. 353", "case_name": "Anonymous",
      "volume": 3, "reporter_abbr": "Salk.", "page": 353,
-     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
-     "note": "the Anonymous beginning at 3 Salk 353 on special traverse; Bullen v Benson also begins there"}
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "the Anonymous beginning at 3 Salk 353 on special traverse; Bullen v Benson also begins there; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"}
   ]
 }

@@ -23,8 +23,8 @@
       "reporter_abbr": "East",
       "page": 291,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "no ER record by name (Denison/Dennison, Richardson); ER has Bowring v. Pritchard at 14 East 289 (no word count) and nothing again until 301, so the case appears to be missing from the ER data"
+      "confidence": "high",
+      "note": "no ER record by name (Denison/Dennison, Richardson); ER has Bowring v. Pritchard at 14 East 289 (no word count) and nothing again until 301, so the case appears to be missing from the ER data; legible with a name printed, so a no_match graded high (consistency pass)"
     },
     {
       "seq": 3,

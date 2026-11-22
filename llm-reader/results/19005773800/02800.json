@@ -14,7 +14,7 @@
     {"seq": 4, "raw": "2 Saund. 385 n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 285,
      "status": "linked_english_reports", "er_case_id": "18450187", "pincite": true, "confidence": "medium", "note": "printed 385, read as 285 as the 1859 edition prints; no name printed; the note falls in Poole v. Longuevill, 2 Wms Saund 282"},
     {"seq": 5, "raw": "Anon. Salk. G43", "case_name": "Anonymous", "volume": 2, "reporter_abbr": "Salk.", "page": 643,
-     "status": "linked_english_reports", "er_case_id": "17950124", "confidence": "medium", "note": "OCR 'G43' for 643; volume 2 supplied; the Anonymous case at 2 Salk 643, as in other editions"},
+     "status": "linked_english_reports", "er_case_id": "17950124", "confidence": "high", "note": "OCR 'G43' for 643; volume 2 supplied; the Anonymous case at 2 Salk 643, as in other editions; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"},
     {"seq": 6, "raw": "Searl v. Bunnion, 2 Mod. 70", "case_name": "Searl v. Bunnion", "volume": 2, "reporter_abbr": "Mod.", "page": 70,
      "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high"},
     {"seq": 7, "raw": "Osway v. Bristow, 10 Mod. 37", "case_name": "Osway v. Bristow", "volume": 10, "reporter_abbr": "Mod.", "page": 37,

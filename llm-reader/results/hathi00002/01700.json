@@ -62,8 +62,8 @@
       "page": 354,
       "status": "linked_english_reports",
       "er_case_id": "17970501",
-      "confidence": "medium",
-      "note": "printed 254 in this clean copy too, so a misprint; Dodd v. Kyffin is at 7 TR 354 (7 TR 254 is Myers v. Edge)"
+      "confidence": "high",
+      "note": "printed 254 in this clean copy too, so a misprint; Dodd v. Kyffin is at 7 TR 354 (7 TR 254 is Myers v. Edge); found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     }
   ]
 }

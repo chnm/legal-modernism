@@ -8,7 +8,7 @@
     {"seq": 1, "raw": "Halsey v. Carpenter, Cro. Jac. 359", "case_name": "Halsey v. Carpenter", "reporter_abbr": "Cro. Jac.", "page": 359,
      "status": "linked_english_reports", "er_case_id": "17910448", "confidence": "high", "note": "two other cases also begin at Cro Jac 359; the name decides"},
     {"seq": 2, "raw": "Denison v. Richardson, 14 East, 291", "case_name": "Denison v. Richardson", "volume": 14, "reporter_abbr": "East", "page": 291,
-     "status": "no_match", "confidence": "medium", "note": "no ER record by name (Denison/Dennison, Richardson); ER has Bowring v. Pritchard at 14 East 289 and nothing again until 301, so the case appears to be missing from the ER data"},
+     "status": "no_match", "confidence": "high", "note": "no ER record by name (Denison/Dennison, Richardson); ER has Bowring v. Pritchard at 14 East 289 and nothing again until 301, so the case appears to be missing from the ER data; legible with a name printed, so a no_match graded high (consistency pass)"},
     {"seq": 3, "raw": "Ring v. Roxbrough, 2 Tyr. 473", "case_name": "Ring v. Roxbrough", "volume": 2, "reporter_abbr": "Tyr.", "page": 473,
      "status": "linked_english_reports", "er_case_id": "18320253", "confidence": "medium", "note": "Tyrwhitt's Exchequer Reports have no source here; the same case (1832) is in ER as 2 Cr & J 418, linked by name"}
   ]

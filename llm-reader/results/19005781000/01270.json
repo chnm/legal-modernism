@@ -11,7 +11,7 @@
      "note": "case begins at 1 Wms Saund 20"},
     {"seq": 2, "raw": "Walers v. Hodges, Lut. 1625", "case_name": "Walters v. Hodges",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1625,
-     "status": "no_match", "confidence": "medium",
-     "note": "Lutwyche is in the stubs only; no stub at 2 Lutw. 1625 (nearest 1606, 1630), as found for other editions. Volume 2 supplied from the stub paging"}
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche is in the stubs only; no stub at 2 Lutw. 1625 (nearest 1606, 1630), as found for other editions. Volume 2 supplied from the stub paging; legible and named, no source: high (a Lutwyche volume follows from the page and is not supplied) (consistency pass)"}
   ]
 }

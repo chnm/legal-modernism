@@ -8,7 +8,7 @@
      "note": "volume 2 supplied"},
     {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyriv. 495", "case_name": "Thynne v. Woodman",
      "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
-     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
-     "note": "OCR Tyriv. for Tyrw.; Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name; linked to the exact stub, as in the 1841 and 1845 readings"}
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "high",
+     "note": "OCR Tyriv. for Tyrw.; Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name; linked to the exact stub, as in the 1841 and 1845 readings; named, and the stub matches the printed cite exactly, so high (consistency pass)"}
   ]
 }

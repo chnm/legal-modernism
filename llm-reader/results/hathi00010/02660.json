@@ -11,10 +11,10 @@
      "volume": 3, "reporter_abbr": "Dy.", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
      "note": "volume 3 supplied (ER 3 Dy 365)"},
-    {"seq": 3, "raw": "2 Sauad., 207, n. 24", "case_name": "Goram v. Sweeting",
+    {"seq": 3, "raw": "2 Sauad., 207, n. 24",
      "volume": 2, "reporter_abbr": "Saund.", "page": 207,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Sauad. is OCR for Saund.; notes 21-24 at 2 Saund. 200-207 belong to Goram v. Sweeting, whose ER record at 2 Wms Saund 205 holds the cited page, not Foxwist v. Tremaine, which begins at 207 (choice already made)"},
+     "note": "Sauad. is OCR for Saund.; notes 21-24 at 2 Saund. 200-207 belong to Goram v. Sweeting, whose ER record at 2 Wms Saund 205 holds the cited page, not Foxwist v. Tremaine, which begins at 207 (choice already made); no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 4, "raw": "Wood v. Budden, Hob., 119", "case_name": "Wood v. Budden",
      "reporter_abbr": "Hob.", "page": 119,
      "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"},
@@ -36,9 +36,9 @@
      "volume": 3, "reporter_abbr": "Dyer", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
      "note": "volume 3 supplied (ER 3 Dy 365)"},
-    {"seq": 10, "raw": "2 Saund., 206 a, n. 22", "case_name": "Goram v. Sweeting",
+    {"seq": 10, "raw": "2 Saund., 206 a, n. 22",
      "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "note (22) to Goram v. Sweeting; the ER record at 2 Wms Saund 205 holds the cited page (choice already made)"}
+     "note": "note (22) to Goram v. Sweeting; the ER record at 2 Wms Saund 205 holds the cited page (choice already made); no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

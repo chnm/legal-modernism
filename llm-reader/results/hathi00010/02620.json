@@ -16,7 +16,7 @@
      "note": "the record at 3 Lev 113, a separate report of the suit, per the README's choice already made (graded medium as it requires)"},
     {"seq": 4, "raw": "Britton v. Cole, 3 Salk., 409", "case_name": "Britton v. Cole",
      "volume": 1, "reporter_abbr": "Salk.", "page": 409,
-     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
-     "note": "no Britton v. Cole in 3 Salk; read as 1 Salk. 409, inside Britton v. Cole at 1 Salk 408, as in the other editions"}
+     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "high",
+     "note": "no Britton v. Cole in 3 Salk; read as 1 Salk. 409, inside Britton v. Cole at 1 Salk 408, as in the other editions; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

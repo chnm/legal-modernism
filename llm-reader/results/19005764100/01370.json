@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Anon. 3 Salk. 358", "case_name": "Anonymous",
      "volume": 3, "reporter_abbr": "Salk.", "page": 353,
-     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
-     "note": "printed 358 read as 353 (no Anonymous at 358, where The King v Speke begins; the 1845 edition prints 353, and p. 182 cites the same case); the Anonymous at 3 Salk 353 on traverse, Bullen v Benson also begins there"},
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "printed 358 read as 353 (no Anonymous at 358, where The King v Speke begins; the 1845 edition prints 353, and p. 182 cites the same case); the Anonymous at 3 Salk 353 on traverse, Bullen v Benson also begins there; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"},
     {"seq": 2, "raw": "The King v. Bishop of Worcester, Vaughan, 62", "case_name": "The King v. Bishop of Worcester",
      "reporter_abbr": "Vaugh.", "page": 62,
      "status": "linked_english_reports", "er_case_id": "18230260", "pincite": true, "confidence": "high",

@@ -48,8 +48,8 @@
       "reporter_abbr": "Dowl.",
       "page": 598,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Dowling's Practice Cases have no source and there is no stub 8 Dowl. 598; no Harvey v. Hewitt in the English Reports by er_name or murrell_title, 1838-42"
+      "confidence": "high",
+      "note": "Dowling's Practice Cases have no source and there is no stub 8 Dowl. 598; no Harvey v. Hewitt in the English Reports by er_name or murrell_title, 1838-42; legible with a name printed, so a no_match graded high (consistency pass)"
     },
     {
       "seq": 5,

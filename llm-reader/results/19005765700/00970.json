@@ -49,8 +49,8 @@
       "reporter_abbr": "Dowl.",
       "page": 957,
       "status": "no_match",
-      "confidence": "high",
-      "note": "OCR 'p57' read as 957, as the 1843 edition prints it; Dowling has no source, no stub at 9 Dowl. 957, and no Roffey v. Shoobridge in the English Reports"
+      "confidence": "medium",
+      "note": "OCR 'p57' read as 957, as the 1843 edition prints it; Dowling has no source, no stub at 9 Dowl. 957, and no Roffey v. Shoobridge in the English Reports; a number corrected from the OCR or another edition makes a no_match at most medium (consistency pass)"
     },
     {
       "seq": 5,

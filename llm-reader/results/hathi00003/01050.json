@@ -30,7 +30,6 @@
     {
       "seq": 3,
       "raw": "2 Saund. 319 b, n. (6)",
-      "case_name": "Bennet v. Holbech",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 319,
@@ -38,7 +37,7 @@
       "er_case_id": "18450012",
       "pincite": true,
       "confidence": "medium",
-      "note": "per the README's choice already made: 2 Saund. 319 n. (6) is Bennet v. Holbech (record begins at 2 Wms Saund 317)"
+      "note": "per the README's choice already made: 2 Saund. 319 n. (6) is Bennet v. Holbech (record begins at 2 Wms Saund 317); no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 4,

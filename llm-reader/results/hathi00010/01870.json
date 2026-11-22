@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Belasyse v. Hester, Lutw., 1592", "case_name": "Belasyse v. Hester",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1592,
-     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "medium",
-     "note": "volume 2 supplied (Lutwyche is paged as one run; the stubs split it, and 1592 is in the second volume); Lutwyche is in the stubs only"},
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "high",
+     "note": "volume 2 supplied (Lutwyche is paged as one run; the stubs split it, and 1592 is in the second volume); Lutwyche is in the stubs only; named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"},
     {"seq": 2, "raw": "Routh v. Weddell, 1667", "case_name": "Routh v. Weddell",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1667,
      "status": "linked_stub", "stub_cite": "2 Lutw. 1667", "confidence": "medium",

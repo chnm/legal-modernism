@@ -18,7 +18,7 @@
      "note": "note at 62 c to Hodsden v. Harridge, which begins at 2 Wms Saund 61"},
     {"seq": 5, "raw": "Dodd v. Kyffin, 7 T. R. 254", "case_name": "Dodd v. Kyffin",
      "volume": 7, "reporter_abbr": "T. R.", "page": 254,
-     "status": "linked_english_reports", "er_case_id": "17970501", "confidence": "medium",
-     "note": "Dodd v. Kyffin is at 7 TR 354; 254 is a misprint or OCR error (7 TR 254 is Myers v. Edge)"}
+     "status": "linked_english_reports", "er_case_id": "17970501", "confidence": "high",
+     "note": "Dodd v. Kyffin is at 7 TR 354; 254 is a misprint or OCR error (7 TR 254 is Myers v. Edge); found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

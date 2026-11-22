@@ -25,8 +25,8 @@
      "status": "linked_english_reports", "er_case_id": "17951002", "confidence": "high", "note": "OCR 'S5' for 355 (1901 edition prints 355)"},
     {"seq": 9, "raw": "Duke of Newcastle v. Wright, 1 Loe. 190", "case_name": "Duke of Newcastle v. Wright", "volume": 1, "reporter_abbr": "Lev.", "page": 190,
      "status": "linked_english_reports", "er_case_id": "17931096", "confidence": "high", "note": "OCR 'Loe.' for Lev."},
-    {"seq": 10, "raw": "1 Lord Raym.202", "case_name": "Reynoldson v. Blake", "volume": 1, "reporter_abbr": "Lord Raym.", "page": 202,
+    {"seq": 10, "raw": "1 Lord Raym.202", "volume": 1, "reporter_abbr": "Lord Raym.", "page": 202,
      "status": "linked_english_reports", "er_case_id": "17922006", "pincite": true, "confidence": "medium",
-     "note": "no name printed in this edition; earlier editions print Reynoldson v. Blake, which begins at 1 Ld Raym 192"}
+     "note": "no name printed in this edition; earlier editions print Reynoldson v. Blake, which begins at 1 Ld Raym 192; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

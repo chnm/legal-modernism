@@ -48,8 +48,8 @@
       "page": 196,
       "status": "linked_english_reports",
       "er_case_id": "17260031",
-      "confidence": "medium",
-      "note": "the only Anonymous case at 2 Vent 196"
+      "confidence": "high",
+      "note": "the only Anonymous case at 2 Vent 196; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"
     },
     {
       "seq": 5,
@@ -121,13 +121,12 @@
     {
       "seq": 11,
       "raw": "Yclv. 24, Metcalf's note",
-      "case_name": "Wharton's Case",
       "reporter_abbr": "Yelv.",
       "page": 24,
       "status": "linked_english_reports",
       "er_case_id": "17922792",
       "confidence": "medium",
-      "note": "Metcalf's (the American editor's) note to the case at Yelv. 24; the only ER record there is Wharton's Case, to which the note belongs"
+      "note": "Metcalf's (the American editor's) note to the case at Yelv. 24; the only ER record there is Wharton's Case, to which the note belongs; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 12,

@@ -26,8 +26,7 @@
       "er_case_id": "18450073",
       "pincite": true,
       "confidence": "medium",
-      "note": "Every edition prints 1 Saund. 284, n. (4) here (beside Evans v. Stevens, 4 T. R. 227); this OCR reads 234. 284 falls in Duppa v. Mayo (ER record beginning at 1 Wms Saund 282). Corrected by the coordinator.",
-      "case_name": "Duppa v. Mayo"
+      "note": "Every edition prints 1 Saund. 284, n. (4) here (beside Evans v. Stevens, 4 T. R. 227); this OCR reads 234. 284 falls in Duppa v. Mayo (ER record beginning at 1 Wms Saund 282). Corrected by the coordinator; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 3,

@@ -12,13 +12,13 @@
     {"seq": 3, "raw": "1 Saund. 103. n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 103,
      "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "medium",
      "note": "note (1) to Hayman v. Gerrard, 1 Wms Saund 99 (record at 102)"},
-    {"seq": 4, "raw": "2 Saund. 207. n. 24", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
+    {"seq": 4, "raw": "2 Saund. 207. n. 24", "volume": 2, "reporter_abbr": "Saund.", "page": 207,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Williams's note (24) to Goram v. Sweeting (2 Saund. 200-207, notes 21-24); the English Reports title its records at 2 Wms Saund 200 and 205 'Same v Bateman'; the note falls in the record at 205, per the README's choice"},
+     "note": "Williams's note (24) to Goram v. Sweeting (2 Saund. 200-207, notes 21-24); the English Reports title its records at 2 Wms Saund 200 and 205 'Same v Bateman'; the note falls in the record at 205, per the README's choice; no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 5, "raw": "Gardiner v. Croasdale, 2 Burr. 904", "case_name": "Gardiner v. Croasdale", "volume": 2, "reporter_abbr": "Burr.", "page": 904,
      "status": "linked_english_reports", "er_case_id": "17600685", "confidence": "high"},
-    {"seq": 6, "raw": "2 Saund. 206. a, note 22", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+    {"seq": 6, "raw": "2 Saund. 206. a, note 22", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Williams's note (22) to Goram v. Sweeting; the note falls in the English Reports record at 2 Wms Saund 205 ('Same v Bateman'), per the README's choice"}
+     "note": "Williams's note (22) to Goram v. Sweeting; the note falls in the English Reports record at 2 Wms Saund 205 ('Same v Bateman'), per the README's choice; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

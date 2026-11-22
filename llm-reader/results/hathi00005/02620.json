@@ -24,7 +24,7 @@
      "note": "same case; ER 1 Sid 444 'Awbry versus James'"},
     {"seq": 6, "raw": "2 Keb. 623, S. C.", "case_name": "Auberie v. James",
      "volume": 2, "reporter_abbr": "Keb.", "page": 623,
-     "status": "no_match", "confidence": "medium",
-     "note": "S. C. of Auberie v. James; the records at 2 Keb 618-626 are other cases (Morris v. Creech, Taylor v. Wells, Fernhaw v. Watkins at 623), and no Aubery/Awbry v. James is found anywhere in Keble"}
+     "status": "no_match", "confidence": "high",
+     "note": "S. C. of Auberie v. James; the records at 2 Keb 618-626 are other cases (Morris v. Creech, Taylor v. Wells, Fernhaw v. Watkins at 623), and no Aubery/Awbry v. James is found anywhere in Keble; legible, named by the S. C. or the head of its string, so a no_match graded high (consistency pass)"}
   ]
 }

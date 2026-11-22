@@ -12,7 +12,7 @@
      "status": "linked_english_reports", "er_case_id": "18491191", "confidence": "high"},
     {"seq": 3, "raw": "Brandt v. Craddock, 27 L. J. Exch. 314", "case_name": "Brandt v. Craddock",
      "volume": 27, "reporter_abbr": "L. J. Exch.", "page": 314,
-     "status": "linked_stub", "stub_cite": "27 L.J.Ex. 314", "confidence": "medium",
-     "note": "Law Journal Exchequer has no source; no Brandt v. Craddock (or Cradock) found in the English Reports by name; the stub is at the exact cite"}
+     "status": "linked_stub", "stub_cite": "27 L.J.Ex. 314", "confidence": "high",
+     "note": "Law Journal Exchequer has no source; no Brandt v. Craddock (or Cradock) found in the English Reports by name; the stub is at the exact cite; named, and the stub matches the printed cite exactly, so high (consistency pass)"}
   ]
 }

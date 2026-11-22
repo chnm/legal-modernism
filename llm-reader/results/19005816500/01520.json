@@ -14,8 +14,7 @@
       "er_case_id": "18450243",
       "pincite": true,
       "confidence": "medium",
-      "note": "Williams's note (1) at 1 Saund. 228, on aider by verdict, is the note to Stennel v. Hogg (1 Wms Saund 226), not Skinner v. Gunton, which also begins at 228. Corrected by the coordinator to agree with the 1841 reading.",
-      "case_name": "Stennel v. Hogg"
+      "note": "Williams's note (1) at 1 Saund. 228, on aider by verdict, is the note to Stennel v. Hogg (1 Wms Saund 226), not Skinner v. Gunton, which also begins at 228. Corrected by the coordinator to agree with the 1841 reading; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 2,
@@ -48,9 +47,8 @@
       "status": "linked_english_reports",
       "er_case_id": "18450243",
       "confidence": "medium",
-      "note": "Williams's note (1) at 1 Saund. 228, on aider by verdict, is the note to Stennel v. Hogg (1 Wms Saund 226), not Skinner v. Gunton, which also begins at 228. Corrected by the coordinator to agree with the 1841 reading.",
-      "pincite": true,
-      "case_name": "Stennel v. Hogg"
+      "note": "Williams's note (1) at 1 Saund. 228, on aider by verdict, is the note to Stennel v. Hogg (1 Wms Saund 226), not Skinner v. Gunton, which also begins at 228. Corrected by the coordinator to agree with the 1841 reading; no name is printed for this cite, so case_name removed (consistency pass)",
+      "pincite": true
     },
     {
       "seq": 5,

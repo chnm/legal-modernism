@@ -16,6 +16,6 @@
     {"seq": 5, "raw": "S. C. Coleman, 72", "case_name": "Le Conte v. Pendleton", "volume": 1, "reporter_abbr": "Cole. Cas.", "page": 72,
      "status": "linked_cap", "cap_case_id": 6754516, "confidence": "high", "note": "S. C. = Le Conte v. Pendleton; Coleman's Cases, volume 1 supplied"},
     {"seq": 6, "raw": "Carnes v. Duncan, Coleman, 75", "case_name": "Carnes v. Duncan", "volume": 1, "reporter_abbr": "Cole. Cas.", "page": 35,
-     "status": "linked_cap", "cap_case_id": 6753939, "confidence": "medium", "note": "printed Coleman 75, but Carnes v. Duncan is at 1 Cole. Cas. 35 (page 75 is the end of Pendleton v. Le Conte), so 75 is taken as the editor's misprint for 35; volume 1 supplied"}
+     "status": "linked_cap", "cap_case_id": 6753939, "confidence": "high", "note": "printed Coleman 75, but Carnes v. Duncan is at 1 Cole. Cas. 35 (page 75 is the end of Pendleton v. Le Conte), so 75 is taken as the editor's misprint for 35; volume 1 supplied; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

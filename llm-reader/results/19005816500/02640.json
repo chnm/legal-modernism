@@ -38,8 +38,7 @@
       "status": "linked_english_reports",
       "er_case_id": "18450055",
       "confidence": "medium",
-      "note": "Williams's note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290, 4,489 words, running onto 291), not Gay v. Adams, whose 585-word record also begins at 291. Aligned by the coordinator across editions.",
-      "case_name": "Dakin's Case",
+      "note": "Williams's note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290, 4,489 words, running onto 291), not Gay v. Adams, whose 585-word record also begins at 291. Aligned by the coordinator across editions; no name is printed for this cite, so case_name removed (consistency pass)",
       "pincite": true
     },
     {
@@ -50,8 +49,8 @@
       "reporter_abbr": "J. B. Moore",
       "page": 114,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "J. B. Moore's Common Pleas reports are not in the English Reports and no stub exists at 2 B. Moore 114"
+      "confidence": "high",
+      "note": "J. B. Moore's Common Pleas reports are not in the English Reports and no stub exists at 2 B. Moore 114; legible with a name printed, so a no_match graded high (consistency pass)"
     },
     {
       "seq": 5,
@@ -61,8 +60,8 @@
       "reporter_abbr": "J. B. Moore",
       "page": 93,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Ibid. expands to 2 J. B. Moore; not in the English Reports and no stub at 2 B. Moore 93"
+      "confidence": "high",
+      "note": "Ibid. expands to 2 J. B. Moore; not in the English Reports and no stub at 2 B. Moore 93; legible and named; a printed ibid. is not a supplied reporter, so high as in most editions (consistency pass)"
     },
     {
       "seq": 6,

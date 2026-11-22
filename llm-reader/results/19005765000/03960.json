@@ -33,7 +33,6 @@
     {
       "seq": 3,
       "raw": "2 Saund. 291 (o)",
-      "case_name": "Dakin's Case",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 291,
@@ -41,7 +40,7 @@
       "er_case_id": "18450055",
       "pincite": true,
       "confidence": "medium",
-      "note": "Williams's note on the videlicet at 2 Saund. 291 is the note to Dakin's Case (2 Wms Saund 290), per the README's choice; no name printed"
+      "note": "Williams's note on the videlicet at 2 Saund. 291 is the note to Dakin's Case (2 Wms Saund 290), per the README's choice; no name printed; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 4,

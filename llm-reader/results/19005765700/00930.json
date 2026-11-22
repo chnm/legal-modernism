@@ -24,8 +24,8 @@
       "reporter_abbr": "Scott",
       "page": 769,
       "status": "no_match",
-      "confidence": "high",
-      "note": "OCR '8 Scott' read as 3 Scott, as the 1843 edition prints it; no stub at 3 or 8 Scott 769; no Wilks v. Dodd in the English Reports"
+      "confidence": "medium",
+      "note": "OCR '8 Scott' read as 3 Scott, as the 1843 edition prints it; no stub at 3 or 8 Scott 769; no Wilks v. Dodd in the English Reports; a number corrected from the OCR or another edition makes a no_match at most medium (consistency pass)"
     },
     {
       "seq": 3,

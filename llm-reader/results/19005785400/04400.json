@@ -49,8 +49,7 @@
       "cap_case_id": 2000748,
       "pincite": true,
       "confidence": "low",
-      "note": "No name printed. cap.citations puts Bacon v. Callender at 6 Mass. 303, so p. 304 falls in it; Greenwood v. Curtis begins at 6 Mass. 358 (CAP's first/last pages are offset in this volume). Aligned by the coordinator with the other editions.",
-      "case_name": "Bacon v. Callender"
+      "note": "No name printed. cap.citations puts Bacon v. Callender at 6 Mass. 303, so p. 304 falls in it; Greenwood v. Curtis begins at 6 Mass. 358 (CAP's first/last pages are offset in this volume). Aligned by the coordinator with the other editions; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 5,
@@ -241,8 +240,7 @@
       "status": "linked_cap",
       "cap_case_id": 8672558,
       "confidence": "medium",
-      "note": "OCR 'Eay' is Bay (South Carolina), not Day: Neal v. Lewis begins at 2 Bay 204 and fits the passage on state courts; corrected by the coordinator to agree with the 1845 reading. dropped: 439",
-      "case_name": "Neal v. Lewis"
+      "note": "OCR 'Eay' is Bay (South Carolina), not Day: Neal v. Lewis begins at 2 Bay 204 and fits the passage on state courts; corrected by the coordinator to agree with the 1845 reading. dropped: 439; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 22,

@@ -9,17 +9,17 @@
      "status": "linked_english_reports", "er_case_id": "17870116", "confidence": "high"},
     {"seq": 2, "raw": "Mure v. Kaye, 4 Taunt. 84", "case_name": "Mure v. Kaye", "volume": 4, "reporter_abbr": "Taunt.", "page": 34,
      "status": "linked_english_reports", "er_case_id": "18110388", "confidence": "high", "note": "OCR 84 for 34 (1901 edition prints 34)"},
-    {"seq": 3, "raw": "Cro. Jac. 803", "case_name": "Codner v. Dalby", "reporter_abbr": "Cro. Jac.", "page": 363,
+    {"seq": 3, "raw": "Cro. Jac. 803", "reporter_abbr": "Cro. Jac.", "page": 363,
      "status": "linked_english_reports", "er_case_id": "17910218", "confidence": "medium",
-     "note": "no name printed here; OCR 803 for 363 (1901 edition); two records begin at Cro Jac 363, and the 1831 edition's text names Codner v. Dalby"},
-    {"seq": 4, "raw": "Ibid. 603", "case_name": "Leneret v. Rivet", "reporter_abbr": "Cro. Jac.", "page": 503,
+     "note": "no name printed here; OCR 803 for 363 (1901 edition); two records begin at Cro Jac 363, and the 1831 edition's text names Codner v. Dalby; no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 4, "raw": "Ibid. 603", "reporter_abbr": "Cro. Jac.", "page": 503,
      "status": "linked_english_reports", "er_case_id": "17910619", "confidence": "medium",
-     "note": "Ibid. = Cro. Jac.; read 503 from the 1901 edition (this scan reads 603); no name printed here (the 1831 names Leneret v. Rivet), the only record beginning at Cro Jac 503"},
-    {"seq": 5, "raw": "Cro. E1z, 910", "case_name": "Braban v. Bacon", "reporter_abbr": "Cro. Eliz.", "page": 916,
+     "note": "Ibid. = Cro. Jac.; read 503 from the 1901 edition (this scan reads 603); no name printed here (the 1831 names Leneret v. Rivet), the only record beginning at Cro Jac 503; no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 5, "raw": "Cro. E1z, 910", "reporter_abbr": "Cro. Eliz.", "page": 916,
      "status": "linked_english_reports", "er_case_id": "16530168", "confidence": "medium",
-     "note": "read 916 from the 1901 edition (this scan reads 910); no name printed here; two records begin at Cro Eliz 916, and the 1831 edition's text names Braban v. Bacon (ER 'Barban against Bacon')"},
-    {"seq": 6, "raw": "1 Saund. 117, n. 1", "case_name": "Cutler v. Southern", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "note": "read 916 from the 1901 edition (this scan reads 910); no name printed here; two records begin at Cro Eliz 916, and the 1831 edition's text names Braban v. Bacon (ER 'Barban against Bacon'); no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 6, "raw": "1 Saund. 117, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
      "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
-     "note": "no name printed; page 117 falls in Cutler v. Southern (ER records at 1 Wms Saund 113 and 116), the case on pleading performance of a bond to save harmless"}
+     "note": "no name printed; page 117 falls in Cutler v. Southern (ER records at 1 Wms Saund 113 and 116), the case on pleading performance of a bond to save harmless; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

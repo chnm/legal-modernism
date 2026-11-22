@@ -4,7 +4,7 @@
   "note": "Second appendix, note 3: Reeves's specimens of year-book pleading",
   "citations": [
     {"seq": 1, "raw": "Mayn. 109", "reporter_abbr": "Y.B.", "page": 109,
-     "status": "no_match", "confidence": "medium",
-     "note": "year book of Edw. II in Maynard's edition, page 109 (Prior of Lenton v. Parson of Bangor); regnal year not printed; no source"}
+     "status": "no_match", "confidence": "high",
+     "note": "year book of Edw. II in Maynard's edition, page 109 (Prior of Lenton v. Parson of Bangor); regnal year not printed; no source; year book legible, so high (consistency pass)"}
   ]
 }

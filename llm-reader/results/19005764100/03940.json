@@ -27,8 +27,8 @@
       "status": "linked_cap",
       "cap_case_id": 1427694,
       "pincite": true,
-      "confidence": "high",
-      "note": "Marshall, C. J.'s opinion in Wilson v. Codman's Executor (named later on the page), cited 3 Cranch 193"
+      "confidence": "medium",
+      "note": "Marshall, C. J.'s opinion in Wilson v. Codman's Executor (named later on the page), cited 3 Cranch 193; no name printed for this cite, so medium (consistency pass)"
     },
     {
       "seq": 3,
@@ -100,8 +100,8 @@
       "page": 235,
       "status": "linked_english_reports",
       "er_case_id": "17860111",
-      "confidence": "medium",
-      "note": "125 is a misprint for 235 (printed 125 in the earlier editions too): King v. Pippett, on variance, is 1 TR 235"
+      "confidence": "high",
+      "note": "125 is a misprint for 235 (printed 125 in the earlier editions too): King v. Pippett, on variance, is 1 TR 235; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 9,

@@ -7,8 +7,8 @@
   "citations": [
     {"seq": 1, "raw": "Anon. 3 Salk, 353", "case_name": "Anonymous",
      "volume": 3, "reporter_abbr": "Salk.", "page": 353,
-     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
-     "note": "the Anonymous at 3 Salk 353 on traverse; Bullen v Benson also begins there (as in the other editions' records)"},
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "the Anonymous at 3 Salk 353 on traverse; Bullen v Benson also begins there (as in the other editions' records); the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"},
     {"seq": 2, "raw": "The King v. Bishop of Worcester, Vaughan, 62", "case_name": "The King v. Bishop of Worcester",
      "reporter_abbr": "Vaugh.", "page": 62,
      "status": "linked_english_reports", "er_case_id": "18230260", "pincite": true, "confidence": "high",

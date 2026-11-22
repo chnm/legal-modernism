@@ -1,14 +1,14 @@
 {"psmid": "hathi00002", "pageid": "02890", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:08:20Z",
  "note": "printed pages 367-368; Vin. Ab., Co. Litt. and 2 Chitty are treatises; statutes skipped; cross-checked with Gale 19005816500/02810",
  "citations": [
-  {"seq": 1, "raw": "1 Saund. 276 a. n. (2)", "case_name": "Duppa v. Mayo", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
+  {"seq": 1, "raw": "1 Saund. 276 a. n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
    "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
-   "note": "no name printed; page 276 a falls in Duppa v. Mayo, which begins at 1 Wms Saund 275"},
+   "note": "no name printed; page 276 a falls in Duppa v. Mayo, which begins at 1 Wms Saund 275; no name is printed for this cite, so case_name removed (consistency pass)"},
   {"seq": 2, "raw": "Porter v. Gray, Cro. Eliz. 245", "case_name": "Porter v. Gray", "reporter_abbr": "Cro. Eliz.", "page": 245,
    "status": "linked_english_reports", "er_case_id": "16531539", "confidence": "high"},
-  {"seq": 3, "raw": "1 Saund. 234. n. (3)", "case_name": "Thursby v. Plant", "volume": 1, "reporter_abbr": "Saund.", "page": 234,
+  {"seq": 3, "raw": "1 Saund. 234. n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 234,
    "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
-   "note": "no name printed; page 234 falls in Thursby v. Plant, ER records at 1 Wms Saund 230 and 237"},
+   "note": "no name printed; page 234 falls in Thursby v. Plant, ER records at 1 Wms Saund 230 and 237; no name is printed for this cite, so case_name removed (consistency pass)"},
   {"seq": 4, "raw": "Lathbury v. Arnold, 1 Bing. 217", "case_name": "Lathbury v. Arnold", "volume": 1, "reporter_abbr": "Bing.", "page": 217,
    "status": "linked_english_reports", "er_case_id": "18230498", "confidence": "high"}
  ]}

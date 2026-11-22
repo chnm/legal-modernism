@@ -7,7 +7,7 @@
     {"seq": 1, "raw": "10 E. 3, 23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
      "status": "no_match", "confidence": "high", "note": "year book, 10 Edw. III; no source. Legible, so high (consistency pass)"},
     {"seq": 2, "raw": "ibid. 25", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
-     "status": "no_match", "confidence": "medium", "note": "year book, 10 Edw. III; ibid. expands to 10 E. 3, 25; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Edw. III; ibid. expands to 10 E. 3, 25; no source; year book legible, so high (consistency pass)"},
     {"seq": 3, "raw": "40 E. 8, 20", "volume": 40, "reporter_abbr": "Y.B.", "page": 20,
      "status": "no_match", "confidence": "medium", "note": "year book, 40 Edw. III (OCR E. 8 = E. 3); no source"},
     {"seq": 4, "raw": "10 E; 3, 25, 20", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,

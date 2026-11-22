@@ -20,7 +20,7 @@
     {"seq": 7, "raw": "Brown v. Rande, 2 Vent. 156", "case_name": "Brown v. Rands", "volume": 2, "reporter_abbr": "Vent.", "page": 156,
      "status": "linked_english_reports", "er_case_id": "17260287", "confidence": "high"},
     {"seq": 8, "raw": "Lord Evers Buckston, Benl. 65", "case_name": "Lord Evers v. Buckston", "reporter_abbr": "Benl.", "page": 65,
-     "status": "no_match", "confidence": "medium", "note": "Benloe has no records for pages 44-88; no other report of the case found by name (Buckston, Buxton), as in other editions"},
+     "status": "no_match", "confidence": "high", "note": "Benloe has no records for pages 44-88; no other report of the case found by name (Buckston, Buxton), as in other editions; legible with a name printed, so a no_match graded high (consistency pass)"},
     {"seq": 9, "raw": "Braban v. Bacon, Cro. Eliz. 915", "case_name": "Braban v. Bacon", "reporter_abbr": "Cro. Eliz.", "page": 916,
      "status": "linked_english_reports", "er_case_id": "16530168", "confidence": "high", "note": "printed 915; ER 'Barban against Bacon' begins at Cro Eliz 916, as the 1859 edition prints"},
     {"seq": 10, "raw": "Codner v. .)alby, Cro. Jac. 363", "case_name": "Codner v. Dalby", "reporter_abbr": "Cro. Jac.", "page": 363,

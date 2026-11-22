@@ -28,6 +28,6 @@
      "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
      "note": "Venle, Satuid. are OCR for Veale, Saund.; Veale v. Warner begins at 1 Wms Saund 323"},
     {"seq": 8, "raw": "3 Edy. 3, 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
-     "status": "no_match", "confidence": "medium", "note": "year book, 3 Edw. III fo. 21 (Edy. is OCR for Ed.); no source"}
+     "status": "no_match", "confidence": "high", "note": "year book, 3 Edw. III fo. 21 (Edy. is OCR for Ed.); no source; year book legible, so high (consistency pass)"}
   ]
 }

@@ -23,7 +23,7 @@
      "note": "S. C. = Le Conte v. Pendleton; Coleman's Cases, volume 1 supplied"},
     {"seq": 5, "raw": "Cornes v. Duncan, Coleman, 75", "case_name": "Carnes v. Duncan",
      "volume": 1, "reporter_abbr": "Cole. Cas.", "page": 35,
-     "status": "linked_cap", "cap_case_id": 6753939, "confidence": "medium",
-     "note": "the editions print Coleman 75, but Carnes v. Duncan is at 1 Cole. Cas. 35 (page 75 is the end of Pendleton v. Le Conte), so 75 is taken as the editor's misprint for 35; volume 1 supplied (as for the other editions)"}
+     "status": "linked_cap", "cap_case_id": 6753939, "confidence": "high",
+     "note": "the editions print Coleman 75, but Carnes v. Duncan is at 1 Cole. Cas. 35 (page 75 is the end of Pendleton v. Le Conte), so 75 is taken as the editor's misprint for 35; volume 1 supplied (as for the other editions); found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

@@ -21,8 +21,8 @@
      "status": "linked_english_reports", "er_case_id": "17922393", "confidence": "medium",
      "note": "no name printed; three records begin at 1 Bulst 43; the bond to pay all legacies is Stone v. Bliss, named in the 1831 edition (see p. 409, note (s))"},
     {"seq": 6, "raw": "1 Lutw. 419", "volume": 1, "reporter_abbr": "Lutw.", "page": 419,
-     "status": "linked_stub", "stub_cite": "1 Lutw. 419", "confidence": "high",
-     "note": "Lutwyche is only in the stubs; the printed cite matches the stub exactly"},
+     "status": "linked_stub", "stub_cite": "1 Lutw. 419", "confidence": "medium",
+     "note": "Lutwyche is only in the stubs; the printed cite matches the stub exactly; exact stub but no name printed, so medium (consistency pass)"},
     {"seq": 7, "raw": "1 Saund. 117, n. 1", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
      "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
      "note": "no name printed; as in note (q)"}

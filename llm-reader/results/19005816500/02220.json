@@ -26,8 +26,7 @@
       "status": "linked_english_reports",
       "er_case_id": "18450012",
       "confidence": "medium",
-      "note": "Williams's note (6) at 2 Saund. 319 is read as the note to Bennet v. Holbech (2 Wms Saund 317, 5,609 words, running onto 319), the leading case on repleader: Williams numbers each case's notes from (1), and a sixth note on Hoskins v. Robins's first page (319) is unlikely. Aligned by the coordinator across editions.",
-      "case_name": "Bennet v. Holbech",
+      "note": "Williams's note (6) at 2 Saund. 319 is read as the note to Bennet v. Holbech (2 Wms Saund 317, 5,609 words, running onto 319), the leading case on repleader: Williams numbers each case's notes from (1), and a sixth note on Hoskins v. Robins's first page (319) is unlikely. Aligned by the coordinator across editions; no name is printed for this cite, so case_name removed (consistency pass)",
       "pincite": true
     },
     {

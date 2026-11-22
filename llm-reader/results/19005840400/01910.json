@@ -14,8 +14,8 @@
       "page": 113,
       "status": "linked_english_reports",
       "er_case_id": "17970039",
-      "confidence": "high",
-      "note": "ER has Bridgwater v. Bythway at 3 Lev 109 and 3 Lev 113; linked the record at the cited page"
+      "confidence": "medium",
+      "note": "ER has Bridgwater v. Bythway at 3 Lev 109 and 3 Lev 113; linked the record at the cited page; a choice already made in the README (the record at 3 Lev 113, not 3 Lev 109), so medium (consistency pass)"
     },
     {
       "seq": 2,
@@ -27,8 +27,8 @@
       "status": "linked_english_reports",
       "er_case_id": "17950624",
       "pincite": true,
-      "confidence": "medium",
-      "note": "no Britton v. Cole in 3 Salk; read as 1 Salk. 409, inside Britton v. Cole at 1 Salk 408"
+      "confidence": "high",
+      "note": "no Britton v. Cole in 3 Salk; read as 1 Salk. 409, inside Britton v. Cole at 1 Salk 408; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 3,

@@ -5,13 +5,13 @@
   "read_at": "2026-11-20T22:45:27Z",
   "note": "printed pp. 141-142; judgment without issue, by default, nil dicit. Co. Ent., Com. Dig., Bac. Ab. and Booth are not reports, skipped. Agrees with the Gale copy's record (19005816500/01250)",
   "citations": [
-    {"seq": 1, "raw": "2 Saund. 44 n. (4)", "case_name": "William v. Gwyn",
+    {"seq": 1, "raw": "2 Saund. 44 n. (4)",
      "volume": 2, "reporter_abbr": "Saund.", "page": 44,
      "status": "linked_english_reports", "er_case_id": "18450306", "pincite": true, "confidence": "medium",
-     "note": "no name printed; Williams's note to William v. Gwyn, which begins at 2 Wms Saund 42"},
-    {"seq": 2, "raw": "2 Saund. 45 n. (4)", "case_name": "William v. Gwyn",
+     "note": "no name printed; Williams's note to William v. Gwyn, which begins at 2 Wms Saund 42; no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 2, "raw": "2 Saund. 45 n. (4)",
      "volume": 2, "reporter_abbr": "Saund.", "page": 45,
      "status": "linked_english_reports", "er_case_id": "18450305", "pincite": true, "confidence": "medium",
-     "note": "no name printed; Williams's note in William v. Gwyn, which begins at 2 Wms Saund 42; the cited page is the first of its second English Reports record (45), so a pin cite"}
+     "note": "no name printed; Williams's note in William v. Gwyn, which begins at 2 Wms Saund 42; the cited page is the first of its second English Reports record (45), so a pin cite; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

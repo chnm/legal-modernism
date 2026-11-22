@@ -60,8 +60,7 @@
       "status": "linked_english_reports",
       "er_case_id": "17953264",
       "confidence": "medium",
-      "note": "No name printed here; five cases begin at 2 Salk 544, and the 1827 and 1831 editions name this one Stephens v. Arthur. Aligned by the coordinator across editions.",
-      "case_name": "Stephen v. Arthur",
+      "note": "No name printed here; five cases begin at 2 Salk 544, and the 1827 and 1831 editions name this one Stephens v. Arthur. Aligned by the coordinator across editions; no name is printed for this cite, so case_name removed (consistency pass)",
       "pincite": false
     }
   ]

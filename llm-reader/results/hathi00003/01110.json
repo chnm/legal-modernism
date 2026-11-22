@@ -8,14 +8,13 @@
     {
       "seq": 1,
       "raw": "2 Saund. 45, п. (4.)",
-      "case_name": "William v. Gwyn",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 45,
       "status": "linked_english_reports",
       "er_case_id": "18450305",
       "confidence": "medium",
-      "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), which has a record beginning at 2 Wms Saund 45"
+      "note": "no name printed; Saunders's note in William v. Gwyn (a real action, fitting default of appearance), which has a record beginning at 2 Wms Saund 45; no name is printed for this cite, so case_name removed (consistency pass)"
     }
   ]
 }

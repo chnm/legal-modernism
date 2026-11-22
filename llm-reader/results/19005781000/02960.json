@@ -6,8 +6,8 @@
     {"seq": 1, "raw": "Topping v. Puge, 1 Marsh, 341", "case_name": "Topping v. Fuge", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
      "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
      "note": "OCR Puge for Fuge; Marshall's C.P. Reports (1813-16) have no source; the same case is in Taunton, 5 Taunt 330 (also 5 Taunt 771, a later stage); 330 chosen as in the other editions"},
-    {"seq": 2, "raw": "1 Marsh, 341", "case_name": "Topping v. Fuge", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+    {"seq": 2, "raw": "1 Marsh, 341", "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
      "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
-     "note": "repeat of Topping v. Fuge in the American editor's bracketed note; linked as seq 1"}
+     "note": "repeat of Topping v. Fuge in the American editor's bracketed note; linked as seq 1; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Hickman c. Walker, Willes, 27", "case_name": "Hickman v. Walker",
      "reporter_abbr": "Willes", "page": 27,
-     "status": "no_match", "confidence": "medium",
-     "note": "Willes's Reports have no source; no Hickman v. Walker in the English Reports by name, as in the other editions' readings"},
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source; no Hickman v. Walker in the English Reports by name, as in the other editions' readings; legible with a name printed, so a no_match graded high (consistency pass)"},
     {"seq": 2, "raw": "Robercs v. M1arriett, 2 Saund. 188", "case_name": "Roberts v. Marriett",
      "volume": 2, "reporter_abbr": "Saund.", "page": 188,
      "status": "linked_english_reports", "er_case_id": "18450223", "pincite": true, "confidence": "high",

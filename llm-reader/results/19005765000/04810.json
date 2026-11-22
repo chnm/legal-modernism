@@ -11,8 +11,8 @@
     {"seq": 2, "raw": "T., W. & W. Ry. v. McLaugh- lin, 63 111. 389", "case_name": "Toledo, Wabash & Western Ry. v. McLaughlin", "volume": 63, "reporter_abbr": "Ill.", "page": 389,
      "status": "linked_cap", "cap_case_id": 2609531, "confidence": "high"},
     {"seq": 3, "raw": "Wright v. Snedecor, 46 Ala. 631", "case_name": "Wright v. Snedecor", "volume": 46, "reporter_abbr": "Ala.", "page": 92,
-     "status": "linked_cap", "cap_case_id": 3147033, "confidence": "medium",
-     "note": "printed 46 Ala. 631 here and in the 1901 edition, but 631 is Turrentine v. Perkins; the only Wright v. Snedecor in CAP is 46 Ala. 92, cited so on the previous page (printed p. 416); linked by name"},
+     "status": "linked_cap", "cap_case_id": 3147033, "confidence": "high",
+     "note": "printed 46 Ala. 631 here and in the 1901 edition, but 631 is Turrentine v. Perkins; the only Wright v. Snedecor in CAP is 46 Ala. 92, cited so on the previous page (printed p. 416); linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 4, "raw": "Watkins v. Junker, 4 Ter. Civ. App. 629", "case_name": "Watkins v. Junker", "volume": 4, "reporter_abbr": "Tex. Civ. App.", "page": 629,
      "status": "linked_cap", "cap_case_id": 223691, "confidence": "high", "note": "OCR Ter. read Tex."}
   ]

@@ -349,7 +349,17 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    books, 107 `raw`; left for U7: 19005816500/01450 seq 2 ("5 Hen. S.
    23 a" is 5 Hen. 7, 13 a, as hathi00002/01530), 19005816500/02960
    (18 E. 2, page empty, read 614); for U9: "29 Ass. 37" (1831 copies,
-   `high`) against "29 Ap. xxxvii. 19 (E. 2)" (later editions, `low`); U4 grading (item 6's no_match
+   `high`) against "29 Ap. xxxvii. 19 (E. 2)" (later editions, `low`);
+   U4 grading: DONE 2026-11-22, about 1,000 citations (171 no_match
+   grades, 59 unnamed cites, 114 stubs, 443 `case_name` removals, 204
+   choices and corrected pages, Hartford v. Jones back to `high`; Glasscock
+   v. Morgan is Andrews's misplaced name for "Anon. 2 Salk. 519", kept at
+   17950161 `low`). Left: restore `case_name` on 22 parallel cites
+   wrongly stripped (Skin. 660 after The King v. Bishop of Chester, 1 Marsh.
+   341 after Topping v. Fuge, Goram v. Sweeting's 2 Saund. 207, Haworth v.
+   Spraggs, Lord Arlington v. Merricke), and hathi00002/02750 seq 12 `page`
+   375→357 (Goodtitle v. Otway); open question: whether a printed "ibid."
+   is a carried-over reporter (graded as printed, `high` when named); U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

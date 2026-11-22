@@ -107,15 +107,14 @@
     {
       "seq": 10,
       "raw": "1 Lord Raym. 202",
-      "case_name": "Reynoldson v. Blake",
       "volume": 1,
       "reporter_abbr": "Lord Raym.",
       "page": 202,
       "status": "linked_english_reports",
       "er_case_id": "17922006",
       "pincite": true,
-      "confidence": "high",
-      "note": "no name printed in this edition; other editions print 'Reynoldson v. Blake, 1 Lord Raym. 202', which begins at 1 Ld Raym 192"
+      "confidence": "medium",
+      "note": "no name printed in this edition; other editions print 'Reynoldson v. Blake, 1 Lord Raym. 202', which begins at 1 Ld Raym 192; no name is printed for this cite, so case_name removed (consistency pass); no name printed for this cite, so medium (consistency pass)"
     },
     {
       "seq": 11,

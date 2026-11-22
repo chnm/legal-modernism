@@ -19,7 +19,7 @@
      "status": "linked_english_reports", "er_case_id": "17440761", "confidence": "high"},
     {"seq": 5, "raw": "Gould v. Oliver, 2 Man. & Gr. 288", "case_name": "Gould v. Oliver",
      "volume": 2, "reporter_abbr": "Man. & Gr.", "page": 238,
-     "status": "linked_english_reports", "er_case_id": "18400097", "pincite": true, "confidence": "medium",
-     "note": "Serjeant Manning's note in Gould v. Oliver; printed 288 falls in Brown v Edgington (279), outside the case (208-240); hathi00008 01350 prints 238, used here"}
+     "status": "linked_english_reports", "er_case_id": "18400097", "pincite": true, "confidence": "high",
+     "note": "Serjeant Manning's note in Gould v. Oliver; printed 288 falls in Brown v Edgington (279), outside the case (208-240); hathi00008 01350 prints 238, used here; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

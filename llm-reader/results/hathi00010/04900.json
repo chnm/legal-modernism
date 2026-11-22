@@ -4,8 +4,8 @@
   "note": "Stephen, Appendix p. lxvi, end of note 71 and note 72 (plea in bar concluding in abatement); matches the 1871 hathi00009/04880. Chitty on Pleading and Archbold skipped; text cites first, then footnotes (p), (q), (r), (s) (s OCR'd as 8). Footnote (s) runs onto 04910, where its last cite, '2 Saund., by P. & W., p. 209 c.', has its page number and is recorded",
   "citations": [
     {"seq": 1, "raw": "6 Taunt., 587", "volume": 6, "reporter_abbr": "Taunt.", "page": 587,
-     "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "high",
-     "note": "Godson v. Good begins at 6 Taunt 587; the same case is named in footnote (s)"},
+     "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "medium",
+     "note": "Godson v. Good begins at 6 Taunt 587; the same case is named in footnote (s); no name printed for this cite, so medium (consistency pass)"},
     {"seq": 2, "raw": "37 Hen. VI, 24 a.", "volume": 37, "reporter_abbr": "Y.B.", "page": 24,
      "status": "no_match", "confidence": "high",
      "note": "year book, 37 Hen. VI, fol. 24 a (Prisot, J.); no source for the year books"},

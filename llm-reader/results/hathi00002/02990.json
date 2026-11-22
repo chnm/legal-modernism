@@ -16,15 +16,15 @@
   {"seq": 7, "raw": "Brown v. Rands, 2 Vent. 156", "case_name": "Brown v. Rands", "volume": 2, "reporter_abbr": "Vent.", "page": 156,
    "status": "linked_english_reports", "er_case_id": "17260287", "confidence": "high"},
   {"seq": 8, "raw": "Lord Evers v. Buckton, Benl. 65", "case_name": "Lord Evers v. Buckton", "reporter_abbr": "Benl.", "page": 65,
-   "status": "no_match", "confidence": "medium",
-   "note": "Benloe has no records for pp. 44-88; no other report found by name (Evers/Eure, Buckton)"},
+   "status": "no_match", "confidence": "high",
+   "note": "Benloe has no records for pp. 44-88; no other report found by name (Evers/Eure, Buckton); legible with a name printed, so a no_match graded high (consistency pass)"},
   {"seq": 9, "raw": "Braban v. Bacon, Cro. Eliz. 916", "case_name": "Braban v. Bacon", "reporter_abbr": "Cro. Eliz.", "page": 916,
    "status": "linked_english_reports", "er_case_id": "16530168", "confidence": "high", "note": "ER has Barban against Bacon"},
   {"seq": 10, "raw": "Codner. v. Dalby, Cro. Jac. 363", "case_name": "Codner v. Dalby", "reporter_abbr": "Cro. Jac.", "page": 363,
    "status": "linked_english_reports", "er_case_id": "17910218", "confidence": "high"},
   {"seq": 11, "raw": "Leneret v. Rivet. Ibid. 503", "case_name": "Leneret v. Rivet", "reporter_abbr": "Cro. Jac.", "page": 503,
    "status": "linked_english_reports", "er_case_id": "17910619", "confidence": "high", "note": "Ibid. expands to Cro. Jac."},
-  {"seq": 12, "raw": "1 Saund. 116. n. (1)", "case_name": "Cutler v. Southern", "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+  {"seq": 12, "raw": "1 Saund. 116. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 116,
    "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
-   "note": "no name printed; note to Cutler v. Southern, split in ER into records at 1 Wms Saund 113 and 116; page 116 begins the second, a pin cite since the case begins at 113"}
+   "note": "no name printed; note to Cutler v. Southern, split in ER into records at 1 Wms Saund 113 and 116; page 116 begins the second, a pin cite since the case begins at 113; no name is printed for this cite, so case_name removed (consistency pass)"}
  ]}

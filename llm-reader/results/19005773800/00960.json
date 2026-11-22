@@ -116,8 +116,8 @@
       "reporter_abbr": "Dowl. N. S.",
       "page": 317,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Dowling's Practice Cases (N.S.) have no source and there is no stub 1 Dowl. N.S. 317; no Davis (or Davies) v. Dunn in the English Reports by er_name or murrell_title, 1835-45"
+      "confidence": "high",
+      "note": "Dowling's Practice Cases (N.S.) have no source and there is no stub 1 Dowl. N.S. 317; no Davis (or Davies) v. Dunn in the English Reports by er_name or murrell_title, 1835-45; legible with a name printed, so a no_match graded high (consistency pass)"
     },
     {
       "seq": 11,

@@ -17,8 +17,8 @@
      "volume": 3, "reporter_abbr": "Tyrw.", "page": 157,
      "status": "linked_english_reports", "er_case_id": "18320096", "confidence": "medium",
      "note": "Tyrwhitt has no source; linked to the same case at 1 Cr & M 241"},
-    {"seq": 5, "raw": "Salk. 544", "case_name": "Stephen v. Arthur", "volume": 2, "reporter_abbr": "Salk.", "page": 544,
+    {"seq": 5, "raw": "Salk. 544", "volume": 2, "reporter_abbr": "Salk.", "page": 544,
      "status": "linked_english_reports", "er_case_id": "17953264", "confidence": "medium",
-     "note": "no name or volume printed; volume 2 supplied; several cases begin at 2 Salk 544, and the 1827 and 1831 editions name this one Stephens v. Arthur (the choice already made: Salk. 544 is Stephen v. Arthur)"}
+     "note": "no name or volume printed; volume 2 supplied; several cases begin at 2 Salk 544, and the 1827 and 1831 editions name this one Stephens v. Arthur (the choice already made: Salk. 544 is Stephen v. Arthur); no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

@@ -8,6 +8,6 @@
     {"seq": 1, "raw": "Scavage v. Hnwkins, Cro. Car. 571", "case_name": "Scavage v. Hawkins", "reporter_abbr": "Cro. Car.", "page": 571,
      "status": "linked_english_reports", "er_case_id": "17922101", "confidence": "high", "note": "Bulley v Hubbins also begins at Cro Car 571, the name decides"},
     {"seq": 2, "raw": "Cuthbertson v. Irving, H. & 7.- 743", "case_name": "Cuthbertson v. Irving", "volume": 4, "reporter_abbr": "H. & N.", "page": 743,
-     "status": "linked_english_reports", "er_case_id": "18590767", "pincite": true, "confidence": "medium", "note": "volume 4 supplied and OCR '7.-' read as N.; Cuthbertson v Irving (1859) begins at 4 H & N 742 (the Exchequer Chamber decision of 1860 is at 6 H & N 135)"}
+     "status": "linked_english_reports", "er_case_id": "18590767", "pincite": true, "confidence": "high", "note": "volume 4 supplied and OCR '7.-' read as N.; Cuthbertson v Irving (1859) begins at 4 H & N 742 (the Exchequer Chamber decision of 1860 is at 6 H & N 135); found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

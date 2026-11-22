@@ -3,12 +3,12 @@
   "model": "claude-opus-5-5", "read_at": "2026-11-20T14:05:04Z",
   "note": "Com. Dig., Bac. Ab., Co. Litt., Bracton, Tidd and the rule of court skipped; cross-checked with the other editions' records for this note",
   "citations": [
-    {"seq": 1, "raw": "1 Saund. 318, n. 3", "case_name": "Redman v. Edolph", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
+    {"seq": 1, "raw": "1 Saund. 318, n. 3", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
      "status": "linked_english_reports", "er_case_id": "18450197", "pincite": true, "confidence": "medium",
-     "note": "Saunders's note (3) at 318 is the note to Redman v. Edolph (begins 1 Wms Saund 317)"},
-    {"seq": 2, "raw": "1 Saund. 318, n. (3)", "case_name": "Redman v. Edolph", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
+     "note": "Saunders's note (3) at 318 is the note to Redman v. Edolph (begins 1 Wms Saund 317); no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 2, "raw": "1 Saund. 318, n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 318,
      "status": "linked_english_reports", "er_case_id": "18450197", "pincite": true, "confidence": "medium",
-     "note": "Saunders's note (3) at 318 is the note to Redman v. Edolph (begins 1 Wms Saund 317)"},
+     "note": "Saunders's note (3) at 318 is the note to Redman v. Edolph (begins 1 Wms Saund 317); no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 3, "raw": "Salk. 701", "volume": 2, "reporter_abbr": "Salk.", "page": 701,
      "status": "linked_english_reports", "er_case_id": "17951980", "confidence": "low",
      "note": "no name or volume printed; volume 2 supplied (title Writ); two cases begin at 2 Salk 701, Helliot v. Selby chosen over R. v. Mayor of Hereford as fitting a variance between writ and declaration, as in the earlier editions' records"}

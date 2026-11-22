@@ -44,7 +44,6 @@
     {
       "seq": 4,
       "raw": "2 Saund. 207, n. 24",
-      "case_name": "Goram v. Sweeting",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 207,
@@ -52,7 +51,7 @@
       "er_case_id": "18450230",
       "pincite": true,
       "confidence": "medium",
-      "note": "Goram v. Sweeting, 2 Saund. 200, which the English Reports title 'Same v Bateman' at 2 Wms Saund 200 and 205; 207 falls in the record at 205 (the README's choice)"
+      "note": "Goram v. Sweeting, 2 Saund. 200, which the English Reports title 'Same v Bateman' at 2 Wms Saund 200 and 205; 207 falls in the record at 205 (the README's choice); no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 5,
@@ -68,7 +67,6 @@
     {
       "seq": 6,
       "raw": "2 Saund. 206, a, note 22",
-      "case_name": "Goram v. Sweeting",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 206,
@@ -76,7 +74,7 @@
       "er_case_id": "18450230",
       "pincite": true,
       "confidence": "medium",
-      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205 (the README's choice)"
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205 (the README's choice); no name is printed for this cite, so case_name removed (consistency pass)"
     }
   ]
 }

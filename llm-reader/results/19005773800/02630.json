@@ -20,7 +20,7 @@
     {"seq": 7, "raw": "Skin. 660", "case_name": "The King v. Bishop of Chester", "reporter_abbr": "Skin.", "page": 660,
      "status": "linked_english_reports", "er_case_id": "17280444", "pincite": true, "confidence": "medium", "note": "the same case in Skinner, The King and the Bishop of Chester, begins at Skin 651"},
     {"seq": 8, "raw": "9 len. VI., 115, 116", "volume": 9, "reporter_abbr": "Y.B.", "page": 115,
-     "status": "no_match", "confidence": "medium", "note": "year book, 9 Hen. VI (OCR len for Hen.); no source; dropped: 116"},
+     "status": "no_match", "confidence": "high", "note": "year book, 9 Hen. VI (OCR len for Hen.); no source; dropped: 116; year book legible, so high (consistency pass)"},
     {"seq": 9, "raw": "Harpur's case, 11 Rep. 25, b", "case_name": "Harpur's Case", "volume": 11, "reporter_abbr": "Rep.", "page": 25,
      "status": "linked_english_reports", "er_case_id": "15720178", "pincite": true, "confidence": "high", "note": "Henry Harpur's Case begins at 11 Co Rep 23"},
     {"seq": 10, "raw": "Knight v. Symns, Carth. 204", "case_name": "Knight v. Symms", "reporter_abbr": "Carth.", "page": 204,

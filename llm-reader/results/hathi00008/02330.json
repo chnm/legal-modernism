@@ -42,7 +42,7 @@
      "status": "linked_english_reports", "er_case_id": "18550608", "confidence": "high"},
     {"seq": 12, "raw": "Bowman v. Rostron, 2 A. & E. 295", "case_name": "Bowman v. Rostron",
      "volume": 2, "reporter_abbr": "A. & E.", "page": 296,
-     "status": "linked_english_reports", "er_case_id": "18350450", "confidence": "medium",
-     "note": "printed 295 (as in the 1838, 1843 and 1860 editions); the case, 'Bowman against Royston and Another' (no text), begins at 2 Ad & E 296, after Bowman v. Taylor"}
+     "status": "linked_english_reports", "er_case_id": "18350450", "confidence": "high",
+     "note": "printed 295 (as in the 1838, 1843 and 1860 editions); the case, 'Bowman against Royston and Another' (no text), begins at 2 Ad & E 296, after Bowman v. Taylor; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

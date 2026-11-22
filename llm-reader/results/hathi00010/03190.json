@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Blockley v. Slater, Lutw., 120", "case_name": "Blockley v. Slater",
      "volume": 1, "reporter_abbr": "Lutw.", "page": 120,
-     "status": "linked_stub", "stub_cite": "1 Lutw. 120", "confidence": "medium",
-     "note": "volume 1 supplied (the stub registry splits Lutwyche into 1 and 2 Lutw.), so medium (hathi00009/03170 graded it high)"},
+     "status": "linked_stub", "stub_cite": "1 Lutw. 120", "confidence": "high",
+     "note": "volume 1 supplied (the stub registry splits Lutwyche into 1 and 2 Lutw.), so medium (hathi00009/03170 graded it high); named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"},
     {"seq": 2, "raw": "Searl Bunnion, 2 Mod., 70", "case_name": "Searl v. Bunnion",
      "volume": 2, "reporter_abbr": "Mod.", "page": 70,
      "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high",

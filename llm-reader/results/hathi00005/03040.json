@@ -12,8 +12,8 @@
      "status": "linked_english_reports", "er_case_id": "18220329", "pincite": true, "confidence": "high",
      "note": "case begins at 5 B & A 749; dropped: 751"},
     {"seq": 4, "raw": "Richley v. Proone, 1 Barn. & Cres. 386", "case_name": "Richley v. Proone", "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 286,
-     "status": "linked_english_reports", "er_case_id": "18230201", "confidence": "medium",
-     "note": "printed 386 (here and in the 1851 copy); the case is at 1 B & C 286; linked by name"},
+     "status": "linked_english_reports", "er_case_id": "18230201", "confidence": "high",
+     "note": "printed 386 (here and in the 1851 copy); the case is at 1 B & C 286; linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 5, "raw": "Merrington v. Becket, 2 Barn. & Cres. 81", "case_name": "Merrington v. Becket", "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 81,
      "status": "linked_english_reports", "er_case_id": "18230146", "confidence": "high"},
     {"seq": 6, "raw": "Bell v. Alex- ander, 6 M. & S. 133", "case_name": "Bell v. Alexander", "volume": 6, "reporter_abbr": "M. & S.", "page": 133,
@@ -30,7 +30,7 @@
     {"seq": 11, "raw": "Smith v. Hardy, 8 Bing. 435", "case_name": "Smith v. Hardy", "volume": 8, "reporter_abbr": "Bing.", "page": 435,
      "status": "linked_english_reports", "er_case_id": "18320602", "confidence": "high"},
     {"seq": 12, "raw": "Miley v. Walls, 1 Dowl. 618", "case_name": "Miley v. Walls", "volume": 1, "reporter_abbr": "Dowl.", "page": 618,
-     "status": "no_match", "confidence": "medium",
-     "note": "Dowling's Practice Cases (1833) have no source; not in ER by er_name or murrell_title; no stub at 1 Dowl. 618 (nearest 1 Dowl. 611)"}
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases (1833) have no source; not in ER by er_name or murrell_title; no stub at 1 Dowl. 618 (nearest 1 Dowl. 611); legible with a name printed, so a no_match graded high (consistency pass)"}
   ]
 }

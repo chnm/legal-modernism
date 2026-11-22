@@ -7,10 +7,10 @@
      "volume": 2, "reporter_abbr": "Saund.", "page": 410,
      "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "high",
      "note": "footnote (f), OCR '(f)'; case begins at 2 Wms Saund 403; the note on the same page is one record"},
-    {"seq": 2, "raw": "2 Saund., ibid.", "case_name": "Lord Arlington v. Merricke",
+    {"seq": 2, "raw": "2 Saund., ibid.",
      "volume": 2, "reporter_abbr": "Saund.", "page": 410,
      "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
-     "note": "ibid. expanded to the previous cite, 2 Saund. 410 (Lord Arlington v. Merricke, begins at 2 Wms Saund 403)"},
+     "note": "ibid. expanded to the previous cite, 2 Saund. 410 (Lord Arlington v. Merricke, begins at 2 Wms Saund 403); no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 3, "raw": "Oglethorpe v. Hyde, Cro. Eliz., 233", "case_name": "Oglethorpe v. Hyde",
      "reporter_abbr": "Cro. Eliz.", "page": 233,
      "status": "linked_english_reports", "er_case_id": "16531413", "confidence": "high"}

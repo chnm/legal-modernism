@@ -41,8 +41,7 @@
       "er_case_id": "18450114",
       "pincite": true,
       "confidence": "medium",
-      "note": "Saunders's note (5) at 2 Saund. 62 b falls in Hodsden v. Harridge (2 Wms Saund 61), a bond to perform an award, which fits the passage on profert of an award; not Posterne v. Hanson (59). Aligned by the coordinator across editions.",
-      "case_name": "Hodsden v. Harridge"
+      "note": "Saunders's note (5) at 2 Saund. 62 b falls in Hodsden v. Harridge (2 Wms Saund 61), a bond to perform an award, which fits the passage on profert of an award; not Posterne v. Hanson (59). Aligned by the coordinator across editions; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 4,

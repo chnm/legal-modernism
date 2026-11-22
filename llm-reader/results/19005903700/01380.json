@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "James v. Cochrane, 9 Exch. 562", "case_name": "James v. Cochrane",
      "volume": 9, "reporter_abbr": "Exch.", "page": 552,
-     "status": "linked_english_reports", "er_case_id": "18540235", "confidence": "medium",
-     "note": "printed 562 is Smith v Lloyd; James v Cochrane (1854) begins at 9 Exch 552 (1689 words, next case at 556), as hathi00008 01520 prints"}
+     "status": "linked_english_reports", "er_case_id": "18540235", "confidence": "high",
+     "note": "printed 562 is Smith v Lloyd; James v Cochrane (1854) begins at 9 Exch 552 (1689 words, next case at 556), as hathi00008 01520 prints; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

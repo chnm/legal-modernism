@@ -11,7 +11,7 @@
      "note": "volume 2 supplied"},
     {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyrw. 495", "case_name": "Thynne v. Woodman",
      "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
-     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
-     "note": "Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name (every edition prints Thynne); Pim v. Woodman, 2 Cr & J 464 (1832), is the only Woodman case of the period in Crompton and Jervis, but the plaintiff's name differs, so linked to the exact stub, as in the Gale copy's reading"}
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "high",
+     "note": "Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name (every edition prints Thynne); Pim v. Woodman, 2 Cr & J 464 (1832), is the only Woodman case of the period in Crompton and Jervis, but the plaintiff's name differs, so linked to the exact stub, as in the Gale copy's reading; named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"}
   ]
 }

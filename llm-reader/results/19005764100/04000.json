@@ -76,13 +76,12 @@
     {
       "seq": 7,
       "raw": "Yelv. 151. n.",
-      "case_name": "Bedell v. Lull",
       "reporter_abbr": "Yelv.",
       "page": 151,
       "status": "linked_english_reports",
       "er_case_id": "17920256",
       "confidence": "medium",
-      "note": "the note to Bedell v. Lull, Yel 151, cited above"
+      "note": "the note to Bedell v. Lull, Yel 151, cited above; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 8,
@@ -120,13 +119,12 @@
     {
       "seq": 11,
       "raw": "Yelv. 151",
-      "case_name": "Bedell v. Lull",
       "reporter_abbr": "Yelv.",
       "page": 151,
       "status": "linked_english_reports",
       "er_case_id": "17920256",
       "confidence": "medium",
-      "note": "Bedell v. Lull (or its note), Yel 151, cited above; the 1845 edition prints Yelv. 151. n."
+      "note": "Bedell v. Lull (or its note), Yel 151, cited above; the 1845 edition prints Yelv. 151. n.; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 12,
@@ -165,14 +163,13 @@
     {
       "seq": 15,
       "raw": "Yelv. 153. 26.",
-      "case_name": "Barrett v. Fletcher",
       "reporter_abbr": "Yelv.",
       "page": 153,
       "status": "linked_english_reports",
       "er_case_id": "17920229",
       "pincite": true,
       "confidence": "medium",
-      "note": "no name at this cite, but Barrett v. Fletcher, Yelv. 153 is named later on the page; ER has it at Yel 152; dropped: 26"
+      "note": "no name at this cite, but Barrett v. Fletcher, Yelv. 153 is named later on the page; ER has it at Yel 152; dropped: 26; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 16,

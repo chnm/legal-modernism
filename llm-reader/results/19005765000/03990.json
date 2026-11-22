@@ -141,8 +141,8 @@
       "page": 439,
       "status": "linked_cap",
       "cap_case_id": 2730228,
-      "confidence": "medium",
-      "note": "printed 484 (the 1901 edition prints 434); Holmes v. Chicago & Alton Railroad runs 439-445, so neither page is in it; linked by name, page set to the case's first page"
+      "confidence": "high",
+      "note": "printed 484 (the 1901 edition prints 434); Holmes v. Chicago & Alton Railroad runs 439-445, so neither page is in it; linked by name, page set to the case's first page; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 13,

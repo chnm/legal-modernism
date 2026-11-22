@@ -40,8 +40,8 @@
      "status": "linked_english_reports", "er_case_id": "18410064", "confidence": "high"},
     {"seq": 11, "raw": "Stephens v. Bigelow, 12 Maass. 438", "case_name": "Stevens v. Bigelow",
      "volume": 12, "reporter_abbr": "Mass.", "page": 433,
-     "status": "linked_cap", "cap_case_id": 2052088, "confidence": "medium",
-     "note": "printed 438 read as 433, where Stevens v. Bigelow begins (438 is Clarke v. Waite); linked by name"},
+     "status": "linked_cap", "cap_case_id": 2052088, "confidence": "high",
+     "note": "printed 438 read as 433, where Stevens v. Bigelow begins (438 is Clarke v. Waite); linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 12, "raw": "Hampshire Manufiacturers' Bank v. Billings, 17 Pick. 87", "case_name": "Hampshire Manufacturers' Bank v. Billings",
      "volume": 17, "reporter_abbr": "Pick.", "page": 87,
      "status": "linked_cap", "cap_case_id": 2023933, "confidence": "high"}

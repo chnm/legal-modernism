@@ -10,7 +10,7 @@
      "note": "volume 2 supplied"},
     {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyrw. 495", "case_name": "Thynne v. Woodman",
      "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
-     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
-     "note": "Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name; linked to the exact stub, as in the 1841, 1845 and 1851 readings. The only 1832 Exchequer Woodman case in ER is Pim v. Woodman, 2 Cr & J 464 (18320230), a possible parallel report not adopted because the names differ"}
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "high",
+     "note": "Tyrwhitt is not in the English Reports and no Thynne v. Woodman is there by name; linked to the exact stub, as in the 1841, 1845 and 1851 readings. The only 1832 Exchequer Woodman case in ER is Pim v. Woodman, 2 Cr & J 464 (18320230), a possible parallel report not adopted because the names differ; named, and the stub matches the printed cite exactly, so high (consistency pass)"}
   ]
 }

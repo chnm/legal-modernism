@@ -11,7 +11,7 @@
      "confidence": "low", "note": "OCR 'Yclv.'; same cite as on 04930; two cases begin at Yel 146 (Cope v. Temple and Wilshire v. -), not told apart; picked Cope v. Temple"},
     {"seq": 3, "raw": "2 Lutw. 1956", "volume": 2, "reporter_abbr": "Lutw.", "page": 1956,
      "status": "linked_stub", "stub_cite": "2 Lutw. 1956",
-     "confidence": "high", "note": "no name printed; a stub begins at exactly 2 Lutw. 1956"},
+     "confidence": "medium", "note": "no name printed; a stub begins at exactly 2 Lutw. 1956; exact stub but no name printed, so medium (consistency pass)"},
     {"seq": 4, "raw": "1 New amZp. Rep. 38", "volume": 1, "reporter_abbr": "N.H.", "page": 38,
      "status": "linked_cap", "cap_case_id": 6752673, "pincite": true,
      "confidence": "medium", "note": "OCR 'New amZp.' for New Hamp.; no name printed; falls in Brown v. Smith, 1 N.H. 36-39, on impounding animals"},

@@ -7,8 +7,8 @@
   "citations": [
     {"seq": 1, "raw": "Sir Francis Leke's case, Dyer, 365", "case_name": "Sir Francis Leke's Case", "reporter_abbr": "Dyer", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high"},
-    {"seq": 2, "raw": "2 Saund. a. n. (22)", "case_name": "Goram v. Sweeting", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
+    {"seq": 2, "raw": "2 Saund. a. n. (22)", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "page number lost in print or OCR; note (22) is at 2 Saund. 206 a, among Goram v. Sweeting's notes 21-24 (README's choice: ER record at 2 Wms Saund 205, titled 'Same v Bateman'); page supplied as in the Gale copy's record"}
+     "note": "page number lost in print or OCR; note (22) is at 2 Saund. 206 a, among Goram v. Sweeting's notes 21-24 (README's choice: ER record at 2 Wms Saund 205, titled 'Same v Bateman'); page supplied as in the Gale copy's record; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

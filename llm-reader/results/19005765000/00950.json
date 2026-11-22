@@ -32,14 +32,13 @@
     {
       "seq": 3,
       "raw": "1 English Ruling Cases, p. 156",
-      "case_name": "Dockwray v. Dickenson",
       "volume": 1,
       "reporter_abbr": "Eng. Rul. Cas.",
       "page": 156,
       "status": "linked_english_reports",
       "er_case_id": "17280145",
       "confidence": "medium",
-      "note": "a reprint in English Ruling Cases, linked to the case's own report; no name printed here, but p. 45 of this edition (pageid 01070) cites 'Dockwray v. Dickenson, 1 Eng. Rul. Cases, 156'. Reported at Skin 640 (linked), Comb 366 and Holt KB 291"
+      "note": "a reprint in English Ruling Cases, linked to the case's own report; no name printed here, but p. 45 of this edition (pageid 01070) cites 'Dockwray v. Dickenson, 1 Eng. Rul. Cases, 156'. Reported at Skin 640 (linked), Comb 366 and Holt KB 291; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 4,

@@ -20,14 +20,13 @@
     {
       "seq": 2,
       "raw": "3 Salk. 273",
-      "case_name": "Hatton v. Morse",
       "volume": 3,
       "reporter_abbr": "Salk.",
       "page": 273,
       "status": "linked_english_reports",
       "er_case_id": "17951956",
       "confidence": "medium",
-      "note": "no name printed; two cases begin at 3 Salk 273, Hatton v Morse (on colour, cited by name in note (m) and on the previous page) and Horne v Lewin"
+      "note": "no name printed; two cases begin at 3 Salk 273, Hatton v Morse (on colour, cited by name in note (m) and on the previous page) and Horne v Lewin; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 3,

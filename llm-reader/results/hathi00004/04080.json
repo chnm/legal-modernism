@@ -8,7 +8,6 @@
     {
       "seq": 1,
       "raw": "2 Saund. 207, n. 24",
-      "case_name": "Goram v. Sweeting",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 207,
@@ -16,12 +15,11 @@
       "er_case_id": "18450230",
       "pincite": true,
       "confidence": "medium",
-      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205"
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "2 Saund. 206, note 21",
-      "case_name": "Goram v. Sweeting",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 206,
@@ -29,12 +27,11 @@
       "er_case_id": "18450230",
       "pincite": true,
       "confidence": "medium",
-      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205"
+      "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 3,
       "raw": "Ib. 207, note 24",
-      "case_name": "Goram v. Sweeting",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 207,
@@ -42,7 +39,7 @@
       "er_case_id": "18450230",
       "pincite": true,
       "confidence": "medium",
-      "note": "Ib. = 2 Saund.; Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205"
+      "note": "Ib. = 2 Saund.; Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205; no name is printed for this cite, so case_name removed (consistency pass)"
     }
   ]
 }

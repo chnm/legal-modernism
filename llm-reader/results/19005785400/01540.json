@@ -66,8 +66,8 @@
       "page": 353,
       "status": "linked_english_reports",
       "er_case_id": "17950130",
-      "confidence": "medium",
-      "note": "the Anonymous beginning at 3 Salk 353 on special traverse; Bullen v Benson also begins there"
+      "confidence": "high",
+      "note": "the Anonymous beginning at 3 Salk 353 on special traverse; Bullen v Benson also begins there; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"
     }
   ]
 }

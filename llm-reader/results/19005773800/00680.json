@@ -21,7 +21,7 @@
      "note": "OCR 'linch' for Finch; Tyrwhitt is a stub only, so linked the same case in ER at 2 Cr. M. & R. 196 (stub 5 Tyrw. 774 exists)"},
     {"seq": 5, "raw": "Wheatlcy v. Golncy, 9 Dowl. 1019", "case_name": "Wheatley v. Golney",
      "volume": 9, "reporter_abbr": "Dowl.", "page": 1019,
-     "status": "no_match", "confidence": "medium",
-     "note": "Dowling's Practice Cases have no source and no stub; no Wheatley case of 1838-45 in ER under another reporter (searched er_name ILIKE '%wheatley%', '%golney%')"}
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases have no source and no stub; no Wheatley case of 1838-45 in ER under another reporter (searched er_name ILIKE '%wheatley%', '%golney%'); legible with a name printed, so a no_match graded high (consistency pass)"}
   ]
 }

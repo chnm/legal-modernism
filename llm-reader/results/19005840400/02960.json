@@ -18,8 +18,8 @@
      "status": "linked_english_reports", "er_case_id": "17931279", "confidence": "high"},
     {"seq": 5, "raw": "Rowe v. Tutte, Willie, 14", "case_name": "Rowe v. Tutte",
      "reporter_abbr": "Willes", "page": 14,
-     "status": "no_match", "confidence": "medium",
-     "note": "Willie read as Willes; Willes's Reports have no source; no Rowe v. Tutte found in the English Reports by name (as in the 1841 reading)"},
+     "status": "no_match", "confidence": "high",
+     "note": "Willie read as Willes; Willes's Reports have no source; no Rowe v. Tutte found in the English Reports by name (as in the 1841 reading); legible with a name printed, so a no_match graded high (consistency pass)"},
     {"seq": 6, "raw": "Trueman v. Hurst, 1 T. R. 40", "case_name": "Trueman v. Hurst",
      "volume": 1, "reporter_abbr": "T. R.", "page": 40,
      "status": "linked_english_reports", "er_case_id": "17850042", "confidence": "high"},
@@ -42,7 +42,7 @@
      "note": "case begins at 6 Bing 266"},
     {"seq": 12, "raw": "Crump v. Adney, 1 Cromp. & Mee. 332", "case_name": "Crump v. Adney",
      "volume": 1, "reporter_abbr": "Cromp. & Mee.", "page": 332,
-     "status": "linked_english_reports", "er_case_id": "18330056", "confidence": "medium",
-     "note": "printed 332 is Hume v. Liversidge; Crump v. Adney is at 1 Cr & M 355, linked by name"}
+     "status": "linked_english_reports", "er_case_id": "18330056", "confidence": "high",
+     "note": "printed 332 is Hume v. Liversidge; Crump v. Adney is at 1 Cr & M 355, linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
   ]
 }

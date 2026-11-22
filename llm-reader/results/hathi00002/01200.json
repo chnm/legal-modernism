@@ -14,8 +14,8 @@
       "page": 155,
       "status": "linked_english_reports",
       "er_case_id": "17953682",
-      "confidence": "medium",
-      "note": "printed 355 (the clean HathiTrust text has it too, so a misprint); Thruston versus Slatford is at 3 Salk 155. Agrees with the Gale copy's record (19005816500/01120)"
+      "confidence": "high",
+      "note": "printed 355 (the clean HathiTrust text has it too, so a misprint); Thruston versus Slatford is at 3 Salk 155. Agrees with the Gale copy's record (19005816500/01120); found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 2,

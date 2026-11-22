@@ -8,6 +8,6 @@
     {"seq": 2, "raw": "7 Ed. HI. 213", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
      "status": "no_match", "confidence": "medium", "note": "Year book, 7 Edw. II: OCR 'HI' read as II, as other editions print it and the text speaks of the reign of Edw. II; no source"},
     {"seq": 3, "raw": "ibid. 226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
-     "status": "no_match", "confidence": "medium", "note": "ibid. = Year book, 7 Edw. II, p. 226; no source"}
+     "status": "no_match", "confidence": "high", "note": "ibid. = Year book, 7 Edw. II, p. 226; no source; year book legible, so high (consistency pass)"}
   ]
 }

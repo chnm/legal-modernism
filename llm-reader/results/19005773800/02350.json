@@ -14,7 +14,7 @@
     {"seq": 4, "raw": "Essington v. Bourcher, Hob. 245", "case_name": "Essington v. Bourcher", "reporter_abbr": "Hob.", "page": 245,
      "status": "linked_english_reports", "er_case_id": "17920780", "pincite": true, "confidence": "high", "note": "ER Essington versus Bourcher begins at Hob 244"},
     {"seq": 5, "raw": "Caznean v. Morris, 26 L. J. Q. B. N. S. 126", "case_name": "Cazneau v. Morris", "volume": 26, "reporter_abbr": "L. J. Q. B. N. S.", "page": 126,
-     "status": "no_match", "confidence": "medium", "note": "not found in the English Reports by name (Cazneau, Cazenove, any v Morris 1855-58); no stub at 26 L.J.Q.B. 126 (only Ex. and Ch.)"},
+     "status": "no_match", "confidence": "high", "note": "not found in the English Reports by name (Cazneau, Cazenove, any v Morris 1855-58); no stub at 26 L.J.Q.B. 126 (only Ex. and Ch.); legible with a name printed, so a no_match graded high (consistency pass)"},
     {"seq": 6, "raw": "Cajpple dick v. Terwhit, Hob. 250", "case_name": "Cuppledick v. Terwhit", "reporter_abbr": "Hob.", "page": 250,
      "status": "linked_english_reports", "er_case_id": "17920607", "pincite": true, "confidence": "high", "note": "ER Cuppledick versus Sir Philip Terwhit begins at Hob 249"}
   ]

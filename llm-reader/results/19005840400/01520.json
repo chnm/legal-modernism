@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Anon. a Salk. 353", "case_name": "Anonymous",
      "volume": 3, "reporter_abbr": "Salk.", "page": 353,
-     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "medium",
-     "note": "OCR 'a' for 3, as cited on p. 184; the Anonymous beginning at 3 Salk 353 (on traverse, under Pleas); Bullen v Benson also begins there"},
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "OCR 'a' for 3, as cited on p. 184; the Anonymous beginning at 3 Salk 353 (on traverse, under Pleas); Bullen v Benson also begins there; the only Anonymous beginning at that page is an unambiguous name, so high (consistency pass)"},
     {"seq": 2, "raw": "Dike v. Ricks, Cro. Car. 336", "case_name": "Dike v. Ricks",
      "reporter_abbr": "Cro. Car.", "page": 336,
      "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true, "confidence": "high",

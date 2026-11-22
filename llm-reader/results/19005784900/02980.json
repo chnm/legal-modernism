@@ -31,7 +31,7 @@
     {"seq": 11, "raw": "Smith v. Hardy, 8Bing. 435", "case_name": "Smith v. Hardy", "volume": 8, "reporter_abbr": "Bing.", "page": 435,
      "status": "linked_english_reports", "er_case_id": "18320602", "confidence": "high"},
     {"seq": 12, "raw": "Miley v. Walls, 1 Dowl. 618", "case_name": "Miley v. Walls", "volume": 1, "reporter_abbr": "Dowl.", "page": 618,
-     "status": "no_match", "confidence": "medium",
-     "note": "Dowling's Practice Cases (1833) have no source; not in ER by name; no stub at 1 Dowl. 618 (nearest 1 Dowl. 611)"}
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases (1833) have no source; not in ER by name; no stub at 1 Dowl. 618 (nearest 1 Dowl. 611); legible with a name printed, so a no_match graded high (consistency pass)"}
   ]
 }

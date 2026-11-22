@@ -30,14 +30,13 @@
     {
       "seq": 3,
       "raw": "3 Wile. 419. 541",
-      "case_name": "Tyssen v. Clarke",
       "volume": 3,
       "reporter_abbr": "Wils.",
       "page": 419,
       "status": "linked_english_reports",
       "er_case_id": "17990509",
       "confidence": "medium",
-      "note": "no name printed; 3 Wils KB 419 is Tissen v. Clarke, a writ of right (demandant v. tenant), fitting the grand assize. Recorded once at its first page; 541 is a later report of the same case (17990518)"
+      "note": "no name printed; 3 Wils KB 419 is Tissen v. Clarke, a writ of right (demandant v. tenant), fitting the grand assize. Recorded once at its first page; 541 is a later report of the same case (17990518); no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 4,

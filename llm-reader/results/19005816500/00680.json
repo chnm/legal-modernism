@@ -1,5 +1,5 @@
 {"psmid": "19005816500", "pageid": "00680", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:10:00Z",
  "citations": [
   {"seq": 1, "raw": "Rudd v. Berkenhead, 1 Show. 376", "case_name": "Rudd v. Berkenhead", "volume": 1, "reporter_abbr": "Show.", "page": 376,
-   "status": "linked_english_reports", "er_case_id": "17941394", "confidence": "medium", "note": "ER has Rudd and his Wife against Berkenhead at 1 Show KB 366, a short case; 376 is probably a misprint or OCR error for 366 (nothing begins between 1 Show KB 370 and 386). Also reported Carth 144"}
+   "status": "linked_english_reports", "er_case_id": "17941394", "confidence": "high", "note": "ER has Rudd and his Wife against Berkenhead at 1 Show KB 366, a short case; 376 is probably a misprint or OCR error for 366 (nothing begins between 1 Show KB 370 and 386). Also reported Carth 144; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
  ]}

@@ -6,7 +6,7 @@
   "note": "printed pp. 309-311; same setting as hathi00005/02190; Chitty, Com. Dig., Coke's Entries, Wentworth and cross-references skipped",
   "citations": [
     {"seq": 1, "raw": "Blockley v. Slater, Lutw. 120", "case_name": "Blockley v. Slater", "volume": 1, "reporter_abbr": "Lutw.", "page": 120,
-     "status": "linked_stub", "stub_cite": "1 Lutw. 120", "confidence": "medium", "note": "Lutwyche is in the stubs only; page 120 falls in the first volume, supplied"},
+     "status": "linked_stub", "stub_cite": "1 Lutw. 120", "confidence": "high", "note": "Lutwyche is in the stubs only; page 120 falls in the first volume, supplied; named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"},
     {"seq": 2, "raw": "Searl v. Bunnion, 2 Mod. 70", "case_name": "Searl v. Bunnion", "volume": 2, "reporter_abbr": "Mod.", "page": 70,
      "status": "linked_english_reports", "er_case_id": "17930941", "confidence": "high"},
     {"seq": 3, "raw": "Silly v. Dally, Carth. 444", "case_name": "Scilly v. Dally", "reporter_abbr": "Carth.", "page": 444,

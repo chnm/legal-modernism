@@ -7,5 +7,6 @@
   {"seq": 2, "raw": "Jones v. Powell, 5 Barn. and Cres. 647", "case_name": "Jones v. Powell", "volume": 5, "reporter_abbr": "Barn. and Cres.", "page": 647,
    "status": "linked_english_reports", "er_case_id": "18260975", "confidence": "high"},
   {"seq": 3, "raw": "Bridgwater v. Bythway, 3 Lev. 113", "case_name": "Bridgwater v. Bythway", "volume": 3, "reporter_abbr": "Lev.", "page": 113,
-   "status": "linked_english_reports", "er_case_id": "17970039", "confidence": "high"}
+   "status": "linked_english_reports", "er_case_id": "17970039", "confidence": "medium",
+   "note": "a choice already made in the README (the record at 3 Lev 113, not 3 Lev 109), so medium (consistency pass)"}
  ]}

@@ -13,8 +13,8 @@
       "page": 155,
       "status": "linked_english_reports",
       "er_case_id": "17953682",
-      "confidence": "medium",
-      "note": "OCR 355 read as 155: Thruston v. Slatford is at 3 Salk 155; 3 Salk 355 holds other cases"
+      "confidence": "high",
+      "note": "OCR 355 read as 155: Thruston v. Slatford is at 3 Salk 155; 3 Salk 355 holds other cases; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 2,

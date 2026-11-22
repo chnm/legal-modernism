@@ -24,8 +24,8 @@
       "reporter_abbr": "East",
       "page": 291,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "no ER record by name or at 14 East 291 (nearest are 14 East 289 Bowring v. Pritchard and then 14 East 622); ER lacks this stretch of 14 East"
+      "confidence": "high",
+      "note": "no ER record by name or at 14 East 291 (nearest are 14 East 289 Bowring v. Pritchard and then 14 East 622); ER lacks this stretch of 14 East; legible with a name printed, so a no_match graded high (consistency pass)"
     },
     {
       "seq": 3,

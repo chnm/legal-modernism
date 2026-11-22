@@ -15,7 +15,7 @@
     {"seq": 3, "raw": "Cuppledick v. Terwhit, Hob. 350", "case_name": "Cuppledick v. Terwhit",
      "reporter_abbr": "Hob.", "page": 250,
      "status": "linked_english_reports", "er_case_id": "17920607", "pincite": true,
-     "confidence": "medium", "note": "ER Cuppledick versus Sir Philip Terwhit begins at Hob 249; printed 350 read as 250 (Hob 350 is Swaine v Holman)"},
+     "confidence": "high", "note": "ER Cuppledick versus Sir Philip Terwhit begins at Hob 249; printed 350 read as 250 (Hob 350 is Swaine v Holman); found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 4, "raw": "Morrow v. Belcher, 4 Barn. & Cres. 704", "case_name": "Marrow v. Belcher",
      "volume": 4, "reporter_abbr": "Barn. & Cres.", "page": 704,
      "status": "linked_english_reports", "er_case_id": "18250789", "confidence": "high"}

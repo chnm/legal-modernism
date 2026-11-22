@@ -9,11 +9,11 @@
     {"seq": 2, "raw": "Longuville v. Thistleworth, Ld. Ray. 970", "case_name": "Longueville v. Thistleworth", "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 970,
      "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
      "note": "volume 2 supplied; case begins at 2 Ld Raym 969"},
-    {"seq": 3, "raw": "Cro. Jac. 414", "case_name": "Hussey v. More", "reporter_abbr": "Cro. Jac.", "page": 414,
+    {"seq": 3, "raw": "Cro. Jac. 414", "reporter_abbr": "Cro. Jac.", "page": 414,
      "status": "linked_english_reports", "er_case_id": "17910295", "pincite": true, "confidence": "medium",
-     "note": "no name printed; Dr Hussey v. More begins at Cro Jac 413, the same case as 3 Bulst 275 cited beside it"},
-    {"seq": 4, "raw": "3. Bulst. 279", "case_name": "Hussey v. Moor", "volume": 3, "reporter_abbr": "Bulst.", "page": 279,
+     "note": "no name printed; Dr Hussey v. More begins at Cro Jac 413, the same case as 3 Bulst 275 cited beside it; no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 4, "raw": "3. Bulst. 279", "volume": 3, "reporter_abbr": "Bulst.", "page": 279,
      "status": "linked_english_reports", "er_case_id": "16880345", "pincite": true, "confidence": "medium",
-     "note": "no name printed; Hussey v. Moor begins at 3 Bulst 275, the same case as Cro Jac 413"}
+     "note": "no name printed; Hussey v. Moor begins at 3 Bulst 275, the same case as Cro Jac 413; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

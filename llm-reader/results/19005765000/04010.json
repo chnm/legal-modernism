@@ -8,7 +8,6 @@
     {
       "seq": 1,
       "raw": "2 Saund. , n. 8",
-      "case_name": "Mellor v. Walker",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 5,
@@ -16,7 +15,7 @@
       "er_case_id": "18450156",
       "pincite": true,
       "confidence": "medium",
-      "note": "page lost in the OCR, read 2 Saund. 5, n. 3 from the 1901 and 1831 editions; no name printed; note to Mellor v. Walker, ER record at 2 Wms Saund 4"
+      "note": "page lost in the OCR, read 2 Saund. 5, n. 3 from the 1901 and 1831 editions; no name printed; note to Mellor v. Walker, ER record at 2 Wms Saund 4; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 2,

@@ -3,9 +3,9 @@
  "citations": [
   {"seq": 1, "raw": "5 Hen. 7. 10. a. pl. 2", "volume": 5, "reporter_abbr": "Y.B.", "page": 10,
    "status": "no_match", "confidence": "high", "note": "year book, 5 Hen. VII fo. 10 a pl. 2; no source"},
-  {"seq": 2, "raw": "1 Saund. 347. d. n. (6.)", "case_name": "Potter v. North", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
+  {"seq": 2, "raw": "1 Saund. 347. d. n. (6.)", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
    "status": "linked_english_reports", "er_case_id": "18450192", "pincite": true, "confidence": "medium",
-   "note": "no name printed; page 347 d falls in Potter v. North, ER records at 1 Wms Saund 346 and 350"},
+   "note": "no name printed; page 347 d falls in Potter v. North, ER records at 1 Wms Saund 346 and 350; no name is printed for this cite, so case_name removed (consistency pass)"},
   {"seq": 3, "raw": "33 Hen. 6. 14. b", "volume": 33, "reporter_abbr": "Y.B.", "page": 14,
    "status": "no_match", "confidence": "high", "note": "year book, 33 Hen. VI fo. 14 b; no source"},
   {"seq": 4, "raw": "Careswell v. Vaughan, 2 Saund. 30", "case_name": "Careswell v. Vaughan", "volume": 2, "reporter_abbr": "Saund.", "page": 30,

@@ -15,8 +15,8 @@
      "note": "case begins at 7 Co Rep 23; the ER record at 25 is the next case, but the printed name decides"},
     {"seq": 4, "raw": "Ilutchinson v. Jackson, 2 Lut. 1324", "case_name": "Hutchinson v. Jackson",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1324,
-     "status": "linked_stub", "stub_cite": "2 Lutw. 1324", "confidence": "medium",
-     "note": "Lutwyche is only in the stubs; stub at exactly 2 Lutw. 1324"},
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1324", "confidence": "high",
+     "note": "Lutwyche is only in the stubs; stub at exactly 2 Lutw. 1324; named, and the stub matches the printed cite exactly, so high (consistency pass)"},
     {"seq": 5, "raw": "VWynt v. Ayland, 1 Salk. 324", "case_name": "Wyat v. Ayland",
      "volume": 1, "reporter_abbr": "Salk.", "page": 324,
      "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high",
@@ -51,9 +51,9 @@
      "volume": 1, "reporter_abbr": "Salk.", "page": 324,
      "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high",
      "note": "dropped: 325"},
-    {"seq": 14, "raw": "2 Sauud. 291, n. (14)", "case_name": "Dakin's Case",
+    {"seq": 14, "raw": "2 Sauud. 291, n. (14)",
      "volume": 2, "reporter_abbr": "Saund.", "page": 291,
      "status": "linked_english_reports", "er_case_id": "18450055", "pincite": true, "confidence": "medium",
-     "note": "the note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290), the choice already made in the README; the 1859 edition prints '291, n. (1); 306, n. (14)' here, and this OCR has run the two together"}
+     "note": "the note at 2 Saund. 291 (on the videlicet) is the note to Dakin's Case (2 Wms Saund 290), the choice already made in the README; the 1859 edition prints '291, n. (1); 306, n. (14)' here, and this OCR has run the two together; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

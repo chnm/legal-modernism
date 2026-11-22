@@ -26,7 +26,7 @@
      "note": "note (1) at 84 falls in Richards v. Hodges, which begins at 2 Wms Saund 80 (record at 83)"},
     {"seq": 7, "raw": "Iickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
      "reporter_abbr": "Willes", "page": 27,
-     "status": "no_match", "confidence": "medium",
-     "note": "Willes's Reports have no source; no Hickman v. Walker in the English Reports by name (as in the 1841 and 1845 readings)"}
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source; no Hickman v. Walker in the English Reports by name (as in the 1841 and 1845 readings); legible with a name printed, so a no_match graded high (consistency pass)"}
   ]
 }

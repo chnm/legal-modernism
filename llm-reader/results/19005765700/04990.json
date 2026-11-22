@@ -4,8 +4,8 @@
   "note": "Appendix, end of Note 60 and Note 61 (printed p. 473). Chitty on Pleading, Archbold and Fleta are not cases. Text cites first, then footnotes (u), (x), (y); the marker for (u) is on 04980's continuation.",
   "citations": [
     {"seq": 1, "raw": "6 Taunt. 587", "volume": 6, "reporter_abbr": "Taunt.", "page": 587,
-     "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "high",
-     "note": "Godson v. Good begins at 6 Taunt 587; the same case is named in footnote (y); as in the 1831 record (hathi00002/04400)"},
+     "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "medium",
+     "note": "Godson v. Good begins at 6 Taunt 587; the same case is named in footnote (y); as in the 1831 record (hathi00002/04400); no name printed for this cite, so medium (consistency pass)"},
     {"seq": 2, "raw": "37 Hen. VI., 24 a.", "volume": 37, "reporter_abbr": "Y.B.", "page": 24,
      "status": "no_match", "confidence": "high",
      "note": "year book, 37 Hen. VI, fol. 24 a (Prisot, J.); no source for the year books"},

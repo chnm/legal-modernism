@@ -21,8 +21,8 @@
      "note": "Dowling's Practice Cases have no source and there is no stub at 6 Dowl. 313; the English Reports' Finch v Brook(e) cases (1 Bing NC 253, 2 Bing NC 324, 2 Bing NC 711) are 1834-36, earlier than vol. 6 of Dowling, and not shown to be the same case"},
     {"seq": 5, "raw": "llandford v. Handford, ibid. 473", "case_name": "Handford v. Handford",
      "volume": 6, "reporter_abbr": "Dowl.", "page": 473,
-     "status": "no_match", "confidence": "medium",
-     "note": "ibid. = 6 Dowl.; volume and reporter supplied from the previous cite. No stub at 6 Dowl. 473; the English Reports' Handford v Handford (5 Hare 212, 1846) is a later Chancery case"},
+     "status": "no_match", "confidence": "high",
+     "note": "ibid. = 6 Dowl.; volume and reporter supplied from the previous cite. No stub at 6 Dowl. 473; the English Reports' Handford v Handford (5 Hare 212, 1846) is a later Chancery case; legible and named; a printed ibid. is not a supplied reporter, so high as in most editions (consistency pass)"},
     {"seq": 6, "raw": "Siboni v. Kirkman, 3 M. & W. 46", "case_name": "Siboni v. Kirkman",
      "volume": 3, "reporter_abbr": "M. & W.", "page": 46,
      "status": "linked_english_reports", "er_case_id": "18370282", "confidence": "high"}

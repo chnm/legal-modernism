@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Britton v. Cole, 3 Salk. 409", "case_name": "Britton v. Cole",
      "volume": 1, "reporter_abbr": "Salk.", "page": 409,
-     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
-     "note": "printed 3 Salk. 409, as in the other editions; 3 Salk has no Britton v. Cole. Read as 1 Salk. 409, inside Britton versus Cole at 1 Salk 408, as the 1860 record does"},
+     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "high",
+     "note": "printed 3 Salk. 409, as in the other editions; 3 Salk has no Britton v. Cole. Read as 1 Salk. 409, inside Britton versus Cole at 1 Salk 408, as the 1860 record does; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 2, "raw": "Sir Ralph Bovy's case, 1 Vent. 217", "case_name": "Sir Ralph Bovy's Case",
      "volume": 1, "reporter_abbr": "Vent.", "page": 217,
      "status": "linked_english_reports", "er_case_id": "17260724", "confidence": "high",

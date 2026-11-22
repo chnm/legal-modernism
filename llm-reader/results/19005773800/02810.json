@@ -27,7 +27,7 @@
     {"seq": 10, "raw": "Carth. 9", "case_name": "Saunders v. Hussey", "reporter_abbr": "Carth.", "page": 9,
      "status": "linked_english_reports", "er_case_id": "17410299", "confidence": "high", "note": "same case, ER 'Sanders versus Hussey' at Carth 9 (Langford v. Webber also begins there)"},
     {"seq": 11, "raw": "Ld. Ray. 3S,, S. C.", "case_name": "Saunders v. Hussey", "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 333,
-     "status": "no_match", "confidence": "medium", "note": "OCR '3S,' read as 333 as other editions print; S. C. of Saunders v. Hussey, volume 1 supplied; no ER record of it by name in Ld Raym (1 Ld Raym 331 Silly v Dally, next 335 Cromwell v Grumsden), as in the 1854 and 1859 readings"},
+     "status": "no_match", "confidence": "low", "note": "OCR '3S,' read as 333 as other editions print; S. C. of Saunders v. Hussey, volume 1 supplied; no ER record of it by name in Ld Raym (1 Ld Raym 331 Silly v Dally, next 335 Cromwell v Grumsden), as in the 1854 and 1859 readings; a second report found only inside another case's report is no_match at low (README) (consistency pass)"},
     {"seq": 12, "raw": "Adams v. Cross, I Vent. 181", "case_name": "Adams v. Cross", "volume": 2, "reporter_abbr": "Vent.", "page": 181,
      "status": "linked_english_reports", "er_case_id": "17260002", "confidence": "high", "note": "printed volume 1 (OCR I), but the case is at 2 Vent 181"}
   ]

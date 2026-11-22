@@ -37,9 +37,8 @@
       "page": 207,
       "status": "linked_english_reports",
       "confidence": "medium",
-      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner.",
+      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner; no name is printed for this cite, so case_name removed (consistency pass)",
       "er_case_id": "18450230",
-      "case_name": "Goram v. Sweeting",
       "pincite": true
     },
     {
@@ -118,9 +117,8 @@
       "page": 206,
       "status": "linked_english_reports",
       "confidence": "medium",
-      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner.",
+      "note": "Goram v. Sweeting (K.B., Mich. 1670), argued with Goram v. Fowke and Goram v. Bateman: it begins at 2 Saund. 200, and p. 205 has the end of the plea-roll entry and the start of Saunders's report. The English Reports title its records at 2 Wms Saund 200 and 205 for the companion suit (\"Same v Bateman\"); this is the record holding the cited page. Identified by the project owner; no name is printed for this cite, so case_name removed (consistency pass)",
       "er_case_id": "18450230",
-      "case_name": "Goram v. Sweeting",
       "pincite": true
     }
   ]

@@ -8,7 +8,6 @@
     {
       "seq": 1,
       "raw": "2 Saund. 44, n. (4)",
-      "case_name": "William v. Gwyn",
       "volume": 2,
       "reporter_abbr": "Saund.",
       "page": 44,
@@ -16,7 +15,7 @@
       "er_case_id": "18450306",
       "pincite": true,
       "confidence": "medium",
-      "note": "no name printed; Saunders's note in William v. Gwyn (a writ of right, fitting damages in mixed actions), whose record begins at 2 Wms Saund 42; the next record of it starts at 45"
+      "note": "no name printed; Saunders's note in William v. Gwyn (a writ of right, fitting damages in mixed actions), whose record begins at 2 Wms Saund 42; the next record of it starts at 45; no name is printed for this cite, so case_name removed (consistency pass)"
     }
   ]
 }

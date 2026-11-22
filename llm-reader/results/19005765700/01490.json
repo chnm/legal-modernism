@@ -85,8 +85,8 @@
       "reporter_abbr": "Dowl.",
       "page": 306,
       "status": "no_match",
-      "confidence": "high",
-      "note": "OCR 300 for 306, as the 1843 copy prints; Dowling's Practice Cases have no source and no stub at 306; no Berridge v. Priestley in the English Reports"
+      "confidence": "medium",
+      "note": "OCR 300 for 306, as the 1843 copy prints; Dowling's Practice Cases have no source and no stub at 306; no Berridge v. Priestley in the English Reports; a number corrected from the OCR or another edition makes a no_match at most medium (consistency pass)"
     },
     {
       "seq": 8,
@@ -107,8 +107,8 @@
       "reporter_abbr": "Scott",
       "page": 406,
       "status": "no_match",
-      "confidence": "high",
-      "note": "OCR 400 for 406, as the 1843 copy prints; Scott's Common Pleas Reports have no source and no stub; no Verbecke v. Pearse in the English Reports (Bing. N.C. or elsewhere)"
+      "confidence": "medium",
+      "note": "OCR 400 for 406, as the 1843 copy prints; Scott's Common Pleas Reports have no source and no stub; no Verbecke v. Pearse in the English Reports (Bing. N.C. or elsewhere); a number corrected from the OCR or another edition makes a no_match at most medium (consistency pass)"
     },
     {
       "seq": 10,

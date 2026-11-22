@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Simpsone.. Garside, Lutw. 1644", "case_name": "Simpson v. Garside",
      "volume": 2, "reporter_abbr": "Lutw.", "page": 1644,
-     "status": "linked_stub", "stub_cite": "2 Lutw. 1644", "confidence": "medium",
-     "note": "no volume printed; Lutwyche is paged as one run and the stubs split it, so supplied 2; Lutwyche has no ER source"},
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1644", "confidence": "high",
+     "note": "no volume printed; Lutwyche is paged as one run and the stubs split it, so supplied 2; Lutwyche has no ER source; named, and the stub matches the printed cite exactly (a Lutwyche volume follows from the page and is not supplied), so high (consistency pass)"},
     {"seq": 2, "raw": "Jevons v. Ilarridge, 1 Sid. 38", "case_name": "Jevons v. Harridge",
      "volume": 1, "reporter_abbr": "Sid.", "page": 308,
      "status": "linked_english_reports", "er_case_id": "17140321", "confidence": "high",

@@ -14,8 +14,8 @@
       "page": 210,
       "status": "linked_english_reports",
       "er_case_id": "17961002",
-      "confidence": "medium",
-      "note": "printed 310 in this clean copy too, so a misprint; Fits v. Freestone is at 1 Mod 210, and no case begins at 1 Mod 310"
+      "confidence": "high",
+      "note": "printed 310 in this clean copy too, so a misprint; Fits v. Freestone is at 1 Mod 210, and no case begins at 1 Mod 310; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     },
     {
       "seq": 2,

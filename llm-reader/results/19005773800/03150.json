@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Wimbish v. Tailbois, Plow. 24, 55", "case_name": "Wimbish v. Tailbois",
      "reporter_abbr": "Plow.", "page": 54,
-     "status": "no_match", "confidence": "high",
-     "note": "printed 24, OCR for 54 (as on printed p. 367); ER's Plowden lacks pages 1-130 and no other report of Wimbish v. Tailbois found by name. dropped: 55"},
+     "status": "no_match", "confidence": "medium",
+     "note": "printed 24, OCR for 54 (as on printed p. 367); ER's Plowden lacks pages 1-130 and no other report of Wimbish v. Tailbois found by name. dropped: 55; a number corrected from the OCR or another edition makes a no_match at most medium (consistency pass)"},
     {"seq": 2, "raw": "Partridge v. Strange, Plow. 85", "case_name": "Partridge v. Strange",
      "reporter_abbr": "Plow.", "page": 85,
      "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",

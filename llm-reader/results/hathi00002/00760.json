@@ -14,8 +14,8 @@
       "page": 376,
       "status": "linked_english_reports",
       "er_case_id": "17941394",
-      "confidence": "medium",
-      "note": "ER has Rudd and his Wife against Berkenhead at 1 Show KB 366 (143 words); the HathiTrust text prints 376 too, so the misprint is the book's, not the OCR's: nothing begins between 1 Show KB 370 and 386. Agrees with the Gale copy's record"
+      "confidence": "high",
+      "note": "ER has Rudd and his Wife against Berkenhead at 1 Show KB 366 (143 words); the HathiTrust text prints 376 too, so the misprint is the book's, not the OCR's: nothing begins between 1 Show KB 370 and 386. Agrees with the Gale copy's record; found by an unambiguous printed name at a corrected page, so high (consistency pass)"
     }
   ]
 }

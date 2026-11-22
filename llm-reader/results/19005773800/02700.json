@@ -5,8 +5,8 @@
   "read_at": "2026-11-20T13:50:20Z",
   "note": "statute 2 & 3 W. 4, c. 71 and cross-references skipped",
   "citations": [
-    {"seq": 1, "raw": "2 Saund. 401, a", "case_name": "Pearle v. Bridges", "volume": 2, "reporter_abbr": "Saund.", "page": 401,
-     "status": "linked_english_reports", "er_case_id": "18450176", "confidence": "medium", "note": "no name printed; note at 401 a to Pearle v. Bridges (ER 2 Wms Saund 401), cited by name on the previous page"},
+    {"seq": 1, "raw": "2 Saund. 401, a", "volume": 2, "reporter_abbr": "Saund.", "page": 401,
+     "status": "linked_english_reports", "er_case_id": "18450176", "confidence": "medium", "note": "no name printed; note at 401 a to Pearle v. Bridges (ER 2 Wms Saund 401), cited by name on the previous page; no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 2, "raw": "Attorney-General v. Gauntlctt, 3 Y. & J. 93", "case_name": "Attorney-General v. Gauntlett", "volume": 3, "reporter_abbr": "Y. & J.", "page": 93,
      "status": "linked_english_reports", "er_case_id": "18290205", "confidence": "high"},
     {"seq": 3, "raw": "IIoskins v. Robins. 2 Saund. 320", "case_name": "Hoskins v. Robins", "volume": 2, "reporter_abbr": "Saund.", "page": 320,

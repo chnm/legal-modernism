@@ -14,8 +14,7 @@
       "er_case_id": "18090247",
       "pincite": false,
       "confidence": "medium",
-      "note": "OCR 268; every other edition prints 11 East 263, where Vivian v. Blake begins and fits the passage on costs. Corrected by the coordinator.",
-      "case_name": "Vivian v. Blake"
+      "note": "OCR 268; every other edition prints 11 East 263, where Vivian v. Blake begins and fits the passage on costs. Corrected by the coordinator; no name is printed for this cite, so case_name removed (consistency pass)"
     },
     {
       "seq": 2,

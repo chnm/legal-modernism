@@ -8,7 +8,7 @@
     {"seq": 1, "raw": "Craft v. Boitc. 1 Saund. 247", "case_name": "Craft v. Boite", "volume": 1, "reporter_abbr": "Saund.", "page": 247,
      "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high", "note": "ER splits Craft versus Boite into 1 Wms Saund 241 and 246; 247 falls in the second record"},
     {"seq": 2, "raw": "I Saund. 247, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 247,
-     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high", "note": "OCR I for 1; the note annotates Craft v. Boite, whose second ER record begins at 1 Wms Saund 246"},
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "medium", "note": "OCR I for 1; the note annotates Craft v. Boite, whose second ER record begins at 1 Wms Saund 246; no name printed for this cite, so medium (consistency pass)"},
     {"seq": 3, "raw": "2 Saund. 5, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 5,
      "status": "linked_english_reports", "er_case_id": "18450156", "pincite": true, "confidence": "medium", "note": "no name printed; the note falls in Mellor v. Walker, whose second ER record begins at 2 Wms Saund 4 (Jeffreson v. Morton begins at 6)"},
     {"seq": 4, "raw": "Bowycr's case, Cro. Eliz. 468", "case_name": "Bowyer's Case", "reporter_abbr": "Cro. Eliz.", "page": 468,

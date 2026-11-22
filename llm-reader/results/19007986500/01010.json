@@ -9,7 +9,7 @@
      "note": "no volume printed, supplied 2 from the case; three records begin at 2 Str 1131, the name picks Shepley vers Marsh"},
     {"seq": 2, "raw": "Thynne v. Woodman, 2 Tyrw. 495", "case_name": "Thynne v. Woodman",
      "volume": 2, "reporter_abbr": "Tyrw.", "page": 495,
-     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "medium",
-     "note": "Tyrwhitt is not in the English Reports; no Thynne v. Woodman there by name (Pim v Woodman, 2 Cr & J 464, 1832, is the only Woodman of the period, a different plaintiff); stub is exactly the printed page, as in the 1841 records"}
+     "status": "linked_stub", "stub_cite": "2 Tyrw. 495", "confidence": "high",
+     "note": "Tyrwhitt is not in the English Reports; no Thynne v. Woodman there by name (Pim v Woodman, 2 Cr & J 464, 1832, is the only Woodman of the period, a different plaintiff); stub is exactly the printed page, as in the 1841 records; named, and the stub matches the printed cite exactly, so high (consistency pass)"}
   ]
 }

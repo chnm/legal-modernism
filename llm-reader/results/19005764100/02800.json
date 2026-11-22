@@ -4,15 +4,15 @@
   "note": "Doct. Pl., Vin. Ab., Bro. Abr. and cross-references skipped; cross-checked with the 1845 edition's records (19005840400/03040, 03050)",
   "citations": [
     {"seq": 1, "raw": "10 Hen. 6,16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
-     "status": "no_match", "confidence": "medium", "note": "year book, 10 Hen. VI fo. 16 (note (k), OCR '(h)'); no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Hen. VI fo. 16 (note (k), OCR '(h)'); no source; year book legible, so high (consistency pass)"},
     {"seq": 2, "raw": "22 Hen. 6, 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
      "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI fo. 37, cited through Doct. Pl.; no source. Legible, so high (consistency pass)"},
     {"seq": 3, "raw": "22Edw. 4. 29", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
      "status": "no_match", "confidence": "high", "note": "year book, 22 Edw. IV fo. 29, cited through Vin. Ab. and Bro.; no source. Legible, so high (consistency pass)"},
     {"seq": 4, "raw": "Gifford v. Perkins, 1 Sid. 470", "case_name": "Gifford v. Perkins",
      "volume": 1, "reporter_abbr": "Sid.", "page": 450,
-     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "medium",
-     "note": "Gifford versus Perkins is at 1 Sid 450 in the ER; printed 470 read as 450, linked by name"},
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high",
+     "note": "Gifford versus Perkins is at 1 Sid 450 in the ER; printed 470 read as 450, linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 5, "raw": "1 Vent. 77, S. C.", "volume": 1, "reporter_abbr": "Vent.", "page": 77,
      "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
      "note": "S. C. of Gifford v. Perkins"}

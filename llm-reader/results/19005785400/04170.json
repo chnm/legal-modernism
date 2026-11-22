@@ -8,7 +8,7 @@
      "note": "Sir Henry Constable's Case begins at 5 Co Rep 106; Foxley's Case begins at 109"},
     {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
      "volume": 1, "reporter_abbr": "Lutw.", "page": 665,
-     "status": "no_match", "confidence": "medium",
-     "note": "Lutwyche has no source; no stub at 1 Lutw. 665 (stubs at 662 and 670, so 665 is likely a pin cite); no Ladd v. Garrod in the English Reports"}
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche has no source; no stub at 1 Lutw. 665 (stubs at 662 and 670, so 665 is likely a pin cite); no Ladd v. Garrod in the English Reports; legible and named, no source: high (a Lutwyche volume follows from the page and is not supplied) (consistency pass)"}
   ]
 }

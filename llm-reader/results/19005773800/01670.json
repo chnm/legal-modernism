@@ -7,7 +7,7 @@
     {"seq": 1, "raw": "Bennett v. Filkins, 1 Saund. 21", "case_name": "Bennet v. Filkins", "volume": 1, "reporter_abbr": "Saund.", "page": 21,
      "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "high", "note": "case begins at 1 Wms Saund 20"},
     {"seq": 2, "raw": "Walters v. Hodges, Lut. 1625", "case_name": "Walters v. Hodges", "volume": 2, "reporter_abbr": "Lutw.", "page": 1625,
-     "status": "no_match", "confidence": "medium",
-     "note": "Lutwyche is in the stubs only; no stub at 2 Lutw. 1625 (none between 1620 and 1629), as other editions' readers found. Volume 2 supplied from the stub paging"}
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche is in the stubs only; no stub at 2 Lutw. 1625 (none between 1620 and 1629), as other editions' readers found. Volume 2 supplied from the stub paging; legible and named, no source: high (a Lutwyche volume follows from the page and is not supplied) (consistency pass)"}
   ]
 }

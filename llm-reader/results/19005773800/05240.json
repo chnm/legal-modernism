@@ -3,13 +3,13 @@
   "model": "claude-opus-5-5", "read_at": "2026-11-21T04:45:40Z",
   "note": "Second appendix pp. cxxxiii-cxxxiv, note 11 (end) and note 12 (Gould on title in the declaration); Gould is a treatise. As in hathi00006/04080.",
   "citations": [
-    {"seq": 1, "raw": "2 Saund. 206, note 21", "case_name": "Goram v. Sweeting",
+    {"seq": 1, "raw": "2 Saund. 206, note 21",
      "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205 (the README's choice)"},
-    {"seq": 2, "raw": "lb. 207, note 24", "case_name": "Goram v. Sweeting",
+     "note": "Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 206 falls in the record at 205 (the README's choice); no name is printed for this cite, so case_name removed (consistency pass)"},
+    {"seq": 2, "raw": "lb. 207, note 24",
      "volume": 2, "reporter_abbr": "Saund.", "page": 207,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
-     "note": "Ib. (OCR lb.) = 2 Saund.; Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205"}
+     "note": "Ib. (OCR lb.) = 2 Saund.; Goram v. Sweeting, 2 Saund. 200 (ER 'Same v Bateman'); 207 falls in the record at 205; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

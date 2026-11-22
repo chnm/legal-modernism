@@ -14,8 +14,8 @@
     {"seq": 4, "raw": "2 Saund. 209 c. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
      "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
      "note": "note (1) at 209 c falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
-    {"seq": 5, "raw": "3 Lev. 240", "case_name": "Hampson v. Bill", "volume": 3, "reporter_abbr": "Lev.", "page": 240,
+    {"seq": 5, "raw": "3 Lev. 240", "volume": 3, "reporter_abbr": "Lev.", "page": 240,
      "status": "linked_english_reports", "er_case_id": "17970121", "confidence": "medium",
-     "note": "no name printed; two cases begin at 3 Lev 240 (Hampson v. Bill, Beayne v. Beal), and the 1827 and 1831 editions name Hampson v. Bill for the same point"}
+     "note": "no name printed; two cases begin at 3 Lev 240 (Hampson v. Bill, Beayne v. Beal), and the 1827 and 1831 editions name Hampson v. Bill for the same point; no name is printed for this cite, so case_name removed (consistency pass)"}
   ]
 }

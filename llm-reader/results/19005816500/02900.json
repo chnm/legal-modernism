@@ -70,8 +70,8 @@
       "reporter_abbr": "Willes",
       "page": 528,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "ibid. expands to Willes; not in the ER data, and nothing by name in other reporters"
+      "confidence": "high",
+      "note": "ibid. expands to Willes; not in the ER data, and nothing by name in other reporters; legible and named; a printed ibid. is not a supplied reporter, so high as in most editions (consistency pass)"
     },
     {
       "seq": 7,

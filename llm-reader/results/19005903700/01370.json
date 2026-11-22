@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Hill v. Fox, 3 Hurlst. & N. 647", "case_name": "Hill v. Fox",
      "volume": 3, "reporter_abbr": "Hurlst. & N.", "page": 547,
-     "status": "linked_english_reports", "er_case_id": "18580846", "confidence": "medium",
-     "note": "printed 647, where no Hill v Fox is (Griffiths v Gidlow begins at 648); hathi00008 01510 prints 547, where ER has Hill v Fox (1858)"},
+     "status": "linked_english_reports", "er_case_id": "18580846", "confidence": "high",
+     "note": "printed 647, where no Hill v Fox is (Griffiths v Gidlow begins at 648); hathi00008 01510 prints 547, where ER has Hill v Fox (1858); found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
     {"seq": 2, "raw": "Fisher a. Bridges, 4 El1. & B1. 665", "case_name": "Fisher v. Bridges",
      "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 665,
      "status": "linked_english_reports", "er_case_id": "18550148", "confidence": "high",

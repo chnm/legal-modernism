@@ -5,9 +5,9 @@
   "read_at": "2026-11-21T14:56:46Z",
   "note": "Printed page 352: general freehold title; title alleged in an adversary. Dock. Pl. is a treatise. Andrews's note 1 is printed in two columns whose lines the scan interleaves; recorded in the note's reading order (col. 1: Roberts, Fort Dearborn, Elson, Floyd, Crockett; col. 2: Crockett cont., Tribble, Wilson). Cross-checked with hathi00013/04550, which places Elson v. Comstock last and drops Wilson v. Bibb.",
   "citations": [
-    {"seq": 1, "raw": "I Saund. 847 d, n. 0", "case_name": "Potter v. North", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
+    {"seq": 1, "raw": "I Saund. 847 d, n. 0", "volume": 1, "reporter_abbr": "Saund.", "page": 347,
      "status": "linked_english_reports", "er_case_id": "18450192", "pincite": true, "confidence": "medium",
-     "note": "no name printed; OCR 847 for 347 and n. 0 for n. 6 (1901 edition prints n. 6); page 347 d falls in Potter v. North, ER records at 1 Wms Saund 346 and 350"},
+     "note": "no name printed; OCR 847 for 347 and n. 0 for n. 6 (1901 edition prints n. 6); page 347 d falls in Potter v. North, ER records at 1 Wms Saund 346 and 350; no name is printed for this cite, so case_name removed (consistency pass)"},
     {"seq": 2, "raw": "Rider v. Smith, 8 T. . 760", "case_name": "Rider v. Smith", "volume": 3, "reporter_abbr": "T. R.", "page": 766,
      "status": "linked_english_reports", "er_case_id": "17902424", "confidence": "high",
      "note": "OCR 8 for 3 and 760 for 766 (1901 edition prints 766); Rider against Smith at 3 TR 766"},

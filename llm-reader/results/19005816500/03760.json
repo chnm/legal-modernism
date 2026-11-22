@@ -12,8 +12,8 @@
       "page": 367,
       "status": "linked_english_reports",
       "er_case_id": "17990138",
-      "confidence": "high",
-      "note": "no name printed; Eichorn v Le Maitre (2 Wils KB 367) begins at the page and is the leading case on judgment after an issue on a plea in abatement for misnomer, which fits the text"
+      "confidence": "medium",
+      "note": "no name printed; Eichorn v Le Maitre (2 Wils KB 367) begins at the page and is the leading case on judgment after an issue on a plea in abatement for misnomer, which fits the text; no name printed for this cite, so medium (consistency pass)"
     },
     {
       "seq": 2,
@@ -23,8 +23,8 @@
       "page": 367,
       "status": "linked_english_reports",
       "er_case_id": "17990138",
-      "confidence": "high",
-      "note": "Ibid. expanded to 2 Wils. 367, Eichorn v Le Maitre"
+      "confidence": "medium",
+      "note": "Ibid. expanded to 2 Wils. 367, Eichorn v Le Maitre; no name printed for this cite, so medium (consistency pass)"
     }
   ]
 }
