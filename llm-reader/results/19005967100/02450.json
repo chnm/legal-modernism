@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "02450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:08:29Z",
+  "note": "printed p. 213; no pleading to the inducement of a good special traverse; demurrer for a faulty inducement. Com. Dig. is an abridgment, skipped. Hembrow v. Bailey is new in 1838 (not in the 1835 footnote, 19007986500/02170)",
+  "citations": [
+    {"seq": 1, "raw": "Hembrow v. Bailey, 3 Tyrw. 152", "case_name": "Hembrow v. Bailey",
+     "volume": 3, "reporter_abbr": "Tyrw.", "page": 152,
+     "status": "linked_english_reports", "er_case_id": "18320143", "confidence": "medium",
+     "note": "Tyrwhitt has no source; same case linked to its Crompton and Meeson report, 'Hembro v Bailey and Others', 1 Cr & M 204 (1832)"},
+    {"seq": 2, "raw": "Soden v. Ilaines, Comb. 245", "case_name": "Foden v. Haines",
+     "reporter_abbr": "Comb.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17240198", "confidence": "high",
+     "note": "OCR 'Soden v. Ilaines'; ER 'Foden and Haines' at Comb 245, as the 1835 and 1895 records link"}
+  ]
+}

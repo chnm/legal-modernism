@@ -1,0 +1,28 @@
+{
+  "psmid": "19005967100", "pageid": "02490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:10:18Z",
+  "note": "printed p. 217; no traverse of an inference of law or of a virtute cujus; mixed law and fact traversable. Doct. Pl. is a treatise and Bac. Ab. an abridgment, skipped. 'Ransford' at the foot of footnote (c) continues on the next page, where its cite is printed and recorded. Agrees with the 1835 record 19007986500/02200",
+  "citations": [
+    {"seq": 1, "raw": "Richardson v. Mayor of Orfoyd, 2 H. Bl. 182", "case_name": "Richardson v. Mayor of Orford",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 182,
+     "status": "linked_english_reports", "er_case_id": "17931512", "confidence": "high"},
+    {"seq": 2, "raw": "Trower v. Chadwick, 3 Bing. N. C. 334", "case_name": "Trower v. Chadwick",
+     "volume": 3, "reporter_abbr": "Bing. N. C.", "page": 334,
+     "status": "linked_english_reports", "er_case_id": "18361109", "confidence": "high"},
+    {"seq": 3, "raw": "Priddle and Napper's Case, 11 Rep. 10 b", "case_name": "Priddle and Napper's Case",
+     "volume": 11, "reporter_abbr": "Rep.", "page": 10,
+     "status": "linked_english_reports", "er_case_id": "15720297", "pincite": true, "confidence": "high",
+     "note": "case begins at 11 Co Rep 8"},
+    {"seq": 4, "raw": "1 Saund. 23, n. (5)", "volume": 1, "reporter_abbr": "Saund.", "page": 23,
+     "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "medium",
+     "note": "Saunders's note (5) to Bennet v. Filkins (begins 1 Wms Saund 20), as on the previous page; Earl of Manchester v Vale also begins at 23"},
+    {"seq": 5, "raw": "Beal v. Simpson, 1 Lord Ray. 412", "case_name": "Beal v. Simpson",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 412,
+     "status": "linked_english_reports", "er_case_id": "17920250", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Ld Raym 408"},
+    {"seq": 6, "raw": "Grocers' Company v. Archbishop of Canterbury, 3 Wils. 234", "case_name": "Grocers' Company v. Archbishop of Canterbury",
+     "volume": 3, "reporter_abbr": "Wils.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "17990495", "pincite": true, "confidence": "medium",
+     "note": "ER splits the case at 3 Wils KB 214 and 221; 234 taken as the end of the 221 record (Crusoe v Bugby begins at 234); the printed name decides, as in the 1835 and 1841 records"}
+  ]
+}

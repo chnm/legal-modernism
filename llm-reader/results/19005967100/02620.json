@@ -1,0 +1,22 @@
+{
+  "psmid": "19005967100", "pageid": "02620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:14:53Z",
+  "note": "printed p. 230; colour by qualified confession: the tithe, market overt and demise examples. The footnotes are badly garbled in the OCR; read from the 1843 copy (19005904300/02690), which prints the same notes, and the 1835 records 19007986500/02320-02330. Reg. Plac. and Doct. Pl. are treatises, Vin. Abr. and Com. Dig. abridgments, Rast. a book of entries, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Leyfield's case, 10 Co. Rep. C.", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Co. Rep.", "page": 88,
+     "status": "linked_english_reports", "er_case_id": "15720100", "confidence": "high",
+     "note": "page garbled ('C.'); 88 as the 1835 and 1843 editions print"},
+    {"seq": 2, "raw": "Coinyns v. Boyer, Clo. Eli,. 4i..", "case_name": "Comyns v. Boyer",
+     "reporter_abbr": "Cro. Eliz.", "page": 485,
+     "status": "linked_english_reports", "er_case_id": "16530495", "confidence": "high",
+     "note": "page garbled ('4i..'); 485 as the 1835 and 1843 editions print; ER Comyns against Boyer at Cro Eliz 485"},
+    {"seq": 3, "raw": "Lcylicld's case, I> Ri,. :1 3", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "footnote (s); cite garbled; 10 Rep. 91 a as the 1835 and 1843 editions print; case begins at 10 Co Rep 88"},
+    {"seq": 4, "raw": "3 S;-j*. A'7.", "volume": 3, "reporter_abbr": "Salk.", "page": 273,
+     "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "medium",
+     "note": "garbled; 3 Salk. 273 as the 1835 and 1843 editions print; no name printed; two cases begin there: Hatton v Morse (cited by name for the rule of colour on p. 228) taken over Horne v Lewin, as in the 1835 record"}
+  ]
+}
