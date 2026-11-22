@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "02610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:21:03Z",
+  "note": "p. 225, a traverse too large by taking in quantity (the sum won by gaming). Footnote (l), its marker lost in the OCR",
+  "citations": [
+    {"seq": 1, "raw": "Colborne v. Stockdale, Str. 493", "case_name": "Colborne v. Stockdale",
+     "volume": 1, "reporter_abbr": "Str.", "page": 493,
+     "status": "linked_english_reports", "er_case_id": "17950843", "confidence": "high",
+     "note": "Strange printed without a volume; the case is at 1 Str 493"}
+  ]
+}

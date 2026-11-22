@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00008", "pageid": "02580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:20:10Z",
+  "note": "p. 222, traverse of matter of aggravation and consequential damage",
+  "citations": [
+    {"seq": 1, "raw": "Leech v. Widsley, 1 Vent. 54", "case_name": "Leech v. Widsley",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 54,
+     "status": "linked_english_reports", "er_case_id": "17260553", "confidence": "high",
+     "note": "ER 'Lech versus Widsley'; two records begin at 1 Vent 54, the name picks this one"},
+    {"seq": 2, "raw": "1 Lev. 283, S. C.", "case_name": "Leech v. Widsley",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 283,
+     "status": "linked_english_reports", "er_case_id": "17930668", "confidence": "high",
+     "note": "S. C. of Leech v. Widsley; ER 'Leech against Midgly'"},
+    {"seq": 3, "raw": "Porter v. Izat, 1 M. & W. 381", "case_name": "Porter v. Izat",
+     "volume": 1, "reporter_abbr": "M. & W.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "18360172", "confidence": "high"},
+    {"seq": 4, "raw": "Smith v. Thomas, 2 Bing. N. C. 378", "case_name": "Smith v. Thomas",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 378,
+     "status": "linked_english_reports", "er_case_id": "18351024", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Bing NC 372"},
+    {"seq": 5, "raw": "Porter v. Izat, ubi sup.", "case_name": "Porter v. Izat",
+     "volume": 1, "reporter_abbr": "M. & W.", "page": 381,
+     "status": "linked_english_reports", "er_case_id": "18360172", "confidence": "high",
+     "note": "ubi sup. = 1 M. & W. 381, footnote (c)"},
+    {"seq": 6, "raw": "Reindel v. Schell, 4 C. B. (N. S.) 97", "case_name": "Reindel v. Schell",
+     "volume": 4, "reporter_abbr": "C. B. (N. S.)", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "18580340", "confidence": "high"}
+  ]
+}

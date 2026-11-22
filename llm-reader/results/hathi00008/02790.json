@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00008", "pageid": "02790",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:24:33Z",
+  "note": "p. 243, the rule of Hil. T. 1853 on changing the venue; place alleged for certainty. Footnote (y) also cites Reg. Gen. H. T. 1853 (a rule of court, skipped)",
+  "citations": [
+    {"seq": 1, "raw": "Rothschild v. Schilston, 8 Exch. 503", "case_name": "Rothschild v. Schilston",
+     "volume": 8, "reporter_abbr": "Exch.", "page": 503,
+     "status": "linked_english_reports", "er_case_id": "18530004", "confidence": "high",
+     "note": "ER 'De Rothschild v Shilston'"},
+    {"seq": 2, "raw": "Clulee v. Bradley, 13 Com. B. 604", "case_name": "Clulee v. Bradley",
+     "volume": 13, "reporter_abbr": "Com. B.", "page": 604,
+     "status": "linked_english_reports", "er_case_id": "18531011", "confidence": "high"},
+    {"seq": 3, "raw": "Begg v. Forbes, ibid. 614", "case_name": "Begg v. Forbes",
+     "volume": 13, "reporter_abbr": "Com. B.", "page": 614,
+     "status": "linked_english_reports", "er_case_id": "18540665", "confidence": "high",
+     "note": "ibid. = 13 Com. B.; ER 'Begg v Fokbes and Another'"},
+    {"seq": 4, "raw": "Cartwright v. Frost, 3 Hurl. & N. 278", "case_name": "Cartwright v. Frost",
+     "volume": 3, "reporter_abbr": "Hurl. & N.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18580667", "confidence": "high"}
+  ]
+}

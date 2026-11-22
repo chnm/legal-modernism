@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00008", "pageid": "02680",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:22:29Z",
+  "note": "p. 232, the venue or visne. Footnotes (a) Co. Litt. and Gilbert's Hist. C. P., (b) a statute, (d) Bac. Abr. and Blackstone skipped; (c) also cites Co. Litt.",
+  "citations": [
+    {"seq": 1, "raw": "Ilderton v. Ilderton, 2 H. Bl. 161", "case_name": "Ilderton v. Ilderton",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "17931510", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 145 (8259 words)"},
+    {"seq": 2, "raw": "Mostyn v. Fabrigas, Cowp. 176", "case_name": "Mostyn v. Fabrigas",
+     "reporter_abbr": "Cowp.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "17740104", "pincite": true, "confidence": "high",
+     "note": "per Lord Mansfield; case begins at 1 Cowp 161 (10047 words)"}
+  ]
+}

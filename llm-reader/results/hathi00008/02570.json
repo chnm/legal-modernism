@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00008", "pageid": "02570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:19:55Z",
+  "note": "p. 221, traverse of matter prematurely alleged; matter of aggravation. Footnote (y) continued from the previous page; (z) OCR '(2)'",
+  "citations": [
+    {"seq": 1, "raw": "Britton v. Cole, 3 Salk. 409", "case_name": "Britton v. Cole",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 409,
+     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
+     "note": "printed 3 Salk. 409, as in the other editions; 3 Salk has no Britton v. Cole. Read as 1 Salk. 409, inside Britton versus Cole at 1 Salk 408, as the 1860 record does"},
+    {"seq": 2, "raw": "Sir Ralph Bovy's case, 1 Vent. 217", "case_name": "Sir Ralph Bovy's Case",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "17260724", "confidence": "high",
+     "note": "three records begin at 1 Vent 217; the name picks Sir Ralph Bovy's Case"},
+    {"seq": 3, "raw": "Lush v. Russell, 5 Exch. 203", "case_name": "Lush v. Russell",
+     "volume": 5, "reporter_abbr": "Exch.", "page": 203,
+     "status": "linked_english_reports", "er_case_id": "18500534", "confidence": "high"},
+    {"seq": 4, "raw": "Horton v. M'Murtry, 5 Hurl. & N. 667", "case_name": "Horton v. M'Murtry",
+     "volume": 5, "reporter_abbr": "Hurl. & N.", "page": 667,
+     "status": "linked_english_reports", "er_case_id": "18600651", "confidence": "high"}
+  ]
+}

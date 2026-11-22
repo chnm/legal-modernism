@@ -92,7 +92,8 @@ filed under the wrong page: Mellor v. Leather's `er_parallel_cite` is
 `1 El & Bl 518`, but its `er_cite` (118 E.R. 569) puts it at 619, as printed.
 The reverse also happens: Willis v. Langridge (18360813) has the right
 `er_name` but `murrell_title` "Shearwood v Hay"; Smith v. Scott, 6 CB NS
-771, has `murrell_title` "Scrivener v Pask"; the two records of Whyte
+771, has `murrell_title` "Scrivener v Pask"; Phillips v. Im Thurn, 18 CB
+NS 400, has `murrell_title` "Reynolds v Goodwin"; the two records of Whyte
 v. Rose at 3 QB 493 have their `murrell_title`s swapped. Other records
 carry the right name only in `murrell_title` ("Chitty against Luxford" for
 Chitty v. Dendy; "Anonymous" for Calfe v. Nevil, 16820022; "Same v
