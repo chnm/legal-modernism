@@ -1,0 +1,10 @@
+{
+  "psmid": "19005904300", "pageid": "05150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:07:44Z",
+  "note": "p. 481; the conclusion ad patriam; verification only in affirmative pleadings. Finch's Law and the cross-reference skipped. Cross-checked with the 1838 record (04990)",
+  "citations": [
+    {"seq": 1, "raw": "10 Edw. III. 25, 26, &c.", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fo. 25; no source; dropped: 26"}
+  ]
+}

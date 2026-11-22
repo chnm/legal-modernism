@@ -1,0 +1,16 @@
+{
+  "psmid": "19005904300", "pageid": "05140",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:07:29Z",
+  "note": "p. 480; special verifications; the origin of the rule in the offer of proof, prest d'averrer. The Appendix notes and the cross-references skipped; 'the Year Books passim' names no folio. Cross-checked with the 1838 record (04990)",
+  "citations": [
+    {"seq": 1, "raw": "10 Edw. III. 23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fo. 23; no source"},
+    {"seq": 2, "raw": "ibid. 25", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 10 Edw. III, fo. 25; ibid. expands to the previous cite; no source"},
+    {"seq": 3, "raw": "40 Edw. III. 20", "volume": 40, "reporter_abbr": "Y.B.", "page": 20,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fo. 20; no source"}
+  ]
+}
