@@ -1,0 +1,32 @@
+{
+  "psmid": "19005904300", "pageid": "02780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:29:32Z",
+  "note": "p. 244, where express colour is given and the usual fictions. Footnote (u), begun on p. 243 ('Morant v.'), ends at the top of the footnotes here, so its cites are recorded on this page. Holmes v. Newlands (1839) and Smith v. Adkins (1841) are new since the 1838 text. Reeves's History, Doct. & Stud., 1 Chitty (Chitty on Pleading), Rastall (entries) and the Appendix note are not reports, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Morant v. Sign, 5 Dowl. 319", "case_name": "Morant v. Sign",
+     "volume": 5, "reporter_abbr": "Dowl.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18360157", "pincite": false, "confidence": "medium",
+     "note": "'Morant v.' printed at the foot of p. 243; Dowling's Practice Cases (no source); linked to the case's English Reports record, 2 M & W 95"},
+    {"seq": 2, "raw": "2 M. & W. 95, S. C.", "case_name": "Morant v. Sign",
+     "volume": 2, "reporter_abbr": "M. & W.", "page": 95,
+     "status": "linked_english_reports", "er_case_id": "18360157", "confidence": "high"},
+    {"seq": 3, "raw": "Holmes v. New- land, 11 A. & E. 44", "case_name": "Holmes v. Newland",
+     "volume": 11, "reporter_abbr": "A. & E.", "page": 44,
+     "status": "linked_english_reports", "er_case_id": "18391031", "confidence": "high",
+     "note": "the English Reports name the defendant Newlands"},
+    {"seq": 4, "raw": "3 P. & D. 128, S. C.", "case_name": "Holmes v. Newland",
+     "volume": 3, "reporter_abbr": "P. & D.", "page": 128,
+     "status": "linked_english_reports", "er_case_id": "18391031", "pincite": false, "confidence": "medium",
+     "note": "Perry and Davison (no source); linked to the case's English Reports record, 11 Ad & E 44"},
+    {"seq": 5, "raw": "Smith v. Adkins, 8 M. & W. 362", "case_name": "Smith v. Adkins",
+     "volume": 8, "reporter_abbr": "M. & W.", "page": 362,
+     "status": "linked_english_reports", "er_case_id": "18410666", "confidence": "high"},
+    {"seq": 6, "raw": "1 Dowl. N. S. 129, S. C.", "case_name": "Smith v. Adkins",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 129,
+     "status": "linked_english_reports", "er_case_id": "18410666", "pincite": false, "confidence": "medium",
+     "note": "Dowling's Practice Cases, New Series (no source); linked to the case's English Reports record, 8 M & W 362"},
+    {"seq": 7, "raw": "Taylor v. Eastwood, 1 East, 212", "case_name": "Taylor v. Eastwood",
+     "volume": 1, "reporter_abbr": "East", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18000045", "confidence": "high"}
+  ]
+}

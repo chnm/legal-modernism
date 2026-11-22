@@ -1,0 +1,33 @@
+{
+  "psmid": "19005904300", "pageid": "02860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:33:46Z",
+  "note": "p. 252, estoppel in pais; the anomalous pleas of tender and payment into court. Footnote (x) is OCR'd '(a)'. Footnotes as in the 1838 copy's 02780-02790 and Williston's 02320",
+  "citations": [
+    {"seq": 1, "raw": "Bowman v. Rostron, 2 Ad. & Ell. 295", "case_name": "Bowman v. Rostron",
+     "volume": 2, "reporter_abbr": "Ad. & Ell.", "page": 296,
+     "status": "linked_english_reports", "er_case_id": "18350450", "confidence": "high",
+     "note": "printed 295 (as in Williston); the case, titled 'Bowman against Royston and Another', begins at 2 Ad & E 296, the nearest record"},
+    {"seq": 2, "raw": "Kienan or Kieran v. Sandars, 6 A. & E. 515", "case_name": "Kieran v. Sandars",
+     "volume": 6, "reporter_abbr": "A. & E.", "page": 515,
+     "status": "linked_english_reports", "er_case_id": "18370648", "confidence": "high"},
+    {"seq": 3, "raw": "1 Nev. & P. 628, S. C.", "case_name": "Kieran v. Sandars",
+     "volume": 1, "reporter_abbr": "Nev. & P.", "page": 628,
+     "status": "linked_english_reports", "er_case_id": "18370648", "pincite": false, "confidence": "medium",
+     "note": "Nevile and Perry (no source); linked to the case's English Reports record, 6 Ad & E 515; footnote (x) prints 625 for the same report"},
+    {"seq": 4, "raw": "Kienan or Kieran v. Sandars, 6 A. & E. 515", "case_name": "Kieran v. Sandars",
+     "volume": 6, "reporter_abbr": "A. & E.", "page": 515,
+     "status": "linked_english_reports", "er_case_id": "18370648", "confidence": "high"},
+    {"seq": 5, "raw": "I Nev. & P. 625, S. C.", "case_name": "Kieran v. Sandars",
+     "volume": 1, "reporter_abbr": "Nev. & P.", "page": 625,
+     "status": "linked_english_reports", "er_case_id": "18370648", "pincite": false, "confidence": "medium",
+     "note": "Nevile and Perry (no source); linked to the case's English Reports record, 6 Ad & E 515; footnote (w) prints 628"},
+    {"seq": 6, "raw": "1 Wms. Saund. 325, a., n. (c)",
+     "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 325,
+     "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (c) to Veale v. Warner, whose record begins at 1 Wms Saund 323, as the other records of this note"},
+    {"seq": 7, "raw": "Poole a. Sun- bridge, 1 Mur. & Hu;l. 32", "case_name": "Poole v. Sunbridge",
+     "volume": 1, "reporter_abbr": "Mur. & Hurl.", "page": 32,
+     "status": "linked_english_reports", "er_case_id": "18370199", "pincite": false, "confidence": "medium",
+     "note": "Murphy and Hurlstone (no source); linked to the English Reports record 'Poole v Tumbridge', 2 M & W 223 (1837), the same Exchequer case on a plea of tender"}
+  ]
+}

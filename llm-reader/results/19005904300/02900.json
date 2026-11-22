@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "02900",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:34:55Z",
+  "note": "p. 256, form of the new assignment ends; the common bar in trespass quare clausum fregit",
+  "citations": [
+    {"seq": 1, "raw": "Lambert v. Stroother, Willes, 223", "case_name": "Lambert v. Strother",
+     "reporter_abbr": "Willes", "page": 223,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source and no stub; no other report of Lambert v. Strother found in the English Reports by name (as the other editions' records of this footnote)"}
+  ]
+}
