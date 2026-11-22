@@ -1,0 +1,14 @@
+{
+  "psmid": "19007986500", "pageid": "05680",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:59:20Z",
+  "note": "Appendix Notes, p. lxxxvii: end of Note (59) on hundredors and start of Note (60) on local and transitory matters. A statute (27 Eliz. c. 6) and Co. Litt. skipped. Cross-checked with the 1827 record 19005940200/06120.",
+  "citations": [
+    {"seq": 1, "raw": "Bulvcr's casc, 7 Rep. S a.", "case_name": "Bulwer's Case",
+     "volume": 7, "reporter_abbr": "Rep.", "page": 3,
+     "status": "linked_english_reports", "er_case_id": "15720058", "pincite": true,
+     "confidence": "high", "note": "OCR 'S a' for 3 a, as the 1827 and other editions print; Bulwer's Case begins at 7 Co Rep 1"},
+    {"seq": 2, "raw": "1 Snund. 74, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) to Peacock v. Bell and Kendal, which begins at 1 Wms Saund 69, as the 1827 reader judged"}
+  ]
+}

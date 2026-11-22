@@ -1,0 +1,19 @@
+{
+  "psmid": "19007986500", "pageid": "05740",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:00:41Z",
+  "note": "Appendix Notes, p. xciii: end of Note (65) on the negative pregnant and start of Note (66). Styles's Practical Register (a practice book) skipped; Reeves quoted, not a case. Text cites first, then footnotes by letter. Cross-checked with hathi00003/04190 and the 1827 record 19005940200/06180.",
+  "citations": [
+    {"seq": 1, "raw": "7th Edw. 2, 213", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, p. 213 (Maynard's edition); no source for the year books"},
+    {"seq": 2, "raw": "226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, p. 226: a second authority ('which are believed to be the earliest authorities'), as the 1827 and 1841 readers judged; no source for the year books"},
+    {"seq": 3, "raw": "28 Iten. 6, 7.", "volume": 28, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 28 Hen. VI, fol. 7 (OCR 'Iten.' for Hen.); no source for the year books"},
+    {"seq": 4, "raw": "Slade v. Drake, Hob. 295.", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high"}
+  ]
+}
