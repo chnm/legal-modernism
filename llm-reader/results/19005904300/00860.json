@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "00860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:25:35Z",
+  "note": "p. 52, pleas in suspension and in abatement; same footnote (d) as 1838 p. 54 (19005967100/00850). Otherwise Gilbert's C. P., a statute, Com. Dig., Booth, Chitty on Pleading and Reg. Plac. (not cases)",
+  "citations": [
+    {"seq": 1, "raw": "Lightfoot v. Lenet, Cro. Jac. 421", "case_name": "Lightfoot v. Lenet",
+     "reporter_abbr": "Cro. Jac.", "page": 421,
+     "status": "linked_english_reports", "er_case_id": "17910627", "confidence": "high",
+     "note": "two records begin at Cro Jac 421; the name picks Lightfood against Lenet over Atwood's Case"},
+    {"seq": 2, "raw": "Onslow v. Smith, 2 Bos. & Pul. 384", "case_name": "Onslow v. Smith",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 384,
+     "status": "linked_english_reports", "er_case_id": "18010195", "confidence": "high",
+     "note": "ER 2 Bos & Pul 384, Onslow, Demandant, v Smith, Tenant (1801), aid prayer"}
+  ]
+}

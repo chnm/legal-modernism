@@ -1,0 +1,23 @@
+{
+  "psmid": "19005904300", "pageid": "00900",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:26:12Z",
+  "note": "p. 56, misnomer and nonjoinder under 3 & 4 Will. IV c. 42; footnote (g), OCR'd (y), as 1838 p. 57 (19005967100/00880), with 1 C., M. & R. 771 and 3 Dowl. 486 added as S. C. of Moody v. Aslatt in 1843. The text cites statutes and rules of court",
+  "citations": [
+    {"seq": 1, "raw": "Moody v. Aslatt, 5 Tyr. 492", "case_name": "Moody v. Aslatt",
+     "volume": 5, "reporter_abbr": "Tyr.", "page": 492,
+     "status": "linked_english_reports", "er_case_id": "18350173", "confidence": "medium",
+     "note": "Tyrwhitt has no source; the same case by name is ER 1 CrM & R 771, Moody v Aslatt (1835), preferred over the stub 5 Tyrw. 492, as in the 1838 and 1895 records"},
+    {"seq": 2, "raw": "1 C., M. & R. 771", "case_name": "Moody v. Aslatt",
+     "volume": 1, "reporter_abbr": "C., M. & R.", "page": 771,
+     "status": "linked_english_reports", "er_case_id": "18350173", "confidence": "high",
+     "note": "S. C.; ER 1 CrM & R 771; new in 1843"},
+    {"seq": 3, "raw": "3 Dowl. 486, S. C.", "case_name": "Moody v. Aslatt",
+     "volume": 3, "reporter_abbr": "Dowl.", "page": 486,
+     "status": "linked_english_reports", "er_case_id": "18350173", "confidence": "medium",
+     "note": "S. C.; Dowling's Practice Cases have no source, so the same case's report at 1 CrM & R 771; new in 1843 (the 1895 record reads 3 Dowl. 48)"},
+    {"seq": 4, "raw": "linch v, Cocken, 5 Tyr. 774", "case_name": "Finch v. Cocken",
+     "volume": 5, "reporter_abbr": "Tyr.", "page": 774,
+     "status": "linked_english_reports", "er_case_id": "18350093", "confidence": "medium",
+     "note": "OCR linch for Finch; Tyrwhitt has no source; the same case by name is ER 2 CrM & R 196, Finch v Cocken and Others (1835), preferred over the stub 5 Tyrw. 774"}
+  ]
+}
