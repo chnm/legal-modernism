@@ -25,8 +25,10 @@ and a short one are equally likely, so the sample shows more books than a
 draw over pages would. Draws are with replacement over editions (a page
 already drawn is skipped), and follow from the seed alone: draw *n* hashes
 `seed|n|edition` and `seed|n|page`, so the sample can be continued or rebuilt
-in order. Editions whose official copy is a HathiTrust scan have no page
-types and are passed over.
+in order. HathiTrust pages carry no page type, so for an edition whose official copy
+is a HathiTrust scan the page is drawn from all of its pages, front and back
+matter included (from batch 3 on; before that such editions were passed
+over).
 
 ## The two requests
 

@@ -42,7 +42,8 @@ func pick(seed string, draw int, label string, n int) int {
 // cmdSample draws the next pages, uniformly over editions (a random official
 // copy in moml.treatises, then a random body page of it), and writes the
 // batch with the first request for each page. The draws follow from the seed
-// alone, so the sample can be rebuilt or continued in order.
+// alone, so the sample can be rebuilt or continued in order. HathiTrust
+// pages carry no type, so any page of a HathiTrust volume may be drawn.
 func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n int) error {
 	batches, err := readBatches(dir)
 	if err != nil {
@@ -77,7 +78,7 @@ func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n int)
 		bib := editions[pick(seed, draw, "edition", len(editions))]
 		rows, err := pool.Query(ctx, `
 			SELECT p.psmid, p.pageid FROM moml.page p JOIN moml.volumes v USING (psmid)
-			 WHERE v.bibliographicid = $1 AND p.type = 'bodyPage'
+			 WHERE v.bibliographicid = $1 AND (p.type = 'bodyPage' OR p.psmid LIKE 'hathi%')
 			 ORDER BY p.psmid, p.pageid`, bib)
 		if err != nil {
 			return fmt.Errorf("listing pages of %s: %w", bib, err)
