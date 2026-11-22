@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "01610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:42:13Z",
+  "note": "printed p. 130; error in fact (coverture), error in law on the face of the record. Tidd and Manning (practice book) skipped",
+  "citations": [
+    {"seq": 1, "raw": "King v. Jones, 2 Ld. Raym. 1525", "case_name": "King v. Jones",
+     "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 1525,
+     "status": "linked_english_reports", "er_case_id": "17900555", "confidence": "high",
+     "note": "Edward King and Judith his Wife v. Thomas Jones"}
+  ]
+}
