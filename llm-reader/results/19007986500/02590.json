@@ -1,0 +1,15 @@
+{
+  "psmid": "19007986500", "pageid": "02590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:38:09Z",
+  "note": "printed p. 231; conclusion to the country by plaintiff or defendant; form of a plea of judgment recovered begins. Heath's Maxims, Bracton, Ryley's Placita Parliamentaria and 'Supra, p. 52, 61' skipped",
+  "citations": [
+    {"seq": 1, "raw": "Weltale v. Glover, 10 Mod. 166", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high",
+     "note": "two cases begin at 10 Mod 166, the name decides"},
+    {"seq": 2, "raw": "Weltale v. Glover, 10 Mod. 166", "case_name": "Weltale v. Glover",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17953849", "confidence": "high",
+     "note": "footnote (n); two cases begin at 10 Mod 166, the name decides"}
+  ]
+}

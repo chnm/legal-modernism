@@ -1,0 +1,15 @@
+{
+  "psmid": "19007986500", "pageid": "02620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:39:01Z",
+  "note": "printed p. 234; replication of breach or damnification discloses new matter and concludes with a verification. 'See Sect. IV' is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Gainsford v. Griffith, 1 Saund. 54", "case_name": "Gainsford v. Griffith",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 54,
+     "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high",
+     "note": "ER records of Gainsford v. Griffith begin at 1 Wms Saund 51 and 58; 54 falls in the record at 51"},
+    {"seq": 2, "raw": "Itichards v. Hodges, 2 Saund. 82", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "18450217", "pincite": true, "confidence": "high",
+     "note": "ER records of Richards v. Hodges begin at 2 Wms Saund 80 and 83; 82 falls in the record at 80"}
+  ]
+}

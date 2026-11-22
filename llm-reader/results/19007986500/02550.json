@@ -1,0 +1,17 @@
+{
+  "psmid": "19007986500", "pageid": "02550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:36:52Z",
+  "note": "printed p. 227; several new assignments; new assignment as a repeated declaration. 1 Chitty (Chitty on Pleading), Vin. Ab., Bac. Ab. and 3 Went. 151 (precedents) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Batt v. Bradley, Cro. Jnc. 141", "case_name": "Batt v. Bradley",
+     "reporter_abbr": "Cro. Jac.", "page": 141,
+     "status": "linked_english_reports", "er_case_id": "17910084", "confidence": "high",
+     "note": "OCR 'Jnc.' for Jac.; two cases begin at Cro Jac 141, the name decides"},
+    {"seq": 2, "raw": "1 Saund. 299 c", "volume": 1, "reporter_abbr": "Saund.", "page": 299,
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "footnote (c); Saunders's note on new assignment, to Greene v. Jones (ER 1 Wms Saund 295 and 298); linked to the part at 298"},
+    {"seq": 3, "raw": "1 Saund. 299 c", "volume": 1, "reporter_abbr": "Saund.", "page": 299,
+     "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
+     "note": "footnote (d); as seq 2"}
+  ]
+}

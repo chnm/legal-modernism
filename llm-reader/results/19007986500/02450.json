@@ -1,0 +1,28 @@
+{
+  "psmid": "19007986500", "pageid": "02450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:34:39Z",
+  "note": "printed p. 217; defective answer; matter not traversed is admitted. Com. Dig., Bac. Ab. and 'Supra, pp. 53, 60' skipped. Agrees with 19005940200/02810",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 28, n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "footnote (e); Saunders's note (3); Birks v. Trippet begins at 1 Wms Saund 28"},
+    {"seq": 2, "raw": "Thomas v. Heathorn, 2 Barn. & Cres. 477", "case_name": "Thomas v. Heathorn",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 477,
+     "status": "linked_english_reports", "er_case_id": "18240206", "confidence": "high"},
+    {"seq": 3, "raw": "Earl of St. Germains v. Willan, 216", "case_name": "Earl of St. Germains v. Willan",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 216,
+     "status": "linked_english_reports", "er_case_id": "18090450", "confidence": "high",
+     "note": "volume and reporter carried over from the preceding cite (2 Barn. & Cres.); 2 B & C 216"},
+    {"seq": 4, "raw": "1 Saund. 28, n. (3)", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "footnote (f); Saunders's note (3); Birks v. Trippet begins at 1 Wms Saund 28"},
+    {"seq": 5, "raw": "Hudson v. Jones, 1 Salk. 9.1", "case_name": "Hudson v. Jones",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "17952104", "pincite": true, "confidence": "high",
+     "note": "OCR '9.1' for 91; case begins at 1 Salk 90"},
+    {"seq": 6, "raw": "Nicholson v. Simpson, Fort. 556", "case_name": "Nicholson v. Simpson",
+     "reporter_abbr": "Fort.", "page": 356,
+     "status": "linked_english_reports", "er_case_id": "17480129", "confidence": "high",
+     "note": "556 read 356, as the 1827 edition prints"}
+  ]
+}
