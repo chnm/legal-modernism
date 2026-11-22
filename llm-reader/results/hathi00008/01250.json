@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00008", "pageid": "01250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:34:57Z",
+  "note": "p. 89, new trial for misdirection; footnote (x) cites 17 & 18 Vict. c. 125 only. As the 1860 record",
+  "citations": [
+    {"seq": 1, "raw": "Avery v. Bowden (in error), 6 Ell. & B. 962", "case_name": "Avery v. Bowden",
+     "volume": 6, "reporter_abbr": "Ell. & B.", "page": 962,
+     "status": "linked_english_reports", "er_case_id": "18560003", "confidence": "high",
+     "note": "ER Avery v Bowden, 6 El & Bl 962 (1856, Exchequer Chamber); another record of the name begins at 972"},
+    {"seq": 2, "raw": "Wheelton v. Hardisty, 8 Ell. & B. 262", "case_name": "Wheelton v. Hardisty",
+     "volume": 8, "reporter_abbr": "Ell. & B.", "page": 262,
+     "status": "linked_english_reports", "er_case_id": "18570026", "pincite": true, "confidence": "high",
+     "note": "the case begins at 8 El & Bl 232 and the next record in the volume is after 300, so 262 falls inside it"},
+    {"seq": 3, "raw": "Toomey v. The London, Brighton, and South Coast Railway Company, 3 C. B. (N. S.) 146", "case_name": "Toomey v. The London, Brighton, and South Coast Railway Company",
+     "volume": 3, "reporter_abbr": "C. B. (N. S.)", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "18570891", "confidence": "high"}
+  ]
+}

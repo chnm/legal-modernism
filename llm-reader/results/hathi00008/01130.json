@@ -1,0 +1,21 @@
+{
+  "psmid": "hathi00008", "pageid": "01130",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:31:57Z",
+  "note": "p. 77, the issue only to be tried; distributive findings. Footnote (d) continues on p. 78. As the 1860 records",
+  "citations": [
+    {"seq": 1, "raw": "Clark v. Hougham, 2 Barn. & Cres. 149", "case_name": "Clark v. Hougham",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "18230046", "confidence": "high"},
+    {"seq": 2, "raw": "Uther v. Rich, 10 Ad. & Ell. 784", "case_name": "Uther v. Rich",
+     "volume": 10, "reporter_abbr": "Ad. & Ell.", "page": 784,
+     "status": "linked_english_reports", "er_case_id": "18390859", "confidence": "high"},
+    {"seq": 3, "raw": "Traherne v. Gardner, 8 Ell. & Bl. 161", "case_name": "Traherne v. Gardner",
+     "volume": 8, "reporter_abbr": "Ell. & Bl.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "18570740", "confidence": "high",
+     "note": "ER 8 El & Bl 161 (1857), Traherne and Parry against Gardner and Newman"},
+    {"seq": 4, "raw": "Cousens v. Paddon, 2 C. M. & R. 547", "case_name": "Cousens v. Paddon",
+     "volume": 2, "reporter_abbr": "C. M. & R.", "page": 547,
+     "status": "linked_english_reports", "er_case_id": "18350048", "confidence": "high",
+     "note": "ER Cousins v Paddon, 2 CrM & R 547"}
+  ]
+}

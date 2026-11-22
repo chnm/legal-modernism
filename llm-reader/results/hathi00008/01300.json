@@ -1,0 +1,24 @@
+{
+  "psmid": "hathi00008", "pageid": "01300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:36:18Z",
+  "note": "p. 94, judgment non obstante veredicto; footnote (l). As the 1860 record, with Leigh v. Lillie added",
+  "citations": [
+    {"seq": 1, "raw": "Goodburne v. Bowman, 9 Bing. 532", "case_name": "Goodburne v. Bowman",
+     "volume": 9, "reporter_abbr": "Bing.", "page": 532,
+     "status": "linked_english_reports", "er_case_id": "18330332", "confidence": "high"},
+    {"seq": 2, "raw": "Couling v. Coxe, 6 Com. B. 703", "case_name": "Couling v. Coxe",
+     "volume": 6, "reporter_abbr": "Com. B.", "page": 703,
+     "status": "linked_english_reports", "er_case_id": "18481014", "confidence": "high"},
+    {"seq": 3, "raw": "Crossfield v. Morrison, 7 Com. B. 286", "case_name": "Crossfield v. Morrison",
+     "volume": 7, "reporter_abbr": "Com. B.", "page": 286,
+     "status": "linked_english_reports", "er_case_id": "18490294", "confidence": "high"},
+    {"seq": 4, "raw": "Duke of Rutland v. Bagshawe, 14 Q. B. 869", "case_name": "Duke of Rutland v. Bagshawe",
+     "volume": 14, "reporter_abbr": "Q. B.", "page": 869,
+     "status": "linked_english_reports", "er_case_id": "18500362", "confidence": "high",
+     "note": "ER Duke of Rutland v Bagshaw, 14 QB 869 (1850)"},
+    {"seq": 5, "raw": "Leigh v. Lillie, 30 L. J. Ex. 25", "case_name": "Leigh v. Lillie",
+     "volume": 30, "reporter_abbr": "L. J. Ex.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "18601109", "confidence": "medium",
+     "note": "new in 1866; the Law Journal has no source; linked to the same case in the English Reports, Legh v Lillie (er_name 'Lfgh v Lillie'), 6 H & N 165 (Exchequer, 1860), preferred over the stub 30 L.J.Ex. 25"}
+  ]
+}

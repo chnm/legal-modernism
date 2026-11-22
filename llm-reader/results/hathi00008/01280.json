@@ -1,0 +1,33 @@
+{
+  "psmid": "hathi00008", "pageid": "01280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:35:41Z",
+  "note": "p. 92, appeal on a new trial motion; arrest of judgment. 17 & 18 Vict. c. 125 is a statute. The scan scrambles the lines of footnote (f) ('And see ss. 36 to 42, and Gurney v. Womersley, 4 Ell. & Bl. 144. Watson v. Lane, 25 L. J. Ex. 240'); read in that order, as the 1860 record",
+  "citations": [
+    {"seq": 1, "raw": "Gurney v. Womersley, 4 Ell. & Bl. 144", "case_name": "Gurney v. Womersley",
+     "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 144,
+     "status": "linked_english_reports", "er_case_id": "18540845", "pincite": true, "confidence": "high",
+     "note": "case begins at 4 El & Bl 133; Baker v Marsh begins at 144, the page where Gurney v Womersley ends; the name decides, as the 1860 record"},
+    {"seq": 2, "raw": "Watson v. Lane, 25 L. J. Ex. 240", "case_name": "Watson v. Lane",
+     "volume": 25, "reporter_abbr": "L. J. Ex.", "page": 240,
+     "status": "linked_english_reports", "er_case_id": "18560187", "confidence": "medium",
+     "note": "the Law Journal has no source; linked to the same case, Watson v Lane, 11 Exch 769 (1856), as the 1860 record"},
+    {"seq": 3, "raw": "Leach v. Thomas, 2 M. & W. 427", "case_name": "Leach v. Thomas",
+     "volume": 2, "reporter_abbr": "M. & W.", "page": 427,
+     "status": "linked_english_reports", "er_case_id": "18370159", "confidence": "high"},
+    {"seq": 4, "raw": "Airey v. Fearnsides, 4 M. & W. 168", "case_name": "Airey v. Fearnsides",
+     "volume": 4, "reporter_abbr": "M. & W.", "page": 168,
+     "status": "linked_english_reports", "er_case_id": "18380012", "confidence": "high",
+     "note": "ER Ayrey and Another v Fearnsides"},
+    {"seq": 5, "raw": "Emblin v. Dartnell, 1 D. & L. 1010", "case_name": "Emblin v. Dartnell",
+     "volume": 1, "reporter_abbr": "D. & L.", "page": 1010,
+     "status": "linked_english_reports", "er_case_id": "18440538", "confidence": "medium",
+     "note": "Dowling and Lowndes has no source; linked to the same case, Emblin v Dartnell, 12 M & W 830 (1844)"},
+    {"seq": 6, "raw": "Empson v. Griffin, 11 Ad. & Ell. 186", "case_name": "Empson v. Griffin",
+     "volume": 11, "reporter_abbr": "Ad. & Ell.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "18391130", "confidence": "high"},
+    {"seq": 7, "raw": "Gould v. Oliver, 2 Man. & Gr. 231", "case_name": "Gould v. Oliver",
+     "volume": 2, "reporter_abbr": "Man. & Gr.", "page": 231,
+     "status": "linked_english_reports", "er_case_id": "18400097", "pincite": true, "confidence": "high",
+     "note": "Gould and Others v Elizabeth Oliver begins at 2 Man & G 208 (10785 words)"}
+  ]
+}
