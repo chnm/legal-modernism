@@ -1,0 +1,22 @@
+{
+  "psmid": "19005903700", "pageid": "03370",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:33:56Z",
+  "note": "p. 309, Section V, Rule I: pleadings must not be insensible nor repugnant. Skipped: Com. Dig. Pleader, Bac. Ab. Pleas, Vin. Ab. Abatement (abridgments)",
+  "citations": [
+    {"seq": 1, "raw": "Wyat v. Aland, 1 Salk. 324", "case_name": "Wyat v. Aland",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "17953998", "confidence": "high",
+     "note": "two cases begin at 1 Salk 324; the name picks Wyat v Aland"},
+    {"seq": 2, "raw": "Nevill v. Soper, 1 Salk. 213", "case_name": "Nevill v. Soper",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 213,
+     "status": "linked_english_reports", "er_case_id": "17952651", "confidence": "high",
+     "note": "three cases begin at 1 Salk 213; the name picks Nevil v Soper"},
+    {"seq": 3, "raw": "Butt's case, 7 Rep. 23 a", "case_name": "Butt's Case",
+     "volume": 7, "reporter_abbr": "Rep.", "page": 23,
+     "status": "linked_english_reports", "er_case_id": "15720063", "confidence": "high"},
+    {"seq": 4, "raw": "Byass v. Wylie, 1 C . . & R. 086", "case_name": "Byass v. Wylie",
+     "volume": 1, "reporter_abbr": "C. M. & R.", "page": 686,
+     "status": "linked_english_reports", "er_case_id": "18350031", "confidence": "high",
+     "note": "OCR 'C . . & R. 086' for C. M. & R. 686; ER 'Byas v Wylie' at 1 CrM & R 686"}
+  ]
+}

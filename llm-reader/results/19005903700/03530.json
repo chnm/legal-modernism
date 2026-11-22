@@ -1,0 +1,18 @@
+{
+  "psmid": "19005903700", "pageid": "03530",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:42:14Z",
+  "note": "p. 325, Rule VI examples: limitations pleaded to two counts; false imprisonment pleaded jointly by A. and the constable. Skipped: 'Vide sup. p. 321' (cross-reference)",
+  "citations": [
+    {"seq": 1, "raw": "Webb v. Martin, 1 Lev. 48", "case_name": "Webb v. Martin",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "17931279", "confidence": "high"},
+    {"seq": 2, "raw": "Lyno v. Siesficld, 1 H. and N. 278", "case_name": "Lyne v. Siesfeld",
+     "volume": 1, "reporter_abbr": "H. & N.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18560646", "confidence": "high",
+     "note": "OCR 'Lyno v. Siesficld'; two cases begin at 1 H & N 278 (Arding v Holmer the other); the name picks 'Lyne and Another v Siesfeld'"},
+    {"seq": 3, "raw": "Hedges v. Chapman, 2 Bing. 623", "case_name": "Hedges v. Chapman",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 523,
+     "status": "linked_english_reports", "er_case_id": "18250402", "confidence": "high",
+     "note": "OCR '623' for 523; Hedges v Chapman and Cousens begins at 2 Bing 523"}
+  ]
+}

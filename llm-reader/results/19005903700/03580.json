@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "03580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:44:54Z",
+  "note": "p. 330, departure in the rejoinder: the award not tendered; the indemnity bond and want of notice (its footnote on the next page)",
+  "citations": [
+    {"seq": 1, "raw": "ltoberts v. Mnrictt, 2 Saund. 188", "case_name": "Roberts v. Mariett",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18450223", "pincite": true, "confidence": "high",
+     "note": "OCR garbled name; Roberts versus Mariett begins at 2 Wms Saund 183, and 188 is the first page of its second ER record, so a pin cite"}
+  ]
+}

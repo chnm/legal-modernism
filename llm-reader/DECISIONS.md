@@ -319,7 +319,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    kept as a pin cite; 1843 and 1866 print 453, the first page. Decide
    whether 463 is a misprint. 2 Saund. 319 e is linked to Bennet v.
    Holbech by extension of the README's 319 b/c choice (1860 01100-01200);
-   confirm.
+   confirm. Dellevene v. Percer, 7 M. & W. 439 (no case of the name; two
+   begin at 439): Deriemer v Fenna at `medium` in 1843, 1867 and 1895,
+   `low` in 1860 03410; pick one.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

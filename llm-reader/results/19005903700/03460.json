@@ -1,0 +1,21 @@
+{
+  "psmid": "19005903700", "pageid": "03460",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:40:01Z",
+  "note": "p. 318, slander and libel set forth in words; Rule V, proper commencements and conclusions. Skipped: 'supra, p. 39' and 'Vide sup. p. 32' (cross-references), C.L.P. Act 1852",
+  "citations": [
+    {"seq": 1, "raw": "Wright v. Clements, 3 Brn &Ald, 603", "case_name": "Wright v. Clements",
+     "volume": 3, "reporter_abbr": "B. & Ald.", "page": 503,
+     "status": "linked_english_reports", "er_case_id": "18200316", "confidence": "high",
+     "note": "OCR '603' for 503; Wright against Clements begins at 3 B & A 503"},
+    {"seq": 2, "raw": "Cook v. Cox, 3M. & S. 110", "case_name": "Cook v. Cox",
+     "volume": 3, "reporter_abbr": "M. & S.", "page": 110,
+     "status": "linked_english_reports", "er_case_id": "18140511", "confidence": "high"},
+    {"seq": 3, "raw": "Newton v. Stubbs, 2 Show. 435", "case_name": "Newton v. Stubbs",
+     "volume": 2, "reporter_abbr": "Show.", "page": 435,
+     "status": "linked_english_reports", "er_case_id": "17941186", "confidence": "high"},
+    {"seq": 4, "raw": "Gutsole v. Mathoel 1 Ty'. & G. 694", "case_name": "Gutsole v. Mathers",
+     "volume": 1, "reporter_abbr": "Tyr. & G.", "page": 694,
+     "status": "linked_english_reports", "er_case_id": "18360099", "confidence": "medium",
+     "note": "OCR 'Mathoel' for Mathers; Tyrwhitt and Granger have no source; the same case (Exchequer, 1836) linked at 1 M & W 495"}
+  ]
+}

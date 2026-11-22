@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "03490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:40:35Z",
+  "note": "p. 321, precludi non and prayer of judgment abolished (15 & 16 Vict. c. 76, s. 66); replication to a plea in abatement; pleadings to part of the matter. Skipped: 'supra, p. 50' (cross-reference), the C.L.P. Act",
+  "citations": [
+    {"seq": 1, "raw": "Weeks v. Peach, 1 Salk. 179", "case_name": "Weeks v. Peach",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 179,
+     "status": "linked_english_reports", "er_case_id": "17953841", "confidence": "high",
+     "note": "three cases begin at 1 Salk 179; the name picks Weeks versus Peach"},
+    {"seq": 2, "raw": "Vero v. Goldsborough, 1 lBing. N. C. 353", "case_name": "Vere v. Goldsborough",
+     "volume": 1, "reporter_abbr": "Bing. N. C.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "18341094", "confidence": "medium",
+     "note": "OCR 'Vero' for Vere; two ER records titled Vere v Goldsborough at 1 Bing NC 353 (18341094, 421 words; 18340469, 164 words, murrell_title 'Pigou v Drummond'); the longer, whose murrell_title also names the case, is linked"}
+  ]
+}

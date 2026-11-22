@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "03480",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:40:21Z",
+  "note": "p. 320, the conclusions of a plea in abatement; replication's precludi non. Skipped: Chitty's new Forms, Co. Litt., Com. Dig. (treatises), 'supra, p. 69' (cross-reference)",
+  "citations": [
+    {"seq": 1, "raw": "2 Wins. Saund. 209 a. n.",
+     "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note at 209 a falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207 (10989 words), as on p. 302 (03300)"}
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "psmid": "19005903700", "pageid": "03420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:37:53Z",
+  "note": "p. 314, demurrer for ambiguity; Rule III, pleadings not hypothetical or in the alternative (the gaoler's escape). Footnote (q) matches hathi00008/03760 footnote (i), which adds Dutton v. Powles",
+  "citations": [
+    {"seq": 1, "raw": "Goll- ham v. Edwards, 18 Corn. B. 389", "case_name": "Goldham v. Edwards",
+     "volume": 18, "reporter_abbr": "Com. B.", "page": 389,
+     "status": "linked_english_reports", "er_case_id": "18560525", "confidence": "high",
+     "note": "OCR 'Gollham' and 'Corn.'; the Exchequer Chamber judgment (1856)"},
+    {"seq": 2, "raw": "Gould v. Webb, 4 Ell. & B1. 933", "case_name": "Gould v. Webb",
+     "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 933,
+     "status": "linked_english_reports", "er_case_id": "18550397", "confidence": "high"},
+    {"seq": 3, "raw": "The Metropolitan Association v. Petch, 6 C. B. (N. S.) 504", "case_name": "The Metropolitan Association v. Petch",
+     "volume": 5, "reporter_abbr": "C. B. (N. S.)", "page": 504,
+     "status": "linked_english_reports", "er_case_id": "18581068", "confidence": "high",
+     "note": "OCR '6' for 5 (the 1866 text prints 5 C. B. (N. S.) 504); ER 'The Metropolitan Association for Improving the Dwellings of the Industrious Classes ...' at 5 CB NS 504"},
+    {"seq": 4, "raw": "Cook v. Cox, 3M. & S.114", "case_name": "Cook v. Cox",
+     "volume": 3, "reporter_abbr": "M. & S.", "page": 114,
+     "status": "linked_english_reports", "er_case_id": "18140511", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 M & S 110 (2354 words)"},
+    {"seq": 5, "raw": "Rex v. Morley, 1 You. & Jer. 221", "case_name": "Rex v. Morley",
+     "volume": 1, "reporter_abbr": "You. & Jer.", "page": 221,
+     "status": "linked_english_reports", "er_case_id": "18270282", "confidence": "high"},
+    {"seq": 6, "raw": "Smith v. The London, Brighton, &c. Railway Co., 7 Cor. B. 782", "case_name": "Smith v. The London, Brighton, &c. Railway Co.",
+     "volume": 7, "reporter_abbr": "Com. B.", "page": 782,
+     "status": "linked_english_reports", "er_case_id": "18490581", "confidence": "high",
+     "note": "OCR 'Cor.' for Com."},
+    {"seq": 7, "raw": "Griffiths v. Eyles, 1 Bos. & Pul. 413", "case_name": "Griffiths v. Eyles",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "17990708", "confidence": "high"}
+  ]
+}

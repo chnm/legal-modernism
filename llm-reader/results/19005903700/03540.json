@@ -1,0 +1,26 @@
+{
+  "psmid": "19005903700", "pageid": "03540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:42:57Z",
+  "note": "p. 326, why Rule VI follows from the commencement; it does not apply to the declaration (general demurrer to a declaration good in part). Footnote (a) may continue on p. 327. Skipped: Bac. Ab. Cross-checked with hathi00008/03940 (1866) and the 1843 records 19005904300/04840-04850",
+  "citations": [
+    {"seq": 1, "raw": "1. Wims. Saund. 288, n. (9)",
+     "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 286,
+     "status": "linked_english_reports", "er_case_id": "18450073", "pincite": true, "confidence": "medium",
+     "note": "no name printed; '288' read as 286, as the 1843 and 1866 editions print it (288 is where Cabell v. Vaughan begins, and a note (9) there would belong to the case running onto it in any event); note (9) falls in Duppa v. Mayo (1 Wms Saund 282, 16887 words), as the 1843 reader linked it"},
+    {"seq": 2, "raw": "Cutforthay v. Taylor, Raym. 395", "case_name": "Cutforthay v. Taylor",
+     "reporter_abbr": "T. Raym.", "page": 395,
+     "status": "linked_english_reports", "er_case_id": "18030072", "confidence": "high",
+     "note": "Raym. is Sir T. Raymond"},
+    {"seq": 3, "raw": "Judin v. Samuel, 1 New Rep./J3", "case_name": "Judin v. Samuel",
+     "volume": 1, "reporter_abbr": "New Rep.", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "18040235", "confidence": "high",
+     "note": "OCR '/J3' for 43; Bosanquet and Puller's New Reports, stored as 1 Bos & Pul 43 (1804)"},
+    {"seq": 4, "raw": "Benbridge v. Day, 1 Salk. 218", "case_name": "Benbridge v. Day",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 218,
+     "status": "linked_english_reports", "er_case_id": "17950445", "confidence": "high"},
+    {"seq": 5, "raw": "Powdick v. Lyon, 11 East, 665", "case_name": "Powdick v. Lyon",
+     "volume": 11, "reporter_abbr": "East", "page": 565,
+     "status": "linked_english_reports", "er_case_id": "18090490", "confidence": "high",
+     "note": "OCR '665' for 565; Powdick against Lyon begins at 11 East 565"}
+  ]
+}

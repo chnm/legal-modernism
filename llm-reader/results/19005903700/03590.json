@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "03590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:45:29Z",
+  "note": "p. 331, departure: the covenant to fence; examples of no departure (the account and the robbery). Footnote (i) belongs to the indemnity-bond example ending at the foot of p. 330 (the scan seems to have lost a line or two at the head of this page). Cross-checked with the 1843 records 19005904300/04870-04890",
+  "citations": [
+    {"seq": 1, "raw": "Cutler v. Southern, 1 Saund. 110", "case_name": "Cutler v. Southern",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "high",
+     "note": "'110' read as 116, as the 1843 edition prints it (110 is outside the case); Cutler v. Southern begins at 1 Wms Saund 113 and its second ER record at 116, as the 1843 reader linked it"},
+    {"seq": 2, "raw": ")yer, 253 b",
+     "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume 3 supplied (stored as 3 Dy); the only record beginning at 3 Dy 253 is Cecil's Case, not confirmed as the covenant-to-fence case (Vernon v Gatacre at 3 Dy 252, 903 words, might run onto 253 b); as the 1843 and earlier records"}
+  ]
+}
