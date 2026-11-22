@@ -1,0 +1,16 @@
+{
+  "psmid": "19005904300", "pageid": "04090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:20:06Z",
+  "note": "p. 375; the Earl of Stirling's dignity; a usurious contract must be set out; libel imputing fraud. Cross-checked with 19005765700/03290, 03300",
+  "citations": [
+    {"seq": 1, "raw": "Earl of Stirling v. Clayton, 1 Cromp. & Mee. 241", "case_name": "Earl of Stirling v. Clayton",
+     "volume": 1, "reporter_abbr": "Cromp. & Mee.", "page": 241,
+     "status": "linked_english_reports", "er_case_id": "18320096", "confidence": "high"},
+    {"seq": 2, "raw": "Hill v. Montagu, 2 M. & S. 377", "case_name": "Hill v. Montagu",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 377,
+     "status": "linked_english_reports", "er_case_id": "18140256", "confidence": "high"},
+    {"seq": 3, "raw": "Hinton v. Roffey, 3 Mod. 35, S. P.", "case_name": "Hinton v. Roffey",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 35,
+     "status": "linked_english_reports", "er_case_id": "17930538", "confidence": "high"}
+  ]
+}

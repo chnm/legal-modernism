@@ -1,0 +1,17 @@
+{
+  "psmid": "19005904300", "pageid": "04150",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:21:41Z",
+  "note": "p. 381; the wheat case concluded; Digby v. Alexander, a plea in abatement that was only evidence",
+  "citations": [
+    {"seq": 1, "raw": "Eaton v. Southby, Willes, 131", "case_name": "Eaton v. Southby",
+     "reporter_abbr": "Willes", "page": 131,
+     "status": "linked_english_reports", "er_case_id": "17900552", "confidence": "medium",
+     "note": "Willes has no source; linked the same case as reported in Barnes's Notes, Eaton against Southby, Bar N 206"},
+    {"seq": 2, "raw": "Elliott v. Hardy, 3 Bing. 61", "case_name": "Elliott v. Hardy",
+     "volume": 3, "reporter_abbr": "Bing.", "page": 61,
+     "status": "linked_english_reports", "er_case_id": "18250564", "confidence": "high"},
+    {"seq": 3, "raw": "Digby v. Alexander, 8 Bing. 416", "case_name": "Digby v. Alexander",
+     "volume": 8, "reporter_abbr": "Bing.", "page": 416,
+     "status": "linked_english_reports", "er_case_id": "18320559", "confidence": "high"}
+  ]
+}
