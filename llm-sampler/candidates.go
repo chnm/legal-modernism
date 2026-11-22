@@ -28,6 +28,7 @@ type reporter struct {
 	SingleVol       bool
 	PagedVolumes    int
 	CitedByYearFrom int
+	Alts            []string // other spellings the sources use (reporters_abbreviations)
 }
 
 type capVolume struct {
@@ -56,6 +57,24 @@ func loadLookups(ctx context.Context, pool *pgxpool.Pool) (*lookups, error) {
 			return nil, err
 		}
 		lk.reporters[r.Standard] = &r
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	// Alternate spellings, as the linker loads them: one that is itself some
+	// reporter's standard spelling belongs to that reporter (issue #289).
+	rows, err = pool.Query(ctx, `SELECT reporter_standard, alt_abbr FROM legalhist.reporters_abbreviations`)
+	if err != nil {
+		return nil, fmt.Errorf("loading alternate abbreviations: %w", err)
+	}
+	for rows.Next() {
+		var std, alt string
+		if err := rows.Scan(&std, &alt); err != nil {
+			return nil, err
+		}
+		if r := lk.reporters[std]; r != nil && lk.reporters[alt] == nil {
+			r.Alts = append(r.Alts, alt)
+		}
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -118,6 +137,24 @@ func (lk *lookups) readings(c *Detected) []*reporter {
 	return out
 }
 
+var dots = strings.NewReplacer(".", "", ",", "")
+
+// printedReporters reads the printed abbreviation as a reporter in its own
+// right, as printed and in the English Reports' unpunctuated style ("And."
+// as "And"). It reaches reporters a source holds but the reporter table does
+// not (Anderson, Plowden), and spellings the whitelist does not know.
+func printedReporters(c *Detected) []*reporter {
+	abbr := strings.Join(strings.Fields(c.ReporterAbbr), " ")
+	if abbr == "" {
+		return nil
+	}
+	out := []*reporter{{Standard: abbr, SingleVol: c.Volume == nil}}
+	if bare := strings.Join(strings.Fields(dots.Replace(abbr)), " "); bare != abbr && bare != "" {
+		out = append(out, &reporter{Standard: bare, SingleVol: c.Volume == nil})
+	}
+	return out
+}
+
 // citeStrings returns the strings a citation of this reporter, volume and
 // page is keyed by in the sources, as the linker builds them: under the
 // standard spelling, CAP's spelling and CAP's renumbered volume, with the
@@ -150,6 +187,9 @@ func (lk *lookups) citeStrings(r *reporter, vol *int, page int, year *int) []str
 		build(v, r.Standard)
 		if r.CAP != "" {
 			build(v, r.CAP)
+		}
+		for _, alt := range r.Alts {
+			build(v, alt)
 		}
 		if v != nil {
 			if cv, ok := lk.diffvols[r.Standard][*v]; ok {
@@ -281,7 +321,7 @@ func candidatesFor(ctx context.Context, pool *pgxpool.Pool, lk *lookups, c *Dete
 
 	probes := map[string]probe{}
 	if c.Page != nil {
-		for _, r := range lk.readings(c) {
+		for _, r := range append(lk.readings(c), printedReporters(c)...) {
 			for q := max(1, *c.Page-pagesBefore); q <= *c.Page+pagesNear; q++ {
 				for _, s := range lk.citeStrings(r, c.Volume, q, c.Year) {
 					if _, ok := probes[s]; !ok {

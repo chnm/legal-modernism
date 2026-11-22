@@ -63,7 +63,10 @@ matches on indexed columns and one name search:
   `legalhist.whitelist` makes of the printed spelling, fallback included.
   Cite strings are built as the linker builds them (standard spelling, CAP's
   spelling, CAP's renumbered volume, the volume added or dropped for a
-  single-volume reporter, the year for a reporter cited by year) for every
+  single-volume reporter, the year for a reporter cited by year, the
+  alternate spellings of `legalhist.reporters_abbreviations`, and the printed
+  abbreviation itself with and without its full stops, which reaches
+  reporters a source holds but the reporter table does not) for every
   page from 40 before the cited page to 3 after, and probed in
   `cap.citations`, `english_reports.cases`, `legalhist.code_reporter` and
   `legalhist.stub_cases`. A case is offered if it begins at the page (`exact
