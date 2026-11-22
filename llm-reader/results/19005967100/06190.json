@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "06190",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:01:41Z",
+  "note": "printed p. cii; Appendix Notes, Note (66), trial by jury as a mode of proof (Bracton). Bracton and Vin. Ab. skipped. Cross-checked with the 1835 and 1827 records.",
+  "citations": [
+    {"seq": 1, "raw": "Constable's Case, 5 Rep. 108 a", "case_name": "Constable's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 108,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true, "confidence": "high",
+     "note": "Sir Henry Constable's Case begins at 5 Co Rep 106"},
+    {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
+     "volume": 1, "reporter_abbr": "Lutw.", "page": 665,
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche is only in the stubs, which hold 1 Lutw. 660 and 662 but nothing at 665 (a pin cite into a stub reporter is no_match); no Ladd v. Garrod in the English Reports by er_name or murrell_title"}
+  ]
+}

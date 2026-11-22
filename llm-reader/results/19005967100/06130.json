@@ -1,0 +1,28 @@
+{
+  "psmid": "19005967100", "pageid": "06130",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:00:29Z",
+  "note": "printed p. xcvi; Appendix Notes, end of Note (60), Note (61), production of suit (Fleta, Magna Charta), and start of Note (62), the order of pleading (Tidd). Fleta and Tidd skipped. Text cites first, then footnote (y). Cross-checked with the 1835 record 19007986500/05790.",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 209 c, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note falls in Foxwist v. Tremaine, 2 Wms Saund 207"},
+    {"seq": 2, "raw": "Medina v. Stougbton, 1 Ld. Ray. 593", "case_name": "Medina v. Stoughton",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 593,
+     "status": "linked_english_reports", "er_case_id": "17921544", "confidence": "high",
+     "note": "OCR 'Stougbton'"},
+    {"seq": 3, "raw": "Carneth v. Priour, 1 Show. 4", "case_name": "Carneth v. Priour",
+     "volume": 1, "reporter_abbr": "Show.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "17940427", "confidence": "high",
+     "note": "ER: Carneth against Prior, 1 Show KB 4"},
+    {"seq": 4, "raw": "Alice v. Gale, 10 Mod. 112", "case_name": "Alice v. Gale",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 112,
+     "status": "linked_english_reports", "er_case_id": "17950026", "confidence": "high"},
+    {"seq": 5, "raw": "Godsonv. Good, 6 Taunt. 595", "case_name": "Godson v. Good",
+     "volume": 6, "reporter_abbr": "Taunt.", "page": 595,
+     "status": "linked_english_reports", "er_case_id": "18160522", "pincite": true, "confidence": "high",
+     "note": "case begins at 6 Taunt 587"},
+    {"seq": 6, "raw": "2 Saund. by P. & W. p. 009 c, n. (c)", "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "OCR '009' for 209, as 1835 prints; Patteson and Williams's edition of Saunders; note falls in Foxwist v. Tremaine, 2 Wms Saund 207"}
+  ]
+}

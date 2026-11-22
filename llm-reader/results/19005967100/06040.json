@@ -1,0 +1,14 @@
+{
+  "psmid": "19005967100", "pageid": "06040",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:58:28Z",
+  "note": "printed p. lxxxvii; Appendix Notes, end of Note (51), Note (52), changing the venue, and start of Note (53), omission of quality, quantity or value aided by verdict. Gilbert's History of the Common Pleas and the statute 6 Rich. II. skipped. Cross-checked with the 1835 records.",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 74, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450174", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) to Peacock v. Bell and Kendal, record at 1 Wms Saund 73, as on p. lxxxvi"},
+    {"seq": 2, "raw": "Santler v. Heard, 2 Bla. Rep. 1033", "case_name": "Santler v. Heard",
+     "volume": 2, "reporter_abbr": "Bla. Rep.", "page": 1033,
+     "status": "linked_english_reports", "er_case_id": "17460458", "pincite": true,
+     "confidence": "high", "note": "case begins at 2 Black W 1031"}
+  ]
+}

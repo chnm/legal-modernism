@@ -1,0 +1,19 @@
+{
+  "psmid": "19005967100", "pageid": "06080",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:59:21Z",
+  "note": "printed p. xci; Appendix Notes, end of Note (55), the negative pregnant, and start of Note (56), Reeves on established forms of statement. Styles's Practical Register skipped. Text cites first, then footnotes by letter. Cross-checked with the 1835 record 19007986500/05740.",
+  "citations": [
+    {"seq": 1, "raw": "7th Edw. II. 213", "volume": 7, "reporter_abbr": "Y.B.", "page": 213,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, p. 213 (Maynard's edition); no source for the year books"},
+    {"seq": 2, "raw": "226", "volume": 7, "reporter_abbr": "Y.B.", "page": 226,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II, p. 226: a second authority ('which are believed to be the earliest authorities'), as the 1835 reader judged; no source for the year books"},
+    {"seq": 3, "raw": "28 Hen. VI. 7", "volume": 28, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 28 Hen. VI, fol. 7; no source for the year books"},
+    {"seq": 4, "raw": "Slade v. Drake, Hob. 295", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high"}
+  ]
+}
