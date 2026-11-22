@@ -1,0 +1,19 @@
+{
+  "psmid": "19005903700", "pageid": "03300",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:31:40Z",
+  "note": "p. 302, several pleas: distinct answers to different claims at common law; plea in abatement to part and in bar to the rest. Skipped: the statute; 'sup. p. 33' and 'Vide sup. p. 296' (cross-references). Cross-checked with the 1843 record of the same footnote (p. 306)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 209 (e)",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note at 209 e falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207 (10989 words), as the 1843 reader linked it"},
+    {"seq": 2, "raw": "Herries :v Jameson, 5 T. I. 553", "case_name": "Herries v. Jameson",
+     "volume": 5, "reporter_abbr": "T. R.", "page": 553,
+     "status": "linked_english_reports", "er_case_id": "17942193", "confidence": "high",
+     "note": "OCR 'T. I.' for T. R.; ER 'Herries against Jamieson'"},
+    {"seq": 3, "raw": "Hill v. White, 6 ling. N. C. 20", "case_name": "Hill v. White",
+     "volume": 6, "reporter_abbr": "Bing. N. C.", "page": 26,
+     "status": "linked_english_reports", "er_case_id": "18391090", "confidence": "medium",
+     "note": "OCR 'ling.' for Bing.; '20' read as 26, as the 1843 edition prints it; 'Hill v White and Williams' at 6 Bing NC 26 (another Hill v. White begins at 23, so the corrected number decides, at medium)"}
+  ]
+}

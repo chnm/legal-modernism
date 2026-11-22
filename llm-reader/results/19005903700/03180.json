@@ -1,0 +1,17 @@
+{
+  "psmid": "19005903700", "pageid": "03180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:27:58Z",
+  "note": "p. 290, C.L.P.A. 1852 s. 49 (immaterial statements omitted); Section IV begins, rules tending to prevent duplicity. Skipped: the statute; 'sup. p. 75' and 'Vide sup. pp. 125, 126' (cross-references)",
+  "citations": [
+    {"seq": 1, "raw": "Nightingale v. Wilcoxon, 10lB. & 0. 215", "case_name": "Nightingale v. Wilcoxon",
+     "volume": 10, "reporter_abbr": "B. & C.", "page": 215,
+     "status": "linked_english_reports", "er_case_id": "18290152", "pincite": true, "confidence": "high",
+     "note": "OCR '10lB. & 0.' for 10 B. & C.; case begins at 10 B & C 202 (4455 words)"},
+    {"seq": 2, "raw": "Ryalls v. Bramall, 1 Exch. 734", "case_name": "Ryalls v. Bramall",
+     "volume": 1, "reporter_abbr": "Exch.", "page": 734,
+     "status": "linked_english_reports", "er_case_id": "18480193", "confidence": "high"},
+    {"seq": 3, "raw": "Noden v. Johnson, 16 Q. B. 218", "case_name": "Noden v. Johnson",
+     "volume": 16, "reporter_abbr": "Q. B.", "page": 218,
+     "status": "linked_english_reports", "er_case_id": "18500945", "confidence": "high"}
+  ]
+}

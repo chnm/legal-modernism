@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "03070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:24:48Z",
+  "note": "p. 279, general pleading where matters tend to infiniteness; the plea of non damnificatus",
+  "citations": [
+    {"seq": 1, "raw": "Mints v. Bethil, Cro. Eliz, 749", "case_name": "Mints v. Bethil",
+     "reporter_abbr": "Cro. Eliz.", "page": 749,
+     "status": "linked_english_reports", "er_case_id": "16531353", "confidence": "high",
+     "note": "two cases begin at Cro Eliz 749; the name picks Mints against Bethil"},
+    {"seq": 2, "raw": "Grey v. Friar, 15 Q. B. 891", "case_name": "Grey v. Friar",
+     "volume": 15, "reporter_abbr": "Q. B.", "page": 891,
+     "status": "linked_english_reports", "er_case_id": "18500019", "confidence": "high",
+     "note": "ER titles the record at 15 QB 891 'Friar against Grey'; the error proceedings begin at 901"}
+  ]
+}

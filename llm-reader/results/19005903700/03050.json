@@ -1,0 +1,19 @@
+{
+  "psmid": "19005903700", "pageid": "03050",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:24:23Z",
+  "note": "p. 277, no need to spin out the proceedings to prolixity; general replication to plea of performance by an agent",
+  "citations": [
+    {"seq": 1, "raw": "Colrwallis v. Savely, 2 Burr. 772", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high",
+     "note": "OCR 'Colrwallis v. Savely' for Cornwallis v. Savery"},
+    {"seq": 2, "raw": "Shum v. Farrington, 1 Bos. &.Pul. 040", "case_name": "Shum v. Farrington",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 640,
+     "status": "linked_english_reports", "er_case_id": "17970365", "confidence": "high",
+     "note": "OCR 040 for 640"},
+    {"seq": 3, "raw": "Burton v. Webb, 8 T. R. 459", "case_name": "Barton v. Webb",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 459,
+     "status": "linked_english_reports", "er_case_id": "18000054", "confidence": "high",
+     "note": "printed or OCR 'Burton' for Barton"}
+  ]
+}
