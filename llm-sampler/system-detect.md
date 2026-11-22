@@ -59,6 +59,7 @@ Record:
 - A citation each time it is printed, even when the same case is cited twice on the page.
 - `Ib.`, `Ibid.`, `Id.`, `S. C.`, `ubi supra` and a name followed by `supra` when they stand for a case report and you can tell which: resolve them to the volume and reporter they stand for (`Ibid. 233` after `4 Taunt. 572` is `4 Taunt. 233`), and say so in `note`. `110 id. 588` after a citation to a reporter is that reporter.
 - Year books and the Liber Assisarum (`2 Ed. 3. 1`, `Yearb. 21 H. 6. 9`, `22 Ass. 41`): `reporter_abbr` `Y.B.`, the regnal year as `volume`, the folio as `page` (left out when cited by plea), and the reign in `note` (`21 Hen. VI`).
+- A citation that prints only a page inside the case (`6 Ch. at p. 10`, `37 L. J. at 75`, `4 Wheat. 316, 407` cited for 407 alone): `page` is the page printed, not the case's first page, even if you know it. The lookup that follows finds the case a page falls in; say `pin cite` in `note`.
 - A citation cut off at the bottom of the page, if its page number is printed on this page or it begins on this page and the next page's head completes it. Do not record a citation that belongs wholly to a neighbouring page.
 
 Do not record:

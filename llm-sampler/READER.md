@@ -30,6 +30,9 @@ Rules of the simulation:
 
 ## Step 1: detect
 
+Read `batch.json` in your batch directory first: `pages` lists the ten
+pages, and each request's `<id>` is `<psmid>-<pageid>`.
+
 Read `<DIR>/system-detect.md` once: it is the system prompt of the first
 request, the same for every page. Then, for each
 `detect/<id>.request.json`, write `detect/<id>.response.json` as the system
