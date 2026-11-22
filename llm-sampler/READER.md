@@ -6,7 +6,7 @@ each page of the batch, and nothing more.
 
 ---
 
-You are standing in for the Claude API in a simulation (issue #474). A batch
+You are standing in for the Claude API in a simulation (issue #442). A batch
 is ten pages of nineteenth-century legal treatises. Each page gets two
 requests, and you play the model answering each one: your only inputs are the
 system prompt and the request, and your only output is the response file.

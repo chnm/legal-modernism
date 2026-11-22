@@ -1,7 +1,7 @@
 # llm-sampler
 
 Claude reads random body pages of the MOML treatises and records the cases
-they cite (issue #474). It follows the page-by-page reading of Stephen on
+they cite (issue #442). It follows the page-by-page reading of Stephen on
 Pleading (`llm-reader`, issue #439), with two differences:
 
 - **It is designed for the Claude API.** The Stephen readers queried the

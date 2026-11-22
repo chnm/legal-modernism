@@ -1,7 +1,7 @@
 // Command llm-sampler reads random body pages of the MOML treatises for
 // citations with Claude, as two stateless requests per page: one that detects
 // the citations, one that links them to candidate cases code looked up in
-// between (issue #474). It draws the pages, writes each request, checks each
+// between (issue #442). It draws the pages, writes each request, checks each
 // response, writes the final records under its data directory, and shows
 // progress. See llm-sampler/README.md.
 package main
