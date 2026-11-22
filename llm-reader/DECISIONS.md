@@ -285,7 +285,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    the README's 17950161; align them. A case named in the text with only
    "Supra, p. N" is now recorded (README, 2026-11-22): 1838 01900-02100
    (Cousins v. Paddon at 02050) and earlier records skipped such cases;
-   find and add them.
+   find and add them. Chitty v. Dendy, 3 Ad. & El. 319 ("Chitty against
+   Luxford" by `er_name`, Chitty v Dendy by `murrell_title`) is `high` in
+   1838 but `medium` in earlier records; regrade where the name matches
+   `murrell_title`. Thorn v. Rolfe, Benl. 86, S. C.: the 1835 and 1838
+   records link 2 Dy 185, the 1895 record Moo KB 14; pick one.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

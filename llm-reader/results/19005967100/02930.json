@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "02930",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:22:50Z",
+  "note": "printed p. 261; a replication assigning a breach of covenant or a damnification shows new matter and concludes with a verification. Footnote (o) is a cross-reference; footnote (q) OCR'd '(9)'",
+  "citations": [
+    {"seq": 1, "raw": "Gainsford v. Griffith, 1 Saund. 54", "case_name": "Gainsford v. Griffith",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 54,
+     "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high",
+     "note": "the English Reports' records of Gainsford v. Griffith begin at 1 Wms Saund 51 and 58; 54 falls in the record at 51"},
+    {"seq": 2, "raw": "Richards v. Hodges, 2 Satind. 82", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "18450217", "pincite": true, "confidence": "high",
+     "note": "the English Reports' records of Richards v. Hodges begin at 2 Wms Saund 80 and 83; 82 falls in the record at 80"}
+  ]
+}

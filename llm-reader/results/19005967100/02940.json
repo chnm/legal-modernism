@@ -1,0 +1,14 @@
+{
+  "psmid": "19005967100", "pageid": "02940",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:22:59Z",
+  "note": "printed p. 262; the clerk's account case (Vere v. Smith); doubtful cases of new matter",
+  "citations": [
+    {"seq": 1, "raw": "Vcre v. Smith, 2 Lev. 5", "case_name": "Vere v. Smith",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+    {"seq": 2, "raw": "1 Vent. 121, S. C.", "case_name": "Vere v. Smith",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high",
+     "note": "S. C. of Vere v. Smith"}
+  ]
+}

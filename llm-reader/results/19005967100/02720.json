@@ -1,0 +1,10 @@
+{
+  "psmid": "19005967100", "pageid": "02720",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:17:42Z",
+  "note": "printed p. 240; colour must not amount to a real right. Doct. Pl. and Com. Dig. are treatises, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Radford v. Harbyn, Cro. Jac. 122", "case_name": "Radford v. Harbyn",
+     "reporter_abbr": "Cro. Jac.", "page": 122,
+     "status": "linked_english_reports", "er_case_id": "17910806", "confidence": "high"}
+  ]
+}
