@@ -1,0 +1,19 @@
+{
+  "psmid": "19005940200", "pageid": "05660",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:15:31Z",
+  "note": "Appendix Notes, printed p. xxvii (end of Note 19, Note 20 on dilatory and peremptory pleas). Also cites the Digest, Bac. Ab., 1 Chitty (on Pleading, 1st edit.) and Bracton (not cases). Cross-checked with hathi00001/05120 (1824) and hathi00002/04070 (1831)",
+  "citations": [
+    {"seq": 1, "raw": "Bowycr v. Book, 5 Mod. 146", "case_name": "Bowyer v. Cook",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17940334", "pincite": true, "confidence": "high",
+     "note": "'Book' for Cook (OCR or misprint, as in the 1831 text); case begins at 5 Mod 145"},
+    {"seq": 2, "raw": "Carth. 163", "case_name": "Bowyer v. Cook",
+     "reporter_abbr": "Carth.", "page": 363,
+     "status": "linked_english_reports", "er_case_id": "17410040", "confidence": "high",
+     "note": "same case as the preceding cite; printed or OCR'd 163, read 363 as the 1824 and 1831 editions print it (no case begins at Carth 163); ER titles it Bowers versus Cook"},
+    {"seq": 3, "raw": "Salk. 297. S. C.", "case_name": "Bowyer v. Cook",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "17951706", "confidence": "medium",
+     "note": "volume 1 supplied (the 1831 edition prints 1 Salk. 297); S. C., same case as Bowyer v. Cook; of the three cases at 1 Salk 297, 'Fooler versus Cooke' is plainly this one under a garbled name, as the 1831 reader judged"}
+  ]
+}

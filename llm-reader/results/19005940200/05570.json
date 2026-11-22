@@ -1,0 +1,10 @@
+{
+  "psmid": "19005940200", "pageid": "05570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:13:56Z",
+  "note": "Appendix Notes, printed p. xviii (Note 11 on records). Also cites Hickes, Hallam, the Assises de Jerusalem and Coke's preface to 9 Rep. (a preface, not a case); the pleas of Gundulf v. Pichot and of Pinenden are narratives, not reports. Cross-checked with hathi00001/05030 (1824)",
+  "citations": [
+    {"seq": 1, "raw": "Year-book, 7 Hen 6. p. 29", "volume": 7, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Hen. VI, fo. 29; no source for the year books"}
+  ]
+}
