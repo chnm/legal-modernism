@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
      "volume": 1, "reporter_abbr": "Plow.", "page": 118,
-     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium",
-     "note": "the README's choice: Plowden's pages 1-130 are missing from the ER, linked to Dyer's report, Bulkeley v Thomas, 2 Dy 113, a pin cite past 113"},
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "the README's choice: Plowden's pages 1-130 are missing from the ER, linked to Dyer's report, Bulkeley v Thomas, 2 Dy 113; Plow. 118 is the report's first page, not a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Wimbish v. Tailbois, Plow. 54, 65", "case_name": "Wimbish v. Tailbois",
      "volume": 1, "reporter_abbr": "Plow.", "page": 54,
      "status": "no_match", "confidence": "high",

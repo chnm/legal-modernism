@@ -6,7 +6,7 @@
   "note": "statute 3 & 4 W. 4, c. 42 skipped",
   "citations": [
     {"seq": 1, "raw": "Bucllcy v. Rico Thomas, Plowd. 128 a", "case_name": "Buckley v. Rice Thomas", "volume": 1, "reporter_abbr": "Plowd.", "page": 128,
-     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium", "note": "volume 1 supplied; the case begins at 1 Plowd. 118 and ER's Plowden lacks pages 1-130; the same case is reported in Dyer as 'Sir Richard Bulkeley against Thomas', 2 Dy 113, linked to the case as in other editions' readings"},
+     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium", "note": "volume 1 supplied; the case begins at 1 Plowd. 118 and ER's Plowden lacks pages 1-130; the same case is reported in Dyer as 'Sir Richard Bulkeley against Thomas', 2 Dy 113, linked to the case as in other editions' readings; a pin cite, since Plowden's report begins at 118 (consistency pass)"},
     {"seq": 2, "raw": "Rowe v. Roach, I BM. & S. 304", "case_name": "Rowe v. Roach", "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
      "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high", "note": "OCR 'I BM.' for 1 M.; murrell_title is Rowe v Roach"},
     {"seq": 3, "raw": "Nodcn v. Jolnson, 20 L. J. Q. B. (N. S.) 75", "case_name": "Noden v. Johnson", "volume": 20, "reporter_abbr": "L. J. Q. B. (N. S.)", "page": 75,

@@ -5,8 +5,8 @@
   "citations": [
     {"seq": 1, "raw": "Calfe v. Nevil, Popli. 186", "case_name": "Calfe v. Nevil",
      "reporter_abbr": "Poph.", "page": 186,
-     "status": "linked_english_reports", "er_case_id": "16820094", "pincite": true, "confidence": "high",
-     "note": "case begins at Pop 185"},
+     "status": "linked_english_reports", "er_case_id": "16820022", "pincite": true, "confidence": "high",
+     "note": "case begins at Pop 185; linked to 16820022 (er_name Anonymous, murrell_title Calfe v Nevil, with text), not the empty 16820094 (consistency pass)"},
     {"seq": 2, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b", "case_name": "Executors of Grenelefe's Case",
      "reporter_abbr": "Dyer", "page": 42,
      "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",

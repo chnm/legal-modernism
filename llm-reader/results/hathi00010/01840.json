@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob., 164", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 164,
-     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "high",
-     "note": "the Commendam case begins at Hob 140, where the English Reports hold two records of it: 17920644 (er_name 'De Termino Sancti' Mich', murrell_title 'Colt and Glover v Bishop of Coventry and Lichfield', 18474 words) and 17921247 (titled for the case, no word_count); linked the one with a word_count per the README, where the 1871 record (hathi00009/01820) linked 17921247"}
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "the Commendam case begins at Hob 140, where the English Reports hold two records of it: 17920644 (er_name 'De Termino Sancti' Mich', murrell_title 'Colt and Glover v Bishop of Coventry and Lichfield', 18474 words) and 17921247 (titled for the case, no word_count); linked the one with a word_count per the README, where the 1871 record (hathi00009/01820) linked 17921247; medium, as a choice already made, and the 1871 record now links 17920644 too (consistency pass)"}
   ]
 }

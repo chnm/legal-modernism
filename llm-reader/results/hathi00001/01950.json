@@ -1,7 +1,7 @@
 {
   "psmid": "hathi00001", "pageid": "01950",
   "model": "claude-opus-5-5", "read_at": "2026-11-21T17:47:49Z",
-  "note": "printed p. 173; general issues in formedon (ne dona pas) and quare impedit (ne disturba pas). Wentworth, Rastall and Winch's Entries are books of precedents, skipped. Footnote (r) printed after (s) in the scan. The 1831 record (hathi00002/01650) names the case but links the empty record 17921247; the README's choice is 17920644",
+  "note": "printed p. 173; general issues in formedon (ne dona pas) and quare impedit (ne disturba pas). Wentworth, Rastall and Winch's Entries are books of precedents, skipped. Footnote (r) printed after (s) in the scan. The 1831 record (hathi00002/01650) names the case but linked the empty record 17921247; the README's choice is 17920644, which it now links too (consistency pass)",
   "citations": [
     {"seq": 1, "raw": "Hob. 162.", "reporter_abbr": "Hob.", "page": 162,
      "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",

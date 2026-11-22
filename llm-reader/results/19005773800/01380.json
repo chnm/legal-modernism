@@ -4,8 +4,8 @@
   "citations": [
     {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 164", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 164,
-     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
-     "note": "Lord Hobart's judgment; Colt and Glover v. Bishop of Coventry and Lichfield begins at Hob 140 and runs to the next case at 165"},
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "Lord Hobart's judgment; Colt and Glover v. Bishop of Coventry and Lichfield begins at Hob 140 and runs to the next case at 165; linked to 17920644, the record with text, not the empty 17921247, at medium per the README's choice (consistency pass)"},
     {"seq": 2, "raw": "Dole v. Weeks, 4 Mass. 451", "case_name": "Dole v. Weeks",
      "volume": 4, "reporter_abbr": "Mass.", "page": 451,
      "status": "linked_cap", "cap_case_id": 2003960, "confidence": "high",

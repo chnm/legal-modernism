@@ -25,7 +25,7 @@
      "status": "linked_english_reports", "er_case_id": "17940655", "confidence": "medium",
      "note": "no name printed; Elwis v. Lombe, the only case at 6 Mod 117, a liberum tenementum case"},
     {"seq": 7, "raw": "12 Mod. 508", "volume": 12, "reporter_abbr": "Mod.", "page": 508,
-     "status": "linked_english_reports", "er_case_id": "17961459", "pincite": true, "confidence": "low",
-     "note": "no name printed; the README's choice: 12 Mod. 508 is Pell v. Garlick (begins at 12 Mod 506); low as a pin cite"}
+     "status": "linked_english_reports", "er_case_id": "17961459", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the README's choice: 12 Mod. 508 is Pell v. Garlick (begins at 12 Mod 506); medium, not low: an unnamed page inside the chosen case is no fault (consistency pass)"}
   ]
 }

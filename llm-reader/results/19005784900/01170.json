@@ -7,8 +7,8 @@
   "citations": [
     {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 162", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 162,
-     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
-     "note": "the Commendam case begins at Hob 140; the next case begins at Hob 165"},
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "the Commendam case begins at Hob 140; the next case begins at Hob 165; linked to 17920644, the record with text, not the empty 17921247, at medium per the README's choice (consistency pass)"},
     {"seq": 2, "raw": "10 Wendel, 112", "volume": 10, "reporter_abbr": "Wend.", "page": 112,
      "status": "linked_cap", "cap_case_id": 2013005, "pincite": true, "confidence": "medium",
      "note": "no name printed; Root v. Chandler runs 10 Wend. 110-113, an assault and battery case on what may be given in evidence under the general issue, which fits the note on matter of justification"},

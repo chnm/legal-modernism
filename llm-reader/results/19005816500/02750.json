@@ -174,9 +174,10 @@
       "volume": 2,
       "reporter_abbr": "Lutw.",
       "page": 1231,
-      "status": "linked_stub",
-      "stub_cite": "2 Lutw. 1231",
-      "confidence": "high"
+      "status": "linked_english_reports",
+      "er_case_id": "17410299",
+      "confidence": "medium",
+      "note": "Lutwyche is held only as stubs; the English Reports report of the same case, Sanders versus Hussey, Carth 9 (cited next), wins over the stub 2 Lutw. 1231 it linked before (consistency pass)"
     },
     {
       "seq": 16,

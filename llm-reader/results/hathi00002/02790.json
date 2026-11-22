@@ -4,8 +4,8 @@
   {"seq": 1, "raw": "Rivers v. Griffith, 5 Barn. and Ald. 630", "case_name": "Rivers v. Griffith", "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 630,
    "status": "linked_english_reports", "er_case_id": "18220278", "confidence": "high"},
   {"seq": 2, "raw": "Buckley v. Rice Thomas, Plowd. 128 a", "case_name": "Buckley v. Rice Thomas", "reporter_abbr": "Plowd.", "page": 128,
-   "status": "no_match", "confidence": "medium",
-   "note": "Plowden pp. 1-130 are missing from the ER data; no report of the case found by name (Buckley, Bulkley, Rice Thomas) in another reporter"},
+   "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium",
+   "note": "Plowden pp. 1-130 are missing from the ER data; but Dyer reports the same case as Bulkeley v Thomas, 2 Dy 113 (17941482): linked there at medium, a pin cite, since Plowden's report begins at 118 (consistency pass)"},
   {"seq": 3, "raw": "Rowe v. Roach, 1 M. and S. 304", "case_name": "Rowe v. Roach", "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
    "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high",
    "note": "ER's er_name is 'Same against Hoar the Younger' but murrell_title is Rowe v Roach"}

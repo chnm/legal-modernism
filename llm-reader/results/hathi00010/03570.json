@@ -11,8 +11,8 @@
      "note": "no name printed; the note on the statute of frauds falls in Forth v. Stanton (1 Wms Saund 210); Doughty v. Neal begins at 211 but the subject fits Forth v. Stanton"},
     {"seq": 3, "raw": "Anon., 2 Salk., 519", "case_name": "Anonymous",
      "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
-     "note": "three Anonymous cases begin at 2 Salk 519 and cannot be told apart; same choice as the previous page"},
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519 and cannot be told apart; same choice as the previous page; relinked from 17950160 to 17950161, the README's choice (consistency pass)"},
     {"seq": 4, "raw": "1 Saund., 276, d´e., n. 2", "volume": 1, "reporter_abbr": "Saund.", "page": 276,
      "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
      "note": "folios 276 d, e (OCR 'd´e.') are page 276; no name printed; the note falls in Duppa v. Mayo (begins 1 Wms Saund 275)"}

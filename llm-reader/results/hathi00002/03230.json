@@ -16,8 +16,8 @@
      "note": "second Saunders page with its own note; the note on the statute of frauds' promise to answer for another's debt belongs to Forth v. Stanton (1 Wms Saund 210, 6801 words), which runs onto 211; ER's record beginning at 211 is Doughty v. Neal"},
     {"seq": 4, "raw": "Anon. 2 Salk. 519", "case_name": "Anonymous",
      "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
-     "note": "three Anonymous records at 2 Salk 519 (plus Peirce v. Paxton) that the data cannot tell apart; picked the first, as the Gale copy's reader did"},
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous records at 2 Salk 519 (plus Peirce v. Paxton) that the data cannot tell apart; relinked from the first, 17950160, to 17950161, the README's choice (consistency pass)"},
     {"seq": 5, "raw": "Birch v. Bellamy, 12 Mod. 540", "case_name": "Birch v. Bellamy",
      "volume": 12, "reporter_abbr": "Mod.", "page": 540,
      "status": "linked_english_reports", "er_case_id": "17960713", "confidence": "high"},
@@ -32,7 +32,7 @@
      "note": "Saunders's note on the promise to answer for another's debt, belonging to Forth v. Stanton (1 Wms Saund 210); ER's record at 211 is Doughty v. Neal"},
     {"seq": 9, "raw": "Anon. 2 Salk. 519", "case_name": "Anonymous",
      "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
-     "note": "three Anonymous records at 2 Salk 519 that the data cannot tell apart; picked the first, as above"}
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous records at 2 Salk 519 that the data cannot tell apart; 17950161, the README's choice, as above (consistency pass)"}
   ]
 }

@@ -6,8 +6,8 @@
   "citations": [
     {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
      "volume": 1, "reporter_abbr": "Plowd.", "page": 118,
-     "status": "no_match", "confidence": "high",
-     "note": "ER's Plowden records begin at 1 Plowden 131; pages 1-130 are missing and no case of this name is in ER"},
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "ER's Plowden records begin at 1 Plowden 131; pages 1-130 are missing and no case of this name is in ER; but Dyer reports the same case as Bulkeley v Thomas, 2 Dy 113 (17941482): linked there at medium; 118 is the report's first page, not a pin cite (consistency pass)"},
     {"seq": 2, "raw": "Cited ibid.", "volume": 1, "reporter_abbr": "Plowd.", "page": 118,
      "status": "no_match", "confidence": "medium",
      "note": "ibid. expanded to Plow. 118: a case cited in the report of Buckley v. Rice Thomas; Plowden 1-130 not in ER"},

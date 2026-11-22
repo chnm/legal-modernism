@@ -20,7 +20,7 @@
      "status": "linked_english_reports", "er_case_id": "18370065", "confidence": "high"},
     {"seq": 5, "raw": "Delle- vene v. Percer, 7 lM. & W. 439", "case_name": "Dellevene v. Percer",
      "volume": 7, "reporter_abbr": "M. & W.", "page": 439,
-     "status": "linked_english_reports", "er_case_id": "18410262", "confidence": "low",
-     "note": "the 1866 edition prints the same name and cite; no case of that name in the ER. Two cases begin at 7 M & W 439: Deriemer v Fenna (412 words) and Doe d Lowndes v Roe (184 words, an ejectment practice note); Deriemer v Fenna is the nearer to the printed name, taken as a misprint of it, at low"}
+     "status": "linked_english_reports", "er_case_id": "18410262", "confidence": "medium",
+     "note": "the 1866 edition prints the same name and cite; no case of that name in the ER. Two cases begin at 7 M & W 439: Deriemer v Fenna (412 words) and Doe d Lowndes v Roe (184 words, an ejectment practice note); Deriemer v Fenna is the nearer to the printed name, taken as a misprint of it; medium, as most editions grade it (consistency pass)"}
   ]
 }

@@ -4,7 +4,7 @@
   "note": "Com. Dig., Bract. and statutes are not recorded",
   "citations": [
     {"seq": 1, "raw": "Buckley v. Rico Thomas, Plowd. 123 a", "case_name": "Buckley v. Rice Thomas", "volume": 1, "reporter_abbr": "Plowd.", "page": 123,
-     "status": "no_match", "confidence": "high", "note": "OCR 'Rico' for Rice; volume 1 supplied; the 1845 edition prints 128 a; the case begins at 1 Plowd. 118, and Plowden's first 130 pages are missing from the English Reports"},
+     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium", "note": "OCR 'Rico' for Rice; volume 1 supplied; the 1845 edition prints 128 a; the case begins at 1 Plowd. 118, and Plowden's first 130 pages are missing from the English Reports; but Dyer reports the same case as Bulkeley v Thomas, 2 Dy 113 (17941482): linked there at medium, a pin cite, since Plowden's report begins at 118 (consistency pass)"},
     {"seq": 2, "raw": "Rowe v. Roach, 1 M. & S. 304", "case_name": "Rowe v. Roach", "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
      "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high", "note": "er_name is 'Same against Hoar the Younger'; murrell_title is Rowe v Roach"},
     {"seq": 3, "raw": "Whitwell v. Bennett, 3 Bos. & Pul. 559", "case_name": "Whitwell v. Bennett", "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 559,

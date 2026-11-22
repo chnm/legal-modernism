@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. I1i2", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 162,
-     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
-     "note": "OCR 'I1i2' for 162, as cited on p. 155; the Commendam case begins at Hob 140"}
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "OCR 'I1i2' for 162, as cited on p. 155; the Commendam case begins at Hob 140; linked to 17920644, the record with text, not the empty 17921247, at medium per the README's choice (consistency pass)"}
   ]
 }

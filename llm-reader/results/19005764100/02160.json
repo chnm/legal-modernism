@@ -60,9 +60,8 @@
       "status": "linked_english_reports",
       "er_case_id": "17961459",
       "pincite": true,
-      "confidence": "low",
-      "note": "No name printed; two cases begin at 12 Mod 506. Walker v. Humphry's record is 101 words and cannot reach p. 508, so Pell v. Garlick (1,586 words). Aligned by the coordinator across editions.",
-      "case_name": "Pell v. Garlick"
+      "confidence": "medium",
+      "note": "No name printed; two cases begin at 12 Mod 506. Walker v. Humphry's record is 101 words and cannot reach p. 508, so Pell v. Garlick (1,586 words). Aligned by the coordinator across editions. Medium, not low: an unnamed page inside the chosen case is no fault, per the README; case_name dropped, as none is printed (consistency pass)"
     },
     {
       "seq": 6,

@@ -5,8 +5,8 @@
   "read_at": "2026-11-20T13:34:55Z",
   "citations": [
     {"seq": 1, "raw": "Anon. 2 Salk. 519", "case_name": "Anonymous", "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950162", "confidence": "high",
-     "note": "two records begin at 2 Salk 519 (Peirce v. Paxton and Anonymous); the printed name picks the Anonymous"},
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "two records begin at 2 Salk 519 (Peirce v. Paxton and Anonymous); the printed name picks the Anonymous; but three Anonymous records begin there (17950160-17950162), so relinked from 17950162 to 17950161 at low, the README's choice (consistency pass)"},
     {"seq": 2, "raw": "Fowle v. Welsh, 1 Barn. & Cress. 29", "case_name": "Fowle v. Welsh", "volume": 1, "reporter_abbr": "Barn. & Cress.", "page": 29,
      "status": "linked_english_reports", "er_case_id": "18220541", "confidence": "high"},
     {"seq": 3, "raw": "Fletcher v. Pogson, 3 Barn. & Cress. 192", "case_name": "Fletcher v. Pogson", "volume": 3, "reporter_abbr": "Barn. & Cress.", "page": 192,

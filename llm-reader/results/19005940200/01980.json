@@ -6,6 +6,6 @@
     {"seq": 1, "raw": "Per Lord Hobart, Colt v. Bishop of Coventry, Hob. 164", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 164,
      "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
-     "note": "Colt v. Bishop of Coventry runs Hob 140-164; linked to the record with text (17920644, 'De Termino Sancti Mich'), not the empty 17921247, per the README's choice (the 1831 record, which predates it, has 17921247)"}
+     "note": "Colt v. Bishop of Coventry runs Hob 140-164; linked to the record with text (17920644, 'De Termino Sancti Mich'), not the empty 17921247, per the README's choice (the 1831 record, which predated it, had 17921247; it now links 17920644 too (consistency pass))"}
   ]
 }

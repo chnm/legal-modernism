@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob., 162", "case_name": "Colt v. Bishop of Coventry",
      "reporter_abbr": "Hob.", "page": 162,
-     "status": "linked_english_reports", "er_case_id": "17921247", "pincite": true, "confidence": "high",
-     "note": "the Commendam case (Colt & Glover v. Bishop of Coventry & Lichfield) begins at Hob 140; same link as hathi00006"}
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "the Commendam case (Colt & Glover v. Bishop of Coventry & Lichfield) begins at Hob 140; same link as hathi00006; linked to 17920644, the record with text, not the empty 17921247, at medium per the README's choice (consistency pass)"}
   ]
 }

@@ -333,6 +333,31 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    two English Reports records (8 Co Rep 80 and 81); 1838 marks the 81
    link `pincite: true` as a split case, 1860 and 1866 leave it unset.
    Check whether the two records are one case, and align.
+   **The pass, by unit** (begun 2026-11-22 after the last UK page; one
+   agent at a time, each finding its records with read-only jq over
+   `results/*/*.json` and editing them one by one, notes ending
+   "(consistency pass)"; commit after each unit):
+   U1 settled ID and grade alignments (Colt, Calfe, Anon. 2 Salk. 519,
+   Hartford v. Jones, Saunders v. Hussey, Buckley, 12 Mod. 508, Chitty v.
+   Dendy, Thorn v. Rolfe, Dellevene v. Percer): DONE 2026-11-22, 179
+   citations; left for U4: Hartford v. Jones back to `high` (README
+   clarified), "Glasscock v. Morgan, 2 Salk. 519" (19005765000/02890,
+   hathi00013/03250: no such case; decide), "Cited ibid." recorded in
+   19005816500/03120 (drop), `case_name` on bare "Plow., 118" in
+   hathi00009/03500; U2 year-book format
+   (item 1); U3 `raw` line breaks (item 5); U4 grading (item 6's no_match
+   grades, item 4, exact stubs, bare Lutw., `case_name` where none
+   printed); U5 pin cites on split records and same-case parallels (items
+   2 and 8); U6 stubs where the English Reports have the case by name
+   (1895 records, Lutwyche, Belasyse v. Hester); U7 the named record fixes
+   in item 6 (1894 Andrews, 1831, 1851 Gale, Bradford v. Pickles, 1 Saund.
+   374→274, Plow. Com. 231); U8 back-references (item 7, supra-named
+   cases, bare Ibid.); U9 cross-edition variants that are owner decisions:
+   apply the majority reading now and list them for the issues (Yelv. 13,
+   40 Ed. 3. 45, 16/10 Hen. 6. 16, 2 Saund. 291/201 and 295/285, Gwynne v.
+   Burnell 463, Vynior's Case, Hawkins v. Eckles 361, 11 Rep. 55 a, bare
+   second Saunders page, Dyer's volume, 2 Saund. 319 e, Dal. 67, the
+   4 Dowl. 524 note).
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

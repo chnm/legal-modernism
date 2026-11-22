@@ -21,7 +21,7 @@
      "note": "Dowling's Practice Cases have no source; same case linked at 6 Bing NC 26"},
     {"seq": 5, "raw": "Chitty v. Dendy, 3 Ad. & Ell. 819", "case_name": "Chitty v. Dendy",
      "volume": 3, "reporter_abbr": "Ad. & Ell.", "page": 319,
-     "status": "linked_english_reports", "er_case_id": "18350719", "confidence": "medium",
-     "note": "printed 819; the 1838 and 1843 editions print 3 Ad. & Ell. 319; no record titled Chitty v. Dendy; the record at 3 Ad & E 319 is titled 'Chitty against Luxford' (1835), the same plaintiff, taken to be the case (as at 02280)"}
+     "status": "linked_english_reports", "er_case_id": "18350719", "confidence": "high",
+     "note": "printed 819; the 1838 and 1843 editions print 3 Ad. & Ell. 319; the record at 3 Ad & E 319 is titled 'Chitty against Luxford' (1835), as at 02280, but its murrell_title is Chitty v Dendy, so the printed name picks it: high (consistency pass)"}
   ]
 }

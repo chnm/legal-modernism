@@ -117,9 +117,9 @@
       "reporter_abbr": "Salk.",
       "page": 654,
       "status": "linked_english_reports",
-      "er_case_id": "17951938",
-      "confidence": "high",
-      "note": "ER has two Hartford v. Jones records at 2 Salk 654 (17951938 with no word count, 17951939 with 270 words); picked the first, as the other editions' readers did"
+      "er_case_id": "17951939",
+      "confidence": "medium",
+      "note": "ER has two Hartford v. Jones records at 2 Salk 654 (17951938 with no word count, 17951939 with 270 words); relinked from the first to 17951939, the one with a word_count, at medium per the README's duplicate rule (consistency pass)"
     },
     {
       "seq": 11,

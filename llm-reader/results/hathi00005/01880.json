@@ -26,7 +26,7 @@
      "note": "volume supplied; stored in ER as 1 Dy 42, Executors of Grenelife against W-"},
     {"seq": 6, "raw": "Calfe v. Nevil, Poph. 186", "case_name": "Calfe v. Nevil",
      "reporter_abbr": "Poph.", "page": 186,
-     "status": "linked_english_reports", "er_case_id": "16820094", "pincite": true, "confidence": "high",
-     "note": "case begins at Pop 185"}
+     "status": "linked_english_reports", "er_case_id": "16820022", "pincite": true, "confidence": "high",
+     "note": "case begins at Pop 185; linked to 16820022 (er_name Anonymous, murrell_title Calfe v Nevil, with text), not the empty 16820094 (consistency pass)"}
   ]
 }

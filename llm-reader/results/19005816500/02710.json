@@ -22,9 +22,11 @@
       "case_name": "Buckley v. Rice Thomas",
       "reporter_abbr": "Plowd.",
       "page": 128,
-      "status": "no_match",
+      "status": "linked_english_reports",
+      "er_case_id": "17941482",
+      "pincite": true,
       "confidence": "medium",
-      "note": "the ER's Plowden records begin at 1 Plowden 131 in this data; nothing found by name (Buckley, Bulkley, Rice) in Plowden; the case (begins about Plowd. 118) appears to be missing"
+      "note": "the ER's Plowden records begin at 1 Plowden 131 in this data; nothing found by name (Buckley, Bulkley, Rice) in Plowden; the case (begins about Plowd. 118) appears to be missing; but Dyer reports the same case as Bulkeley v Thomas, 2 Dy 113 (17941482): linked there at medium, a pin cite, since Plowden's report begins at 118 (consistency pass)"
     },
     {
       "seq": 3,

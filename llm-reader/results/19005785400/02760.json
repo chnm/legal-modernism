@@ -13,8 +13,8 @@
      "note": "1 Saund. understood from the preceding cite; Saunders's note on the statute of frauds' promise to answer for another's debt, which is Forth v. Stanton (1 Wms Saund 210); Doughty v. Neal begins at 211 but the subject fits Forth v. Stanton"},
     {"seq": 4, "raw": "Anon, 2 Salk. 519", "case_name": "Anonymous",
      "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
-     "note": "three Anonymous cases begin at 2 Salk 519 (17950160, 17950161, 17950162) and cannot be told apart without their text; same choice as other readings of this footnote"},
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519 (17950160, 17950161, 17950162) and cannot be told apart without their text; same choice as other readings of this footnote; relinked from 17950160 to 17950161, the README's choice (consistency pass)"},
     {"seq": 5, "raw": "Birch v. Bella- my, 12 Mod. 540", "case_name": "Birch v. Bellamy",
      "volume": 12, "reporter_abbr": "Mod.", "page": 540,
      "status": "linked_english_reports", "er_case_id": "17960713", "confidence": "high"},
@@ -32,7 +32,7 @@
      "note": "Saunders's note on the statute of frauds, in Forth v. Stanton (1 Wms Saund 210); Doughty v. Neal begins at 211 but the subject fits Forth v. Stanton"},
     {"seq": 10, "raw": "Anon, 2 Salk 519", "case_name": "Anonymous",
      "volume": 2, "reporter_abbr": "Salk.", "page": 519,
-     "status": "linked_english_reports", "er_case_id": "17950160", "confidence": "low",
-     "note": "three Anonymous cases begin at 2 Salk 519 and cannot be told apart without their text; same choice as seq 4"}
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519 and cannot be told apart without their text; same choice as seq 4, 17950161, the README's choice (consistency pass)"}
   ]
 }
