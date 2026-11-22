@@ -62,12 +62,12 @@ Record:
 - A citation that prints only a page inside the case (`6 Ch. at p. 10`, `37 L. J. at 75`, `4 Wheat. 316, 407` cited for 407 alone): `page` is the page printed, not the case's first page, even if you know it. The lookup that follows finds the case a page falls in; say `pin cite` in `note`.
 - A citation whose page number the OCR lost or never printed (`Herring v. Woodhull, 29 Ill.`), or a reporter cited by name alone: record it with `page` left out, and say so in `note`. Do not supply a number from memory; the name will find the case.
 - A citation to a reporter's or editor's note on a case (`1 Wms. Saund. 333 a, n. 8`) is a citation of the case it annotates, at that page.
-- A citation cut off at the bottom of the page, if its page number is printed on this page or it begins on this page and the next page's head completes it. Do not record a citation that belongs wholly to a neighbouring page.
+- A citation split across the page break is recorded once, on the page where its page number is printed: a citation whose name and reporter end this page but whose page number is in `next_page_head` belongs to the next page, and one whose page number opens this page (its name in `previous_page_tail`) belongs here.
 
 Do not record:
 
 - Statutes (`13 Eliz. c. 5`, `2 R. S. 301`), constitutions, codes, session laws and rules of court.
-- Treatises, abridgments, digests, dictionaries, books of entries and collections of leading cases (`Co. Litt.`, `Bac. Abr.`, `Com. Dig.`, `Vin. Abr.`, `2 Inst.`, `Tidd`, `Chit. Pl.`, `2 Kent Com. 340`, `Story Eq. Jur. § 12`, `1 Greenl. Ev.`, `Smith's Leading Cases`), and periodical articles. Beware abbreviations that are a treatise in one book and a reporter in another.
+- Treatises, abridgments, digests, dictionaries, books of entries and collections of leading cases (`Co. Litt.`, `Bac. Abr.`, `Com. Dig.`, `Vin. Abr.`, `2 Inst.`, `Tidd`, `Chit. Pl.`, `2 Kent Com. 340`, `Story Eq. Jur. § 12`, `1 Greenl. Ev.`, `Smith's Leading Cases`), and periodical articles. Beware abbreviations that are a treatise in one book and a reporter in another. Collections of cases that are in the table of reporters are reports, whatever their titles: Equity Cases Abridged (`Eq. Cas. Abr.`), Select Cases in Chancery, Cases in Chancery.
 - A case named with no report anywhere on the page (`as in Slade's case`), an unreported or manuscript case, and cross-references within the book (`supra, p. 32`, `ante, § 4`).
 - Footnote markers, running heads, section numbers, dates, sums of money.
 - Entries of a table of cases or an index, which pair case names with the book's own pages: return `"citations": []` with a `note` saying what the page is. So too a title page, an advertisement, a blank or illegible page, and a page with no citations.
