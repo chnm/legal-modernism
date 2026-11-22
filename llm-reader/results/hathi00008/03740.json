@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00008", "pageid": "03740",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:55:15Z",
+  "note": "p. 338, the perambulation case (gates and hedges 'aforesaid'). Cross-checked with the 1860 edition 19005903700/03400",
+  "citations": [
+    {"seq": 1, "raw": "Goodday v. Mitchell, Cro. Eliz. 441", "case_name": "Goodday v. Mitchell",
+     "reporter_abbr": "Cro. Eliz.", "page": 441,
+     "status": "linked_english_reports", "er_case_id": "16530816", "confidence": "high"}
+  ]
+}

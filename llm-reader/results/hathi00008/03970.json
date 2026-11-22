@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "03970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:02:41Z",
+  "note": "p. 361, departure in the rejoinder (award; bond of indemnity, notice of damnification)",
+  "citations": [
+    {"seq": 1, "raw": "Roberts v. Mariett, 2 Saund. 188", "case_name": "Roberts v. Mariett",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18450223", "pincite": true, "confidence": "high",
+     "note": "Roberts versus Mariett begins at 2 Wms Saund 183, and 188 is the first page of its second ER record, so a pin cite, as the 1860 reader judged"}
+  ]
+}

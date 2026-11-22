@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00008", "pageid": "03920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:01:06Z",
+  "note": "p. 356, Rule VI examples: Statute of Limitations pleaded to two counts; false imprisonment justified jointly. Footnote (y) OCR'd as '(3)'; the two columns of footnote (x) are interleaved with (y) in the scan and read as 'Webb v. Martin, 1 Lev. 48. See acc. Lyne v. Siesfield, 1 Hurl. & N. 278. And see Hyde v. Graham, 32 L. J. Ex. 27'",
+  "citations": [
+    {"seq": 1, "raw": "Webb v. Martin, 1 Lev. 48", "case_name": "Webb v. Martin",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 48,
+     "status": "linked_english_reports", "er_case_id": "17931279", "confidence": "high",
+     "note": "two records at 1 Lev 48 (an Anonymus the other); the name picks Webb against Martin"},
+    {"seq": 2, "raw": "Lyne v. Siesfield, 1 Hurl. & N. 278", "case_name": "Lyne v. Siesfield",
+     "volume": 1, "reporter_abbr": "Hurl. & N.", "page": 278,
+     "status": "linked_english_reports", "er_case_id": "18560646", "confidence": "high",
+     "note": "ER 'Lyne and Another v Siesfeld'; the other record at 1 H & N 278 is Arding v Holmer"},
+    {"seq": 3, "raw": "Hyde v. Graham, 32 L. J. Ex. 27", "case_name": "Hyde v. Graham",
+     "volume": 32, "reporter_abbr": "L. J. Ex.", "page": 27,
+     "status": "linked_english_reports", "er_case_id": "18621073", "confidence": "medium",
+     "note": "the Law Journal has no source; the same case (Exchequer, 1862) found by name at 1 H & C 593, the only record of the name"},
+    {"seq": 4, "raw": "Hedges v. Chapman, 2 Bing. 523", "case_name": "Hedges v. Chapman",
+     "volume": 2, "reporter_abbr": "Bing.", "page": 523,
+     "status": "linked_english_reports", "er_case_id": "18250402", "confidence": "high"}
+  ]
+}

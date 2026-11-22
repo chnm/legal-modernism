@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "03960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:02:29Z",
+  "note": "p. 360, departure in the replication (executors); departure in the rejoinder (award not tendered)",
+  "citations": [
+    {"seq": 1, "raw": "Hickman v. Walker, Willes, 27", "case_name": "Hickman v. Walker",
+     "reporter_abbr": "Willes", "page": 27,
+     "status": "no_match", "confidence": "high",
+     "note": "Willes's Reports have no source and no stub; no Hickman v. Walker in the English Reports by name, as the 1860 and earlier readers found"}
+  ]
+}

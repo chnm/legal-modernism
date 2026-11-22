@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00008", "pageid": "03800",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:57:46Z",
+  "note": "p. 344, hypothetical plea of escape and return; 'wrote or caused to be written' bad; exception for policies of assurance. Skipped: 'vide sup. p. 339 (e)' (cross-reference). Cross-checked with the 1860 edition 19005903700/03420-03430",
+  "citations": [
+    {"seq": 1, "raw": "Griffiths v. Eyles, 1 Bos. & Pul. 413", "case_name": "Griffiths v. Eyles",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 413,
+     "status": "linked_english_reports", "er_case_id": "17990708", "confidence": "high"},
+    {"seq": 2, "raw": "The King v. Brereton, 8 Mod. 330", "case_name": "The King v. Brereton",
+     "volume": 8, "reporter_abbr": "Mod.", "page": 330,
+     "status": "linked_english_reports", "er_case_id": "17953393", "pincite": true, "confidence": "high",
+     "note": "case begins at 8 Mod 328"}
+  ]
+}
