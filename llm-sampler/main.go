@@ -62,11 +62,12 @@ func main() {
 	case "sample":
 		n := fs.Int("n", 10, "pages in the batch")
 		seed := fs.String("seed", "legal-modernism-474", "seed of the random draws")
+		minCites := fs.Int("min-cites", 10, "fewest pipeline citations an edition must have to be drawn")
 		weight := fs.Int("cited-weight", 5, "how many times likelier a page with a pipeline citation is than one without")
 		fs.Parse(args)
 		pool := connect()
 		defer pool.Close()
-		err = cmdSample(ctx, pool, *dir, *seed, *n, max(1, *weight))
+		err = cmdSample(ctx, pool, *dir, *seed, *n, max(1, *weight), *minCites)
 	case "candidates":
 		fs.Parse(args)
 		pool := connect()

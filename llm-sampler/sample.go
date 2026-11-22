@@ -48,13 +48,13 @@ func pick(seed string, draw int, label string, n int) int {
 
 // cmdSample draws the next pages and writes the batch with the first request
 // for each page. An edition is drawn uniformly (a random official copy in
-// moml.treatises), then a page among its body pages, a page on which the
+// moml.treatises with at least minCites pipeline citations), then a page among its body pages, a page on which the
 // pipeline found a citation being citedWeight times as likely as one on which
 // it found none. Each draw records its weight and probability within the
 // edition, so that counts can be weighted back. The draws follow from the
 // seed alone, so the sample can be rebuilt or continued in order. HathiTrust
 // pages carry no type, so any page of a HathiTrust volume may be drawn.
-func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n, citedWeight int) error {
+func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n, citedWeight, minCites int) error {
 	batches, err := readBatches(dir)
 	if err != nil {
 		return err
@@ -81,11 +81,29 @@ func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n, cit
 		return fmt.Errorf("listing editions: %w", err)
 	}
 
-	batch := &Batch{Batch: next, StartedAt: time.Now().UTC(), CitedWeight: citedWeight}
+	batch := &Batch{Batch: next, StartedAt: time.Now().UTC(), CitedWeight: citedWeight, MinCites: minCites}
 	bdir := batchDir(dir, next)
 	for len(batch.Pages) < n {
 		draw++
 		bib := editions[pick(seed, draw, "edition", len(editions))]
+		// An edition with too few pipeline citations is passed over: the view
+		// of treatises still holds histories, political tracts and the like,
+		// which cite no cases. Rejecting a draw leaves the editions that pass
+		// equally likely.
+		var cites int
+		if err := pool.QueryRow(ctx, `
+			SELECT count(*) FROM (
+			  SELECT 1 FROM moml_citations.citations_unlinked u
+			    JOIN moml_citations.citation_links l ON l.citation_id = u.id
+			    JOIN moml.volumes v ON v.psmid = u.moml_treatise
+			   WHERE v.bibliographicid = $1 AND l.status NOT LIKE 'skipped%' LIMIT $2) x`, bib, minCites).Scan(&cites); err != nil {
+			return fmt.Errorf("counting citations of %s: %w", bib, err)
+		}
+		if cites < minCites {
+			slog.Debug("edition has too few citations", "bibliographicid", bib, "draw", draw, "citations", cites)
+			continue
+		}
+
 		// A page counts as cited when the detector found a citation on it
 		// that the linker did not skip as junk, a statute or an unknown
 		// spelling.

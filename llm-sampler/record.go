@@ -21,8 +21,11 @@ type Batch struct {
 	FinishedAt *time.Time `json:"finished_at,omitempty"`
 	// CitedWeight is how many times likelier a page with a pipeline citation
 	// was than one without; absent (1) for the first batches, drawn uniformly.
-	CitedWeight int         `json:"cited_weight,omitempty"`
-	Pages       []BatchPage `json:"pages"`
+	CitedWeight int `json:"cited_weight,omitempty"`
+	// MinCites is the fewest pipeline citations an edition could have and be
+	// drawn; absent for the first batches, which drew any edition.
+	MinCites int         `json:"min_cites,omitempty"`
+	Pages    []BatchPage `json:"pages"`
 }
 
 // BatchPage is one page of a batch, with the draw that chose it.

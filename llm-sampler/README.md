@@ -19,7 +19,11 @@ to the database: the records are files under the data directory.
 
 ## The sample
 
-An edition is drawn uniformly: a random official copy in `moml.treatises`. A
+An edition is drawn uniformly: a random official copy in `moml.treatises`. An
+edition in which the pipeline found fewer than ten citations (`--min-cites`,
+counting those the linker did not skip) is passed over and another drawn,
+since the view still holds histories, political works and other books that
+cite no cases (from batch 14; batches 1 to 13 drew any edition). A
 long treatise and a short one are equally likely, so the sample shows more
 books than a draw over pages would. Then a page is drawn among the edition's
 `bodyPage`s, weighted: a page on which the pipeline found a citation (one the
