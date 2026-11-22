@@ -1,0 +1,10 @@
+{
+  "psmid": "19005903700", "pageid": "04250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:04:53Z",
+  "note": "p. 397; Appendix Note (25) continued, pleading under Hen. III. and Edw. II. Bracton, Reeves and Hale are not cases. Cross-checked with 1843 (19005904300/05800).",
+  "citations": [
+    {"seq": 1, "raw": "17 Edw. II., 534", "volume": 17, "reporter_abbr": "Y.B.", "page": 534,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 17 Edw. II, p. 534 (Maynard's edition, paged as one run), on pleadings in estoppel; no source for the year books"}
+  ]
+}
