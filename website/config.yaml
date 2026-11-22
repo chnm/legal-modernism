@@ -18,3 +18,15 @@ disableKinds:
 
 build:
   noJSConfigInAssets: true
+
+# WebVTT captions generated from a page's plain-text transcript
+mediaTypes:
+  text/vtt:
+    suffixes: [vtt]
+
+outputFormats:
+  captions:
+    mediaType: text/vtt
+    baseName: captions
+    isPlainText: true
+    notAlternative: true

@@ -49,12 +49,16 @@
 				<div class="embed-responsive video-border embed-responsive-16by9">
 					<video class="embed-responsive-item" width="100%" controls allowfullscreen preload=none poster="{{ $img.RelPermalink }}" aria-label="{{ $alt }}">
 						<source src="{{ .Params.Video }}" type="{{ .Params.VideoType }}">
+						{{ with .OutputFormats.Get "captions" }}<track kind="captions" src="{{ .RelPermalink }}" srclang="en" label="English">{{ end }}
 						Your browser does not support the video tag.
 					</video>
 				</div>
 			</div>
 			<div class="col-sm-8">
 				{{ .Content }}
+				{{ if .Params.Transcript }}
+				<p><a href="{{ .RelPermalink }}">Watch with transcript</a></p>
+				{{ end }}
 			</div>
 			{{ end }}
 

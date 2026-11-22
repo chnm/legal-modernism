@@ -1,0 +1,8 @@
+{{/* Parses lines of "[HH:MM:SS] text" into a slice of dicts with time and text. */}}
+{{ $lines := slice }}
+{{ range split (os.ReadFile .Params.Transcript | strings.TrimSpace) "\n" }}
+{{ with findRESubmatch `^\[(\d\d:\d\d:\d\d)\] (.*)$` . 1 }}
+{{ $lines = $lines | append (dict "time" (index . 0 1) "text" (index . 0 2)) }}
+{{ end }}
+{{ end }}
+{{ return $lines }}
