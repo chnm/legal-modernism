@@ -17,7 +17,7 @@ import (
 const (
 	pagesBefore   = 40 // a pin cite can fall deep inside a long case
 	pagesNear     = 3  // a start this close is offered whatever its length
-	maxNameHits   = 8
+	maxNameHits   = 12
 	maxCandidates = 24
 )
 
@@ -537,7 +537,8 @@ func nameTokens(name string) []string {
 }
 
 // searchNames offers the cases whose names hold every token, decided no
-// later than the citing book.
+// later than the citing book, the latest first: a book cites the cases of
+// its own time more than old ones.
 //
 // volume and series are LIKE patterns for a cite in the cited volume and in
 // the cited reporter; cases they match come first, so that a common name
@@ -546,9 +547,18 @@ func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tok
 	if ceiling == 0 {
 		ceiling = 1930
 	}
+	// With a word from each party, the words are cut to their first letters,
+	// since names are spelled variously (Stansfeld, Stansfield); two parties
+	// of one name (Robinson v. Robinson) must hold it twice.
 	patterns := make([]string, len(tokens))
 	for i, t := range tokens {
+		if len(tokens) == 2 && len(t) > 6 {
+			t = t[:5]
+		}
 		patterns[i] = "%" + t + "%"
+	}
+	if len(tokens) == 2 && tokens[0] == tokens[1] {
+		patterns = []string{"%" + tokens[0] + "%" + tokens[0] + "%"}
 	}
 	rows, err := pool.Query(ctx, `
 		SELECT c.id::text, c.name_abbreviation, coalesce(c.decision_year, 0), coalesce(c.first_page, 0), coalesce(c.last_page, 0),
@@ -557,7 +567,7 @@ func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tok
 		 WHERE c.decision_year <= $2 AND c.name_abbreviation ILIKE ALL($1)
 		 ORDER BY EXISTS (SELECT 1 FROM cap.citations ci WHERE ci."case" = c.id AND ci.cite LIKE ANY($4)) DESC,
 		          EXISTS (SELECT 1 FROM cap.citations ci WHERE ci."case" = c.id AND ci.cite LIKE ANY($5)) DESC,
-		          c.decision_year LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
+		          c.decision_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
 	if err != nil {
 		return fmt.Errorf("searching CAP names: %w", err)
 	}
@@ -578,7 +588,7 @@ func searchNames(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, tok
 		  FROM english_reports.cases
 		 WHERE er_year <= $2 + 1 AND (er_name ILIKE ALL($1) OR murrell_title ILIKE ALL($1))
 		 ORDER BY coalesce(er_parallel_cite LIKE ANY($4), false) DESC, coalesce(er_parallel_cite LIKE ANY($5), false) DESC,
-		          er_year LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
+		          er_year DESC LIMIT $3`, patterns, ceiling, maxNameHits, pat[0], pat[1])
 	if err != nil {
 		return fmt.Errorf("searching English Reports names: %w", err)
 	}
