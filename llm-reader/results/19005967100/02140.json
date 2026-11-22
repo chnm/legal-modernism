@@ -1,0 +1,18 @@
+{
+  "psmid": "19005967100", "pageid": "02140",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:58:08Z",
+  "note": "printed p. 183; non assumpsit (account stated; illegality; Carriers Act). The cases of 1834-36 are added in 1838 under the Rules of H. T. 4 Will. IV. The OCR prints the first footnote marker as (n) but the note is (m). '(n) Supra, p. 180' is a cross-reference and 11 Geo. IV. c. 68 a statute, not recorded. 'Et vide Alcock v. Taylor, 2' runs onto the next page, where its page is printed, and is recorded there",
+  "citations": [
+    {"seq": 1, "raw": "Fidget v. Penny, 4 Tyrw. 650", "case_name": "Fidget v. Penny",
+     "volume": 4, "reporter_abbr": "Tyrw.", "page": 650,
+     "status": "linked_english_reports", "er_case_id": "18340104", "confidence": "medium",
+     "note": "Tyrwhitt has no source; linked to the same case's report, Fidgett v Penny, 1 CrM & R 107 (1834), found by name"},
+    {"seq": 2, "raw": "Potts v. Sparrow, 1 Bing. N. C. 594", "case_name": "Potts v. Sparrow",
+     "volume": 1, "reporter_abbr": "Bing. N. C.", "page": 594,
+     "status": "linked_english_reports", "er_case_id": "18350648", "confidence": "high"},
+    {"seq": 3, "raw": "Symms v. Chaplin, 5 Dowl. 429", "case_name": "Symms v. Chaplin",
+     "volume": 5, "reporter_abbr": "Dowl.", "page": 429,
+     "status": "linked_english_reports", "er_case_id": "18361055", "confidence": "medium",
+     "note": "Dowling's Practice Cases have no source; linked to the same case's report, Syms against Chaplin, 5 Ad & E 634 (1836, carrier, the Carriers Act), found by name"}
+  ]
+}
