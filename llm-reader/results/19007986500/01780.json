@@ -1,0 +1,14 @@
+{
+  "psmid": "19007986500", "pageid": "01780",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:14:46Z",
+  "note": "printed p. 150, faults the verdict cannot cure; the statutes of jeofails. A cross-reference and Blackstone's Commentaries skipped",
+  "citations": [
+    {"seq": 1, "raw": "Jackson v. Pesked, 1 M. & S. 334", "case_name": "Jackson v. Pesked",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18130139", "confidence": "high",
+     "note": "printed 334 corrected to 234, where the named case begins (cited at 234 on pp. 148-149)"},
+    {"seq": 2, "raw": "1 Saund. 228 c. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note (1) at 1 Saund. 228 c, the note to Stennel v. Hogg (1 Wms Saund 226), per the README's choice"}
+  ]
+}

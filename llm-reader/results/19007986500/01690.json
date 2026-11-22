@@ -1,0 +1,24 @@
+{
+  "psmid": "19007986500", "pageid": "01690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:11:42Z",
+  "note": "printed p. 141, the statutes of jeofails (27 Eliz. c. 5, 4 Ann. c. 16, skipped) and special demurrer. Same footnote as the 1827 and 1841 records",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Kenyon, 10 East, 139", "case_name": "Buckley v. Kenyon",
+     "volume": 10, "reporter_abbr": "East", "page": 139,
+     "status": "linked_english_reports", "er_case_id": "18080273", "confidence": "high"},
+    {"seq": 2, "raw": "Bowdell v. Parsons, 359", "case_name": "Bowdell v. Parsons",
+     "volume": 10, "reporter_abbr": "East", "page": 359,
+     "status": "linked_english_reports", "er_case_id": "18080381", "confidence": "high",
+     "note": "volume and reporter carried over from the previous cite (10 East); the named case is at 10 East 359"},
+    {"seq": 3, "raw": "Bolton v. Bishop of Carlisle, 2 IL. B. 259", "case_name": "Bolton v. Bishop of Carlisle",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 259,
+     "status": "linked_english_reports", "er_case_id": "17931596", "confidence": "high"},
+    {"seq": 4, "raw": "Bi:ch v. Owen, 5 T. R. 409", "case_name": "Bach v. Owen",
+     "volume": 5, "reporter_abbr": "T. R.", "page": 409,
+     "status": "linked_english_reports", "er_case_id": "17931568", "confidence": "high",
+     "note": "OCR 'Bi:ch' for Bach"},
+    {"seq": 5, "raw": "2 Sauibd. 2 b. n. (k)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note at 2 b to Mellor v. Walker, which begins at 2 Wms Saund 1, as in the 1827 and 1841 records"}
+  ]
+}
