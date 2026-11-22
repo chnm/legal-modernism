@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "00580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:17:01Z",
+  "note": "printed p. 27; the end of footnote (d) cites Tidd and Jones's Index (treatises); (e) also Co. Litt. and the Records report, (f) a statute and Tidd, (g) Impey",
+  "citations": [
+    {"seq": 1, "raw": "Ramsbottom v. Buckhurst, 2 M. & S. 565", "case_name": "Ramsbottom v. Buckhurst",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 565,
+     "status": "linked_english_reports", "er_case_id": "18140412", "confidence": "high",
+     "note": "ER 2 M & S 565, Ramsbottom and Others against Buckhurst (1814), as in the 1835 record"}
+  ]
+}

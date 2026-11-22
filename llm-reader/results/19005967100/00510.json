@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "00510",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:16:05Z",
+  "note": "printed p. 20, replevin (1835: 19007986500/00470, its p. 19); footnotes otherwise cite F. N. B., Doctor and Student, 2 Inst., Dalton's Sheriff and Selwyn (treatises) and a statute",
+  "citations": [
+    {"seq": 1, "raw": "Moor v. Watts, Ld. Ray. 617", "case_name": "Moor v. Watts",
+     "volume": 1, "reporter_abbr": "Ld. Ray.", "page": 617,
+     "status": "linked_english_reports", "er_case_id": "17921610", "pincite": true, "confidence": "high",
+     "note": "volume 1 supplied from the case name; Moore v. Watts begins at 1 Ld Raym 613 (2796 words, the next case at 618), on replevin by writ; as in the 1835 record (19007986500/00470)"}
+  ]
+}
