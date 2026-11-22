@@ -1,0 +1,31 @@
+{
+  "psmid": "19005967100", "pageid": "04270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:07:51Z",
+  "note": "printed p. 395; oyer of the condition and of the collateral instrument; Rule 8, no greater particularity than the thing will conveniently admit. Bac. Ab. skipped; footnote (b) 'Vide supra, p. 324' is a cross-reference to this work, skipped",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 410, n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Saunders's note (2) at 410 in Lord Arlington v. Merricke, whose first ER record runs 2 Wms Saund 403-410"},
+    {"seq": 2, "raw": "Ibid.", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "footnote (y), a bare Ibid. repeating footnote (x), 2 Saund. 410, n. (2), in Lord Arlington v. Merricke"},
+    {"seq": 3, "raw": "Earl of Kerry v. Baxter, 4 East, 340", "case_name": "Earl of Kerry v. Baxter",
+     "volume": 4, "reporter_abbr": "East", "page": 340,
+     "status": "linked_english_reports", "er_case_id": "18030719", "confidence": "high"},
+    {"seq": 4, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
+     "reporter_abbr": "Plow.", "page": 118,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "choice already made (README): Plowden's pages 1-130 are missing; linked to Dyer's report, Bulkeley v Thomas, 2 Dy 113; 118 is the report's first page, not a pin cite"},
+    {"seq": 5, "raw": "Wimbish v. Tailbois, ibid. 54, 55", "case_name": "Wimbish v. Tailbois",
+     "reporter_abbr": "Plow.", "page": 54,
+     "status": "no_match", "confidence": "high",
+     "note": "ibid. = Plowden; ER's Plowden lacks pages 1-130 and no other report of Wimbish v. Tailbois found by name (searched wymb, wimb, tailb, talbois); dropped: 55"},
+    {"seq": 6, "raw": "Partridge v. Strange, ibid. 85", "case_name": "Partridge v. Strange",
+     "reporter_abbr": "Plow.", "page": 85,
+     "status": "linked_english_reports", "er_case_id": "17941252", "confidence": "medium",
+     "note": "ibid. = Plowden; ER's Plowden lacks pages 1-130; the same case is reported as 1 Dy 74, linked to the case"},
+    {"seq": 7, "raw": "lartley v. Herring, 8 T. R. 130", "case_name": "Hartley v. Herring",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 130,
+     "status": "linked_english_reports", "er_case_id": "17990601", "confidence": "high"}
+  ]
+}

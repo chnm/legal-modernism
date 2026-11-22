@@ -1,0 +1,10 @@
+{
+  "psmid": "19005967100", "pageid": "04440",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:13:41Z",
+  "note": "printed p. 412; argumentativeness: the wager on the velvet cloak; the plea that the plaintiff never had any goods. Footnote (x) OCR'd '(.r)'",
+  "citations": [
+    {"seq": 1, "raw": "Ledesham v. Lubram, Cro. Eliz. 870", "case_name": "Ledesham v. Lubram",
+     "reporter_abbr": "Cro. Eliz.", "page": 870,
+     "status": "linked_english_reports", "er_case_id": "16531203", "confidence": "high"}
+  ]
+}
