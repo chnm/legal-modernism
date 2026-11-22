@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "01950",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:50:42Z",
+  "note": "printed p. 164; whether to pass by an objection and plead over; Coke's advice quoted from Lord Cromwell's Case. A cross-reference skipped. Same as 1835 (19007986500, p. 152)",
+  "citations": [
+    {"seq": 1, "raw": "Lord Cromwell's Case, 4 Rep. 14 a", "case_name": "Lord Cromwell's Case",
+     "volume": 4, "reporter_abbr": "Rep.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "15780080", "pincite": true, "confidence": "high",
+     "note": "The Lord Cromwell's Case begins at 4 Co Rep 12; the quoted advice is at 14 a (Cutler v Dixon and Buckley v Wood begin at 14, but the name decides)"}
+  ]
+}

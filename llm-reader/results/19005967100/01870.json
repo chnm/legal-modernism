@@ -1,0 +1,26 @@
+{
+  "psmid": "19005967100", "pageid": "01870",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:48:09Z",
+  "note": "printed p. 156; exceptions to the whole-record rule: respondeat ouster; the plaintiff must put his action on the ground; demurrer too large. Footnote (s) as in 1835 (19007986500/01720)",
+  "citations": [
+    {"seq": 1, "raw": "Belasyse, v. Hester, Lutw., 1592", "case_name": "Belasyse v. Hester",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1592,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1592", "confidence": "high",
+     "note": "Lutwyche is in the stubs only; the stub's volume 2 follows from the page"},
+    {"seq": 2, "raw": "Routh v. Weddell, id. 1667", "case_name": "Routh v. Weddell",
+     "volume": 2, "reporter_abbr": "Lutw.", "page": 1667,
+     "status": "linked_stub", "stub_cite": "2 Lutw. 1667", "confidence": "high",
+     "note": "id. expanded to Lutw.; the stub's volume 2 follows from the page"},
+    {"seq": 3, "raw": "Hastrop v. Hastings, 1 Salk. 212", "case_name": "Hastrop v. Hastings",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "17951949", "confidence": "high",
+     "note": "two cases begin at 1 Salk 212; the name picks Hastrop versus Hastings"},
+    {"seq": 4, "raw": "Rich v. Pilkington, Carth. 172", "case_name": "Rich v. Pilkington",
+     "reporter_abbr": "Carth.", "page": 172,
+     "status": "linked_english_reports", "er_case_id": "17410289", "pincite": true, "confidence": "high",
+     "note": "begins at Carth 171"},
+    {"seq": 5, "raw": "Marsh v. Bulteel, 5 Barn. & Aid. 507", "case_name": "Marsh v. Bulteel",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 507,
+     "status": "linked_english_reports", "er_case_id": "18220069", "confidence": "high"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "01960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:51:14Z",
+  "note": "printed p. 165; costs on demurrer; the opening of Pleadings. Sel. Pract. and Tidd are practice books, not recorded; a cross-reference skipped. Hitchin v. Stevens is added in 1838 (not in 1835's footnote, 19007986500 p. 153); 1843 and the 1895 reprint have it",
+  "citations": [
+    {"seq": 1, "raw": "Hitchin v. Stevens, 2 Show. 244", "case_name": "Hitchin v. Stevens",
+     "volume": 2, "reporter_abbr": "Show.", "page": 233,
+     "status": "linked_english_reports", "er_case_id": "17940851", "confidence": "high",
+     "note": "printed 244; the case is at 2 Show KB 233 (244 is probably its number among Shower's cases; nothing at 2 Show KB 244); found by name, as the 1895 record reads it"},
+    {"seq": 2, "raw": "Cameron v. Reynolds, Cowp. 407", "case_name": "Cameron v. Reynolds",
+     "volume": 1, "reporter_abbr": "Cowp.", "page": 407,
+     "status": "linked_english_reports", "er_case_id": "17760026", "pincite": true, "confidence": "high",
+     "note": "Cameron v. Reynolds begins at 1 Cowp 403 (2073 words); Sayer v. Pocock begins at 407, but the printed name decides"}
+  ]
+}

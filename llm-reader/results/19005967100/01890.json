@@ -1,0 +1,26 @@
+{
+  "psmid": "19005967100", "pageid": "01890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:48:56Z",
+  "note": "printed p. 158; faults aided by pleading over. Skipped: Com. Dig., Co. Litt., Pract. Reg., Gilb. Hist. C. P., cross-references. Footnote (a) prints Plowden, Butt's case and Drake v. Corderoy, which the 1835 record (19007986500/01750) has not; matches the 1895 record (19005765700/01540)",
+  "citations": [
+    {"seq": 1, "raw": "Plow. Corn. 230", "volume": 1, "reporter_abbr": "Plow.", "page": 230,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page falls in Willion v. Berkley, which begins at 1 Plowden 222"},
+    {"seq": 2, "raw": "Butt's case, 7 Rep. 23", "case_name": "Butt's Case",
+     "volume": 7, "reporter_abbr": "Rep.", "page": 23,
+     "status": "linked_english_reports", "er_case_id": "15720063", "confidence": "high"},
+    {"seq": 3, "raw": "Drake v. Corderoy, Cro. Car. 288", "case_name": "Drake v. Corderoy",
+     "reporter_abbr": "Cro. Car.", "page": 288,
+     "status": "linked_english_reports", "er_case_id": "17920721", "confidence": "high"},
+    {"seq": 4, "raw": "Anon. 2 Salk. 519", "case_name": "Anonymous",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 519,
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519; the README's choice, 17950161"},
+    {"seq": 5, "raw": "Fowle v. Welsh, 1 Barn. & Cres. 29", "case_name": "Fowle v. Welsh",
+     "volume": 1, "reporter_abbr": "Barn. & Cres.", "page": 29,
+     "status": "linked_english_reports", "er_case_id": "18220541", "confidence": "high"},
+    {"seq": 6, "raw": "Fletcher v. Pogson, 3 Barn. & Cres. 192", "case_name": "Fletcher v. Pogson",
+     "volume": 3, "reporter_abbr": "Barn. & Cres.", "page": 192,
+     "status": "linked_english_reports", "er_case_id": "18240053", "confidence": "high"}
+  ]
+}

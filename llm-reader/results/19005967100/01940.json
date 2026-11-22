@@ -1,0 +1,13 @@
+{
+  "psmid": "19005967100", "pageid": "01940",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:50:27Z",
+  "note": "printed p. 163; objections cured by the statutes of jeofails; the pleader's election to demur or plead. Skipped: 3 Bl. Com., Gilbert C. P.",
+  "citations": [
+    {"seq": 1, "raw": "1 Saund. 228 c. n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; 1 Saund. 228 n. (1), covering 228 a, b and c, is the note to Stennel v. Hogg (record at 1 Wms Saund 226), per the README's choice"},
+    {"seq": 2, "raw": "1 Saund. 228 b. n. (i) by Pat.", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) read for OCR '(i)', at 228 b (Patteson's edition); the note to Stennel v. Hogg, per the README's choice"}
+  ]
+}

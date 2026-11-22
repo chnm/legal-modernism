@@ -281,6 +281,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    The year book "16 Hen. 6, 16" (1835 04460, p. 418) is 10 Hen. 6. 16 in
    the 1824, 1827 and 1831 editions; check the scan and the later
    editions under the variant-reading rule.
+   Anon. 2 Salk. 519: some 1895 records (19005765700) link 17950162, not
+   the README's 17950161; align them. A case named in the text with only
+   "Supra, p. N" is now recorded (README, 2026-11-22): 1838 01900-02100
+   (Cousins v. Paddon at 02050) and earlier records skipped such cases;
+   find and add them.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

@@ -1,0 +1,18 @@
+{
+  "psmid": "19005967100", "pageid": "01900",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:49:14Z",
+  "note": "printed p. 159; faults aided by pleading over (the hook; the condition and release); slips of form. Skipped: Bac. Ab., Gilb. Hist. C. P. 1838 prints Brooke v. Brooke at Sid. 184 where 1835 (19007986500/01750) printed Glasscock v. Morgan, the next case at that page; the 1895 reprint (19005765700/01550) has Brooke v. Brooke",
+  "citations": [
+    {"seq": 1, "raw": "Brooke v. Brooke, Sid. 184", "case_name": "Brooke v. Brooke",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 184,
+     "status": "linked_english_reports", "er_case_id": "17140078", "confidence": "high",
+     "note": "volume supplied; 'Brooke versus Brooke & Auters' at 1 Sid 184 (Glascok versus Morgan also begins there; the name picks Brooke); cited through Bac. Ab. Trespass, but linked to its own report"},
+    {"seq": 2, "raw": "Plow. Corn. 230", "volume": 1, "reporter_abbr": "Plow.", "page": 230,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page falls in Willion v. Berkley, which begins at 1 Plowden 222"},
+    {"seq": 3, "raw": "Per Holt, C. J., Anon. 2 Salk. 519", "case_name": "Anonymous",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 519,
+     "status": "linked_english_reports", "er_case_id": "17950161", "confidence": "low",
+     "note": "three Anonymous cases begin at 2 Salk 519; the README's choice, 17950161"}
+  ]
+}

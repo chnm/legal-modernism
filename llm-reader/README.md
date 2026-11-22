@@ -89,7 +89,11 @@ count. Do not look at `moml_citations.*`: the point is an independent reading.
 - `Ib.`, `Id.`, `ubi supra`, a case name followed by `sup.` or `supra`
   (`Martin v. Kesterton, sup.`), `S. C.` (same case) and a bare `Ibid. 233` refer back to the
   previous cite: resolve them to the volume and reporter they stand for and
-  record them, noting the expansion in `note`.
+  record them, noting the expansion in `note`. A case named in the text
+  whose only cite is a cross-reference to this book's earlier page where
+  its report is printed (Cousins v. Paddon, footnote "Supra, p. 173") is
+  the same: resolve it to that report, at `medium`. A bare `supra, p. 32`
+  with no case name is still a cross-reference.
 - When a citation is cut off at the bottom of the page and continues on the
   next, record it on the page where its page number is printed (even if the
   name and reporter end the page before);
