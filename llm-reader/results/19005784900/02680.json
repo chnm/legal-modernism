@@ -1,7 +1,7 @@
 {
   "psmid": "19005784900", "pageid": "02680",
   "model": "claude-opus-5-5", "read_at": "2026-11-20T12:30:59Z",
-  "note": "Bac. Ab., Com. Dig., Chitty, Selw. N. P., Arch. and cross-references skipped; cross-checked with the 1851 edition's record (19005764100/02680)",
+  "note": "Bac. Ab., Com. Dig., Chitty, Selw. N. P., Arch. and cross-references skipped; cross-checked with the 1851 edition's record (19005764100/02680). The bare Ibid. in (o) follows footnote (n), which mixes Le Bret v. Papillon with 2 Chitty (a treatise), and is not recorded (consistency pass)",
   "citations": [
     {"seq": 1, "raw": "2 Saund. 210, n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 210,
      "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
@@ -15,17 +15,14 @@
     {"seq": 4, "raw": "Le Bret v. Papillon, 4 East, 502", "case_name": "Le Bret v. Papillon",
      "volume": 4, "reporter_abbr": "East", "page": 502,
      "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "high"},
-    {"seq": 5, "raw": "Ibid.", "volume": 4, "reporter_abbr": "East", "page": 502,
-     "status": "linked_english_reports", "er_case_id": "18040108", "confidence": "medium",
-     "note": "Ibid. read as repeating Le Bret v. Papillon, 4 East 502 from the previous note (as in the 1851 reading), though it could repeat the 2 Chitty cite printed after it"},
-    {"seq": 6, "raw": "Evans v. Prosser, 3 T. R. 186", "case_name": "Evans v. Prosser",
+    {"seq": 5, "raw": "Evans v. Prosser, 3 T. R. 186", "case_name": "Evans v. Prosser",
      "volume": 3, "reporter_abbr": "T. R.", "page": 186,
      "status": "linked_english_reports", "er_case_id": "17892450", "confidence": "high"},
-    {"seq": 7, "raw": "Veale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
+    {"seq": 6, "raw": "Veale v. Warner, 1 Saund. 325", "case_name": "Veale v. Warner",
      "volume": 1, "reporter_abbr": "Saund.", "page": 325,
      "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
      "note": "Veale v. Warner begins at 1 Wms Saund 323"},
-    {"seq": 8, "raw": "3 Ed. 3. 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
+    {"seq": 7, "raw": "3 Ed. 3. 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
      "status": "no_match", "confidence": "high", "note": "year book, 3 Edw. III fo. 21; no source. Legible, so high (consistency pass)"}
   ]
 }

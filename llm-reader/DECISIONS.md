@@ -391,7 +391,14 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Jeffrey v. White, Doug. 475/476; Garrard v. Tuck, 8 C.B. 230/231; Leke's
    Case, Dy. 364 b/365), does `page` keep the printed number or take the
    English Reports'? Left printed. Two 1 Saund. 374 records stay `low`
-   (19005765000/04420, hathi00013/04820); U4 grading (item 6's no_match
+   (19005765000/04420, hathi00013/04820);
+   U8 back-references: DONE 2026-11-22 (7 added: Martin v. Kesterton sup.
+   in the 1831 copies, Cousins v. Paddon 1838, Livingston v. Jefferson and
+   Donovan v. Hartford in 1901, an Ibid. in 1824, an Id. in 1894; 6 removed:
+   the Ibid. after Le Bret v. Papillon and 2 Chitty in six copies). Open:
+   a bare American "Id." after a footnote of several cases is recorded as
+   the last case in some places (Whitney v. Stark) and skipped in others;
+   settle the rule; U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

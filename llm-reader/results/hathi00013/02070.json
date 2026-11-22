@@ -3,7 +3,7 @@
   "pageid": "02070",
   "model": "claude-opus-5-5",
   "read_at": "2026-11-21T16:20:23Z",
-  "note": "printed page 153, section 94 (the declaration), with Andrews's new bracketed passage on the structure of a declaration and new notes 1-3. Stephen's notes (g)-(h) cite the Appendix, Reg. Plac. and F. N. B. (not recorded). 'Donovan v. Hartford & New Haven Ry. Co., stated ante, 107' is a cross-reference with no report, not recorded.",
+  "note": "printed page 153, section 94 (the declaration), with Andrews's new bracketed passage on the structure of a declaration and new notes 1-3. Stephen's notes (g)-(h) cite the Appendix, Reg. Plac. and F. N. B. (not recorded). 'Donovan v. Hartford & New Haven Ry. Co., stated ante, 107' is read like supra and resolved to 65 Conn. 201, cited on p. 107 (01610) (consistency pass).",
   "citations": [
     {"seq": 1, "raw": "People for use, etc. v. Lane, 36 111. App. 649", "case_name": "People for use v. Lane",
      "volume": 36, "reporter_abbr": "Ill. App.", "page": 649,
@@ -18,6 +18,10 @@
     {"seq": 4, "raw": "People v. Ryder, 12 N. Y. 433", "case_name": "People v. Ryder",
      "volume": 12, "reporter_abbr": "N. Y.", "page": 433,
      "status": "linked_cap", "cap_case_id": 2016197, "confidence": "high",
-     "note": "CAP names it People ex rel. Crane v. Ryder"}
+     "note": "CAP names it People ex rel. Crane v. Ryder"},
+    {"seq": 5, "raw": "Donovan v. Hartford & New Haven Ry. Co., stated ante, 107", "case_name": "Donovan v. Hartford & New Haven Ry. Co.",
+     "volume": 65, "reporter_abbr": "Conn.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 806171, "confidence": "medium",
+     "note": "'stated ante, 107' read like supra: the case is cited 65 Conn. 201 in the note on p. 107 (hathi00013/01610); volume, reporter and page supplied from there, as on 05170 (consistency pass)"}
   ]
 }

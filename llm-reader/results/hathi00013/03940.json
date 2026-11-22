@@ -3,7 +3,7 @@
   "pageid": "03940",
   "model": "claude-opus-5-5",
   "read_at": "2026-11-21T16:47:50Z",
-  "note": "Printed p. 340 (number not printed): chapter VIII, Rule I, § 170, traverse must not be taken on an immaterial allegation. Stephen's footnotes (m)-(q), then Andrews's notes 1-3, whose two columns the scan interleaves line by line: recorded in note order (note 1: Rogers, Thompson, Caulfield, Castro; note 2: Clement; note 3: Rasor, Havens). Com. Dig. and Bac. Ab. not recorded; 'Donovan v. Hartford, etc. R. Co., stated ante, p. 107' is a cross-reference with no report. Matches 1894 page 03580; the 1894 note's Thurman v. Wild and Gledstane v. Hewitt are not on this page.",
+  "note": "Printed p. 340 (number not printed): chapter VIII, Rule I, § 170, traverse must not be taken on an immaterial allegation. Stephen's footnotes (m)-(q), then Andrews's notes 1-3, whose two columns the scan interleaves line by line: recorded in note order (note 1: Rogers, Thompson, Caulfield, Castro; note 2: Clement; note 3: Rasor, Havens). Com. Dig. and Bac. Ab. not recorded; 'Donovan v. Hartford, etc. R. Co., stated ante, p. 107' is read like supra and resolved to 65 Conn. 201, cited on p. 107 (01610) (consistency pass). Matches 1894 page 03580; the 1894 note's Thurman v. Wild and Gledstane v. Hewitt are not on this page.",
   "citations": [
     {"seq": 1, "raw": "1 Lev. 82",
      "volume": 1, "reporter_abbr": "Lev.", "page": 32,
@@ -45,6 +45,10 @@
     {"seq": 11, "raw": "Havens v. H. & N. H. Ry., 28 Conn. 69", "case_name": "Havens v. Hartford & New Haven Ry.",
      "volume": 28, "reporter_abbr": "Conn.", "page": 69,
      "status": "linked_cap", "cap_case_id": 527851, "pincite": true, "confidence": "high",
-     "note": "CAP cites the case as 28 Conn. 68 (1859); 69 is one page in"}
+     "note": "CAP cites the case as 28 Conn. 68 (1859); 69 is one page in"},
+    {"seq": 12, "raw": "Donovan v. Hartford, etc. R. Co., stated ante, p. 107", "case_name": "Donovan v. Hartford, etc. R. Co.",
+     "volume": 65, "reporter_abbr": "Conn.", "page": 201,
+     "status": "linked_cap", "cap_case_id": 806171, "confidence": "medium",
+     "note": "'stated ante, p. 107' read like supra: the case is cited 65 Conn. 201 in the note on p. 107 (hathi00013/01610); volume, reporter and page supplied from there, as on 05170 (consistency pass)"}
   ]
 }

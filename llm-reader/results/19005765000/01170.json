@@ -3,7 +3,7 @@
   "pageid": "01170",
   "model": "claude-opus-5-5",
   "read_at": "2026-11-21T14:11:58Z",
-  "note": "p. 58, Andrews's chapter on election of remedies (§ 35). The scan interleaves the footnote columns; recorded in footnote order 1-8 (no text for 9 is printed). Case names given in the text with the cite in the footnote (Brown v. C., M. & St. P. Ry.; Terry v. Munger) are taken for those cites. Sutherland on Damages, the Id. after it, the cross-reference to § 31, and the Am. Rep., Am. Dec. and L.R.A. parallel cites are not recorded, except L.R.A. where it is the only cite.",
+  "note": "p. 58, Andrews's chapter on election of remedies (§ 35). The scan interleaves the footnote columns; recorded in footnote order 1-9. Case names given in the text with the cite in the footnote (Brown v. C., M. & St. P. Ry.; Terry v. Munger) are taken for those cites. Sutherland on Damages (the end of note 4), the cross-reference to § 31, and the Am. Rep., Am. Dec. and L.R.A. parallel cites are not recorded, except L.R.A. where it is the only cite. Note 9 is a bare Id. after note 8's single case, Omaha v. Tabor, and is recorded, as in the 1901 record (consistency pass).",
   "citations": [
     {"seq": 1, "raw": "Brown v. C., M. & St. P. Ry. Co.,' ... 54 Wis. 343", "case_name": "Brown v. Chicago, Milwaukee & St. Paul Railway Co.",
      "volume": 54, "reporter_abbr": "Wis.", "page": 342,
@@ -42,6 +42,10 @@
      "note": "cited only by L.R.A. (not in CAP); linked by name to Bailey v. Chicago, M. & St. P. Ry. Co., 3 S.D. 531 (1893), the only such case in South Dakota"},
     {"seq": 11, "raw": "Omaha, etc. Co. v. Tabor, 13 Colo. 41", "case_name": "Omaha & Grant Smelting & Refining Co. v. Tabor",
      "volume": 13, "reporter_abbr": "Colo.", "page": 41,
-     "status": "linked_cap", "cap_case_id": 2505029, "confidence": "high"}
+     "status": "linked_cap", "cap_case_id": 2505029, "confidence": "high"},
+    {"seq": 12, "raw": "Id.", "case_name": "Omaha & Grant Smelting & Refining Co. v. Tabor",
+     "volume": 13, "reporter_abbr": "Colo.", "page": 41,
+     "status": "linked_cap", "cap_case_id": 2505029, "confidence": "high",
+     "note": "note 9, a bare Id. after note 8, which holds the single case Omaha, etc. Co. v. Tabor, 13 Colo. 41 (the scan prints it beside the end of note 4's Sutherland on Damages); as in the 1901 record hathi00013/01440 (consistency pass)"}
   ]
 }

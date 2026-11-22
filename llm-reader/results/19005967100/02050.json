@@ -1,17 +1,21 @@
 {
   "psmid": "19005967100", "pageid": "02050",
   "model": "claude-opus-5-5", "read_at": "2026-11-22T03:54:21Z",
-  "note": "printed p. 174; more decisions on never indebted (attorney's retainer, set-off, payment), all added in 1838 (cases of 1836-37). Cousins v. Paddon, named in the text with only 'Supra, p. 173' in note (p), is a cross-reference to the previous page and not recorded again. Note (q) is OCR'd '(g)'",
+  "note": "printed p. 174; more decisions on never indebted (attorney's retainer, set-off, payment), all added in 1838 (cases of 1836-37). Cousins v. Paddon, named in the text with only 'Supra, p. 173' in note (p), is resolved to the report printed on that page (02040) and recorded, as on 02120 (consistency pass). Note (q) is OCR'd '(g)'",
   "citations": [
     {"seq": 1, "raw": "Jones v. Reade, 5 Dowl. 216", "case_name": "Jones v. Reade",
      "volume": 5, "reporter_abbr": "Dowl.", "page": 216,
      "status": "linked_english_reports", "er_case_id": "18361004", "confidence": "medium",
      "note": "Dowling's Practice Cases have no source; linked to the same case's report, Jones against Reade, 5 Ad & E 529 (1836), found by name, in preference to the stub 5 Dowl. 216"},
-    {"seq": 2, "raw": "Graham v. Partridge, 1 Tyrw. & G. 754", "case_name": "Graham v. Partridge",
+    {"seq": 2, "raw": "Cousins v. Paddon (p) ... (p) Supri, p. 173", "case_name": "Cousins v. Paddon",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 535,
+     "status": "linked_english_reports", "er_case_id": "18350048", "confidence": "medium",
+     "note": "named in the text with only a cross-reference to p. 173 (02040), where it is cited 5 Tyrw. 535; resolved to that report, linked as there to Cousins v Paddon, 2 CrM & R 547 (consistency pass)"},
+    {"seq": 3, "raw": "Graham v. Partridge, 1 Tyrw. & G. 754", "case_name": "Graham v. Partridge",
      "volume": 1, "reporter_abbr": "Tyrw. & G.", "page": 754,
      "status": "linked_english_reports", "er_case_id": "18360666", "confidence": "medium",
      "note": "Tyrwhitt and Granger has no source; linked to the same case's report, Graham v Partridge, 1 M & W 395 (1836)"},
-    {"seq": 3, "raw": "Belbin v. Butt, 2 Mees. & W. 422", "case_name": "Belbin v. Butt",
+    {"seq": 4, "raw": "Belbin v. Butt, 2 Mees. & W. 422", "case_name": "Belbin v. Butt",
      "volume": 2, "reporter_abbr": "Mees. & W.", "page": 422,
      "status": "linked_english_reports", "er_case_id": "18370024", "confidence": "high"}
   ]
