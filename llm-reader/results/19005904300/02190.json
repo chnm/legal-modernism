@@ -1,0 +1,18 @@
+{
+  "psmid": "19005904300", "pageid": "02190",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:09:43Z",
+  "note": "p. 185, non assumpsit: goods bargained and sold, use and occupation, money had and received. Footnotes (m) (OCR '(id)'), (n) (OCR '(a)', 'See Supra, p. 175', a cross-reference, not recorded), (o). As the 1838 record of the same footnotes",
+  "citations": [
+    {"seq": 1, "raw": "Gardner v. Alexander, 3 Dowl. 146", "case_name": "Gardner v. Alexander",
+     "volume": 3, "reporter_abbr": "Dowl.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "18350678", "confidence": "medium",
+     "note": "Dowling's Practice Cases have no source; linked to the same case's report, Alexander v Gardner, 1 Bing NC 671 (1835: goods to be shipped on conditions not complied with), found by name with the parties reversed, in preference to the stub 3 Dowl. 146"},
+    {"seq": 2, "raw": "Groundsell v. Lamb, 2 Gale, 28", "case_name": "Groundsell v. Lamb",
+     "volume": 2, "reporter_abbr": "Gale", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18360096", "confidence": "medium",
+     "note": "Gale's Exchequer Reports have no source; linked to the same case's report, Grounsell v Lamb, 1 M & W 352 (1836), found by name"},
+    {"seq": 3, "raw": "Waddilove v. Barnett, 2 Bing. N. C. 538", "case_name": "Waddilove v. Barnett",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 538,
+     "status": "linked_english_reports", "er_case_id": "18360375", "confidence": "high"}
+  ]
+}

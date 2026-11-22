@@ -1,0 +1,25 @@
+{
+  "psmid": "19005904300", "pageid": "02140",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:07:39Z",
+  "note": "p. 180, not guilty in case and trover: a denial of fact only. Footnotes (v), (w), (x). Note (w)'s cases (1839-40) are added since 1838",
+  "citations": [
+    {"seq": 1, "raw": "Frankum v. Lord Falmouth, 2 Ad. & Ell. 452", "case_name": "Frankum v. Lord Falmouth",
+     "volume": 2, "reporter_abbr": "Ad. & Ell.", "page": 452,
+     "status": "linked_english_reports", "er_case_id": "18350371", "confidence": "high"},
+    {"seq": 2, "raw": "Barton v. Brown, 5 M. & W. 298", "case_name": "Barton v. Brown",
+     "volume": 5, "reporter_abbr": "M. & W.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "18390015", "confidence": "high"},
+    {"seq": 3, "raw": "White v. Teale, 12 A. & E. 106", "case_name": "White v. Teale",
+     "volume": 12, "reporter_abbr": "A. & E.", "page": 106,
+     "status": "linked_english_reports", "er_case_id": "18400283", "confidence": "high",
+     "note": "ER 'White against Teal'"},
+    {"seq": 4, "raw": "4 P. & D. 43, S. C.", "case_name": "White v. Teale",
+     "volume": 4, "reporter_abbr": "P. & D.", "page": 43,
+     "status": "linked_english_reports", "er_case_id": "18400283", "confidence": "medium",
+     "note": "S. C.; Perry and Davison has no source; linked to the same case's report at 12 Ad & E 106"},
+    {"seq": 5, "raw": "Stancliffo. Hardwick, 5 Tyr. 551", "case_name": "Stancliffe v. Hardwick",
+     "volume": 5, "reporter_abbr": "Tyr.", "page": 551,
+     "status": "linked_english_reports", "er_case_id": "18350283", "confidence": "medium",
+     "note": "Tyrwhitt has no source; linked to the same case's report, Stancliffe v Hardwick, 2 CrM & R 1 (1835), found by name"}
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "psmid": "19005904300", "pageid": "02180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:09:11Z",
+  "note": "p. 184, non assumpsit; bills and notes must be denied specially. Footnotes (g) (OCR '(y)'), (h) (cross-reference), (i), (k) and (l) (cross-references). The cases of 1838-41 in (g) and (i) are added since 1838; same cites as the 1895 Williston records",
+  "citations": [
+    {"seq": 1, "raw": "Martin v. Smith, 4 Bing. N. C. 436", "case_name": "Martin v. Smith",
+     "volume": 4, "reporter_abbr": "Bing. N. C.", "page": 436,
+     "status": "linked_english_reports", "er_case_id": "18380611", "confidence": "high"},
+    {"seq": 2, "raw": "Fenwick v. Laycock, 1 Q. B. 414", "case_name": "Fenwick v. Laycock",
+     "volume": 1, "reporter_abbr": "Q. B.", "page": 414,
+     "status": "linked_english_reports", "er_case_id": "18410508", "confidence": "high"},
+    {"seq": 3, "raw": "1 G. & D. 27, S.C.", "case_name": "Fenwick v. Laycock",
+     "volume": 1, "reporter_abbr": "G. & D.", "page": 27,
+     "status": "linked_english_reports", "er_case_id": "18410508", "confidence": "medium",
+     "note": "S. C.; Gale and Davison has no source; linked to the same case's report at 1 QB 414"},
+    {"seq": 4, "raw": "Sewell v. Dale, 8 Dowl. 309", "case_name": "Sewell v. Dale",
+     "volume": 8, "reporter_abbr": "Dowl.", "page": 309,
+     "status": "no_match", "confidence": "high",
+     "note": "Dowling's Practice Cases have no source; no stub at 8 Dowl. 309, and no English Reports report of Sewell v. Dale (1838-42) found by name or in murrell_title"},
+    {"seq": 5, "raw": "Fraser v. Newton, ibid. 773", "case_name": "Fraser v. Newton",
+     "volume": 8, "reporter_abbr": "Dowl.", "page": 773,
+     "status": "no_match", "confidence": "medium",
+     "note": "ibid. = 8 Dowl. (reporter carried over); no stub at 8 Dowl. 773, and no English Reports report of Fraser v. Newton (1838-42) found by name or in murrell_title"},
+    {"seq": 6, "raw": "Donaldson v. Thompson, 6 M. & W. 316", "case_name": "Donaldson v. Thompson",
+     "volume": 6, "reporter_abbr": "M. & W.", "page": 316,
+     "status": "linked_english_reports", "er_case_id": "18400073", "confidence": "high"},
+    {"seq": 7, "raw": "8 Dowl. 209, S. C.", "case_name": "Donaldson v. Thompson",
+     "volume": 8, "reporter_abbr": "Dowl.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18400073", "confidence": "medium",
+     "note": "S. C.; Dowling's Practice Cases have no source; linked to the same case's report at 6 M & W 316"}
+  ]
+}

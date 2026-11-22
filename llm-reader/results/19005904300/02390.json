@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "02390",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:16:31Z",
+  "note": "p. 205, estoppel of a tenant; secondly, a special traverse to raise an issue in law. Footnote (m) (OCR '(in)' in the text) is a bare 'Ibid.' after a footnote holding the single case Blake v. Foster",
+  "citations": [
+    {"seq": 1, "raw": "Ibid.",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 487,
+     "status": "linked_english_reports", "er_case_id": "18000084", "confidence": "medium",
+     "note": "bare Ibid. repeating footnote (l) of p. 204, Blake v. Foster, 8 T. R. 487"}
+  ]
+}
