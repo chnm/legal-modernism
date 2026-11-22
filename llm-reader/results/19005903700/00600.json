@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "00600",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:53:48Z",
+  "note": "p. 33, declarations in debt on a bond and on simple contract (the money counts); footnotes (a)-(c) otherwise cite the C.L.P. Act 1852",
+  "citations": [
+    {"seq": 1, "raw": "Place v. Potts, 8 Exch. 705", "case_name": "Place v. Potts",
+     "volume": 8, "reporter_abbr": "Exch.", "page": 705,
+     "status": "linked_english_reports", "er_case_id": "18530554", "confidence": "high",
+     "note": "ER 8 Exch 705, Place v Potts and Another (1853); the record at 8 Exch 704 is In re Place, a separate application in the suit"},
+    {"seq": 2, "raw": "Wilkinson v. Sharland, 10 Exch. 724", "case_name": "Wilkinson v. Sharland",
+     "volume": 10, "reporter_abbr": "Exch.", "page": 724,
+     "status": "linked_english_reports", "er_case_id": "18550144", "confidence": "high",
+     "note": "ER 10 Exch 724 (1855); a later stage is at 11 Exch 33"}
+  ]
+}

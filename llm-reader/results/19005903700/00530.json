@@ -1,0 +1,14 @@
+{
+  "psmid": "19005903700", "pageid": "00530",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:52:06Z",
+  "note": "p. 26, modern appearance (1843: 19005904300/00600); footnotes otherwise cite Co. Litt., the Appendix, statutes, the Reg. Gen. H. T. 1853 and Chitty's Archbold's Practice",
+  "citations": [
+    {"seq": 1, "raw": "Iamsbottom v. Buckhurst, 2 M. & S. 565", "case_name": "Ramsbottom v. Buckhurst",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 565,
+     "status": "linked_english_reports", "er_case_id": "18140412", "confidence": "high",
+     "note": "OCR Iamsbottom; ER 2 M & S 565, Ramsbottom and Others against Buckhurst (1814), as in the 1843 record (19005904300/00600)"},
+    {"seq": 2, "raw": "2 Saund. 212, n. (4)", "volume": 2, "reporter_abbr": "Saund.", "page": 212,
+     "status": "linked_english_reports", "er_case_id": "18450085", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (4) to Foxwist v. Tremaine (an infant executor appearing by attorney), which the English Reports split into records at 2 Wms Saund 207 and 212; the cite falls in the later record, so a pin cite, as in the earlier editions' records"}
+  ]
+}

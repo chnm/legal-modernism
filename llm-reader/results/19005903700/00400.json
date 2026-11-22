@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "00400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:48:54Z",
+  "note": "p. 13, the fictions of ejectment; footnote (a) also cites 3 & 4 Wm. IV c. 27 and the C.L.P. Act (statutes)",
+  "citations": [
+    {"seq": 1, "raw": "Doe d. Kingston v. Kingston, 1 Dowl. N. S. 203", "case_name": "Doe d. Kingston v. Kingston",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 263,
+     "status": "linked_stub", "stub_cite": "1 Dowl. N.S. 263", "confidence": "medium",
+     "note": "printed or OCR'd 203 for 263, which the 1843 edition prints twice (19005904300/00390, 00470); no Doe d. Kingston v. Kingston in the English Reports by er_name or murrell_title; linked to the stub 1 Dowl. N.S. 263 (coordinator's correction)"},
+    {"seq": 2, "raw": "Marshall v. The Bishop of Exeter, 0 C. B. (N. S.) 780", "case_name": "Marshall v. The Bishop of Exeter",
+     "volume": 6, "reporter_abbr": "C. B. (N. S.)", "page": 730,
+     "status": "linked_english_reports", "er_case_id": "18590629", "pincite": true, "confidence": "high",
+     "note": "OCR 0 for 6 and 780 for 730: hathi00008 (00560) prints 6 C. B. (N. S.) 730; Marshall v Bishop of Exeter begins at 6 CB NS 716, next record at 733. Its other reports (7 CB NS 653, 13 CB NS 819) are later stages"}
+  ]
+}
