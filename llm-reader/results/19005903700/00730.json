@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "00730",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:57:16Z",
+  "note": "p. 46, plea in abatement of alien enemy, effect of such pleas; footnote (v) also cites East's, Lilly's and Modern Entries and Wentworth (books of precedents) and a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "De Wahl. v. Browne, 1 Hurls. & . 178", "case_name": "De Wahl v. Browne",
+     "volume": 1, "reporter_abbr": "Hurls. & N.", "page": 178,
+     "status": "linked_english_reports", "er_case_id": "18560615", "confidence": "high",
+     "note": "OCR lost the N. of Hurls. & N.; ER 1 H & N 178, De Wahl v Braune (1856), alien enemy"},
+    {"seq": 2, "raw": "Alcinous v. Nigreu, 4 Ell. & B1. 217", "case_name": "Alcinous v. Nigreu",
+     "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "18540889", "confidence": "high",
+     "note": "ER 4 El & Bl 217 (1854)"}
+  ]
+}

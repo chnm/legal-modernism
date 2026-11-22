@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "00650",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:55:39Z",
+  "note": "p. 38, declarations in trespass (assault, quare clausum fregit) and trover; footnote (g) also cites the C.L.P. Act 1852 schedule",
+  "citations": [
+    {"seq": 1, "raw": "MIunster v. The S.-E. Railway Company, 4 C. B. (N. S.) 679, NOTE (a)", "case_name": "Munster v. The South-Eastern Railway Company",
+     "volume": 4, "reporter_abbr": "C. B. (N. S.)", "page": 679,
+     "status": "linked_english_reports", "er_case_id": "18580729", "pincite": true, "confidence": "high",
+     "note": "ER 4 CB NS 676 (1858), 9696 words; the note at 679 falls inside the case"}
+  ]
+}

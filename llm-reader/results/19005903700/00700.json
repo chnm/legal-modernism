@@ -1,0 +1,25 @@
+{
+  "psmid": "19005903700", "pageid": "00700",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:56:32Z",
+  "note": "p. 43, division of pleas, pleas to the jurisdiction and in suspension; footnotes also cite the Appendix, 4 & 5 Anne c. 16, the C.L.P. Act 1852 and Gilbert's Common Pleas (a treatise)",
+  "citations": [
+    {"seq": 1, "raw": "Lovell v. Walker, 9 Mees. & Wels. 209", "case_name": "Lovell v. Walker",
+     "volume": 9, "reporter_abbr": "Mees. & Wels.", "page": 299,
+     "status": "linked_english_reports", "er_case_id": "18420109", "confidence": "high",
+     "note": "printed 209; Lovell v Walker is ER 9 M & W 299 (1842), nothing at 209 by that name; the 1843 edition (19005904300/00850) prints 299"},
+    {"seq": 2, "raw": "Ryland v. Wormald, 2 Mee. & W. 393", "case_name": "Ryland v. Wormald",
+     "volume": 2, "reporter_abbr": "Mee. & W.", "page": 393,
+     "status": "linked_english_reports", "er_case_id": "18370278", "confidence": "high",
+     "note": "ER 2 M & W 393 (1837); murrell_title Ryland v Worland"},
+    {"seq": 3, "raw": "The Dundalk Western Railway Co. v. Tapster, 1 Q. B. 667", "case_name": "The Dundalk Western Railway Co. v. Tapster",
+     "volume": 1, "reporter_abbr": "Q. B.", "page": 667,
+     "status": "linked_english_reports", "er_case_id": "18410652", "confidence": "high"},
+    {"seq": 4, "raw": "Iossi v. Grant, 5 0. B. N. S. 699", "case_name": "Rossi v. Grant",
+     "volume": 5, "reporter_abbr": "C. B. N. S.", "page": 699,
+     "status": "linked_english_reports", "er_case_id": "18590213", "confidence": "high",
+     "note": "OCR Iossi for Rossi, 0. B. for C. B.; ER 5 CB NS 699, Antonio Rossi v Grant (1859)"},
+    {"seq": 5, "raw": "Neave v. Avery, 16. Com. B. 328", "case_name": "Neave v. Avery",
+     "volume": 16, "reporter_abbr": "Com. B.", "page": 328,
+     "status": "linked_english_reports", "er_case_id": "18550562", "confidence": "high"}
+  ]
+}
