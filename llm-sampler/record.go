@@ -16,13 +16,13 @@ const Model = "claude-opus-5-5"
 // Batch is the record of one batch of pages: what was drawn and when the
 // batch was worked on. It is batches/<NNNN>/batch.json.
 type Batch struct {
-	Batch      int         `json:"batch"`
-	StartedAt  time.Time   `json:"started_at"`
-	FinishedAt *time.Time  `json:"finished_at,omitempty"`
+	Batch      int        `json:"batch"`
+	StartedAt  time.Time  `json:"started_at"`
+	FinishedAt *time.Time `json:"finished_at,omitempty"`
 	// CitedWeight is how many times likelier a page with a pipeline citation
 	// was than one without; absent (1) for the first batches, drawn uniformly.
-	CitedWeight int `json:"cited_weight,omitempty"`
-	Pages      []BatchPage `json:"pages"`
+	CitedWeight int         `json:"cited_weight,omitempty"`
+	Pages       []BatchPage `json:"pages"`
 }
 
 // BatchPage is one page of a batch, with the draw that chose it.
