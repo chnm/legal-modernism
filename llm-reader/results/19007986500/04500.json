@@ -1,0 +1,21 @@
+{
+  "psmid": "19007986500", "pageid": "04500",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:36:23Z",
+  "note": "printed p. 422; the true object of rule 2 is to avoid prolixity; rule 3, surplusage is to be avoided. Supra reference and Com. Dig. skipped. Cross-checked with the 1841 edition (hathi00003)",
+  "citations": [
+    {"seq": 1, "raw": "Warner v. Wainsford, Ilob. 127", "case_name": "Warner v. Wainsford",
+     "reporter_abbr": "Hob.", "page": 127,
+     "status": "linked_english_reports", "er_case_id": "17922191", "confidence": "high"},
+    {"seq": 2, "raw": "Bristow v. Wright, Doug. 667", "case_name": "Bristow v. Wright",
+     "volume": 2, "reporter_abbr": "Doug.", "page": 667,
+     "status": "linked_english_reports", "er_case_id": "17810056", "pincite": true, "confidence": "high",
+     "note": "volume 2 supplied from the case name; case begins at 2 Doug 665"},
+    {"seq": 3, "raw": "1 Saund. 233, n. (Q)", "volume": 1, "reporter_abbr": "Saund.", "page": 233,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
+     "note": "n. (2), OCR '(Q)'; the note at 233 falls in Thursby v. Plant, which begins at 1 Wms Saund 230"},
+    {"seq": 4, "raw": "Yates v. Carlisle, 1 Black. Rep. 270", "case_name": "Yates v. Carlisle",
+     "volume": 1, "reporter_abbr": "Black. Rep.", "page": 270,
+     "status": "linked_english_reports", "er_case_id": "17460717", "confidence": "high",
+     "note": "W. Blackstone's Reports, 1 Black W 270"}
+  ]
+}

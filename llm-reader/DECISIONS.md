@@ -278,6 +278,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Case; the American editions from 1841 print 201 c and link Goram v.
    Sweeting. Check which case the passage describes and whether 291/201 is
    a variant or a misprint, and align with the README's 2 Saund. 291 n.
+   The year book "16 Hen. 6, 16" (1835 04460, p. 418) is 10 Hen. 6. 16 in
+   the 1824, 1827 and 1831 editions; check the scan and the later
+   editions under the variant-reading rule.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

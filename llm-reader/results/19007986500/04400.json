@@ -1,0 +1,14 @@
+{
+  "psmid": "19007986500", "pageid": "04400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:33:18Z",
+  "note": "printed p. 412; departure in the rejoinder: the award not tendered; the bond to keep harmless. Supra references skipped. Cross-checked with the 1841 edition (hathi00003/03120)",
+  "citations": [
+    {"seq": 1, "raw": "Roberts v. Mnrictt, 2 Saund. 188", "case_name": "Roberts v. Marriett",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 188,
+     "status": "linked_english_reports", "er_case_id": "18450223", "pincite": true, "confidence": "high",
+     "note": "Roberts v. Mariett begins at 2 Wms Saund 183; the English Reports split it, and 188 is the second record"},
+    {"seq": 2, "raw": "1 Saund. 117., . (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
+     "note": "1 Saund. 117, n. (1); the note falls in Cutler v. Southern, which begins at 1 Wms Saund 113 (record at 116)"}
+  ]
+}

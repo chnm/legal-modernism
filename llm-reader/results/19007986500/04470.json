@@ -1,0 +1,24 @@
+{
+  "psmid": "19007986500", "pageid": "04470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:35:40Z",
+  "note": "printed p. 419; examples of pleas amounting to the general issue. Supra reference, Doct. Pl., Vin. Ab. and Bro. skipped, but the year books they cite are recorded. Footnote (n) is revised from the 1827 text, which cited Saunders's Case, Lynnet v. Wood and Jaques's Case; 1835 prints Gifford v. Perkins. Cross-checked with the 1827 edition (19005940200/04860, 04870)",
+  "citations": [
+    {"seq": 1, "raw": "10 He. 6, 16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fo. 16 (the garden case); no source"},
+    {"seq": 2, "raw": "22 leul. (, 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 22 Hen. VI, fo. 37, cited through Doct. Pl. 42; OCR garbled, read from the 1827 edition's text; no source"},
+    {"seq": 3, "raw": "2 E2 lvd. 4. \"9)", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 22 Edw. IV, fo. 29, cited through Vin. Ab. and Bro.; OCR garbled, read from the 1827 edition's text; no source"},
+    {"seq": 4, "raw": "Gifilbd v. Perl;inls, Sill. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high",
+     "note": "OCR garbled the names and 'Sid.'; volume 1 supplied from the case, Gifford versus Perkins at 1 Sid 450"},
+    {"seq": 5, "raw": "1 Vent. 77, S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. of Gifford v. Perkins"}
+  ]
+}
