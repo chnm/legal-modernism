@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "04960",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:00:32Z",
+  "note": "p. 462; a plea amounting to non est factum; negative and affirmative forms of such pleas. Cross-references (d), (e) skipped. Cross-checked with the 1838 and 1895 records",
+  "citations": [
+    {"seq": 1, "raw": "Giftord v. Perkins, 1 Sid. 450", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 450,
+     "status": "linked_english_reports", "er_case_id": "17140237", "confidence": "high",
+     "note": "OCR Giftord; two records begin at 1 Sid 450; the name decides"},
+    {"seq": 2, "raw": "1 Vent. 77, S. C.", "case_name": "Gifford v. Perkins",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17260434", "confidence": "high",
+     "note": "S. C. of Gifford v. Perkins; the name decides between the two records at 1 Vent 77"}
+  ]
+}

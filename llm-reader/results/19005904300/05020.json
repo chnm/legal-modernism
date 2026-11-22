@@ -1,0 +1,22 @@
+{
+  "psmid": "19005904300", "pageid": "05020",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:02:14Z",
+  "note": "p. 468; surplusage: matter not requiring statement, prolixity; utile per inutile non vitiatur. Cross-reference (a) and Co. Litt. skipped. Lord v. Houston's page is printed on p. 469 and recorded there (05030). Cross-checked with the 1838 and 1895 records",
+  "citations": [
+    {"seq": 1, "raw": "Dundass v. Lord Weymouth, Cowp. 665", "case_name": "Dundass v. Lord Weymouth",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 665,
+     "status": "linked_english_reports", "er_case_id": "17770005", "confidence": "high",
+     "note": "volume 2 supplied (ER 2 Cowp)"},
+    {"seq": 2, "raw": "Price v. Fletcher, ibid. 727", "case_name": "Price v. Fletcher",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 727,
+     "status": "linked_english_reports", "er_case_id": "17780042", "confidence": "high",
+     "note": "ibid. = Cowp.; two records begin at 2 Cowp 727, the name decides"},
+    {"seq": 3, "raw": "Phillips v. Fielding, 2 H. Bl. 131", "case_name": "Phillips v. Fielding",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 131,
+     "status": "linked_english_reports", "er_case_id": "17923206", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 123 (next record 133)"},
+    {"seq": 4, "raw": "Plow. Cor. 232", "volume": 1, "reporter_abbr": "Plowd.", "page": 232,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "Plowden's Commentaries (OCR Cor. for Com.); no name printed; 232 falls in Willion v. Lord Berkley, which begins at 1 Plowden 222 and runs well past 232; as the 1838 record"}
+  ]
+}

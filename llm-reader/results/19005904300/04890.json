@@ -1,0 +1,13 @@
+{
+  "psmid": "19005904300", "pageid": "04890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:57:40Z",
+  "note": "p. 455; departure by putting the same facts on a new ground in law. The scan prints footnote (l) before (k); seq follows the letters. Statute (31 Hen. VIII. c. 13) skipped. Cross-checked with the 1838 records",
+  "citations": [
+    {"seq": 1, "raw": "D~yer, 253 b", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume 3 supplied; the only record beginning at 3 Dy 253 is Cecil's Case, not confirmed as the covenant-to-fence case (Vernon v Gatacre at 3 Dy 252, 903 words, might run onto 253 b); as the 1838 and earlier records"},
+    {"seq": 2, "raw": "Mole v. Wallis, I Lev. 81", "case_name": "Mole v. Wallis",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930733", "confidence": "high"}
+  ]
+}

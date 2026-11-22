@@ -1,0 +1,10 @@
+{
+  "psmid": "19005904300", "pageid": "04840",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:55:56Z",
+  "note": "p. 450; why Rule IX follows from the commencement and conclusion; a declaration good in part and a general demurrer. Footnote (b) begins here and continues on p. 451 (04850); Bac. Ab. skipped. Cross-checked with the 1838 record (19005967100/04700)",
+  "citations": [
+    {"seq": 1, "raw": "1 Win. 8aund. 286, n. (9)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 286,
+     "status": "linked_english_reports", "er_case_id": "18450073", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (9) at 286 falls in Duppa v. Mayo (ER record at 1 Wms Saund 282)"}
+  ]
+}
