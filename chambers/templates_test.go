@@ -18,7 +18,7 @@ func TestParseTemplates(t *testing.T) {
 	tmpls := parseTemplates()
 
 	for _, page := range []string{
-		"home.html", "error.html", "works.html", "work.html", "work_cases.html", "edition.html", "edition_cases.html",
+		"home.html", "error.html", "works.html", "work.html", "work_cases.html", "editions.html", "edition.html", "edition_cases.html",
 		"page.html", "cases.html", "case.html", "reporters.html", "reporter.html",
 		"citations.html", "citation.html", "linking.html", "linking_tiers.html", "linking_whitelist.html",
 		"cap_graph_case.html", "cap_graph_reporter.html", "viz_jurisdictions.html", "viz_field_code.html",
@@ -64,6 +64,65 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `href="/viz/jurisdictions"`)
 		require.Contains(t, out, `href="/viz/field-code"`)
 		require.Contains(t, out, `href="/viz/stephen"`)
+		require.Contains(t, out, `<a href="/editions">Editions: pipeline &amp; LLM</a>`)
+	})
+
+	t.Run("editions dashboard", func(t *testing.T) {
+		author := "Stephen, Henry John"
+		d := editionListPage{
+			Page:    Page{Title: "Editions: pipeline and LLM citations", Section: "works"},
+			Sort:    "llm",
+			Summary: &EditionListSummary{Editions: 16138, Pipeline: 16020, LLM: 19, Both: 19, Neither: 118},
+			Items: []EditionListItem{
+				// Read in full by both methods.
+				{BiblioID: "hathi00013", Title: "Principles of pleading", Author: &author, Year: ptr(1901), Jurisdiction: "US", Pages: 688,
+					Cites: 3539, Linked: 1449, Cases: 1261, LLMPages: 688, LLMCites: 3741, LLMLinked: 3640, LLMCases: 2469},
+				// Partly read by the LLM.
+				{BiblioID: "ed2", Title: "A treatise on pleading", Jurisdiction: "UK", Pages: 500,
+					Cites: 100, Linked: 25, Cases: 20, LLMPages: 30, LLMCites: 12, LLMLinked: 6, LLMCases: 6},
+				// The pipeline only.
+				{BiblioID: "ed3", Title: "Commentaries", Year: ptr(1913), Jurisdiction: "US", Pages: 8018, Cites: 279405, Linked: 207703, Cases: 78730},
+				// Neither.
+				{BiblioID: "ed4", Title: "A pamphlet", Jurisdiction: "UK", Pages: 60},
+			},
+			Nav: Pagination{Page: 1, PageSize: 100, Shown: 4, Total: 16138, HasNext: true, NextURL: "/editions?page=2"},
+		}
+		out := render(t, "editions.html", d)
+		require.Contains(t, out, "<strong>16,138</strong> editions")
+		require.Contains(t, out, "<strong>19</strong> with LLM citations")
+		require.Contains(t, out, `<a href="/editions/hathi00013">Principles of pleading</a>`)
+		require.Contains(t, out, `<a href="/editions?sort=llm&q=&jur=&show=" class="btn btn-primary">LLM first</a>`)
+		require.Contains(t, out, `class="nav-link active" href="/works"`)
+		// Both methods: counts and the share linked, 41% and 97%.
+		require.Contains(t, out, "<td class=\"num\">3,539</td>\n                <td class=\"num\">41%</td>")
+		require.Contains(t, out, "<td class=\"num\">3,741</td>\n                <td class=\"num\">97%</td>")
+		require.Contains(t, out, `<td class="num">688</td>`, "a complete reading shows no total")
+		require.Contains(t, out, `<td class="num">30 <span class="text-secondary small">of 500</span></td>`)
+		// Two editions lack an LLM reading and one lacks pipeline citations.
+		require.Equal(t, 3, strings.Count(out, `<span class="chip chip-junk has">none</span>`))
+		require.Equal(t, 5, strings.Count(out, `<span class="chip chip-linked has">citations</span>`))
+		require.Contains(t, out, `href="/editions?page=2"`)
+		require.Contains(t, out, "1&ndash;4 of 16,138")
+
+		// The filters keep their values, and clear appears with one set.
+		require.NotContains(t, out, ">clear</a>")
+		d.Show, d.Jur, d.Sort = "llm", "uk", "year"
+		out = render(t, "editions.html", d)
+		require.Contains(t, out, `<option value="llm" selected>With LLM citations</option>`)
+		require.Contains(t, out, `<option value="uk" selected>UK editions</option>`)
+		require.Contains(t, out, `<a href="/editions?sort=year&q=&jur=uk&show=llm" class="btn btn-primary">Earliest</a>`)
+		require.Contains(t, out, `<a href="/editions?sort=year" class="small">clear</a>`)
+
+		// Nothing matches.
+		d.Items = nil
+		require.Contains(t, render(t, "editions.html", d), "No editions match.")
+
+		// The view or the LLM tables are missing: a notice and no table.
+		missing := editionListPage{Page: Page{Title: "Editions", Section: "works"}, Sort: "llm"}
+		missing.Page.unavailable("moml_citations.edition_citation_counts or moml_citations.llm_links")
+		out = render(t, "editions.html", missing)
+		require.Contains(t, out, "make db-maintenance")
+		require.NotContains(t, out, "<table")
 	})
 
 	t.Run("viz jurisdictions", func(t *testing.T) {
