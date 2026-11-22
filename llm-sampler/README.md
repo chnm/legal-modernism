@@ -19,10 +19,17 @@ to the database: the records are files under the data directory.
 
 ## The sample
 
-Pages are drawn uniformly over editions: a random official copy in
-`moml.treatises`, then a random `bodyPage` among its volumes. A long treatise
-and a short one are equally likely, so the sample shows more books than a
-draw over pages would. Draws are with replacement over editions (a page
+An edition is drawn uniformly: a random official copy in `moml.treatises`. A
+long treatise and a short one are equally likely, so the sample shows more
+books than a draw over pages would. Then a page is drawn among the edition's
+`bodyPage`s, weighted: a page on which the pipeline found a citation (one the
+linker did not skip as junk, a statute or an unknown spelling) is five times
+as likely as a page on which it found none (`--cited-weight`). Pages without
+pipeline citations are still drawn, because Claude finds citations on some of
+them. `batch.json` records each page's weight, its probability within the
+edition, and the edition's counts of pages, so that counts can be weighted
+back to the uniform draw. Batches 1 to 12 were drawn with no weighting.
+Draws are with replacement over editions (a page
 already drawn is skipped), and follow from the seed alone: draw *n* hashes
 `seed|n|edition` and `seed|n|page`, so the sample can be continued or rebuilt
 in order. HathiTrust pages carry no page type, so for an edition whose official copy

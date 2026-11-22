@@ -19,6 +19,9 @@ type Batch struct {
 	Batch      int         `json:"batch"`
 	StartedAt  time.Time   `json:"started_at"`
 	FinishedAt *time.Time  `json:"finished_at,omitempty"`
+	// CitedWeight is how many times likelier a page with a pipeline citation
+	// was than one without; absent (1) for the first batches, drawn uniformly.
+	CitedWeight int `json:"cited_weight,omitempty"`
 	Pages      []BatchPage `json:"pages"`
 }
 
@@ -28,6 +31,14 @@ type BatchPage struct {
 	Bibliographicid string `json:"bibliographicid"`
 	Psmid           string `json:"psmid"`
 	Pageid          string `json:"pageid"`
+
+	// How the page was drawn within its edition: its weight, the probability
+	// that gave it, and the edition's body pages and how many of them the
+	// pipeline found a citation on. Absent for pages drawn uniformly.
+	Weight       int     `json:"weight,omitempty"`
+	Probability  float64 `json:"probability,omitempty"`
+	EditionPages int     `json:"edition_pages,omitempty"`
+	EditionCited int     `json:"edition_cited,omitempty"`
 }
 
 func (p BatchPage) id() string { return p.Psmid + "-" + p.Pageid }
