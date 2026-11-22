@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00008", "pageid": "04070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:07:02Z",
+  "note": "p. 371, pleas held to amount to the general issue under the Pleading Rules of 4 Will. IV. (skipped, rules of court)",
+  "citations": [
+    {"seq": 1, "raw": "Dicken v. Neale, 5 Dowl. 176", "case_name": "Dicken v. Neale",
+     "volume": 5, "reporter_abbr": "Dowl.", "page": 176,
+     "status": "linked_english_reports", "er_case_id": "18360056", "confidence": "medium",
+     "note": "Dowling has no source; linked to the same case, Dicken v Neale, 1 M & W 556 (1836), as the 1860 reader did"},
+    {"seq": 2, "raw": "Solly v. Neish, 2 C. M. & R. 358", "case_name": "Solly v. Neish",
+     "volume": 2, "reporter_abbr": "C. M. & R.", "page": 358,
+     "status": "linked_english_reports", "er_case_id": "18350279", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 CrM & R 355 (next record 360); 358 kept as printed, a pin cite"}
+  ]
+}

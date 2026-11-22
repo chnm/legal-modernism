@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00008", "pageid": "04020",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:05:18Z",
+  "note": "p. 366, no departure: the toll charter of 26 Hen. VI.; no award meaning no valid award. Skipped: Bac. Ab. Pleas p. 152, cited for Owen v. Reynolds",
+  "citations": [
+    {"seq": 1, "raw": "Owen v. Reynolds, Fort. 341", "case_name": "Owen v. Reynolds",
+     "reporter_abbr": "Fort.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "17480137", "confidence": "high",
+     "note": "four cases begin at Fort 341; the name picks 'Owen & Al' versus Reynolds', as the 1860 reader found"},
+    {"seq": 2, "raw": "Wood v. Hawkshead, Yelv. 13", "case_name": "Wood v. Hawkshead",
+     "reporter_abbr": "Yelv.", "page": 14,
+     "status": "linked_english_reports", "er_case_id": "17922886", "confidence": "high",
+     "note": "Wood versus Haukshead begins at Yel 14, a page from the printed 13 (the record at Yel 13 is Crispe v. Viroll); page corrected by the name, as in the 1860 and 1843 records"}
+  ]
+}

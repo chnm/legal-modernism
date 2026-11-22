@@ -1,0 +1,24 @@
+{
+  "psmid": "hathi00008", "pageid": "04040",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:06:10Z",
+  "note": "p. 368, departure a fault of substance; s. 52 of the C.L.P. Act 1852 (skipped)",
+  "citations": [
+    {"seq": 1, "raw": "Bartlett v. Wells, 31 L. J. Q. B. 57", "case_name": "Bartlett v. Wells",
+     "volume": 31, "reporter_abbr": "L. J. Q. B.", "page": 57,
+     "status": "linked_english_reports", "er_case_id": "18620291", "confidence": "medium",
+     "note": "the Law Journal has no source; the same case (1862) found by name at 1 B & S 836, the only record of the name"},
+    {"seq": 2, "raw": "Brine v. The Great Western Railway Company, ibid. 101", "case_name": "Brine v. The Great Western Railway Company",
+     "volume": 31, "reporter_abbr": "L. J. Q. B.", "page": 101,
+     "status": "linked_english_reports", "er_case_id": "18620471", "confidence": "medium",
+     "note": "ibid. = 31 L. J. Q. B.; the Law Journal has no source; the same case (1862) found by name at 2 B & S 402"},
+    {"seq": 3, "raw": "De Roo v. Foster, 12 C. B. (N. S). 272", "case_name": "De Roo v. Foster",
+     "volume": 12, "reporter_abbr": "C. B. (N. S.)", "page": 272,
+     "status": "linked_english_reports", "er_case_id": "18620640", "confidence": "high"},
+    {"seq": 4, "raw": "Thames Iron Works Company v. Royal Mail Steam Packet Company, 13 C. B. (N. S.) 358", "case_name": "Thames Iron Works Company v. Royal Mail Steam Packet Company",
+     "volume": 13, "reporter_abbr": "C. B. (N. S.)", "page": 358,
+     "status": "linked_english_reports", "er_case_id": "18620234", "confidence": "high"},
+    {"seq": 5, "raw": "2 Saund. 84 f. (6th ed.)", "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "medium",
+     "note": "Williams's note on departure (84 a-f) to Richards v. Hodges, whose second record is at 2 Wms Saund 83; as the 1860 reader linked"}
+  ]
+}
