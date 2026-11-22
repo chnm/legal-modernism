@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00008", "pageid": "02020",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:59:02Z",
+  "note": "p. 166, not guilty in case and trover; footnotes (e) and (f)",
+  "citations": [
+    {"seq": 1, "raw": "Frankum v. Lord Falmouth, 2 A. & E. 452", "case_name": "Frankum v. Lord Falmouth",
+     "volume": 2, "reporter_abbr": "A. & E.", "page": 452,
+     "status": "linked_english_reports", "er_case_id": "18350371", "confidence": "high"},
+    {"seq": 2, "raw": "Lush v. Russell, 5 Exch. 203", "case_name": "Lush v. Russell",
+     "volume": 5, "reporter_abbr": "Exch.", "page": 203,
+     "status": "linked_english_reports", "er_case_id": "18500534", "confidence": "high"},
+    {"seq": 3, "raw": "Stancliffe v. Hardwicke, 1 C. M. & R. 1", "case_name": "Stancliffe v. Hardwicke",
+     "volume": 2, "reporter_abbr": "C. M. & R.", "page": 1,
+     "status": "linked_english_reports", "er_case_id": "18350283", "confidence": "high",
+     "note": "printed volume 1; Stancliffe v Hardwick is 2 CrM & R 1, while 1 CrM & R 1 is R. v. Mayor of London: the name decides, as the 1860 reader found"}
+  ]
+}

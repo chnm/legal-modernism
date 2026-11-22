@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00008", "pageid": "01950",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:55:41Z",
+  "note": "p. 159, never indebted; footnote (o) 'Vide sup. p. 157' is a bare cross-reference, not recorded; (p), (q) (OCR '(9)'), (r)",
+  "citations": [
+    {"seq": 1, "raw": "Waddilove v. Barnett, 2 Bing. N. C. 538", "case_name": "Waddilove v. Barnett",
+     "volume": 2, "reporter_abbr": "Bing. N. C.", "page": 538,
+     "status": "linked_english_reports", "er_case_id": "18360375", "confidence": "high"},
+    {"seq": 2, "raw": "Solly v. Neish, 2 Cr. M. & R. 355", "case_name": "Solly v. Neish",
+     "volume": 2, "reporter_abbr": "Cr. M. & R.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "18350279", "confidence": "high"},
+    {"seq": 3, "raw": "Owen v. Challis, 6 Com. B. 115", "case_name": "Owen v. Challis",
+     "volume": 6, "reporter_abbr": "Com. B.", "page": 115,
+     "status": "linked_english_reports", "er_case_id": "18480496", "confidence": "high"},
+    {"seq": 4, "raw": "Graham v. Partridge, 1 M. & W. 395", "case_name": "Graham v. Partridge",
+     "volume": 1, "reporter_abbr": "M. & W.", "page": 395,
+     "status": "linked_english_reports", "er_case_id": "18360666", "confidence": "high"}
+  ]
+}

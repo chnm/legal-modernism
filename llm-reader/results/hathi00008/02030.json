@@ -1,0 +1,26 @@
+{
+  "psmid": "hathi00008", "pageid": "02030",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:59:15Z",
+  "note": "p. 167, not guilty in trover and case; footnotes (g), (h), (i) (OCR '(1)'); the scan splits 'Jones v. Davies, 6 Exch. 663' (end of (h)) across lines",
+  "citations": [
+    {"seq": 1, "raw": "Whitmore v. Green, 13 M. & W. 107", "case_name": "Whitmore v. Green",
+     "volume": 13, "reporter_abbr": "M. & W.", "page": 107,
+     "status": "linked_english_reports", "er_case_id": "18440647", "pincite": true, "confidence": "high",
+     "note": "Whitmore v Greene begins at 13 M & W 104, as the 1860 reader found"},
+    {"seq": 2, "raw": "Kynaston v. Crouch, 14 M. & W. 266", "case_name": "Kynaston v. Crouch",
+     "volume": 14, "reporter_abbr": "M. & W.", "page": 266,
+     "status": "linked_english_reports", "er_case_id": "18450961", "confidence": "high"},
+    {"seq": 3, "raw": "Young v. Cooper, 6 Exch. 259", "case_name": "Young v. Cooper",
+     "volume": 6, "reporter_abbr": "Exch.", "page": 259,
+     "status": "linked_english_reports", "er_case_id": "18510245", "confidence": "high"},
+    {"seq": 4, "raw": "Barton v. Brown, 5 M. & W. 298", "case_name": "Barton v. Brown",
+     "volume": 5, "reporter_abbr": "M. & W.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "18390015", "confidence": "high"},
+    {"seq": 5, "raw": "Jones v. Davies, 6 Exch. 663", "case_name": "Jones v. Davies",
+     "volume": 6, "reporter_abbr": "Exch.", "page": 663,
+     "status": "linked_english_reports", "er_case_id": "18510528", "confidence": "high"},
+    {"seq": 6, "raw": "Cotton v. Browne, 3 A. & E. 312", "case_name": "Cotton v. Browne",
+     "volume": 3, "reporter_abbr": "A. & E.", "page": 312,
+     "status": "linked_english_reports", "er_case_id": "18350720", "confidence": "high"}
+  ]
+}

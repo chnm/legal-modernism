@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00008", "pageid": "01920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:54:50Z",
+  "note": "p. 156, non est factum and never indebted; footnote (h)",
+  "citations": [
+    {"seq": 1, "raw": "Williams v. Bryant, 5 M. & W. 447", "case_name": "Williams v. Bryant",
+     "volume": 5, "reporter_abbr": "M. & W.", "page": 447,
+     "status": "linked_english_reports", "er_case_id": "18390350", "confidence": "high"},
+    {"seq": 2, "raw": "Warre v. Calvert, 7 A. & E. 143", "case_name": "Warre v. Calvert",
+     "volume": 7, "reporter_abbr": "A. & E.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "18370797", "confidence": "high"},
+    {"seq": 3, "raw": "Trott v. Smith, 12 M. & W. 688", "case_name": "Trott v. Smith",
+     "volume": 12, "reporter_abbr": "M. & W.", "page": 688,
+     "status": "linked_english_reports", "er_case_id": "18440218", "confidence": "high"},
+    {"seq": 4, "raw": "North v. Wakefield, 13 Q. B. 536", "case_name": "North v. Wakefield",
+     "volume": 13, "reporter_abbr": "Q. B.", "page": 536,
+     "status": "linked_english_reports", "er_case_id": "18490465", "confidence": "high"}
+  ]
+}

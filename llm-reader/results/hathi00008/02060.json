@@ -1,0 +1,30 @@
+{
+  "psmid": "hathi00008", "pageid": "02060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:00:08Z",
+  "note": "p. 170, not guilty in collision and duty cases; non cepit; footnotes (p), (q) (OCR '(g)'), (r)",
+  "citations": [
+    {"seq": 1, "raw": "Dunford v. Trattles, 12 M. & W. 529", "case_name": "Dunford v. Trattles",
+     "volume": 12, "reporter_abbr": "M. & W.", "page": 529,
+     "status": "linked_english_reports", "er_case_id": "18440150", "confidence": "high"},
+    {"seq": 2, "raw": "Hart v. Crowley, 12 A. & E. 378", "case_name": "Hart v. Crowley",
+     "volume": 12, "reporter_abbr": "A. & E.", "page": 378,
+     "status": "linked_english_reports", "er_case_id": "18400690", "confidence": "high"},
+    {"seq": 3, "raw": "Mitchell v. Crassweller, 13 Com. B. 237", "case_name": "Mitchell v. Crassweller",
+     "volume": 13, "reporter_abbr": "Com. B.", "page": 237,
+     "status": "linked_english_reports", "er_case_id": "18530174", "confidence": "high"},
+    {"seq": 4, "raw": "Davis v. Mann, 10 M. & W. 548", "case_name": "Davis v. Mann",
+     "volume": 10, "reporter_abbr": "M. & W.", "page": 548,
+     "status": "linked_english_reports", "er_case_id": "18420968", "pincite": true, "confidence": "high",
+     "note": "Davies v Mann begins at 10 M & W 546"},
+    {"seq": 5, "raw": "Rigby v. Hewitt, 5 Exch. 240", "case_name": "Rigby v. Hewitt",
+     "volume": 5, "reporter_abbr": "Exch.", "page": 240,
+     "status": "linked_english_reports", "er_case_id": "18500537", "confidence": "high"},
+    {"seq": 6, "raw": "Greenland v. Chaplin, ibid. 243", "case_name": "Greenland v. Chaplin",
+     "volume": 5, "reporter_abbr": "Exch.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18500528", "confidence": "high",
+     "note": "ibid. = 5 Exch."},
+    {"seq": 7, "raw": "Roberts v. The G. W. R. Company, 4 C. B. (N. S.) 506", "case_name": "Roberts v. The G. W. R. Company",
+     "volume": 4, "reporter_abbr": "C. B. (N. S.)", "page": 506,
+     "status": "linked_english_reports", "er_case_id": "18580143", "confidence": "high"}
+  ]
+}
