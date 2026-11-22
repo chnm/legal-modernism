@@ -1,0 +1,19 @@
+{
+  "psmid": "19005903700", "pageid": "02340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:51:50Z",
+  "note": "p. 206, traverse of an immaterial point (the bailiffs' command); traverse of matter alleged prematurely (full age in debt on bond). Footnotes (k), (l)",
+  "citations": [
+    {"seq": 1, "raw": "Bridgwater v. Bythway, 3 Lev. 113", "case_name": "Bridgwater v. Bythway",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 113,
+     "status": "linked_english_reports", "er_case_id": "17970039", "confidence": "medium",
+     "note": "a choice already made in the README: the record at 3 Lev 113, a separate report of the suit"},
+    {"seq": 2, "raw": "Britton v. Cole, 3 Salkl. 409", "case_name": "Britton v. Cole",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 409,
+     "status": "linked_english_reports", "er_case_id": "17950624", "pincite": true, "confidence": "medium",
+     "note": "printed 3 Salk. 409, as in the other editions; 3 Salk has no record at 409 and no Britton v. Cole. Read as 1 Salk. 409, inside Britton versus Cole at 1 Salk 408, as the 1838 and 1843 records do"},
+    {"seq": 3, "raw": "Sir Ralph BovyI case, 1 Vent. 217", "case_name": "Sir Ralph Bovy's Case",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "17260724", "confidence": "high",
+     "note": "the record of Sir Ralph Bovy's Case beginning at 1 Vent 217 (others at 193 and 211)"}
+  ]
+}
