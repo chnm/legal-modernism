@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00008", "pageid": "00580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:21:40Z",
+  "note": "p. 22, the writ of ejectment and the forms of action under the C.L.P. Act 1852",
+  "citations": [
+    {"seq": 1, "raw": "Bracegirdle v. Hinks (9 Exch. 361", "case_name": "Bracegirdle v. Hinks",
+     "volume": 9, "reporter_abbr": "Exch.", "page": 361,
+     "status": "linked_english_reports", "er_case_id": "18540172", "confidence": "high"},
+    {"seq": 2, "raw": "Nargatt v. Nias (28 L. J. Q. B. 143", "case_name": "Nargatt v. Nias",
+     "volume": 28, "reporter_abbr": "L.J. Q.B.", "page": 143,
+     "status": "linked_english_reports", "er_case_id": "18590228", "confidence": "medium",
+     "note": "the Law Journal has no source; the same case (1859) is in the English Reports as Nargett v Nias, 1 El & El 439, linked by name"}
+  ]
+}

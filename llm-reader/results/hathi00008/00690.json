@@ -1,0 +1,14 @@
+{
+  "psmid": "hathi00008", "pageid": "00690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:23:13Z",
+  "note": "p. 33, forms of declaration in debt (the money counts and a bill of exchange); footnote (z) also cites schedule B to 15 & 16 Vict. c. 76, a statute",
+  "citations": [
+    {"seq": 1, "raw": "Place v. Potts, 8 Exch. 705", "case_name": "Place v. Potts",
+     "volume": 8, "reporter_abbr": "Exch.", "page": 705,
+     "status": "linked_english_reports", "er_case_id": "18530554", "confidence": "high",
+     "note": "8 Exch 705 (1853), on the words 'money payable'; not the separate record at 704 (In re Place) or the later reports at 10 Exch 370 and 5 HLC 383"},
+    {"seq": 2, "raw": "Wilkinson v. Sharland, 10 Exch. 724", "case_name": "Wilkinson v. Sharland",
+     "volume": 10, "reporter_abbr": "Exch.", "page": 724,
+     "status": "linked_english_reports", "er_case_id": "18550144", "confidence": "high"}
+  ]
+}

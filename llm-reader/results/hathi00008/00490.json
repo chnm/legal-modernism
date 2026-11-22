@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00008", "pageid": "00490",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:20:22Z",
+  "note": "p. 13, trespass on the case and assumpsit; footnotes otherwise cite Reeves and Chitty on Pleading, treatises. The 1860 copy prints the year book at p. 18 (19005903700/00450); this edition rewrote the passage",
+  "citations": [
+    {"seq": 1, "raw": "22 Ass. 41", "volume": 22, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "year book, Liber Assisarum, 22 Edw. III, pl. 41 (cited by plea, so page left empty), the first action on the case noticed by Reeves; year books have no source. As in the 1860 record (19005903700/00450)"},
+    {"seq": 2, "raw": "Boorman v. Brown, 11 Clark & Fin. 11", "case_name": "Boorman v. Brown",
+     "volume": 11, "reporter_abbr": "Cl. & Fin.", "page": 11,
+     "status": "linked_english_reports", "er_case_id": "18440065", "pincite": true, "confidence": "high",
+     "note": "House of Lords, Brown v. Boorman (1844), begins at 11 Cl & Fin 1 (14380 words); 11 is inside it"},
+    {"seq": 3, "raw": "Courtenay v. Earle, 10 Com. B. 73", "case_name": "Courtenay v. Earle",
+     "volume": 10, "reporter_abbr": "C.B.", "page": 73,
+     "status": "linked_english_reports", "er_case_id": "18500858", "confidence": "high"}
+  ]
+}
