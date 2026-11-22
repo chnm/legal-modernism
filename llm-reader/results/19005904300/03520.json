@@ -1,0 +1,20 @@
+{
+  "psmid": "19005904300", "pageid": "03520",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:58:19Z",
+  "note": "p. 318; the jury summoned from the venue laid to the fact in issue. Footnote (n) OCR'd '(a)'. Skipped: Co. Lit., Bac. Ab., Com. Dig. (treatises and abridgments) and 3 Reeves (history). Same notes as the 1838 copy's 03420-03430",
+  "citations": [
+    {"seq": 1, "raw": "43 Edw. III. 1", "volume": 43, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 43 Edw. III fo. 1; no source"},
+    {"seq": 2, "raw": "Craft v. Boite, 1 Saund. 246 b", "case_name": "Craft v. Boite",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 246,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high",
+     "note": "246 b; the English Reports split Craft v Boite into records at 1 Wms Saund 241 and 246; linked the record the page falls in, a pin cite since the case begins at 241"},
+    {"seq": 3, "raw": "8 Edw. III. 8 PI. 20", "volume": 8, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 8 Edw. III fo. 8, pl. 20; no source"},
+    {"seq": 4, "raw": "45 Edw. III. 15", "volume": 45, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 45 Edw. III fo. 15; no source"}
+  ]
+}

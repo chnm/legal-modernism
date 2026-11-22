@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "03580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:59:29Z",
+  "note": "p. 324; local facts proved as laid, transitory not; actions local or transitory. Skipped: Vin. Ab., Co. Litt. and 1 Chit. 268, 6th edit. (Chitty on Pleading), treatises; the Appendix reference is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Buckworth v. Simpson, 5 Tyrw. 344", "case_name": "Buckworth v. Simpson",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 344,
+     "status": "linked_english_reports", "er_case_id": "18350029", "confidence": "medium",
+     "note": "Tyrwhitt has no source; the same case (1835) linked at 1 CrM & R 834"},
+    {"seq": 2, "raw": "L C.. M. & It. 834, S. C.", "case_name": "Buckworth v. Simpson",
+     "volume": 1, "reporter_abbr": "C., M. & R.", "page": 834,
+     "status": "linked_english_reports", "er_case_id": "18350029", "confidence": "high",
+     "note": "OCR 'L C.. M. & It.' for 1 C., M. & R."}
+  ]
+}

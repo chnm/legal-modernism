@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "03420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:55:12Z",
+  "note": "p. 308; replications to several pleas; judgment on a successful plea; several pleas carried further in practice",
+  "citations": [
+    {"seq": 1, "raw": "Lord Clinton v. Morton, 2 Stra. 1000", "case_name": "Lord Clinton v. Morton",
+     "volume": 2, "reporter_abbr": "Stra.", "page": 1000,
+     "status": "linked_english_reports", "er_case_id": "17952430", "confidence": "high",
+     "note": "four cases begin at 2 Str 1000; the name picks Lord Clinton vers Morton"}
+  ]
+}
