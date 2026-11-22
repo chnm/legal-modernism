@@ -321,7 +321,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Holbech by extension of the README's 319 b/c choice (1860 01100-01200);
    confirm. Dellevene v. Percer, 7 M. & W. 439 (no case of the name; two
    begin at 439): Deriemer v Fenna at `medium` in 1843, 1867 and 1895,
-   `low` in 1860 03410; pick one.
+   `low` in 1860 03410; pick one. Belasyse v. Hester, 2 Lutw. 1592:
+   1866 (01780) links Bellasis v. Hester, 1 Ld Raym 280, at `low` (a
+   second record at 3 Ld Raym 336) by the rule that the English Reports
+   beat a stub; every other edition links the stub. Align, and look for
+   other Lutwyche stubs whose case is in the English Reports by name.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

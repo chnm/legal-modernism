@@ -1,0 +1,31 @@
+{
+  "psmid": "hathi00008", "pageid": "01810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:51:09Z",
+  "note": "p. 145, the hook case; a freight case since the C.L.P. Act; aider by verdict. Footnotes (n), (o) (OCR '(0)') and (p), whose case names the scan splits from their cites into a column; read in the order the 1860 edition prints it (19005903700/01660). Bac. Ab. and Com. Dig. skipped. (p) continues on p. 146, where Pippet v. Hearn's cite is printed and recorded",
+  "citations": [
+    {"seq": 1, "raw": "Brooke v. Brooke, Sid. 184", "case_name": "Brooke v. Brooke",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 184,
+     "status": "linked_english_reports", "er_case_id": "17140078", "confidence": "high",
+     "note": "volume supplied; 'Brooke versus Brooke & Auters' at 1 Sid 184 (Glascok v. Morgan also begins there; the name picks Brooke); cited through Bac. Ab. Trespass, but linked to its own report, as the 1860 record"},
+    {"seq": 2, "raw": "Wilkinson v. Sharland, 10 Exch, 724", "case_name": "Wilkinson v. Sharland",
+     "volume": 10, "reporter_abbr": "Exch.", "page": 724,
+     "status": "linked_english_reports", "er_case_id": "18550144", "confidence": "high"},
+    {"seq": 3, "raw": "Plow. Com. 230", "volume": 1, "reporter_abbr": "Plow.", "page": 230,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "no name printed; page falls in Willion v. Berkley, which begins at 1 Plowden 222, as the 1860 and 1843 readers linked it"},
+    {"seq": 4, "raw": "Spieres v. Parker, 1 T. R. 141", "case_name": "Spieres v. Parker",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 141,
+     "status": "linked_english_reports", "er_case_id": "17860052", "confidence": "high"},
+    {"seq": 5, "raw": "Johnstone v. Sutton, ibid. 545", "case_name": "Johnstone v. Sutton",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 545,
+     "status": "linked_english_reports", "er_case_id": "17850016", "pincite": true, "confidence": "high",
+     "note": "ibid. = 1 T. R.; the Exchequer Chamber judgment begins at 1 TR 510, as the 1860 record"},
+    {"seq": 6, "raw": "Nerot v. Wallace, 3 T. R. 25", "case_name": "Nerot v. Wallace",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 25,
+     "status": "linked_english_reports", "er_case_id": "17892362", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 TR 17"},
+    {"seq": 7, "raw": "Ward v. Harris, 2 Bos. & Pul. 265", "case_name": "Ward v. Harris",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 265,
+     "status": "linked_english_reports", "er_case_id": "18000241", "confidence": "high"}
+  ]
+}

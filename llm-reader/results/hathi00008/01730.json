@@ -1,0 +1,29 @@
+{
+  "psmid": "hathi00008", "pageid": "01730",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:47:38Z",
+  "note": "p. 137, Rule I, its two branches. Footnote (r) continued (15 & 16 Vict. c. 76, a statute; 'Vide ante' a cross-reference); (s), (t) cross-references; (u) the common erudition to traverse or confess and avoid, the footnote of 1860 (19005903700/01580), which also cites Merceron v. Dowson and Arlett v. Ellis that 1866 drops. Reg. Plac. (a treatise) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Dy. 66 b", "volume": 1, "reporter_abbr": "Dy.", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "17941176", "pincite": true, "confidence": "medium",
+     "note": "volume supplied; no name printed. Mynours v. Turke and Yorke begins at 1 Dy 65 and holds 66 b, the quoted 'common erudition', as the 1860 and 1843 readers linked it"},
+    {"seq": 2, "raw": "21 Hen. VI. 12", "volume": 21, "reporter_abbr": "Y.B.", "page": 12,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 21 Hen. VI, fol. 12; no source for the year books"},
+    {"seq": 3, "raw": "5 Hen. VII. 13 a. 14 a. b.", "volume": 5, "reporter_abbr": "Y.B.", "page": 13,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 5 Hen. VII, fol. 13 a; recorded once at its first folio, dropped: 14 a. b.; no source for the year books"},
+    {"seq": 4, "raw": "Dyer, 66 b.", "volume": 1, "reporter_abbr": "Dyer", "page": 66,
+     "status": "linked_english_reports", "er_case_id": "17941176", "pincite": true, "confidence": "medium",
+     "note": "repeats Dy. 66 b above; volume supplied; Mynours v. Turke and Yorke (1 Dy 65)"},
+    {"seq": 5, "raw": "171 b.", "volume": 2, "reporter_abbr": "Dyer", "page": 171,
+     "status": "linked_english_reports", "er_case_id": "17941983", "confidence": "medium",
+     "note": "reporter carried over from Dyer; volume supplied; no name printed; Turke v. Frencham begins at 2 Dy 171, as the 1860 and 1843 readers linked it"},
+    {"seq": 6, "raw": "M'Pherson v. Daniels, 10 B. & C. 263", "case_name": "M'Pherson v. Daniels",
+     "volume": 10, "reporter_abbr": "B. & C.", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high",
+     "note": "per Parke, B."},
+    {"seq": 7, "raw": "Gregory v. Hartnoll, 1 M. & W. 183", "case_name": "Gregory v. Hartnoll",
+     "volume": 1, "reporter_abbr": "M. & W.", "page": 183,
+     "status": "linked_english_reports", "er_case_id": "18360094", "confidence": "high"}
+  ]
+}

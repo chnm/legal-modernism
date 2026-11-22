@@ -1,0 +1,26 @@
+{
+  "psmid": "hathi00008", "pageid": "01830",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:52:15Z",
+  "note": "p. 147, aider by verdict: the King's Bench explanation and Serjeant Williams; a verdict will not aid a total omission. Footnotes (r) and (s) (OCR '(8)'); the scan moves 'Davies v. Williams,' out of line after its cite. Cross-checked with 1860 (19005903700/01670), which lacks Pollitt v. Forrest and Davies v. Williams",
+  "citations": [
+    {"seq": 1, "raw": "Jackson v. Pesked, 1 M. & S. 234", "case_name": "Jackson v. Pesked",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18130139", "confidence": "high"},
+    {"seq": 2, "raw": "1 Saund. 228, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note (1) on aider by verdict, the note to Stennel v. Hogg (record at 1 Wms Saund 226), per the README's choice"},
+    {"seq": 3, "raw": "Harris v. Goodwyn, 2 M. & G. 405", "case_name": "Harris v. Goodwyn",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 405,
+     "status": "linked_english_reports", "er_case_id": "18410233", "confidence": "high"},
+    {"seq": 4, "raw": "Thomas v. Fredricks, 10 Q. B. 775", "case_name": "Thomas v. Fredricks",
+     "volume": 10, "reporter_abbr": "Q. B.", "page": 775,
+     "status": "linked_english_reports", "er_case_id": "18470620", "confidence": "high"},
+    {"seq": 5, "raw": "Pollitt v. Forrest, 11 Q. B. 967", "case_name": "Pollitt v. Forrest",
+     "volume": 11, "reporter_abbr": "Q. B.", "page": 967,
+     "status": "linked_english_reports", "er_case_id": "18470031", "pincite": true, "confidence": "high",
+     "note": "the English Reports split Pollitt v. Forrest into records at 11 QB 949 and 962; 967 falls in the second"},
+    {"seq": 6, "raw": "Davies v. Williams, 16 Q. B. 546", "case_name": "Davies v. Williams",
+     "volume": 16, "reporter_abbr": "Q. B.", "page": 546,
+     "status": "linked_english_reports", "er_case_id": "18510005", "confidence": "high"}
+  ]
+}
