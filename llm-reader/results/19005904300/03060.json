@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "03060",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:42:00Z",
+  "note": "p. 272; the party may demur instead of adding the similiter; its origin in the mutual consent to a jury. Footnotes (q) and (r) are cross-references (supra, p. 80, 86; Appendix Note 26)",
+  "citations": [
+    {"seq": 1, "raw": "Whitehead v. Buckland, Stile, 402", "case_name": "Whitehead v. Buckland",
+     "reporter_abbr": "Stile", "page": 402,
+     "status": "linked_english_reports", "er_case_id": "16580760", "pincite": true, "confidence": "high",
+     "note": "footnote (p); case begins at Sty 401, the next record at 404"},
+    {"seq": 2, "raw": "Campbell v. St. John, 1 Salk. 219", "case_name": "Campbell v. St. John",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 219,
+     "status": "linked_english_reports", "er_case_id": "17950720", "confidence": "high",
+     "note": "three records begin at 1 Salk 219; the name picks Campbell versus St John"}
+  ]
+}

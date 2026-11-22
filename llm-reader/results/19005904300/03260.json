@@ -1,0 +1,18 @@
+{
+  "psmid": "19005904300", "pageid": "03260",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:48:48Z",
+  "note": "p. 292; distinct pleas to several claims must not each answer the whole (release and duress on two bonds); several defendants may sever. The first text marker '(i)' is footnote (h). Doct. Pl., Vin. Ab. (no year-book folio) and Co. Litt. are not reports",
+  "citations": [
+    {"seq": 1, "raw": "Bur- roughs v. Hodgson, 9 A. & E. 499", "case_name": "Burroughs v. Hodgson",
+     "volume": 9, "reporter_abbr": "A. & E.", "page": 499,
+     "status": "linked_english_reports", "er_case_id": "18390363", "confidence": "high"},
+    {"seq": 2, "raw": "Essington v. Bourcher, Hob. 245", "case_name": "Essington v. Bourcher",
+     "reporter_abbr": "Hob.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "17920780", "pincite": true, "confidence": "high",
+     "note": "Essington versus Bourcher begins at Hob 244 and runs onto 245, where other cases begin"},
+    {"seq": 3, "raw": "Cuppledick v. Terwhit, Hob. 250", "case_name": "Cuppledick v. Terwhit",
+     "reporter_abbr": "Hob.", "page": 250,
+     "status": "linked_english_reports", "er_case_id": "17920607", "pincite": true, "confidence": "high",
+     "note": "Cuppledick versus Sir Philip Terwhit begins at Hob 249 and runs onto 250"}
+  ]
+}

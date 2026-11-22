@@ -1,0 +1,24 @@
+{
+  "psmid": "19005904300", "pageid": "03030",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:40:53Z",
+  "note": "p. 269; whether a replication introduces new matter is sometimes doubtful (the silver bowl case). Footnote (i) runs onto p. 270: 'Brunskill' is printed here, its cite there, so it is recorded on p. 270. Fleming v. Cooper (1836) is in the 1895 Williston reprint of this text (19005765700/02460)",
+  "citations": [
+    {"seq": 1, "raw": "Hayman v. Gerrard, 1 Saund. 102", "case_name": "Hayman v. Gerrard",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18450110", "pincite": true, "confidence": "high",
+     "note": "the English Reports hold Hayman v. Gerrard in two records, at 1 Wms Saund 99 and 102; 102 is the second record's first page, a pincite since the case begins at 99"},
+    {"seq": 2, "raw": "Cornwallis v. Savery, Burr. 772", "case_name": "Cornwallis v. Savery",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 772,
+     "status": "linked_english_reports", "er_case_id": "17590007", "confidence": "high",
+     "note": "volume 2 supplied from the case name"},
+    {"seq": 3, "raw": "Sayre v. Minns, Cowp. 575", "case_name": "Sayre v. Minns",
+     "reporter_abbr": "Cowp.", "page": 575,
+     "status": "linked_english_reports", "er_case_id": "17770027", "confidence": "high"},
+    {"seq": 4, "raw": "Low v. Burrows, 2 A. & E. 483", "case_name": "Low v. Burrows",
+     "volume": 2, "reporter_abbr": "A. & E.", "page": 483,
+     "status": "linked_english_reports", "er_case_id": "18350384", "confidence": "high"},
+    {"seq": 5, "raw": "Fleming v. Cooper, 5 A. & E. 221", "case_name": "Fleming v. Cooper",
+     "volume": 5, "reporter_abbr": "A. & E.", "page": 221,
+     "status": "linked_english_reports", "er_case_id": "18360745", "confidence": "high"}
+  ]
+}
