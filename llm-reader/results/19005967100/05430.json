@@ -1,0 +1,19 @@
+{
+  "psmid": "19005967100", "pageid": "05430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:44:04Z",
+  "note": "printed p. xxvi; Appendix Notes, end of Note (15) and Note (16) on dilatory and peremptory pleas; footnotes (u)-(a) (canonists, Digest, Bac. Ab., Chitty on Pleading, Gilbert's C. P.) badly garbled and none of them cases. Footnote (b) read with 1835 (19007986500/05090)",
+  "citations": [
+    {"seq": 1, "raw": "Bowyer v. Book, 5 Mod. 146", "case_name": "Bowyer v. Cook",
+     "volume": 5, "reporter_abbr": "Mod.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "17940334", "pincite": true, "confidence": "high",
+     "note": "'Book' for Cook, as in other editions; Bowyer against Cook begins at 5 Mod 145"},
+    {"seq": 2, "raw": "Cirtth. 363", "case_name": "Bowyer v. Cook",
+     "reporter_abbr": "Carth.", "page": 363,
+     "status": "linked_english_reports", "er_case_id": "17410040", "confidence": "high",
+     "note": "OCR 'Cirtth.' for Carth.; same case as the preceding cite; ER titles it Bowers versus Cook"},
+    {"seq": 3, "raw": "i Si.l:.' 297, S.C.", "case_name": "Bowyer v. Cook",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 297,
+     "status": "linked_english_reports", "er_case_id": "17951706", "confidence": "medium",
+     "note": "OCR garbled, read as 1 Salk. 297 from 1835; S. C. of Bowyer v. Cook; three cases begin at 1 Salk 297 (Billinghurst v. Speerman, Williams v. Grey, Fooler v. Cooke), and Fooler v. Cooke is the one whose name fits"}
+  ]
+}

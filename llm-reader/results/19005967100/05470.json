@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "05470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:44:48Z",
+  "note": "printed p. xxx; Appendix Notes, Note (20) on traverse and start of Note (21) on the word plea; footnote (k) also cites Chitty on Pleading, Bac. Ab. and Finch's Law (not cases). Footnote cross-checked with the 1843 copy (19005904300/05640)",
+  "citations": [
+    {"seq": 1, "raw": "Lambert v. Stroother, Willis, \"o4", "case_name": "Lambert v. Strother",
+     "reporter_abbr": "Willes", "page": 224,
+     "status": "no_match", "confidence": "medium",
+     "note": "page garbled in the OCR ('\"o4'), read as 224 from the 1843 copy's same footnote (1895 Williston prints 221); Willes's Reports have no source; no Lambert v. Strother in the English Reports under another reporter, as for this volume's earlier cites of it (01840)"}
+  ]
+}
