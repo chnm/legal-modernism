@@ -1,0 +1,140 @@
+{{define "styles"}}
+        th.grp { text-align: center; border-bottom: 1px solid #dee2e6; font-weight: 600; }
+        th.sep, td.sep { border-left: 1px solid #dee2e6; }
+        .has { display: inline-block; min-width: 4.6rem; text-align: center; }
+        .tally { font-variant-numeric: tabular-nums; }
+        /* The numeric columns do not wrap, so without a floor the title is
+           squeezed to a few words a line. */
+        th.title-col, td.title-col { min-width: 24rem; }
+        td.author { max-width: 13rem; }
+{{end}}
+
+{{define "content"}}
+    <h1 class="h4 mt-2">Editions: pipeline and LLM citations</h1>
+    <p class="small text-secondary mb-2">
+        Every edition in the treatise view, US and UK, with the citations each method found in it. The
+        <strong>pipeline</strong> is the regex detector and the linker, run over the whole corpus. The
+        <strong>LLM</strong> reading is Claude reading an edition page by page and linking each case citation by its own
+        judgement (issue #439), done so far for the editions of <a href="/works/1107">Stephen on Pleading</a>.
+        Editions with an LLM reading are listed first. Citations are every citation found; linked is the share that
+        reached a case; cases are the distinct cases reached.
+    </p>
+
+    {{with .Summary}}
+    <p class="small tally mb-2">
+        <strong>{{num .Editions}}</strong> editions:
+        <strong>{{num .Pipeline}}</strong> with pipeline citations,
+        <strong>{{num .LLM}}</strong> with LLM citations,
+        <strong>{{num .Both}}</strong> with both,
+        <strong>{{num .Neither}}</strong> with neither.
+    </p>
+    {{end}}
+
+    <form method="get" class="row g-2 align-items-center mb-2">
+        <div class="col-auto">
+            <input type="search" name="q" value="{{.Q}}" class="form-control form-control-sm"
+                   placeholder="Title or author&hellip;" style="min-width: 18rem;">
+        </div>
+        <div class="col-auto">
+            <select name="jur" class="form-select form-select-sm" aria-label="Jurisdiction">
+                <option value="" {{if eq .Jur ""}}selected{{end}}>US and UK</option>
+                <option value="us" {{if eq .Jur "us"}}selected{{end}}>US editions</option>
+                <option value="uk" {{if eq .Jur "uk"}}selected{{end}}>UK editions</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select name="show" class="form-select form-select-sm" aria-label="Which editions">
+                <option value="" {{if eq .Show ""}}selected{{end}}>All editions</option>
+                <option value="llm" {{if eq .Show "llm"}}selected{{end}}>With LLM citations</option>
+                <option value="pipeline" {{if eq .Show "pipeline"}}selected{{end}}>With pipeline citations</option>
+                <option value="neither" {{if eq .Show "neither"}}selected{{end}}>With neither</option>
+            </select>
+        </div>
+        <input type="hidden" name="sort" value="{{.Sort}}">
+        <div class="col-auto"><button class="btn btn-sm btn-primary">Search</button></div>
+        {{if or .Q .Jur .Show}}<div class="col-auto"><a href="/editions?sort={{.Sort}}" class="small">clear</a></div>{{end}}
+    </form>
+
+    <div class="btn-group btn-group-sm mb-3" role="group" aria-label="Sort">
+        {{$q := .Q}}{{$jur := .Jur}}{{$show := .Show}}
+        <a href="/editions?sort=llm&q={{$q}}&jur={{$jur}}&show={{$show}}" class="btn {{if eq .Sort "llm"}}btn-primary{{else}}btn-outline-secondary{{end}}">LLM first</a>
+        <a href="/editions?sort=cites&q={{$q}}&jur={{$jur}}&show={{$show}}" class="btn {{if eq .Sort "cites"}}btn-primary{{else}}btn-outline-secondary{{end}}">Most pipeline citations</a>
+        <a href="/editions?sort=year&q={{$q}}&jur={{$jur}}&show={{$show}}" class="btn {{if eq .Sort "year"}}btn-primary{{else}}btn-outline-secondary{{end}}">Earliest</a>
+        <a href="/editions?sort=title&q={{$q}}&jur={{$jur}}&show={{$show}}" class="btn {{if eq .Sort "title"}}btn-primary{{else}}btn-outline-secondary{{end}}">Title</a>
+    </div>
+
+    {{if .Summary}}
+    <table class="table table-sm table-hover align-middle">
+        <thead>
+            <tr>
+                <th colspan="5"></th>
+                <th colspan="4" class="grp sep">Pipeline</th>
+                <th colspan="5" class="grp sep">LLM reading</th>
+            </tr>
+            <tr>
+                <th class="num">#</th>
+                <th class="title-col">Edition</th>
+                <th>Author</th>
+                <th class="num">Year</th>
+                <th>In</th>
+                <th class="sep"></th>
+                <th class="num">Citations</th>
+                <th class="num">Linked</th>
+                <th class="num">Cases</th>
+                <th class="sep"></th>
+                <th class="num">Pages read</th>
+                <th class="num">Citations</th>
+                <th class="num">Linked</th>
+                <th class="num">Cases</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{$from := .Nav.From}}
+        {{range $i, $e := .Items}}
+            <tr>
+                <td class="num text-secondary small">{{add $from $i}}</td>
+                <td class="title-col"><a href="{{$e.URL}}">{{$e.Title}}</a></td>
+                <td class="small text-secondary author">{{ptrOr $e.Author "&mdash;"}}</td>
+                <td class="num">{{if $e.Year}}{{deref $e.Year}}{{else}}&mdash;{{end}}</td>
+                <td><span class="badge jur">{{$e.Jurisdiction}}</span></td>
+                {{if $e.HasPipeline}}
+                <td class="sep"><span class="chip chip-linked has">citations</span></td>
+                <td class="num">{{num $e.Cites}}</td>
+                <td class="num">{{$e.LinkedPct}}</td>
+                <td class="num">{{num $e.Cases}}</td>
+                {{else}}
+                <td class="sep"><span class="chip chip-junk has">none</span></td>
+                <td class="num text-secondary">&mdash;</td>
+                <td class="num text-secondary">&mdash;</td>
+                <td class="num text-secondary">&mdash;</td>
+                {{end}}
+                {{if $e.HasLLM}}
+                <td class="sep"><span class="chip chip-linked has">citations</span></td>
+                <td class="num">{{num $e.LLMPages}}{{if not $e.LLMComplete}} <span class="text-secondary small">of {{num $e.Pages}}</span>{{end}}</td>
+                <td class="num">{{num $e.LLMCites}}</td>
+                <td class="num">{{$e.LLMLinkedPct}}</td>
+                <td class="num">{{num $e.LLMCases}}</td>
+                {{else}}
+                <td class="sep"><span class="chip chip-junk has">none</span></td>
+                <td class="num text-secondary">&mdash;</td>
+                <td class="num text-secondary">&mdash;</td>
+                <td class="num text-secondary">&mdash;</td>
+                <td class="num text-secondary">&mdash;</td>
+                {{end}}
+            </tr>
+        {{else}}
+            <tr><td colspan="14" class="text-secondary">No editions match.</td></tr>
+        {{end}}
+        </tbody>
+    </table>
+
+    {{template "pagination" .Nav}}
+
+    <p class="small text-secondary mt-3 mb-0">
+        The pipeline's counts come from <code>moml_citations.edition_citation_counts</code>, as of the last
+        <code>make db-maintenance</code>. The LLM reading's counts are read live from
+        <code>moml_citations.llm_pages</code> and <code>llm_links</code>. An edition is counted by its official copy;
+        the other copies of a printing that Claude also read are not listed.
+    </p>
+    {{end}}
+{{end}}
