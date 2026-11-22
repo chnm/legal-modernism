@@ -1,0 +1,22 @@
+{
+  "psmid": "19005904300", "pageid": "04590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:41:27Z",
+  "note": "p. 425; the special traverse cures argumentativeness; two negatives make no good issue. Skipped: Bac. Ab., Doct. Pl., Com. Dig. Cross-checked with the 1895 Williston (19005765700/03690)",
+  "citations": [
+    {"seq": 1, "raw": "Courtncy v. Phelps, Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "volume supplied; Courtney versus Phelps begins at 1 Sid 300 (487 words) and runs onto 301, where Haw v. Planner begins; the name decides"},
+    {"seq": 2, "raw": "Her- ring v. Blacklow, Cro. Eliz. 30", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high",
+     "note": "two records at Cro Eliz 30; the name decides"},
+    {"seq": 3, "raw": "10 Hen. 6, 7, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, pl. 21"},
+    {"seq": 4, "raw": "Martin o. Smith, 6 East, 557", "case_name": "Martin v. Smith",
+     "volume": 6, "reporter_abbr": "East", "page": 557,
+     "status": "linked_english_reports", "er_case_id": "18050219", "pincite": true, "confidence": "high",
+     "note": "Martin and Others against Smith begins at 6 East 555 (3092 words)"}
+  ]
+}

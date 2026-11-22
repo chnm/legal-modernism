@@ -1,0 +1,25 @@
+{
+  "psmid": "19005904300", "pageid": "04580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:41:02Z",
+  "note": "p. 424; argumentative traverse of the steward; two affirmatives make no good issue; special traverse. Skipped: Com. Dig., Co. Litt., Doct. Pl., the cross-reference supra pp. 207, 208. Cross-checked with the 1838 record (19005967100/04450) and the 1895 Williston (19005765700/03690)",
+  "citations": [
+    {"seq": 1, "raw": "Wood v. Butts, Cro. Eliz. 260", "case_name": "Wood v. Butts",
+     "reporter_abbr": "Cro. Eliz.", "page": 260,
+     "status": "linked_english_reports", "er_case_id": "16532222", "confidence": "high"},
+    {"seq": 2, "raw": "Chandler v. Roberts, Doug. 60", "case_name": "Chandler v. Roberts",
+     "volume": 1, "reporter_abbr": "Doug.", "page": 60,
+     "status": "linked_english_reports", "er_case_id": "17790039", "pincite": true, "confidence": "high",
+     "note": "per Buller, J.; volume supplied; case begins at 1 Doug 58"},
+    {"seq": 3, "raw": "Zoncl and Bam- field's case, 1 Leon. 77", "case_name": "Zouch and Bamfield's Case",
+     "volume": 1, "reporter_abbr": "Leon.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "16870944", "pincite": true, "confidence": "high",
+     "note": "OCR 'Zoncl'; case begins at 1 Leo 75 (8377 words)"},
+    {"seq": 4, "raw": "Tomlin v. Surlace, 1 Wils. 6", "case_name": "Tomlin v. Surlace",
+     "volume": 1, "reporter_abbr": "Wils.", "page": 6,
+     "status": "linked_english_reports", "er_case_id": "17990512", "confidence": "high",
+     "note": "ER 'Tomlin versus Burlace' at 1 Wils KB 6"},
+    {"seq": 5, "raw": "5 lien. VI.. 11, 12", "volume": 5, "reporter_abbr": "Y.B.", "page": 11,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 5 Hen. VII; this scan reads 'VI..', the 1838 and 1895 editions print VII, taken as OCR loss; dropped: 12"}
+  ]
+}
