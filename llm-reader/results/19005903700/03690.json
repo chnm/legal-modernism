@@ -1,0 +1,23 @@
+{
+  "psmid": "19005903700", "pageid": "03690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:51:03Z",
+  "note": "p. 341; Common Law Procedure Act 1852 s. 49 (statute, skipped); brevity; surplusage is no ground of demurrer, utile per inutile non vitiatur. Co. Litt. skipped. Cross-checked with the 1843 record (19005904300/05030)",
+  "citations": [
+    {"seq": 1, "raw": "Plow. Corn. 232", "reporter_abbr": "Plow.", "volume": 1, "page": 232,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Plowden's Commentaries, page 232 falls in Willion v. Berkley, whose record begins at 1 Plowden 222 (42111 words, the only record in the 220s and 230s)"},
+    {"seq": 2, "raw": "Lord v. Houstcn, 11 East, 62", "case_name": "Lord v. Houston",
+     "volume": 11, "reporter_abbr": "East", "page": 62,
+     "status": "linked_english_reports", "er_case_id": "18090184", "confidence": "high"},
+    {"seq": 3, "raw": "Cobbett v. Cochrane, 8 Bing. 17", "case_name": "Cobbett v. Cochrane",
+     "volume": 8, "reporter_abbr": "Bing.", "page": 17,
+     "status": "linked_english_reports", "er_case_id": "18310859", "confidence": "high"},
+    {"seq": 4, "raw": "Bacon v, Ashton, 5 Dowl. 94", "case_name": "Bacon v. Ashton",
+     "volume": 5, "reporter_abbr": "Dowl.", "page": 94,
+     "status": "linked_stub", "stub_cite": "5 Dowl. 94", "confidence": "high",
+     "note": "no Bacon v. Ashton in ER by name; the stub matches the cite exactly, as the 1843 record"},
+    {"seq": 5, "raw": "Palmer v. Gooden, 8 M. and W. 890", "case_name": "Palmer v. Gooden",
+     "volume": 8, "reporter_abbr": "M. & W.", "page": 890,
+     "status": "linked_english_reports", "er_case_id": "18410064", "confidence": "high"}
+  ]
+}

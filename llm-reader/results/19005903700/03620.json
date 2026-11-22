@@ -1,0 +1,13 @@
+{
+  "psmid": "19005903700", "pageid": "03620",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:48:11Z",
+  "note": "p. 334; the reason of the rule against departure; Rule II, a plea amounting to the general issue. Skipped: Co. Lit., Doct. & Stud., Com. Dig., Bac. Ab., Chitty's Archbold, the Common Law Procedure Act",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 84 f (Oth ed.)", "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "medium",
+     "note": "Williams's note on departure (84 a-f) to Richards v. Hodges, whose second record is at 2 Wms Saund 83 (4921 words); Hesketh v. Lee's record is also at 84, but the departure note belongs to Richards v. Hodges, a departure case; OCR 'Oth' for 9th edition"},
+    {"seq": 2, "raw": "The Earl of Lucan v. Smith, 1 H. & N. 481", "case_name": "The Earl of Lucan v. Smith",
+     "volume": 1, "reporter_abbr": "H. & N.", "page": 481,
+     "status": "linked_english_reports", "er_case_id": "18560941", "confidence": "high"}
+  ]
+}
