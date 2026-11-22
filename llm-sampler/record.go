@@ -115,6 +115,7 @@ type Detected struct {
 	Page             *int      `json:"page,omitempty"`
 	Year             *int      `json:"year,omitempty"`
 	Alternates       []Reading `json:"alternates,omitempty"`
+	ParallelOf       int       `json:"parallel_of,omitempty"`
 	Pipeline         string    `json:"pipeline"`
 	Confidence       string    `json:"confidence"`
 	Note             string    `json:"note,omitempty"`
@@ -304,6 +305,9 @@ func (r *DetectResponse) check(id string) []string {
 		}
 		if !confidences[c.Confidence] {
 			add("citation %d: confidence must be high, medium or low, not %q", i+1, c.Confidence)
+		}
+		if c.ParallelOf < 0 || c.ParallelOf > len(r.Citations) || c.ParallelOf == c.Seq {
+			add("citation %d: parallel_of must be the seq of another citation on the page, not %d", i+1, c.ParallelOf)
 		}
 		if !relations[c.Pipeline] {
 			add("citation %d: pipeline must be same, corrected or new, not %q", i+1, c.Pipeline)

@@ -692,7 +692,13 @@ func cmdCandidates(ctx context.Context, pool *pgxpool.Pool, dir string, n int) e
 			return err
 		}
 		req := &LinkRequest{CustomID: p.id(), Edition: dreq.Edition, Page: dreq.Page, Text: dreq.Text, Citations: []LinkCitation{}}
-		for _, c := range responses[p.id()].Citations {
+		all := responses[p.id()].Citations
+		for _, c := range all {
+			// A parallel report with no name of its own is searched by the
+			// name of the citation it is parallel to.
+			if c.CaseName == "" && c.ParallelOf > 0 {
+				c.CaseName = all[c.ParallelOf-1].CaseName
+			}
 			list, err := candidatesFor(ctx, pool, lk, &c, dreq.Edition.Year, pipeline)
 			if err != nil {
 				return fmt.Errorf("%s seq %d: %w", p.id(), c.Seq, err)
