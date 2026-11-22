@@ -1,0 +1,13 @@
+{
+  "psmid": "19007986500", "pageid": "04990",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:47:15Z",
+  "note": "Appendix Notes (10)-(11) (p. xviii); 'the Year-books, viz. 1 Ed. 2' has no folio and is not recorded; Terrien and Co. Litt. are not reports. Cross-checked with 1827 (19005940200/05550) and 1841 (hathi00003/03600)",
+  "citations": [
+    {"seq": 1, "raw": "Year-book, 21 Ed. 4, 35", "volume": 21, "reporter_abbr": "Y.B.", "page": 35,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 21 Edw. IV, fo. 35; no source for the year books"},
+    {"seq": 2, "raw": "the Year-book, 3 Ed. 2, 59", "volume": 3, "reporter_abbr": "Y.B.", "page": 59,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 3 Edw. II, fo. 59; no source for the year books"}
+  ]
+}

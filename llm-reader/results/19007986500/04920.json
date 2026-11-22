@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "04920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:46:09Z",
+  "note": "Appendix Notes (4)-(5) (p. xi); also cites Glanville and Bracton (not cases). Cross-checked with 1827 (19005940200/05480)",
+  "citations": [
+    {"seq": 1, "raw": "10 E. , 19, pi. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
+     "status": "no_match", "confidence": "medium",
+     "note": "year book, 10 Edw. III, fo. 19, pl. 21; the OCR drops the reign, read from the 1827 and 1831 editions (10 E. 3. 19. pl. 21); no source for the year books"}
+  ]
+}
