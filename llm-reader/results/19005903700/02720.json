@@ -1,0 +1,17 @@
+{
+  "psmid": "19005903700", "pageid": "02720",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:09:46Z",
+  "note": "p. 244, possession enough against a wrong-doer (close, right of way). Skipped: cross-reference (k), the Prescription Act 2 & 3 Will. IV. c. 71",
+  "citations": [
+    {"seq": 1, "raw": "2 Wins. Saund. 1183 ..", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 113,
+     "status": "linked_english_reports", "er_case_id": "18450046", "pincite": true, "confidence": "medium",
+     "note": "OCR '1183 ..' read as 113 a from the 1866 edition (hathi00008/02980, '2 Wms. Saund. 113 a'); no name printed; Williams's note on the Prescription Act and pleading a way, inside Coryton v. Lithebye, which begins at 2 Wms Saund 112 (16,023 words)"},
+    {"seq": 2, "raw": "Laing v. Whaloy, 3 IIurlst. & N. G75", "case_name": "Laing v. Whaley",
+     "volume": 3, "reporter_abbr": "H. & N.", "page": 675,
+     "status": "linked_english_reports", "er_case_id": "18580870", "confidence": "high",
+     "note": "OCR 'G75' for 675; er_name reads 'Laving', murrell_title 'Laing v Whaley'"},
+    {"seq": 3, "raw": "Bibby v. Cartcr, 4 IIurlst. & N. 153", "case_name": "Bibby v. Carter",
+     "volume": 4, "reporter_abbr": "H. & N.", "page": 153,
+     "status": "linked_english_reports", "er_case_id": "18590215", "confidence": "high"}
+  ]
+}

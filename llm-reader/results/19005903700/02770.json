@@ -1,0 +1,23 @@
+{
+  "psmid": "19005903700", "pageid": "02770",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:12:17Z",
+  "note": "p. 249, the assignee of a reversion; an heir charged generally; title of the substance of the issue. Skipped: cross-references (b), (c). Footnote (z) is OCR'd '(s)'",
+  "citations": [
+    {"seq": 1, "raw": "1 Wis. Saund. 112, n. (1)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 112,
+     "status": "linked_english_reports", "er_case_id": "18450132", "confidence": "medium",
+     "note": "no name printed; Williams's note (1) to Jemott v. Cowley, which begins at 1 Wms Saund 112, as on p. 248"},
+    {"seq": 2, "raw": "Cuthbertion v. Irving, 4 H. &N. 742", "case_name": "Cuthbertson v. Irving",
+     "volume": 4, "reporter_abbr": "H. & N.", "page": 742,
+     "status": "linked_english_reports", "er_case_id": "18590767", "confidence": "high"},
+    {"seq": 3, "raw": "Denham v. Stephenson, 1 Salk. 355", "case_name": "Denham v. Stephenson",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 355,
+     "status": "linked_english_reports", "er_case_id": "17951002", "confidence": "high"},
+    {"seq": 4, "raw": "Brunton v. Hall, 1 Q. B. 792", "case_name": "Brunton v. Hall",
+     "volume": 1, "reporter_abbr": "Q. B.", "page": 792,
+     "status": "linked_english_reports", "er_case_id": "18410690", "confidence": "high"},
+    {"seq": 5, "raw": "Cawrk- well v. Russell, 26 L. J. (N.S.) Ex. 34", "case_name": "Cawkwell v. Russell",
+     "volume": 26, "reporter_abbr": "L. J. Ex.", "page": 34,
+     "status": "linked_stub", "stub_cite": "26 L.J.Ex. 34", "confidence": "high",
+     "note": "Law Journal (no source); no English Reports record of Cawkwell v. Russell found by name (searched Cawkwell, Russell 1855-57); the stub matches exactly"}
+  ]
+}

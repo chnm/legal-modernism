@@ -1,0 +1,14 @@
+{
+  "psmid": "19005903700", "pageid": "02930",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:18:13Z",
+  "note": "p. 265, the wheat case concluded; why evidence need not be pleaded. Skipped: cross-reference (g)",
+  "citations": [
+    {"seq": 1, "raw": "Eaton v. Southby, Willes, 181", "case_name": "Eaton v. Southby",
+     "reporter_abbr": "Willes", "page": 131,
+     "status": "linked_english_reports", "er_case_id": "17900552", "confidence": "medium",
+     "note": "OCR '181' for 131, as the 1843 edition prints it; Willes has no source; linked the same case as reported in Barnes's Notes, Eaton against Southby, Bar N 206, as the 1843 reader did"},
+    {"seq": 2, "raw": "Eliott v, Hardy, 3 Bing. 61", "case_name": "Elliott v. Hardy",
+     "volume": 3, "reporter_abbr": "Bing.", "page": 61,
+     "status": "linked_english_reports", "er_case_id": "18250564", "confidence": "high"}
+  ]
+}

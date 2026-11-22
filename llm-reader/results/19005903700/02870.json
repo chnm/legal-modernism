@@ -1,0 +1,15 @@
+{
+  "psmid": "19005903700", "pageid": "02870",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:16:26Z",
+  "note": "p. 259, the replication must assign a breach; conditions precedent under C.L.P. Act 1852 s. 57 (not a case)",
+  "citations": [
+    {"seq": 1, "raw": "Plomer v. oess, 5 Taunt. 880", "case_name": "Plomer v. Ross",
+     "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high",
+     "note": "OCR 'oess' for Ross and '880' for 386, as the 1843 edition prints it"},
+    {"seq": 2, "raw": "per Lord Mansfield, Sayre v. Minns, Cowp. 378", "case_name": "Sayre v. Minns",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 578,
+     "status": "linked_english_reports", "er_case_id": "17770027", "pincite": true, "confidence": "high",
+     "note": "OCR '378' for 578, as the 1843 edition prints it (no Sayre v. Minns near 378); stored as 2 Cowp; case begins at 2 Cowp 575"}
+  ]
+}
