@@ -1,0 +1,14 @@
+{
+  "psmid": "19005967100", "pageid": "01430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:37:32Z",
+  "note": "printed p. 112; trial by the record, nul tiel record. Vide supra p. 84, 3 Chitty (Chitty on Pleading's precedents), Co. Litt., Brooke's Abridgment (Br. Trials, pl. 40) and the rule of Hil. 4 Will. IV skipped; footnote (z) continues on the next page",
+  "citations": [
+    {"seq": 1, "raw": "Dyson v. Wood, 3 Barn. & Cress. 449", "case_name": "Dyson v. Wood",
+     "volume": 3, "reporter_abbr": "Barn. & Cress.", "page": 449,
+     "status": "linked_english_reports", "er_case_id": "18240856", "confidence": "high"},
+    {"seq": 2, "raw": "Abbot of Strata Marcella's case, 9 Rep. 31", "case_name": "Abbot of Strata Marcella's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "high",
+     "note": "the Case of the Abbot of Strata Mercella begins at 9 Co Rep 24 and runs to 33; as in the 1895 record for the same footnote"}
+  ]
+}

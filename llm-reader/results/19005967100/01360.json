@@ -1,0 +1,14 @@
+{
+  "psmid": "19005967100", "pageid": "01360",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:35:24Z",
+  "note": "printed p. 105; grounds for a new trial, attaint. Footnote (c) continued from the previous page. Tidd's New Practice, Arch. Prac., Blackstone's Commentaries and Reeves's History skipped",
+  "citations": [
+    {"seq": 1, "raw": "Carstairs v. Stein, 4 M. & S. 192", "case_name": "Carstairs v. Stein",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 192,
+     "status": "linked_english_reports", "er_case_id": "18150778", "confidence": "high"},
+    {"seq": 2, "raw": "Swinnerton v. Marquis of Stafford, 3 Taunt. 91, 232", "case_name": "Swinnerton v. Marquis of Stafford",
+     "volume": 3, "reporter_abbr": "Taunt.", "page": 91,
+     "status": "linked_english_reports", "er_case_id": "18100376", "confidence": "high",
+     "note": "dropped: 232 (a second record of the same case, 3 Taunt 232, 18100415), as in the 1835 and 1841 records"}
+  ]
+}

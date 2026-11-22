@@ -1,0 +1,17 @@
+{
+  "psmid": "19005967100", "pageid": "01250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T03:33:33Z",
+  "note": "printed p. 94; variance. Footnote (k) continues on the next page: Guthing v. Lynn's reporter and page are printed there, so it is recorded there. Same footnotes as the 1835 edition (19007986500/01130-01140)",
+  "citations": [
+    {"seq": 1, "raw": "Horsefall v. Testar, 7 Taunt. 385", "case_name": "Horsefall v. Testar",
+     "volume": 7, "reporter_abbr": "Taunt.", "page": 385,
+     "status": "linked_english_reports", "er_case_id": "18170304", "confidence": "high",
+     "note": "two records begin at 7 Taunt 385; the name picks Horsefall v Testar"},
+    {"seq": 2, "raw": "Latham v. Rutley, 2 Barn. & Cres. 20", "case_name": "Latham v. Rutley",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 20,
+     "status": "linked_english_reports", "er_case_id": "18230564", "confidence": "high"},
+    {"seq": 3, "raw": "Woodward v. Booth, 7 Barn. & Cres. 301", "case_name": "Woodward v. Booth",
+     "volume": 7, "reporter_abbr": "Barn. & Cres.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "18270234", "confidence": "high"}
+  ]
+}
