@@ -162,10 +162,10 @@
       "volume": 1,
       "reporter_abbr": "Dowl. N. S.",
       "page": 527,
-      "status": "linked_stub",
-      "stub_cite": "1 Dowl. N.S. 527",
-      "confidence": "high",
-      "note": "the English Reports hold two 1842 reports of Paddock v Forrester (3 Man & G 903, 4 Man & G 775) and nothing tells which this is, so the exact stub is linked"
+      "status": "linked_english_reports",
+      "er_case_id": "18420146",
+      "confidence": "low",
+      "note": "Dowling N.S. has no source; the English Reports hold two 1842 records of Paddock v Forrester (3 Man & G 903, 8,642 words; 4 Man & G 775, 1,345 words); linked to 3 Man & G 903 for the subject (variance) over the stub 1 Dowl. N.S. 527, at low as two records fit, as in the other editions; earlier reading: the English Reports hold two 1842 reports of Paddock v Forrester (3 Man & G 903, 4 Man & G 775) and nothing tells which this is, so the exact stub is linked (consistency pass)"
     },
     {
       "seq": 15,

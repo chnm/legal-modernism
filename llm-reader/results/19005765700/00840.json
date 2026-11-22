@@ -82,10 +82,10 @@
       "volume": 1,
       "reporter_abbr": "Dowl. N. S.",
       "page": 288,
-      "status": "linked_stub",
-      "stub_cite": "1 Dowl. N.S. 288",
-      "confidence": "high",
-      "note": "exact stub. ER holds Smith against Goldsworthy at 2 QB 717 (1842) and 4 QB 430 (1843), but nothing shows which proceeding, if either, is the one in Dowling, so the stub is kept"
+      "status": "linked_english_reports",
+      "er_case_id": "18420209",
+      "confidence": "low",
+      "note": "Dowling N.S. has no source; the English Reports hold Smith against Goldsworthy twice, 2 QB 717 (Jan. 1842) and 4 QB 430 (1843); linked to 2 QB 717 as nearer in date to 1 Dowl. N.S. (1841-42), over the stub 1 Dowl. N.S. 288, at low as two records fit, as in the 1843 record; earlier reading: exact stub. ER holds Smith against Goldsworthy at 2 QB 717 (1842) and 4 QB 430 (1843), but nothing shows which proceeding, if either, is the one in Dowling, so the stub is kept (consistency pass)"
     },
     {
       "seq": 8,

@@ -186,10 +186,10 @@
       "volume": 2,
       "reporter_abbr": "G. & D.",
       "page": 36,
-      "status": "linked_stub",
-      "stub_cite": "2 Gale & D. 36",
+      "status": "linked_english_reports",
+      "er_case_id": "18420032",
       "confidence": "medium",
-      "note": "page garbled (';16'), 36 as the 1843 copy prints; Gale and Davison, no Hinton v. Dibdin in the English Reports"
+      "note": "Gale and Davison has no source; linked to the same case, Hinton against Dibbin, 2 QB 646 (K.B. 1842), found by name, over the stub 2 Gale & D. 36, as in the other editions; earlier reading: page garbled (';16'), 36 as the 1843 copy prints; Gale and Davison, no Hinton v. Dibdin in the English Reports (consistency pass)"
     },
     {
       "seq": 17,

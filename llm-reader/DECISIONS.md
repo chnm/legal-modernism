@@ -368,7 +368,16 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    so the 80 record may be a different matter); Manser's Case (the 2 Co
    Rep 1 record is empty, so 2 Rep. 3 may not be a pin cite); Weedon v.
    Woodbridge, 13 QB 470 (two decisions, 1849 and 1850, or one split?);
-   Sir Ralph Bovy's Case, 1 Vent. 217 (marked a pin cite, probably not); U4 grading (item 6's no_match
+   Sir Ralph Bovy's Case, 1 Vent. 217 (marked a pin cite, probably not);
+   U6 stubs against the English Reports: DONE 2026-11-22, 74 named stub
+   cases checked, 6 relinked (54 citations): Belasyse v. Hester (23, `low`),
+   Routh v. Weddell (24, `low`: 3 Salk 285, record 17950650, `er_name`
+   "Brown v Burlace" but `murrell_title` "Ruth v Weddall", chosen over the
+   empty 17953010 "Ruth versus Weddall"; check), Hinton v. Dibdin, Paddock
+   v. Forrester, Smith v. Goldsworthy, Bayley v. Baker (spelled "Baily").
+   Left as stubs: the other Lutwyche cases, Brown v. Lord Granville,
+   Gardner v. Alexander, Fletcher v. Rylands (L.R. H.L.; only the 1865
+   Exchequer stage is in the English Reports), Thynne v. Woodman; U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name
