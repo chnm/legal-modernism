@@ -1,0 +1,86 @@
+# Reader prompt
+
+The coordinating session gives each reader subagent this prompt, with
+`<PSMID>`, `<FIRST>` and `<LAST>` filled in from `bin/llm-reader todo`. A
+round is one reader of 30 pages (the owner asked for a single reader at a
+time, to spare tokens); after a round the coordinator runs
+`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and has the owner load
+the records (`results/` is not tracked in Git: the records stay local until
+they are loaded).
+To resume after a restart, take the next
+pages from `bin/llm-reader todo --jurisdiction US --limit 150`. Questions for
+the owners go in `llm-reader/DECISIONS.md` with the interim rule, not to the
+user mid-run; at the end each is posted as its own GitHub issue.
+
+---
+
+You are one of several readers linking the case citations in Stephen on
+Pleading by reading each page yourself (issue #439). Work in the worktree
+`.claude/worktrees/llm-stephen-links-439` of the legal-modernism repository;
+run every command from there, and do not run git.
+
+First read `llm-reader/README.md` in full: "Instructions for a reader" is your
+brief (what counts as a case citation, reading the OCR, looking cases up with
+read-only SQL via `psql "$LAW_CLAUDE"`, the JSON record). A worked example is
+`llm-reader/results/19005816500/01000.json`. Do not query any
+`moml_citations.*` table: this reading must be independent of the existing
+detector and linker.
+
+Your pages: psmid `<PSMID>`, pageids `<FIRST>` through `<LAST>` (each multiple
+of 10 between them). For each page, in order:
+
+1. `LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader page <PSMID> <pageid>`
+2. Find every case citation and decide its link by your judgement, starting
+   from the case name: the OCR'd volume and page numbers are often wrong,
+   the names much less so (see "Reading the OCR" in the README).
+3. Write `llm-reader/results/<PSMID>/<pageid>.json` with the Write tool
+   (model `claude-opus-5-5`, `read_at` the current UTC time, from `date -u +%Y-%m-%dT%H:%M:%SZ`). A page with no
+   case citations still gets a record, with `"citations": []` and a short note.
+
+Run shell commands one at a time: the worktree guard refuses compound
+commands, loops and scripts in `/tmp`, and any command naming the worktree's
+absolute path (its `github` looks like git), so use relative paths
+(`bin/llm-reader`, `llm-reader/results/...`). Write each record with the Write tool.
+The guard also refuses any command containing the letters "git", even
+inside a word ("legitimate"): choose another search term.
+
+Other readers write into the same results directory at the same time. Never
+edit a file outside your own page range, and never run `sed`, a glob or a
+loop over the results directory; fix your own files one at a time. Take
+`read_at` from the clock when you write the record, rather than estimating it.
+
+Read every page in full, indexes and tables included: do not skim a page or
+search it for patterns in place of reading it.
+
+The manifest lists each edition's official copy (`moml.treatises`, PR #443):
+a HathiTrust scan where one exists (`hathi000NN`), else Gale's. HathiTrust text
+is cleaner than Gale's OCR but its pages carry no printed page number or type
+in the metadata; the printed page is in the text. Several are the same
+printing as a Gale volume already read, whose records are the cross-check
+(find the same footnote by its printed page):
+
+| Official copy | Year | Gale copy already read |
+|---|---|---|
+| hathi00002 | 1831 | 19005816500 (from about printed p. 40 its pageids run 80 behind this copy's, and 90 behind in the Appendix) |
+| hathi00003 | 1841 | 19005785400 (its pageids run 120 behind this copy's at the start of the text and 110 behind from about p. 138; check as you go) |
+| hathi00004 | 1851 | 19005764100 (its pageids run 60 behind this copy's, at least through the opening chapters; check as you go) |
+| hathi00005 | 1854 | 19005784900 (its pageids run 60 behind this copy's, at least through p. 22; check as you go) |
+| hathi00006 | 1857 | 19005781000 (the 1859 printing of the same 8th American edition; its pageids run 60 behind this copy's). hathi00005 (1854) is the same setting of type at the same pageid from the start of the text, as hathi00004 (1851) is for hathi00005 |
+| hathi00009 | 1871 | none read (Samuel Tyler's edition, from the 2nd London edition, with his own preface, introduction, dissertation on parties and notes) |
+| hathi00010 | 1882 | none read (Gale has the 1875 printing, 19005763500). Tyler's third American edition; cross-check against hathi00009 (1871 Tyler) by content |
+| 19005765000 | 1894 | none (Gale is the official copy). James DeWitt Andrews's edition (Chicago: Callaghan): Stephen's first-edition text with Andrews's own American notes, introduction and added chapters |
+| 19005765700 | 1895 | none (Gale is the official copy). Samuel Williston's edition (Cambridge: Harvard Law Review Publishing Association): a reprint of the 5th English edition (1843, Stephen's last), with Williston's bracketed notes on English decisions of the next decade. No American edition read carries this text; the 1843 English Gale copy 19005904300 (unread, text in the database) does, its pageids 80–150 and more above this copy's, star pages ([*41]) marking the 1843 pagination |
+| hathi00001 | 1824 (UK) | 1st edition (London). None read of this copy; Gale's 19005920500 (unread) is the same edition. The 1894 Andrews (19005765000) reprints the 1st-edition text, so its records cross-check Stephen's own footnotes by content |
+| 19005940200 | 1827 (UK) | 2nd edition (London: Butterworth), which prints case names and adds a table of cases. The American editions of 1831–57 follow the pre-1834 English text, so their records cross-check by content: both drift behind this copy's pageids, so find footnotes by content and printed page: hathi00001 (1824) is 40 behind at p. 34, 530 at p. 483, and 530 in the Appendix Notes (its Note 1 at 04870, this copy's at 05400); hathi00002 (1831) is 40 ahead at p. 1, 1410 behind at p. 483 and 1480 at p. 508 (19005816500 about 80 further), its pages holding more text |
+| 19007986500 | 1835 (UK) | 3rd edition (London: Saunders and Benning), revised for the Hilary Rules of 1834; prints case names and a table of cases (00220–00280). The 1841 American edition (hathi00003, 80 pageids ahead at p. 1 but 1300 behind by p. 418 and 1350 by p. 443, its pages holding two or three printed pages; its Gale twin 19005785400 about 110 further behind) follows the post-1834 text, so its records cross-check by content; the 1827 copy (19005940200, 20 behind at p. 1 but 400 ahead by p. 418 and 500 at the Conclusion, 05220 against this copy's 04720, since 1835 cut text) for the unrevised passages. Check the offsets as you go |
+| 19005967100 | 1838 (UK) | 4th edition (London: Saunders and Benning), "corrected in conformity with the Rules of H. T. 1834, and the decisions thereon"; prints case names and a table of cases (00230–00310 or so). Its text is longer than 1835's (Chapter I ends at p. 128, not 117), so cross-check the 1835 copy (19007986500) and the 1841 American edition (hathi00003, whose p. 1 is at 00370; Gale twin 19005785400) by content. 10 pageids ahead of 1835 through the front matter, then further ahead: 1838 p. 50 (00810) is 1835 p. 44 (00720) and 1841 p. 43 (hathi00003/00670); 1838 p. 82 (01130) is 1835 p. 75 (01030), hathi00003 00880 and 1895 Williston (19005765700) about 00900; 1838 p. 119 (01500) is 1835 p. 108 and hathi00003 01110; 1838 p. 140 (01710) is 1835 01570 (p. 129), Williston 01390 and hathi00003 01250. From about p. 165 the 1843 Gale copy (19005904300, unread but in the database) is the closest text, about 60 pageids ahead at p. 208 (02400) and 90 at p. 297 (03290), where Williston is 400 and then 540 behind. 1838 adds cases of 1835–38 and moves some Appendix matter into footnotes |
+| 19005903700 | 1860 (UK) | 6th edition, by James Stephen and Francis F. Pinder (London: Stevens, Sweet, Maxwell), rewritten for the Common Law Procedure Act 1852; Stephen's surviving words are bracketed; some Appendix notes dropped. Table of cases 00190–00270, p. 1 at 00280. Cross-check the 1843 copy (19005904300, p. 1 at 00350) and hathi00008 (1866 7th edition, a revised reprint of this one, p. 1 at 00370) by case name: the text was rewritten, so offsets drift |
+| hathi00008 | 1866 (UK) | 7th edition, by Francis F. Pinder alone (London: Stevens, Sweet, Maxwell), "a reprint, with considerable alterations and additions" of the 1860 edition. Table of cases 00270–00350, p. 1 at 00370; Concluding Remarks at p. 386, Appendix p. 397, Index p. 461. Cross-check the 1860 copy (19005903700, complete; 90 behind at p. 1, 430–460 behind by the Appendix) by case name: the text keeps drifting |
+| 19005904300 | 1843 (UK) | Text begins about 00350 (p. 2 at 00360); the table of cases runs 00230 to about 00340. By content it runs ahead of the 1838 copy (19005967100, complete): +20 at p. 82, +110 at p. 347, +160 at p. 483. The 1895 Williston (19005765700) starts level and falls 730 behind by p. 347 and 1030 by p. 483: find passages by case name. 5th edition (London: Saunders and Benning), the text Williston reprinted; prints case names and adds cases since 1838 |
+| hathi00013 | 1901 | none read. Andrews's second edition (Chicago: Callaghan, 1901), retitled "Principles of Pleading in Civil Actions under the Common-Law System and as Modified ... under Modern Codes": the 1894 text with interpolations, new sections, renumbered (cross-check the 1894 records by text, not section). It lines up with the 1894 copy only loosely in the parties chapters (about −30 to +40), then +360 to +410 from the Proceedings chapter (1901 ~01400) and +470 late in the appendix |
+
+Skip a page that already has a results file. When done, run
+`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db --psmid <PSMID>` (once
+per volume you read; checking every volume takes minutes) and fix any problem
+in your files. Report back briefly: pages written, citations by status, the
+no_match and why, and anything in the README that was unclear or wrong.

@@ -2508,6 +2508,97 @@ CREATE VIEW moml_citations.linking_tier_summary AS
 
 
 --
+-- Name: llm_links; Type: TABLE; Schema: moml_citations; Owner: -
+--
+
+CREATE TABLE moml_citations.llm_links (
+    psmid text NOT NULL,
+    pageid text NOT NULL,
+    seq integer NOT NULL,
+    raw text NOT NULL,
+    case_name text,
+    volume integer,
+    reporter_abbr text,
+    page integer,
+    year integer,
+    status text NOT NULL,
+    cap_case_id bigint,
+    er_case_id text,
+    code_reporter_id bigint,
+    stub_cite text,
+    pincite boolean DEFAULT false NOT NULL,
+    confidence text NOT NULL,
+    note text,
+    CONSTRAINT chk_llm_links_confidence CHECK ((confidence = ANY (ARRAY['high'::text, 'medium'::text, 'low'::text]))),
+    CONSTRAINT chk_llm_links_status CHECK ((status = ANY (ARRAY['linked_cap'::text, 'linked_english_reports'::text, 'linked_code_reporter'::text, 'linked_stub'::text, 'no_match'::text]))),
+    CONSTRAINT chk_llm_links_target CHECK ((((((((cap_case_id IS NOT NULL))::integer + ((er_case_id IS NOT NULL))::integer) + ((code_reporter_id IS NOT NULL))::integer) + ((stub_cite IS NOT NULL))::integer) =
+CASE
+    WHEN (status = 'no_match'::text) THEN 0
+    ELSE 1
+END) AND ((status <> 'linked_cap'::text) OR (cap_case_id IS NOT NULL)) AND ((status <> 'linked_english_reports'::text) OR (er_case_id IS NOT NULL)) AND ((status <> 'linked_code_reporter'::text) OR (code_reporter_id IS NOT NULL)) AND ((status <> 'linked_stub'::text) OR (stub_cite IS NOT NULL)))),
+    CONSTRAINT llm_links_seq_check CHECK ((seq > 0))
+);
+
+
+--
+-- Name: TABLE llm_links; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON TABLE moml_citations.llm_links IS 'Citations of cases Claude found and linked by reading a MOML page (issue #439), independent of citations_unlinked and citation_links.';
+
+
+--
+-- Name: COLUMN llm_links.raw; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.llm_links.raw IS 'The citation as printed on the page (OCR errors and all).';
+
+
+--
+-- Name: COLUMN llm_links.case_name; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.llm_links.case_name IS 'The case name as printed, or as the reader inferred it from context; NULL when none is given.';
+
+
+--
+-- Name: COLUMN llm_links.pincite; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.llm_links.pincite IS 'True when the cited page is inside the case rather than its first page.';
+
+
+--
+-- Name: COLUMN llm_links.note; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON COLUMN moml_citations.llm_links.note IS 'The reader''s reasoning when it is not obvious: an OCR correction, a disambiguation, why no case was found.';
+
+
+--
+-- Name: llm_pages; Type: TABLE; Schema: moml_citations; Owner: -
+--
+
+CREATE TABLE moml_citations.llm_pages (
+    psmid text NOT NULL,
+    pageid text NOT NULL,
+    model text NOT NULL,
+    read_at timestamp with time zone NOT NULL,
+    citation_count integer NOT NULL,
+    note text,
+    loaded_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT llm_pages_citation_count_check CHECK ((citation_count >= 0))
+);
+
+
+--
+-- Name: TABLE llm_pages; Type: COMMENT; Schema: moml_citations; Owner: -
+--
+
+COMMENT ON TABLE moml_citations.llm_pages IS 'MOML pages Claude has read for citations (issue #439), one row per page, including pages with none. Loaded from llm-reader/results by llm-reader load.';
+
+
+--
 -- Name: reporter_case_citations; Type: MATERIALIZED VIEW; Schema: moml_citations; Owner: -
 --
 
@@ -3510,6 +3601,22 @@ ALTER TABLE ONLY moml_citations.citations_unlinked
 
 
 --
+-- Name: llm_links llm_links_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_pkey PRIMARY KEY (psmid, pageid, seq);
+
+
+--
+-- Name: llm_pages llm_pages_pkey; Type: CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_pages
+    ADD CONSTRAINT llm_pages_pkey PRIMARY KEY (psmid, pageid);
+
+
+--
 -- Name: citations_unlinked moml_citations_id_key; Type: CONSTRAINT; Schema: moml_citations; Owner: -
 --
 
@@ -4161,6 +4268,34 @@ CREATE UNIQUE INDEX linking_dashboard_tiers_uq ON moml_citations.linking_dashboa
 
 
 --
+-- Name: llm_links_cap_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX llm_links_cap_idx ON moml_citations.llm_links USING btree (cap_case_id) WHERE (cap_case_id IS NOT NULL);
+
+
+--
+-- Name: llm_links_code_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX llm_links_code_idx ON moml_citations.llm_links USING btree (code_reporter_id) WHERE (code_reporter_id IS NOT NULL);
+
+
+--
+-- Name: llm_links_er_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX llm_links_er_idx ON moml_citations.llm_links USING btree (er_case_id) WHERE (er_case_id IS NOT NULL);
+
+
+--
+-- Name: llm_links_stub_idx; Type: INDEX; Schema: moml_citations; Owner: -
+--
+
+CREATE INDEX llm_links_stub_idx ON moml_citations.llm_links USING btree (stub_cite) WHERE (stub_cite IS NOT NULL);
+
+
+--
 -- Name: reporter_case_citations_editions_idx; Type: INDEX; Schema: moml_citations; Owner: -
 --
 
@@ -4792,6 +4927,54 @@ ALTER TABLE ONLY moml_citations.citation_links
 
 
 --
+-- Name: llm_links llm_links_cap_case_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_cap_case_id_fkey FOREIGN KEY (cap_case_id) REFERENCES cap.cases(id);
+
+
+--
+-- Name: llm_links llm_links_code_reporter_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_code_reporter_id_fkey FOREIGN KEY (code_reporter_id) REFERENCES legalhist.code_reporter(id);
+
+
+--
+-- Name: llm_links llm_links_er_case_id_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_er_case_id_fkey FOREIGN KEY (er_case_id) REFERENCES english_reports.cases(id);
+
+
+--
+-- Name: llm_links llm_links_page_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_page_fkey FOREIGN KEY (psmid, pageid) REFERENCES moml_citations.llm_pages(psmid, pageid) ON DELETE CASCADE;
+
+
+--
+-- Name: llm_links llm_links_stub_cite_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_links
+    ADD CONSTRAINT llm_links_stub_cite_fkey FOREIGN KEY (stub_cite) REFERENCES legalhist.stub_cases(cite) ON UPDATE CASCADE;
+
+
+--
+-- Name: llm_pages llm_pages_page_fkey; Type: FK CONSTRAINT; Schema: moml_citations; Owner: -
+--
+
+ALTER TABLE ONLY moml_citations.llm_pages
+    ADD CONSTRAINT llm_pages_page_fkey FOREIGN KEY (pageid, psmid) REFERENCES moml.page(pageid, psmid);
+
+
+--
 -- Name: citation_links citation_links_cap_case_id_fkey; Type: FK CONSTRAINT; Schema: opinion_citations; Owner: -
 --
 
@@ -4940,5 +5123,7 @@ INSERT INTO sys_admin.migrations_dbmate (version) VALUES
     ('20261106201422'),
     ('20261117203658'),
     ('20261118164617'),
+    ('20261120020229'),
     ('20261120163920'),
-    ('20261120214024');
+    ('20261120214024'),
+    ('20261122190321');

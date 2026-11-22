@@ -30,6 +30,7 @@ func TestRoutes(t *testing.T) {
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/jurisdictions.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/census.js").StatusCode)
 	require.Equal(t, http.StatusOK, get(t, "/static/viz/field-code.js").StatusCode)
+	require.Equal(t, http.StatusOK, get(t, "/static/viz/stephen.js").StatusCode)
 
 	// Static files carry an ETag that a conditional request matches, and ask
 	// to be revalidated.
@@ -51,7 +52,7 @@ func TestRoutes(t *testing.T) {
 
 	// The linking pages that only render a shell, for each corpus, and the
 	// requests refused before any query.
-	for _, path := range []string{"/linking", "/linking/tiers", "/linking/cap/tiers", "/linking/whitelist", "/linking/whitelist?corpus=cap", "/viz/jurisdictions", "/viz/field-code"} {
+	for _, path := range []string{"/linking", "/linking/tiers", "/linking/cap/tiers", "/linking/whitelist", "/linking/whitelist?corpus=cap", "/viz/jurisdictions", "/viz/field-code", "/viz/stephen"} {
 		require.Equal(t, http.StatusOK, get(t, path).StatusCode, path)
 	}
 	for _, path := range []string{

@@ -103,6 +103,9 @@ cap-import/metadata_unzipped/*
 *_cache
 .claude/settings.local.json
 
+# Claude's page records (llm-reader): local until loaded into the database
+llm-reader/results/
+
 # Git worktrees
 .worktrees/
 

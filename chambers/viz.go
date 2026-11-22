@@ -230,3 +230,108 @@ func (s *server) handleVizFieldCode(w http.ResponseWriter, r *http.Request) {
 		Title: "The migration of the Field Code", Section: "viz",
 	}})
 }
+
+// stephenWorkID is Stephen on Pleading in moml.works, the work whose
+// editions Claude read for citations in issue #439.
+const stephenWorkID = 1107
+
+// handleVizStephen renders the citations of the American editions of Stephen
+// on Pleading (issue #439), as Claude read and linked them page by page. The
+// page is a shell; the script fetches the API below.
+func (s *server) handleVizStephen(w http.ResponseWriter, r *http.Request) {
+	s.render(w, r, "viz_stephen.html", http.StatusOK, vizPage{Page{
+		Title: "Stephen on Pleading", Section: "viz",
+	}})
+}
+
+// vizStephenRow is the citations of cases of one jurisdiction in one American
+// edition of Stephen on Pleading: US, UK or Unknown. Every edition with a
+// page read has all three rows, a zero included, and the pages read and in
+// the copy, so that a partly read edition can be marked.
+type vizStephenRow struct {
+	Year             int     `json:"year"`
+	Bibliographicid  string  `json:"bibliographicid"`
+	Psmid            string  `json:"psmid"`
+	EditionStatement *string `json:"edition_statement"`
+	Jurisdiction     string  `json:"jurisdiction"` // US, UK or Unknown
+	Citations        int64   `json:"citations"`
+	PagesRead        int64   `json:"pages_read"`
+	Pages            int64   `json:"pages"`
+}
+
+// vizStephenSQL counts the LLM-read citations (moml_citations.llm_links, not
+// the detector's citations_unlinked) in the official copy of each American
+// edition of a work: the editions moml.treatises counts, which leaves out the
+// copies marked by moml.editions.copy_of, so that the Gale copies also read
+// are not counted twice. An edition no page of which is loaded is absent. A
+// citation is American when it links to CAP or the New York Code Reporter,
+// English when it links to the English Reports, and for a stub case whatever
+// its reporter's jurisdiction says (legalhist.stub_cases.reporter_standard,
+// a foreign key onto legalhist.reporters, whose jurisdiction is us:xx or
+// uk:xx); a citation that matched nothing, or a stub whose reporter has no
+// jurisdiction, is Unknown.
+const vizStephenSQL = `
+WITH copies AS (
+    SELECT v.bibliographicid, v.psmid, v.year, v.edition_statement
+      FROM moml.editions e
+      JOIN moml.treatises t USING (bibliographicid)
+      JOIN moml.volumes v USING (bibliographicid)
+     WHERE e.work_id = $1 AND t.jurisdiction = 'US'
+), editions AS (
+    SELECT c.bibliographicid, min(c.psmid) AS psmid, min(c.year) AS year,
+           min(c.edition_statement) AS edition_statement,
+           count(r.pageid) AS pages_read, count(*) AS pages
+      FROM copies c
+      JOIN moml.page p USING (psmid)
+      LEFT JOIN moml_citations.llm_pages r USING (psmid, pageid)
+     GROUP BY c.bibliographicid
+    HAVING count(r.pageid) > 0
+), links AS (
+    SELECT c.bibliographicid,
+           CASE WHEN l.status IN ('linked_cap', 'linked_code_reporter') OR rep.jurisdiction LIKE 'us:%' THEN 'US'
+                WHEN l.status = 'linked_english_reports' OR rep.jurisdiction LIKE 'uk:%' THEN 'UK'
+                ELSE 'Unknown' END AS jurisdiction
+      FROM copies c
+      JOIN moml_citations.llm_links l USING (psmid)
+      LEFT JOIN legalhist.stub_cases s ON s.cite = l.stub_cite
+      LEFT JOIN legalhist.reporters rep ON rep.reporter_standard = s.reporter_standard
+)
+SELECT e.year, e.bibliographicid, e.psmid, e.edition_statement, j.jurisdiction,
+       count(l.jurisdiction), e.pages_read, e.pages
+  FROM editions e
+ CROSS JOIN (VALUES ('US', 1), ('UK', 2), ('Unknown', 3)) AS j (jurisdiction, ord)
+  LEFT JOIN links l ON l.bibliographicid = e.bibliographicid AND l.jurisdiction = j.jurisdiction
+ GROUP BY e.year, e.bibliographicid, e.psmid, e.edition_statement, j.jurisdiction, j.ord, e.pages_read, e.pages
+ ORDER BY e.year, e.bibliographicid, j.ord`
+
+func (s *server) getVizStephen(ctx context.Context) ([]vizStephenRow, error) {
+	rows, err := s.db.Query(ctx, vizStephenSQL, stephenWorkID)
+	if err != nil {
+		return nil, fmt.Errorf("querying Stephen citations: %w", err)
+	}
+	defer rows.Close()
+	out := []vizStephenRow{}
+	for rows.Next() {
+		var r vizStephenRow
+		if err := rows.Scan(&r.Year, &r.Bibliographicid, &r.Psmid, &r.EditionStatement, &r.Jurisdiction,
+			&r.Citations, &r.PagesRead, &r.Pages); err != nil {
+			return nil, fmt.Errorf("scanning Stephen citations: %w", err)
+		}
+		out = append(out, r)
+	}
+	return out, rows.Err()
+}
+
+// handleVizStephenAPI serves the citations of each American edition of
+// Stephen on Pleading by jurisdiction. Before any official copy is loaded it
+// is an empty array, which the page says.
+func (s *server) handleVizStephenAPI(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := s.ctx(r, 30*time.Second)
+	defer cancel()
+	data, err := s.getVizStephen(ctx)
+	if err != nil {
+		apiError(w, err, "error querying Stephen citations", momlCorpus)
+		return
+	}
+	writeJSON(w, data)
+}

@@ -22,6 +22,7 @@ func TestParseTemplates(t *testing.T) {
 		"page.html", "cases.html", "case.html", "reporters.html", "reporter.html",
 		"citations.html", "citation.html", "linking.html", "linking_tiers.html", "linking_whitelist.html",
 		"cap_graph_case.html", "cap_graph_reporter.html", "viz_jurisdictions.html", "viz_field_code.html",
+		"viz_stephen.html",
 	} {
 		require.Contains(t, tmpls, page)
 	}
@@ -62,6 +63,7 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `<a href="/works/1107/cases">Stephen on Pleading</a>`)
 		require.Contains(t, out, `href="/viz/jurisdictions"`)
 		require.Contains(t, out, `href="/viz/field-code"`)
+		require.Contains(t, out, `href="/viz/stephen"`)
 	})
 
 	t.Run("viz jurisdictions", func(t *testing.T) {
@@ -86,6 +88,18 @@ func TestRenderPages(t *testing.T) {
 		require.Contains(t, out, `id="code"`)
 		require.Contains(t, out, `id="color-region"`)
 		require.Contains(t, out, `id="zoom-in"`)
+		require.Contains(t, out, `href="/#viz"`)
+	})
+
+	t.Run("viz stephen", func(t *testing.T) {
+		out := render(t, "viz_stephen.html", vizPage{Page{Title: "Stephen on Pleading", Section: "viz"}})
+		require.Contains(t, out, `const API = "/api/viz/stephen"`)
+		require.Contains(t, out, `from "/static/viz/stephen.js"`)
+		require.Contains(t, out, `from "/static/viz/style.js"`)
+		require.Contains(t, out, `id="viz-counts"`)
+		require.Contains(t, out, `id="viz-shares"`)
+		require.Contains(t, out, `class="viz-source"`)
+		require.Contains(t, out, `class="viz-notes"`)
 		require.Contains(t, out, `href="/#viz"`)
 	})
 
