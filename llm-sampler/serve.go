@@ -133,10 +133,11 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 <p class="text-secondary mb-4">Pages drawn uniformly over treatise editions, each read as two requests to <code>claude-opus-5-5</code>:
 detect the citations, then link them to candidate cases. <span id="state"></span></p>
 <div class="row g-4 mb-4">
- <div class="col-6 col-md-3"><div class="label">Pages read</div><div class="stat" id="pages"></div><div class="small text-secondary" id="pagesnote"></div></div>
- <div class="col-6 col-md-3"><div class="label">Citations detected</div><div class="stat" id="citations"></div><div class="small text-secondary" id="citesnote"></div></div>
- <div class="col-6 col-md-3"><div class="label">Active time</div><div class="stat" id="active"></div><div class="small text-secondary" id="rate"></div></div>
- <div class="col-6 col-md-3"><div class="label">Wall clock</div><div class="stat" id="wall"></div><div class="small text-secondary" id="started"></div></div>
+ <div class="col-6 col-lg"><div class="label">Pages read</div><div class="stat" id="pages"></div><div class="small text-secondary" id="pagesnote"></div></div>
+ <div class="col-6 col-lg"><div class="label">Citations Claude detected</div><div class="stat" id="citations"></div><div class="small text-secondary" id="citesnote"></div></div>
+ <div class="col-6 col-lg"><div class="label">Pipeline detections</div><div class="stat" id="pipeline"></div><div class="small text-secondary" id="pipenote"></div></div>
+ <div class="col-6 col-lg"><div class="label">Active time</div><div class="stat" id="active"></div><div class="small text-secondary" id="rate"></div></div>
+ <div class="col-6 col-lg"><div class="label">Wall clock</div><div class="stat" id="wall"></div><div class="small text-secondary" id="started"></div></div>
 </div>
 <div class="row g-4 mb-4">
  <div class="col-md-6"><h2 class="h6">Links</h2><div class="bar" id="statusbar"></div><div class="small mt-2" id="statuskey"></div></div>
@@ -173,7 +174,9 @@ async function load(){
   $("pages").textContent = n(data.pages);
   $("pagesnote").textContent = n(data.batches)+" batches · "+n(data.editions)+" editions · "+n(data.pages_with_citations)+" pages with citations";
   $("citations").textContent = n(data.citations);
-  $("citesnote").textContent = n(data.linked)+" linked · the pipeline found "+n(data.pipeline_detections)+" on these pages, "+n(data.pipeline_rejected)+" of them rejected";
+  $("citesnote").textContent = n(data.linked)+" linked to a case · "+n(data.citations-data.linked)+" with no match";
+  $("pipeline").textContent = n(data.pipeline_detections);
+  $("pipenote").textContent = "on the same pages · Claude kept "+n(data.pipeline_detections-data.pipeline_rejected)+" ("+n(data.relation.corrected||0)+" of them corrected) and rejected "+n(data.pipeline_rejected)+" · it missed "+n(data.relation["new"]||0)+" that Claude found";
   $("rate").textContent = data.active_seconds>0 && data.pages ? (data.pages/(data.active_seconds/3600)).toFixed(0)+" pages per active hour" : "";
   $("started").textContent = data.started ? "since "+new Date(data.started).toLocaleString() : "";
   $("state").textContent = data.running_batch ? "Batch "+data.running_batch+" ("+data.running_pages+" pages) is being read now." : "No batch is running.";
