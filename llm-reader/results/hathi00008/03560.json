@@ -1,0 +1,17 @@
+{
+  "psmid": "hathi00008", "pageid": "03560",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:48:49Z",
+  "note": "p. 320, matter pleaded only as necessary inducement does not make a pleading double (coverture and the husband's release). Skipped: Bac. Ab., Com. Dig. Cross-checked with the 1843 records (19005904300/03300)",
+  "citations": [
+    {"seq": 1, "raw": "24 E. 3, 75 b", "volume": 24, "reporter_abbr": "Y.B.", "page": 75,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 24 Edw. III, fo. 75 b; no source"},
+    {"seq": 2, "raw": "Calfe v. Nevil, Poph. 185", "case_name": "Calfe v. Nevil",
+     "reporter_abbr": "Poph.", "page": 185,
+     "status": "linked_english_reports", "er_case_id": "16820022", "confidence": "high",
+     "note": "two records of the case begin at Pop 185: 16820094 (no text) and 16820022 (er_name 'Anonymous', murrell_title 'Calfe v Nevil', with text); linked to the one with a word_count, per the README"},
+    {"seq": 3, "raw": "Rowles v. Lusty, 4 Bing. 428", "case_name": "Rowles v. Lusty",
+     "volume": 4, "reporter_abbr": "Bing.", "page": 428,
+     "status": "linked_english_reports", "er_case_id": "18270787", "confidence": "high"}
+  ]
+}

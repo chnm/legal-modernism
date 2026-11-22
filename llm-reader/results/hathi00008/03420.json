@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "03420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:43:44Z",
+  "note": "p. 306, the knight of the shire's election need not show the number of electors; 'others unknown'",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Rice Thomas, Plow. 118", "case_name": "Buckley v. Rice Thomas",
+     "reporter_abbr": "Plow.", "page": 118,
+     "status": "linked_english_reports", "er_case_id": "17941482", "confidence": "medium",
+     "note": "choice already made: Plowden 118 is in Plowden's missing pages; linked Dyer's report, Bulkeley v Thomas, 2 Dy 113; 118 is the report's first page, not a pin cite"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "psmid": "hathi00008", "pageid": "03550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:48:23Z",
+  "note": "p. 319, immaterial entry without admission is surplusage. Footnote (z) is OCR'd '(2)'. Skipped: Bac. Ab.; 'Suprà, pp. 132, 133' (cross-reference)",
+  "citations": [
+    {"seq": 1, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b.", "case_name": "Executors of Grenelefe's Case",
+     "reporter_abbr": "Dyer", "page": 42,
+     "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
+     "note": "stored as 1 Dy 42, 'Executors of Grenelife against W-'"}
+  ]
+}
