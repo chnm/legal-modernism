@@ -4,9 +4,9 @@ The coordinating session gives each reader subagent this prompt, with
 `<PSMID>`, `<FIRST>` and `<LAST>` filled in from `bin/llm-reader todo`. A
 round is one reader of 30 pages (the owner asked for a single reader at a
 time, to spare tokens); after a round the coordinator runs
-`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and loads the records
-(`results/` is not tracked in Git; the finished Stephen reading is the tag
-`stephen-llm-records-439`, which also holds the worked example below).
+`LAW_DBSTR="$LAW_CLAUDE" bin/llm-reader validate --db` and has the owner load
+the records (`results/` is not tracked in Git: the records stay local until
+they are loaded).
 To resume after a restart, take the next
 pages from `bin/llm-reader todo --jurisdiction US --limit 150`. Questions for
 the owners go in `llm-reader/DECISIONS.md` with the interim rule, not to the

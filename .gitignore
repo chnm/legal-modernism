@@ -103,8 +103,7 @@ cap-import/metadata_unzipped/*
 *_cache
 .claude/settings.local.json
 
-# Claude's page records (llm-reader): loaded into the database, not kept in
-# main; the Stephen reading is the tag stephen-llm-records-439
+# Claude's page records (llm-reader): local until loaded into the database
 llm-reader/results/
 
 # Git worktrees
