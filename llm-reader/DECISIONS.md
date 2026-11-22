@@ -416,7 +416,13 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    second Saunders page, Dyer's volume, 2 Saund. 319 e, Dal. 67, the
    4 Dowl. 524 note).
 9. After the pass: validate everything, commit, and post each Decisions and
-   Findings unit above as its own GitHub issue, linked from #439.
+   Findings unit above as its own GitHub issue, linked from #439. DONE
+   2026-11-22: decisions #452 (second numbers), #453 (Price v. Brown),
+   #454 (reprint parallels), #455 (misprints across editions), #456
+   (split English Reports records), #457 (field conventions), #458
+   (reporters' notes, bare Id.); findings #459 (English Reports gaps),
+   #460 (mislabelled records), #461 (whitelist readings), #462 (CAP first
+   pages), #463 (missing scan pages); stubs #464.
    The owner first decided (2026-11-21) not to read the UK editions, then
    reversed it the same day: after the last U.S. edition, read the UK
    editions (7 official copies, 4,219 pages) with ONE reader at a time,
