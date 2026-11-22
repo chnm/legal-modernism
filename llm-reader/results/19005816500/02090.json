@@ -1,7 +1,0 @@
-{"psmid": "19005816500", "pageid": "02090", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:32:00Z",
- "note": "2 Chitty skipped",
- "citations": [
-  {"seq": 1, "raw": "Took v. Glasclock, I Saund. 257", "case_name": "Took v. Glascock", "volume": 1, "reporter_abbr": "Saund.", "page": 257,
-   "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
-   "note": "OCR I for 1, 'Glasclock' for Glascock; case begins at 1 Wms Saund 250 (ER continues it at 260)"}
- ]}

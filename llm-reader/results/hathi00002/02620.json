@@ -1,6 +1,0 @@
-{"psmid": "hathi00002", "pageid": "02620", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:02:12Z",
- "note": "printed page 327-328; Bac. Ab. skipped; cross-checked with Gale 19005816500/02540",
- "citations": [
-  {"seq": 1, "raw": "Bolton v. Cannon, 1 Vent. 272", "case_name": "Bolton v. Cannon", "volume": 1, "reporter_abbr": "Vent.", "page": 272,
-   "status": "linked_english_reports", "er_case_id": "17260272", "pincite": true, "confidence": "high", "note": "case begins at 1 Vent 271"}
- ]}

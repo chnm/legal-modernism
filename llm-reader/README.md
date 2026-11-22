@@ -11,7 +11,12 @@ cases up itself, so the result can be compared with `moml_citations.citation_lin
 - `manifests/work-1107.tsv` lists every page, in reading order (U.S. editions
   by year, then UK).
 - `results/<psmid>/<pageid>.json` is the record of one page read. A page with
-  a record is done; the work resumes from the first page without one.
+  a record is done; the work resumes from the first page without one. The
+  records are not kept in `main` (`results/` is ignored). The finished
+  reading of Stephen, 12,868 pages after the consistency pass, is the tag
+  `stephen-llm-records-439`; put it back in a checkout with
+  `git restore --source=stephen-llm-records-439 --worktree llm-reader/results`
+  before running `load`, `validate`, `todo` or `serve` on it.
 - `moml_citations.llm_pages` and `moml_citations.llm_links` hold the records
   once loaded (`db/migrations/20261122190321_llm-links.sql`).
 

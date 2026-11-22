@@ -1,9 +1,0 @@
-{
-  "psmid": "hathi00009", "pageid": "02360",
-  "model": "claude-opus-5-5", "read_at": "2026-11-21T05:42:45Z",
-  "note": "Stephen, chapter II (p. 212): express colour given by a fictitious averment. Brown's Entries (a book of precedents) and the cross-reference supra, p. 185 are not recorded; the year book matches hathi00006",
-  "citations": [
-    {"seq": 1, "raw": "2 Edw. IV, 8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
-     "status": "no_match", "confidence": "high", "note": "year book, 2 Edw. IV, fol. 8; no source"}
-  ]
-}

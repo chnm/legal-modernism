@@ -1,9 +1,0 @@
-{
-  "psmid": "19005784900", "pageid": "01010",
-  "model": "claude-opus-5-5", "read_at": "2026-11-20T12:26:30Z",
-  "citations": [
-    {"seq": 1, "raw": "The King v. Cook, 2 Barn. & Cre. 871", "case_name": "The King v. Cook",
-     "volume": 2, "reporter_abbr": "Barn. & Cre.", "page": 871,
-     "status": "linked_english_reports", "er_case_id": "18240180", "confidence": "high"}
-  ]
-}

@@ -1,8 +1,0 @@
-{"psmid": "hathi00002", "pageid": "02390", "model": "claude-opus-5-5", "read_at": "2026-11-20T23:00:35Z",
- "note": "printed page 293-294; note (o) continues on the next page; cross-checked with Gale 19005816500/02310",
- "citations": [
-  {"seq": 1, "raw": "Humphreys v. Bethily, 2 Vent. 198. 222", "case_name": "Humphreys v. Bethily", "volume": 2, "reporter_abbr": "Vent.", "page": 198,
-   "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high", "note": "dropped: 222 (ER also has a second record of Humphreys v. Bethily at 2 Vent 222, id 17260504)"},
-  {"seq": 2, "raw": "Hart v. Longfield, 7 Mod. 148", "case_name": "Hart v. Longfield", "volume": 7, "reporter_abbr": "Mod.", "page": 148,
-   "status": "linked_english_reports", "er_case_id": "17961127", "confidence": "high"}
- ]}

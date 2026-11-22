@@ -1,8 +1,0 @@
-{"psmid": "19005816500", "pageid": "00960", "model": "claude-opus-5-5", "read_at": "2026-11-20T02:24:00Z",
- "note": "imparlance in modern practice. Chitty and Tidd are treatises, skipped",
- "citations": [
-  {"seq": 1, "raw": "2:Saund. 2. . (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
-   "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium", "note": "read as 2 Saund. 2 n. (2); Mellor v. Walker, 2 Wms Saund 1"},
-  {"seq": 2, "raw": "2 Saund. 2. n. (2)", "volume": 2, "reporter_abbr": "Saund.", "page": 2,
-   "status": "linked_english_reports", "er_case_id": "18450157", "pincite": true, "confidence": "medium", "note": "Mellor v. Walker, 2 Wms Saund 1"}
- ]}
