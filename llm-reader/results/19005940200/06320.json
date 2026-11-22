@@ -1,0 +1,15 @@
+{
+  "psmid": "19005940200", "pageid": "06320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:30:58Z",
+  "note": "Appendix Notes, printed p. xciii (end of Note 84, Notes 85-86); the two cases close Note 84 at the head of the page; Viner's Abridgment and the Year-books (no folio) not recorded. Cross-checked with hathi00002",
+  "citations": [
+    {"seq": 1, "raw": "Constable's Case, 5 Rep. ()(86) 108 a", "case_name": "Constable's Case",
+     "volume": 5, "reporter_abbr": "Rep.", "page": 108,
+     "status": "linked_english_reports", "er_case_id": "15720352", "pincite": true, "confidence": "high",
+     "note": "the '()(86)' is the margin's note number running into the line, not part of the cite; Sir Henry Constable's Case begins at 5 Co Rep 106"},
+    {"seq": 2, "raw": "Ladd v. Garrod, Lutw. 665", "case_name": "Ladd v. Garrod",
+     "reporter_abbr": "Lutw.", "page": 665,
+     "status": "no_match", "confidence": "high",
+     "note": "Lutwyche is only in the stubs, which hold 1 Lutw. 660, 662 and 670 but nothing at 665; not in the English Reports by name (searched Garrod, Ladd)"}
+  ]
+}
