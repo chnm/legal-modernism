@@ -1,0 +1,19 @@
+{
+  "psmid": "19007986500", "pageid": "04690",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:42:05Z",
+  "note": "printed p. 441; Rule VIII, pleadings properly intitled (Rules M. T. 3 W. 4 and H. T. 4 W. 4, rules of court, not recorded); Rule IX, pleadings ought to be true. Chitty on Pleading, Archbold's Practice and Bac. Ab. skipped. Cross-checked with the 1827 and 1841 records",
+  "citations": [
+    {"seq": 1, "raw": "Topping f. tiuge, 1 Marsh. 341", "case_name": "Topping v. Fuge",
+     "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
+     "note": "OCR 'f. tiuge' for v. Fuge; Marshall's C.P. Reports (1813-16) have no source; the same case is in Taunton at 5 Taunt 330 and, a later stage, 5 Taunt 771; 330 chosen, as in the other editions' records"},
+    {"seq": 2, "raw": "Slade v. Drake, Hob. 25", "case_name": "Slade v. Drake",
+     "reporter_abbr": "Hob.", "page": 295,
+     "status": "linked_english_reports", "er_case_id": "17922267", "confidence": "high",
+     "note": "OCR '25' for 295, where the named case begins, as the 1827 and 1841 editions print"},
+    {"seq": 3, "raw": "Smith v. Yeomans, 1 Srtund. 3t6.", "case_name": "Smith v. Yeomans",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 316,
+     "status": "linked_english_reports", "er_case_id": "18450240", "confidence": "high",
+     "note": "OCR '3t6' for 316"}
+  ]
+}

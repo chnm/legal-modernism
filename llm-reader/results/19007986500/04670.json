@@ -1,0 +1,18 @@
+{
+  "psmid": "19007986500", "pageid": "04670",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:41:37Z",
+  "note": "printed p. 439; profert excused for a deed lost, destroyed or held by the other side; the author's account of profert as an offer of proof. Chitty on Pleading, Co. Litt. and the supra reference skipped. Cross-checked with the 1827 and 1841 records",
+  "citations": [
+    {"seq": 1, "raw": "R3ead v. Brooklman, 3 T. It, 156", "case_name": "Read v. Brookman",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 156,
+     "status": "linked_english_reports", "er_case_id": "17892447", "pincite": true, "confidence": "high",
+     "note": "footnote (l), OCR '(1)'; case begins at 3 TR 151"},
+    {"seq": 2, "raw": "Cnrver v. Pinkneyt 3 Lev. 82", "case_name": "Carver v. Pinkney",
+     "volume": 3, "reporter_abbr": "Lev.", "page": 82,
+     "status": "linked_english_reports", "er_case_id": "17970048", "confidence": "high"},
+    {"seq": 3, "raw": "Leyfield's case, 10 Rep. 92 b", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 92,
+     "status": "linked_english_reports", "er_case_id": "15720100", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 Co Rep 88"}
+  ]
+}

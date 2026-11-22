@@ -1,0 +1,14 @@
+{
+  "psmid": "19007986500", "pageid": "04580",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:39:29Z",
+  "note": "printed p. 430; the count in dower concludes without production of suit; Rule III, pleas must be pleaded in due order. Booth, Coke's Entries, Co. Litt., Com. Dig., Chitty on Pleading and the Appendix reference skipped. Footnote (x), begun on p. 429, ends here with its year book. Cross-checked with the 1841 and 1827 records",
+  "citations": [
+    {"seq": 1, "raw": "7 Edw. 2, 242", "volume": 7, "reporter_abbr": "Y.B.", "page": 242,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II; no source (as the 1841 record)"},
+    {"seq": 2, "raw": "Longueville v. 'ihistleworth, Ld. IRy. 970", "case_name": "Longueville v. Thistleworth",
+     "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 970,
+     "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
+     "note": "volume 2 supplied from the case name; case begins at 2 Ld Raym 969"}
+  ]
+}

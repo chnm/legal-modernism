@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "04570",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:39:21Z",
+  "note": "printed p. 429; damages limited to those laid; production of suit, the secta. Com. Dig., Vin. Ab., Bracton, Gilbert's Common Pleas, the Placitorum Abbreviatio and the Appendix reference skipped; the year book that ends footnote (x) is printed on p. 430 and recorded there. Cross-checked with the 1841 edition (hathi00003/03240)",
+  "citations": [
+    {"seq": 1, "raw": "Robert Pil- ford's case, 10 Rep. 117 a, b.", "case_name": "Robert Pilford's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
+     "note": "Robert Pilfold's Case begins at 10 Co Rep 115"}
+  ]
+}
