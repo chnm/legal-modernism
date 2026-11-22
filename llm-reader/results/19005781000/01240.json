@@ -6,9 +6,9 @@
   "note": "2 Chitty and Finch's Law are treatises; not recorded",
   "citations": [
     {"seq": 1, "raw": "Jones v. Kitchen, 1 Bos. & Pull. (76", "case_name": "Jones v. Kitchen",
-     "volume": 1, "reporter_abbr": "Bos. & Pull.", "page": 76,
+     "volume": 1, "reporter_abbr": "Bos. & Pull.", "page": 77,
      "status": "linked_english_reports", "er_case_id": "17970518", "confidence": "high",
-     "note": "OCR '(76' for 76; ER 'Jones v Kitchin' is stored at 1 Bos & Pul 77, a page from the printed 76"},
+     "note": "OCR '(76' for 76; ER 'Jones v Kitchin' is stored at 1 Bos & Pul 77, a page from the printed 76; page holds the corrected 77, the printed 76 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "Selby v. Bardons, 3 Barn. & Aid. 2", "case_name": "Selby v. Bardons",
      "volume": 3, "reporter_abbr": "Barn. & Adol.", "page": 2,
      "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",

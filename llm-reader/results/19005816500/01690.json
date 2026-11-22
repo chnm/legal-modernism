@@ -4,9 +4,9 @@
   "note": "Chitty, Finch Law, Doct. Pl. and Archbold are not recorded",
   "citations": [
     {"seq": 1, "raw": "Jones v. Kitchen. 1 Bos. and Pul. 76", "case_name": "Jones v. Kitchin",
-     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 76,
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 77,
      "status": "linked_english_reports", "er_case_id": "17970518", "confidence": "high",
-     "note": "ER stores Jones v Kitchin at 1 Bos & Pul 77 (1797); no case begins at 76 (Smith v O'Kelly begins at 75)"},
+     "note": "ER stores Jones v Kitchin at 1 Bos & Pul 77 (1797); no case begins at 76 (Smith v O'Kelly begins at 75); page holds the corrected 77, the printed 76 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "Crogate's Case, 8 Rep. 67 a", "case_name": "Crogate's Case",
      "volume": 8, "reporter_abbr": "Rep.", "page": 67,
      "status": "linked_english_reports", "er_case_id": "15720123", "pincite": true, "confidence": "high",

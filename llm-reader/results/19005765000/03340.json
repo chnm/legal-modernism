@@ -10,9 +10,9 @@
      "status": "linked_english_reports", "er_case_id": "17951956", "confidence": "high",
      "note": "one of two cases at 3 Salk 273 (with Horne v. Lewin); the name decides"},
     {"seq": 2, "raw": "Holt's Inst. 562", "case_name": "Hatton v. Morse",
-     "reporter_abbr": "Holt's Inst.", "page": 562,
-     "status": "linked_english_reports", "er_case_id": "17380398", "pincite": true, "confidence": "medium",
-     "note": "Holt's K.B. Reports, as the README rules for Hatton v. Morse ('Holt's Inst. 561, S. C.'); the case begins at Holt KB 561 (369 words, running onto 562)"},
+     "reporter_abbr": "Holt's Inst.", "page": 561,
+     "status": "linked_english_reports", "er_case_id": "17380398", "confidence": "medium",
+     "note": "Holt's K.B. Reports, as the README rules for Hatton v. Morse ('Holt's Inst. 561, S. C.'); printed 562, a misprint of 561, where the case begins (Holt KB 561), not a pin cite (consistency pass)"},
     {"seq": 3, "raw": "FL Dearborn Lodge v. Klein, 115 IlL 177", "case_name": "Ft. Dearborn Lodge v. Klein",
      "volume": 115, "reporter_abbr": "Ill.", "page": 177,
      "status": "linked_cap", "cap_case_id": 2877010, "confidence": "high"}

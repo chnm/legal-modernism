@@ -79,11 +79,11 @@
       "case_name": "Ireland v. Johnson",
       "volume": 1,
       "reporter_abbr": "Bing. N. C.",
-      "page": 162,
+      "page": 163,
       "status": "linked_english_reports",
       "er_case_id": "18340847",
       "confidence": "high",
-      "note": "ER has Ireland v Johnson at 1 Bing NC 163, a page after the printed 162"
+      "note": "ER has Ireland v Johnson at 1 Bing NC 163, a page after the printed 162; page holds the corrected 163, the printed 162 stays in raw (consistency pass)"
     },
     {
       "seq": 8,

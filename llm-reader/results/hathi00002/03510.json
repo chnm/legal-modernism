@@ -6,9 +6,9 @@
   "note": "printed pp. 457-458; footnote lines interleaved in the OCR; cross-checked with 19005816500/03430",
   "citations": [
     {"seq": 1, "raw": "Wood v. Hawkshead, Yelv. 13", "case_name": "Wood v. Hawkshead",
-     "reporter_abbr": "Yelv.", "page": 13,
+     "reporter_abbr": "Yelv.", "page": 14,
      "status": "linked_english_reports", "er_case_id": "17922886", "confidence": "high",
-     "note": "ER has Wood versus Haukshead at Yel 14, a page from the printed 13"},
+     "note": "ER has Wood versus Haukshead at Yel 14, a page from the printed 13; page holds the corrected 14, the printed 13 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "Fisher v. Pimbley, 11 East, 188", "case_name": "Fisher v. Pimbley",
      "volume": 11, "reporter_abbr": "East", "page": 188,
      "status": "linked_english_reports", "er_case_id": "18090223", "confidence": "high"},

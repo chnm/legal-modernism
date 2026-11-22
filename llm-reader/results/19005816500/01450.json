@@ -5,9 +5,9 @@
     {"seq": 1, "raw": "21 Ren. 6. 12", "volume": 21, "reporter_abbr": "Y.B.", "page": 12,
      "status": "no_match", "confidence": "high",
      "note": "Year Book 21 Hen. VI, OCR 'Ren.' for Hen.; year books have no source. Recorded as Y.B. (consistency pass)"},
-    {"seq": 2, "raw": "5 Hen. S. 23 a, 14 a. b.", "volume": 5, "reporter_abbr": "Y.B.", "page": 23,
-     "status": "no_match", "confidence": "medium",
-     "note": "Year Book; OCR 'Hen. S.' is Hen. 7 or Hen. 8 (other editions print '5 Hen. 7, 13 a' and '5 Hen. VIII, 23 a'); second page 14 a. b. ignored; year books have no source. Reign Hen. VII or Hen. VIII; folio 23 goes with the Hen. VIII reading. Recorded as Y.B. (consistency pass)"},
+    {"seq": 2, "raw": "5 Hen. S. 23 a, 14 a. b.", "volume": 5, "reporter_abbr": "Y.B.", "page": 13,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 5 Hen. VII, fo. 13 a (OCR 'Hen. S. 23 a' for 'Hen. 7, 13 a', as the other editions print '5 Hen. 7, 13 a. 14 a. b.'; the 5 Hen. VIII reading is wrong); dropped: 14 a. b.; year books have no source (consistency pass)"},
     {"seq": 3, "raw": "Merceron v. Dowson, 5 Barn. & Cres. 479", "case_name": "Merceron v. Dowson",
      "volume": 5, "reporter_abbr": "Barn. & Cres.", "page": 479,
      "status": "linked_english_reports", "er_case_id": "18260400", "confidence": "high"}

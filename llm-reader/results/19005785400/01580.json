@@ -10,11 +10,11 @@
       "case_name": "Nevil and Cook's Case",
       "volume": 2,
       "reporter_abbr": "Leon.",
-      "page": 4,
+      "page": 5,
       "status": "linked_english_reports",
       "er_case_id": "16870534",
       "confidence": "high",
-      "note": "ER has Nevil and Cook's Case at 2 Leo 5; Savacres Case begins at 4"
+      "note": "ER has Nevil and Cook's Case at 2 Leo 5; Savacres Case begins at 4; page holds the corrected 5, the printed 4 stays in raw (consistency pass)"
     },
     {
       "seq": 2,

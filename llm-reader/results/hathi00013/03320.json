@@ -6,12 +6,12 @@
   "note": "§ 145, forms of the general issue and their effect; Andrews's note 1 (two columns, interleaved in the scan) runs on to the next page. Its Maryland passage with Keedy v. Long is new in 1901 (1894 page 02960 had no case).",
   "citations": [
     {"seq": 1, "raw": "Keedyv. Long, 71 Md. 384", "case_name": "Keedy v. Long",
-     "volume": 71, "reporter_abbr": "Md.", "page": 384,
+     "volume": 71, "reporter_abbr": "Md.", "page": 385,
      "status": "linked_cap", "cap_case_id": 1815769, "confidence": "high",
-     "note": "new in 1901; CAP holds Keedy v. Long (1889) at 71 Md. 385, one page off the printed cite; the name is unique there"},
+     "note": "new in 1901; CAP holds Keedy v. Long (1889) at 71 Md. 385, one page off the printed cite; the name is unique there; page holds the corrected 385, the printed 384 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "Id.", "case_name": "Keedy v. Long",
-     "volume": 71, "reporter_abbr": "Md.", "page": 384,
+     "volume": 71, "reporter_abbr": "Md.", "page": 385,
      "status": "linked_cap", "cap_case_id": 1815769, "confidence": "medium",
-     "note": "Id. expanded to Keedy v. Long, 71 Md. 384, the cite before it"}
+     "note": "Id. expanded to Keedy v. Long, 71 Md. 384, the cite before it; page 385, the corrected reading (consistency pass)"}
   ]
 }

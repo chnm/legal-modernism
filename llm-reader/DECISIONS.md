@@ -377,7 +377,21 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    v. Forrester, Smith v. Goldsworthy, Bayley v. Baker (spelled "Baily").
    Left as stubs: the other Lutwyche cases, Brown v. Lord Granville,
    Gardner v. Alexander, Fletcher v. Rylands (L.R. H.L.; only the 1865
-   Exchequer stage is in the English Reports), Thynne v. Woodman; U4 grading (item 6's no_match
+   Exchequer stage is in the English Reports), Thynne v. Woodman;
+   U7 named fixes: DONE 2026-11-22 (1 Saund. 374→274 King v. Sutton; Bradford
+   v. Pickles to the [1895] A.C. 587 stub at `low`; the 1894 Andrews pages
+   and seq order; Holt's Inst. 561; 1 Hen. 7 fo. 16; Digby, Cornwallis,
+   Dana v. Bryant Id., Serjeant v. Fairfax, Taylor v. Needham; 5 Hen. 7
+   13 a; 18 E. 2 614; about 85 records whose `page` kept the printed number
+   after a correction; the 1851 Gale appendix, with the same fixes in the
+   other Gale copies; 16 split citations merged). "Plow. Com. 231" is not
+   in the 1831 text (it enters in 1838), so nothing to add. For U9 / the
+   owners: where the printed page follows another edition's paging of the
+   report (King v. Lyme Regis, Doug. 148/149; Price v. Brown, Str. 690/691;
+   Jeffrey v. White, Doug. 475/476; Garrard v. Tuck, 8 C.B. 230/231; Leke's
+   Case, Dy. 364 b/365), does `page` keep the printed number or take the
+   English Reports'? Left printed. Two 1 Saund. 374 records stay `low`
+   (19005765000/04420, hathi00013/04820); U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

@@ -12,7 +12,11 @@
     {"seq": 2, "raw": "Dana v. Bryant, 1 Gilm. 104", "case_name": "Dana v. Bryant",
      "volume": 1, "reporter_abbr": "Gilm.", "page": 104,
      "status": "linked_cap", "cap_case_id": 2466838, "confidence": "high"},
-    {"seq": 3, "raw": "Cromwell v. Sac Co., 94 U. S. 351", "case_name": "Cromwell v. Sac Co.",
+    {"seq": 3, "raw": "Id.", "case_name": "Dana v. Bryant",
+     "volume": 1, "reporter_abbr": "Gilm.", "page": 104,
+     "status": "linked_cap", "cap_case_id": 2466838, "confidence": "medium",
+     "note": "note 2's bare Id. follows note 1, which holds the single case Dana v. Bryant, 1 Gilm. 104, as the 1901 record (consistency pass)"},
+    {"seq": 4, "raw": "Cromwell v. Sac Co., 94 U. S. 351", "case_name": "Cromwell v. Sac Co.",
      "volume": 94, "reporter_abbr": "U. S.", "page": 351,
      "status": "linked_cap", "cap_case_id": 5646801, "confidence": "high",
      "note": "CAP: Cromwell v. County of Sac (1876)"}

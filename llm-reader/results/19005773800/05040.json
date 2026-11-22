@@ -12,7 +12,7 @@
      "status": "linked_english_reports", "er_case_id": "18450101", "pincite": true, "confidence": "medium",
      "note": "Id. is Saund.; no name printed; note (1) at 171 d falls in Hambleton v. Veere, which begins at 2 Wms Saund 169 (Yard v. Ford begins at 172)"},
     {"seq": 3, "raw": "380, n. 14", "volume": 2, "reporter_abbr": "Saund.", "page": 380,
-     "status": "linked_english_reports", "er_case_id": "18450180", "pincite": true, "confidence": "low",
-     "note": "2 Saund. 380 n. (14), volume from the preceding Id.; a note numbered (14) belongs to the case running onto 380, Pinkney v. Inhabitants of East Hundred (record at 2 Wms Saund 379), not Purefoy v. Rogers, which begins at 380"}
+     "status": "linked_english_reports", "er_case_id": "18450180", "pincite": true, "confidence": "medium",
+     "note": "2 Saund. 380 n. (14), volume from the preceding Id.; a note numbered (14) belongs to the case running onto 380, Pinkney v. Inhabitants of East Hundred (record at 2 Wms Saund 379), not Purefoy v. Rogers, which begins at 380; medium, as every record of 2 Saund. 380 n. (14) (consistency pass)"}
   ]
 }

@@ -4,9 +4,9 @@
   "note": "Com. Dig. and Doctrina Placitandi are not recorded",
   "citations": [
     {"seq": 1, "raw": "Nevil and Cook's Case, 2 Leo. 4", "case_name": "Nevil and Cook's Case",
-     "volume": 2, "reporter_abbr": "Leo.", "page": 4,
+     "volume": 2, "reporter_abbr": "Leo.", "page": 5,
      "status": "linked_english_reports", "er_case_id": "16870534", "confidence": "high",
-     "note": "ER has Nevil and Cook's Case at 2 Leo 5; Savacres Case begins at 4, the printed name decides"},
+     "note": "ER has Nevil and Cook's Case at 2 Leo 5; Savacres Case begins at 4, the printed name decides; page holds the corrected 5, the printed 4 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "1 Saund. 23, n. (5)", "volume": 1, "reporter_abbr": "Saund.", "page": 23,
      "status": "linked_english_reports", "er_case_id": "18450010", "pincite": true, "confidence": "low",
      "note": "taken as a note to Bennet v Filkins (1 Wms Saund 20, on traverse, cited by Stephen at 1 Saund. 21); Earl of Manchester v Vale also begins at 23"},

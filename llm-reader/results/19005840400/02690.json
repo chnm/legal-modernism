@@ -26,13 +26,9 @@
     {"seq": 7, "raw": "Oglethorpe v. Hyde, Cro. Eliz. 233", "case_name": "Oglethorpe v. Hyde",
      "reporter_abbr": "Cro. Eliz.", "page": 233,
      "status": "linked_english_reports", "er_case_id": "16531413", "confidence": "high"},
-    {"seq": 8, "raw": "Lord Arlington v. Mlerricke, 2 Saund. 410", "case_name": "Lord Arlington v. Merricke",
+    {"seq": 8, "raw": "Lord Arlington v. Mlerricke, 2 Saund. 410, and note (3), ibid.", "case_name": "Lord Arlington v. Merricke",
      "volume": 2, "reporter_abbr": "Saund.", "page": 410,
      "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "high",
-     "note": "case begins at 2 Wms Saund 403"},
-    {"seq": 9, "raw": "note (3), ibid.", "case_name": "Lord Arlington v. Merricke",
-     "volume": 2, "reporter_abbr": "Saund.", "page": 410,
-     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
-     "note": "ibid. = 2 Saund. 410, Saunders's note (3) to Lord Arlington v. Merricke"}
+     "note": "case begins at 2 Wms Saund 403; the note (3) on the same page is one record, as the other copies have it (consistency pass)"}
   ]
 }

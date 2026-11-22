@@ -11,11 +11,11 @@
       "case_name": "Jones v. Kitchen",
       "volume": 1,
       "reporter_abbr": "Bos. & Pul.",
-      "page": 76,
+      "page": 77,
       "status": "linked_english_reports",
       "er_case_id": "17970518",
       "confidence": "high",
-      "note": "Jones v Kitchin is at 1 Bos & Pul 77 (1797); printed 76"
+      "note": "Jones v Kitchin is at 1 Bos & Pul 77 (1797); printed 76; page holds the corrected 77, the printed 76 stays in raw (consistency pass)"
     },
     {
       "seq": 2,

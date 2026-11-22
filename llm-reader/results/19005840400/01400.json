@@ -4,9 +4,9 @@
   "note": "2 Chitty and Finch's Law are not recorded",
   "citations": [
     {"seq": 1, "raw": "Jones v. Kitchen, 1 Boss. & Pull. 76", "case_name": "Jones v. Kitchin",
-     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 76,
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 77,
      "status": "linked_english_reports", "er_case_id": "17970518", "confidence": "high",
-     "note": "Jones v Kitchin is at 1 Bos & Pul 77 (1797); printed 76"},
+     "note": "Jones v Kitchin is at 1 Bos & Pul 77 (1797); printed 76; page holds the corrected 77, the printed 76 stays in raw (consistency pass)"},
     {"seq": 2, "raw": "Selby v. Burdens, 3 Barn. & Ad. 2", "case_name": "Selby v. Bardons",
      "volume": 3, "reporter_abbr": "Barn. & Ad.", "page": 2,
      "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",

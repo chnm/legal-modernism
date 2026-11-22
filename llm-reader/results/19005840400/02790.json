@@ -52,8 +52,8 @@
      "status": "linked_english_reports", "er_case_id": "17921018", "pincite": true, "confidence": "high",
      "note": "case begins at Cro Car 5"},
     {"seq": 14, "raw": "Harlow v. Wright, Cro. Cur. 105", "case_name": "Harlow v. Wright",
-     "reporter_abbr": "Cro. Car.", "page": 105,
+     "reporter_abbr": "Cro. Car.", "page": 195,
      "status": "linked_english_reports", "er_case_id": "17921029", "confidence": "high",
-     "note": "Cur. read as Car.; ER stores Harlow against Wright at Cro Car 195, linked by name"}
+     "note": "Cur. read as Car.; ER stores Harlow against Wright at Cro Car 195, linked by name; page holds the corrected 195, the printed 105 stays in raw (consistency pass)"}
   ]
 }

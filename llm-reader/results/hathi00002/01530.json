@@ -20,10 +20,10 @@
       "raw": "5 Hen. S. 23 a, 14 a. b.",
       "volume": 5,
       "reporter_abbr": "Y.B.",
-      "page": 23,
+      "page": 13,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 5 Hen. VIII (OCR 'S.' for 8; later editions print '5 Hen. VIII, 23 a'); dropped: 14 a. b.; year books have no source"
+      "confidence": "high",
+      "note": "year book, 5 Hen. VII, fo. 13 a (OCR 'Hen. S. 23 a' for 'Hen. 7, 13 a', as the other editions print '5 Hen. 7, 13 a. 14 a. b.'; the 5 Hen. VIII reading is wrong); dropped: 14 a. b.; year books have no source (consistency pass)"
     },
     {
       "seq": 3,

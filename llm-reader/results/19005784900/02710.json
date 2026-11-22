@@ -24,8 +24,8 @@
     {"seq": 7, "raw": "Godson v. Good, 6 Taunt. 587", "case_name": "Godson v. Good",
      "volume": 6, "reporter_abbr": "Taunt.", "page": 587,
      "status": "linked_english_reports", "er_case_id": "18160522", "confidence": "high"},
-    {"seq": 8, "raw": "1 Saund. 29, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 29,
-     "status": "linked_english_reports", "er_case_id": "18450018", "pincite": true, "confidence": "medium",
-     "note": "Saunders's note (2) in Birks v. Trippet, which begins at 1 Wms Saund 28"}
+    {"seq": 8, "raw": "1 Saund. 29, n. (2)", "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "Saunders's note (2) in Birks v. Trippet, which begins at 1 Wms Saund 28; no name printed; OCR 29 (the HathiTrust copy of this printing reads 23) taken as 28, as most editions print it: note (2) to Birks v. Trippet at its first page, not a pin cite (consistency pass)"}
   ]
 }

@@ -13,8 +13,8 @@
      "reporter_abbr": "Fort.", "page": 341,
      "status": "linked_english_reports", "er_case_id": "17480137", "confidence": "high"},
     {"seq": 4, "raw": "Wood v. HLawkshead, Yelr. 13", "case_name": "Wood v. Hawkshead",
-     "reporter_abbr": "Yelv.", "page": 13,
+     "reporter_abbr": "Yelv.", "page": 14,
      "status": "linked_english_reports", "er_case_id": "17922886", "confidence": "high",
-     "note": "Yelr. is OCR for Yelv.; Wood versus Haukshead begins at Yel 14 in the ER; printed 13 (Crispe v. Viroll there); linked by name; found by an unambiguous printed name at a corrected page, so high (consistency pass)"}
+     "note": "Yelr. is OCR for Yelv.; Wood versus Haukshead begins at Yel 14 in the ER; printed 13 (Crispe v. Viroll there); linked by name; found by an unambiguous printed name at a corrected page, so high; page holds the corrected 14, the printed 13 stays in raw (consistency pass)"}
   ]
 }

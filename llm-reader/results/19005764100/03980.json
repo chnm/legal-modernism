@@ -92,8 +92,9 @@
       "page": 53,
       "status": "linked_cap",
       "cap_case_id": 2007214,
+      "pincite": true,
       "confidence": "medium",
-      "note": "no name printed; Benson v. Swift begins at 2 Mass. 53; dropped: 408"
+      "note": "no name printed; falls in Benson v. Swift, cited 2 Mass. 50 (CAP first_page 53), on entire damages, so a pin cite; dropped: 408 (consistency pass)"
     },
     {
       "seq": 9,
