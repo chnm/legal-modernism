@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "00320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:42:56Z",
+  "note": "printed p. 4 (19005940200/00300); footnote (c) Sellon's Practice and Bl. Com. are treatises",
+  "citations": [
+    {"seq": 1, "raw": "Peacock v. Bell, 1 Saund. 73", "case_name": "Peacock v. Bell",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 73,
+     "status": "linked_english_reports", "er_case_id": "18450174", "confidence": "high",
+     "note": "ER 1 Wms Saund 73, Peacock versus Bell and Kendal; as in the 1827 record (19005940200/00300)"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "00540",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:47:00Z",
+  "note": "printed p. 26, records and modern appearance; footnotes otherwise cite Tidd, Jones's Index, Co. Litt., the Report on the Public Records, Impey (treatises and papers), 2 W. IV. c. 39 (statute) and the Appendix",
+  "citations": [
+    {"seq": 1, "raw": "Ramsbottom v. Buckhurst, 2 M.&S. 565", "case_name": "Ramsbottom v. Buckhurst",
+     "volume": 2, "reporter_abbr": "M. & S.", "page": 565,
+     "status": "linked_english_reports", "er_case_id": "18140412", "confidence": "high",
+     "note": "ER 2 M & S 565, Ramsbottom and Others against Buckhurst (1814)"}
+  ]
+}
