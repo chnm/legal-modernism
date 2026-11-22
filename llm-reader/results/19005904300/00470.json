@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "00470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:18:42Z",
+  "note": "p. 13 (ejectment as a mixed action); footnote (c) cites Adams on Ejectment and Hale, treatises, and adds Doe d. Poole v. Errington, which the 1838 records lack; (d) cites 3 & 4 Will. IV c. 27 and repeats Doe d. Kingston v. Kingston (1841), new in 1843",
+  "citations": [
+    {"seq": 1, "raw": "Doe d. Poole v. Errington, 1 Ad. & Ell. 756, and the note there", "case_name": "Doe d. Poole v. Errington",
+     "volume": 1, "reporter_abbr": "Ad. & Ell.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18340838", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Ad & E 750 (next record at 758); 756 is the note inside it; as in the 1895 Williston record (19005765700/00360), which prints 768"},
+    {"seq": 2, "raw": "Doe d. Kingston v. Kingston, . I Dowl . N. S263", "case_name": "Doe d. Kingston v. Kingston",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 263,
+     "status": "linked_stub", "stub_cite": "1 Dowl. N.S. 263", "confidence": "high",
+     "note": "OCR I for 1, S263 for S. 263; as on p. 5 (00390): Dowling N.S. has no source and the English Reports have no record of the case by name; the stub matches exactly"}
+  ]
+}
