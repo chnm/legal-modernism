@@ -1,0 +1,28 @@
+{
+  "psmid": "19005967100", "pageid": "03610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:46:29Z",
+  "note": "printed p. 329; amount strictly proved where material; quality proved as laid; Rule IV, names of persons. Skipped: cross-reference in (x), Appendix in (z), Com. Dig. and Bracton in (a). Cousens v. Paddon, Marks v. Lahee (1835-37) and Benmore v. Neck are added in the 1838 text",
+  "citations": [
+    {"seq": 1, "raw": "Nightingale v. Wilcoxson, 10 Barn. & Cres. 215", "case_name": "Nightingale v. Wilcoxson",
+     "volume": 10, "reporter_abbr": "Barn. & Cres.", "page": 215,
+     "status": "linked_english_reports", "er_case_id": "18290152", "pincite": true, "confidence": "high",
+     "note": "case begins at 10 B & C 202"},
+    {"seq": 2, "raw": "Rubery v. Stevens, 4 Barn. & Adol. 241", "case_name": "Rubery v. Stevens",
+     "volume": 4, "reporter_abbr": "Barn. & Adol.", "page": 241,
+     "status": "linked_english_reports", "er_case_id": "18320257", "confidence": "high"},
+    {"seq": 3, "raw": "Rivers v. Griffiths, 5 Barn. & Ald. 630", "case_name": "Rivers v. Griffiths",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 630,
+     "status": "linked_english_reports", "er_case_id": "18220278", "confidence": "high"},
+    {"seq": 4, "raw": "Cousens v. Pad- don, 5 Tyrw. 547", "case_name": "Cousens v. Paddon",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 547,
+     "status": "linked_english_reports", "er_case_id": "18350048", "confidence": "medium",
+     "note": "Tyrwhitt has no source; the same case (1835) linked at 2 CrM & R 547 (Cousins v Paddon), as on p. 323"},
+    {"seq": 5, "raw": "Marks v. Lahee, 3 Bing. N. C. 408", "case_name": "Marks v. Lahee",
+     "volume": 3, "reporter_abbr": "Bing. N. C.", "page": 408,
+     "status": "linked_english_reports", "er_case_id": "18370389", "confidence": "high"},
+    {"seq": 6, "raw": "Benmore v. Neck, 2 Har. & W. 178", "case_name": "Benmore v. Neck",
+     "volume": 2, "reporter_abbr": "Har. & W.", "page": 178,
+     "status": "linked_stub", "stub_cite": "2 Har. & W. 178", "confidence": "high",
+     "note": "Harrison and Wollaston; no English Reports record of the name found (Neck cases of 1835-37 are other suits)"}
+  ]
+}

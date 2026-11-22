@@ -1,0 +1,20 @@
+{
+  "psmid": "19005967100", "pageid": "03730",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:50:35Z",
+  "note": "printed p. 341; a devise alleged in writing; a grant by deed; a lease by indenture; a demise by husband and wife. Skipped: statutes, Vin. Ab., Chitty; cross-checked with the 1835 edition (19007986500/03410)",
+  "citations": [
+    {"seq": 1, "raw": "1 Wms. Saund. 276 a, n. (2)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 276,
+     "status": "linked_english_reports", "er_case_id": "18450074", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note falls in Duppa v. Mayo, 1 Wms Saund 275"},
+    {"seq": 2, "raw": "Porter v. Gray, Cro. Eliz. 245", "case_name": "Porter v. Gray",
+     "reporter_abbr": "Cro. Eliz.", "page": 245,
+     "status": "linked_english_reports", "er_case_id": "16531539", "confidence": "high"},
+    {"seq": 3, "raw": "I Wms. Saund. 234, n. (3)", "volume": 1, "reporter_abbr": "Wms. Saund.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18450280", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR 'I' for 1; Williams's note falls in Thursby v. Plant, first ER record at 1 Wms Saund 230"},
+    {"seq": 4, "raw": "Lath- bury v. Arnold, I Bing. 217", "case_name": "Lathbury v. Arnold",
+     "volume": 1, "reporter_abbr": "Bing.", "page": 217,
+     "status": "linked_english_reports", "er_case_id": "18230498", "confidence": "high",
+     "note": "OCR 'I' for 1"}
+  ]
+}

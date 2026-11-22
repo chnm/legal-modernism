@@ -293,6 +293,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Calfe v. Nevil, Poph. 185: 1838 (03190, 03220) links 16820022
    ("Anonymous" by `er_name`, Calfe v Nevil by `murrell_title`, with text);
    earlier editions link the empty 16820094. Align to 16820022.
+   "2 Wms. Saund. 295, n. (3)" and "Carth. 2" (1838 p. 349 note (o), as
+   in 1843 and 1895) are read as misprints of 285 and Carth. 9 (Poole v.
+   Longuevill, Sanders v. Hussey), as 1827–41 print them and note (n)
+   prints 285; the 1895 record keeps 295 (White v. Stubbs). Align 1895.
+   12 Mod. 508 at `low` (1835, 1838 03610-03900, 1841): regrade `medium`.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

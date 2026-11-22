@@ -207,7 +207,10 @@ linked at `medium`: Plow. 118, the report's first page, is not a pin
 cite; a later Plowden page (123, 128 a) is. Record each of
 these choices at `medium` (unless a pin-cite or name fault makes it `low`),
 except where the printed name alone picks the case, which is `high`
-(Stephen v. Arthur, Salk. 544).
+(Stephen v. Arthur, Salk. 544). A pin cite that falls inside the chosen
+case, or a cite printed without a name, is not a fault: 12 Mod. 508
+(Pell v. Garlick), unnamed and a page inside the case, is `medium`. A
+fault is a page outside the case or a printed name that fits another.
 A second report of a case found only inside a different case's report
 (Saunders v. Hussey, "Ld. Ray. 333, S. C.", inside Silly v. Dally; Price
 v. Brown, "1 Wils. 116, S. C.", inside Alcorn v. Westbrook) is `no_match`
