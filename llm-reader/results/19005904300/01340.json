@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "01340",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:42:08Z",
+  "note": "p. 100, the special verdict; footnote (x). Same footnote as the 1838 copy",
+  "citations": [
+    {"seq": 1, "raw": "Wittersheim v. Lady Carlisle, 1 H. Bl. 631", "case_name": "Wittersheim v. Lady Carlisle",
+     "volume": 1, "reporter_abbr": "H. Bl.", "page": 631,
+     "status": "linked_english_reports", "er_case_id": "17911365", "confidence": "high",
+     "note": "two records begin at 1 H Bl 631; the name picks Wittersheim v Countess Dowager of Carlisle"},
+    {"seq": 2, "raw": "Cook v. Gerrard, 1 Saund. 171, a", "case_name": "Cook v. Gerrard",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 171,
+     "status": "linked_english_reports", "er_case_id": "18450041", "pincite": true, "confidence": "high",
+     "note": "Cooke versus Gerrard begins at 1 Wms Saund 170"}
+  ]
+}

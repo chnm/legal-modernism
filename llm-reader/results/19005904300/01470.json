@@ -1,0 +1,28 @@
+{
+  "psmid": "19005904300", "pageid": "01470",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:45:50Z",
+  "note": "p. 113, trial by record and trial by certificate; footnotes (a)-(d). Chitty on Pleading, Co. Litt., Brooke's Abridgment, a rule of court, Tidd and Blackstone skipped. 1843 adds Brokenshir v. Monger (1841) to (c)",
+  "citations": [
+    {"seq": 1, "raw": "Dyson v. Wood, 3 Barn. & Cress. 449", "case_name": "Dyson v. Wood",
+     "volume": 3, "reporter_abbr": "Barn. & Cress.", "page": 449,
+     "status": "linked_english_reports", "er_case_id": "18240856", "confidence": "high"},
+    {"seq": 2, "raw": "Abbot of Strata Marcella's case, 9 Rep. 31", "case_name": "Abbot of Strata Marcella's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "high",
+     "note": "the Case of the Abbot of Strata Mercella begins at 9 Co Rep 24 (12,231 words); Bucknal's Case begins at 33, so 31 is inside it"},
+    {"seq": 3, "raw": "Power v. Izod, 1 Bing. N. C. 304", "case_name": "Power v. Izod",
+     "volume": 1, "reporter_abbr": "Bing. N. C.", "page": 304,
+     "status": "linked_english_reports", "er_case_id": "18341046", "confidence": "high"},
+    {"seq": 4, "raw": "Brokenshir v. Morgan, 9 Mees. & Wels. 111", "case_name": "Brokenshir v. Monger",
+     "volume": 9, "reporter_abbr": "Mees. & Wels.", "page": 111,
+     "status": "linked_english_reports", "er_case_id": "18411123", "confidence": "high",
+     "note": "printed 'Morgan'; the English Reports' Brokenshir v Monger at the cited page, on this rule of pleading a judgment"},
+    {"seq": 5, "raw": "1 Dowl. N. S. 378, S. C.", "case_name": "Brokenshir v. Monger",
+     "volume": 1, "reporter_abbr": "Dowl. N. S.", "page": 378,
+     "status": "linked_english_reports", "er_case_id": "18411123", "confidence": "medium",
+     "note": "S. C.; Dowling N.S. has no source, linked to 9 M & W 111"},
+    {"seq": 6, "raw": "Few v. Backhouse, 8 Ad. & Ell. 789", "case_name": "Few v. Backhouse",
+     "volume": 8, "reporter_abbr": "Ad. & Ell.", "page": 789,
+     "status": "linked_english_reports", "er_case_id": "18380918", "confidence": "high"}
+  ]
+}
