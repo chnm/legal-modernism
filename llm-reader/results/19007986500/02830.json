@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "02830",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:46:05Z",
+  "note": "printed p. 255; double replication; several demands may each be alleged (covenant by instalments). Cross-reference (supra, p. 181) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Humphreys v. Churchman, Rep. temp. Hard. 289", "case_name": "Humphreys v. Churchman",
+     "reporter_abbr": "Rep. temp. Hard.", "page": 289,
+     "status": "linked_english_reports", "er_case_id": "18150208", "confidence": "high"}
+  ]
+}

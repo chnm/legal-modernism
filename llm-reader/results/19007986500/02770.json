@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "02770",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:44:32Z",
+  "note": "printed p. 249; the chase extending over the whole town (Wood v. Budden); traverse too narrow begins",
+  "citations": [
+    {"seq": 1, "raw": "Wood v. Budden, Hob. 119", "case_name": "Wood v. Budden",
+     "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"}
+  ]
+}

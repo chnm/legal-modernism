@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "02970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:49:24Z",
+  "note": "printed p. 269; judgment pro tanto on several counts; the common counts condensed into one; several pleas introduced. Skipped: the rules Hil. T. 2 Will. 4 and Hil. T. 4 Will. 4 (rules of court) and the cross-reference (supra, p. 256)",
+  "citations": [
+    {"seq": 1, "raw": "Phillips v. Ilowgate, 5 Barn. & Aid. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"}
+  ]
+}

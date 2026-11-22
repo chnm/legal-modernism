@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "02910",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:48:03Z",
+  "note": "printed p. 263; several circumstances forming one point may be affirmed or denied together (commonable cattle levant and couchant). Viner's Abridgment skipped, its year book cite recorded. Agrees with hathi00003",
+  "citations": [
+    {"seq": 1, "raw": "2 Ed. 4, 8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 2 Edw. IV fo. 8, cited through Vin. Ab. Double Pleas (A. 7); no source"}
+  ]
+}
