@@ -25,6 +25,7 @@ func usage() {
 
 commands:
   sample      draw the next batch of pages and write its detect requests (needs the database)
+  prompts     rewrite the system prompts in the data directory (needs the database)
   candidates  check a batch's detect responses and write its link requests (needs the database)
   finish      check a batch's link responses and write the final records
   serve       show progress
@@ -68,6 +69,11 @@ func main() {
 		pool := connect()
 		defer pool.Close()
 		err = cmdSample(ctx, pool, *dir, *seed, *n, max(1, *weight), *minCites)
+	case "prompts":
+		fs.Parse(args)
+		pool := connect()
+		defer pool.Close()
+		err = writeSystemPrompts(ctx, pool, *dir)
 	case "candidates":
 		fs.Parse(args)
 		pool := connect()
