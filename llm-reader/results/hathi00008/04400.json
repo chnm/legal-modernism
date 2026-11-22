@@ -1,0 +1,18 @@
+{
+  "psmid": "hathi00008", "pageid": "04400",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T14:15:38Z",
+  "note": "p. 404, Appendix, Note (3) continued, appearance by attorney. Glanville, Bracton, Tidd, Gilb. C. P., Reeves and the statute are not cases. Cross-checked with 1860 (19005903700/03940), the same footnotes.",
+  "citations": [
+    {"seq": 1, "raw": "10 E. 3, 19, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Edw. III, fol. 19, pl. 21; no source for the year books"},
+    {"seq": 2, "raw": "Per Bayley, J., in Johnson v. Birley, 5 Barn. & Ald. 542", "case_name": "Johnson v. Birley",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 542,
+     "status": "linked_english_reports", "er_case_id": "18220198", "pincite": true, "confidence": "high",
+     "note": "case begins at 5 B & A 540; 542 is Bayley J.'s dictum"},
+    {"seq": 3, "raw": "Beecher's case, 8 Rep. 58 b.", "case_name": "Beecher's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 58,
+     "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",
+     "note": "8 Co Rep 58; 'acc.' follows the cite"}
+  ]
+}
