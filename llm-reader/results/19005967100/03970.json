@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "03970",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:59:41Z",
+  "note": "printed p. 365; replication to a general plea of performance must assign a breach; the Earl of Stirling. Com. Dig. skipped; same footnote as 1835 p. 337 (19007986500/03650)",
+  "citations": [
+    {"seq": 1, "raw": "Flower v. Ross, 5 Taunt 386", "case_name": "Plomer v. Ross",
+     "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
+     "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high",
+     "note": "printed 'Flower' (a misreading of Plomer), as in the 1835 and 1841 editions; ER 'Plomer and another v Ross' at exactly 5 Taunt 386"},
+    {"seq": 2, "raw": "Sayre Minns, Cowp. 578", "case_name": "Sayre v. Minns",
+     "volume": 2, "reporter_abbr": "Cowp.", "page": 578,
+     "status": "linked_english_reports", "er_case_id": "17770027", "pincite": true, "confidence": "high",
+     "note": "'v.' lost in OCR; volume supplied; case begins at 2 Cowp 575"}
+  ]
+}

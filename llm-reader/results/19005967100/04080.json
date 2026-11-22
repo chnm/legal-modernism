@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "04080",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:01:54Z",
+  "note": "printed p. 376; contra formam statuti; matter of law not to be traversed; public matters noticed officially. Footnote (x) is new in 1838 (1824 and 1834 cases; 1843 prints it too, 19005904300/04190); footnote (y) is a cross-reference to this work, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Wells v. Iggulden, 5 Barn. & Cres. 186", "case_name": "Wells v. Iggulden",
+     "volume": 3, "reporter_abbr": "Barn. & Cres.", "page": 186,
+     "status": "linked_english_reports", "er_case_id": "18240219", "confidence": "high",
+     "note": "printed 5 for 3; ER 'Wells against Iggulden' at 3 B & C 186, and the 1843 and 1895 editions print 3 Barn. & Cress. 186"},
+    {"seq": 2, "raw": "Peate v. Dicken, 5 Tyrw. 116", "case_name": "Peate v. Dicken",
+     "volume": 5, "reporter_abbr": "Tyrw.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "18340240", "confidence": "medium",
+     "note": "Tyrwhitt has no source; linked the same case as reported by Crompton, Meeson and Roscoe, Peate v Dicken, 1 CrM & R 422"}
+  ]
+}

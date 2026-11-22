@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "03930",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:58:37Z",
+  "note": "printed p. 361; cognizance as bailiff pleaded generally; Rule VII, certainty. Com. Dig. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Matthews v. Cary, 3 Mod. 138", "case_name": "Matthews v. Cary",
+     "volume": 3, "reporter_abbr": "Mod.", "page": 138,
+     "status": "linked_english_reports", "er_case_id": "17930712", "pincite": true, "confidence": "high",
+     "note": "case begins at 3 Mod 137"}
+  ]
+}

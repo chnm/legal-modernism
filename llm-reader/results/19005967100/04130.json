@@ -1,0 +1,27 @@
+{
+  "psmid": "19005967100", "pageid": "04130",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:03:15Z",
+  "note": "printed p. 381; plea of alien enemy; Rule 4: circumstances necessarily implied (revocation of an arbitrator's authority). Bac. Ab., Com. Dig., Co. Litt. and Reg. Plac. skipped; same footnotes as 1835 p. 353 (19007986500/03810)",
+  "citations": [
+    {"seq": 1, "raw": "Casseres v. Bell, 8 T. R. 166", "case_name": "Casseres v. Bell",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 166,
+     "status": "linked_english_reports", "er_case_id": "17990622", "confidence": "high"},
+    {"seq": 2, "raw": "Vynior's case, 8 Rep. 8J b", "case_name": "Vynior's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high",
+     "note": "OCR '8J' for 81; ER splits the case into 8 Co Rep 80 and 8 Co Rep 81, linked to the record 81 b falls in; case begins at 80"},
+    {"seq": 3, "raw": "2 Wins. Saund. 305 a, n. (13)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 305,
+     "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR 'Wins.'; Williams's note (13) at 305 a, in Dean and Chapter of Windsor v. Gover (begins 2 Wms Saund 296; ER record at 302)"},
+    {"seq": 4, "raw": "Sheers v. Brooks, 2 H. Bl. 120", "case_name": "Sheers v. Brooks",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 120,
+     "status": "linked_english_reports", "er_case_id": "17923175", "confidence": "high"},
+    {"seq": 5, "raw": "Handford v. Palmer, 2 Brod. & Bing. 361", "case_name": "Handford v. Palmer",
+     "volume": 2, "reporter_abbr": "Brod. & Bing.", "page": 361,
+     "status": "linked_english_reports", "er_case_id": "18200601", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Br & B 359"},
+    {"seq": 6, "raw": "Marsh v. Bulteel, 5 Barn. & Aid. 507", "case_name": "Marsh v. Bulteel",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 507,
+     "status": "linked_english_reports", "er_case_id": "18220069", "confidence": "high"}
+  ]
+}
