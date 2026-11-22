@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00008", "pageid": "03280",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:39:03Z",
+  "note": "p. 292, short tonnage a matter of defence; matter essential to the prima facie right must be averred (licence on a common)",
+  "citations": [
+    {"seq": 1, "raw": "Hotham v. East India Company, 1 T. R. 638", "case_name": "Hotham v. East India Company",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 638,
+     "status": "linked_english_reports", "er_case_id": "17870048", "confidence": "high"}
+  ]
+}

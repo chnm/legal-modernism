@@ -1,0 +1,13 @@
+{
+  "psmid": "hathi00008", "pageid": "03320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:40:20Z",
+  "note": "p. 296, general allegation of necessaries; general plea of payment of a moiety",
+  "citations": [
+    {"seq": 1, "raw": "Cryps v. Baynton, 3 Bulst. 31", "case_name": "Cryps v. Baynton",
+     "volume": 3, "reporter_abbr": "Bulst.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "16880258", "confidence": "high"},
+    {"seq": 2, "raw": "Huggins v. Wiseman, Carth. 110", "case_name": "Huggins v. Wiseman",
+     "reporter_abbr": "Carth.", "page": 110,
+     "status": "linked_english_reports", "er_case_id": "17410180", "confidence": "high"}
+  ]
+}

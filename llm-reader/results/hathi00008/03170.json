@@ -1,0 +1,27 @@
+{
+  "psmid": "hathi00008", "pageid": "03170",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:36:17Z",
+  "note": "p. 281, certainty: grounds of suspicion, a prize sentence, a contempt. Footnote (s) OCR'd '(8)'",
+  "citations": [
+    {"seq": 1, "raw": "Mure v. Kaye, 4 Taunt. 34", "case_name": "Mure v. Kaye",
+     "volume": 4, "reporter_abbr": "Taunt.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "18110388", "confidence": "high"},
+    {"seq": 2, "raw": "West v. Baxendale, 9 Com. B. 141", "case_name": "West v. Baxendale",
+     "volume": 9, "reporter_abbr": "Com. B.", "page": 141,
+     "status": "linked_english_reports", "er_case_id": "18500166", "confidence": "high"},
+    {"seq": 3, "raw": "Burgess v. Beaumont, 7 M. & Gr. 962", "case_name": "Burgess v. Beaumont",
+     "volume": 7, "reporter_abbr": "M. & Gr.", "page": 962,
+     "status": "linked_english_reports", "er_case_id": "18440992", "confidence": "high"},
+    {"seq": 4, "raw": "Horton v. M'Murtry, 5 Hurl. & N. 667", "case_name": "Horton v. M'Murtry",
+     "volume": 5, "reporter_abbr": "Hurl. & N.", "page": 667,
+     "status": "linked_english_reports", "er_case_id": "18600651", "confidence": "high",
+     "note": "added in this edition"},
+    {"seq": 5, "raw": "Beak v. Tyrrell, Carth. 31", "case_name": "Beak v. Tyrrell",
+     "reporter_abbr": "Carth.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "17410023", "confidence": "high"},
+    {"seq": 6, "raw": "Collett v. The Bailiffs of Shrewsbury, 2 Leo. 34", "case_name": "Collett v. The Bailiffs of Shrewsbury",
+     "volume": 2, "reporter_abbr": "Leo.", "page": 34,
+     "status": "linked_english_reports", "er_case_id": "16870176", "confidence": "high",
+     "note": "two cases begin at 2 Leo 34; the name picks Collet and the Bailiffs of Shrewsbury's Case"}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00008", "pageid": "03220",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:37:26Z",
+  "note": "p. 286, 2. matter of which the court takes notice need not be stated. Skipped: Co. Litt. and Com. Dig. (b)",
+  "citations": [
+    {"seq": 1, "raw": "Deybel's case, 4 B. & A. 243", "case_name": "Deybel's Case",
+     "volume": 4, "reporter_abbr": "B. & A.", "page": 243,
+     "status": "linked_english_reports", "er_case_id": "18210136", "confidence": "high"}
+  ]
+}
