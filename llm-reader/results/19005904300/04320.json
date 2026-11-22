@@ -1,0 +1,19 @@
+{
+  "psmid": "19005904300", "pageid": "04320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:29:00Z",
+  "note": "p. 398; the plea of non damnificatus on an indemnity bond. Skipped: Com. Dig. (with its '(2 W. 33)'), Wentworth's precedents. Cross-checked with the 1838 record (19005967100/04200)",
+  "citations": [
+    {"seq": 1, "raw": "Richards v. Hodges, 2 Saund. 84", "case_name": "Richards v. Hodges",
+     "volume": 2, "reporter_abbr": "Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Wms Saund 80; ER's second record of it at 83 holds page 84 (Hesketh v. Lee also begins at 84, but the printed name decides)"},
+    {"seq": 2, "raw": "Hayes v. Bryant, 1 H. BI. 253", "case_name": "Hayes v. Bryant",
+     "volume": 1, "reporter_abbr": "H. Bl.", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17892498", "confidence": "high",
+     "note": "OCR 'BI.' for Bl."},
+    {"seq": 3, "raw": "Manser's case, 2 Rep. 4 a.", "case_name": "Manser's Case",
+     "volume": 2, "reporter_abbr": "Rep.", "page": 4,
+     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "high",
+     "note": "ER splits the case (Painter v Manser) into 2 Co Rep 1 and 2 Co Rep 3; folio 4 a falls in the second record"}
+  ]
+}

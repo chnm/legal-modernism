@@ -1,0 +1,31 @@
+{
+  "psmid": "19005904300", "pageid": "04250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:27:05Z",
+  "note": "p. 391; revocation implies notice, feoffment implies livery, heir implies death; Rule 5, what the law will presume. Skipped: Co. Litt., Doct. Pl., Com. Dig., Chitty on Pleading. Footnote marker (t) OCR'd '(1)'. Cross-checked with the 1838 record (19005967100/04140)",
+  "citations": [
+    {"seq": 1, "raw": "Vynior's case, 8 Rep. 81 b.", "case_name": "Vynior's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "15720466", "pincite": true, "confidence": "high",
+     "note": "ER splits the case into 8 Co Rep 80 and 8 Co Rep 81; linked the record 81 b falls in; case begins at 80"},
+    {"seq": 2, "raw": "Marsh v. Bulteel, 5 Barn. & Aid. 507, S. P.", "case_name": "Marsh v. Bulteel",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 507,
+     "status": "linked_english_reports", "er_case_id": "18220069", "confidence": "high"},
+    {"seq": 3, "raw": "2 Wmi. Saund. 305 a. n. (13)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 305,
+     "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
+     "note": "no name printed; OCR 'Wmi.'; Williams's note (13) at 305 a, in Dean and Chapter of Windsor v. Gover (begins 2 Wms Saund 296; ER record at 302)"},
+    {"seq": 4, "raw": "2 Wms. Saund. 305 a. n. (13)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 305,
+     "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Williams's note (13) at 305 a, in Dean and Chapter of Windsor v. Gover (begins 2 Wms Saund 296; ER record at 302)"},
+    {"seq": 5, "raw": "Pal. 67", "reporter_abbr": "Dal.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "16890192", "pincite": true, "confidence": "medium",
+     "note": "OCR 'Pal.' for Dal., as the 1838 edition prints it; Dalison is stored as '2 Ben & D' in groups of cases by term; p. 67 falls in the group beginning at 2 Ben & D 57"},
+    {"seq": 6, "raw": "Wilson v. Hobday, *I M. & S. 125", "case_name": "Wilson v. Hobday",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 125,
+     "status": "linked_english_reports", "er_case_id": "18150701", "pincite": true, "confidence": "high",
+     "note": "OCR '*I' for 4; case begins at 4 M & S 120"},
+    {"seq": 7, "raw": "Chapman n. Pickersgill, 2 Wils. 147", "case_name": "Chapman v. Pickersgill",
+     "volume": 2, "reporter_abbr": "Wils.", "page": 147,
+     "status": "linked_english_reports", "er_case_id": "17990093", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 Wils KB 145; Marriot v. Lister begins at 147 but the printed name decides"}
+  ]
+}

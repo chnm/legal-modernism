@@ -1,0 +1,23 @@
+{
+  "psmid": "19005904300", "pageid": "04350",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T08:29:55Z",
+  "note": "p. 401; general plea of performance of the postmaster's instructions and of affirmative covenants. Skipped: Chitty on Pleading. Cross-checked with the 1838 record (19005967100/04240)",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 403 b.", "volume": 2, "reporter_abbr": "Saund.", "page": 403,
+     "status": "linked_english_reports", "er_case_id": "18450149", "confidence": "medium",
+     "note": "no name printed; Lord Arlington v. Merricke begins at 2 Wms Saund 403"},
+    {"seq": 2, "raw": "410, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 410,
+     "status": "linked_english_reports", "er_case_id": "18450149", "pincite": true, "confidence": "medium",
+     "note": "2 Saund. understood from the preceding cite; a second page with its own note; Saunders's note (3) in Lord Arlington v. Merricke (record runs 2 Wms Saund 403-410)"},
+    {"seq": 3, "raw": "Gainsford v. Griffith, 1 Saund. 55", "case_name": "Gainsford v. Griffith",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 55,
+     "status": "linked_english_reports", "er_case_id": "18450089", "pincite": true, "confidence": "high",
+     "note": "ER records of Gainsford v. Griffith begin at 1 Wms Saund 51 and 58; 55 falls in the record at 51"},
+    {"seq": 4, "raw": "117, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "medium",
+     "note": "1 Saund. understood from the preceding cite; a second page with its own note; Saunders's note in Cutler v. Southern (ER record at 1 Wms Saund 116)"},
+    {"seq": 5, "raw": "Earl of Kerry v. Baxter, 4 East, 340", "case_name": "Earl of Kerry v. Baxter",
+     "volume": 4, "reporter_abbr": "East", "page": 340,
+     "status": "linked_english_reports", "er_case_id": "18030719", "confidence": "high"}
+  ]
+}
