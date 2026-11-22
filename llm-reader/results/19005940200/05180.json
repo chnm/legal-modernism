@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "05180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:07:22Z",
+  "note": "printed p. 491; Rule X, title of court and term. Chitty on Pleading, Archbold, Com. Dig., the Appendix note and cross-references not recorded. Cross-checked with 1831 hathi00002/03750",
+  "citations": [
+    {"seq": 1, "raw": "Topping v. Fuge, 1 Marsh. 341", "case_name": "Topping v. Fuge",
+     "volume": 1, "reporter_abbr": "Marsh.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "18140242", "confidence": "low",
+     "note": "Marshall's C.P. Reports (1813-16) have no source; the same case is in Taunton, 5 Taunt 330 (also 5 Taunt 771, a later stage); 330 chosen as in the other editions' records"}
+  ]
+}

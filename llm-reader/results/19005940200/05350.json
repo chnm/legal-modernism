@@ -1,0 +1,14 @@
+{
+  "psmid": "19005940200", "pageid": "05350",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:09:44Z",
+  "note": "Conclusion, printed p. 508; costs of several pleas; wide effect of the general issue. Cross-references not recorded. Cross-checked with 1831 hathi00002/03870, which prints no names here",
+  "citations": [
+    {"seq": 1, "raw": "Vivian v. Blake, 11 East, 263", "case_name": "Vivian v. Blake",
+     "volume": 11, "reporter_abbr": "East", "page": 263,
+     "status": "linked_english_reports", "er_case_id": "18090247", "confidence": "high"},
+    {"seq": 2, "raw": "Cook v. Sayer, 2 Burr. 71a", "case_name": "Cook v. Sayer",
+     "volume": 2, "reporter_abbr": "Burr.", "page": 753,
+     "status": "linked_english_reports", "er_case_id": "17590006", "confidence": "high",
+     "note": "OCR '71a' for 753, as the 1831 edition prints; Cooke v. Sayer begins at 2 Burr 753"}
+  ]
+}
