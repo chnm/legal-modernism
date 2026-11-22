@@ -290,6 +290,9 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    1838 but `medium` in earlier records; regrade where the name matches
    `murrell_title`. Thorn v. Rolfe, Benl. 86, S. C.: the 1835 and 1838
    records link 2 Dy 185, the 1895 record Moo KB 14; pick one.
+   Calfe v. Nevil, Poph. 185: 1838 (03190, 03220) links 16820022
+   ("Anonymous" by `er_name`, Calfe v Nevil by `murrell_title`, with text);
+   earlier editions link the empty 16820094. Align to 16820022.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

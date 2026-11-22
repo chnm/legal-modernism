@@ -1,0 +1,17 @@
+{
+  "psmid": "19005967100", "pageid": "03110",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:28:57Z",
+  "note": "printed p. 279; Rule I, pleadings must not be double. Com. Dig., Bac. Ab. and Doct. Pl. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Humphreys v. Bethily, 2 Vent. 198, 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "recorded once at its first page per the README (222 is a second record of the same case, 17260504); dropped: 222"},
+    {"seq": 2, "raw": "Per Finchden, 40 Ed. III. 45", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, per Finchden; no source"},
+    {"seq": 3, "raw": "15 Ed. IV. 1", "volume": 15, "reporter_abbr": "Y.B.", "page": 1,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 15 Edw. IV; no source"}
+  ]
+}

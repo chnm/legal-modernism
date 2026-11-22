@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "03090",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:28:25Z",
+  "note": "printed p. 277; the Cranborn chase case concluded; traverse too narrow",
+  "citations": [
+    {"seq": 1, "raw": "Wood v. Budden, Hob. 119", "case_name": "Wood v. Budden",
+     "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high",
+     "note": "the printed name picks it from Parry v. Dale at Hob 119"}
+  ]
+}

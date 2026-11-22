@@ -1,0 +1,24 @@
+{
+  "psmid": "19005967100", "pageid": "03250",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:32:19Z",
+  "note": "printed p. 293; de injuria absque residuo causae. Footnote (m) OCR'd '(in)'; note (n) is a cross-reference. Kerbey v. Denby (1836) is added in the 1838 text",
+  "citations": [
+    {"seq": 1, "raw": "O'Brien v. Saxon. 2 Barn. & Cres. 908", "case_name": "O'Brien v. Saxon",
+     "volume": 2, "reporter_abbr": "Barn. & Cres.", "page": 908,
+     "status": "linked_english_reports", "er_case_id": "18240124", "confidence": "high"},
+    {"seq": 2, "raw": "Phillips v. Howgate, 5 Barn. & Ald. 220", "case_name": "Phillips v. Howgate",
+     "volume": 5, "reporter_abbr": "Barn. & Ald.", "page": 220,
+     "status": "linked_english_reports", "er_case_id": "18210581", "confidence": "high"},
+    {"seq": 3, "raw": "Selby v. Bardons, 3 Barn. & Ad. 2", "case_name": "Selby v. Bardons",
+     "volume": 3, "reporter_abbr": "Barn. & Ad.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high"},
+    {"seq": 4, "raw": "Kerbey v. Denbey, 1 Tyrw. & G. 688", "case_name": "Kerbey v. Denby",
+     "volume": 1, "reporter_abbr": "Tyrw. & G.", "page": 688,
+     "status": "linked_english_reports", "er_case_id": "18360131", "confidence": "medium",
+     "note": "Tyrwhitt and Granger have no source; the same case (Exchequer, 1836) linked at 1 M & W 336"},
+    {"seq": 5, "raw": "Per Denison, J., Robinson v. Rayley, 1 Burr. 320", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 320,
+     "status": "linked_english_reports", "er_case_id": "17570030", "pincite": true, "confidence": "high",
+     "note": "case begins at 1 Burr 316 (2531 words)"}
+  ]
+}

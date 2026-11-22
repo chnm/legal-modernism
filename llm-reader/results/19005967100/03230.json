@@ -1,0 +1,10 @@
+{
+  "psmid": "19005967100", "pageid": "03230",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:31:57Z",
+  "note": "printed p. 291; circumstances of suspicion as one connected cause; a traverse of several facts forming one point. Vin. Ab. skipped; the year book it cites recorded",
+  "citations": [
+    {"seq": 1, "raw": "Vin. Ab. Double Pleas, (A. 7,) cites 2 Ed. 4, 8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 2 Edw. IV fo. 8, cited through Vin. Ab.; no source"}
+  ]
+}

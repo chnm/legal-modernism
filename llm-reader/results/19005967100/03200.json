@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "03200",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:31:15Z",
+  "note": "printed p. 288; surplusage cannot make a plea double (Grenelefe's executors, copyhold forfeiture)",
+  "citations": [
+    {"seq": 1, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b", "case_name": "Executors of Grenelefe's Case",
+     "reporter_abbr": "Dyer", "page": 42,
+     "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
+     "note": "stored in ER as 1 Dy 42, Executors of Grenelife against W-"}
+  ]
+}

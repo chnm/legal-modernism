@@ -1,0 +1,11 @@
+{
+  "psmid": "19005967100", "pageid": "03120",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:29:07Z",
+  "note": "printed p. 280; duplicity in a declaration on a penal bill. Note (h) on bills penal has no cite",
+  "citations": [
+    {"seq": 1, "raw": "Humphreys v. Bethily, 2 Vent. 198, 222", "case_name": "Humphreys v. Bethily",
+     "volume": 2, "reporter_abbr": "Vent.", "page": 198,
+     "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high",
+     "note": "recorded once at its first page per the README (222 is a second record of the same case, 17260504); dropped: 222"}
+  ]
+}
