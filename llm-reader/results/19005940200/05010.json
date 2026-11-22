@@ -1,0 +1,15 @@
+{
+  "psmid": "19005940200", "pageid": "05010",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:02:43Z",
+  "note": "printed p. 474; Rule III, laying damages. Com. Dig., Vin. Ab. and the supra reference not recorded. Cross-checked with 1831 hathi00002/03620",
+  "citations": [
+    {"seq": 1, "raw": "Robert Pilfold's Case, 1o Rep. 116 b. 117 a. b.", "case_name": "Robert Pilfold's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 116,
+     "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
+     "note": "OCR '1o' for 10; case begins at 10 Co Rep 115; dropped: 117"},
+    {"seq": 2, "raw": "Robert Pilford's Case, 10 Rep. 117. a. b.", "case_name": "Robert Pilfold's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 117,
+     "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
+     "note": "Pilford read as Pilfold; case begins at 10 Co Rep 115"}
+  ]
+}

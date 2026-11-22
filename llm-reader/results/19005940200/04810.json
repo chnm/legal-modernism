@@ -1,0 +1,13 @@
+{
+  "psmid": "19005940200", "pageid": "04810",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:58:27Z",
+  "note": "printed p. 454; departure (new ground in law). Cross-checked with 1831 hathi00002/03490",
+  "citations": [
+    {"seq": 1, "raw": "Dyer, 253 b.", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
+     "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
+     "note": "no name printed; volume 3 supplied; the only ER record beginning at 3 Dy 253 is Cecil's Case; not confirmed as the covenant-to-fence case (Vernon v Gatacre at 3 Dy 252, 903 words, might run onto 253 b); as the 1831 record"},
+    {"seq": 2, "raw": "Mole v. Wallis, I Lev. 81", "case_name": "Mole v. Wallis",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "17930733", "confidence": "high"}
+  ]
+}

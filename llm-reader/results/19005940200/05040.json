@@ -1,0 +1,11 @@
+{
+  "psmid": "19005940200", "pageid": "05040",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:03:30Z",
+  "note": "printed p. 477; pledges; Rule IV, pleas in due order, with the table of the order of pleas. Co. Litt., Com. Dig., Chitty on Pleading (1 Chitty, 425) and the Appendix notes not recorded. Cross-checked with 1831 hathi00002/03650",
+  "citations": [
+    {"seq": 1, "raw": "Longueville v. Thistleworth. Ld. Ray. 970", "case_name": "Longueville v. Thistleworth",
+     "volume": 2, "reporter_abbr": "Ld. Ray.", "page": 970,
+     "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
+     "note": "volume 2 supplied from the case name; case begins at 2 Ld Raym 969"}
+  ]
+}

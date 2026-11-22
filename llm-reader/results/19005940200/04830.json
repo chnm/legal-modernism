@@ -1,0 +1,18 @@
+{
+  "psmid": "19005940200", "pageid": "04830",
+  "model": "claude-opus-5-5", "read_at": "2026-11-21T23:58:46Z",
+  "note": "printed p. 456; no departure (robbery as account; no tonnage due). Bac. Ab. not recorded. Cross-checked with 1831 hathi00002/03500",
+  "citations": [
+    {"seq": 1, "raw": "Vere v. Smith, 2 Lev. 5", "case_name": "Vere v. Smith",
+     "volume": 2, "reporter_abbr": "Lev.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "17931257", "confidence": "high"},
+    {"seq": 2, "raw": "1 Vent. 121. S. C.", "case_name": "Vere v. Smith",
+     "volume": 1, "reporter_abbr": "Vent.", "page": 121,
+     "status": "linked_english_reports", "er_case_id": "17260866", "confidence": "high",
+     "note": "S. C. = Vere v. Smith"},
+    {"seq": 3, "raw": "Owen v. Reynolds, Fort. 311.", "case_name": "Owen v. Reynolds",
+     "reporter_abbr": "Fort.", "page": 341,
+     "status": "linked_english_reports", "er_case_id": "17480137", "confidence": "high",
+     "note": "OCR 311 for 341 (the 1831 edition prints 341); ER Owen & Al' versus Reynolds at Fort 341"}
+  ]
+}
