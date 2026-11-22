@@ -1,0 +1,19 @@
+{
+  "psmid": "19005904300", "pageid": "02430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:18:26Z",
+  "note": "p. 209, special traverse with an inducement repeating the complaint; cases where the common traverse alone is used. '9 Went. 211, 308' is Wentworth's book of precedents, not a case. Same footnotes as the 1838 copy's 02370",
+  "citations": [
+    {"seq": 1, "raw": "Stennel v. Iogg, 1 Saund. 223", "case_name": "Stennel v. Hogg",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 223,
+     "status": "linked_english_reports", "er_case_id": "18450242", "pincite": true, "confidence": "high",
+     "note": "OCR 'Iogg' for Hogg; the case begins at 1 Wms Saund 220, as in the 1838 record"},
+    {"seq": 2, "raw": "Mayor of Orford v. Richardson, 4 T. R. 437", "case_name": "Mayor of Orford v. Richardson",
+     "volume": 4, "reporter_abbr": "T. R.", "page": 437,
+     "status": "linked_english_reports", "er_case_id": "17911479", "confidence": "high",
+     "note": "Mayor of Orford v Richardson at 4 TR 437 (earlier editions print Oxford)"},
+    {"seq": 3, "raw": "Home v. Lewin, 1 Ld. Raym. 641", "case_name": "Horne v. Lewin",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 641,
+     "status": "linked_english_reports", "er_case_id": "17921158", "pincite": true, "confidence": "high",
+     "note": "OCR 'Home' for Horne; the case begins at 1 Ld Raym 639"}
+  ]
+}

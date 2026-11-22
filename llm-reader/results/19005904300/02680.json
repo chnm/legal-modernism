@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "02680",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T07:26:22Z",
+  "note": "p. 234, colour: absolute admission (statute of limitations) and qualified admission (the rector's tithe). Footnote (e) 'See this plea, supra, p. 169' is a cross-reference. The scan OCRs (e) and (f) as '(c)' and 'js)'",
+  "citations": [
+    {"seq": 1, "raw": "Galc r. Capcrn, I Ad. & 1E!1. 10o", "case_name": "Gale v. Capern",
+     "volume": 1, "reporter_abbr": "Ad. & El.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "18340667", "confidence": "high",
+     "note": "OCR garbled; Gale against Capern, 1 Ad & E 102 (1834), the only case of that name, as the 1838 and 1895 copies print"}
+  ]
+}
