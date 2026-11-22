@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "00890",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T00:52:33Z",
+  "note": "printed p. 61, replication in confession and avoidance concluded and rejoinder by way of traverse; 2 Richardson's K. B. 60 (twice) is Richardson's practice of the King's Bench, a practice book, not a case. Same footnotes as hathi00003/00780 (1841, pp. 60-61)",
+  "citations": [
+    {"seq": 1, "raw": "8 Edw. 3, pl. 20", "volume": 8, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 8 Edw. III, plea 20, no folio printed; year books have no source here"}
+  ]
+}
