@@ -36,8 +36,8 @@
     {"seq": 10, "raw": "2 Saund., 305 a. n. 13", "volume": 2, "reporter_abbr": "Saund.", "page": 305,
      "status": "linked_english_reports", "er_case_id": "18450254", "pincite": true, "confidence": "medium",
      "note": "no name printed; Saunders's note (13) at 305 a, in Dean and Chapter of Windsor v. Gover (ER record at 2 Wms Saund 302)"},
-    {"seq": 11, "raw": "Dal., 67", "reporter_abbr": "Dal.", "page": 67,
+    {"seq": 11, "raw": "Dal., 67", "volume": 2, "reporter_abbr": "Dal.", "page": 67,
      "status": "linked_english_reports", "er_case_id": "16890192", "pincite": true, "confidence": "medium",
-     "note": "Dalison is stored as 2 Ben & D, groups of cases by term; p. 67 falls in the group beginning at 2 Ben & D 57; linked to the group at medium"}
+     "note": "Dalison is stored as 2 Ben & D, groups of cases by term; p. 67 falls in the group beginning at 2 Ben & D 57; linked to the group at medium; volume 2 is the English Reports' volume (2 Ben & D), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

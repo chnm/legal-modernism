@@ -3,8 +3,8 @@
   "model": "claude-opus-5-5", "read_at": "2026-11-21T18:19:58Z",
   "note": "printed p. 273; the copyhold forfeiture case concluded: the entry without admission was surplusage and did not make the plea double. Bac. Ab. and the cross-references skipped",
   "citations": [
-    {"seq": 1, "raw": "Dyer, 42.", "reporter_abbr": "Dyer", "page": 42,
+    {"seq": 1, "raw": "Dyer, 42.", "volume": 1, "reporter_abbr": "Dyer", "page": 42,
      "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "medium",
-     "note": "no name printed; Executors of Grenelife (ER 1 Dy 42), the copyhold meadow case, the only case there, as Andrews 1894 names it (cited Dyer 42 b on the previous page)"}
+     "note": "no name printed; Executors of Grenelife (ER 1 Dy 42), the copyhold meadow case, the only case there, as Andrews 1894 names it (cited Dyer 42 b on the previous page); volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

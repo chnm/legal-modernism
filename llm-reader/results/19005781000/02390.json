@@ -142,11 +142,12 @@
     {
       "seq": 12,
       "raw": "Dal. 67",
+      "volume": 2,
       "reporter_abbr": "Dal.",
       "page": 67,
       "status": "linked_english_reports",
-      "confidence": "low",
-      "note": "Dalison's Reports are in the English Reports as '2 Ben & D' (the 1689 Benloe and Dalison, 123 E.R. 225-315), stored as groups of notes; p. 67 falls in the group beginning at 2 Ben & D 57 (the next begins at 75). No case name is printed to check it, so low. Coordinator's reading.",
+      "confidence": "medium",
+      "note": "Dalison's Reports are in the English Reports as '2 Ben & D' (the 1689 Benloe and Dalison, 123 E.R. 225-315), stored as groups of notes; p. 67 falls in the group beginning at 2 Ben & D 57 (the next begins at 75); medium, the README's grade for a cite linked to one of Dalison's groups of cases by term, a pin cite into the group and no printed name being no fault; volume 2 is the English Reports' volume (2 Ben & D), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)",
       "er_case_id": "16890192",
       "pincite": true
     }

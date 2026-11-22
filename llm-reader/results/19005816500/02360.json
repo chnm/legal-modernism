@@ -5,8 +5,9 @@
   "read_at": "2026-11-20T02:30:00Z",
   "citations": [
     {"seq": 1, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b", "case_name": "Executors of Grenelefe's Case",
+     "volume": 1,
      "reporter_abbr": "Dyer", "page": 42,
      "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
-     "note": "stored in ER as 1 Dy 42, Executors of Grenelife against W-; volume supplied"}
+     "note": "stored in ER as 1 Dy 42, Executors of Grenelife against W-; volume supplied; volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

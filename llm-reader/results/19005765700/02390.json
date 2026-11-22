@@ -5,9 +5,9 @@
   "read_at": "2026-11-21T15:45:22Z",
   "note": "printed p. 213 (*260-262); new assignment must name the close; it admits nothing; checked against 19005904300/02950; Com. Dig., 9 Went. (precedents) not recorded",
   "citations": [
-    {"seq": 1, "raw": "Semb. Dy. 264 a.", "reporter_abbr": "Dy.", "page": 264,
+    {"seq": 1, "raw": "Semb. Dy. 264 a.", "volume": 3, "reporter_abbr": "Dy.", "page": 264,
      "status": "linked_english_reports", "er_case_id": "17940868", "confidence": "low",
-     "note": "no name printed; two cases begin at 3 Dy 264, Roswell's Case and Horneby v. Clifton; Horneby v. Clifton picked as the trespass case, but nothing on the page tells them apart"},
+     "note": "no name printed; two cases begin at 3 Dy 264, Roswell's Case and Horneby v. Clifton; Horneby v. Clifton picked as the trespass case, but nothing on the page tells them apart; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 2, "raw": "1 Saund. 299 a.,n.(6)", "volume": 1, "reporter_abbr": "Saund.", "page": 299,
      "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
      "note": "note (6) to Greene v. Jones, on new assignment; the English Reports hold the case at 1 Wms Saund 295 and 298, and 299 falls in the second record"},

@@ -32,12 +32,13 @@
       "seq": 3,
       "raw": "Sir Francis Leke's case, Dy. 865",
       "case_name": "Sir Francis Leke's Case",
+      "volume": 3,
       "reporter_abbr": "Dy.",
       "page": 365,
       "status": "linked_english_reports",
       "er_case_id": "17941455",
       "confidence": "high",
-      "note": "OCR '865' read as 365; the case is at 3 Dy 365"
+      "note": "OCR '865' read as 365; the case is at 3 Dy 365; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"
     },
     {
       "seq": 4,

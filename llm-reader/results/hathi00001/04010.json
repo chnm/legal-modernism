@@ -22,7 +22,7 @@
      "status": "linked_english_reports", "er_case_id": "18160442", "confidence": "medium",
      "note": "no name printed; the page '38.' is printed on a line of its own above notes (i)-(l); Thornton v. Adams (1831 edition)"},
     {"seq": 7, "raw": "2 Rep. 3", "volume": 2, "reporter_abbr": "Rep.", "page": 3,
-     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "medium",
-     "note": "no name printed; Manser's Case (1831 edition); ER splits Painter v. Manser into records at 2 Co Rep 1 and 3, so folio 3 is a pincite"}
+     "status": "linked_english_reports", "er_case_id": "15840013", "confidence": "medium",
+     "note": "no name printed; Manser's Case (1831 edition). Manser's Case is the English Reports' Painter v Manser at 2 Co Rep 3 (3,275 words), where it is usually cited (2 Co. Rep. 3 a, 76 E.R. 392); the record of the same title at 2 Co Rep 1 has no text and is not read as the case's beginning, so 3 is the first page, not a pin cite; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

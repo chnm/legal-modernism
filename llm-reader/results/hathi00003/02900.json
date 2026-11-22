@@ -27,7 +27,7 @@
      "status": "linked_english_reports", "er_case_id": "18270080", "confidence": "medium",
      "note": "no name printed; Hobson v. Middleton begins at 6 B & C 295"},
     {"seq": 9, "raw": "Manser's case, 2 Rep. 3", "case_name": "Manser's Case", "volume": 2, "reporter_abbr": "Rep.", "page": 3,
-     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "high",
-     "note": "ER Painter v Manser, 2 Co Rep 3 (a record at 2 Co Rep 1 has the same title and no text); the English Reports split the case, which begins in the record at 2 Co Rep 1; this later record makes the cite a pin cite (consistency pass)"}
+     "status": "linked_english_reports", "er_case_id": "15840013", "confidence": "high",
+     "note": "Manser's Case is the English Reports' Painter v Manser at 2 Co Rep 3 (3,275 words), where it is usually cited (2 Co. Rep. 3 a, 76 E.R. 392); the record of the same title at 2 Co Rep 1 has no text and is not read as the case's beginning, so 3 is the first page, not a pin cite; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

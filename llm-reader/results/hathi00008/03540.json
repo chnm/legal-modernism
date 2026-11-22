@@ -11,8 +11,9 @@
      "status": "linked_english_reports", "er_case_id": "15720421", "pincite": true, "confidence": "high",
      "note": "case begins at 5 Co Rep 97 (Bury's Case also begins at 98; the name decides)"},
     {"seq": 3, "raw": "Case of the Executors of Grenelefe, Dyer, 42 b.", "case_name": "Executors of Grenelefe's Case",
+     "volume": 1,
      "reporter_abbr": "Dyer", "page": 42,
      "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "high",
-     "note": "stored as 1 Dy 42, 'Executors of Grenelife against W-'"}
+     "note": "stored as 1 Dy 42, 'Executors of Grenelife against W-'; volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

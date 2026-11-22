@@ -6,9 +6,10 @@
   "note": "Printed p. 344, §§ 173-174 (Sir Francis Leke's case; the chase at Tollard Royal; traverse too narrow). Stephen's footnotes (d)-(e), no Andrews notes. Matches 1894 page 03620.",
   "citations": [
     {"seq": 1, "raw": "Sir Francis Leke's Case, Dyer, 364 b", "case_name": "Sir Francis Leke's Case",
+     "volume": 3,
      "reporter_abbr": "Dyer", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
-     "note": "printed 364 b here; the 1831 text prints Dyer. 365, where the ER has Sir Francis Leke's Case (3 Dy 365); the records at 3 Dy 364 are other cases (Eunubety v Bath, Gibbon v White), so the name picks 365, a page from the printed folio"},
+     "note": "printed 364 b here; the 1831 text prints Dyer. 365, where the ER has Sir Francis Leke's Case (3 Dy 365); the records at 3 Dy 364 are other cases (Eunubety v Bath, Gibbon v White), so the name picks 365, a page from the printed folio; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 2, "raw": "2 Saund. 206 a, n. 22",
      "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",

@@ -18,8 +18,8 @@
      "status": "linked_english_reports", "er_case_id": "17920965", "confidence": "high",
      "note": "volume 1 supplied; Grace Faux vers Barnes, 1 Ld Raym 174"},
     {"seq": 4, "raw": "23 Ass. 37",
-     "volume": 23, "reporter_abbr": "Y.B.",
+     "volume": 29, "reporter_abbr": "Y.B.",
      "status": "no_match", "confidence": "medium",
-     "note": "Liber Assisarum, 23 Edw. III, pl. 37, cited through Vin. Ab.; the 1831 text prints 29 Ass. 37, so this edition's 23 is kept at medium as a variant; no source for the year books"}
+     "note": "Liber Assisarum, 29 Edw. III, pl. 37, cited through Vin. Ab.; this scan's OCR reads 23 (its text is badly garbled here), and the 1824, 1827 and 1831 editions and Andrews's own 1901 edition print 29 Ass. 37, so 23 is read as OCR for 29, at medium; cited by plea, so no page; no source for the year books; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

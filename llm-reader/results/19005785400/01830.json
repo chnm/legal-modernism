@@ -32,12 +32,13 @@
     {
       "seq": 3,
       "raw": "Dy. 264 a",
+      "volume": 3,
       "reporter_abbr": "Dy.",
       "page": 264,
       "status": "linked_english_reports",
       "er_case_id": "17940868",
       "confidence": "low",
-      "note": "no name printed; two cases begin at 3 Dy 264 (Roswell's Case, Horneby v. Clifton) and the passage does not decide between them; Horneby v. Clifton chosen as a guess"
+      "note": "no name printed; two cases begin at 3 Dy 264 (Roswell's Case, Horneby v. Clifton) and the passage does not decide between them; Horneby v. Clifton chosen as a guess; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"
     },
     {
       "seq": 4,

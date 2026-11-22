@@ -4,8 +4,8 @@
   "note": "printed p. 265; duplicity in the declaration, the penal bill example begins; footnote (k) on bills penal has no citation",
   "citations": [
     {"seq": 1, "raw": "Per Finchden, 40 Ed. 3. 45.", "volume": 40, "reporter_abbr": "Y.B.", "page": 45,
-     "status": "no_match", "confidence": "medium",
-     "note": "year book, 40 Edw. III, fo. 45, per Finchden; no source covers the year books. Variant: the 1831, 1871, 1882, 1897 and 1900 editions print 49 Ed. 3; the 1827, 1838, 1843 and 1895 print 40 as here, so editions are split and this edition's legible 40 is kept at medium"},
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 40 Edw. III, fo. 45, per Finchden; no source covers the year books. Most editions print 40 as here; only the 1831 American text and Tyler's 1871 and 1882 editions print 49, read as a misprint of 40, so this legible cite is high; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 2, "raw": "15 Ed. 4. 1.", "volume": 15, "reporter_abbr": "Y.B.", "page": 1,
      "status": "no_match", "confidence": "high",
      "note": "year book, 15 Edw. IV, fo. 1; no source covers the year books"}

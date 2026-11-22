@@ -398,7 +398,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    the Ibid. after Le Bret v. Papillon and 2 Chitty in six copies). Open:
    a bare American "Id." after a footnote of several cases is recorded as
    the last case in some places (Whitney v. Stark) and skipped in others;
-   settle the rule; U4 grading (item 6's no_match
+   settle the rule;
+   U9 cross-edition variants: DONE 2026-11-22; 20 questions in
+   `VARIANTS.md`, each with the interim reading applied (about 200
+   citations changed, 19 added). The pass is complete: 12,868 pages,
+   39,333 citations, all valid against the database. U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

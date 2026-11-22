@@ -9,8 +9,8 @@
     {"seq": 2, "raw": "1 Saund. 299 c", "volume": 1, "reporter_abbr": "Saund.", "page": 299,
      "status": "linked_english_reports", "er_case_id": "18450100", "pincite": true, "confidence": "medium",
      "note": "footnote (u); as seq 1"},
-    {"seq": 3, "raw": "Semb. Dy. 264 a", "reporter_abbr": "Dy.", "page": 264,
+    {"seq": 3, "raw": "Semb. Dy. 264 a", "volume": 3, "reporter_abbr": "Dy.", "page": 264,
      "status": "linked_english_reports", "er_case_id": "17940868", "confidence": "low",
-     "note": "footnote (x) (OCR '(v)'); no name printed; two cases begin at 3 Dy 264, Roswell's Case and Horneby v. Clifton; Horneby v. Clifton picked as the trespass case, as in the 1835 record, but nothing on the page tells them apart"}
+     "note": "footnote (x) (OCR '(v)'); no name printed; two cases begin at 3 Dy 264, Roswell's Case and Horneby v. Clifton; Horneby v. Clifton picked as the trespass case, as in the 1835 record, but nothing on the page tells them apart; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

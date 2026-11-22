@@ -6,9 +6,10 @@
   "note": "Stephen's text (Sir Francis Leke's case; the chase at Tollard Royal; traverse too narrow), his footnotes (d)-(e), no Andrews notes. Numbers garbled in the OCR, read from the 1831 text and record (hathi00002/02360): Sir Francis Leke's Case, Dyer, 365, and 2 Saund. 206. a. n. (22).",
   "citations": [
     {"seq": 1, "raw": "Sir Francis Loire's Case, Dyer, 301 b", "case_name": "Sir Francis Leke's Case",
+     "volume": 3,
      "reporter_abbr": "Dyer", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
-     "note": "name and page garbled (Loire's, 301 b); the 1831 text prints Sir Francis Leke's Case, Dyer. 365, ER 3 Dy 365"},
+     "note": "name and page garbled (Loire's, 301 b); the 1831 text prints Sir Francis Leke's Case, Dyer. 365, ER 3 Dy 365; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 2, "raw": "2 Saund. 20 a, n. 2?",
      "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",

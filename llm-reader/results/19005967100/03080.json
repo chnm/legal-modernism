@@ -4,9 +4,10 @@
   "note": "printed p. 276; Sir F. Leke's case; the chase of Cranborn",
   "citations": [
     {"seq": 1, "raw": "Sir Francis Leke's case, Dyer, 365", "case_name": "Sir Francis Leke's Case",
+     "volume": 3,
      "reporter_abbr": "Dyer", "page": 365,
      "status": "linked_english_reports", "er_case_id": "17941455", "confidence": "high",
-     "note": "the printed name picks it from Lord Crumwell's Case at 3 Dy 365"},
+     "note": "the printed name picks it from Lord Crumwell's Case at 3 Dy 365; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 2, "raw": "2 Saund. 206 a, n. (22)", "volume": 2, "reporter_abbr": "Saund.", "page": 206,
      "status": "linked_english_reports", "er_case_id": "18450230", "pincite": true, "confidence": "medium",
      "note": "choice already made: note (22) to Goram v. Sweeting (2 Saund. 200-207, notes 21-24), ER record at 2 Wms Saund 205, titled 'Same v Bateman'"}

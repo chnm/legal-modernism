@@ -5,7 +5,7 @@
   "citations": [
     {"seq": 1, "raw": "Manscr's Case, 2 Itcl. 3.", "case_name": "Manser's Case",
      "volume": 2, "reporter_abbr": "Rep.", "page": 3,
-     "status": "linked_english_reports", "er_case_id": "15840013", "pincite": true, "confidence": "high",
-     "note": "OCR Itcl. for Rep. (1831 edition: 2 Rep. 3); ER splits Painter v. Manser into records at 2 Co Rep 1 and 3; folio 3 is the second record's first page, a pin cite since the case begins at 1"}
+     "status": "linked_english_reports", "er_case_id": "15840013", "confidence": "high",
+     "note": "OCR Itcl. for Rep. (1831 edition: 2 Rep. 3). Manser's Case is the English Reports' Painter v Manser at 2 Co Rep 3 (3,275 words), where it is usually cited (2 Co. Rep. 3 a, 76 E.R. 392); the record of the same title at 2 Co Rep 1 has no text and is not read as the case's beginning, so 3 is the first page, not a pin cite; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

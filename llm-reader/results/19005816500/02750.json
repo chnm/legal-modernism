@@ -129,10 +129,23 @@
       "page": 359,
       "status": "linked_english_reports",
       "er_case_id": "18010122",
-      "confidence": "high"
+      "confidence": "high", "note": "361, n. (a), a second page carrying its own note, is recorded as a second citation by the README rule; interim reading pending the owners' decision (consistency pass)"
     },
     {
       "seq": 12,
+      "raw": "361. n. (a)",
+      "case_name": "Hawkins v. Eccles",
+      "volume": 2,
+      "reporter_abbr": "Bos. & Pul.",
+      "page": 361,
+      "status": "linked_english_reports",
+      "er_case_id": "18010122",
+      "pincite": true,
+      "confidence": "high",
+      "note": "a second page carrying its own note, so a second citation (README rule); the note is in Hawkins v. Eckles, which begins at 2 Bos & Pul 359 (the ER record at 361, Ramsay v. Lord Reay, is the New Reports of 1806); interim reading pending the owners' decision (consistency pass)"
+    },
+    {
+      "seq": 13,
       "raw": "Dovaston v. Payne, 2 H. BI. 530",
       "case_name": "Dovaston v. Payne",
       "volume": 2,
@@ -145,7 +158,7 @@
       "note": "case begins at 2 H Bl 527"
     },
     {
-      "seq": 13,
+      "seq": 14,
       "raw": "1 Saund. 346 e. n. (2)",
       "volume": 1,
       "reporter_abbr": "Saund.",
@@ -156,7 +169,7 @@
       "note": "note to Potter v. North, which begins at 1 Wms Saund 346"
     },
     {
-      "seq": 14,
+      "seq": 15,
       "raw": "2. Saund. 285. n. (3)",
       "volume": 2,
       "reporter_abbr": "Saund.",
@@ -168,7 +181,7 @@
       "note": "page 285 falls in Poole v. Longuevill, ER records at 2 Wms Saund 282 and 288"
     },
     {
-      "seq": 15,
+      "seq": 16,
       "raw": "Saunders v. Hussey, 2 Lutw. 1231",
       "case_name": "Saunders v. Hussey",
       "volume": 2,
@@ -180,7 +193,7 @@
       "note": "Lutwyche is held only as stubs; the English Reports report of the same case, Sanders versus Hussey, Carth 9 (cited next), wins over the stub 2 Lutw. 1231 it linked before (consistency pass)"
     },
     {
-      "seq": 16,
+      "seq": 17,
       "raw": "Carth. 9",
       "case_name": "Saunders v. Hussey",
       "reporter_abbr": "Carth.",
@@ -191,7 +204,7 @@
       "note": "S. C. of Saunders v. Hussey: Sanders versus Hussey at Carth 9"
     },
     {
-      "seq": 17,
+      "seq": 18,
       "raw": "Ld. Ray. 333",
       "volume": 1,
       "reporter_abbr": "Ld. Ray.",
@@ -202,7 +215,7 @@
       "note": "S. C. of Saunders v. Hussey (printed so again on the next page); volume 1 supplied; no Saunders/Sanders v. Hussey in Lord Raymond in the ER; 1 Ld Raym 331 Silly v. Dally (an avowry case) is the nearest record but the name does not fit"
     },
     {
-      "seq": 18,
+      "seq": 19,
       "raw": "Adams v. Cross, 2 Vent. 181",
       "case_name": "Adams v. Cross",
       "volume": 2,

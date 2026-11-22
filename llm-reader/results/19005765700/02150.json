@@ -15,9 +15,9 @@
      "volume": 3, "reporter_abbr": "T. R.", "page": 298,
      "status": "linked_english_reports", "er_case_id": "17892473", "pincite": true, "confidence": "high",
      "note": "Taylor v. Cole begins at 3 TR 292 and runs to 298, where Rumball v. Murray begins; the name decides; 1843 edition also prints 298"},
-    {"seq": 4, "raw": "Dy. 66 b", "reporter_abbr": "Dy.", "page": 66,
+    {"seq": 4, "raw": "Dy. 66 b", "volume": 1, "reporter_abbr": "Dy.", "page": 66,
      "status": "linked_english_reports", "er_case_id": "17941176", "pincite": true, "confidence": "medium",
-     "note": "no name printed; the escape case described in the text (sheriffs of London, escape by predecessors) is Mynours v. Turke and Yorke, Sheriffs of London, which begins at 1 Dy 65"},
+     "note": "no name printed; the escape case described in the text (sheriffs of London, escape by predecessors) is Mynours v. Turke and Yorke, Sheriffs of London, which begins at 1 Dy 65; volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 5, "raw": "M'Pherson v. Daniels, 10 Barn. & Cress. 268", "case_name": "M'Pherson v. Daniels",
      "volume": 10, "reporter_abbr": "Barn. & Cress.", "page": 263,
      "status": "linked_english_reports", "er_case_id": "18290131", "confidence": "high",
@@ -50,8 +50,8 @@
      "volume": 3, "reporter_abbr": "P. & D.", "page": 510,
      "status": "linked_english_reports", "er_case_id": "18400544", "pincite": false, "confidence": "medium",
      "note": "Perry and Davison (no source); linked to the case's English Reports record, 11 Ad & E 816"},
-    {"seq": 14, "raw": "Dy. 66 b.", "reporter_abbr": "Dy.", "page": 66,
+    {"seq": 14, "raw": "Dy. 66 b.", "volume": 1, "reporter_abbr": "Dy.", "page": 66,
      "status": "linked_english_reports", "er_case_id": "17941176", "pincite": true, "confidence": "medium",
-     "note": "footnote (x), the escape case in the text: Mynours v. Turke and Yorke, Sheriffs of London, begins at 1 Dy 65"}
+     "note": "footnote (x), the escape case in the text: Mynours v. Turke and Yorke, Sheriffs of London, begins at 1 Dy 65; volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }

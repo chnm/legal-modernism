@@ -12,9 +12,9 @@
     {"seq": 3, "raw": "1 Hen. 7. 16.", "volume": 1, "reporter_abbr": "Y.B.", "page": 16,
      "status": "no_match", "confidence": "high",
      "note": "year book, 1 Hen. VII, fo. 16 (Andrews 1894 alone prints 10); no source covers the year books"},
-    {"seq": 4, "raw": "Dyer, 42. b.", "reporter_abbr": "Dyer", "page": 42,
+    {"seq": 4, "raw": "Dyer, 42. b.", "volume": 1, "reporter_abbr": "Dyer", "page": 42,
      "status": "linked_english_reports", "er_case_id": "17940666", "confidence": "medium",
-     "note": "no name printed; Executors of Grenelife (ER 1 Dy 42), the only case there, as Andrews 1894 names it"},
+     "note": "no name printed; Executors of Grenelife (ER 1 Dy 42), the only case there, as Andrews 1894 names it; volume 1 is the English Reports' volume of Dyer (1 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"},
     {"seq": 5, "raw": "Poph. 186.", "reporter_abbr": "Poph.", "page": 186,
      "status": "linked_english_reports", "er_case_id": "16820022", "pincite": true, "confidence": "medium",
      "note": "no name printed; Andrews 1894 names Calfe v. Nevil (Doddridge's dictum), which begins at Pop 185 (an Anonymous also begins there); linked to that Anonymous, 16820022, whose murrell_title is Calfe v Nevil and which has text, not the empty 16820094 (consistency pass)"}

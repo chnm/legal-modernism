@@ -13,8 +13,8 @@
     {"seq": 3, "raw": "Cutler v. Southern, 1 Saund, 110", "case_name": "Cutler v. Southern", "volume": 1, "reporter_abbr": "Saund.", "page": 116,
      "status": "linked_english_reports", "er_case_id": "18450054", "pincite": true, "confidence": "high",
      "note": "Cutler v. Southern is at 1 Wms Saund 113-117 (records at 113 and 116); printed 110 read as 116, OCR 6 for 0; found by an unambiguous printed name at a corrected page, so high (consistency pass)"},
-    {"seq": 4, "raw": "Dyer, 253, b", "reporter_abbr": "Dyer", "page": 253,
+    {"seq": 4, "raw": "Dyer, 253, b", "volume": 3, "reporter_abbr": "Dyer", "page": 253,
      "status": "linked_english_reports", "er_case_id": "17940442", "confidence": "low",
-     "note": "no name printed; Cecil's Case is the only case beginning at 3 Dy 253; subject (fence after felling wood) not verified"}
+     "note": "no name printed; Cecil's Case is the only case beginning at 3 Dy 253; subject (fence after felling wood) not verified; volume 3 is the English Reports' volume of Dyer (3 Dy), which the printed cite does not show; interim reading pending the owners' decision (consistency pass)"}
   ]
 }
