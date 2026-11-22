@@ -24,7 +24,9 @@ Rules of the simulation:
   request into another's.
 - Read every request file in full, with the Read tool. Write each response
   with the Write tool, as one valid JSON object and nothing else.
-- Run only the two commands given below, exactly as written.
+- Run only the two commands given below, exactly as written. Do not write scripts or
+  run any other command: each response is your own reading, written by hand
+  with the Write tool, one file per request.
 
 ## Step 1: detect
 
