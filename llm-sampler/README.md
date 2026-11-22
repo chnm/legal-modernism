@@ -58,7 +58,8 @@ matches on indexed columns and one name search:
   `legalhist.stub_cases`. A case is offered if it begins at the page (`exact
   cite`), within three pages of it, or, in CAP, runs over it (`page inside
   case`). The English Reports give no last page, so the two nearest starts
-  before the page are offered with the length of each report.
+  before the page are offered with the length of each report. A stub has no
+  last page either: the two nearest stubs before the page are offered too.
 - **By alternate reading.** The exact cite of each alternate the first
   request gave.
 - **By name.** The most distinctive word of each party, matched against CAP

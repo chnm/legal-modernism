@@ -456,22 +456,40 @@ func probeCites(ctx context.Context, pool *pgxpool.Pool, set *candidateSet, cite
 		return err
 	}
 
-	// A stub is a case known only by its cite, so only an exact cite finds it.
+	// A stub is known only by its cite: offer the one at the cited page, and
+	// the two nearest before it, since the page may be a pin cite into a case
+	// whose first page is a stub. A stub has no last page to check that by.
 	rows, err = pool.Query(ctx, `SELECT cite FROM legalhist.stub_cases WHERE cite = ANY($1)`, cites)
 	if err != nil {
 		return fmt.Errorf("probing the stubs: %w", err)
 	}
+	var stubsBefore []erHit
 	for rows.Next() {
 		var c Candidate
 		if err := rows.Scan(&c.Cite); err != nil {
 			return err
 		}
 		c.Source, c.CaseID = "stub", c.Cite
-		if h, alt := how(c.Cite); alt || probes[c.Cite].page == page {
+		h, alt := how(c.Cite)
+		q := probes[c.Cite].page
+		switch {
+		case alt || q == page:
 			set.add(c, h)
+		case q < page:
+			stubsBefore = append(stubsBefore, erHit{c, q})
 		}
 	}
-	return rows.Err()
+	if err := rows.Err(); err != nil {
+		return err
+	}
+	sort.Slice(stubsBefore, func(i, j int) bool { return stubsBefore[i].q > stubsBefore[j].q })
+	for i, hit := range stubsBefore {
+		if i == 2 {
+			break
+		}
+		set.add(hit.c, near(hit.q, page))
+	}
+	return nil
 }
 
 func abs(n int) int {
