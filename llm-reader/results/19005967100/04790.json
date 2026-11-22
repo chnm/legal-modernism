@@ -1,0 +1,19 @@
+{
+  "psmid": "19005967100", "pageid": "04790",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:27:32Z",
+  "note": "printed p. 447; no departure on an immaterial point (time in assumpsit); why departure is forbidden. Footnote (s) adds Arnold v. Arnold (1836); footnote (t) OCR'd \"(1)\"; cross-references (supra, pp. 321, 66, 69) skipped",
+  "citations": [
+    {"seq": 1, "raw": "Lee v. Rogers, 1 Lev. 110", "case_name": "Lee v. Rogers",
+     "volume": 1, "reporter_abbr": "Lev.", "page": 110,
+     "status": "linked_english_reports", "er_case_id": "17930667", "confidence": "high"},
+    {"seq": 2, "raw": "Cole v. Hawkins, 10 Mod. 348, S. P.", "case_name": "Cole v. Hawkins",
+     "volume": 10, "reporter_abbr": "Mod.", "page": 348,
+     "status": "linked_english_reports", "er_case_id": "17950845", "confidence": "high"},
+    {"seq": 3, "raw": "Arnold v. Arnold, 3 Bing. N. C. 81", "case_name": "Arnold v. Arnold",
+     "volume": 3, "reporter_abbr": "Bing. N. C.", "page": 81,
+     "status": "linked_english_reports", "er_case_id": "18360814", "confidence": "high"},
+    {"seq": 4, "raw": "2 Wis. Saund. 84 a, n.(l)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 84,
+     "status": "linked_english_reports", "er_case_id": "18450218", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) at 84 a falls in Richards v. Hodges, which begins at 2 Wms Saund 80 (record at 83), as in the 1895 record"}
+  ]
+}

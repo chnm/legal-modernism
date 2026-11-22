@@ -298,6 +298,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    Longuevill, Sanders v. Hussey), as 1827–41 print them and note (n)
    prints 285; the 1895 record keeps 295 (White v. Stubbs). Align 1895.
    12 Mod. 508 at `low` (1835, 1838 03610-03900, 1841): regrade `medium`.
+   "The note of the reporter, ibid. p. 524 (b)" (4 Dowl. 524; 1838 04700,
+   1895 03890) is recorded as `no_match` `medium`; the README's rule
+   against an annotation cited without its case is in the American
+   section. Decide whether it covers an English reporter's note, and drop
+   or keep both records alike.
 9. After the pass: validate everything, commit, and post each Decisions and
    Findings unit above as its own GitHub issue, linked from #439.
    The owner first decided (2026-11-21) not to read the UK editions, then

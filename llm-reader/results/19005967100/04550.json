@@ -1,0 +1,33 @@
+{
+  "psmid": "19005967100", "pageid": "04550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:18:43Z",
+  "note": "printed p. 423; commencements and conclusions of pleas in suspension and in abatement. Chitty on Pleading, Lib. Plac., Wentworth, Reg. Plac., Archbold, Com. Dig., Rastall, Co. Litt. and the Appendix reference skipped. '1 Vent. 58, 62' in (k) is Wentworth's precedents ('1 Went. 58, 62', as the 1843 edition prints, 19005904300/04690), not Ventris: not recorded. Cross-checked with the 1835 edition (19007986500/04220, 04230)",
+  "citations": [
+    {"seq": 1, "raw": "Plaskett v. Beeby, 4 East, 485", "case_name": "Plaskett v. Beeby",
+     "volume": 4, "reporter_abbr": "East", "page": 485,
+     "status": "linked_english_reports", "er_case_id": "18040102", "confidence": "high"},
+    {"seq": 2, "raw": "2 Wins. Saund. 210, n. (1)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 210,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 3, "raw": "John Trollop's case, 8 Rep. 69", "case_name": "John Trollop's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 69,
+     "status": "linked_english_reports", "er_case_id": "15720214", "pincite": true, "confidence": "high",
+     "note": "John Trollop's Case begins at 8 Co Rep 68"},
+    {"seq": 4, "raw": "2 Wins. Saund. 209 a, n. (1)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) at 209 a falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 5, "raw": "Lutw. 11", "volume": 1, "reporter_abbr": "Lutw.", "page": 11,
+     "status": "linked_stub", "stub_cite": "1 Lutw. 11", "confidence": "medium",
+     "note": "Lutwyche is paged as one run, so page 11 is the stub's 1 Lutw.; no name printed"},
+    {"seq": 6, "raw": "Powers v. Cook, Ld. Ray. 63", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high",
+     "note": "volume 1 supplied from the case name"},
+    {"seq": 7, "raw": "`2 Vins.Saund. 209 a, n. (1)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 209,
+     "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
+     "note": "no name printed; note (1) at 209 a falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
+    {"seq": 8, "raw": "Chatland v. Thornley, 12 East, 544", "case_name": "Chatland v. Thornley",
+     "volume": 12, "reporter_abbr": "East", "page": 544,
+     "status": "linked_english_reports", "er_case_id": "18100361", "confidence": "high"}
+  ]
+}

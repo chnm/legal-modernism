@@ -1,0 +1,15 @@
+{
+  "psmid": "19005967100", "pageid": "04760",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T05:26:33Z",
+  "note": "printed p. 444; the college lease rejoinder held a departure; cases held not departures: accounting modo sequente (money stolen). The scan puts footnote (m), OCR'd \"(pn)\", at the head of the page",
+  "citations": [
+    {"seq": 1, "raw": "Fulmerston v. Steward, Plowd. 102", "case_name": "Fulmerston v. Steward",
+     "reporter_abbr": "Plowd.", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "medium",
+     "note": "Plowden pages 1-130 are missing from the English Reports; linked to the same case's Dyer report (S. C. follows), Fulmerston against Stuard, 1 Dy 102"},
+    {"seq": 2, "raw": "Dyer, 102 b, S. C.", "case_name": "Fulmerston v. Steward",
+     "volume": 1, "reporter_abbr": "Dyer", "page": 102,
+     "status": "linked_english_reports", "er_case_id": "17940707", "confidence": "high",
+     "note": "S. C. of Fulmerston v. Steward; volume 1 supplied from the case, Fulmerston against Stuard, 1 Dy 102"}
+  ]
+}
