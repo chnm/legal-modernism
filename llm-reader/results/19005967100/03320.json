@@ -1,0 +1,14 @@
+{
+  "psmid": "19005967100", "pageid": "03320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:35:04Z",
+  "note": "printed p. 300; stat. 4 Anne c. 16 s. 4 and the rule for leave to plead several matters; form of pleas in trespass. Chitty v. Dendy (1835) is added in the 1838 text. Reg. Trin. 1 Will. IV skipped (rule of court); note (g) is a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Chitty v. Dendy, 3 Ad. & El. 319", "case_name": "Chitty v. Dendy",
+     "volume": 3, "reporter_abbr": "Ad. & El.", "page": 319,
+     "status": "linked_english_reports", "er_case_id": "18350719", "confidence": "high",
+     "note": "er_name 'Chitty against Luxford'; murrell_title Chitty v Dendy"},
+    {"seq": 2, "raw": "Jenkins v. Edwards, 5 T. R. 97", "case_name": "Jenkins v. Edwards",
+     "volume": 5, "reporter_abbr": "T. R.", "page": 97,
+     "status": "linked_english_reports", "er_case_id": "17931357", "confidence": "high"}
+  ]
+}

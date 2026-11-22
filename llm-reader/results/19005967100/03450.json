@@ -1,0 +1,26 @@
+{
+  "psmid": "19005967100", "pageid": "03450",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:38:46Z",
+  "note": "printed p. 313; the statute of jeofails cures a venire from the venue in the action and so makes it practice. Co. Litt. by Hargrave skipped. Agrees with the 1835 text (19007986500/03130)",
+  "citations": [
+    {"seq": 1, "raw": "Craft v. Boite, 1 Saund. 247", "case_name": "Craft v. Boite",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high",
+     "note": "the English Reports split Craft v Boite into records at 1 Wms Saund 241 and 246; 247 falls in the second"},
+    {"seq": 2, "raw": "1 Saund. 247, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 247,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "medium",
+     "note": "no name printed in this footnote; Williams's note to Craft v. Boite, named in the footnote before; second ER record at 1 Wms Saund 246"},
+    {"seq": 3, "raw": "2 Saund. 5, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "18450156", "pincite": true, "confidence": "medium",
+     "note": "no name printed; the note falls in Mellor v. Walker, which the English Reports split into 2 Wms Saund 1 and 4 (next case at 6)"},
+    {"seq": 4, "raw": "Bowyer's case, Cro, Eliz. 468", "case_name": "Bowyer's Case",
+     "reporter_abbr": "Cro. Eliz.", "page": 468,
+     "status": "linked_english_reports", "er_case_id": "16530298", "confidence": "high"},
+    {"seq": 5, "raw": "Eden's case, 6 Rep. 15 b", "case_name": "Eden's Case",
+     "volume": 6, "reporter_abbr": "Rep.", "page": 15,
+     "status": "linked_english_reports", "er_case_id": "15720119", "confidence": "high"},
+    {"seq": 6, "raw": "2 Saund. 5, n. (3)", "volume": 2, "reporter_abbr": "Saund.", "page": 5,
+     "status": "linked_english_reports", "er_case_id": "18450156", "pincite": true, "confidence": "medium",
+     "note": "footnote (h), repeating the note to Mellor v. Walker, second ER record at 2 Wms Saund 4"}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "psmid": "19005967100", "pageid": "03590",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:44:43Z",
+  "note": "printed p. 327; quality and quantity in a loose and general way: packs of flax, a library of books, keys of a house, goods and doors in trespass. Footnote (q) OCR'd '(/)'",
+  "citations": [
+    {"seq": 1, "raw": "2 Saund. 74 b. n. (1)", "volume": 2, "reporter_abbr": "Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; 74 b is page 74; two English Reports records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby; picked Taylor v. Wells, as the other editions' readers did"},
+    {"seq": 2, "raw": "Layton v. Grindall, 2 Salk. 6413", "case_name": "Layton v. Grindall",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 643,
+     "status": "linked_english_reports", "er_case_id": "17952363", "confidence": "high",
+     "note": "OCR '6413' for 643; an Anonymous also begins at 2 Salk 643, the name decides"},
+    {"seq": 3, "raw": "2 \\nis. Saund. 74 b. n. (1)", "volume": 2, "reporter_abbr": "Wms. Saund.", "page": 74,
+     "status": "linked_english_reports", "er_case_id": "18450248", "confidence": "low",
+     "note": "no name printed; 74 b is page 74; two English Reports records begin at 2 Wms Saund 74, Taylor v. Wells and an empty Mauleverer v. Hawxby; picked Taylor v. Wells, as the other editions' readers did"}
+  ]
+}

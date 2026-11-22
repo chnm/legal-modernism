@@ -1,0 +1,17 @@
+{
+  "psmid": "19005967100", "pageid": "03430",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T04:38:07Z",
+  "note": "printed p. 311; trial by a jury from the venue laid to the fact in issue; the ancient form of the venire. Skipped: Com. Dig., 3 Reeves (history), Bracton, the statute 27 Eliz. c. 6, Littleton. Footnote (a) printed as '(u)' by the OCR. Agrees with the 1835 text (19007986500/03110)",
+  "citations": [
+    {"seq": 1, "raw": "Craft v. Boite, 1 Saund. 246 b", "case_name": "Craft v. Boite",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 246,
+     "status": "linked_english_reports", "er_case_id": "18450050", "pincite": true, "confidence": "high",
+     "note": "246 b; the English Reports split Craft v Boite into records at 1 Wms Saund 241 and 246; linked the record the page falls in, a pin cite since the case begins at 241"},
+    {"seq": 2, "raw": "8 Edw. III. 8 PI. 20", "volume": 8, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 8 Edw. III, fo. 8, pl. 20, cited through Com. Dig.; no source covers the year books"},
+    {"seq": 3, "raw": "45 Edw. III. 15", "volume": 45, "reporter_abbr": "Y.B.", "page": 15,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 45 Edw. III, fo. 15; no source covers the year books"}
+  ]
+}
