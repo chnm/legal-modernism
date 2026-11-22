@@ -1,0 +1,14 @@
+{
+  "psmid": "19005904300", "pageid": "01160",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T06:34:25Z",
+  "note": "p. 82, limits of amendment; decision of issues in law; methods of trial. Footnote (h) (OCR '(i)') is Tidd; (k) refers to the Appendix; (l) (OCR '(0)') begins with a statute and runs onto p. 83. 1838's footnote (g) cases (Atkinson v. Bayntun, Carr v. Hinchliff, 19005967100/01140) are not printed in this passage of 1843 (the scan names them only at 04990, in the Appendix). Footnote (i) as 1838 and the 1895 Williston (19005765700/00910)",
+  "citations": [
+    {"seq": 1, "raw": "Plow. Corn. 2.1", "volume": 1, "reporter_abbr": "Plowd.", "page": 231,
+     "status": "linked_english_reports", "er_case_id": "18160085", "pincite": true, "confidence": "medium",
+     "note": "Plowden's Commentaries; OCR '2.1' read as 231, as the 1838 and 1895 copies print it; no name printed; 231 falls inside Willion v Berkley, which begins at 1 Plowden 222"},
+    {"seq": 2, "raw": "Abbot of Strata Marcella's case, 9 Rep. 24", "case_name": "Abbot of Strata Marcella's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 24,
+     "status": "linked_english_reports", "er_case_id": "15720404", "confidence": "high",
+     "note": "ER 9 Co Rep 24, The Case of the Abbot of Strata Mercella"}
+  ]
+}
