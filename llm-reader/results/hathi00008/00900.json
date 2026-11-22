@@ -1,0 +1,10 @@
+{
+  "psmid": "hathi00008", "pageid": "00900",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:27:51Z",
+  "note": "p. 54, issue in law; footnote (g) cites Howell's State Trials for the maxim ad questionem facti",
+  "citations": [
+    {"seq": 1, "raw": "Howell's St. Trials, v., xxi., p. 1023", "volume": 21, "reporter_abbr": "How. St. Tr.", "page": 1023,
+     "status": "no_match", "confidence": "medium",
+     "note": "no name printed; State Trials held only as stubs, none at 21 How. St. Tr. 1023 (nearest earlier stub 847, the Dean of St Asaph's case, which the page may fall inside); a pin cite into a stub reporter is no_match"}
+  ]
+}

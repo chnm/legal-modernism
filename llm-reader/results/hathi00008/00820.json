@@ -1,0 +1,20 @@
+{
+  "psmid": "hathi00008", "pageid": "00820",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:26:13Z",
+  "note": "p. 46, pleas in suspension and abatement; footnotes also cite a statute, Com. Dig., Booth and the Appendix: not recorded",
+  "citations": [
+    {"seq": 1, "raw": "Lightfoot v. Lenet, Cro. Jac. 421", "case_name": "Lightfoot v. Lenet",
+     "reporter_abbr": "Cro. Jac.", "page": 421,
+     "status": "linked_english_reports", "er_case_id": "17910627", "confidence": "high",
+     "note": "English Reports titles it 'Lightfood against Lenet'; Atwood's Case also begins at Cro Jac 421"},
+    {"seq": 2, "raw": "Onslow v. Smith, 2 Bos. & Pul. 384", "case_name": "Onslow v. Smith",
+     "volume": 2, "reporter_abbr": "Bos. & Pul.", "page": 384,
+     "status": "linked_english_reports", "er_case_id": "18010195", "confidence": "high"},
+    {"seq": 3, "raw": "Davies v. Thompson, 14 Mee. & W. 161", "case_name": "Davies v. Thompson",
+     "volume": 14, "reporter_abbr": "Mee. & W.", "page": 161,
+     "status": "linked_english_reports", "er_case_id": "18450812", "confidence": "high"},
+    {"seq": 4, "raw": "Whitling v. Des Anges, 3 Com. B. 910", "case_name": "Whitling v. Des Anges",
+     "volume": 3, "reporter_abbr": "Com. B.", "page": 910,
+     "status": "linked_english_reports", "er_case_id": "18470140", "confidence": "high"}
+  ]
+}
