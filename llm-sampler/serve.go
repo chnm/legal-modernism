@@ -133,11 +133,11 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 <p class="text-secondary mb-4">Pages drawn uniformly over treatise editions, each read as two requests to <code>claude-opus-5-5</code>:
 detect the citations, then link them to candidate cases. <span id="state"></span></p>
 <div class="row g-4 mb-4">
- <div class="col-6 col-lg"><div class="label">Pages read</div><div class="stat" id="pages"></div><div class="small text-secondary" id="pagesnote"></div></div>
- <div class="col-6 col-lg"><div class="label">Citations Claude detected</div><div class="stat" id="citations"></div><div class="small text-secondary" id="citesnote"></div></div>
  <div class="col-6 col-lg"><div class="label">Pipeline detections</div><div class="stat" id="pipeline"></div><div class="small text-secondary" id="pipenote"></div></div>
+ <div class="col-6 col-lg"><div class="label">Citations Claude detected</div><div class="stat" id="citations"></div><div class="small text-secondary" id="citesnote"></div></div>
  <div class="col-6 col-lg"><div class="label">Active time</div><div class="stat" id="active"></div><div class="small text-secondary" id="rate"></div></div>
  <div class="col-6 col-lg"><div class="label">Wall clock</div><div class="stat" id="wall"></div><div class="small text-secondary" id="started"></div></div>
+ <div class="col-6 col-lg"><div class="label">Pages read</div><div class="stat" id="pages"></div><div class="small text-secondary" id="pagesnote"></div></div>
 </div>
 <div class="row g-4 mb-4">
  <div class="col-md-6"><h2 class="h6">Links</h2><div class="bar" id="statusbar"></div><div class="small mt-2" id="statuskey"></div></div>
