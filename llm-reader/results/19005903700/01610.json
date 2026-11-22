@@ -1,0 +1,24 @@
+{
+  "psmid": "19005903700", "pageid": "01610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:21:30Z",
+  "note": "p. 133, effect of a demurrer: it admits the facts. Footnote (x) the C.L.P.A. s. 89 and Chitty's Archbold's Practice (not cases); (y) Bac. Ab. and Com. Dig. (abridgments) skipped; (z) a cross-reference",
+  "citations": [
+    {"seq": 1, "raw": "Nowlan v. Geddes, 1 East, 634", "case_name": "Nowlan v. Geddes",
+     "volume": 1, "reporter_abbr": "East", "page": 634,
+     "status": "linked_english_reports", "er_case_id": "18010328", "confidence": "high"},
+    {"seq": 2, "raw": "Gunmdy v. Fltllam, 1 T. IR. 334", "case_name": "Gundry v. Feltham",
+     "volume": 1, "reporter_abbr": "T. R.", "page": 334,
+     "status": "linked_english_reports", "er_case_id": "17860152", "confidence": "high",
+     "note": "names garbled in the OCR"},
+    {"seq": 3, "raw": "The Gas Light and Coke Company v. Turner, 6 Bing. N. C. 324", "case_name": "The Gas Light and Coke Company v. Turner",
+     "volume": 6, "reporter_abbr": "Bing. N. C.", "page": 324,
+     "status": "linked_english_reports", "er_case_id": "18400420", "confidence": "high"},
+    {"seq": 4, "raw": "Tylor v. Bland, 9 M. & W. 338", "case_name": "Tylor v. Bland",
+     "volume": 9, "reporter_abbr": "M. & W.", "page": 338,
+     "status": "linked_english_reports", "er_case_id": "18420141", "confidence": "high",
+     "note": "ER 'Tyler v Bland'"},
+    {"seq": 5, "raw": "Tancred v. Allgood, 4 Hurl. & N. 438", "case_name": "Tancred v. Allgood",
+     "volume": 4, "reporter_abbr": "Hurl. & N.", "page": 438,
+     "status": "linked_english_reports", "er_case_id": "18590577", "confidence": "high"}
+  ]
+}

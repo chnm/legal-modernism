@@ -1,0 +1,21 @@
+{
+  "psmid": "19005903700", "pageid": "01670",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:24:29Z",
+  "note": "p. 139, aider by verdict: the King's Bench explanation and Serjeant Williams. Footnotes (p) and (q) (OCR '(g)')",
+  "citations": [
+    {"seq": 1, "raw": "Jackson v. Pesked, 1 M. & S. 234", "case_name": "Jackson v. Pesked",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 234,
+     "status": "linked_english_reports", "er_case_id": "18130139", "confidence": "high"},
+    {"seq": 2, "raw": "1 Saund. 228, n. (1)", "volume": 1, "reporter_abbr": "Saund.", "page": 228,
+     "status": "linked_english_reports", "er_case_id": "18450243", "pincite": true, "confidence": "medium",
+     "note": "no name printed; Serjeant Williams's note (1) on aider by verdict, the note to Stennel v. Hogg (record at 1 Wms Saund 226), per the README's choice"},
+    {"seq": 3, "raw": "Harris v. Ooo(dwvy, 2 M. & B. 405", "case_name": "Harris v. Goodwyn",
+     "volume": 2, "reporter_abbr": "M. & G.", "page": 405,
+     "status": "linked_english_reports", "er_case_id": "18410233", "confidence": "high",
+     "note": "added since 1843 (a case of 1841); OCR 'Ooo(dwvy' and 'M. & B.' for Goodwyn and M. & G."},
+    {"seq": 4, "raw": "Tlholns i. Frcdricls, 10 Q. B. 775", "case_name": "Thomas v. Fredricks",
+     "volume": 10, "reporter_abbr": "Q. B.", "page": 775,
+     "status": "linked_english_reports", "er_case_id": "18470620", "confidence": "high",
+     "note": "added since 1843 (a case of 1847); names garbled in the OCR"}
+  ]
+}

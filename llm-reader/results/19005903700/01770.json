@@ -1,0 +1,22 @@
+{
+  "psmid": "19005903700", "pageid": "01770",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:26:36Z",
+  "note": "p. 149, never indebted: goods shipped on conditions, credit not expired, an attorney's terms. Footnotes (g) (OCR '(y)'), (h) and (i) (its marker lost). Cross-checked against the 1843 records",
+  "citations": [
+    {"seq": 1, "raw": "Gardner v. Alexander, 3 Dowl. 140", "case_name": "Gardner v. Alexander",
+     "volume": 3, "reporter_abbr": "Dowl.", "page": 146,
+     "status": "linked_english_reports", "er_case_id": "18350678", "confidence": "medium",
+     "note": "OCR '140' for 146, as the 1843 edition prints it. Dowling's Practice Cases have no source; linked to the same case's report, Alexander v Gardner, 1 Bing NC 671 (1835), found by name with the parties reversed, as the 1843 reader linked it"},
+    {"seq": 2, "raw": "Groundsell v. Lamb, 1 N. & W. 852", "case_name": "Groundsell v. Lamb",
+     "volume": 1, "reporter_abbr": "M. & W.", "page": 352,
+     "status": "linked_english_reports", "er_case_id": "18360096", "confidence": "high",
+     "note": "OCR 'N. & W. 852' for M. & W. 352; ER 'Grounsell v Lamb' at 1 M & W 352 (1843 cited 2 Gale 28 instead)"},
+    {"seq": 3, "raw": "Cousins v. Paddon, 2 C.M. & I1. 547", "case_name": "Cousins v. Paddon",
+     "volume": 2, "reporter_abbr": "C. M. & R.", "page": 547,
+     "status": "linked_english_reports", "er_case_id": "18350048", "confidence": "high"},
+    {"seq": 4, "raw": "hBroomfild v. Smith, 1 Mees. & W. 642", "case_name": "Broomfield v. Smith",
+     "volume": 1, "reporter_abbr": "Mees. & W.", "page": 542,
+     "status": "linked_english_reports", "er_case_id": "18360035", "confidence": "high",
+     "note": "OCR '642' for 542, as the 1843 edition prints it; the name decides"}
+  ]
+}

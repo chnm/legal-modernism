@@ -90,6 +90,12 @@ search for `Dal` misses; its records are untitled groups of notes.
 Lord Huntingtower v. Gardiner; "In Michaelmas Term" at 1 TR 510). Some are
 filed under the wrong page: Mellor v. Leather's `er_parallel_cite` is
 `1 El & Bl 518`, but its `er_cite` (118 E.R. 569) puts it at 619, as printed.
+The reverse also happens: Willis v. Langridge (18360813) has the right
+`er_name` but `murrell_title` "Shearwood v Hay"; the two records of Whyte
+v. Rose at 3 QB 493 have their `murrell_title`s swapped. Other records
+carry the right name only in `murrell_title` ("Chitty against Luxford" for
+Chitty v. Dendy; "Anonymous" for Calfe v. Nevil, 16820022; "Same v
+Fairclough" for London and Brighton Railway v. Wilson).
 
 ### 5. Whitelist readings that are wrong in an English treatise
 
