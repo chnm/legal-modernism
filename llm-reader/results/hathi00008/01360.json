@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00008", "pageid": "01360",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:39:51Z",
+  "note": "p. 100, trial by the record; trial by certificate. Footnotes (e), (f), (g), which runs onto p. 101. Co. Litt., Brooke's Abridgment (Br. Trials pl. 40, no year-book folio), Reg. Gen. H. T. 1853, Arch. Prac., Bl. Com., Chitty's Pleading and Coke's Entries are not cases. As the 1860 records (19005903700/01220, 01230)",
+  "citations": [
+    {"seq": 1, "raw": "Abbott of Strata Mar- cella's case, 9 Rep. 31", "case_name": "Abbot of Strata Marcella's Case",
+     "volume": 9, "reporter_abbr": "Rep.", "page": 31,
+     "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "high",
+     "note": "the case begins at 9 Co Rep 24 (12231 words; next case at 33)"},
+    {"seq": 2, "raw": "Ilderton ». Ilderton, 2 H. Bl. 149", "case_name": "Ilderton v. Ilderton",
+     "volume": 2, "reporter_abbr": "H. Bl.", "page": 149,
+     "status": "linked_english_reports", "er_case_id": "17931510", "pincite": true, "confidence": "high",
+     "note": "case begins at 2 H Bl 145; the recital in the writ"}
+  ]
+}

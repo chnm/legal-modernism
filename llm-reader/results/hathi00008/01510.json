@@ -1,0 +1,22 @@
+{
+  "psmid": "hathi00008", "pageid": "01510",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T12:42:27Z",
+  "note": "p. 115, proceedings in error under the C.L.P. Act 1852. Footnotes (g) (Tidd), (h), (i), (k) (statutes); Reg. Gen. H. T. 1853 is a rule of court. As the 1860 record (19005903700/01370), with Parker v. Tootal added",
+  "citations": [
+    {"seq": 1, "raw": "Hill v. Fox, 3 Hurlst. & N. 547", "case_name": "Hill v. Fox",
+     "volume": 3, "reporter_abbr": "Hurlst. & N.", "page": 547,
+     "status": "linked_english_reports", "er_case_id": "18580846", "confidence": "high"},
+    {"seq": 2, "raw": "Fisher v. Bridges, 4 Ell. & Bl. 665", "case_name": "Fisher v. Bridges",
+     "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 665,
+     "status": "linked_english_reports", "er_case_id": "18550148", "confidence": "high",
+     "note": "ER stores Fisher against Bridges (1855) at 4 El & Bl 666, as the 1860 record"},
+    {"seq": 3, "raw": "Marshall v. Jackson, ib. 669, n.", "case_name": "Marshall v. Jackson",
+     "volume": 4, "reporter_abbr": "Ell. & Bl.", "page": 669,
+     "status": "linked_english_reports", "er_case_id": "18550347", "confidence": "high",
+     "note": "ib. = 4 Ell. & Bl.; the case is reported in a note at 669"},
+    {"seq": 4, "raw": "Parker v. Tootal, 1 Law Rep. Ex. 41", "case_name": "Parker v. Tootal",
+     "volume": 1, "reporter_abbr": "L. R. Ex.", "page": 41,
+     "status": "linked_english_reports", "er_case_id": "18650039", "confidence": "medium",
+     "note": "new in 1866. The Law Reports (Exchequer) have no source; linked by name to the same case in the English Reports, Parker (Devisee of Barrow) v Tootal, 3 H & C 913 (Exchequer, 1865), the costs-in-error stage at the end of Hurlstone and Coltman, preferred over the stub 1 L.R.Ex. 41. The other record of the name is the House of Lords appeal, 11 HLC 143 (1865); the footnote's subject (costs in error) and court pick the Exchequer record, but that it is the same report as L.R. 1 Ex. 41 is inferred, not checked"}
+  ]
+}
