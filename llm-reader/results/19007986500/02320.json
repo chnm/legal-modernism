@@ -1,0 +1,14 @@
+{
+  "psmid": "19007986500", "pageid": "02320",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:30:51Z",
+  "note": "printed p. 204; colour by a qualified confession: the tithe and market overt examples. Reg. Plac. is a treatise, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Leyfield's case, 10 Co. Rep. 88", "case_name": "Leyfield's Case",
+     "volume": 10, "reporter_abbr": "Co. Rep.", "page": 88,
+     "status": "linked_english_reports", "er_case_id": "15720100", "confidence": "high"},
+    {"seq": 2, "raw": "Coiyns v. Buyer, Cro, Eliz. 485", "case_name": "Comyns v. Boyer",
+     "reporter_abbr": "Cro. Eliz.", "page": 485,
+     "status": "linked_english_reports", "er_case_id": "16530495", "confidence": "high",
+     "note": "OCR 'Coiyns v. Buyer'; ER Comyns against Boyer at Cro Eliz 485"}
+  ]
+}

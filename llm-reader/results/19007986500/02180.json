@@ -1,0 +1,25 @@
+{
+  "psmid": "19007986500", "pageid": "02180",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:26:49Z",
+  "note": "printed p. 190; variance and modo et forma. 'Supra, p. 85' is a cross-reference; Litt. Sec. 483 and Doct. Pl. 344 are treatises, skipped. Agrees with hathi00003/01680 and 19005940200/02590 (Nevil and Cook's Case, which the 1827 prints on its p. 232, falls on this edition's next page, 02190)",
+  "citations": [
+    {"seq": 1, "raw": "Hoar v. Mill, 4 M. & S. 470", "case_name": "Hoar v. Mill",
+     "volume": 4, "reporter_abbr": "M. & S.", "page": 470,
+     "status": "linked_english_reports", "er_case_id": "18160242", "confidence": "high"},
+    {"seq": 2, "raw": "Harris v. Ferrnd, Hardr. 39", "case_name": "Harris v. Ferrand",
+     "reporter_abbr": "Hardr.", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "16600162", "pincite": true, "confidence": "high",
+     "note": "OCR 'Ferrnd'; case begins at Hard 36"},
+    {"seq": 3, "raw": "Pope v. Skinner, Hob. 72", "case_name": "Pope v. Skinner",
+     "reporter_abbr": "Hob.", "page": 72,
+     "status": "linked_english_reports", "er_case_id": "17921841", "confidence": "high"},
+    {"seq": 4, "raw": "Carrick v. Blagrave, 1 Brod. & Bing. 536", "case_name": "Carvick v. Blagrave",
+     "volume": 1, "reporter_abbr": "Brod. & Bing.", "page": 536,
+     "status": "linked_english_reports", "er_case_id": "18190281", "pincite": true, "confidence": "high",
+     "note": "printed 'Carrick'; ER Carvick v Blagrave begins at 1 Br & B 531"},
+    {"seq": 5, "raw": "Wetherell v. oInward, 3 Bing. 135", "case_name": "Wetherell v. Howard",
+     "volume": 3, "reporter_abbr": "Bing.", "page": 135,
+     "status": "linked_english_reports", "er_case_id": "18250637", "confidence": "high",
+     "note": "OCR 'oInward'; ER Weathrell v Howard"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "psmid": "19007986500", "pageid": "02230",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:28:21Z",
+  "note": "printed p. 195; traverse of matter necessarily implied; replevin pleadings. Com. Dig. is an abridgment, skipped",
+  "citations": [
+    {"seq": 1, "raw": "Powers v. Cook, 1 Lord Ray. 63", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 63,
+     "status": "linked_english_reports", "er_case_id": "17921854", "confidence": "high"},
+    {"seq": 2, "raw": "1 Salk. 298, S. C.", "case_name": "Powers v. Cook",
+     "volume": 1, "reporter_abbr": "Salk.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "17952846", "confidence": "high",
+     "note": "S. C. of Powers v. Cook; ER Powers v Coot"},
+    {"seq": 3, "raw": "1 Saund. 312 d. n. (4)", "volume": 1, "reporter_abbr": "Saund.", "page": 312,
+     "status": "linked_english_reports", "er_case_id": "18450069", "pincite": true, "confidence": "medium",
+     "note": "note (4) to Rex v. Kilderby, record beginning 1 Wms Saund 311"},
+    {"seq": 4, "raw": "Gilbert v. Parker, 2 Salk. 629", "case_name": "Gilbert v. Parker",
+     "volume": 2, "reporter_abbr": "Salk.", "page": 629,
+     "status": "linked_english_reports", "er_case_id": "17951791", "confidence": "high",
+     "note": "three cases begin at 2 Salk 629; the name decides"},
+    {"seq": 5, "raw": "6 Mod. 158, S. C.", "case_name": "Gilbert v. Parker",
+     "volume": 6, "reporter_abbr": "Mod.", "page": 158,
+     "status": "linked_english_reports", "er_case_id": "17940732", "confidence": "high",
+     "note": "S. C. of Gilbert v. Parker"},
+    {"seq": 6, "raw": "Meriton v. Briggs, 1 Lord Ray. 39", "case_name": "Meriton v. Briggs",
+     "volume": 1, "reporter_abbr": "Lord Ray.", "page": 39,
+     "status": "linked_english_reports", "er_case_id": "17921578", "confidence": "high",
+     "note": "two cases begin at 1 Ld Raym 39; the name decides"}
+  ]
+}

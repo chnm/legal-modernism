@@ -1,0 +1,15 @@
+{
+  "psmid": "19007986500", "pageid": "02110",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:25:14Z",
+  "note": "printed p. 183; the inducement must amount to a sufficient answer in substance. Bac. Ab. and Com. Dig. are abridgments, skipped. Agrees with hathi00003/01640 and 19005940200/02530",
+  "citations": [
+    {"seq": 1, "raw": "Anon. 3 Salk. 353", "case_name": "Anonymous",
+     "volume": 3, "reporter_abbr": "Salk.", "page": 353,
+     "status": "linked_english_reports", "er_case_id": "17950130", "confidence": "high",
+     "note": "two cases begin at 3 Salk 353; the only Anonymous, not Bullen v. Benson"},
+    {"seq": 2, "raw": "Dike v. Ricks,.Cro. Car. 336", "case_name": "Dike v. Ricks",
+     "reporter_abbr": "Cro. Car.", "page": 336,
+     "status": "linked_english_reports", "er_case_id": "17920666", "pincite": true, "confidence": "high",
+     "note": "case begins at Cro Car 335; the record beginning at 336 is another case"}
+  ]
+}
