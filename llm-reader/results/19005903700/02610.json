@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "02610",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:02:37Z",
+  "note": "p. 233, a seisin in fee alleged without its commencement; when the derivation must be shown. Co. Litt. and Doct. Pl. skipped",
+  "citations": [
+    {"seq": 1, "raw": "Seymour's case, 10 Rep. 98", "case_name": "Seymour's Case",
+     "volume": 10, "reporter_abbr": "Rep.", "page": 98,
+     "status": "linked_english_reports", "er_case_id": "15720126", "pincite": true, "confidence": "high",
+     "note": "Edward Seymor's Case begins at 10 Co Rep 95"}
+  ]
+}

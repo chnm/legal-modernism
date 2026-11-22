@@ -1,0 +1,10 @@
+{
+  "psmid": "19005903700", "pageid": "02420",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:56:32Z",
+  "note": "p. 214, the chase of Cranborn; the fault in the plea, not the issue. Footnote (f)",
+  "citations": [
+    {"seq": 1, "raw": "Wood v. Budden, HIob. 119", "case_name": "Wood v. Budden",
+     "reporter_abbr": "Hob.", "page": 119,
+     "status": "linked_english_reports", "er_case_id": "17922884", "confidence": "high"}
+  ]
+}

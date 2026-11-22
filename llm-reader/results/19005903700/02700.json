@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "02700",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T11:07:27Z",
+  "note": "p. 242, a title of mere possession for goods, corporeal and incorporeal hereditaments. Skipped: cross-references (d), (e), Chitty on Pleading (f), the C.L.P. Act 1852 schedule",
+  "citations": [
+    {"seq": 1, "raw": "I:ogcrs v. Taylor, 2 Harls. & N. 828", "case_name": "Rogers v. Taylor",
+     "volume": 2, "reporter_abbr": "H. & N.", "page": 828,
+     "status": "linked_english_reports", "er_case_id": "18580255", "confidence": "high",
+     "note": "OCR 'I:ogcrs' for Rogers"}
+  ]
+}
