@@ -7,6 +7,13 @@
 
 {{define "content"}}
     <h1 class="h4 mt-2">{{.Title}}</h1>
+    {{if .IsCopy}}
+    <p class="alert alert-secondary small py-2">
+        <strong>Another copy.</strong> The database holds this edition in more than one copy, and this one,
+        from {{.ScannedBy}}, is not the official one. Lists and counts elsewhere in Chambers show the edition by
+        {{with .Official}}<a href="{{.URL}}">its official copy ({{.Label}})</a>{{else}}its official copy{{end}}.
+    </p>
+    {{end}}
     <div class="row">
         <div class="col-lg-7">
             <div class="detail-grid small mb-3">
@@ -16,12 +23,15 @@
                 {{if .Imprint}}<span class="label">Imprint</span><span>{{derefStr .Imprint}}</span>{{end}}
                 {{if .Place}}<span class="label">Place</span><span>{{derefStr .Place}}</span>{{end}}
                 <span class="label">Year</span><span>{{if .Year}}{{deref .Year}}{{else}}&mdash;{{end}}</span>
-                <span class="label">Treatise view</span><span>{{if .InTreatises}}<span class="badge jur">{{derefStr .Jurisdiction}}</span>{{else}}<span class="text-secondary">Not in the treatise view: this edition is not counted anywhere else in Chambers.</span>{{end}}</span>
-                <span class="label">Volumes</span><span>{{len .Volumes}} in MOML{{if .TotalVolumes}}{{if ne (deref .TotalVolumes) 0}}, {{deref .TotalVolumes}} catalogued{{end}}{{end}}{{if .Collation}} <span class="text-secondary">&middot; {{derefStr .Collation}}</span>{{end}}</span>
+                <span class="label">Treatise view</span><span>{{if .InTreatises}}<span class="badge jur">{{derefStr .Jurisdiction}}</span>{{else}}{{if .IsCopy}}<span class="text-secondary">Counted through its official copy.</span>{{else}}<span class="text-secondary">Not in the treatise view: this edition is not counted anywhere else in Chambers.</span>{{end}}{{end}}</span>
+                <span class="label">Volumes</span><span>{{len .Volumes}} scanned{{if .TotalVolumes}}{{if ne (deref .TotalVolumes) 0}}, {{deref .TotalVolumes}} catalogued{{end}}{{end}}{{if .Collation}} <span class="text-secondary">&middot; {{derefStr .Collation}}</span>{{end}}</span>
                 {{if .Subjects}}<span class="label">Subjects</span><span>{{range .Subjects}}<span class="badge jur me-1">{{.}}</span>{{end}}</span>{{end}}
                 {{if .LoCHeadings}}<span class="label">LoC headings</span><span>{{range $i, $h := .LoCHeadings}}{{if $i}}<br>{{end}}{{$h}}{{end}}</span>{{end}}
                 <span class="label">Bibliographic id</span><span><code>{{.BiblioID}}</code></span>
-                {{if .Gale.GMU}}<span class="label">On Gale</span><span><a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+                <span class="label">Scanned by</span><span>{{.ScannedBy}}{{if .Copies}}{{if not .IsCopy}} <span class="text-secondary">&middot; the official copy of this edition</span>{{end}}{{end}}</span>
+                {{if .Copies}}<span class="label">Other copies</span><span>{{range $i, $c := .Copies}}{{if $i}}<br>{{end}}<a href="{{$c.URL}}">{{$c.Label}}</a>{{if $c.Official}} <span class="badge text-bg-light">official</span>{{end}}{{if $c.Imprint}} <span class="text-secondary">&middot; {{derefStr $c.Imprint}}</span>{{end}}{{if $c.HasCounts}} <span class="text-secondary">&middot; {{num $c.Cites}} citations, {{$c.LinkedPct}} linked</span>{{end}}{{end}}</span>{{end}}
+                {{if .Links.GMU}}<span class="label">On Gale</span><span><a href="{{.Links.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Links.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+                {{if .Links.HathiTrust}}<span class="label">On HathiTrust</span><span><a href="{{.Links.HathiTrust}}" target="_blank" rel="noopener">Read the scan</a> <span class="text-secondary">(public)</span></span>{{end}}
             </div>
         </div>
         <div class="col-lg-5">
@@ -69,7 +79,8 @@
             {{if .Year}}<span class="text-secondary">&middot; {{deref .Year}}</span>{{end}}
             <span class="text-secondary">&middot; {{num .Cites}} citations on {{len .Pages}} pages{{if .TotalPages}} of {{num .TotalPages}}{{end}}, {{pct .Linked .Cites}} linked</span>
             <span class="text-secondary">&middot; <code>{{.PSMID}}</code></span>
-            {{if .Gale.GMU}}<span class="text-secondary">&middot; Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+            {{if .Links.GMU}}<span class="text-secondary">&middot; Gale: <a href="{{.Links.GMU}}" target="_blank" rel="noopener">GMU</a>, <a href="{{.Links.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+            {{if .Links.HathiTrust}}<span class="text-secondary">&middot; <a href="{{.Links.HathiTrust}}" target="_blank" rel="noopener">HathiTrust</a></span>{{end}}
         </summary>
         {{if .Pages}}
         <table class="table table-sm table-hover align-middle pages-table small mt-2">
@@ -93,6 +104,6 @@
         {{end}}
     </details>
     {{else}}
-    <p class="small text-secondary fst-italic">This edition has no volumes in MOML.</p>
+    <p class="small text-secondary fst-italic">This edition has no volumes in the database.</p>
     {{end}}
 {{end}}

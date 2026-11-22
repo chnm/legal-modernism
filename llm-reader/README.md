@@ -13,7 +13,7 @@ cases up itself, so the result can be compared with `moml_citations.citation_lin
 - `results/<psmid>/<pageid>.json` is the record of one page read. A page with
   a record is done; the work resumes from the first page without one.
 - `moml_citations.llm_pages` and `moml_citations.llm_links` hold the records
-  once loaded (`db/migrations/20261120020229_llm-links.sql`).
+  once loaded (`db/migrations/20261122190321_llm-links.sql`).
 
 Set `LAW_DBSTR` on the command line each time (`LAW_DBSTR="$LAW_CLAUDE"
 bin/llm-reader ...`): an `export` does not carry over between Claude's shell

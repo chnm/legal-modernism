@@ -13,7 +13,9 @@ import (
 )
 
 // An edition (moml.editions, keyed by bibliographicid) is one printing of a
-// work in one or more volumes. Its page shows the catalogue record, the cases
+// work in one or more volumes, or one copy of it when the database holds
+// several (copies.go); a copy that is not the official one has a page too,
+// which says so and points at the official copy. Its page shows the catalogue record, the cases
 // it cites most, the reporters it cites, and every page on which a citation
 // was detected, volume by volume.
 
@@ -30,13 +32,16 @@ type EditionDetail struct {
 	Year             *int
 	Jurisdiction     *string // nil when the edition is outside the treatise view
 	Derivative       bool
+	ScannedBy        string        // where this copy was scanned: MOML, HathiTrust, side corpus
+	CopyOf           *string       // the official copy's id, nil when this is it
+	Copies           []EditionCopy // the edition's other copies
 	TotalVolumes     *int
 	Collation        *string
 	WorkID           int
 	WorkTitle        string
 	Subjects         []string
 	LoCHeadings      []string
-	Gale             GaleLinks
+	Links            SourceLinks
 	Counts           *EditionCounts
 	Reporters        []ReporterShare
 	USCites          int
@@ -45,9 +50,21 @@ type EditionDetail struct {
 	TopCases         TopCasesView
 }
 
-func (e *EditionDetail) URL() string         { return editionURL(e.BiblioID) }
-func (e *EditionDetail) WorkURL() string     { return workURL(e.WorkID) }
-func (e *EditionDetail) InTreatises() bool   { return e.Jurisdiction != nil }
+func (e *EditionDetail) URL() string       { return editionURL(e.BiblioID) }
+func (e *EditionDetail) WorkURL() string   { return workURL(e.WorkID) }
+func (e *EditionDetail) InTreatises() bool { return e.Jurisdiction != nil }
+func (e *EditionDetail) IsCopy() bool      { return e.CopyOf != nil }
+
+// Official is the official copy of the edition when this page is another
+// copy of it, and nil otherwise.
+func (e *EditionDetail) Official() *EditionCopy {
+	for i := range e.Copies {
+		if e.Copies[i].Official {
+			return &e.Copies[i]
+		}
+	}
+	return nil
+}
 func (e *EditionDetail) AllCasesURL() string { return editionCasesURL(e.BiblioID) }
 func (e *EditionDetail) CitationsURL() string {
 	return citationsURL(url.Values{"edition": {e.BiblioID}})
@@ -102,7 +119,7 @@ type EditionVolume struct {
 	Imprint          *string
 	Year             *int
 	TotalPages       *int
-	Gale             GaleLinks
+	Links            SourceLinks
 	Pages            []EditionPageRow
 	Cites            int
 	Linked           int
@@ -149,7 +166,9 @@ func (s *server) getEditionHeader(ctx context.Context, id string) (*EditionDetai
 		SELECT e.author, e.author_role, e.publication_place, e.total_volumes, e.book_collation, e.derivative,
 		       e.work_id, w.title,
 		       v.title, v.edition_statement, v.imprint, v.year, v.product_link,
-		       (SELECT t.jurisdiction FROM moml.treatises t WHERE t.bibliographicid = e.bibliographicid)
+		       (SELECT t.jurisdiction FROM moml.treatises t WHERE t.bibliographicid = e.bibliographicid),
+		       e.copy_of,
+		       (SELECT c.source FROM moml.edition_copies c WHERE c.bibliographicid = e.bibliographicid)
 		FROM moml.editions e
 		JOIN moml.works w ON w.work_id = e.work_id
 		JOIN LATERAL (
@@ -163,14 +182,15 @@ func (s *server) getEditionHeader(ctx context.Context, id string) (*EditionDetai
 		WHERE e.bibliographicid = $1`, id).Scan(
 		&d.Author, &d.AuthorRole, &d.Place, &d.TotalVolumes, &d.Collation, &d.Derivative,
 		&d.WorkID, &d.WorkTitle,
-		&d.Title, &d.EditionStatement, &d.Imprint, &d.Year, &productLink, &d.Jurisdiction)
+		&d.Title, &d.EditionStatement, &d.Imprint, &d.Year, &productLink, &d.Jurisdiction,
+		&d.CopyOf, &d.ScannedBy)
 	if isNoRows(err) {
 		return nil, nil
 	}
 	if err != nil {
 		return nil, fmt.Errorf("edition header: %w", err)
 	}
-	d.Gale = galeLinks(productLink, "")
+	d.Links = sourceLinks(productLink, "")
 	return d, nil
 }
 
@@ -279,7 +299,7 @@ func (s *server) getEditionVolumes(ctx context.Context, id string) ([]EditionVol
 			var v EditionVolume
 			var productLink *string
 			err := rows.Scan(&v.PSMID, &v.Number, &v.Title, &v.EditionStatement, &v.Imprint, &v.Year, &v.TotalPages, &productLink)
-			v.Gale = galeLinks(productLink, "")
+			v.Links = sourceLinks(productLink, "")
 			return v, err
 		})
 	if err != nil {
@@ -366,6 +386,11 @@ func (s *server) handleEdition(w http.ResponseWriter, r *http.Request) {
 	}
 	if d.LoCHeadings, err = s.getEditionLoCHeadings(ctx, id); err != nil {
 		s.serverError(w, r, err, "loading the edition's headings", "bibliographicid", id)
+		return
+	}
+
+	if d.Copies, err = s.getCopies(ctx, copiesBeside, id); err != nil {
+		s.serverError(w, r, err, "loading the edition's copies", "bibliographicid", id)
 		return
 	}
 

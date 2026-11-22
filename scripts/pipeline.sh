@@ -36,8 +36,14 @@
 #
 # The database steps run here, through the Makefile targets, against
 # LAW_DBSTR. The Slurm jobs run on hopper and are watched by polling
-# squeue over fresh ssh connections, so a laptop that sleeps or loses its
-# network picks up where it left off instead of losing the run. Pass or fail
+# squeue over short ssh connections, so a laptop that sleeps or loses its
+# network picks up where it left off instead of losing the run. Hopper asks
+# for a password and a Duo push, so the preflight signs in once by opening an
+# ssh master connection, and every later connection, the rsync of make
+# sync-hopper included, goes through it (issue #448). If the master dies, the
+# script asks to sign in again, with a bell and a notification, before a phase
+# that reaches hopper or while it waits on a job. The master stays up for an
+# hour after the run, so a run chained after it signs in without asking. Pass or fail
 # comes from the Slurm job state, not the program's exit code: the detector
 # exits 1 on a wall-time SIGTERM as well as on a real failure. A job that hits
 # its wall time is resubmitted once: the linker resumes from committed work,
@@ -71,7 +77,21 @@ cd "$REPO_ROOT"
 
 # The ssh alias for the cluster, the same one the Makefile's sync-hopper uses.
 HOPPER=hopper
-SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=2)
+
+# Hopper asks for a password and a Duo push (issue #448), so the script signs
+# in once, in the preflight, by opening an ssh master connection, and every
+# later ssh goes through the master's socket. BatchMode stays on for those, so
+# nothing but ensure_master ever prompts. %C is a hash of the host, port and
+# user, short enough for macOS's 104-byte limit on a socket path. The master
+# outlives the run by SSH_PERSIST of idleness, so a run chained after this one
+# reuses it without another Duo push.
+SSH_CONTROL="$HOME/.ssh/pipeline-%C"
+SSH_PERSIST=1h
+SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=2
+          -o ControlMaster=no -o "ControlPath=$SSH_CONTROL")
+# make sync-hopper's rsync goes through the master too.
+export RSYNC_RSH="ssh ${SSH_OPTS[*]}"
+MASTER_OPENED=0   # set by ensure_master when it had to open a new master
 
 # The corpus, chosen by --corpus: moml (the default) or cap. set_corpus below
 # fills the settings that depend on it.
@@ -280,6 +300,36 @@ resume_cmd() {
 # carries LAW_DBSTR into the job. The command string is single-quoted for the
 # remote shell, so it must not itself contain single quotes.
 
+# Make sure the master connection to hopper is up, opening it if not. Opening
+# it prompts on the terminal for the password and the Duo push, so it needs
+# one; the bell and a notification call whoever is away from it. A Slurm job
+# keeps running while the prompt waits. Returns non-zero, without prompting,
+# when there is no terminal, and when the sign-in fails.
+ensure_master() {
+  MASTER_OPENED=0
+  if [[ $DRY_RUN -eq 1 ]]; then return 0; fi
+  if ssh -o "ControlPath=$SSH_CONTROL" -O check "$HOPPER" 2>/dev/null; then return 0; fi
+  if ! { : >/dev/tty; } 2>/dev/null; then
+    log "no ssh connection to $HOPPER is open and there is no terminal to sign in on; open one first with:"
+    log "  ssh -fN -o ControlMaster=yes -o ControlPersist=$SSH_PERSIST -o ControlPath='$SSH_CONTROL' $HOPPER"
+    return 1
+  fi
+  log "+ ssh -fN -o ControlMaster=yes -o ControlPersist=$SSH_PERSIST $HOPPER"
+  log "signing in to $HOPPER: enter the password and approve the Duo push when asked"
+  notify "Citation pipeline" "sign in to $HOPPER in the terminal (password and Duo)"
+  if ssh -fN -o ControlMaster=yes -o "ControlPersist=$SSH_PERSIST" -o "ControlPath=$SSH_CONTROL" \
+       -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 \
+       "$HOPPER" </dev/tty >/dev/null 2>/dev/tty; then
+    # The terminal, not the run log: the master backgrounds itself and would
+    # otherwise hold the log's tee open for as long as it lives.
+    MASTER_OPENED=1
+    log "signed in to $HOPPER; later ssh connections reuse this one"
+    return 0
+  fi
+  log "signing in to $HOPPER failed"
+  return 1
+}
+
 # Log and run a remote command; under --dry-run only log it. Returns ssh's
 # status (255 when the connection itself failed).
 hopper() {
@@ -355,6 +405,11 @@ wait_for_job() {  # wait_for_job ID
     out=$(hopper_raw "squeue -h -j $id -o %T" "") || rc=$?
     out=$(printf '%s\n' "$out" | tail -n 1)
     if [[ $rc -eq 255 ]]; then
+      # The master dies when a laptop sleeps or the network drops; sign in
+      # again and poll at once. A master that is still up means the failure
+      # was something else, so back off as before.
+      ensure_master || true
+      if [[ $MASTER_OPENED -eq 1 ]]; then consecutive=0; continue; fi
       consecutive=$((consecutive + 1))
       if [[ $consecutive -ge 10 ]]; then
         die "ssh to $HOPPER failed $consecutive times in a row while waiting for job $id; it may still be running. Resume with: $(resume_cmd)"
@@ -513,6 +568,7 @@ phase_preflight() {
   run dbmate --env DBMATE_URL --migrations-dir db/migrations status --exit-code \
     || die "migrations are pending (or dbmate cannot reach the database): run make db-up, then make db-schema, and commit db/schema.sql"
 
+  ensure_master || die "cannot sign in to $HOPPER"
   log "+ ssh $HOPPER true"
   if [[ $DRY_RUN -eq 0 ]]; then
     ssh "${SSH_OPTS[@]}" "$HOPPER" true || die "cannot ssh to $HOPPER"
@@ -617,6 +673,11 @@ phase() {  # phase NAME FUNC
   PHASE_JOBS=""
   PHASE_START=$(date +%s)
   log "=== $name: begin"
+  # The phases that reach hopper check the connection first: a local phase
+  # before them (stubs, a truncate) may have outlasted a sleeping laptop.
+  case "$name" in
+    sync|detect|link|relink) ensure_master || die "cannot sign in to $HOPPER" ;;
+  esac
   "$fn"
   secs=$(( $(date +%s) - PHASE_START ))
   log "=== $name: done in $(fmt_duration "$secs")"

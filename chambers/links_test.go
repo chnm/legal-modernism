@@ -9,7 +9,7 @@ import (
 
 func strptr(s string) *string { return &s }
 
-func TestGaleLinks(t *testing.T) {
+func TestSourceLinks(t *testing.T) {
 	productLink := "http://link.galegroup.com/apps/doc/F0103227568/MOML?sid=dhxml"
 	tests := []struct {
 		name        string
@@ -40,9 +40,30 @@ func TestGaleLinks(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			g := galeLinks(tt.productLink, tt.pageid)
+			g := sourceLinks(tt.productLink, tt.pageid)
 			require.Equal(t, tt.gmu, g.GMU)
 			require.Equal(t, tt.columbia, g.Columbia)
+		})
+	}
+}
+
+func TestSourceLinksHathiTrust(t *testing.T) {
+	handle := "https://hdl.handle.net/2027/uc2.ark:/13960/t0pr7q84f"
+	tests := []struct {
+		name   string
+		pageid string
+		want   string
+	}{
+		{"volume", "", handle},
+		{"page", "00450", handle + "?urlappend=%3Bseq=45"},
+		{"page past a thousand", "12440", handle + "?urlappend=%3Bseq=1244"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			g := sourceLinks(strptr(handle), tt.pageid)
+			require.Equal(t, tt.want, g.HathiTrust)
+			require.Empty(t, g.GMU)
+			require.Empty(t, g.Columbia)
 		})
 	}
 }

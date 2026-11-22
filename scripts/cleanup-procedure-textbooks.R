@@ -7,7 +7,7 @@ db <- dbConnect(odbc::odbc(), "Research", timeout = 10)
 book_info <- tbl(db, in_schema("moml", "book_info")) |> collect()
 book_info <- book_info |>
   select(webid, psmid, bibliographicid)
-raw_tb <- read_csv("temp/procedure_textbooks.csv") |>
+raw_tb <- read_csv("tmp/procedure_textbooks.csv") |>
   select(-moml_psmid) |>
   rename(webid = moml_webid)
 
@@ -19,7 +19,7 @@ clean_tb <- raw_tb |>
   select(-begin_year, -end_year)
 
 clean_tb |>
-  write_csv("temp/procedure-textbooks-cleaned.csv")
+  write_csv("tmp/procedure-textbooks-cleaned.csv")
 
 dbWriteTable(db, Id(schema = "legalhist", table = "textbooks"), clean_tb)
 

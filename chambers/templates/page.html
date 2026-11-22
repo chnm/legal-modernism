@@ -30,7 +30,8 @@
             {{if .NextCited}}<a href="{{.NextCited}}">next page with citations &raquo;</a>{{end}}
         </span>
         <span><code>{{.PSMID}}</code> / <code>{{.PageID}}</code>{{if .Type}} &middot; {{.Type}}{{end}}{{if .Year}} &middot; {{deref .Year}}{{end}}</span>
-        {{if .Gale.GMU}}<span>Image on Gale: <a href="{{.Gale.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Gale.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+        {{if .Links.GMU}}<span>Image on Gale: <a href="{{.Links.GMU}}" target="_blank" rel="noopener">GMU</a> &middot; <a href="{{.Links.Columbia}}" target="_blank" rel="noopener">Columbia</a></span>{{end}}
+        {{if .Links.HathiTrust}}<span><a href="{{.Links.HathiTrust}}" target="_blank" rel="noopener">Image on HathiTrust</a></span>{{end}}
     </div>
     {{if .Sections}}<p class="small text-secondary mb-2">Section: {{join .Sections " · "}}</p>{{end}}
 
