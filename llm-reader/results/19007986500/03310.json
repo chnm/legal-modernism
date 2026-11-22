@@ -1,0 +1,27 @@
+{
+  "psmid": "19007986500", "pageid": "03310",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:58:49Z",
+  "note": "printed p. 303; variance in the names of persons not parties. Statutes and a cross-reference skipped; cross-checked with the 1841 edition (hathi00003/02420) and the 1827 edition (19005940200/03800)",
+  "citations": [
+    {"seq": 1, "raw": "Buckley v. Rice Thomns, Plowd. 1'8 a", "case_name": "Buckley v. Rice Thomas",
+     "reporter_abbr": "Plowd.", "page": 128,
+     "status": "linked_english_reports", "er_case_id": "17941482", "pincite": true, "confidence": "medium",
+     "note": "OCR lost the middle digit; the 1827 and 1841 editions print 128 a. Plowden pp. 1-130 are missing from the ER data; per the README's choice, linked Dyer's report of the case, Bulkeley v Thomas, 2 Dy 113; a later Plowden page than the report's first (118), so a pin cite"},
+    {"seq": 2, "raw": "Rowe v. Roach, 1 M. & S. 304", "case_name": "Rowe v. Roach",
+     "volume": 1, "reporter_abbr": "M. & S.", "page": 304,
+     "status": "linked_english_reports", "er_case_id": "18130283", "confidence": "high",
+     "note": "ER's er_name is 'Same against Hoar the Younger' but murrell_title is Rowe v Roach"},
+    {"seq": 3, "raw": "Whitwell v. Bennett, 3 Bos. & Pal. 559", "case_name": "Whitwell v. Bennett",
+     "volume": 3, "reporter_abbr": "Bos. & Pul.", "page": 559,
+     "status": "linked_english_reports", "er_case_id": "18030749", "confidence": "high"},
+    {"seq": 4, "raw": "Bowditcl v. Mawley, 1 Camp. 195", "case_name": "Bowditch v. Mawley",
+     "volume": 1, "reporter_abbr": "Camp.", "page": 195,
+     "status": "linked_english_reports", "er_case_id": "18080090", "confidence": "high"},
+    {"seq": 5, "raw": "Hutchinson v. Piper, 4 Taunt. 810", "case_name": "Hutchinson v. Piper",
+     "volume": 4, "reporter_abbr": "Taunt.", "page": 810,
+     "status": "linked_english_reports", "er_case_id": "18130278", "confidence": "high"},
+    {"seq": 6, "raw": "Waiters v. Mace, 2 Barn. & Aid. 756", "case_name": "Walters v. Mace",
+     "volume": 2, "reporter_abbr": "Barn. & Ald.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18190514", "confidence": "high"}
+  ]
+}

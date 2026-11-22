@@ -1,0 +1,10 @@
+{
+  "psmid": "19007986500", "pageid": "03550",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T02:05:40Z",
+  "note": "printed p. 327; a variance in title is one of substance; no title need be shown where the adversary is estopped. Buller's Nisi Prius (a treatise) and a cross-reference skipped",
+  "citations": [
+    {"seq": 1, "raw": "Cudlip v. Rundle, Carth. 202", "case_name": "Cudlip v. Rundle",
+     "reporter_abbr": "Carth.", "page": 202,
+     "status": "linked_english_reports", "er_case_id": "17410095", "confidence": "high"}
+  ]
+}
