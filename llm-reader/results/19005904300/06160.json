@@ -1,0 +1,15 @@
+{
+  "psmid": "19005904300", "pageid": "06160",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:28:20Z",
+  "note": "Appendix Notes, p. lxxxi: Note 48, end of the Hilary Rules on several counts and start of the Common Law Commissioners' remarks. Footnote (n) is new in 1843 (cases of 1840-41).",
+  "citations": [
+    {"seq": 1, "raw": "Head v. Baldrey, 11 A. & E. 90o.", "case_name": "Head v. Baldrey",
+     "volume": 11, "reporter_abbr": "A. & E.", "page": 905,
+     "status": "linked_english_reports", "er_case_id": "18400106", "confidence": "high",
+     "note": "OCR '90o' for 905; Head against Baldrey, 11 Ad & E 905 (1840), on the costs of several pleas under the rule (earlier reports of the suit at 6 Ad & E 459 and 8 Ad & E 605)"},
+    {"seq": 2, "raw": "Dewar v. Swabey, ibid. 913.", "case_name": "Dewar v. Swabey",
+     "volume": 11, "reporter_abbr": "A. & E.", "page": 913,
+     "status": "linked_english_reports", "er_case_id": "18410836", "confidence": "high",
+     "note": "ibid. expanded to 11 A. & E.; Dewar and Others against Swabey and Another, 11 Ad & E 913"}
+  ]
+}

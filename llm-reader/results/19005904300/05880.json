@@ -1,0 +1,11 @@
+{
+  "psmid": "19005904300", "pageid": "05880",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T09:23:45Z",
+  "note": "Appendix Notes, p. liv: end of Note 34, Note 35 (special demurrer statutes; 27 Eliz. c. 5 is a statute) and start of Note 36 (dower). Same footnote as 1838 (19005967100/05700).",
+  "citations": [
+    {"seq": 1, "raw": "Heard v. Baskerville, Hob. 232.", "case_name": "Heard v. Baskerville",
+     "reporter_abbr": "Hob.", "page": 232,
+     "status": "linked_english_reports", "er_case_id": "17921070", "confidence": "high",
+     "note": "Heard v Baskervile, Hob 232"}
+  ]
+}
