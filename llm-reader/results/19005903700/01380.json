@@ -1,0 +1,11 @@
+{
+  "psmid": "19005903700", "pageid": "01380",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T10:16:06Z",
+  "note": "p. 110, error in fact; what is error. Footnote (e) continued from p. 109 (Arch. Pr. not a case), (f) a statute, (g) supra p. 86",
+  "citations": [
+    {"seq": 1, "raw": "James v. Cochrane, 9 Exch. 562", "case_name": "James v. Cochrane",
+     "volume": 9, "reporter_abbr": "Exch.", "page": 552,
+     "status": "linked_english_reports", "er_case_id": "18540235", "confidence": "medium",
+     "note": "printed 562 is Smith v Lloyd; James v Cochrane (1854) begins at 9 Exch 552 (1689 words, next case at 556), as hathi00008 01520 prints"}
+  ]
+}
