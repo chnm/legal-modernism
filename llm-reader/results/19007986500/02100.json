@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "02100",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:23:28Z",
+  "note": "printed p. 182, the special traverse as a dilatory form; footnote (a) cites the Common Law Commissioners' Second Report, not a case",
+  "citations": [
+    {"seq": 1, "raw": "Robinson v. Iltyley, 1 Burr. 320", "case_name": "Robinson v. Rayley",
+     "volume": 1, "reporter_abbr": "Burr.", "page": 320,
+     "status": "linked_english_reports", "er_case_id": "17570030", "pincite": true, "confidence": "high",
+     "note": "'Iltyley' is OCR for Rayley, as the 1841 edition prints; Robinson v Raley begins at 1 Burr 316 (2531 words)"}
+  ]
+}

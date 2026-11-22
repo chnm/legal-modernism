@@ -1,0 +1,19 @@
+{
+  "psmid": "19007986500", "pageid": "02070",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:22:25Z",
+  "note": "printed p. 179, the absque hoc avoids argumentativeness. Reeves' History and Bac. Ab. are not reports; (u) is a cross-reference to the Appendix",
+  "citations": [
+    {"seq": 1, "raw": "Courtney .v. Phelps, 1 Sid. 301", "case_name": "Courtney v. Phelps",
+     "volume": 1, "reporter_abbr": "Sid.", "page": 301,
+     "status": "linked_english_reports", "er_case_id": "17140149", "pincite": true, "confidence": "high",
+     "note": "Courtney v Phelps begins at 1 Sid 300 (487 words); Haw v Planner begins at 301, but the printed name decides, as in the 1841 record"},
+    {"seq": 2, "raw": "Herring v. Blacklow, Cro. Eliz. S0", "case_name": "Herring v. Blacklow",
+     "reporter_abbr": "Cro. Eliz.", "page": 30,
+     "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high",
+     "note": "'S0' is OCR for 30, as the 1841 edition prints"},
+    {"seq": 3, "raw": "10 Hen. 6, 7, pi. 21",
+     "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 10 Hen. VI, fol. 7, pl. 21; the year books have no source"}
+  ]
+}

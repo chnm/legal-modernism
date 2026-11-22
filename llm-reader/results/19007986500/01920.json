@@ -1,0 +1,23 @@
+{
+  "psmid": "19007986500", "pageid": "01920",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:18:48Z",
+  "note": "printed p. 164, the replication de injuria; Chitty on Pleading, Finch's Law and Doct. Pl. are treatises, not recorded. Footnote (f) runs onto p. 165",
+  "citations": [
+    {"seq": 1, "raw": "Jones v. Kitchen, 1 Bos. & Pull. 76", "case_name": "Jones v. Kitchen",
+     "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 77,
+     "status": "linked_english_reports", "er_case_id": "17970518", "confidence": "high",
+     "note": "printed 76 (so in the 1841 edition too); Jones v Kitchin begins at 1 Bos & Pul 77 (1797), and 76 is the end of Smith v O'Kelly (75), so the name decides and the page is corrected"},
+    {"seq": 2, "raw": "Selby v. Bnrdols, 3 Bar . & Al. 2", "case_name": "Selby v. Bardons",
+     "volume": 3, "reporter_abbr": "Barn. & Ad.", "page": 2,
+     "status": "linked_english_reports", "er_case_id": "18320131", "confidence": "high",
+     "note": "'Bnrdols' and 'Bar . & Al.' are OCR for Bardons and Barn. & Ad."},
+    {"seq": 3, "raw": "9 Bing. 756, S. C.", "case_name": "Bardons v. Selby",
+     "volume": 9, "reporter_abbr": "Bing.", "page": 756,
+     "status": "linked_english_reports", "er_case_id": "18330017", "confidence": "high",
+     "note": "S. C. of Selby v. Bardons, in the Exchequer Chamber: Bardons v Selby, 9 Bing 756"},
+    {"seq": 4, "raw": "Crogate's Case, 8 Rlep. 07, a.", "case_name": "Crogate's Case",
+     "volume": 8, "reporter_abbr": "Rep.", "page": 67,
+     "status": "linked_english_reports", "er_case_id": "15720123", "pincite": true, "confidence": "high",
+     "note": "'07' is OCR for 67, as the 1841 edition prints; the case begins at 8 Co Rep 66"}
+  ]
+}

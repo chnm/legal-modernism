@@ -1,0 +1,11 @@
+{
+  "psmid": "19007986500", "pageid": "01860",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T01:17:33Z",
+  "note": "printed p. 158, the general issues restrained by the Rules of 1834 (post-1834 text); ne disturba pas. Arch. and Bac. Ab. are treatises; a cross-reference to the Appendix skipped",
+  "citations": [
+    {"seq": 1, "raw": "Colt v. Bishop of Coventry, Hob. 162", "case_name": "Colt v. Bishop of Coventry",
+     "reporter_abbr": "Hob.", "page": 162,
+     "status": "linked_english_reports", "er_case_id": "17920644", "pincite": true, "confidence": "medium",
+     "note": "the Commendam case, Hob 140-164; linked to 17920644 (the record with text, the name in murrell_title), not the empty 17921247, as the README directs; cited again as on p. 156"}
+  ]
+}
