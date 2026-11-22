@@ -1,0 +1,19 @@
+{
+  "psmid": "hathi00008", "pageid": "02210",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:08:20Z",
+  "note": "p. 185, a pleading in confession and avoidance must confess; cross-references to pp. 52 and 59 not recorded. Footnote (o) (OCR '(0)') continues on p. 186; Gould v. Lasbury's cite is printed there and recorded on that page. 1860 p. 175 (19005903700/02030)",
+  "citations": [
+    {"seq": 1, "raw": "Earl of Manchester v. Vale, 1 Saund. 27", "case_name": "Earl of Manchester v. Vale",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 27,
+     "status": "linked_english_reports", "er_case_id": "18450256", "pincite": true, "confidence": "high",
+     "note": "the English Reports split the case at 1 Wms Saund 23 and 27; the case begins in the earlier record, as in the 1860 and 1843 records"},
+    {"seq": 2, "raw": "Taylor v. Cole, 3 T. R. 298", "case_name": "Taylor v. Cole",
+     "volume": 3, "reporter_abbr": "T. R.", "page": 298,
+     "status": "linked_english_reports", "er_case_id": "17892473", "pincite": true, "confidence": "high",
+     "note": "the case begins at 3 TR 292 (Rumball v. Murray begins at 298; the printed name decides), as in the 1860 record"},
+    {"seq": 3, "raw": "Mountney v. Walton, 2 B. & Ad. 673", "case_name": "Mountney v. Watton",
+     "volume": 2, "reporter_abbr": "B. & Ad.", "page": 673,
+     "status": "linked_english_reports", "er_case_id": "18310690", "confidence": "high",
+     "note": "ER 'Mountney against Watton'"}
+  ]
+}

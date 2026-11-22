@@ -1,0 +1,15 @@
+{
+  "psmid": "hathi00008", "pageid": "02270",
+  "model": "claude-opus-5-5", "read_at": "2026-11-22T13:10:20Z",
+  "note": "p. 191, no colour, plead by traverse; pleadings in general: every pleading must answer the whole. Footnotes (e)-(h); (f) cites Chitty on Pleading, the Common Law Commissioners' Report and the C.L.P. Act 1852, (g) a cross-reference, (h) Com. Dig. (continued on p. 192). 1860 pp. 179-180 (19005903700/02070-02080)",
+  "citations": [
+    {"seq": 1, "raw": "Argent r. Durrant, 8 T. R. 406", "case_name": "Argent v. Durrant",
+     "volume": 8, "reporter_abbr": "T. R.", "page": 406,
+     "status": "linked_english_reports", "er_case_id": "17990876", "pincite": true, "confidence": "high",
+     "note": "OCR 'r.' for v.; the case begins at 8 TR 403 (1685 words)"},
+    {"seq": 2, "raw": "1 Saund. 28, n. (3)",
+     "volume": 1, "reporter_abbr": "Saund.", "page": 28,
+     "status": "linked_english_reports", "er_case_id": "18450018", "confidence": "medium",
+     "note": "no name printed; note (3) to Birks v. Trippet, which begins at 1 Wms Saund 28, as in the 1860 record"}
+  ]
+}
