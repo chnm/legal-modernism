@@ -16,7 +16,7 @@
      "volume": 1, "reporter_abbr": "Freem.", "page": 190,
      "status": "linked_english_reports", "er_case_id": "18260565", "confidence": "high",
      "note": "S. C. = Smith v. Feverell; ER Freem KB 190, 'Smith v Fetherwell'"},
-    {"seq": 5, "raw": "Greenhow v. Ilsley,\nWilles, 619", "case_name": "Greenhow v. Ilsley",
+    {"seq": 5, "raw": "Greenhow v. Ilsley, Willes, 619", "case_name": "Greenhow v. Ilsley",
      "reporter_abbr": "Willes", "page": 619,
      "status": "linked_english_reports", "er_case_id": "17900754", "confidence": "medium",
      "note": "Willes has no source; the same case is reported in Barnes (Bar N 136, 'Grenhow against Ilsley'), linked to the case"}

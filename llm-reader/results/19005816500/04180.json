@@ -9,11 +9,11 @@
       "seq": 1,
       "raw": "10 Hen. 6, 7",
       "volume": 10,
-      "reporter_abbr": "Hen. 6",
+      "reporter_abbr": "Y.B.",
       "page": 7,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book, 10 Hen. 6, fol. 7: no source"
+      "confidence": "high",
+      "note": "year book, 10 Hen. 6, fol. 7: no source. Legible, so high (consistency pass)"
     }
   ]
 }

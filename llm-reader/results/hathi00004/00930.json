@@ -7,7 +7,7 @@
      "volume": 8, "reporter_abbr": "Rep.", "page": 39,
      "status": "linked_english_reports", "er_case_id": "15720166", "pincite": true, "confidence": "high",
      "note": "Griesley's Case begins at 8 Co Rep 38"},
-    {"seq": 2, "raw": "Beecher's case,\nibid. 59", "case_name": "Beecher's Case",
+    {"seq": 2, "raw": "Beecher's case, ibid. 59", "case_name": "Beecher's Case",
      "volume": 8, "reporter_abbr": "Rep.", "page": 59,
      "status": "linked_english_reports", "er_case_id": "15720036", "pincite": true, "confidence": "high",
      "note": "ibid. expanded to 8 Rep.; Beecher's Case begins at 8 Co Rep 58"}

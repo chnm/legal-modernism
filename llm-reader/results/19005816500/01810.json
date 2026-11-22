@@ -10,7 +10,7 @@
     {"seq": 2, "raw": "Herring v. Blacklow, Cro. Eliz. 30", "case_name": "Herring v. Blacklow",
      "reporter_abbr": "Cro. Eliz.", "page": 30,
      "status": "linked_english_reports", "er_case_id": "16530979", "confidence": "high"},
-    {"seq": 3, "raw": "10 Hen. 6, 7. pl. 21", "volume": 10, "reporter_abbr": "Hen. 6", "page": 7,
-     "status": "no_match", "confidence": "high", "note": "Year Book, 10 Hen. VI f. 7 pl. 21; no source"}
+    {"seq": 3, "raw": "10 Hen. 6, 7. pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 7,
+     "status": "no_match", "confidence": "high", "note": "Year Book, 10 Hen. VI f. 7 pl. 21; no source. Recorded as Y.B. (consistency pass)"}
   ]
 }

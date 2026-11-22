@@ -30,7 +30,7 @@
     },
     {
       "seq": 3,
-      "raw": "Fletcher v. Pogson,\n3 Barn. & Cres. 192",
+      "raw": "Fletcher v. Pogson, 3 Barn. & Cres. 192",
       "case_name": "Fletcher v. Pogson",
       "volume": 3,
       "reporter_abbr": "Barn. & Cres.",
@@ -52,7 +52,7 @@
     },
     {
       "seq": 5,
-      "raw": "Tubbs v.\nCaswell et al, 8 Wendell, 129",
+      "raw": "Tubbs v. Caswell et al, 8 Wendell, 129",
       "case_name": "Tubbs v. Caswell",
       "volume": 8,
       "reporter_abbr": "Wendell",
@@ -63,7 +63,7 @@
     },
     {
       "seq": 6,
-      "raw": "Spring v. The Bank of Mount Pleasant, 10\nPeters, 257",
+      "raw": "Spring v. The Bank of Mount Pleasant, 10 Peters, 257",
       "case_name": "Sprigg v. The Bank of Mount Pleasant",
       "volume": 10,
       "reporter_abbr": "Peters",

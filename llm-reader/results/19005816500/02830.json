@@ -9,11 +9,11 @@
       "seq": 1,
       "raw": "5 Hen. 7. 10. a. pl. 2",
       "volume": 5,
-      "reporter_abbr": "Hen. 7.",
+      "reporter_abbr": "Y.B.",
       "page": 10,
       "status": "no_match",
       "confidence": "high",
-      "note": "year book, 5 Hen. VII fol. 10 a pl. 2; no source"
+      "note": "year book, 5 Hen. VII fol. 10 a pl. 2; no source. Recorded as Y.B. (consistency pass)"
     },
     {
       "seq": 2,
@@ -31,11 +31,11 @@
       "seq": 3,
       "raw": "33 Hen. 6. 14. b",
       "volume": 33,
-      "reporter_abbr": "Hen. 6.",
+      "reporter_abbr": "Y.B.",
       "page": 14,
       "status": "no_match",
       "confidence": "high",
-      "note": "year book, 33 Hen. VI fol. 14 b; no source"
+      "note": "year book, 33 Hen. VI fol. 14 b; no source. Recorded as Y.B. (consistency pass)"
     },
     {
       "seq": 4,

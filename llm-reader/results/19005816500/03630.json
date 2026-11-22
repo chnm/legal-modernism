@@ -8,41 +8,41 @@
       "seq": 1,
       "raw": "10 E. 3. 23",
       "volume": 10,
-      "reporter_abbr": "E. 3",
+      "reporter_abbr": "Y.B.",
       "page": 23,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book of 10 Edward III; no source covers the year books"
+      "confidence": "high",
+      "note": "year book of 10 Edward III; no source covers the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "Ibid. 25",
       "volume": 10,
-      "reporter_abbr": "E. 3",
+      "reporter_abbr": "Y.B.",
       "page": 25,
       "status": "no_match",
       "confidence": "medium",
-      "note": "Ibid. expanded to 10 E. 3. 25; year book, no source"
+      "note": "Ibid. expanded to 10 E. 3. 25; year book, no source. Recorded as Y.B. (consistency pass)"
     },
     {
       "seq": 3,
       "raw": "40 E. 3. 20",
       "volume": 40,
-      "reporter_abbr": "E. 3",
+      "reporter_abbr": "Y.B.",
       "page": 20,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book of 40 Edward III; no source covers the year books"
+      "confidence": "high",
+      "note": "year book of 40 Edward III; no source covers the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 4,
       "raw": "10 E. 3. 25, 26",
       "volume": 10,
-      "reporter_abbr": "E. 3",
+      "reporter_abbr": "Y.B.",
       "page": 25,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book of 10 Edward III; second page 26 ignored"
+      "confidence": "high",
+      "note": "year book of 10 Edward III; second page 26 ignored. Legible, so high; dropped: 26 (consistency pass)"
     }
   ]
 }

@@ -19,7 +19,7 @@
     },
     {
       "seq": 2,
-      "raw": "21 Hen.\n6, 12",
+      "raw": "21 Hen. 6, 12",
       "volume": 21,
       "reporter_abbr": "Y.B.",
       "page": 12,
@@ -62,7 +62,7 @@
     },
     {
       "seq": 6,
-      "raw": "Merceron v. Dowson, 5\nBarn. & Cres. 479",
+      "raw": "Merceron v. Dowson, 5 Barn. & Cres. 479",
       "case_name": "Merceron v. Dowson",
       "volume": 5,
       "reporter_abbr": "Barn. & Cres.",
@@ -84,7 +84,7 @@
     },
     {
       "seq": 8,
-      "raw": "McPherson v.\nDaniels, 10 Barn. & Cres. 263",
+      "raw": "McPherson v. Daniels, 10 Barn. & Cres. 263",
       "case_name": "McPherson v. Daniels",
       "volume": 10,
       "reporter_abbr": "Barn. & Cres.",

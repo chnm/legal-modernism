@@ -6,8 +6,8 @@
     {"seq": 1, "raw": "Year-book, 21 Ed. 4, 85", "volume": 21, "reporter_abbr": "Y.B.", "page": 85,
      "status": "no_match", "confidence": "medium", "note": "Year book, 21 Edw. IV; no source (the 1851 edition's OCR reads 35)"},
     {"seq": 2, "raw": "the Year-book, 3 Ed. 2, 59", "volume": 3, "reporter_abbr": "Y.B.", "page": 59,
-     "status": "no_match", "confidence": "medium", "note": "Year book, 3 Edw. II; no source"},
+     "status": "no_match", "confidence": "high", "note": "Year book, 3 Edw. II; no source. Legible, so high (consistency pass)"},
     {"seq": 3, "raw": "the Year-book, 7 Hen. 6, p. 29", "volume": 7, "reporter_abbr": "Y.B.", "page": 29,
-     "status": "no_match", "confidence": "medium", "note": "Year book, 7 Hen. VI; no source"}
+     "status": "no_match", "confidence": "high", "note": "Year book, 7 Hen. VI; no source. Legible, so high (consistency pass)"}
   ]
 }

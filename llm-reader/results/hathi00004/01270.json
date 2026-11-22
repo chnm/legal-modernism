@@ -19,7 +19,7 @@
     },
     {
       "seq": 2,
-      "raw": "Paramore v. Johnson, 1 Ld. Ray.\n566",
+      "raw": "Paramore v. Johnson, 1 Ld. Ray. 566",
       "case_name": "Paramore v. Johnson",
       "volume": 1,
       "reporter_abbr": "Ld. Ray.",
@@ -42,7 +42,7 @@
     },
     {
       "seq": 4,
-      "raw": "Dodd v. Kyffin,\n7 T. R. 254",
+      "raw": "Dodd v. Kyffin, 7 T. R. 254",
       "case_name": "Dodd v. Kyffin",
       "volume": 7,
       "reporter_abbr": "T. R.",

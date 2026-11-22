@@ -21,11 +21,11 @@
       "seq": 2,
       "raw": "10E. 3. 19. pl. 21",
       "volume": 10,
-      "reporter_abbr": "Edw. 3 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 19,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 10 Edw. 3, fo. 19, pl. 21; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 10 Edw. 3, fo. 19, pl. 21; no source for the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 3,

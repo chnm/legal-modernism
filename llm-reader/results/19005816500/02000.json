@@ -3,7 +3,7 @@
   "model": "claude-opus-5-5", "read_at": "2026-11-20T02:22:00Z",
   "note": "Brown's Entries is a book of precedents, not recorded",
   "citations": [
-    {"seq": 1, "raw": "2 Edw. 1V. 8", "volume": 2, "reporter_abbr": "Edw. IV.", "page": 8,
-     "status": "no_match", "confidence": "high", "note": "Year Book, 2 Edw. IV f. 8; no source"}
+    {"seq": 1, "raw": "2 Edw. 1V. 8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "Year Book, 2 Edw. IV f. 8; no source. Recorded as Y.B. (consistency pass)"}
   ]
 }

@@ -14,8 +14,8 @@
      "volume": 1, "reporter_abbr": "Salk.", "page": 394,
      "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "high"},
     {"seq": 4, "raw": "year- ;I _Jˆ_ In 1T T/TT on .n 1J UT no lWUV 0I0. IOYU XJ- 40. 6 .Q U. .Il 4as",
-     "reporter_abbr": "Year Book",
+     "reporter_abbr": "Y.B.",
      "status": "no_match", "confidence": "low",
-     "note": "footnote (l) cites one or more Year Books of Edward III; the OCR is unreadable"}
+     "note": "footnote (l) cites one or more Year Books of Edward III; the OCR is unreadable. Recorded as Y.B.; low because nothing can be read (consistency pass)"}
   ]
 }

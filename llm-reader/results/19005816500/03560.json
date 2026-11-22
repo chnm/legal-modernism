@@ -8,11 +8,11 @@
       "seq": 1,
       "raw": "7 Ed. 2, 242",
       "volume": 7,
-      "reporter_abbr": "Ed. 2",
+      "reporter_abbr": "Y.B.",
       "page": 242,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book of 7 Edward II; no source covers the year books"
+      "confidence": "high",
+      "note": "year book of 7 Edward II; no source covers the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 2,

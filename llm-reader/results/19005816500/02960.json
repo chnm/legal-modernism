@@ -8,8 +8,8 @@
      "reporter_abbr": "Carth.", "page": 491,
      "status": "linked_english_reports", "er_case_id": "17410109", "confidence": "high",
      "note": "name begins at the foot of the previous page"},
-    {"seq": 2, "raw": "18 E. 2. 814.", "volume": 18, "reporter_abbr": "E. 2.",
+    {"seq": 2, "raw": "18 E. 2. 814.", "volume": 18, "reporter_abbr": "Y.B.",
      "status": "no_match", "confidence": "medium",
-     "note": "Year book 18 Edw. II; folio garbled (814), so page left out; no source"}
+     "note": "Year book 18 Edw. II; folio garbled (814), so page left out; no source. Other editions read 18 E. 2. 614. Recorded as Y.B. (consistency pass)"}
   ]
 }

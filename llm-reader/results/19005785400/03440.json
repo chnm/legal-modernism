@@ -5,6 +5,6 @@
   "read_at": "2026-11-20T02:53:56Z",
   "citations": [
     {"seq": 1, "raw": "10 E. 3, 19, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
-     "status": "no_match", "confidence": "medium", "note": "Year book, 10 Edw. III, pl. 21; no source"}
+     "status": "no_match", "confidence": "high", "note": "Year book, 10 Edw. III, pl. 21; no source. Legible, so high (consistency pass)"}
   ]
 }

@@ -20,21 +20,21 @@
       "seq": 2,
       "raw": "37 Hen. 6. 24 a.",
       "volume": 37,
-      "reporter_abbr": "Hen. 6.",
+      "reporter_abbr": "Y.B.",
       "page": 24,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book, 37 Hen. 6, fol. 24 a (Prisot, J.): no source"
+      "confidence": "high",
+      "note": "year book, 37 Hen. 6, fol. 24 a (Prisot, J.): no source. Legible, so high (consistency pass)"
     },
     {
       "seq": 3,
       "raw": "36 Hen. 6. 18.",
       "volume": 36,
-      "reporter_abbr": "Hen. 6.",
+      "reporter_abbr": "Y.B.",
       "page": 18,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book, 36 Hen. 6, fol. 18 (Littleton, J.): no source"
+      "confidence": "high",
+      "note": "year book, 36 Hen. 6, fol. 18 (Littleton, J.): no source. Legible, so high (consistency pass)"
     },
     {
       "seq": 4,

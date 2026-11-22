@@ -9,27 +9,27 @@
       "seq": 1,
       "raw": "17 Ed. 9. 534",
       "volume": 17,
-      "reporter_abbr": "Edw. 2 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 534,
       "status": "no_match",
-      "confidence": "low",
-      "note": "Year Book of Edw. 2 (the passage concerns the reign of Ed. 2; 'Ed. 9' is OCR for 'Ed. 2'), p. 534; no source for the year books"
+      "confidence": "medium",
+      "note": "Year Book of Edw. 2 (the passage concerns the reign of Ed. 2; 'Ed. 9' is OCR for 'Ed. 2'), p. 534; no source for the year books. 17 Edw. II, as every other edition prints it; garbled OCR, so medium (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "7 Ed. 2. 213",
       "volume": 7,
-      "reporter_abbr": "Edw. 2 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 213,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 7 Edw. 2, p. 213; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 7 Edw. 2, p. 213; no source for the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 3,
       "raw": "ibid. 220",
       "volume": 7,
-      "reporter_abbr": "Edw. 2 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 226,
       "status": "no_match",
       "confidence": "medium",

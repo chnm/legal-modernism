@@ -4,8 +4,8 @@
   "citations": [
     {"seq": 1, "raw": "Bac. Ab. Bastardy. 510, cites 11 len. 4, 78",
      "volume": 11, "reporter_abbr": "Y.B.", "page": 78,
-     "status": "no_match", "confidence": "medium",
-     "note": "11 Hen. IV, year book cited through Bacon's Abridgment; no source"},
+     "status": "no_match", "confidence": "high",
+     "note": "11 Hen. IV, year book cited through Bacon's Abridgment; no source. The numbers are legible, so high (consistency pass)"},
     {"seq": 2, "raw": "Jones's Case, Comb. 473", "case_name": "Jones's Case",
      "reporter_abbr": "Comb.", "page": 473,
      "status": "linked_english_reports", "er_case_id": "17240308", "confidence": "high",

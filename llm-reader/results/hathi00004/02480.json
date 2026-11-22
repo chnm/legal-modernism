@@ -9,7 +9,7 @@
     {"seq": 2, "raw": "Shum v. Farrington, 1 Bos. & Pul. 640", "case_name": "Shum v. Farrington",
      "volume": 1, "reporter_abbr": "Bos. & Pul.", "page": 640,
      "status": "linked_english_reports", "er_case_id": "17970365", "confidence": "high"},
-    {"seq": 3, "raw": "Bur-\nton v. Webb, 8 T. R. 459", "case_name": "Barton v. Webb",
+    {"seq": 3, "raw": "Burton v. Webb, 8 T. R. 459", "case_name": "Barton v. Webb",
      "volume": 8, "reporter_abbr": "T. R.", "page": 459,
      "status": "linked_english_reports", "er_case_id": "18000054", "confidence": "high",
      "note": "printed Burton; ER and printed p. 356 have Barton v. Webb"},

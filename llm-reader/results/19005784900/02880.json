@@ -4,7 +4,7 @@
   "note": "Booth, Co. Ent., Co. Litt., Com. Dig., Chitty and Selwyn skipped; cross-checked with the 1851 edition's record",
   "citations": [
     {"seq": 1, "raw": "7 Edw. 2, 242", "volume": 7, "reporter_abbr": "Y.B.", "page": 242,
-     "status": "no_match", "confidence": "medium", "note": "year book, 7 Edw. II; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 7 Edw. II; no source. Legible, so high (consistency pass)"},
     {"seq": 2, "raw": "Longuville v. Thistleworth, Ld. Ray. 970", "case_name": "Longueville v. Thistleworth", "volume": 2, "reporter_abbr": "Ld. Raym.", "page": 970,
      "status": "linked_english_reports", "er_case_id": "17901772", "pincite": true, "confidence": "high",
      "note": "volume 2 supplied; case begins at 2 Ld Raym 969"},

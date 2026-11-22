@@ -8,11 +8,10 @@
       "seq": 1,
       "raw": "22 Au. 41",
       "volume": 22,
-      "reporter_abbr": "Ass.",
-      "page": 41,
+      "reporter_abbr": "Y.B.",
       "status": "no_match",
       "confidence": "high",
-      "note": "OCR 'Au.' for 'Ass.': Liber Assisarum (year book of Edw. III), 22 Ass. pl. 41; year books have no source here"
+      "note": "OCR 'Au.' for 'Ass.': Liber Assisarum (year book of Edw. III), 22 Ass. pl. 41; year books have no source here. 22 Edw. III, cited by plea, so no page (consistency pass)"
     }
   ]
 }

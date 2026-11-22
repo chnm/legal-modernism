@@ -11,8 +11,8 @@
       "reporter_abbr": "Y.B.",
       "page": 213,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year book, 7 Edw. II, fol. 213; year books have no source here"
+      "confidence": "high",
+      "note": "Year book, 7 Edw. II, fol. 213; year books have no source here. Legible, so high (consistency pass)"
     },
     {
       "seq": 2,
@@ -21,8 +21,8 @@
       "reporter_abbr": "Y.B.",
       "page": 226,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year book, 7 Edw. II, fol. 226: a second authority ('which are believed to be the earliest authorities'), not a pin cite; year books have no source here"
+      "confidence": "high",
+      "note": "Year book, 7 Edw. II, fol. 226: a second authority ('which are believed to be the earliest authorities'), not a pin cite; year books have no source here. Legible, so high (consistency pass)"
     },
     {
       "seq": 3,

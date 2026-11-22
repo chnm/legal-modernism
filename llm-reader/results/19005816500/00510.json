@@ -21,11 +21,11 @@
       "seq": 2,
       "raw": "2 Ed. 3. 1",
       "volume": 2,
-      "reporter_abbr": "Ed. 3.",
+      "reporter_abbr": "Y.B.",
       "page": 1,
       "status": "no_match",
-      "confidence": "low",
-      "note": "year book (2 Edw. III, fol. 1), cited as an ancient precedent of a count in formedon; no source covers the year books"
+      "confidence": "high",
+      "note": "year book (2 Edw. III, fol. 1), cited as an ancient precedent of a count in formedon; no source covers the year books. Legible, so high (consistency pass)"
     }
   ]
 }

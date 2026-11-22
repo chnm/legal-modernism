@@ -4,9 +4,9 @@
   "model": "claude-opus-5-5",
   "read_at": "2026-11-20T02:30:00Z",
   "citations": [
-    {"seq": 1, "raw": "24 E. 3. 75 b", "volume": 24, "reporter_abbr": "E. 3", "page": 75,
-     "status": "no_match", "confidence": "high", "note": "Year Book (24 Edw. 3); year books have no source"},
-    {"seq": 2, "raw": "2 Ed. 4.8", "volume": 2, "reporter_abbr": "Ed. 4", "page": 8,
-     "status": "no_match", "confidence": "high", "note": "Year Book (2 Edw. 4. 8), cited through Vin. Abr.; year books have no source"}
+    {"seq": 1, "raw": "24 E. 3. 75 b", "volume": 24, "reporter_abbr": "Y.B.", "page": 75,
+     "status": "no_match", "confidence": "high", "note": "Year Book (24 Edw. 3); year books have no source. Recorded as Y.B. (consistency pass)"},
+    {"seq": 2, "raw": "2 Ed. 4.8", "volume": 2, "reporter_abbr": "Y.B.", "page": 8,
+     "status": "no_match", "confidence": "high", "note": "Year Book (2 Edw. 4. 8), cited through Vin. Abr.; year books have no source. Recorded as Y.B. (consistency pass)"}
   ]
 }

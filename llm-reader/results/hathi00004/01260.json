@@ -20,7 +20,7 @@
     },
     {
       "seq": 2,
-      "raw": "Yates v. Boen, 2 Str.\n1104",
+      "raw": "Yates v. Boen, 2 Str. 1104",
       "case_name": "Yates v. Boen",
       "volume": 2,
       "reporter_abbr": "Str.",
@@ -44,7 +44,7 @@
     },
     {
       "seq": 4,
-      "raw": "Pigot's Case, 11\nRep. 26 b.",
+      "raw": "Pigot's Case, 11 Rep. 26 b.",
       "case_name": "Pigot's Case",
       "volume": 11,
       "reporter_abbr": "Rep.",
@@ -112,7 +112,7 @@
     },
     {
       "seq": 10,
-      "raw": "Keane v.\nBoycott, 2 Hen. Bl. 515",
+      "raw": "Keane v. Boycott, 2 Hen. Bl. 515",
       "case_name": "Keane v. Boycott",
       "volume": 2,
       "reporter_abbr": "Hen. Bl.",

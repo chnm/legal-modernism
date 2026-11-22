@@ -5,7 +5,7 @@
   "read_at": "2026-11-20T02:08:15Z",
   "note": "otherwise treatises only (Wooddeson, Reeves)",
   "citations": [
-    {"seq": 1, "raw": "22. Ass. 41", "volume": 22, "reporter_abbr": "Ass.", "page": 41,
-     "status": "no_match", "confidence": "low", "note": "year book: Liber Assisarum, 22 Edw. III, placitum 41, the first action on the case noticed by Reeves; no source covers the year books"}
+    {"seq": 1, "raw": "22. Ass. 41", "volume": 22, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high", "note": "year book: Liber Assisarum, 22 Edw. III, placitum 41, the first action on the case noticed by Reeves; no source covers the year books. Cited by plea, so no page; legible, so high (consistency pass)"}
   ]
 }

@@ -31,7 +31,7 @@
      "volume": 1, "reporter_abbr": "Leon.", "page": 71,
      "status": "linked_english_reports", "er_case_id": "16870112", "confidence": "high",
      "note": "ER 'Bret and Audars Case'"},
-    {"seq": 9, "raw": "White v. Cleaver,\nStr. 681", "case_name": "White v. Cleaver",
+    {"seq": 9, "raw": "White v. Cleaver, Str. 681", "case_name": "White v. Cleaver",
      "volume": 2, "reporter_abbr": "Str.", "page": 681,
      "status": "linked_english_reports", "er_case_id": "17953870", "confidence": "high",
      "note": "volume 2 supplied"},
@@ -41,7 +41,7 @@
     {"seq": 11, "raw": "Harris v. Pett, 5 Mod. 243", "case_name": "Harris v. Pett",
      "volume": 5, "reporter_abbr": "Mod.", "page": 243,
      "status": "linked_english_reports", "er_case_id": "17940787", "confidence": "high"},
-    {"seq": 12, "raw": "Carth.\n375, S. C.", "case_name": "Harris v. Pett",
+    {"seq": 12, "raw": "Carth. 375, S. C.", "case_name": "Harris v. Pett",
      "reporter_abbr": "Carth.", "page": 375,
      "status": "linked_english_reports", "er_case_id": "17410153", "pincite": true, "confidence": "high",
      "note": "S. C. of Harris v. Pett; case begins at Carth 374"}

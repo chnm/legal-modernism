@@ -13,8 +13,8 @@
    "note": "Saunders's note (1) to Osborne v Rogers, 1 Wms Saund 267"},
   {"seq": 5, "raw": "Humphreys v. Bethily, 2 Vent. 198. 222", "case_name": "Humphreys v. Bethily", "volume": 2, "reporter_abbr": "Vent.", "page": 198,
    "status": "linked_english_reports", "er_case_id": "17260505", "confidence": "high", "note": "second page 222 ignored"},
-  {"seq": 6, "raw": "49 Ed. 3. 45", "reporter_abbr": "Ed. 3", "page": 45,
-   "status": "no_match", "confidence": "low", "note": "year book, 49 Edw. III fol. 45 (per Finchden); no source covers the year books"},
-  {"seq": 7, "raw": "15 Ed. 4. 1", "reporter_abbr": "Ed. 4", "page": 1,
-   "status": "no_match", "confidence": "low", "note": "year book, 15 Edw. IV fol. 1"}
+  {"seq": 6, "raw": "49 Ed. 3. 45", "volume": 49, "reporter_abbr": "Y.B.", "page": 45,
+   "status": "no_match", "confidence": "medium", "note": "year book, 49 Edw. III fol. 45 (per Finchden); no source covers the year books. Regnal year as volume; most editions print 40 Ed. 3. 45, so this edition's 49 is a variant, at medium (consistency pass)"},
+  {"seq": 7, "raw": "15 Ed. 4. 1", "volume": 15, "reporter_abbr": "Y.B.", "page": 1,
+   "status": "no_match", "confidence": "high", "note": "year book, 15 Edw. IV fol. 1. Regnal year as volume; legible, so high (consistency pass)"}
  ]}

@@ -12,8 +12,8 @@
      "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 174,
      "status": "linked_english_reports", "er_case_id": "17920965", "confidence": "high",
      "note": "volume 1 supplied from the case name"},
-    {"seq": 3, "raw": "29 Ass. 37", "volume": 29, "reporter_abbr": "Ass.", "page": 37,
-     "status": "no_match", "confidence": "medium",
-     "note": "Liber Assisarum (year book), cited through Vin. Ab.; no source for the year books"}
+    {"seq": 3, "raw": "29 Ass. 37", "volume": 29, "reporter_abbr": "Y.B.",
+     "status": "no_match", "confidence": "high",
+     "note": "Liber Assisarum (year book), cited through Vin. Ab.; no source for the year books. 29 Edw. III, pl. 37: cited by plea, so no page; legible, so high (consistency pass)"}
   ]
 }

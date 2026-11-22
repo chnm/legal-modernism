@@ -36,7 +36,7 @@
      "status": "linked_english_reports", "er_case_id": "17280444", "pincite": true, "confidence": "medium",
      "note": "no name printed; the same case in Skinner, The King and the Bishop of Chester, begins at Skin 651"},
     {"seq": 9, "raw": "9 Hen. 6, 115, 116", "volume": 9, "reporter_abbr": "Y.B.", "page": 115,
-     "status": "no_match", "confidence": "medium",
-     "note": "year book, 9 Hen. VI fo. 115; no source; dropped: 116"}
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 9 Hen. VI fo. 115; no source; dropped: 116. Legible, so high (consistency pass)"}
   ]
 }

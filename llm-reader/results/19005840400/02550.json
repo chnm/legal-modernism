@@ -30,7 +30,7 @@
      "status": "linked_english_reports", "er_case_id": "18050219", "pincite": true, "confidence": "high",
      "note": "OCR 663 for 563 (6 East ends before 663); case begins at 6 East 555"},
     {"seq": 8, "raw": "18 E. 2, 614", "volume": 18, "reporter_abbr": "Y.B.", "page": 614,
-     "status": "no_match", "confidence": "medium",
-     "note": "year book, 18 Edw. II (the printed year book of Edward II is paged as one run); no source"}
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 18 Edw. II (the printed year book of Edward II is paged as one run); no source. Legible, so high (consistency pass)"}
   ]
 }

@@ -345,7 +345,11 @@ predate several rules. Bring every U.S. record, Gale and HathiTrust, into line:
    hathi00013/03250: no such case; decide), "Cited ibid." recorded in
    19005816500/03120 (drop), `case_name` on bare "Plow., 118" in
    hathi00009/03500; U2 year-book format
-   (item 1); U3 `raw` line breaks (item 5); U4 grading (item 6's no_match
+   (item 1) and U3 `raw` line breaks (item 5): DONE 2026-11-22, 166 year
+   books, 107 `raw`; left for U7: 19005816500/01450 seq 2 ("5 Hen. S.
+   23 a" is 5 Hen. 7, 13 a, as hathi00002/01530), 19005816500/02960
+   (18 E. 2, page empty, read 614); for U9: "29 Ass. 37" (1831 copies,
+   `high`) against "29 Ap. xxxvii. 19 (E. 2)" (later editions, `low`); U4 grading (item 6's no_match
    grades, item 4, exact stubs, bare Lutw., `case_name` where none
    printed); U5 pin cites on split records and same-case parallels (items
    2 and 8); U6 stubs where the English Reports have the case by name

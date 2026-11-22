@@ -10,7 +10,7 @@
     {"seq": 2, "raw": "Blake v. Foster, 8 T. R. 487", "case_name": "Blake v. Foster",
      "volume": 8, "reporter_abbr": "T. R.", "page": 487,
      "status": "linked_english_reports", "er_case_id": "18000084", "confidence": "high"},
-    {"seq": 3, "raw": "the Attorney-General v. Meller,\nHardr. 459", "case_name": "Attorney-General v. Meller",
+    {"seq": 3, "raw": "the Attorney-General v. Meller, Hardr. 459", "case_name": "Attorney-General v. Meller",
      "reporter_abbr": "Hardr.", "page": 459,
      "status": "linked_english_reports", "er_case_id": "16600267", "pincite": true, "confidence": "high",
      "note": "case begins at Hard 451"},

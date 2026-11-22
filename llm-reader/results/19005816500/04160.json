@@ -22,11 +22,11 @@
       "seq": 2,
       "raw": "1 Ed. 2. 14",
       "volume": 1,
-      "reporter_abbr": "Ed. 2.",
+      "reporter_abbr": "Y.B.",
       "page": 14,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book, 1 Edw. 2, fol. 14: no source"
+      "confidence": "high",
+      "note": "year book, 1 Edw. 2, fol. 14: no source. Legible, so high (consistency pass)"
     },
     {
       "seq": 3,

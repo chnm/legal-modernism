@@ -4,7 +4,7 @@
   "note": "Appendix notes (5)-(7); Glanville, Bracton, Tidd, Gilbert, Reeves, Muratori, Heineccius are not cases",
   "citations": [
     {"seq": 1, "raw": "10 E. 3, 19, pl. 21", "volume": 10, "reporter_abbr": "Y.B.", "page": 19,
-     "status": "no_match", "confidence": "medium", "note": "Year book, 10 Edw. III, pl. 21; no source"},
+     "status": "no_match", "confidence": "high", "note": "Year book, 10 Edw. III, pl. 21; no source. Legible, so high (consistency pass)"},
     {"seq": 2, "raw": "Bcecher's case, 3 Rep. 58 b", "case_name": "Beecher's Case",
      "volume": 8, "reporter_abbr": "Rep.", "page": 58,
      "status": "linked_english_reports", "er_case_id": "15720036", "confidence": "high",

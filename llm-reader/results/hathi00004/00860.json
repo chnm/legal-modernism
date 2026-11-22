@@ -6,7 +6,7 @@
     {"seq": 1, "raw": "Kent v. Hall, Hob. 113", "case_name": "Kent v. Hall",
      "reporter_abbr": "Hob.", "page": 113,
      "status": "linked_english_reports", "er_case_id": "17921310", "confidence": "high"},
-    {"seq": 2, "raw": "Plomer v. Ross, 5\nTaunt. 386", "case_name": "Plomer v. Ross",
+    {"seq": 2, "raw": "Plomer v. Ross, 5 Taunt. 386", "case_name": "Plomer v. Ross",
      "volume": 5, "reporter_abbr": "Taunt.", "page": 386,
      "status": "linked_english_reports", "er_case_id": "18140274", "confidence": "high"},
     {"seq": 3, "raw": "2 Saund. 319 b, n. (6)",
@@ -20,7 +20,7 @@
     {"seq": 5, "raw": "Stephens v. Cooper, 3 Lev. 440", "case_name": "Stephens v. Cooper",
      "volume": 3, "reporter_abbr": "Lev.", "page": 440,
      "status": "linked_english_reports", "er_case_id": "17970263", "confidence": "high"},
-    {"seq": 6, "raw": "Enys v. Mohun,\n2 Stra. 847", "case_name": "Enys v. Mohun",
+    {"seq": 6, "raw": "Enys v. Mohun, 2 Stra. 847", "case_name": "Enys v. Mohun",
      "volume": 2, "reporter_abbr": "Stra.", "page": 847,
      "status": "linked_english_reports", "er_case_id": "17951645", "confidence": "high"},
     {"seq": 7, "raw": "Plomer v. Ross, 5 Taunt. 386", "case_name": "Plomer v. Ross",
@@ -42,7 +42,7 @@
     {"seq": 12, "raw": "Goodburne v. Bowman, 9 Bing. 532", "case_name": "Goodburne v. Bowman",
      "volume": 9, "reporter_abbr": "Bing.", "page": 532,
      "status": "linked_english_reports", "er_case_id": "18330332", "confidence": "high"},
-    {"seq": 13, "raw": "Witham v.\nLewis, 1 Wils. 48", "case_name": "Witham v. Lewis",
+    {"seq": 13, "raw": "Witham v. Lewis, 1 Wils. 48", "case_name": "Witham v. Lewis",
      "volume": 1, "reporter_abbr": "Wils.", "page": 48,
      "status": "linked_english_reports", "er_case_id": "17440761", "confidence": "high"}
   ]

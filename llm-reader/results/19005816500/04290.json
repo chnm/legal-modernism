@@ -9,21 +9,21 @@
       "seq": 1,
       "raw": "7 E. 2.3. 213.",
       "volume": 7,
-      "reporter_abbr": "E. 2.",
+      "reporter_abbr": "Y.B.",
       "page": 213,
       "status": "no_match",
       "confidence": "medium",
-      "note": "year book, 7 Edw. 2, 213 (later editions print '7th Edw. 2, 213, 226'): no source"
+      "note": "year book, 7 Edw. 2, 213 (later editions print '7th Edw. 2, 213, 226'): no source. Recorded as Y.B.; medium for the garbled '2.3.' (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "28 Ien. 6, 7",
       "volume": 28,
-      "reporter_abbr": "Hen. 6",
+      "reporter_abbr": "Y.B.",
       "page": 7,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book, 28 Hen. 6, fol. 7: no source"
+      "confidence": "high",
+      "note": "year book, 28 Hen. 6, fol. 7: no source. OCR 'Ien.' for Hen.; the numbers are legible, so high (consistency pass)"
     },
     {
       "seq": 3,

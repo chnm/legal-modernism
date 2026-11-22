@@ -21,7 +21,7 @@
      "status": "linked_english_reports", "er_case_id": "18450293", "pincite": true, "confidence": "high",
      "note": "Veale v. Warner begins at 1 Wms Saund 323; 325 falls in that record"},
     {"seq": 7, "raw": "3 Ed. 3, 21", "volume": 3, "reporter_abbr": "Y.B.", "page": 21,
-     "status": "no_match", "confidence": "medium", "note": "year book, 3 Edw. III; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 3 Edw. III; no source. Legible, so high (consistency pass)"},
     {"seq": 8, "raw": "Took v. Glascock, 1 Saund. 257", "case_name": "Took v. Glascock", "volume": 1, "reporter_abbr": "Saund.", "page": 257,
      "status": "linked_english_reports", "er_case_id": "18450282", "pincite": true, "confidence": "high",
      "note": "Took v. Glascock begins at 1 Wms Saund 250; 257 falls in that record"}

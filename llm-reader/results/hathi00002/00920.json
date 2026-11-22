@@ -11,8 +11,8 @@
       "volume": 8,
       "reporter_abbr": "Y.B.",
       "status": "no_match",
-      "confidence": "low",
-      "note": "year book, 8 Edw. III, pl. 20; the folio is garbled ('s.', perhaps 5 or 8) and left out; no source covers the year books. Agrees with the Gale copy's record (19005816500/00840)"
+      "confidence": "medium",
+      "note": "year book, 8 Edw. III, pl. 20; the folio is garbled ('s.', perhaps 5 or 8) and left out; no source covers the year books. Agrees with the Gale copy's record (19005816500/00840). Garbled OCR, so medium (consistency pass)"
     }
   ]
 }

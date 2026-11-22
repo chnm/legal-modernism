@@ -4,13 +4,13 @@
   "note": "Finch, Co. Litt., the Appendix and cross-references skipped; cross-checked with the 1859 edition's record (19005781000/02930)",
   "citations": [
     {"seq": 1, "raw": "10 E. III. 23", "volume": 10, "reporter_abbr": "Y.B.", "page": 23,
-     "status": "no_match", "confidence": "medium", "note": "year book, 10 Edw. III; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Edw. III; no source. Legible, so high (consistency pass)"},
     {"seq": 2, "raw": "ibid. 25", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
      "status": "no_match", "confidence": "medium", "note": "year book, 10 Edw. III; ibid. expands to 10 E. III. 25; no source"},
     {"seq": 3, "raw": "10 E. III. 20", "volume": 40, "reporter_abbr": "Y.B.", "page": 20,
      "status": "no_match", "confidence": "medium", "note": "year book, 40 Edw. III; printed 10, read as 40 as every other edition prints; no source"},
     {"seq": 4, "raw": "10 E. III. 25, 26", "volume": 10, "reporter_abbr": "Y.B.", "page": 25,
-     "status": "no_match", "confidence": "medium", "note": "year book, 10 Edw. III; no source; dropped: 26"},
+     "status": "no_match", "confidence": "high", "note": "year book, 10 Edw. III; no source; dropped: 26. Legible, so high (consistency pass)"},
     {"seq": 5, "raw": "Mlilinr v. Clowdall, I Show. 338", "case_name": "Milner v. Crowdall", "volume": 1, "reporter_abbr": "Show.", "page": 338,
      "status": "linked_english_reports", "er_case_id": "17941142", "confidence": "high",
      "note": "OCR Mlilinr v. Clowdall for Milner v. Crowdall"}

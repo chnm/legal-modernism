@@ -7,7 +7,7 @@
      "status": "linked_english_reports", "er_case_id": "15720316", "pincite": true, "confidence": "high",
      "note": "Robert Pilfold's Case begins at 10 Co Rep 115"},
     {"seq": 2, "raw": "7 Edw. II., 242", "volume": 7, "reporter_abbr": "Y.B.", "page": 242,
-     "status": "no_match", "confidence": "medium",
-     "note": "year book, 7 Edw. II (Maynard's page 242); no source"}
+     "status": "no_match", "confidence": "high",
+     "note": "year book, 7 Edw. II (Maynard's page 242); no source. Legible, so high (consistency pass)"}
   ]
 }

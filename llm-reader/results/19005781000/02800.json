@@ -6,7 +6,7 @@
     {"seq": 1, "raw": "10 Hen. 6, 16", "volume": 10, "reporter_abbr": "Y.B.", "page": 16,
      "status": "no_match", "confidence": "medium", "note": "year book, 10 Hen. VI fo. 16; no source"},
     {"seq": 2, "raw": "22 Hen. 6 37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
-     "status": "no_match", "confidence": "medium", "note": "year book, 22 Hen. VI fo. 37, cited through Doct. Pl.; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI fo. 37, cited through Doct. Pl.; no source. Legible, so high (consistency pass)"},
     {"seq": 3, "raw": "£2 Edw. 4 29", "volume": 22, "reporter_abbr": "Y.B.", "page": 29,
      "status": "no_match", "confidence": "medium", "note": "year book, 22 Edw. IV fo. 29 ('£2' is OCR for 22, as the 1854 edition prints), cited through Vin. Ab. and Bro.; no source"},
     {"seq": 4, "raw": "Gitford v. Perkldn, 1 Sid. 470", "case_name": "Gifford v. Perkins",

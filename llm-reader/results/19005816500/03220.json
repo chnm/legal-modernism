@@ -21,7 +21,7 @@
      "volume": 1, "reporter_abbr": "Leon.", "page": 77,
      "status": "linked_english_reports", "er_case_id": "16870944", "pincite": true, "confidence": "high",
      "note": "case begins at 1 Leo 75"},
-    {"seq": 6, "raw": "5 Hen. 7.11", "volume": 5, "reporter_abbr": "Hen. 7", "page": 11,
-     "status": "no_match", "confidence": "medium", "note": "year book, no source"}
+    {"seq": 6, "raw": "5 Hen. 7.11", "volume": 5, "reporter_abbr": "Y.B.", "page": 11,
+     "status": "no_match", "confidence": "high", "note": "year book, no source. 5 Hen. VII, fol. 11; legible, so high (consistency pass)"}
   ]
 }

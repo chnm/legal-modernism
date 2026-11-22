@@ -8,21 +8,21 @@
       "seq": 1,
       "raw": "1 Ed. 2. 8",
       "volume": 1,
-      "reporter_abbr": "Edw. 2 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 8,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 1 Edw. 2, fo. 8; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 1 Edw. 2, fo. 8; no source for the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "10 Ed. 3. 23",
       "volume": 10,
-      "reporter_abbr": "Edw. 3 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 23,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 10 Edw. 3, fo. 23; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 10 Edw. 3, fo. 23; no source for the year books. Legible, so high (consistency pass)"
     }
   ]
 }

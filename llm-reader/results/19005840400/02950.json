@@ -73,7 +73,7 @@
      "status": "linked_english_reports", "er_case_id": "18450086", "pincite": true, "confidence": "medium",
      "note": "note (1) at 209 d falls in Foxwist v. Tremaine, which begins at 2 Wms Saund 207"},
     {"seq": 23, "raw": "36 Hen. 6, 18", "volume": 36, "reporter_abbr": "Y.B.", "page": 18,
-     "status": "no_match", "confidence": "medium", "note": "year book, 36 Hen. VI, per Littleton J.; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 36 Hen. VI, per Littleton J.; no source. Legible, so high (consistency pass)"},
     {"seq": 24, "raw": "Meding v. Stough- ton, 1 Ld. Ray. 593", "case_name": "Medina v. Stoughton",
      "volume": 1, "reporter_abbr": "Ld. Raym.", "page": 593,
      "status": "linked_english_reports", "er_case_id": "17921544", "confidence": "high"}

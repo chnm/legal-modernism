@@ -9,21 +9,21 @@
       "seq": 1,
       "raw": "Year- book, 21 Ed. 4. 35",
       "volume": 21,
-      "reporter_abbr": "Edw. 4 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 35,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 21 Edw. 4, fo. 35; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 21 Edw. 4, fo. 35; no source for the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 2,
       "raw": "Year-book, 3 Ed. 2. 59",
       "volume": 3,
-      "reporter_abbr": "Edw. 2 (Year Book)",
+      "reporter_abbr": "Y.B.",
       "page": 59,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "Year Book 3 Edw. 2, fo. 59; no source for the year books"
+      "confidence": "high",
+      "note": "Year Book 3 Edw. 2, fo. 59; no source for the year books. Legible, so high (consistency pass)"
     }
   ]
 }

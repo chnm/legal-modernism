@@ -44,11 +44,11 @@
       "seq": 4,
       "raw": "36 Hen. 6. 36",
       "volume": 36,
-      "reporter_abbr": "Hen. 6",
+      "reporter_abbr": "Y.B.",
       "page": 36,
       "status": "no_match",
-      "confidence": "medium",
-      "note": "year book of 36 Henry VI, cited by Popham; no source covers the year books"
+      "confidence": "high",
+      "note": "year book of 36 Henry VI, cited by Popham; no source covers the year books. Legible, so high (consistency pass)"
     },
     {
       "seq": 5,

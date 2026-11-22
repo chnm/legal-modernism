@@ -9,7 +9,7 @@
     {"seq": 2, "raw": "16 Hen. 6, 16", "volume": 16, "reporter_abbr": "Y.B.", "page": 16,
      "status": "no_match", "confidence": "medium", "note": "year book, 16 Hen. VI fo. 16; no source"},
     {"seq": 3, "raw": "22 Hen. 6,37", "volume": 22, "reporter_abbr": "Y.B.", "page": 37,
-     "status": "no_match", "confidence": "medium", "note": "year book, 22 Hen. VI fo. 37; no source"},
+     "status": "no_match", "confidence": "high", "note": "year book, 22 Hen. VI fo. 37; no source. Legible, so high (consistency pass)"},
     {"seq": 4, "raw": "Holler v. Bush, Salk. 394", "case_name": "Holler v. Bush",
      "volume": 1, "reporter_abbr": "Salk.", "page": 394,
      "status": "linked_english_reports", "er_case_id": "17952059", "confidence": "high",

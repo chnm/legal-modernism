@@ -12,7 +12,7 @@
      "reporter_abbr": "Cowp.", "page": 176,
      "status": "linked_english_reports", "er_case_id": "17740104", "pincite": true,
      "confidence": "high", "note": "case begins at 1 Cowp 161; volume supplied"},
-    {"seq": 3, "raw": "2 Hen. VII. 4", "volume": 2, "reporter_abbr": "Hen. 7", "page": 4,
-     "status": "no_match", "confidence": "high", "note": "Year Book; year books have no source"}
+    {"seq": 3, "raw": "2 Hen. VII. 4", "volume": 2, "reporter_abbr": "Y.B.", "page": 4,
+     "status": "no_match", "confidence": "high", "note": "Year Book; year books have no source. 2 Hen. VII, fol. 4; recorded as Y.B. (consistency pass)"}
   ]
 }

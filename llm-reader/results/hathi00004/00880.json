@@ -14,7 +14,7 @@
     {"seq": 3, "raw": "Machell v. Garret, 3 Salk. 64", "case_name": "Machell v. Garrett",
      "volume": 3, "reporter_abbr": "Salk.", "page": 64,
      "status": "linked_english_reports", "er_case_id": "17952477", "confidence": "high"},
-    {"seq": 4, "raw": "12\nMod. 276, S. C.",
+    {"seq": 4, "raw": "12 Mod. 276, S. C.",
      "volume": 12, "reporter_abbr": "Mod.", "page": 276,
      "status": "linked_english_reports", "er_case_id": "17961378", "confidence": "high",
      "note": "S. C. = Machell v. Garrett; ER 'Michell and his Wife against Garrett'"},
@@ -22,7 +22,7 @@
      "volume": 9, "reporter_abbr": "Rep.", "page": 30,
      "status": "linked_english_reports", "er_case_id": "15720404", "pincite": true, "confidence": "high",
      "note": "volume 9 supplied (not printed here; 9 Rep. in the 1845 edition); case begins at 9 Co Rep 24"},
-    {"seq": 6, "raw": "Grace Faux v. Barnes,\nLord Raym. 174", "case_name": "Grace Faux v. Barnes",
+    {"seq": 6, "raw": "Grace Faux v. Barnes, Lord Raym. 174", "case_name": "Grace Faux v. Barnes",
      "volume": 1, "reporter_abbr": "Lord Raym.", "page": 174,
      "status": "linked_english_reports", "er_case_id": "17920965", "confidence": "high",
      "note": "volume 1 supplied"}

@@ -58,7 +58,7 @@
     },
     {
       "seq": 5,
-      "raw": "Grocers' Company v. Archbishop of Canterbury, 3 Wils.\n234",
+      "raw": "Grocers' Company v. Archbishop of Canterbury, 3 Wils. 234",
       "case_name": "Grocers' Company v. Archbishop of Canterbury",
       "volume": 3,
       "reporter_abbr": "Wils.",
@@ -96,7 +96,7 @@
     },
     {
       "seq": 8,
-      "raw": "Crosse v. Hunt,\nCarth. 99",
+      "raw": "Crosse v. Hunt, Carth. 99",
       "case_name": "Crosse v. Hunt",
       "reporter_abbr": "Carth.",
       "page": 99,
