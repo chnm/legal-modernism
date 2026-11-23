@@ -57,7 +57,7 @@ func count(dir string) (*progress, error) {
 	p := &progress{Status: map[string]int{}, Relation: map[string]int{}, Outcome: map[string]int{}, Recent: []recentPage{}}
 	now := time.Now()
 	editions := map[string]bool{}
-	var first, last time.Time
+	var first time.Time
 	for _, b := range batches {
 		if first.IsZero() {
 			first = b.StartedAt
@@ -65,12 +65,10 @@ func count(dir string) (*progress, error) {
 		if b.FinishedAt == nil {
 			p.Running, p.RunningPages = b.Batch, len(b.Pages)
 			p.ActiveSecs += now.Sub(b.StartedAt).Seconds()
-			last = now
 			continue
 		}
 		p.Batches++
 		p.ActiveSecs += b.FinishedAt.Sub(b.StartedAt).Seconds()
-		last = *b.FinishedAt
 		for _, pg := range b.Pages {
 			var rec PageRecord
 			if err := readJSON(filepath.Join(dir, "results", pg.Psmid, pg.Pageid+".json"), &rec); err != nil {
@@ -136,7 +134,9 @@ func count(dir string) (*progress, error) {
 	}
 	p.Editions = len(editions)
 	if !first.IsZero() {
-		p.WallSecs = last.Sub(first).Seconds()
+		// The wall clock runs from the first batch's start without stopping,
+		// pauses included; active time counts only the time batches were open.
+		p.WallSecs = now.Sub(first).Seconds()
 		p.Started = first.Format(time.RFC3339)
 	}
 	sort.SliceStable(p.Recent, func(i, j int) bool { return p.Recent[i].Batch > p.Recent[j].Batch })
@@ -200,9 +200,9 @@ function bar(el, key, names, counts){
     s.append(dot, names[k][0]+" "+n(v)+" ("+(100*v/total).toFixed(0)+"%)"); key.append(s); }
 }
 let data=null, fetched=0;
-function tick(){ if(!data) return; const extra = data.running_batch ? (Date.now()-fetched)/1000 : 0;
-  document.getElementById("active").textContent = clock(data.active_seconds+extra);
-  document.getElementById("wall").textContent = clock(data.wall_seconds+extra); }
+function tick(){ if(!data) return; const since = (Date.now()-fetched)/1000;
+  document.getElementById("active").textContent = clock(data.active_seconds+(data.running_batch ? since : 0));
+  document.getElementById("wall").textContent = clock(data.wall_seconds+since); }
 async function load(){
   try { data = await (await fetch("api/progress")).json(); fetched = Date.now(); } catch(e) { return; }
   const $ = id => document.getElementById(id);

@@ -110,5 +110,5 @@ The data directory (`--dir`, default `tmp/llm-sampler`, ignored by Git) holds:
 The coordinating session runs `sample`, gives a reader subagent `READER.md`
 with the batch number, and when the reader reports back draws the next batch.
 The dashboard's active time is the time batches were open (from `sample` to
-`finish`); its wall clock runs from the first batch's start to the last
-batch's finish, or to now while one is open.
+`finish`); its wall clock runs from the first batch's start without stopping,
+pauses included.
