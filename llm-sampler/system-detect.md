@@ -63,6 +63,7 @@ Record:
 - A citation that prints only a page inside the case (`6 Ch. at p. 10`, `37 L. J. at 75`, `4 Wheat. 316, 407` cited for 407 alone): `page` is the page printed, not the case's first page, even if you know it. The lookup that follows finds the case a page falls in; say `pin cite` in `note`.
 - A citation whose page number the OCR lost or never printed (`Herring v. Woodhull, 29 Ill.`), or a reporter cited by name alone: record it with `page` left out, and say so in `note`. Do not supply a number from memory; the name will find the case.
 - A citation to a reporter's or editor's note on a case (`1 Wms. Saund. 333 a, n. 8`) is a citation of the case it annotates, at that page.
+- A reporter or number the page prints that cannot be right (`Am. Dec.` for a case of 1900, a page beyond the volume's length): give your best reading in the fields, the printed form in `raw`, other readings in `alternates`, and say so in `note`, at `medium` or `low`.
 - A citation split across the page break is recorded once, on the page where its page number is printed: a citation whose name and reporter end this page but whose page number is in `next_page_head` belongs to the next page, and one whose page number opens this page (its name in `previous_page_tail`) belongs here.
 
 Do not record:

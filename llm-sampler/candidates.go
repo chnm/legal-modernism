@@ -703,6 +703,24 @@ func cmdCandidates(ctx context.Context, pool *pgxpool.Pool, dir string, n int) e
 			if err != nil {
 				return fmt.Errorf("%s seq %d: %w", p.id(), c.Seq, err)
 			}
+			// The cases offered for the citation this one is a parallel
+			// report of are offered for it too: its own reporter may be in
+			// no source, and its name too common to search everywhere.
+			if c.ParallelOf > 0 && c.ParallelOf < c.Seq {
+				have := map[string]bool{}
+				for _, k := range list {
+					have[k.Source+"/"+k.CaseID] = true
+				}
+				for _, k := range req.Citations[c.ParallelOf-1].Candidates {
+					if k.Source == "stub" || have[k.Source+"/"+k.CaseID] || len(list) >= maxCandidates+6 {
+						continue
+					}
+					k.How = []string{fmt.Sprintf("candidate of seq %d, which this is a parallel report of", c.ParallelOf)}
+					k.PipelineLink = false
+					k.ID = fmt.Sprintf("c%d", len(list)+1)
+					list = append(list, k)
+				}
+			}
 			req.Citations = append(req.Citations, LinkCitation{Detected: c, Candidates: list})
 			cites++
 			cands += len(list)
