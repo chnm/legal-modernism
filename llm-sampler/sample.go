@@ -179,10 +179,20 @@ func cmdSample(ctx context.Context, pool *pgxpool.Pool, dir, seed string, n, cit
 // writeSystemPrompts writes the two system prompts, the cached prefix of
 // every request: the instructions, and for the first the table of reporters.
 func writeSystemPrompts(ctx context.Context, pool *pgxpool.Pool, dir string) error {
+	// Each reporter with the spellings it is most often printed under, from
+	// the whitelist and the counts of legalhist.top_reporters: the standard
+	// abbreviations alone are hard to recognize (And, Ves Jun, Bligh NS PC).
 	rows, err := pool.Query(ctx, `
-		SELECT reporter_standard || ' | ' || coalesce(reporter_title, '') || ' | ' || coalesce(jurisdiction, '') || ' | ' ||
-		       coalesce(year_start::text, '') || '–' || coalesce(year_end::text, '')
-		  FROM legalhist.reporters ORDER BY jurisdiction, reporter_standard`)
+		SELECT r.reporter_standard || ' | ' || coalesce(p.printed, '') || ' | ' || coalesce(r.reporter_title, '') || ' | ' ||
+		       coalesce(r.jurisdiction, '') || ' | ' || coalesce(r.year_start::text, '') || '–' || coalesce(r.year_end::text, '')
+		  FROM legalhist.reporters r
+		  LEFT JOIN LATERAL (
+		    SELECT string_agg(x.reporter_found, '; ' ORDER BY x.n DESC) AS printed
+		      FROM (SELECT w.reporter_found, t.n
+		              FROM legalhist.whitelist w JOIN legalhist.top_reporters t ON t.reporter_abbr = w.reporter_found
+		             WHERE w.reporter_standard = r.reporter_standard AND w.reporter_found <> r.reporter_standard
+		             ORDER BY t.n DESC LIMIT 4) x) p ON true
+		 ORDER BY r.jurisdiction, r.reporter_standard`)
 	if err != nil {
 		return fmt.Errorf("listing reporters: %w", err)
 	}
