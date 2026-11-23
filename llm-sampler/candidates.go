@@ -321,7 +321,16 @@ func candidatesFor(ctx context.Context, pool *pgxpool.Pool, lk *lookups, c *Dete
 
 	probes := map[string]probe{}
 	if c.Page != nil {
-		for _, r := range append(lk.readings(c), printedReporters(c)...) {
+		readings := lk.readings(c)
+		// The printed spelling is tried as a reporter only when it is not one
+		// the table knows: a known reporter is read by its row, with its
+		// rules (a year-cited "[1895] 2 Q.B. 208" is not 2 Q.B. of 1841).
+		for _, r := range printedReporters(c) {
+			if lk.reporters[r.Standard] == nil {
+				readings = append(readings, r)
+			}
+		}
+		for _, r := range readings {
 			for q := max(1, *c.Page-pagesBefore); q <= *c.Page+pagesNear; q++ {
 				for _, s := range lk.citeStrings(r, c.Volume, q, c.Year) {
 					if _, ok := probes[s]; !ok {
