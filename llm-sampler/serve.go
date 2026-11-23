@@ -81,8 +81,14 @@ func count(dir string) (*progress, error) {
 			p.PipelineSeen += rec.PipelineCount
 			p.Rejected += len(rec.PipelineRejected)
 			for _, x := range rec.PipelineRejected {
-				if x.N > 0 {
-					p.Outcome["rejected"]++
+				switch {
+				case x.N == 0:
+				case strings.HasPrefix(x.PipelineStatus, "linked"):
+					p.Outcome["rejected_linked"]++
+				case x.PipelineStatus == "no_match":
+					p.Outcome["rejected_nomatch"]++
+				default:
+					p.Outcome["both_skipped"]++
 				}
 			}
 			r := recentPage{Batch: b.Batch, Psmid: rec.Psmid, Pageid: rec.Pageid, Title: rec.Title, Year: rec.Year,
@@ -179,7 +185,8 @@ const statusNames = {linked_cap:["CAP","#2f6db5"], linked_english_reports:["Engl
 const relNames = {same:["Same as pipeline","#5b8c5a"], corrected:["Corrected","#d39a2d"], "new":["New","#2f6db5"]};
 const outNames = {confirmed:["Pipeline's link confirmed","#5b8c5a"], relinked:["Linked to a different case","#b5552f"],
   unlinked:["Pipeline's link dropped","#8a8a3a"], gained:["Pipeline had no link, Claude linked","#2f6db5"],
-  neither:["Neither linked","#bdbdbd"], rejected:["Rejected as not a case citation","#7a5fa8"]};
+  neither:["Neither linked","#bdbdbd"], both_skipped:["Both skipped it (agreement)","#9db8a0"],
+  rejected_nomatch:["Claude rejected; pipeline had no match","#b9a7d6"], rejected_linked:["Claude rejected; pipeline had linked it","#7a5fa8"]};
 const n = x => x.toLocaleString("en-US");
 function clock(s){ s=Math.max(0,Math.floor(s)); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60;
   return (h? h+":"+String(m).padStart(2,"0") : m)+":"+String(x).padStart(2,"0"); }

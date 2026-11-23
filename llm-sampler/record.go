@@ -129,6 +129,9 @@ type Rejected struct {
 	N      int    `json:"n,omitempty"`
 	Raw    string `json:"raw"`
 	Reason string `json:"reason"`
+	// PipelineStatus is what the linker had made of the detection; filled in
+	// by finish, not by the model.
+	PipelineStatus string `json:"pipeline_status,omitempty"`
 }
 
 // DetectResponse is what the first request returns.

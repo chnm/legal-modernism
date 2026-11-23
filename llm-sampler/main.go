@@ -135,6 +135,11 @@ func cmdFinish(dir string, n int) error {
 			PipelineCount: len(dreq.Pipeline), PipelineRejected: dresp.PipelineRejected,
 			Citations: []Citation{},
 		}
+		for i, x := range rec.PipelineRejected {
+			if x.N > 0 && x.N <= len(dreq.Pipeline) {
+				rec.PipelineRejected[i].PipelineStatus = dreq.Pipeline[x.N-1].Status
+			}
+		}
 		for i, lc := range lreq.Citations {
 			l := lresp.Links[i]
 			c := Citation{
