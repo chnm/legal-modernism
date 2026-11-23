@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -22,6 +23,7 @@ type progress struct {
 	Linked       int            `json:"linked"`
 	Status       map[string]int `json:"status"`
 	Relation     map[string]int `json:"relation"`
+	Outcome      map[string]int `json:"outcome"`
 	PipelineSeen int            `json:"pipeline_detections"`
 	Rejected     int            `json:"pipeline_rejected"`
 	Rewired      int            `json:"links_differing_from_pipeline"`
@@ -52,7 +54,7 @@ func count(dir string) (*progress, error) {
 	if err != nil {
 		return nil, err
 	}
-	p := &progress{Status: map[string]int{}, Relation: map[string]int{}, Recent: []recentPage{}}
+	p := &progress{Status: map[string]int{}, Relation: map[string]int{}, Outcome: map[string]int{}, Recent: []recentPage{}}
 	now := time.Now()
 	editions := map[string]bool{}
 	var first, last time.Time
@@ -78,6 +80,11 @@ func count(dir string) (*progress, error) {
 			editions[rec.Bibliographicid] = true
 			p.PipelineSeen += rec.PipelineCount
 			p.Rejected += len(rec.PipelineRejected)
+			for _, x := range rec.PipelineRejected {
+				if x.N > 0 {
+					p.Outcome["rejected"]++
+				}
+			}
 			r := recentPage{Batch: b.Batch, Psmid: rec.Psmid, Pageid: rec.Pageid, Title: rec.Title, Year: rec.Year,
 				Jurisdiction: rec.Jurisdiction, Pipeline: rec.PipelineCount, Citations: len(rec.Citations)}
 			if len(rec.Citations) > 0 {
@@ -87,6 +94,23 @@ func count(dir string) (*progress, error) {
 				p.Citations++
 				p.Status[c.Status]++
 				p.Relation[c.Pipeline]++
+				// What became of a pipeline detection, for the records that
+				// say which detection a citation corresponds to.
+				if c.PipelineN > 0 {
+					had := strings.HasPrefix(c.PipelineStatus, "linked")
+					switch {
+					case had && c.PipelineLink:
+						p.Outcome["confirmed"]++
+					case had && c.Status != "no_match":
+						p.Outcome["relinked"]++
+					case had:
+						p.Outcome["unlinked"]++
+					case c.Status != "no_match":
+						p.Outcome["gained"]++
+					default:
+						p.Outcome["neither"]++
+					}
+				}
 				if c.Status != "no_match" {
 					p.Linked++
 					r.Linked++
@@ -143,6 +167,7 @@ detect the citations, then link them to candidate cases. <span id="state"></span
  <div class="col-md-6"><h2 class="h6">Links</h2><div class="bar" id="statusbar"></div><div class="small mt-2" id="statuskey"></div></div>
  <div class="col-md-6"><h2 class="h6">Against the pipeline's detections</h2><div class="bar" id="relbar"></div><div class="small mt-2" id="relkey"></div></div>
 </div>
+<div class="mb-4" id="outcomebox" hidden><h2 class="h6">What became of the pipeline's detections <span class="text-secondary fw-normal">(pages read since each citation was tied to its detection)</span></h2><div class="bar" id="outbar"></div><div class="small mt-2" id="outkey"></div></div>
 <h2 class="h6">Pages, latest batch first</h2>
 <table class="table table-sm small"><thead><tr><th>Batch</th><th>Treatise</th><th class="num">Year</th><th></th><th>Page</th>
 <th class="num">Pipeline</th><th class="num">Claude</th><th class="num">New</th><th class="num">Corrected</th><th class="num">Linked</th></tr></thead>
@@ -152,6 +177,9 @@ detect the citations, then link them to candidate cases. <span id="state"></span
 const statusNames = {linked_cap:["CAP","#2f6db5"], linked_english_reports:["English Reports","#b5552f"],
   linked_code_reporter:["Code reporter","#7a5fa8"], linked_stub:["Stub","#8a8a3a"], no_match:["No match","#bdbdbd"]};
 const relNames = {same:["Same as pipeline","#5b8c5a"], corrected:["Corrected","#d39a2d"], "new":["New","#2f6db5"]};
+const outNames = {confirmed:["Pipeline's link confirmed","#5b8c5a"], relinked:["Linked to a different case","#b5552f"],
+  unlinked:["Pipeline's link dropped","#8a8a3a"], gained:["Pipeline had no link, Claude linked","#2f6db5"],
+  neither:["Neither linked","#bdbdbd"], rejected:["Rejected as not a case citation","#7a5fa8"]};
 const n = x => x.toLocaleString("en-US");
 function clock(s){ s=Math.max(0,Math.floor(s)); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60;
   return (h? h+":"+String(m).padStart(2,"0") : m)+":"+String(x).padStart(2,"0"); }
@@ -182,6 +210,9 @@ async function load(){
   $("state").textContent = data.running_batch ? "Batch "+data.running_batch+" ("+data.running_pages+" pages) is being read now." : "No batch is running.";
   bar($("statusbar"), $("statuskey"), statusNames, data.status);
   bar($("relbar"), $("relkey"), relNames, data.relation);
+  const anyOut = Object.values(data.outcome||{}).some(v => v > 0);
+  $("outcomebox").hidden = !anyOut;
+  if (anyOut) bar($("outbar"), $("outkey"), outNames, data.outcome);
   const rows = $("rows"); rows.replaceChildren();
   for (const r of data.recent) { const tr=document.createElement("tr");
     const cells=[r.batch, r.title.length>70? r.title.slice(0,70)+"…":r.title, r.year||"", r.jurisdiction, r.psmid+"/"+r.pageid, r.pipeline, r.citations, r.new, r.corrected, r.linked];

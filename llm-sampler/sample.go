@@ -325,6 +325,9 @@ func pipelineFor(ctx context.Context, pool *pgxpool.Pool, psmid, pageid, text st
 		return len(text)
 	}
 	sort.SliceStable(out, func(i, j int) bool { return at(out[i]) < at(out[j]) })
+	for i := range out {
+		out[i].N = i + 1
+	}
 	return out, nil
 }
 

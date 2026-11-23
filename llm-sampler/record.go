@@ -70,6 +70,7 @@ type PageRef struct {
 // PipelineCitation is one citation the regex detector found on the page,
 // with what the linker made of it.
 type PipelineCitation struct {
+	N               int    `json:"n"`
 	Raw             string `json:"raw"`
 	CaseName        string `json:"case_name,omitempty"`
 	Volume          *int   `json:"volume,omitempty"`
@@ -117,6 +118,7 @@ type Detected struct {
 	Alternates       []Reading `json:"alternates,omitempty"`
 	ParallelOf       int       `json:"parallel_of,omitempty"`
 	Pipeline         string    `json:"pipeline"`
+	PipelineN        int       `json:"pipeline_n,omitempty"`
 	Confidence       string    `json:"confidence"`
 	Note             string    `json:"note,omitempty"`
 }
@@ -124,6 +126,7 @@ type Detected struct {
 // Rejected is a pipeline detection the first request decided is not a
 // citation of a case.
 type Rejected struct {
+	N      int    `json:"n,omitempty"`
 	Raw    string `json:"raw"`
 	Reason string `json:"reason"`
 }
@@ -196,6 +199,8 @@ type Citation struct {
 	Page             *int   `json:"page,omitempty"`
 	Year             *int   `json:"year,omitempty"`
 	Pipeline         string `json:"pipeline"`
+	PipelineN        int    `json:"pipeline_n,omitempty"`
+	PipelineStatus   string `json:"pipeline_status,omitempty"`
 	ReadConfidence   string `json:"read_confidence"`
 	ReadNote         string `json:"read_note,omitempty"`
 	Status           string `json:"status"`

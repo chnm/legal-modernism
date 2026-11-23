@@ -8,7 +8,7 @@ A JSON object with:
 - `page`: the volume and page identifiers, and the printed page number when known.
 - `text`: the OCR text of the page. This is the only page you report on.
 - `previous_page_tail` and `next_page_head`: the end of the page before and the start of the page after, for context only: to complete a citation cut off at the page break, to resolve an `Ibid.` at the top of the page, or to see the sentence a footnote supports.
-- `pipeline_detections`: what a regular-expression detector found on this page, and what a rule-based linker made of each: its reading of the reporter, whether it linked a case (`status`, `tier`, `linked`). Treat it as a careful but literal-minded assistant. It finds most volume-reporter-page strings, including some that are not cases (statutes, treatises, noise); it reads digits exactly as the OCR printed them; it misses citations with unusual spacing, citations broken across lines, year books, `Ibid.` and `Id.`, and reporters it does not know. A detection that linked to a case whose name matches the name printed on the page is strong evidence that the numbers were read correctly; a `no_match` on a legible citation often means a misread digit or a reporter the sources do not hold.
+- `pipeline_detections`: what a regular-expression detector found on this page, numbered `n`, and what a rule-based linker made of each: its reading of the reporter, whether it linked a case (`status`, `tier`, `linked`). Treat it as a careful but literal-minded assistant. It finds most volume-reporter-page strings, including some that are not cases (statutes, treatises, noise); it reads digits exactly as the OCR printed them; it misses citations with unusual spacing, citations broken across lines, year books, `Ibid.` and `Id.`, and reporters it does not know. A detection that linked to a case whose name matches the name printed on the page is strong evidence that the numbers were read correctly; a `no_match` on a legible citation often means a misread digit or a reporter the sources do not hold.
 
 The table of reporters at the end of these instructions lists every reporter the project knows: its standard abbreviation, title, jurisdiction and years.
 
@@ -23,14 +23,14 @@ Return one JSON object and nothing else:
   "citations": [
     {"seq": 1, "raw": "Rush v. Seymour, 10. Mod.. 88", "case_name": "Rush v. Seymour",
      "volume": 10, "reporter_abbr": "Mod.", "reporter_standard": "Mod", "page": 88,
-     "pipeline": "same", "confidence": "high"},
+     "pipeline": "same", "pipeline_n": 1, "confidence": "high"},
     {"seq": 2, "raw": "Sackrider v. M'Donald, IO Johns. 2S3", "case_name": "Sackrider v. M'Donald",
      "volume": 10, "reporter_abbr": "Johns.", "reporter_standard": "Johns.", "page": 253,
      "alternates": [{"volume": 10, "page": 283}],
      "pipeline": "new", "confidence": "medium", "note": "OCR: IO for 10, 2S3 for 253 or 283"}
   ],
   "pipeline_rejected": [
-    {"raw": "13 Eliz. c. 5", "reason": "statute"}
+    {"n": 3, "raw": "13 Eliz. c. 5", "reason": "statute"}
   ]
 }
 ```
@@ -46,10 +46,11 @@ For each citation:
 - `parallel_of`: when this citation is another report of the same case as an earlier citation on the page (a parallel report, `S. C.`, a reprint), the `seq` of that earlier citation. Give it the same `case_name` too. A decision in the same litigation at another stage (`affirming 50 Barb. 100`, `reversed, 12 Wall. 1`) is a separate decision with its own report: record it with the same `case_name` but without `parallel_of`. In a `see also` string, or a string of authorities for one proposition, each citation is a different case: a name does not carry forward to them.
 - `alternates`: up to three other readings of the numbers, when a digit is doubtful (`3`/`8`, `1`/`I`/`l`, `5`/`S`, `0`/`O`, a dropped or doubled digit). Each is a `volume` and `page`. Leave it out when the numbers are clear.
 - `pipeline`: `same` if a pipeline detection has this volume, reporter and page; `corrected` if the pipeline detected this citation but you read its numbers or reporter differently; `new` if the pipeline did not detect it.
+- `pipeline_n`: for `same` and `corrected`, the `n` of the pipeline detection this citation corresponds to. Where the pipeline split one citation into fragments or detected it twice, give the `n` of the nearest and reject the others.
 - `confidence`: how surely you read the citation: `high` (legible, and you are sure it cites a case), `medium` (a number or the reporter is uncertain), `low` (a guess worth recording).
 - `note`: anything not obvious: an OCR correction, an `Ibid.` you expanded, why a reporter was chosen.
 
-`pipeline_rejected` lists each pipeline detection you did not record, with a short reason (`statute`, `treatise`, `not a citation`, `duplicate of seq 3`, and the like). Every pipeline detection must end up either matched by a citation or in this list.
+`pipeline_rejected` lists each pipeline detection you did not record, with its `n`, its `raw` and a short reason (`statute`, `treatise`, `not a citation`, `duplicate of seq 3`, and the like). Every pipeline detection must end up either matched by a citation or in this list.
 
 ## What counts
 

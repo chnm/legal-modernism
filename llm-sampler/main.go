@@ -140,9 +140,12 @@ func cmdFinish(dir string, n int) error {
 			c := Citation{
 				Seq: lc.Seq, Raw: lc.Raw, CaseName: lc.CaseName, Volume: lc.Volume,
 				ReporterAbbr: lc.ReporterAbbr, ReporterStandard: lc.ReporterStandard, Page: lc.Page, Year: lc.Year,
-				Pipeline: lc.Pipeline, ReadConfidence: lc.Confidence, ReadNote: lc.Note,
+				Pipeline: lc.Pipeline, PipelineN: lc.PipelineN, ReadConfidence: lc.Confidence, ReadNote: lc.Note,
 				Status: "no_match", Pincite: l.Pincite, Confidence: l.Confidence,
 				Candidates: len(lc.Candidates), Note: l.Note,
+			}
+			if c.PipelineN > 0 && c.PipelineN <= len(dreq.Pipeline) {
+				c.PipelineStatus = dreq.Pipeline[c.PipelineN-1].Status
 			}
 			for _, cand := range lc.Candidates {
 				if cand.ID != l.Candidate {

@@ -54,7 +54,7 @@ one batch, then the candidates step, then all the second requests as another.
 |---|---|---|
 | System prompt (cached) | `system-detect.md`: what counts as a citation of a case, how to read the OCR, and the table of every reporter in `legalhist.reporters` with the spellings it is most often printed under (about 27,000 tokens) | `system-link.md`: how to choose among candidates |
 | User message | `detect/<id>.request.json`: the edition, the page's OCR text, the end of the page before and the start of the page after, and the pipeline's detections with their links | `link/<id>.request.json`: the edition, the page's text, and each citation with its candidates |
-| Response | `detect/<id>.response.json`: each citation as read (name, volume, reporter, the reporter's standard abbreviation, page, alternate readings of doubtful digits, whether the pipeline had it), and the pipeline detections rejected | `link/<id>.response.json`: for each citation, the candidate chosen or none, whether it is a pin cite, and a confidence |
+| Response | `detect/<id>.response.json`: each citation as read (name, volume, reporter, the reporter's standard abbreviation, page, alternate readings of doubtful digits, whether the pipeline had it), and which pipeline detection it corresponds to (`pipeline_n`), and the pipeline detections rejected | `link/<id>.response.json`: for each citation, the candidate chosen or none, whether it is a pin cite, and a confidence |
 
 Between them, `candidates` looks each citation up, with nothing but exact
 matches on indexed columns and one name search:

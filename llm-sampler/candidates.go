@@ -373,7 +373,7 @@ func candidatesFor(ctx context.Context, pool *pgxpool.Pool, lk *lookups, c *Dete
 		if p.caseID == "" {
 			continue
 		}
-		same := p.Raw == c.Raw || (c.Page != nil && p.Page == *c.Page && eq(p.Volume, c.Volume))
+		same := p.N == c.PipelineN || (c.PipelineN == 0 && (p.Raw == c.Raw || (c.Page != nil && p.Page == *c.Page && eq(p.Volume, c.Volume))))
 		if !same {
 			continue
 		}
