@@ -16,6 +16,8 @@ Programs (Go binaries):
 - `chambers/` — Internal web server for inspecting citation data
 - `cite-linker/` — Link the citations detected in the treatises to a database of caselaw
 - `cite-linker-cap/` — Link the citations detected in the CAP opinions the same way
+- `llm-reader/` — Support Claude's page-by-page reading of Stephen on Pleading for citations (issue #439)
+- `llm-sampler/` — Read random MOML body pages for citations with Claude, as two API-shaped requests per page (issue #442)
 
 Support directories:
 
